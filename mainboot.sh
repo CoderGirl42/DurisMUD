@@ -5,7 +5,7 @@ RESULT=53
 ulimit -c unlimited
 
 while [ $RESULT != 0 ]; do
-  if [ $RESULT == 53 ]; then
+  if [ $RESULT != 52 ]; then
     if [ -f src/dms_new ]; then
       mv src/dms_new dms
     fi
