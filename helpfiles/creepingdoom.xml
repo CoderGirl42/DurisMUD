@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CREEPING DOOM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       3 waves
+Type of spell:  Summoning
+
+This deadly spell summons millions of arachnids to overrun the Druid's 
+enemies in wave upon wave of insects, all biting their victims at once. 
+This onslaught of insect bites results in significant damage to the 
+victims.
+</content>
+	<see-also file="magmaburst"/>
+	<see-also file="dreadwave"/>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HEAL UNDEAD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+This spell will revitalize a good deal of the Undead victim's hitpoints and 
+cure blindness, if any.
+</content>
+	<see-also file="cureblind"/>
+	<see-also file="heal"/>
+</help-file>

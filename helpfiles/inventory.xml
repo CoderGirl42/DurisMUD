@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INVENTORY</title>
+<content>
+This command allows you to see what you are currently carrying. It will not
+show you items that are stored inside containers, nor undetectable items
+(invisible items, for example).
+</content>
+	<see-also file="equipment"/>
+</help-file>

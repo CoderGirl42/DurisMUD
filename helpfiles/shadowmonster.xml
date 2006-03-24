@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SHADOW MONSTER"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+When cast, &quot;Shadow Monster&quot; creates one illusionary monster out of thin air
+that attacks the victim. The illusion will end when the victim dies or 
+leaves the area for a time and if the caster dies or the duration of the 
+spell ends. The illusion will also end after it has taken enough damage.
+===========================================================================       
+	
+
+#
+&quot;SHADOW SHIELD&quot; (Spell)
+</content>
+</help-file>

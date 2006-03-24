@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FAERIE SIGHT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Divination
+
+&quot;Faerie Sight&quot; enables the caster to look into an adjacent room (even
+through a door), as if the caster were actually there, but without the 
+corresponding risks. 
+</content>
+	<see-also file="farsee"/>
+</help-file>

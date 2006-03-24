@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BUG IDEA TYPO</title>
+	<category type="Command"/>
+<content>
+Syntax:         bug &lt;text&gt;       (to report a bug)
+                idea &lt;text&gt;      (to send an idea to the Gods of Duris)
+                typo &lt;text&gt;      (to report a typo)
+
+These commands are for making useful suggestions to the maintainers of the
+game. 
+
+Examples:
+
+       bug The entire game crashes when I type &quot;put 2.bag 2.bag&quot;.
+       idea Put an inn in Verspin.
+       typo In the room beside the oiled dragon: &quot;sence&quot; should be &quot;sense&quot;.
+</content>
+	<see-also file="petition"/>
+</help-file>

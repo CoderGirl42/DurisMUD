@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ICE STORM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Cold
+
+&quot;Ice Storm&quot; causes hundreds of ice pellets to form, pounding everyone in
+the room not in the caster's party. The size and subsequent damage of the
+pellets is based on the caster's proficiency.
+</content>
+</help-file>

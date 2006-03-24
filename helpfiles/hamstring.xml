@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HAMSTRING</title>
+	<category type="Skill"/>
+<content>
+Syntax:         Hamstring &lt;victim&gt;
+Aggressive:     Yes
+
+A very very high level rogue can hamstring his victims. He slices at his
+victim's hamstrings, greatly impairing their ability to run away. If the
+rogue successfully hamstrings his victim, the rogue can much more easily
+stab the poor guy to death.
+</content>
+</help-file>

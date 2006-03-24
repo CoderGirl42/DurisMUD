@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CARVE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         carve corpse &lt;body part&gt;
+
+When proficient in carve and armed with a knife, you can carve certain body
+components from corpses. If you aren't very good at carving then you will
+butcher some or most of the body parts you are trying to retrieve,
+rendering them unrecognizable.
+</content>
+	<see-also file="corpse"/>
+	<see-also file="decay"/>
+</help-file>

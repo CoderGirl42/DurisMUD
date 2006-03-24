@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ANIMALIST</title>
+<content>
+The Animalist specializes in the feral nature of his art. They are able
+to summon larger pets, and can even take the form of certain animals.
+
+Innate Abilities
+---------------------------------------------------------------------------
+31st level:     Charm Animal
+41st level:     Shapechange
+
+Spells
+---------------------------------------------------------------------------
+9th circle:     Greater Summon Beast
+11th circle:    Essence of the Wolf
+
+</content>
+	<see-also file="greatersummonbeast"/>
+	<see-also file="essenceofthewolf"/>
+	<see-also file="shapechange"/>
+</help-file>

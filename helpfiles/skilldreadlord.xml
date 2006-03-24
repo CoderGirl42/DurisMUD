@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_DREADLORD</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills available to the Dreadlord class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   2h bludgeon, 2h slashing, bandage, carve, climb, dodge,
+             double attack, first aid, fishing, hitall, kick, mine, mount,
+             parry, retreat, riposte, swim, unarmed damage
+11th level:  flank, battle senses
+21st level:  call of the grave, gaze
+26th level:  switch opponents, tainted blade
+31st level:  blood scent
+36th level:  command aura
+51st level:  battle orders, triple attack
+56th level:  quadruple attack
+
+Dreadlord Specializations
+---------------------------------------------------------------------------
+Deathlord, Shadowlord
+</content>
+	<see-also file="dreadlord"/>
+</help-file>

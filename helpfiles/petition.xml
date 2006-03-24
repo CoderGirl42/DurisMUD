@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PETITION</title>
+	<category type="Command"/>
+<content>
+Syntax:         petition &lt;text&gt;
+      
+The &quot;Petition&quot; command allows you to send a message to all of the Gods 
+currently on the MUD (if there are any).  Certain guidelines should be
+followed when petitioning:
+
+* Players (and Gods) are <R>NOT</R> to use petition as their own personal
+  chat channel.
+
+* Do <R>NOT</R> use petition for reporting ideas, suggestions, or complaints.
+
+* Do <R>NOT</R> use petition to inquire if a God is logged on. If the God
+  does not appear on the &quot;who&quot; list, assume he/she is not on.
+
+* If you have a problem, please describe it in details right away. 
+  Do not force Gods to respond to any form of &quot;anyone there&quot; type spam.
+
+Remember that the Gods abide by a non-interference policy. Petition should
+not be used to ask questions about equipment, areas, mobs or general game 
+play.
+
+If you have a question or need help with a problem, you can either ask 
+another player, post on the Duris forums or petition. To speak privately
+with a God, use the &quot;Tell&quot; command. Or, if you discover a bug or typo on
+Duris, use the &quot;Bug&quot; or &quot;Typo&quot; command. To submit your ideas, you may
+implement the &quot;Idea&quot; command. Lastly, if you feel you just HAVE to whine,
+use your guild board (if you have access to one) or use the Duris Forums.
+
+Abuse of the petition channel will only invoke the wrath of the gods. We
+expect EVERYONE to abide by this.
+</content>
+	<see-also file="gods"/>
+	<see-also file="togglepetition"/>
+	<see-also file="website"/>
+	<see-also file="forums"/>
+	<see-also file="bug"/>
+	<see-also file="idea"/>
+	<see-also file="typo"/>
+	<see-also file="tell"/>
+</help-file>

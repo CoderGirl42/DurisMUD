@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ORC</title>
+<content>
+Orcs are a race of evil humanoids that are, typically, five feet tall with
+green or yellowish skin and red eyes. Orcs tend to be more social then most
+other evil races, preferring to group with as many of their fellows as
+possible. Orcs, while preferring the company of other orcs, are known to
+also group with Ogres and Trolls, and even Drow and Duergar from time to
+time. Orcs are some of the most deadly creatures to be found on Duris.
+
+Class list:	  Warrior, Anti-Paladin, Cleric, Shaman, Sorcerer, Reaver,
+		  Necromancer, Thief, Assassin, Mercenary, Bard, Alchemist,
+		  Berserker, Illusionist, Conjurer.
+Statistics:       Orcs tend to be weaker then most other races, but make up
+                  for that weakness by the sheer force of numbers, and 
+                  their unique vision, which allows them to see in both
+                  darkness and light, allowing them to be the only race on
+                  all of duris to travel both the lands of light and dark.
+Innate Abilities: Infravision, Ultravision, Summon Horde.
+
+<R>Warning</R>: As one of the eight evil races on Duris, orcs are
+extremely difficult to play and face many hardships.  Their hometown
+has been specifically designed to make life hell, and death waits
+around every corner.  Orcs will most certainly encounter situations
+that would be deemed &quot;unfair&quot; to any of the good races.  We did
+this to create a new challenge for those advanced players who have
+&quot;beaten&quot; the challenge of life on the surface world, and are looking
+for something more difficult.  You should NOT play an orc unless you
+are a *very* advanced player and are used to the Duris style of
+MUDding, or are willing to face the hardships without complaint, as it
+is NOT easy.
+</content>
+	<see-also file="summonhorde"/>
+	<see-also file="races"/>
+	<see-also file="innate"/>
+	<see-also file="ultravision"/>
+	<see-also file="infravision"/>
+</help-file>

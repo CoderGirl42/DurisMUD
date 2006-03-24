@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BANISH</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Room
+Aggressive: 	Yes
+Cumulative: 	No
+Duration: 	Instantaneous
+Type of spell: 	Generic
+
+The zealot will attempt to banish any charmed pets present by dissolving the 
+energies that bind the summoned slave to this plane of existence. If the 
+creature fails its saving throw and is of  elemental origin it will be sent 
+back to its plane of existence, while undead slaves are destroyed. Purely
+magical creations will simply cease to be.
+</content>
+</help-file>

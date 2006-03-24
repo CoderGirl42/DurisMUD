@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ELEMENTALIST</title>
+	<category type="Specialization"/>
+<content>
+The Elementalist has learned to master the power of the elemental realm.
+His elemental offensive spells are able to inflict more damage, and he is
+also able to absorb elemental attacks better. At the highest level of the
+craft, he is able to invoke a maelstrom of pure elemental brutality.
+
+Innate Abilities
+---------------------------------------------------------------------------
+35th level:     Elemental Power
+
+Spells
+---------------------------------------------------------------------------
+7th circle:     Elemental Affinity
+12th circle:    Elemental Fury
+
+</content>
+	<see-also file="elementalpower"/>
+	<see-also file="elementalaffinity"/>
+	<see-also file="elementalfury"/>
+</help-file>

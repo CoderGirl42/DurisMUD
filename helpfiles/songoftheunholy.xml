@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF THE UNHOLY"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	No
+Cumulative:	N/A	
+Duration:	Instantaneous
+Type of song:	Healing
+
+This song restores the lifeforce of those in the room, including those not
+in the singer's group. The amount it heals is highly dependent on level and
+skill in the song and instrument.
+</content>
+	<see-also file="songs"/>
+	<see-also file="instrument"/>
+	<see-also file="wail"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+</help-file>

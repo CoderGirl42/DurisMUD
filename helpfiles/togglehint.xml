@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_HINT CHANNEL</title>
+<content>
+Syntax:         toggle hint channel
+
+With this option toggled ON, you will periodically see HINTS useful for
+newer players to the game appear on the screen.
+</content>
+	<see-also file="toggle"/>
+</help-file>

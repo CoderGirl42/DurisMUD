@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BACKSTAB</title>
+	<category type="Skill"/>
+<content>
+Syntax:         backstab &lt;victim&gt;
+
+A backstab is an attempt to sneak up on the victim and place a weapon in
+the victim's back at exactly the point where it will do the most damage. 
+The amount of damage incurred is dependent on the proficiency of the
+backstabber and the dice on the weapon used.
+
+You may only backstab with piercing weapons. Assassins with good enough
+proficiency at dual wielding weapons may double-backstab if they wield two
+piercing weapons.
+</content>
+	<see-also file="dualwield"/>
+	<see-also file="circle"/>
+</help-file>

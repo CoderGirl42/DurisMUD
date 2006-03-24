@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TROPHY</title>
+	<category type="General Information"/>
+<content>
+Syntax:    trophy
+
+The trophy list is a feature which lets you gain a general idea of the
+amount of experience (relative to a particular mob) you are gaining  or the 
+mobs you kill. The trophy ensures that you do not gain experience by 
+&quot;sitting on mobs&quot; as the more you kill any particular mob, the less
+experience you will gain for it. If you kill too many of any particular
+mob, you will eventually gain no experience at all for it.
+
+The trophy list will help your decisions by letting you know how many of
+any particular mob you have already killed. If you are in a group, you
+will only gain a portion of that kill added to your trophy. Therefore,
+you will see percentages on your trophy list. Trophy entries will also
+change colors as the amount of experience you get for a kill becomes
+less and less.
+</content>
+	<see-also file="experience"/>
+</help-file>

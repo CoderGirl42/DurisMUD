@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"VAMPIRIC TOUCH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+This spell temporarily transforms the person's hands into magical lifeforce 
+leeches.  If in battle and unarmed, your hands will suck away your 
+opponent's life force, granting some of it to you.
+
+This can also be an innate ability.
+</content>
+</help-file>

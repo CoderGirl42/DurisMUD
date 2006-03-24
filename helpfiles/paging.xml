@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PAGING TOGGLE_PAGING</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle paging
+
+When this option is OFF, you will have the ability to scroll larger text 
+files down your screen by hitting the enter key. When this option is ON,
+if the text being displayed is small enough or you have set your screen
+size large enough, you will be able to see the entire text in one
+continuous stream. You may set your screen size by using the 
+&quot;toggle screensize&quot; option.
+</content>
+	<see-also file="togglescreensize"/>
+</help-file>

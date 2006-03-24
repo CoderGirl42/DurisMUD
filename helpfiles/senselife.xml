@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SENSE LIFE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Divination
+
+This spell will enable you to sense hidden life forms in a room. The caster
+will then be able to detect invisible or hiding creatures in a room, 
+although, they will be unable to discern their true nature.
+</content>
+	<see-also file="hide"/>
+	<see-also file="invisibility"/>
+</help-file>

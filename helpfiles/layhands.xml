@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"LAY HANDS"</title>
+	<category type="Command"/>
+<content>
+Syntax:         lay &lt;victim&gt;
+
+A Paladin may &quot;Lay Hands&quot; on themselves or another person to recover some
+lifeforce approximately once per game day. 
+
+NOTE: You may inflict damage on an Undead mob or player with the &quot;Lay
+Hands&quot; command.
+</content>
+	<see-also file="fullheal"/>
+</help-file>

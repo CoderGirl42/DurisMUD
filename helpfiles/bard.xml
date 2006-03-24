@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BARD</title>
+	<category type="Sub-Class of: Rogue"/>
+<content>
+Blessed with the talent of music, Bards can, with practice, play any
+instrument. These instruments can invoke magical tunes and songs that act
+as spells, aiding a party during their adventures. Bards are a thief/mage/
+warrior hybrid by nature, and possess some of the advantages of all of
+those classes. They are true &quot;Jacks of all Trade&quot; which means they have
+many skills and spells, but are master of none.  
+
+Allowable races:        Grey Elf, Drow Elf, Half-Elf, Human, Halfling,
+			Goblin, Githyanki, Orc, Harpy
+Innate abilities:       None
+Equipment usage:        Like all classes on Duris, bards have their own set
+                        of equipment they can use. Bards can use most
+                        weapons, and armor, also many magic items.
+</content>
+	<see-also file="practice"/>
+	<see-also file="rogue"/>
+	<see-also file="skillbard"/>
+</help-file>

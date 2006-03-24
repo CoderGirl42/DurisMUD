@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BLACKSMITH</title>
+	<category type="Specialization"/>
+<content>
+A more subdued and less violent subclass of the alchemist the blacksmith 
+excels in crafting and forging, finding more enjoyment searching the land 
+for various ores and minerals then engaging in warfare like his 
+counter-part. 
+
+Skills 
+---------------------------------------------------------------------------
+41st level: Forge 
+41st level: Smelting (Smelt) 
+
+Innates/Passive Abilities 
+---------------------------------------------------------------------------
+36th level: Miner's Sight 
+41st level: Foundry
+
+
+</content>
+	<see-also file="minerssight"/>
+	<see-also file="alchemist"/>
+	<see-also file="forge"/>
+	<see-also file="smelting"/>
+</help-file>

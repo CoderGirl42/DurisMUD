@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>QUIT</title>
+	<category type="General Information"/>
+<content>
+Just like in real life, in the game you cannot just &quot;quit&quot; life. Your
+character must find a safe place such as an Inn or setup camp for the night. 
+There are two commands your character can therefore use to leave the game -
+rent (at an Inn only) and camp. If you simply close your client and leave 
+your character &quot;link dead&quot;, it will remain in the game, which is obviously 
+very dangerous, as it will then leave your character defenseless from 
+attack.
+</content>
+	<see-also file="camp"/>
+	<see-also file="inns"/>
+	<see-also file="rent"/>
+</help-file>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>POISON</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;object&gt;
+Aggressive:     Yes (on victim)
+Cumulative:     No
+Duration:       Dependent on proficiency of caster for victims,
+                Permanent for objects
+
+Casting &quot;Poison&quot; on a victim will cause them to suffer slight damage every 
+hour and heal more slowly than usual.
+
+NOTE: The spell &quot;Remove Poison&quot; neutralizes the poison, magical or not.
+</content>
+	<see-also file="removepoison"/>
+</help-file>

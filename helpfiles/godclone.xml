@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, CLONE"</title>
+<content>
+Syntax:  clone &lt;mob|obj&gt; &lt;name&gt; &lt;count&gt;
+
+This lets you clone a given mob or object &lt;count&gt; times, which is useful
+for avoiding wizlog spam.
+</content>
+</help-file>

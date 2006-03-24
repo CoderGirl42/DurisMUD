@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>VINES</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+The spell &quot;Vines&quot; encases the Druid in a shell of vines grown from herbs. 
+When successful, the vines will absorb damage from magical or physical 
+attacks. But, if the Druid moves, the vines will instantly rot and fade 
+away. 
+
+NOTE: You must have at least (one) herb in your inventory, in order for
+this spell to take effect.
+</content>
+	<see-also file="forage"/>
+	<see-also file="ingredients"/>
+</help-file>

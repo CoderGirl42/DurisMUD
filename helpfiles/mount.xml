@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MOUNT RIDE DISMOUNT BUCK</title>
+	<category type="Skill"/>
+<content>
+Syntax:         mount &lt;mountname&gt;
+                ride &lt;mountname&gt;
+                dismount
+
+Duris now has mounts available for renting or direct buyer purchase, as
+well as Paladin's and Anti-Paladin's summoned mounts. You can only ride
+your own steed and cannot ride into a single file room or indoors. You must
+dismount and have your steed follow you.
+
+There is also the ability for those on the side of good to be able to mount
+and ride their Centaur friends, though the rider must have consent, and the
+Centaur must be wearing a saddle. Be careful! if the Centaur becomes tired
+of their rider, they may attempt to buck them from the saddle.
+
+Syntax:          buck
+
+</content>
+	<see-also file="paladin"/>
+	<see-also file="antipaladin"/>
+</help-file>

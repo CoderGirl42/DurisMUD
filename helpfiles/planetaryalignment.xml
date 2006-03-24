@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PLANETARY ALIGNMENT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt; 
+Aggressive: no 
+Cumulative: no 
+Duration: Instantaneous 
+Type of Spell: Cosmic 
+
+Calls the planets into alignment with the caster attempting the harnass 
+the cosmic powers. If alignment is successful, the caster's stats are 
+improved considerably. 
+</content>
+	<see-also file="ethermancer"/>
+	<see-also file="cosmomancer"/>
+</help-file>

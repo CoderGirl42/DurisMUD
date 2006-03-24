@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STONE SKIN"</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn stone (for Wights)
+Area of effect: &lt;victim&gt; (for spell)  | &lt;self&gt; (for innate)
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+This spell changes the skin of the victim to a stone-like consistency and 
+negates almost all damage from physical attacks. It will last until either
+the duration expires or a variable number of attacks (of any type, whether 
+they hit or do damage) are made against the victim. The number of attacks it 
+protects against varies with level and proficiency of the caster. If a 
+particularily Damaging attack is made, it will provide no protection at all. 
+&quot;Stone Skin&quot; does not block any damage from magical spells (though these 
+attacks will 'chip away' at the protection).
+</content>
+	<see-also file="biofeedback"/>
+</help-file>

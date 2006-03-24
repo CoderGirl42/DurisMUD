@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SCORCHING TOUCH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Elemental
+
+This spell causes the victim to recoil in burning pain at the caster's
+touch, causing a respectable amount of damage.
+</content>
+</help-file>

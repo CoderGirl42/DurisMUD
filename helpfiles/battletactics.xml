@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BATTLE TACTICS"</title>
+	<category type="Skill"/>
+<content>
+So controlled and skilled are the Dreadlords their group holds its place
+for battle in tight formations unrivalled amongst any other. Able to more
+effectively command it's unholy forces the Dreadlord protects and enables
+more than ever the more fragile of its combined mass to stand back from the
+fray to be at their most deadly.
+</content>
+	<see-also file="dreadlord"/>
+	<see-also file="skilldreadlord"/>
+</help-file>

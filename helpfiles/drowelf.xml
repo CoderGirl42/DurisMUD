@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DROW ELF"</title>
+	<category type="General Information"/>
+<content>
+Living far beneath the surface, deep within the bowels of the Underdark,
+drow elves are a swift-moving, crafty, remorselessly wicked people ruled by
+a society of priestesses who serve the demonic Spider Queen, Lloth. The
+drow are an extremely intelligent race, and their abilities and ambition
+are feared and loathed by races throughout the Realms, particularly grey
+elves, their distant cousins and blood enemies.
+
+Because of the length of time they spend below the surface, drow are hurt
+by the natural light of the sun and the light of fire. To compensate, they
+have permanent ultravision, allowing them to see in total darkness.
+However, they seldom travel to the surface, and never during the daytime.
+Drow tend to be weaker and frailer than humans, but are better in most
+other areas. Drow are somewhat resistant to magical attacks.
+
+Class list:       Warrior, Cleric, Sorcerer, Conjurer, Necromancer, Thief,
+                  Assassin, Bard, Reaver.
+Innate abilities: levitate, faerie fire, ultravision, fireball, globe
+                  of darkness, mass dispel.
+
+Warning: As one of the eight evil races on Duris, the drow are extremely
+difficult to play and face many hardships. Their hometown has been
+specifically designed to make life hell and death waits around every
+corner. Drow will most certainly encounter situations that would be deemed
+&quot;unfair&quot; to any of the surface races. We did this to create a new challenge
+for those advanced players who have &quot;beaten&quot; the challenge of life on the
+surface world and are looking for something more difficult. You should NOT
+play a drow unless you are a *very* advanced player and are used to the
+Duris style of MUDding, or are willing to face the hardships without
+complaint, as it will NOT be easy.
+</content>
+	<see-also file="greyelf"/>
+	<see-also file="faeriefire"/>
+	<see-also file="races"/>
+</help-file>

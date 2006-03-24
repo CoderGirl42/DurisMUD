@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HUNTSMAN</title>
+	<category type="Specialization"/>
+<content>
+Specialized at scouting enemies, the Huntsman has learned to stalk their 
+victims unnoticed, hide in the surroundings and set up traps warning them 
+about trespassing enemies.
+
+Skills
+---------------------------------------------------------------------------
+31st level:     Trap
+41st level:     Hide
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Sneak
+
+</content>
+	<see-also file="trap"/>
+	<see-also file="hide"/>
+	<see-also file="sneak"/>
+</help-file>

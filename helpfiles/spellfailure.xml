@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPELL FAILURE"</title>
+	<category type="General Information"/>
+<content>
+A caster who has practiced specific spells for a long period of time
+becomes very skilled at casting the spells. He is able to work his magic
+without fear of error or incorrectly invoking magic. So, as he gains in
+levels, the lower spells become second nature to him. However, when he is
+charged with learning new spells of a more complicated nature than he is
+used to, he may find it difficult to cast without error. So, casters will
+find that they sometimes cannot cast a spell of their highest circle every
+time they try. Expect spell failure as you are learning the spells and are
+not yet a master of their powers.
+</content>
+	<see-also file="spellcircle"/>
+	<see-also file="spellslot"/>
+	<see-also file="spellsystem"/>
+</help-file>

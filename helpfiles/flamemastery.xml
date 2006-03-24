@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FLAME MASTERY"</title>
+	<category type="Skill"/>
+<content>
+Similar to the DISPERSE FLAMES ability, the Pyrokinetic calls upon the
+force of his willpower to redirect any fire based attack inflicted on
+theirself to their opponent.
+</content>
+	<see-also file="fire"/>
+	<see-also file="aura"/>
+	<see-also file="disperse"/>
+	<see-also file="flames"/>
+</help-file>

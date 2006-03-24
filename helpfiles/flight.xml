@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FLIGHT</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; 
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Flight&quot; will allow you to fly around wherever you want, regardless of
+terrain.
+
+<R>Warning</R>:  If your spell expires while you are high in the air,
+the fall will hurt or kill you.  This could result in the possibility
+of an irretrievable corpse.
+</content>
+	<see-also file="fly"/>
+</help-file>

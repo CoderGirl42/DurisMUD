@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HOLYMAN</title>
+	<category type="Specialization"/>
+<content>
+The Holyman Cleric is a master of defensive capabilities. He has the
+ability to invoke his God to calm a room, when needed. And, under the
+effect of the spell &quot;Lesser Sanctuary&quot;, the Healer will take less physical
+damage than normal. When soulshielded, it is said that mysterious things
+may happen.
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Calm God Call
+
+Spells
+---------------------------------------------------------------------------
+11th circle:    Lesser Sanctuary
+
+</content>
+	<see-also file="godcall"/>
+	<see-also file="lessersanctuary"/>
+	<see-also file="cleric"/>
+</help-file>

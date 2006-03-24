@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"IMPROVED INVISIBILITY" INVISIBILITY</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;object&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       dependent on proficiency of caster for victims
+                Permanent for objects
+Type of spell:  Enchantment
+
+This spell turns the victim or object invisible. Invisibility can only be
+detected via the &quot;Detect Invisibility&quot; spell. Invisibility on objects can
+be dispelled via the &quot;Dispel Invisible&quot; spell. Invisibility on creatures
+can be dispelled via the &quot;Dispel Invisible&quot;, &quot;Reveal True Form&quot; and
+&quot;Faerie Fog&quot; spells, or if the creature enters battle.
+</content>
+	<see-also file="detectinvisibility"/>
+	<see-also file="dispelinvisible"/>
+	<see-also file="faeriefog"/>
+</help-file>

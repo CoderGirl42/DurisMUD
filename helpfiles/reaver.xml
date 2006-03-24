@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>REAVER</title>
+	<category type="Sub-Class of: Fighter"/>
+<content>
+Reavers are a unique mix of both warrior and spell-caster. They have left
+behind their sorcerous professions, and have instead turned to the powers
+of the old gods, studying their ways and natures. As such, they have
+forgotten much of their old spells in preference of their new direction, 
+however they still retain some core spells from their forgotten pasts. In
+their thirst for further power, they also too have looked at the ways of
+warriors to enhance their abilities and have training their bodies and
+minds to gain physical battle skills to enhance their offensive capacity.
+
+Allowable races:        Drow, Orc, Goblin.
+Equipment usage:        Like all classes on Duris, Reavers have their own
+                        specific item restrictions. They do however have 
+                        quite a wide range of equipment options being able
+                        to utilize to some extent, both the weaponry and
+                        armor of warriors along with the magical garb of
+                        a spellcaster.  
+                        
+</content>
+	<see-also file="magic"/>
+	<see-also file="warrior"/>
+	<see-also file="sorcerer"/>
+	<see-also file="skillreaver"/>
+</help-file>

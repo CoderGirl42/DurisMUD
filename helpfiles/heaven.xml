@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HEAVEN" "HELL"</title>
+	<category type="General Information"/>
+<content>
+When you die to another player you will be placed in your respective
+heaven. Each side of the racewars has their own heaven. The only way to
+leave heaven is by resurrection, or by waiting a specific amount of time. 
+Depending on how high level you are, that will determine the length of time
+your mortal soul binds to a new body. You will only visit your heaven when 
+you die to another player. Without the limitations of a body your mind is
+more attune to magic and you will be able to memorize any spell you are
+able to use.
+</content>
+	<see-also file="death"/>
+	<see-also file="pkill"/>
+</help-file>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>RELOCATE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; &amp; &lt;player&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+&quot;Relocate&quot; creates an artery in the ether barely big enough to accomodate
+the caster and flings him all the way to the person he selected as his
+target, no matter how far away his target may be.
+ 
+<R>Warning</R>: Sometimes this artery can rupture, depositing the caster 
+        someplace completely unexpected (and perhaps very dangerous).
+</content>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>REPEAT</title>
+	<category type="General Information"/>
+<content>
+The &quot;!&quot; command lets you repeat the last command typed at the keyboard.
+Syntax &quot;!&quot;
+
+Example:
+<Y>Wave</Y>
+You wave.
+<Y>!</Y>
+You wave.
+</content>
+</help-file>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FORAGE</title>
+	<category type="General Information"/>
+<content>
+Syntax: forage
+
+&quot;Ingredients&quot; are located throughout the world of Duris, buried under the
+ground. In order to retrieve these ingredients, you must &quot;Forage&quot; for them.
+Some classes, such as Alchemists and Forest Druids (specialized Druids),
+need specific ingredients in order to cast spells or mix potions.
+
+<R>Warning</R>: While foraging, you cannot enter new commands for a period of 
+        time, making you prone to attack. So, be sure you are relatively 
+        safe before foraging!
+</content>
+	<see-also file="forestdruid"/>
+	<see-also file="alchemist"/>
+	<see-also file="ingredients"/>
+</help-file>

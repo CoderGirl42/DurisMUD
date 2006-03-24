@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TELEPORT</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+This spell instantly teleports the caster to a random location in the
+current zone. Since the location is random, there is a distinct possibility 
+of landing in a potentially fatal spot.
+</content>
+</help-file>

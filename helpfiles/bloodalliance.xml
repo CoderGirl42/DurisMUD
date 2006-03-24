@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BLOOD ALLIANCE"</title>
+<content>
+A Blood Reaver may find a willing target to have an alliance in blood with
+them. Once they are linked, if one of them drops below 50% of their health
+and the other has more than 70%, then damage to the weaker triggers some
+transfer of hitpoints from the stronger to the weaker member. This spell
+is usually used to link Blood Reavers with anti-paladins causing them to
+form a dark and terrible evil plague. 
+</content>
+	<see-also file="bloodreaver"/>
+	<see-also file="reaver"/>
+</help-file>

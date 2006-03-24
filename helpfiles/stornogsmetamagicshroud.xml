@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STORNOGS METAMAGIC SHROUD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+The feared metamagic shroud binds itself to the victim, acting like a
+magnet for magical energies. This makes the victim much more susceptible to
+magical attacks.
+</content>
+	<see-also file="curse"/>
+	<see-also file="malison"/>
+</help-file>

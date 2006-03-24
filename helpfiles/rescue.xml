@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>RESCUE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         rescue &lt;victim&gt;
+
+As a general rule in a group, the person who takes the first hit will
+receive most or all of the damage from the opponent. Often, this person
+will become low on hit points and will need to be rescued. To rescue
+someone is to attempt to take the place of that person and have the monster
+hit you instead. You can only &quot;turn&quot; one monster for each attempt.
+</content>
+	<see-also file="tank"/>
+</help-file>

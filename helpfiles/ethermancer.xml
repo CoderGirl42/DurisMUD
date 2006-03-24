@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ETHERMANCER</title>
+	<category type="Sub-Class of: Priest"/>
+<content>
+Calling on the power of storms, Ethermancers utilize the elements of ice 
+and wind to smite their foes. Although offensive in nature, Ethermancers 
+have the unique ability to dispel powerful magic where others cannot, and
+can sometimes even steal it. Their bodies are composed mostly of ethereal
+matter which causes them to be resilient to physical attacks, yet more
+prone to magical attacks. When walking they leave a trail of frost, 
+allowing them to tread where others cannot go.
+
+Allowable races:        Harpy
+
+Innate abilities:       No class-specific innate abilities.
+
+Equipment usage:        Harpies fall under the Priest classification
+                        of item restriction.  This means they are
+                        restricted to use of non-edged weapons such as
+                        maces, clubs and staves. They can wear almost 
+                        any type of armor, but are mildly restricted 
+                        in the use of miscellaneous magical items.
+</content>
+	<see-also file="spellslots"/>
+	<see-also file="spellsystem"/>
+	<see-also file="priest"/>
+	<see-also file="cast"/>
+	<see-also file="tupor"/>
+</help-file>

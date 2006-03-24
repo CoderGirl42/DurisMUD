@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FORUMS</title>
+<content>
+The Duris forums are a place to chat, get information and find out all the
+latest news on the MUD. They are located at: www.durismud.org
+</content>
+	<see-also file="website"/>
+</help-file>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>KILL HIT MURDER</title>
+	<category type="Command"/>
+<content>
+Syntax:         kill | hit | murder &lt;victim&gt;
+
+One way to initiate a fight.  
+</content>
+</help-file>

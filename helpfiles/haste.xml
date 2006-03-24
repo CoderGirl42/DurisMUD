@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HASTE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+&quot;Haste&quot; grants the victim a faster pulse speed, allowing them to hit more 
+often than without it. It also adds an archery hit, allowing an archer to
+hit more often. When used on casters, it allows them to cast their spell
+more quickly.
+</content>
+	<see-also file="slowness"/>
+</help-file>

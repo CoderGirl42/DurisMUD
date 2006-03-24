@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, GOTO"</title>
+<content>
+&quot;Goto&quot; lets you change your location to the target's location.
+
+Examples: goto 1201         -takes you to room 1201
+          goto poofbrain    -takes you to Poofbrain
+          goto lamp         -takes you to the top lamp in the database
+</content>
+	<see-also file="god teleport"/>
+	<see-also file="god trans"/>
+</help-file>

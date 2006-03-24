@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF SLEEP"</title>
+	<category type="Song"/>
+<content>
+Area of effect: Room 
+Aggressive:	Yes
+Cumulative:	No
+Duration:	Dependent on proficiency of singer 
+Type of song:	Enchantment
+
+A successful verse of this song will cause those in the room and ungrouped 
+to fall magically asleep. A victim affected by this song cannot awaken on
+their own; it takes another to wake him/her.
+</content>
+	<see-also file="songs"/>
+	<see-also file="instrument"/>
+	<see-also file="play"/>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+</help-file>

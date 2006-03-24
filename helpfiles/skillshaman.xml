@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_SHAMAN</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the Shaman
+class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 2h bludgeon, bandage, carve, climb, dodge, 
+             first aid, meditate, mine, mount, quick chant, retreat,
+             shaman spell knowledge, swim
+
+Spells
+---------------------------------------------------------------------------
+Because Shamans' spells are divided into three spheres, they are indicated
+in color by sphere. <y>yellow</y> is animal, <r>red</r> is elemental, and <W>white</W>
+is spiritual.
+
+1st circle:  <r>Ice Missile</r>, <W>Spirit Armor</W>, <W>Transfer Wellness</W>,
+             <y>Wolfspeed</y>
+2nd circle:  <r>Flameburst</r>, <W>Lesser Mending</W>, <W>Reveal Spirit Essence</W>
+3rd circle:  <r>Cold Ward</r>, <r>Fire Ward</r>, <y>Molevision</y>, <W>Purify Spirit</W>,
+             <y>Pythonsting</y>, <r>Scalding Blast</r>, <y>Snailspeed</y>
+4th circle:  <y>Hawkvision</y>, <W>Mending</W>, <y>Mousestrength</y>, <y>Pantherspeed</y>,
+             <r>Scorching Touch</r>, <W>Soul Disturbance</W>, <y>Summon Beast</y>
+5th circle:  <y>Bearstrength</y>, <W>Malison</W>, <r>Molten Spray</r>,
+             <W>Sense Spirit</W>, <y>Shrewtameness</y>
+6th circle:  <r>Earthen Grasp</r>, <W>Greater Mending</W>, <y>Lionrage</y>,
+             <W>Spirit Anguish</W>, <W>Spirit Sight</W>, <W>Wellness</W>
+7th circle:  <y>Elephantstrength</y>, <W>Greater Soul Disturbance</W>,
+             <y>Ravenflight</y>, <W>Spirit Ward</W>
+8th circle:  <y>Greater Pythonsting</y>, <W>Reveal True Form</W>, <r>Scathing Wind</r>,
+             <W>Spirit Jump</W>
+9th circle:  <r>Arieks Shattering Iceball</r>, <y>Greater Ravenflight</y>,
+             <W>Greater Spirit Ward</W>
+10th circle: <r>Earthen Rain</r>, <r>Etherportal</r>, <r>Gaseous Cloud</r>
+11th circle: <r>Greater Earthen Grasp</r>, <W>Greater Spirit Sight</W>
+12th circle: <W>Greater Spirit Anguish</W>
+
+Shaman Specializations
+---------------------------------------------------------------------------
+<r>Elementalist</r>, <y>Animalist</y>, <W>Spiritualist</W>
+</content>
+	<see-also file="shaman"/>
+	<see-also file="tupor"/>
+	<see-also file="memorize"/>
+	<see-also file="totems"/>
+</help-file>

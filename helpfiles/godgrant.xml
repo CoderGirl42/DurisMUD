@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, GRANT" "GOD, REVOKE"</title>
+<content>
+Syntax:  grant &lt;player&gt; &lt;command&gt;
+
+&quot;Grant&quot; lets you grant a player a command normally above their level, until
+someone uses &quot;revoke&quot; to remove the ability. Be VERY careful in its usage.
+The grantable commands form a limited subset of god commands. You can only
+revoke a command that was previously granted.
+</content>
+</help-file>

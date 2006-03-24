@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"VAMPIRIC TRANCE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+&quot;Vampiric Trance&quot; infuses the caster with the power of the undead, granting 
+a higher hitroll and damroll, as well as a larger number of hitpoints. The 
+power of &quot;Vampiric Touch&quot; is granted to the caster as well. Be warned, when 
+the Necromancer is in this form, they cannot control any Undead of their
+own.
+</content>
+	<see-also file="vampirictouch"/>
+</help-file>

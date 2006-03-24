@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HARM</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Harm&quot; will remove a great deal of lifeforce from the victim, with the
+maximum amount lost being dependent on the proficiency of the caster. It is
+not (quite) possible to kill using this spell.
+</content>
+	<see-also file="fullharm"/>
+</help-file>

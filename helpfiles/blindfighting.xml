@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BLINDFIGHTING</title>
+	<category type="Skill"/>
+<content>
+Your proficiency at blindfighting will affect your success at fighting
+while blind or in the dark. A skilled blindfighter suffers little loss in
+fighting abilities under these circumstances.
+</content>
+	<see-also file="blindness"/>
+</help-file>

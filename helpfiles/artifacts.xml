@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ARTIFACTS</title>
+	<category type="General Information"/>
+<content>
+Artifacts are ultimately powerful items on Duris. The artifacts grant the
+wielder/wearer awesome powers. Currently there are twenty-five separate
+artifacts, each one-of-a-kind. They are unique and only one of each can be
+found in the game, EVER. This is only a list of the current artifacts, not
+including uniques or iouns. 
+
+<L>Avernus the life stealer</L>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>: 
+Drains the life force of the victim and transfers it to the wielder.
+Wraps the wielder in a shell of stone.
+Surrounds its wearer in a shimmering globe of protection. 
+Surrounds its wielder in a holy shield of force.
+Increases the attack speed of the wielder.
+Protects the wielder from the elements.
+
+<L>Doombringer the sword of chaos</L>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>: 
+Brings down three elemental powers upon the foes of the wielder.
+Empowers the wielder with the energy of the elements, allowing them to
+score numerous extra hits on their opponent.
+Protects the wielder from the elements.
+Increases the attack speed of the wielder.
+
+<y>the mace of the </y><L>earth</L>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>: 
+Randomly brings the powers of the elemental plane of earth down upon 
+the foes of the wielder. 
+Enhances the senses of the wielder.
+Conceals the wielder from mundane eyes.
+Surrounds its wearer in a shimmering globe of protection.
+Increases the attack speed of the wielder.
+
+<C>the sphere of </C><W>wind</W>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Increases the attack speed of the wielder.
+Protects the wielder from the elements.
+Surrounds its wielder in a holy shield of force.
+Grants the wielder the power of flight.
+When called, causes a great burst of wind to knock its wielder's foes
+off their feet.
+
+<L>the sword of</L> <Y>fire </Y><r>and flame</r>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Randomly brings the powers of the elemental plane of fire down upon the
+foes of the wielder.
+Surrounds the wielder in a protective globe of fire.
+Increases the attack speed of the wielder.
+Protects the wielder from the elements.
+
+<b>the orb of the </b><g>sea</g>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Grants the wielder increased intelligence and constitution.
+Allows the wielder to breath water.
+Increases the attack speed of the wielder.
+Protects the wielder from the elements.
+Banishes the wielder's foes back to <b>The Elemental Plane Of Water</b>.
+
+<y>the holy avenger of Ambran</y>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Smites foes of evil alignment down with its holy power.
+Wards off physical and magical attacks from the wielder.
+Surrounds its wielder in a holy shield of force.
+Increases the attack speed of the wielder.
+Enhances the senses of the wielder.
+
+<G>the holy mace of the effreeti</G>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>
+Calls down the holy wraith of the effreeti god Kossuth upon its wielders'
+foes.
+Protects its wielder from magical attacks.
+Surrounds its wielder in a holy shield of force.
+Surrounds the wielder in a protective globe of fire. 
+Protects the wielder from the elements.
+Increases the attack speed of the wielder.
+
+<c>staff </c><C>of </C><B>blue </B><b>flames</b>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Allows its master to call upon the powers of several arcane spells at will, 
+with but a word.
+Surrounds its wearer in a shimmering globe of protection.
+Conceals the wielder from mundane eyes.
+
+<r>the unholy avenger named 'Bloodlust'</r>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+A vampiric, bloodthirsty blade of great evil that extends its life-draining 
+powers to its wielder.
+Increases the attack speed of the wielder.
+
+<r>a blood red  word named 'Death Rider'</r>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Protects its wielder from physical and magical attacks.
+Smites foes of good alignment down with its unholy power.
+Enhances the senses of the wielder.
+Increases the attack speed of the wearer.
+Surrounds its wielder in a holy shield of force.
+
+<L>Tiamat's </L><G>poison tail stinger</G>
+---------------------------------------------------------------------------
+<R>Known Special Power(s)</R>:
+Enhances a rogues' backstab ability.
+Grants the wielder the ability to move silently.
+Protects its wielder from paralysis and the elements.
+Lashes out with paralysis and poison attacks.
+Increases the attack speed of the wielder.
+
+<C>the sword of </C><W>light </W><C>and </C><L>darkness</L>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Rumored to call the wrath of all the gods down upon a victim
+in the form of ice and pain.
+Wraps the wielder in a shell of stone.
+Increases the attack speed of the wielder.
+Enhances the senses of the wielder.
+
+<L>The globe of shadows</L>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Allows the necromancer to wither his/her enemies.
+Increases the attack speed of the holder.
+Protects the holder from the elements.
+Grants the holder the ability to move silently.
+Enhances the senses of the holder.
+Conceals the holder from mundane eyes.
+
+<y>the mystical warhammer of the barbarian kings</y>
+OR
+<b>the mystical warhammer of the ogre chiefs</b>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Surrounds its wielder in a protective globe of fire.
+Surrounds its wielder in a holy shield of force.
+Wraps the wielder in a shell of stone.
+Allows the wielder to breathe water.
+Surrounds its wearer in a shimmering globe of protection.
+Smites the wielder's foes with lightning.
+
+<L>the granite dagger '</L><R>Bl</R><r>oo</r><R>dFe</R><r>a</r><R>st</R><L>'</L>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Surrounds its wielder in a holy shield of force.
+Wraps the wielder in a shell of stone.
+Drains the life force of the victim and transfers it to the wielder.
+Enhances the senses of the wielder.
+Increases the attack speed of the wearer.
+
+<Y>Sunblade </Y><W>the two-handed sword of justice</W>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Surrounds its wielder in a holy shield of force.
+Wraps the wielder in a shell of stone.
+Surrounds its wearer in a shimmering globe of protection.
+Protects its wielder against many of the elements, as well as good and evil.
+Increases the attack speed of the wearer.
+Smites the wielders' enemies with the power of the sun.
+
+<W>Tsu</W><B>na</B><b>mi</b><W>, </W><b>the trident of </b><c>storms</c>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Increases the attack speed of the wielder.
+Allows the wielder to breathe water.
+Surrounds its wielder in a holy shield of force.
+Grants the wielder increased wisdom and constitution.
+Vitalizes the wielder's entire group.
+
+the <W>platemail</W> of the <Y>Dragonlord</Y>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Surrounds its wearer in a holy shield of force.
+Wraps the wearer in a shell of stone.
+Surrounds its wearer in a shimmering globe of protection.
+Surrounds its wearer with magic-absorbing spheres.
+
+<w>the </w><y>T</y><g>o</g><y>t</y><g>e</g><y>m </y><W>of </W><L>M</L><w>as</w><W>t</W><w>er</w><W>y</W>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Protects its holder against the elements.
+Enhances the senses of the holder.
+Grants the holder increased wisdom.
+Increases the attack speed of the holder.
+
+<c>a pair of pale, misty gloves</c>
+---------------------------------------------------------------------------
+<R>Known Special Powers</R>:
+Wraps the wearer in a shell of stone.
+Grants the wearer the ability to move silently.
+Allows the wearer to blend in with his/her surrounding with a word.
+
+<g>a cloak of Elvenkind</g>
+---------------------------------------------------------------------------
+Grants the wearer the ability to move silently.
+Protects the wearer from the elements.
+Deflects spells targeted at the wearer, protecting them from harm.
+
+<L>T</L><W>en</W><L>d</L><W>ri</W><L>ls </L><W>of</W><L> Shadowy M</L><w>is</w><W>t</W>
+---------------------------------------------------------------------------
+Enhances the senses of the wearer.
+Surrounds its wearer in a shimmering globe of protection.
+Grants the wearer greater agility and dexterity.
+Increases the attack speed of the wearer.
+
+<W>'</W><c>Symmetry</c><W>', </W><g>the</g><G> uniform</G><g> sword of</g><W> light</W>
+---------------------------------------------------------------------------
+Surrounds its wielder in a shimmering globe of protection.
+Increases the attack speed of the wielder. 
+Wraps the wielder in a shell of stone.
+Calls upon the power of the light upon its wielder's foes, and protects
+its wielder in various ways.
+
+<L>'</L><W>Mayhem</W><L>', </L><r>chaotic</r><L> sword of the night</L>
+---------------------------------------------------------------------------
+Surrounds its wielder in a shimmering globe of protection.
+Increases the attack speed of the wielder.
+Wraps the wielder in a shell of stone.
+Calls upon the chaotic power of darkness upon its wielder's foes, and protects
+its wielder in various ways.
+
+To see a list of artifacts and their owners, type &quot;artifact&quot;.
+</content>
+	<see-also file="unique"/>
+	<see-also file="ioun"/>
+	<see-also file="feeding"/>
+</help-file>

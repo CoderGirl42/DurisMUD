@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MINOR CREATION"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;object&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Permanent
+Type of spell:  Summoning
+
+This is a very handy spell, allowing the caster to create items such as
+barrels, lanterns, paper, bags, etc. on the spot. It also allows the caster
+to create most &quot;newbie&quot; items that players start out with.
+</content>
+	<see-also file="newbie"/>
+</help-file>

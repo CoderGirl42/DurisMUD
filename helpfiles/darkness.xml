@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DARKNESS</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn darkness (for Drow Elf and Shades)
+Area of Effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+This spell blankets the room in a cloak of magical darkness, through which
+no light will penetrate. It will also dispel &quot;Continual Light&quot; spells in a
+room. If this spell is cast upon a magically illuminating item, &quot;Darkness&quot;
+will smother the light emanating from it.
+</content>
+	<see-also file="continuallight"/>
+</help-file>

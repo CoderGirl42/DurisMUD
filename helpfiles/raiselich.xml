@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"RAISE LICH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;corpse&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Animation lasts until undead follower dies (again)
+Type of spell:  Summoning
+
+If the Necromancer has a suitable corpse at his feet, &quot;Raise Lich&quot;
+re-animates the corpse with the formidable power of a Lich. Liches by 
+nature are powerful Sorcerers, but their undead prowess allows them to 
+cause considerable damage with their bare hands as well.
+</content>
+	<see-also file="masspreserve"/>
+	<see-also file="sensefollower"/>
+	<see-also file="order"/>
+	<see-also file="pets"/>
+	<see-also file="preserve"/>
+</help-file>

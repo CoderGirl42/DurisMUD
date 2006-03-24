@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"INDUCE TUPOR"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Enchantment
+
+&quot;Induce Tupor&quot; forces the victim into a magical slumber until either the 
+spell wears off or the victim is awakened by battle.
+</content>
+	<see-also file="sleep"/>
+</help-file>

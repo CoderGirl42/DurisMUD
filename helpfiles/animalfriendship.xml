@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ANIMAL FRIENDSHIP"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Permanent
+Type of spell:  Enchantment
+
+When cast on an animal, this spell will &quot;charm&quot; that creature for a time.
+Under this spell, the caster may &quot;order&quot; the animal to attack something,
+follow the caster or other various commands.
+</content>
+	<see-also file="order"/>
+	<see-also file="pets"/>
+</help-file>

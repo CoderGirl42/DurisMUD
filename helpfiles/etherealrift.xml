@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ETHEREAL RIFT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; &amp; &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+This mental feat targets the caster's intended victim, and teleports him
+into the victim's general vicinity.  The teleportation is not precise.
+</content>
+</help-file>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MOUNTED COMBAT"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         mount &lt;mountname&gt;
+
+Paladins and Anti-Paladins may engage in combat and cast while mounted on 
+their steeds. They can then order their steeds to trample the enemy, 
+inflicting damage with the possibility of knocking them to the ground.
+</content>
+	<see-also file="lancecharge"/>
+	<see-also file="trample"/>
+</help-file>

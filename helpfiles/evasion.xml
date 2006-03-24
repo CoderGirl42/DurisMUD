@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>EVASION</title>
+	<category type="Innate"/>
+<content>
+This extraordinary ability allows the target of an area spell attack to 
+twist out of the way avoiding all damage. 
+</content>
+	<see-also file="spell"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ENDURANCE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+While affected by &quot;Endurance&quot;, you are able to run rapidly across harsh 
+terrain without tiring as fast as usual.
+</content>
+</help-file>

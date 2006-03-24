@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NEW-COMBAT "NEW COMBAT" "GROUP RANKS" RANKS "FRONT RANK" "BACK RANK"</title>
+<content>
+The biggest, most important change with the new combat stuff is the
+new, increased importance of group ranks.  Group ranking is now critical
+to the success of PvP engagements.
+
+As before, there are two group ranks ... front and back.  However, the
+old effects of group ranking are no longer.
+
+  *)  You must have, at all times, more people in the front rank of your
+      group than in the back rank.  The code will enforce this for the
+      most part, though there will be times (especially when someone dies
+      or leaves the room) when it won't immediately be updated.
+
+  *)  If you are in the rear rank, leave the room, and come back in, as with
+      a flee/return combo, you will automatically be ranked to the front.
+
+  *)  Targeted spells can be targeted by anyone on anyone, regardless of
+      which group rank the caster and target are in.
+
+  *)  Area spells are still in the game, with a few modifications:
+	-Casting time has been increased for all areas
+	-Area spells do significantly less damage than before
+	-Area spells hit ALL ranks in front of you.  This means if you are
+	  grouped to the back rank, you will hit your front rank as well as
+	  both enemy ranks.  If you are ranked front, you will hit only the
+	  enemy group.
+
+  *)  People in the rear ranks are much harder to target with physical
+      attacks. 
+
+The general theory behind this change is to change battles from the current
+area spam-fests to battles that require thought and skill to win.  Clearly a
+basic group format will have tanks and hitters in the front ranks, with clerics
+and other casters in the rear ranks.  However, experimentation with various
+group formats will be critical to success.  There will also be no single one
+size fits all solution that guarantees a win ... you will have to be flexible
+and above all, you have to use your brain, especially with who the primary
+targets will be for both casters as well as hitters.
+
+Remember, once you kill one of the front ranked people, one of the rear ranked
+guys moves forward (assuming equal numbers in front and back)
+
+I'll leave it up to you folks to see how mob combat will be affected by these
+changes.
+
+Expect damages, spell chant times, and just about any other facet of this to
+be tweaked as it's used.  Of great use to me will be battle logs that show
+problems you may run across.  
+</content>
+</help-file>

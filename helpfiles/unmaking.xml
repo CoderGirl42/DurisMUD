@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>UNMAKING</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;corpse&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+When cast upon a nearby corpse, the caster absorbs the remaining essence 
+within the body.  The caster is healed through the absorption.
+</content>
+</help-file>

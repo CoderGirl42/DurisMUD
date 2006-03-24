@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LIST</title>
+	<category type="General Information"/>
+<content>
+This gives you a listing of a shop's wares and their prices.
+</content>
+	<see-also file="shops"/>
+	<see-also file="buy"/>
+	<see-also file="sell"/>
+	<see-also file="value"/>
+</help-file>

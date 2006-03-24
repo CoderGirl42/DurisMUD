@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>EXITS</title>
+<content>
+Typing &quot;exits&quot; will give you a list of all the obvious exits from your
+location.  The more obscure routes, if any, won't be as perceptible.
+You will have to use a little ingenuity to locate those.
+</content>
+</help-file>

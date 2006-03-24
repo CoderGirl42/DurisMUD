@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GATE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Room
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependant upon level of caster
+Type of spell:  Teleportation
+
+&quot;Gate&quot; is a rather powerful spell which creates a multidirectional 
+portal to another plane of existence.  The destination of the gate
+is totally random and cannot be directed.
+
+The planes that may be directly gated are:
+
+	-<y>The Elemental Plane Of Earth</y>
+	-<b>The Elemental Plane Of Water</b>
+	-<C>The Elemental Plane Of Air</C>
+	-<r>The Elemental Plane Of Fire</r>
+	-<R>The Plane Of Avernus On The Nine Hells</R>
+	-<L>The Negative Material Plane</L>
+	-<L>The Ethereal Plane</L>
+	-The Astral Plane
+</content>
+</help-file>

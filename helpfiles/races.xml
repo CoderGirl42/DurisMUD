@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>RACES</title>
+	<category type="General Information"/>
+<content>
+Your race is defined by the path you choose to take in the Land of Duris.
+Each race has its own strengths and weaknesses and your race should be 
+chosen carefully. The following races are currently available on Duris 
+DikuMUD:
+
+Human, Barbarian, Drow Elf, Grey Elf, Half-Elf, Mountain Dwarf, Duergar
+Dwarf, Gnome, Halfling, Ogre, Minotaur, Goblin, Swamp Troll, Thri-Kreen,
+Centaur, Githyanki, Orc, Storm Giant, Vampire, Lich, Wight,
+Shadow Beast, Death Knight, Phantom, Shade, Revenant, Harpy
+
+Note: If you are new to Duris, it is recommended that you play a &quot;goodie&quot;
+race character, as the other sides are designed much more toward highly
+advanced players. The good side races are as follows: Human, Barbarian,
+Grey Elf, Half-Elf, Mountain Dwarf, Gnome, Halfling, Centaur and Storm
+Giant or Harpy.
+
+For more information on each race, type &quot;help &lt;racename&gt;.&quot;  This will give
+you a brief description of each race, its strengths and weaknesses, the
+bonus system that applies to it, and its innate abilities, if any. It will
+also tell you which classes are available for that race.
+
+For information about the general theme of Duris, with particular attention
+to the division between good, evil and undead races, type &quot;help racewars.&quot;
+</content>
+	<see-also file="greyelf"/>
+	<see-also file="innate"/>
+	<see-also file="racewars"/>
+	<see-also file="human"/>
+	<see-also file="barbarian"/>
+	<see-also file="drow"/>
+</help-file>

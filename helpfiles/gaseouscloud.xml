@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GASEOUS CLOUD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect:	&lt;victim&gt;
+Aggressive:	Yes
+Cumulative:	No
+Duration:	Instantaneous
+Type of spell:	Elemental
+
+&quot;Gaseous Cloud&quot; sends a cloud of gas towards the victim, inflicting a large 
+amount of damage. This spell also has the chance of poisoning the victim.
+</content>
+	<see-also file="removepoison"/>
+	<see-also file="slowpoison"/>
+	<see-also file="posion"/>
+</help-file>

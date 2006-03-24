@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TERRAIN</title>
+	<category type="General Information"/>
+<content>
+Syntax: terrain
+
+This command will enable you to see what type of terrain you are on. This 
+is particularly useful to those of the Druid and Alchemist classes, as they
+need certain terrains in order to successfully cast, commune or forage.
+</content>
+	<see-also file="forage"/>
+	<see-also file="commune"/>
+	<see-also file="druid"/>
+	<see-also file="alchemist"/>
+</help-file>

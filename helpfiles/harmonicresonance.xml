@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HARMONIC RESONANCE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Room
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+&quot;Harmonic resonance&quot; evokes a natural phenomenon which adapts itself to
+the type of terrain that the spell is cast upon.  Different types of 
+terrain evoke different spell-type responses from the resonance.
+</content>
+</help-file>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FORMATIONS</title>
+	<category type="General Information"/>
+<content>
+Syntax: &lt;group formation&gt;
+	&lt;group formation _choice_&gt;
+
+When a group is formed the members of it can decide to use formations to 
+enhance the offensive and defensive powers of the group. For every group 
+size there is at least one type of group formation. To see which formations 
+are available to the group type &lt;group formation&gt;. This will list the 
+formations and also display how many people are needed to form it and also 
+which stances the group members have to be in for the formation to work. 
+If a formation is chosen and the party members are not in the right 
+stances they will not be able to follow. The only exception to this rule 
+is if the stance is &lt;none&gt;.
+</content>
+	<see-also file="group"/>
+	<see-also file="stances"/>
+</help-file>

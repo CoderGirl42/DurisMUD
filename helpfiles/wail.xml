@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WAIL</title>
+<content>
+Syntax:         wail &lt;song_name&gt;
+Aggressive:     Dependent on song sung
+
+To create magical effects, the piper must hold the proper instrument, then 
+&quot;wail&quot; the appropriate song. A magical song will not work without the 
+proper instrumental accompaniment. To end a song simply type &quot;play.&quot;
+</content>
+	<see-also file="instrument"/>
+	<see-also file="song"/>
+	<see-also file="play"/>
+</help-file>

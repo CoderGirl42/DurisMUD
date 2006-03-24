@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DIKUEDIT</title>
+	<category type="General Information"/>
+<content>
+Duris has its very own zone editor called dikuEdit, created by Tavril. This
+allows zones to be created much easier if you are familiar with the Duris
+world, as it gives you both the look and feel of being in the MUD itself.
+For more information or to download it, visit http://duris.no-ip.com/ and
+click on DOWNLOADS. For a list of zones currently in Duris, type &quot;credits&quot;.
+==========================================================================
+See also: ZONES, &quot;AREA MAKING&quot;
+
+#
+&quot;DIMENSION DOOR&quot; (Spell)
+</content>
+</help-file>

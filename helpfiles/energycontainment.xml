@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ENERGY CONTAINMENT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       Dependent on proficiency of caster.
+Type of spell:  Enchantment
+
+This spell allows the caster to harness some of the energies thrown at
+them, thus nullifying the full potential of that energy.
+</content>
+</help-file>

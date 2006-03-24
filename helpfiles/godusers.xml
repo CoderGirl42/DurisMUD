@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, USERS"</title>
+<content>
+Syntax:  users [&lt;victim&gt;]
+
+Without an argument, this gives you a complete list of users, their
+socket, idle time, room, and connection site, and connection status.
+
+With an argument, it gives you the same information but for just the
+single user.
+
+Do NOT reveal users' sites to other mortals.
+</content>
+	<see-also file="god ban"/>
+	<see-also file="god allow"/>
+	<see-also file="god release"/>
+</help-file>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CHANTS</title>
+	<category type="General Information"/>
+<content>
+Chanting is a talent developed by monks used to further enhance their
+martial arts skills. There are a number of different chants available to
+monks, all varying in power and purpose.
+
+Heroism -Heroism elevates the amount of adrenaline produced by the chanter 
+and stimulates the centers of the mind controlling dexterity and balance, 
+resulting in increased combat abilities. For the follower of the 'Way of
+the Snake' this rush of adrenaline also increases speed and movement while
+the Dragon Disciples become immune to fear.
+
+Calm -Calm soothes whoever or whatever might be angry at the chanter or 
+his friends. This chant has the capability of ceasing combat in certain 
+situations.
+
+Quivering Palm -This chant causes the chanter's hand to vibrate so fast it 
+can barely be seen. The hand then strikes out at equally fast speeds, 
+inflicting formidable damage upon its target.
+
+Cell Adjustment -The chant allows the monk to rearrange the cellular
+makeup of his body to his own liking. This comes in handy when afflicted 
+with various maladies.
+
+Regenerate -When chanting Regenerate, the monk heals at a much faster
+rate.
+
+Buddha Palm -Buddha Palm, much like Quivering Palm, causes the monk's
+hands to vibrate at unbelievable speeds. However, the Buddha Palm strikes
+out with both hands at lightning speed at as many adversaries as it can.
+</content>
+	<see-also file="monk"/>
+	<see-also file="skillmonk"/>
+	<see-also file="dragon"/>
+	<see-also file="disciple"/>
+	<see-also file="elaphidist"/>
+</help-file>

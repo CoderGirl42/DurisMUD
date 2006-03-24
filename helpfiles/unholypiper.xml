@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PIPER "UNHOLY-PIPER"</title>
+	<category type="Sub-Class of: Rogue"/>
+<content>
+Blessed with the talent of music, pipers can, with practice, play any
+instrument. These instruments can invoke magical tunes and songs that act
+as spells, aiding a party during their adventures. Pipers are a thief/mage/
+warrior hybrid by nature, and possess some of the advantages of all of
+those classes. They are true &quot;Jacks of all Trade&quot; which means they have
+many skills and spells, but are master of none.  
+
+Allowable races:        Vampire, Lich, Shadow Beast.
+Equipment Usage:        Like all classes on Duris, Pipers have their own set
+                        of equipment they can use. Pipers can use most
+                        weapons, and armor, also many magic items.
+                        
+</content>
+	<see-also file="practice"/>
+	<see-also file="rogue"/>
+	<see-also file="skillpiper"/>
+	<see-also file="songs"/>
+	<see-also file="wail"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BURNING HANDS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Fire
+
+&quot;Burning Hands&quot; causes a wide arc of flame to shoot forth from the
+spell caster's fingertips, burning the victim.
+</content>
+</help-file>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DISPLAY</title>
+	<category type="Command"/>
+<content>
+Syntax:         display  (will list display options)
+                display &lt;option&gt;
+
+The &quot;Display&quot; command allows you to view various attributes of your
+character at all times. The options available are as follows:
+
+        all             --displays hits/maxhits, moves/maxmoves
+        off             --turns off display
+        hits            --displays current hit points
+        maxhits         --displays maximum hit points
+        mana            --displays current mana points
+        maxmana         --displays maximum mana points
+        slots           --displays current spell slots
+        maxslots        --displays maximum spell slots
+        moves           --displays current movement points
+        maxmoves        --displays maximum movement points
+        tankname        --shows name of tank in the group
+        tankcond        --shows condition of tank in group
+        enemy           --shows name of enemy
+        enemycond       --shows condition of enemy
+        twoline         --divides display into two-line prompt
+</content>
+	<see-also file="tank"/>
+	<see-also file="toggle"/>
+</help-file>

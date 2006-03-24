@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DRAGON PUNCH"</title>
+	<category type="Skill"/>
+<content>
+Syntax: dragon punch &lt;target&gt;
+
+&quot;Dragon Punch&quot; is a basic martial arts skill. The attacking monk uses their
+mind in harmony with his body to strike his opponent with a harder speed
+and force than usual, inflicting increased damage.
+</content>
+</help-file>

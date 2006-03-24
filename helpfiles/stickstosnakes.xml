@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STICKS TO SNAKES"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of Spell:  Generic
+
+This spell causes the Druid to transform sticks into snakes to use against
+his victim. For most terrains, the Druid is able to find a random number of
+sticks. Additionally, any arrows in the inventory of the target are
+transformed into snakes.
+</content>
+</help-file>

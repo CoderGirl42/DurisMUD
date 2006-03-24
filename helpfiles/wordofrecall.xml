@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"WORD OF RECALL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+The caster will be instantly transferred back to his/her sanctuary (the
+appropriate guildhall or the proper hometown). 
+
+<R>WARNING</R>: If the caster is overburdened they may leave some items
+        behind at the spot where the spell was cast.
+</content>
+	<see-also file="home"/>
+	<see-also file="society"/>
+</help-file>

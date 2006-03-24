@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ASSASSIN</title>
+	<category type="Specialization"/>
+<content>
+Assassins are practitioners of death and stealth, always lurking down dark
+alleys and just around the corner, ready to commit a convenient act of
+murder if it suits them. Assassins are adept at the art of concealment and
+deception, but they are not as skilled at the art of stealth as other
+related classes might be. Assassins are by far the most deadly creatures
+around if they catch you by surprise and happen to be carrying their
+favorite daggers with them.  
+
+Skills
+---------------------------------------------------------------------------
+30th: Spinal Tap
+40th: Apply Poison
+45th: Control Flee
+51st: Critical Stab
+
+</content>
+	<see-also file="rogue"/>
+	<see-also file="skillrogue"/>
+	<see-also file="classes"/>
+	<see-also file="skills"/>
+	<see-also file="thief"/>
+	<see-also file="bravo"/>
+</help-file>

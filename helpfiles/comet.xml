@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>COMET</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; 
+Aggressive: Yes 
+Cumulative: No 
+Duration: Instantaneous 
+Type of Spell: Cosmic 
+
+Summons forth a single, blazing comet to destroy the target. 
+</content>
+	<see-also file="ethermancer"/>
+	<see-also file="cosmomancer"/>
+</help-file>

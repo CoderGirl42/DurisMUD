@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DRAGON"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+When cast, &quot;Dragon&quot; creates a illusionary red dragon that attacks the 
+victim. The illusion will end when the victim or caster dies or the
+duration of the spell ends. The illusion will also end after it has taken
+enough damage. If the victim try s to flee the area the dragon
+will attempt to hunt them down!
+</content>
+</help-file>

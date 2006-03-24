@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CLONE FORM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Self
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Illusion
+
+This is a more powerful version of mask allowing the caster to take on the
+appearance of ANY mob or player in the room. Anyone with detect illusion
+has a chance to see that this is an illusion
+
+syntax: cast 'clone' victim name in room -to change your appearance
+        cast 'clone' self or me -to remove the illusion 
+</content>
+	<see-also file="detectillusion"/>
+	<see-also file="mask"/>
+</help-file>

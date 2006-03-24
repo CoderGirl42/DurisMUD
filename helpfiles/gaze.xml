@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GAZE</title>
+	<category type="Skill"/>
+<content>
+The gaping empty sockets of the Dreadlord may be sightless, but its gaze
+contains something much more searching, disturbing and terrifying than most
+mortals may bear. To have the gaze of a Dreadlord upon you is to know true
+fear. Too petrified to move, your world ceasing and stopping as you
+struggle to free and turn away. The ability to gaze is dependant on the 
+attribute power of the attacker. It is not crucial but will help subdue 
+the victim.
+</content>
+	<see-also file="dreadlord"/>
+	<see-also file="skilldreadlord"/>
+</help-file>

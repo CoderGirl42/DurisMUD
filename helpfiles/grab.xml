@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GRAB HOLD</title>
+	<category type="General Information"/>
+<content>
+Syntax:  grab &lt;object&gt; | hold &lt;object&gt;
+
+For holding or getting a good grip on something:  a torch, for
+example.
+</content>
+	<see-also file="wear"/>
+	<see-also file="wield"/>
+	<see-also file="remove"/>
+	<see-also file="inventory"/>
+	<see-also file="equipment"/>
+</help-file>

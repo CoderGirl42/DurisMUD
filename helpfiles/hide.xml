@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HIDE</title>
+	<category type="Skill"/>
+<content>
+
+Hide -Rogue Class Skill
+---------------------------------------------------------------------------
+Syntax:         hide
+
+&quot;Hide&quot; allows you to cleverly conceal yourself from the occupants of a room, 
+regardless of whether they are other players or creatures. As with the 
+&quot;Sneak&quot; command, there is always a chance that you will not hide 
+successfully and your failure to do so will not be obvious to you. If your
+attempt to hide is successful, you can only be detected by &quot;Sense Life&quot;, 
+&quot;Infravision&quot; or &quot;Faerie Fog&quot; . To break the hiding, issue any command. The 
+effect will wear off after a period of time.
+
+Hide -General Command
+---------------------------------------------------------------------------
+Syntax:         hide &lt;object&gt;
+
+Hide is a command you can use to conceal an object within the room. The
+object you are trying to hide must be dropped and on the floor of the room
+before you can conceal it. When you &quot;look&quot;, this item should no longer 
+appear in the room. You may &quot;search&quot; the room to re-discover the hidden 
+item.
+
+</content>
+	<see-also file="senselife"/>
+	<see-also file="faeriefog"/>
+	<see-also file="search"/>
+</help-file>

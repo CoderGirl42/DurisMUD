@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"VANISH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Self
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+This spell when cast it causes the caster to turn invisible and to be 
+hidden from site. Once the caster moves he or she will no longer be hidden 
+but will remain invisible. 
+</content>
+	<see-also file="invisibility"/>
+	<see-also file="hide"/>
+	<see-also file="nonexistence"/>
+</help-file>

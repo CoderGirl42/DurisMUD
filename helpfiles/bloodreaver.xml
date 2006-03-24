@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BLOOD REAVER"</title>
+	<category type="Specialization"/>
+<content>
+The Blood Reaver has mastered the use of pain and blood bonds using this
+to create a number of new abilities. With its attention fully focused on
+a victim the reaver will slowly but steadily drain the victim of his life
+by presence alone. He may also link with a fellow group member to drain
+or give life depending on how is hurt. It is a two-way bond.
+
+Innate Abilities
+--------------------------------------------------------------------------
+31st level:	Drain Life
+
+Spells
+---------------------------------------------------------------------------
+10th circle: Blood Alliance
+
+</content>
+	<see-also file="bloodalliance"/>
+	<see-also file="drainlife"/>
+	<see-also file="reaver"/>
+</help-file>

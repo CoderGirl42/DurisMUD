@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>EMOTE</title>
+<content>
+Syntax:  emote &lt;message_text&gt;
+         : &lt;message_text&gt;
+
+The &quot;emote&quot; command allows you to creatively pretend that your
+character is doing something that the available socials do not
+currently allow.  For example, if Fizzwig wished everyone to think he
+is a really nice guy, he might type:
+
+        emote hands you 10000 pcoins.
+                -or-
+        : hands you 10000 pcoins.
+
+This would be viewed as everyone in the room as:
+
+        Fizzwig hands you 10000 pcoins.
+
+Of course, Fizzwig has not really given anyone the coins, he just
+wants everyone to think he has.
+
+A quicker, equivalent command is &quot;:&quot;
+
+Note:  &quot;emote&quot; is a social action that is used for *fun*.  Please do not
+take these actions seriously.
+</content>
+	<see-also file="socialactions"/>
+</help-file>

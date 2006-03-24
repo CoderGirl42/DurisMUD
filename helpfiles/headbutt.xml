@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HEADBUTT</title>
+	<category type="Skill"/>
+<content>
+Syntax:         headbutt &lt;victim&gt;
+Aggressive:     Yes
+
+When successful, a headbutt will cause a sizable amount of damage to the 
+enemy with the possibility of knocking them unconscious. If unsuccessful,
+the initiator will take a sizable amount of damage himself with the 
+possibility of knocking himself unconscious.
+</content>
+</help-file>

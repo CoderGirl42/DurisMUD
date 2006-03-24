@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GREATER SPIRIT WARD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Spiritual
+
+&quot;Greater Spirit Ward&quot; protects the victim from lower circle spells and
+gives slight protection against (un)holy word.
+</content>
+	<see-also file="spiritward"/>
+</help-file>

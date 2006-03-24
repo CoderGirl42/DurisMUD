@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPACIAL FOCUS"</title>
+	<category type="Innate"/>
+<content>
+With the power of this ability, the Psycheporter can open his mind to a
+much wider range of wormhole targets within a certain distance. They have 
+also learned more ways to sustain their wormholes for longer periods, 
+therefore they can handle a greater volume of travelers for a longer period 
+of time. 
+</content>
+	<see-also file="wormhole"/>
+	<see-also file="dimension"/>
+	<see-also file="door"/>
+</help-file>

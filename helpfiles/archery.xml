@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ARCHERY</title>
+	<category type="Skill"/>
+<content>
+This affects your ability to shoot arrows and bolts from any normal bow or
+crossbow. You cannot shoot bows or crossbows without rudimentary knowledge
+in this category.
+
+NOTE: You must have arrows or bolts in a quiver, be wielding a bow and not 
+be engaged in battle to use this skill.
+</content>
+	<see-also file="rangeweapons"/>
+</help-file>

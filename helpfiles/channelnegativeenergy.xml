@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CHANNEL NEGATIVE ENERGY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Channel Negative Energy&quot; causes a huge blast of raw negative planar energy
+to emanate from the caster, striking his victim. The target suffers
+considerable damage, and his lost vitality is transferred to the caster.
+</content>
+</help-file>

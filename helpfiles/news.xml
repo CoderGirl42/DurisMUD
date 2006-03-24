@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NEWS</title>
+<content>
+This command will show you the current edition of the Duris News, a
+publication dedicated to news and useful information about this world. It's
+a very good idea to check it out often.
+</content>
+	<see-also file="motd"/>
+	<see-also file="gmotd"/>
+</help-file>

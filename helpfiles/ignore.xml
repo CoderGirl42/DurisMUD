@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>IGNORE</title>
+	<category type="General Information"/>
+<content>
+Syntax:  ignore &lt;victim&gt;
+
+Used to ignore communications and social actions from a single devious or
+annoying person.  To stop ignoring anyone, simply type &quot;ignore.&quot;
+</content>
+</help-file>

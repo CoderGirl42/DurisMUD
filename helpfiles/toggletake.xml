@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_TAKE</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle take
+ 
+This option allows you to automatically refuse to be given items from other
+people.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="take"/>
+</help-file>

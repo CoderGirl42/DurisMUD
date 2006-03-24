@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CLERICAL SPELL KNOWLEDGE"</title>
+	<category type="Skill"/>
+<content>
+This skill lets you recognize and identify clerical-type spells as they are 
+being cast by others. As you become more proficient in the category, you
+will recognize more spells.
+</content>
+	<see-also file="sorcerousspellknowledge"/>
+	<see-also file="shamanspellknowledge"/>
+</help-file>

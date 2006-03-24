@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FROST BOLT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       waves
+Type of spell:  Cold
+
+&quot;Frost Bolt&quot; sends icy waves at the target, inflicting immense pain that
+chills them to the bone. 
+</content>
+</help-file>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BLINDNESS</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       3 hours
+Type of spell:  Enchantment
+
+A successful &quot;Blindness&quot; spell will  temporarily blind its victim. The 
+blinded victim will suffer penalties to both hitroll and armor class.
+</content>
+	<see-also file="powerwordblind"/>
+	<see-also file="armorclass"/>
+	<see-also file="cureblind"/>
+</help-file>

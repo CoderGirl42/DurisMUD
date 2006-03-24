@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPELL SLOT"</title>
+	<category type="General Information"/>
+<content>
+A caster is able to hold a certain number of spells in each spell circle, 
+dependent on level. Each spell occupies one spell slot in the given circle. 
+Casters that commune, assimilate or tupor cannot choose what spells will
+fill their specific slots, unlike casters that memorize and pray.
+</content>
+	<see-also file="spellcircle"/>
+	<see-also file="spellsystem"/>
+</help-file>

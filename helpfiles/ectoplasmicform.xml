@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ECTOPLASMIC FORM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       Dependent on proficiency of caster.
+Type of spell:  Enchantment
+
+This enchantment converts the body of the caster to an astral substance
+known as 'ectoplasm'. This substance is not visible to most beings without
+the aid of other magical cantrips.
+</content>
+</help-file>

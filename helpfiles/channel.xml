@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CHANNEL"</title>
+	<category type="Spell"/>
+<content>
+Channel is one of the most powerful s ells of a cleric and should be used
+with great caution. It requires four clerics over level 50 to work, and
+creates an avatar bringing the power of all the clerics together. First,
+all the clerics must be grouped and consenting to &quot;lead&quot; cleric. They begin
+casting the spell together until the avatar appears. The lead cleric then
+takes control of the avatar, while the other clerics can simply watch. The
+actual body of the clerics are left laying asleep where they are, but the
+&quot;lead&quot; cleric, in avatar form, can move around, cast, etc.  
+
+Warning: If ANY one of the clerics loses link during the avatar process,
+the avatar will vanish. There IS a time limit on how often clerics can
+avatar.
+</content>
+	<see-also file="avatar"/>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HITALL</title>
+	<category type="Skill"/>
+<content>
+Syntax:         hitall          : hit aggressive monsters
+                hitall all      : hit all monsters
+
+This skill allows you to hit all foes in the room simultaneously. Each
+target may be hit once and only once, regardless of proficiency in &quot;dual 
+wield&quot; or &quot;double attack.&quot;  Using &quot;hitall&quot;, will cause you to be stunned for
+several rounds of combat, with the amount depending on how many targets you
+attempted to hit.
+</content>
+	<see-also file="doubleattack"/>
+	<see-also file="dualwield"/>
+</help-file>

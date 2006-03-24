@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PURGE LIVING"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Purge Living&quot; launches a direct attack on the soul of the victim. Every 
+successful attack destroys a piece of the victim's soul and feeds it to the 
+caster.
+</content>
+</help-file>

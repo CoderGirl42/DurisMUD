@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>REDUCE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Type of spell:  Generic
+
+This spell causes the victim to shrink almost twice his size. The victim
+will become weaker but will gain agility and dexterity.
+
+NOTE: The recipient must consent the caster in order to receive this spell.
+</content>
+	<see-also file="enlarge"/>
+	<see-also file="consent"/>
+</help-file>

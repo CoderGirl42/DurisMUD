@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"AURA SIGHT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster 
+Type of spell:  Generic
+
+Allows the caster to see auras surrounding living things not visible to the 
+naked eye, as well as invisibility, the presence of life and farsight. The
+effects bestowed by &quot;Aura Sight&quot; are dependent on the caster's level. All
+possible effects are bestowed upon reaching 10th circle.
+</content>
+</help-file>

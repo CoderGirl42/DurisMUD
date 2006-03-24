@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, LEVELS"</title>
+<content>
+Syntax: levels [&lt;class&gt;]
+
+This command gives you a list of each experience level for a given class,
+or those of your own class with no argument. Do not give this information
+to mortals, as we are trying to hide numbers from the game.
+</content>
+</help-file>

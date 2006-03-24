@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SPEC_LIST</title>
+	<category type="General Information"/>
+<content>
+  -Alchemist: Battle-Forger
+  -Anti-Paladin: Hellspawn, Dark Knight, Demonic Rider
+  -Bard: Disharmonist, Scoundrel, Minstrel
+  -Berserker: Mauler, Ragelord
+  -Cleric: Healer, Holyman, Zealot
+  -Conjurer: Air Magus, Water Magus, Fire Magus, Earth Magus
+  -Dreadlord: Deathlord, Shadowlord
+  -Druid: Storm Druid, Forest Druid
+  -Ethermancer: Windtalker, Frost Magus, Cosmomancer
+  -Mercenary: Brigand, Bounty Hunter
+  -Monk: Dragon disciple, Elaphidist
+  -Necromancer: Diabolis, Necrolyte, Reaper
+  -Paladin: Crusader, Cavalier
+  -Ranger: Blademaster, Huntsman
+  -Reaver: Flame reaver, Blood reaver
+  -Rogue: Assassin, Bravo, Thief
+  -Shaman: Elementalist, Animalist, Spiritualist
+  -Sorcerer: Shadowmage, Wizard, Wildmage
+  -Unholy-Piper: Disharmonist, Scoundrel, Minstrel
+  -Warrior: Swordsman, Guardian
+
+NOTE: Use help &lt;specname&gt; for information on a specific specialization.
+</content>
+	<see-also file="specializations"/>
+	<see-also file="skills"/>
+	<see-also file="innate"/>
+</help-file>

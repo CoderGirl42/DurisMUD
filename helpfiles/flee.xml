@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FLEE</title>
+	<category type="Command"/>
+<content>
+Syntax:         flee
+
+If, for instance, the minor daemon you so carefully considered turns out to 
+be a little more than you bargained for, you can attempt to escape by using 
+the &quot;Flee&quot; command. This command, if successful, will allow you to leave 
+the room via the nearest exit, if there is one. However, some monsters will 
+hunt you down in various manners to try and continue the fight, so be 
+warned.
+
+Fleeing is not an effortless action. Extracting yourself from a life or 
+death struggle takes energy, so you will eat up your personal stamina in 
+such attempts. You will lose a significant amount of moves on a flee.  
+</content>
+	<see-also file="wordofrecall"/>
+	<see-also file="disengage"/>
+	<see-also file="retreat"/>
+	<see-also file="consider"/>
+	<see-also file="wimpy"/>
+</help-file>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MASS INVISIBILITY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+The caster attempts to cast &quot;Improved Invisibility&quot; on every creature in 
+the room, including himself/herself. All loose objects laying around in the 
+room will also turn invisible.
+</content>
+	<see-also file="dispelinvisible"/>
+	<see-also file="detectinvisibility"/>
+	<see-also file="invisibility"/>
+</help-file>

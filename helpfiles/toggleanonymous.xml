@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_ANONYMOUS ANONYMOUS</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle anonymous
+
+This toggle allows you to hide your level and class from all other mortal
+players, which gives the MUD a more realistic feel. After all, how would
+someone on the street know what class or level you were unless you revealed
+it? Evils do not have the option of togging this.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="who"/>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DISPEL GOOD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Dispel Good&quot; will only affect good creatures, inflicting physical damage
+dependent on the caster's proficiency. Be warned that this spell has a
+tendency to turn on the caster, should the caster be good.
+</content>
+	<see-also file="dispelevil"/>
+</help-file>

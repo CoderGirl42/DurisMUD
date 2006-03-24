@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"QUADRUPLE ATTACK"</title>
+	<category type="Skill"/>
+<content>
+This skill is automatic and gives you an extra attack for each combat
+round, on top of the extra attacks you already get from triple attack. The
+likelihood of the extra attack is dependent upon your proficiency.
+</content>
+	<see-also file="doubleattack"/>
+	<see-also file="tripleattack"/>
+</help-file>

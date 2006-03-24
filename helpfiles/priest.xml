@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PRIEST</title>
+	<category type="General Information"/>
+<content>
+Priests are individuals who choose to spread the faith of their deities 
+through the use of their god-given spell-like powers. The Priest classes 
+are generally charged with the vast responsibility of keeping their party
+alive with their healing and defensive spells. They are also competent
+fighters and can hold their own should battle come their way.
+
+There are subclasses of Priest, each with their own specialties:
+clerics, warlocks, druids, shamans and ethermancers. Clerics are the 
+closest to the common image of a priest: they spread gospel and pray to 
+their deities. Warlocks are Undeads that are very similar to clerics, but 
+have a larger repertoire of utilitarian spells. Druids are calmer folk, who 
+espouse the virtues of closeness and harmony with nature. Though, they can 
+be fearsome when angered. Shamans are a primitive mixture of Priest and 
+Magic-User, with some of the abilities of each, but lacking the full powers 
+of either. Ethermancers use elemental magic and worship the pagan god of 
+storms. The common Priest grouping means the sub-classes are affected by 
+the same class-wide restrictions on equipment and are similar in to-hit 
+rolls and average hit points. Each sub-class has its own experience chart 
+according to which they gain levels.
+
+NOTE: Use &quot;help &lt;classname&gt;&quot; for information on each of the sub-classes.
+</content>
+	<see-also file="cleric"/>
+	<see-also file="druid"/>
+	<see-also file="shaman"/>
+	<see-also file="ethermancer"/>
+	<see-also file="warlock"/>
+	<see-also file="skills"/>
+</help-file>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"AIR MAGUS"</title>
+	<category type="Specialization"/>
+<content>
+The Air Magus has mastered the elements of the air itself. They can
+transform their very bodies into particles of air, making them difficult to
+knock down. They may also transform an entire room into that similar to the
+Air Plane, causing all in the room both the benefits and drawbacks of
+battling on that terrain.
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Fly
+
+Spells
+---------------------------------------------------------------------------
+10th circle:    Air Form
+11th circle:    Ethereal Grounds
+
+</content>
+	<see-also file="airform"/>
+	<see-also file="etherealgrounds"/>
+	<see-also file="conjurer"/>
+	<see-also file="fly"/>
+</help-file>

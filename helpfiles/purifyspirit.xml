@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PURIFY SPIRIT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Spiritual
+
+&quot;Purify Spirit&quot; cleanses the spirit of the victim, removing blindness,
+curse, malison and disease.
+</content>
+	<see-also file="blindness"/>
+	<see-also file="curse"/>
+	<see-also file="malison"/>
+	<see-also file="disease"/>
+</help-file>

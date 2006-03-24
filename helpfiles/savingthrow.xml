@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SAVING THROW" "SAVING THROWS"</title>
+<content>
+A saving throw is a measure of your ability to withstand certain forms of
+attack. Every player in the game, monsters included, has five different
+saving throw values. These values are level-dependent. The five different
+values are as follows:
+
+        SPE     Save versus Spells.
+        PAR     Save versus Paralyzation.
+        BRE     Save versus Breath Weapon.
+        FEA     Save versus Petrification/Polymorph.
+        ROD     Save versus Rod/Staff/Wand.
+
+Each of the saving throws has a value from 0 to 20.  The higher your saving
+throw, the worse off you are. But what do the numbers mean?
+
+Let's say you are in combat with a red dragon and the dragon breathes fire
+at you. In this example, let's say your saving throw vs. breath weapon
+(BRE) is 10. A random 20-sided die roll is made when the dragon breathes at
+you. If the value of the roll is 11 or above, you have successfully saved
+vs. the dragon's breath, and take only half damage from it. If the roll is
+0-10, you have failed your save and will take full damage from the dragon's
+fire. Thus, the lower the saving throw you have, the greater your chances
+are for saving against the dragon's breath.
+
+The same system works for spells. If, for example, a player-killer arrives
+and tries to cast a &quot;sleep&quot; spell on you, and you fail your save, you will
+be affected and fall asleep. If you save successfully, you will be
+unaffected.
+
+Normally, saving throws are determined by the experience your character has
+achieved and they will get steadily smaller as you go up in level. There
+are, however, items in the game that will lower your saving throws
+magically.
+</content>
+</help-file>

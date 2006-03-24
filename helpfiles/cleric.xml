@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CLERIC</title>
+	<category type="Sub-Class of: Priest"/>
+<content>
+Clerics are holy and powerful spell casters who obtain their magical power
+from the gods and goddesses they worship. Their primary goal is to spread
+the word of their faith and to bring good to the world. Most of the
+Cleric's spell arsenal is defensive and healing in nature, making them one
+of the most integral parts of a group.
+
+Allowable races:        Human, Drow Elf, Grey Elf, Mountain Dwarf, Halfling, 
+                        Half-Elf, Gnome, Orc, Goblin, Duergar Dwarf
+Innate abilities:       God Call
+Equipment usage:  	Like all classes on Duris, Clerics have their own
+                        specific item restrictions. They are restricted in
+                        their use of weapons, mainly using maces, clubs and
+                        staves. Some exceptions	are allowed, however. They
+                        can wear almost any type of armor, but are mildly
+                        restricted in the use of miscellaneous magical
+                        items.
+                        
+</content>
+	<see-also file="skillcleric"/>
+	<see-also file="pray"/>
+</help-file>

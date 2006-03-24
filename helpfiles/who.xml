@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WHO</title>
+	<category type="Command"/>
+<content>
+Syntax:         who                (for listing of visible players)
+                who ?              (for a complete list of valid arguments)
+                who &lt;argument&gt;     (for a more specialized listing)
+                
+This command lists the people currently in the game, the level(s) they have 
+achieved and their titles. Gods are listed first in the who list, then 
+mortal characters.
+
+<R>NOTE</R>: On Duris, &quot;Who&quot; will only show the races that are of a like
+     alignment. So, for example, an Evil person typing &quot;Who&quot; will only see
+     other Evil PC's. The same holds true for Good races. 
+</content>
+</help-file>

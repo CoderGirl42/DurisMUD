@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HALF ELF" HALF-ELF</title>
+	<category type="General Information"/>
+<content>
+Half-elves are shunned by humans on this world, and, because of this, are
+limited in the classes in which they may train. They do have, however, the
+option of starting in one of several cities. Half-elves have infravision
+and live much longer than humans, although not as long as their full-
+blooded grey elf kin.
+
+Classes:    Warrior, Conjurer, Sorcerer, Ranger, Druid, Bard, Assassin,
+            Cleric, Paladin, Necromancer, Thief.
+Statistics: Half-elves tend to be slightly weaker and frailer than humans,
+            but also tend to be slightly quicker and smarter. Also better
+            looking.
+Innates:    Infravision.
+
+</content>
+	<see-also file="greyelf"/>
+	<see-also file="races"/>
+	<see-also file="human"/>
+</help-file>

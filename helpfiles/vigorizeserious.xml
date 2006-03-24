@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"VIGORIZE SERIOUS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Enchantment
+
+This handy spell restores to the victim some movement, letting him or her 
+travel farther. The amount of movement restored is dependent on the version 
+of the spell cast. &quot;Vigorize Serious&quot; is the intermediate version of the 
+spell; more powerful than &quot;Vigorize Light&quot; but less powerful than &quot;Vigorize 
+Critic&quot;.
+</content>
+	<see-also file="vigorizelight"/>
+	<see-also file="vigorizecritic"/>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LEVITATE</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn levitate (for Githyanki and Drow Elf)
+Area of effect: &lt;victim&gt; (for spell) | &lt;self&gt; (for innate)
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Levitate&quot; allows you to skim lightly over the ground without regard
+for surface interference.
+</content>
+</help-file>

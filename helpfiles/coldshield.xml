@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>COLDSHIELD</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Up to 3 hours, dependent on proficiency of caster
+Type of spell:  Cold
+
+&quot;Coldshield&quot; provides protection against magical cold attacks and some
+protection against physical attacks, reflecting the damage back at the
+attacker. It is similar to the spell &quot;Fireshield.&quot;
+</content>
+	<see-also file="fireshield"/>
+</help-file>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LICH</title>
+<content>
+A Lich exists because of its own desires and the use of powerful and arcane
+magic. The Lich passes from a state of humanity to a non-living existence
+through both force of will, and from employing nearly forgotten and
+forbidden forms of necromancy. In life, Liches were mostly ultra powerful
+necromancers or clerics who, out of an intense fear of death, took
+advantage of an unholy opportunity to prolong their lives almost
+indefinitely by willingly making the transformation from living to undead.
+Although Liches can exist for many eons, eventually its life force will
+begin to wane, dooming the Lich to spend eternity roaming strange planes
+of existence unknown to even the wisest of sages.
+
+Lich class list:     Necromancer, Sorcerer, Warlock, Conjurer, Alchemist,
+                     Dreadlord, Unholy-Piper.
+
+Lich stats:	     A Lich can appear as a skeleton at first glance,
+                     but they are covered by a very tight layer of dead
+                     and pallid skin.  They are often covered with
+                     rotting but fine garments.  Their eye sockets are
+                     black holes with glowing points of light in the
+                     center.
+
+Lich innate abilities: Ultravision
+</content>
+	<see-also file="warlock"/>
+	<see-also file="necromancer"/>
+	<see-also file="sorcerer"/>
+	<see-also file="conjurer"/>
+	<see-also file="alchemist"/>
+	<see-also file="dreadlord"/>
+</help-file>

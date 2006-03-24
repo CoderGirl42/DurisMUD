@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SMELTING</title>
+	<category type="Skill"/>
+<content>
+Smelting is one of the skills known to the Alchemist Class. It allows you
+to merge pieces of ore into larger ones. This is helpful in order to fulfil
+the requirements needed to forge various items.
+
+A foundry is required to smelt ore, this can be innately created by any
+alchemist.
+
+To smelt ore simply follow these steps:
+   Create a foundry.
+   Open the forge.
+   Put the ore you wish to smelt into the forge.
+   Smelt the ore.
+
+The syntax for using this skill is <Y>smelt</Y>.
+
+Both the skill in smelting and level of the alchemist will determine how
+successful the outcome is. It is well known that less experienced
+alchemists often end up with nothing but ashes when trying to use
+this skill.
+</content>
+</help-file>

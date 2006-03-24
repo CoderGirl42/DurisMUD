@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ASSIMILATE</title>
+	<category type="Innate"/>
+<content>
+Syntax: assimilate (while resting)
+
+All Undeads, except for Gargoyles (Undead Harpies), must absorb their 
+spells back into their minds via assimilate in order to cast them again.
+</content>
+	<see-also file="spellslots"/>
+	<see-also file="spellsystem"/>
+	<see-also file="spellcircle"/>
+</help-file>

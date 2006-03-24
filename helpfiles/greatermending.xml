@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GREATER MENDING"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Spiritual
+
+This spell heals the victim a good amount, up to his maximum hitpoints.
+</content>
+	<see-also file="lessermending"/>
+</help-file>

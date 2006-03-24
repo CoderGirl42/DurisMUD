@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHIP SHIPS</title>
+<content>
+
+Table of Contents for Ships -Type &quot;Help &lt;Ship_category&gt;&quot; to view
+---------------------------------------------------------------------------
+  SHIP_BASIC      -Buying a ship and preparing to go to sea
+  SHIP_LIST       -The &quot;List&quot; command when at a docks
+  SHIP_MOVEMENT   -Moving around in the docks and on the world
+  SHIP_COMBAT     -Almost everything you need to know about combat
+  SHIP_CARGO      -Almost everything you need to know about running cargo
+  SHIP_LOOKS      -All the different ways to &quot;look around&quot;
+  SHIP_COMMANDS   -A thorough list of all ship commands
+  SHIP_CREWS      -Some extra information about crews
+
+</content>
+</help-file>

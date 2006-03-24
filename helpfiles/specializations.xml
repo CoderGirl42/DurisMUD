@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SPECIALIZATIONS SPECIALIZE</title>
+	<category type="General Information"/>
+<content>
+Upon reaching level 30, you may &quot;specialize&quot; you character, meaning to 
+choose a path or skill-set. After you have decided what specialization you
+would like to be, you must find the proper &quot;teacher&quot; mob of your class to
+aid you in your specialization. Then, you must type &quot;spec &lt;specname&gt;&quot; to 
+confirm your choice.
+
+<R>WARNING</R>: Once you specialize it is very difficult to change your choice!
+It requires a specific quest and 50 epics.
+
+NOTE: Not all classes have specializations available.
+      Use help &lt;specname&gt; for information on a specific specialization.
+</content>
+	<see-also file="speclist"/>
+	<see-also file="toggleshowspec"/>
+</help-file>

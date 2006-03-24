@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DREADLORD</title>
+	<category type="Sub-Class of: Fighter"/>
+<content>
+Dreadlords, also knows as the Eyeless, are the warlords of the undead. They
+are the result of a dark and terrible ritual performed on a person. The end
+of the ritual is marked by the person sacrificing his eyes by clawing them
+out and then giving his life to the Dark Lords. If he is deemed worthy he
+will once again rise, this time as an undead, a Dreadlord. If he is not
+deemed worthy he has an eternity in the pits of hell to ponder his
+arrogance. The loss of their eyes does not, as many believe, encumber the
+Eyeless in any way. Instead they are giving a seventh sense by which they
+can perceive their surroundings. This also makes them immune against
+blindness and other things that would normally affect eyesight, such as
+daylight and darkness, yet sensitive to extremes of heat. A Dreadlord is a
+feared fighter, a master in the use of two-handed weapons, spreading the
+taint of the dead as they fight. Even their blood can kill. They are also
+trained in the art of leading and are deadly while commanding a force.  
+
+Allowable races:        Lich, Vampire, Shade.
+Equipment usage:        Like all classes on Duris, Dreadlords have their
+                        own item restrictions. They can use most heavy
+                        armor and weapons but are more limited in using
+                        magical items.
+Innate Abilities:	Acid Blood, Inability to Blind.
+
+</content>
+	<see-also file="acidblood"/>
+</help-file>

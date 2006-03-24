@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GREATER ETHEREAL RECHARGE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+This a spell is a more potent version of &quot;Ethereal Recharge&quot; that grants a 
+recharge of hitpoints. It can only be use on beings composed of ethereal 
+matter.
+</content>
+	<see-also file="etherealrecharge"/>
+	<see-also file="fullheal"/>
+</help-file>

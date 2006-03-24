@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MOUSESTRENGTH</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Animal
+
+&quot;Mousestrength&quot; decreases the strength of the victim, dependent on the
+proficiency of the caster. It cannot be combined with &quot;Bearstrength&quot; or
+&quot;Elephantstrength&quot;.
+</content>
+	<see-also file="bearstrength"/>
+	<see-also file="elephantstrength"/>
+</help-file>

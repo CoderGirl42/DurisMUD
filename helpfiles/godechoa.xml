@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, ECHOA"</title>
+<content>
+&quot;Echoa&quot; will globally send a typed message to ALL players, regardless of
+their current state of consciousness (sleeping, etc.).
+
+Example: echoa LET THE QUEST BEGIN
+         will display to everyone (besides you) as
+         LET THE QUEST BEGIN
+</content>
+	<see-also file="god gshout"/>
+	<see-also file="god echo"/>
+	<see-also file="god echoz"/>
+</help-file>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GNOME</title>
+<content>
+Gnomes are small, sturdy humanoids who are well known for their quick hands
+and good humor. Smaller and weaker than humans, gnomes have more wit to
+compensate. Gnomes have colonies of their own, but are commonplace among
+the major surface communities. Gnomes and dwarves are distantly related,
+and gnomes often understand dwarves fairly well. Gnomes have permanent
+infravision.
+
+Classes:    Warrior, Cleric, Shaman, Sorcerer, Conjurer, Thief, Alchemist,
+            Illusionist.
+Statistics: Gnomes have very quick minds, but seem to lack the wisdom to
+            use that intelligence well. Their bodies are also fairly quick,
+            which is probably good, because they are also weak, and not
+            very appealing.
+Innates:    Infravision, Farsee.
+</content>
+	<see-also file="races"/>
+	<see-also file="infravision"/>
+	<see-also file="innate"/>
+</help-file>

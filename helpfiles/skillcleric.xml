@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_CLERIC</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the Cleric
+class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 2h bludgeon, age corpse, bandage, carve,
+             clerical spell knowledge, climb, dodge, first aid, meditate,
+             mine, mount, quick chant, retreat, swim
+
+Spells
+---------------------------------------------------------------------------
+1st circle:  Armor, Bless, Cause Light, Cure Light, Detect Evil,
+             Detect Good, Detect Magic, Turn Undead
+2nd circle:  Blindness, Cause Serious, Cure Serious, Preserve,
+             Protection from Cold, Protection from Fire, 
+             Slow Poison, Vigorize Light, Word of Command
+3rd circle:  Cause Critical, Cure Blind, Cure Critic, Dispel Evil,
+             Dispel Good, Earthquake, Remove Poison, Sense Life,
+             Vigorize Serious,
+4th circle:  Cure Disease, Protection from Acid, Protection from Evil,
+             Protection from Gas, Protection from Good,
+             Protection from Lightning, Remove Curse, Summon,
+             Vigorize Critic
+5th circle:  Destroy Undead, Heal, Soulshield, Vitality
+6th circle:  Continual Light, Curse, Darkness, Fear, Flame Strike,
+             Harm
+7th circle:  Full Heal, Lesser Resurrect, Water Breathing
+8th circle:  Dispel Magic, Mass Heal
+9th circle:  Holy Word, Plane Shift, Silence, Unholy Word,  
+             Word of Recall,
+10th circle: Accelerated Healing, Full Harm, Resurrect  
+11th circle: Group Recall, Mass Preserve, True Seeing
+12th circle: Miracle
+
+Cleric Specializations
+---------------------------------------------------------------------------
+Healer, Holyman, Zealot
+</content>
+	<see-also file="cleric"/>
+	<see-also file="pray"/>
+</help-file>

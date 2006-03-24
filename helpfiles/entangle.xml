@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ENTANGLE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       1 hour
+Type of spell:  Summoning
+
+This spell causes thick vegetation to grow from the ground, surrounding the 
+victim and immobilizing them for a duration. This spell may only be cast 
+outdoors in areas that have vegetation.
+</content>
+</help-file>

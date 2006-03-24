@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GET TAKE</title>
+	<category type="Command"/>
+<content>
+Syntax:        get &lt;object&gt; | take &lt;object&gt;
+
+If you are in a hurry, or if you feel greedy, you can type get all. You can 
+also use &quot;get&quot; and &quot;take&quot; to extract objects from containers.
+
+Example:  &quot;get dagger from bag&quot; or more simply, &quot;get dagger bag&quot;.
+
+When there is more than one object of the same name in the container or room 
+and you wish to get a particular one, use the following example as a 
+guideline:
+
+You are in a room and you see:
+
+        A shiny box is lying in the dirt here.
+        A shiny box is lying in the dirt here.
+
+If you wished to get the second box, you would type:
+
+        &quot;get 2.box&quot;
+</content>
+	<see-also file="drop"/>
+	<see-also file="put"/>
+</help-file>

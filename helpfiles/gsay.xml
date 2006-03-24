@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GSAY</title>
+	<category type="Command"/>
+<content>
+Syntax:         gsay &lt;message&gt;
+
+This is a &quot;conference&quot; mode of communication used by grouped players. Only 
+the members of your group will hear your communication and it also works 
+when group members are not in the same room.
+
+Example:
+   gsay Let's kill this wraith.
+
+Note: Gsay may possibly be eavesdropped on by classes with the skill 
+      &quot;listen&quot;.
+</content>
+	<see-also file="group"/>
+	<see-also file="say"/>
+	<see-also file="shout"/>
+	<see-also file="listen"/>
+</help-file>

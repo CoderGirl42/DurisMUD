@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, ACCEPT" "GOD, DECLINE"</title>
+<content>
+Syntax:  accept &lt;charname|on|off&gt;
+         decline &lt;player&gt; [&lt;reason&gt;]
+
+These commands let you accept or decline potential character's names,
+dependent on whether they meet up to the standards set forth in the
+introduction at new character creation. &quot;accept off&quot; turns this acception/
+decline mode off, and simply allows new characters to log on without a
+god's permission.
+</content>
+</help-file>

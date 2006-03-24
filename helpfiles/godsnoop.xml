@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, SNOOP"</title>
+<content>
+Syntax:  snoop &lt;victim&gt;
+
+This command lets you see everything that the MUD sends to the
+victim's screen, except for the prompt.  It is not possible to snoop
+someone of equal or higher level.
+
+Note: snooping is to be used only for clearing up problems, and not for
+intruding on people's affairs. Excessive snooping is strongly frowned upon.
+</content>
+</help-file>

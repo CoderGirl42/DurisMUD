@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>JUSTICE</title>
+<content>
+Justice in hometowns when dealing with PKill/PSteal
+DEFINITIONS:
+
+PKill:  Player killing.  (as opposed to mob killing)
+
+PSteal: Player stealing.  Stealing from, or attempting to steal from
+        another player.
+&quot;Aggro action&quot;:  For the purposes in this message, an 'aggro action'
+                 is any form of physical or magical attack against
+                 another player (attempted PKill), OR PSteal.
+
+Outcast: Being outcast from a hometown means that if you set foot in
+         that hometown, there is the danger of a specialized group of
+         guards coming to kill you.
+
+<R>NOTE</R>: ALL OTHER RACES EXCEPT ELF AND HALF-ELF ARE CONSIDERED INVADERS
+           TO CHARING, AND WILL BE HUNTED DOWN AND KILLED ON SITE!
+
+HOW JUSTICE WORKS:
+
+JUSTICE ONLY APPLIES IN GOOD ALIGNED HOMETOWNS!
+
+-Any player that witnesses a crime in a hometown can report it to the
+  justice.
+-If you commit a crime within a hometown and a citizen sees you he/she will
+  report it to the justice.
+-When a crime is reported to the justice, guards will be sent to arrest the
+  criminal (if he/she is still in town).
+
+If a guard arrests you, you will be brought to jail and you will be judged
+for your crime during the next justice session.
+The sentence you get will depend on the crime you committed.
+In each hometown there is a justice hall. The following commands are
+available there :
+
+Reporting a crime
+  reporting &lt;attacker&gt; &lt;crime&gt; &lt;victim&gt;
+Pardoning someone for a crime against you
+  pardon &lt;name&gt;
+Pay a dept to the town
+  pay
+List all wanted criminals (see below)
+  list
+Turn in a wanted criminal
+  turn_in &lt;name&gt;
+
+The list of supported crime is :
+  Att_theft   (attempted theft)
+  Theft       (theft)
+  Att_murder  (attempted murder)
+  Murder      (murder)
+
+Wanted criminal
+  Each hometown has a list of wanted criminals with the reward for bringing
+him in. If you catch a wanted criminal and bring him to justice you will get
+a reward for it. There is a new command &quot;BIND&quot; that you can use to bring a
+live criminal in.
+
+Nothing prevents you from escaping jail, but if you do you will pay the price.
+
+<R>IMPORTANT</R>
+-Pardoning a person for a crime against you does not prevent this person from
+  going to jail but it will be used by the judge when he gives his/her
+  sentence.
+-You cannot report a murder against yourself. 
+-If someone commits a crime against you, you are not allowed to attack him, 
+  let justice take care of it.
+-A witnessed event is erased after a month, so dont wait too long to report a 
+  crime.
+</content>
+	<see-also file="rules"/>
+	<see-also file="laws"/>
+	<see-also file="outcast"/>
+	<see-also file="pkill"/>
+	<see-also file="steal"/>
+	<see-also file="bind"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PROTECTION FROM LIVING"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+This spell surrounds the recipient in an aura of death, making living
+opponents less willing and less able to cause physical harm.
+</content>
+</help-file>

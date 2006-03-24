@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SQUALL</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Squall&quot; gathers and calls upon the violent nature of the storms, leaving 
+only pain and blindness in its wake.
+</content>
+	<see-also file="cureblind"/>
+	<see-also file="blindness"/>
+</help-file>

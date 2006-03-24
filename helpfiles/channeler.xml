@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CHANNELER</title>
+	<category type="MultiClass"/>
+<content>
+A Channeler is a multi-class Shaman/Conjurer.
+
+Notes on Channeler:
+Shamans use totems, and memorize spells without spellbooks.
+Conjurers memorize and require spellbooks.
+If you start as a Shaman, you will memorize spells, but you will no longer
+need totems or spellbooks, for ANY of your spells.
+If you start as a Conjurer, you will need spellbooks for all of your
+conjurer AND your shaman spells.
+</content>
+</help-file>

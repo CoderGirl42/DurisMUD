@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GIVE</title>
+<content>
+Syntax:  give &lt;object&gt; &lt;target&gt;
+
+If you feel charitable, you may want to give items to someone in need.
+
+Example:  &quot;give bread beggar&quot;
+
+Money, in the form of various types of coinage, is a little more
+difficult to give away.
+
+Syntax:  give &lt;amount&gt; &lt;coin_type&gt; &lt;target&gt;
+
+Giving very heavy objects, or 1000s of coins, or anything that will
+overload the receiver, requires the receiver's consent.
+</content>
+	<see-also file="coins"/>
+	<see-also file="currency"/>
+	<see-also file="consent"/>
+</help-file>

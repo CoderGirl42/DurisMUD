@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"REJUVENATE MAJOR"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Permanent
+Type of spell:  Enchantment
+
+This spell permanently reduces the victim's age, with the amount dependent
+on the proficiency of the caster. The reduction in age carries all the
+benefits and detriments normally associated with being younger. This is a
+temporary version of &quot;Rejuvenate Major.&quot;
+</content>
+	<see-also file="rejuvenateminor"/>
+</help-file>

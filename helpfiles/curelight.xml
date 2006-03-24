@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CURE LIGHT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+&quot;Cure Light&quot; cures physical damage, although less than its more powerful
+counterparts &quot;Cure Serious&quot; and &quot;Cure Critic.&quot;
+</content>
+	<see-also file="cureserious"/>
+	<see-also file="curecritic"/>
+</help-file>

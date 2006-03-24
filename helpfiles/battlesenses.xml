@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BATTLE SENSES"</title>
+	<category type="Skill"/>
+<content>
+The eyeless senses of a Dreadlord are most keen when the lust of battle is
+upon them, a heightened awareness of their foe giving them a rush of speed
+to help evade attacks launched against them.
+</content>
+	<see-also file="dreadlord"/>
+	<see-also file="skilldreadlord"/>
+</help-file>

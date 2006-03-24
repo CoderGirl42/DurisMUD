@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>STRENGTH</title>
+	<category type="General Information"/>
+<content>
+Strength is a measure of raw physical power, the ability to man pulate
+matter with muscles. It is the primary attribute for Warrior types and is
+useful for all classes.
+</content>
+	<see-also file="spell strength"/>
+</help-file>

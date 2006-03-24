@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"KANCHELSIS FURY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Self
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+Calls upon the powers of Kanchelsis to increase attack speed, granting extra
+hits and attacks in battle for a limited period of time.
+</content>
+	<see-also file="flurry"/>
+	<see-also file="blur"/>
+	<see-also file="haste"/>
+</help-file>

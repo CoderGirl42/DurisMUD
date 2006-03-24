@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"WRAITHFORM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+When under the influence of Wraithform a necromancer can walk unseen by
+mortal eyes, undetected by any spells. Doors and walls are meaningless to
+anyone under the influence of Wraithform as well. After casting the spell, 
+anything the caster happens to be wearing or carrying at the time will fall
+to the ground.
+</content>
+</help-file>

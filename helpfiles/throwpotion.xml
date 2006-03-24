@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>THROWPOTION</title>
+	<category type="Skill"/>
+<content>
+
+     SYNTAX : throwpotion &lt;potion&gt; &lt;target&gt;
+
+Once you have mixed your potion, you will want to throw it at your target,
+and to do this, the potion you wish to throw must be in your inventory.
+Your accuracy at hitting your victim, instead of others in your group or
+even yourself will grow with your skill and level. As an example, if you
+had a chill touch potion and you wished to throw it at the mob in the room
+called &quot;hunter&quot;, type: throwpotion chill hunter
+</content>
+	<see-also file="throw"/>
+	<see-also file="mix"/>
+	<see-also file="skillalchemist"/>
+</help-file>

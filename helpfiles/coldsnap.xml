@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"COLD SNAP"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Cold Snap&quot; temporarily steals armor class from the victim, transferring 
+it to the caster.
+</content>
+	<see-also file="armorclass"/>
+</help-file>

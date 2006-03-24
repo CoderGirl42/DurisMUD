@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>REMOVE</title>
+<content>
+Syntax:  remove &lt;equipped_item&gt;
+         remove all
+
+If you no longer wish to wear or wield an item, remove it. You can also
+type &quot;remove all&quot; to remove everything you currently have equipped.
+</content>
+	<see-also file="wear"/>
+	<see-also file="hold"/>
+	<see-also file="grab"/>
+	<see-also file="wield"/>
+</help-file>

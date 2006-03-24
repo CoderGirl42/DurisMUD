@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF STORMS"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	Yes
+Cumulative:	No
+Duration:	Instantaneous
+Type of song:	Generic
+
+&quot;Song of storms&quot; calls the power of nature to create a deadly storm in the
+skies, assisting the bard with bolts of lightning upon those in the room
+not in his/her group.
+</content>
+	<see-also file="lightningbolt"/>
+</help-file>

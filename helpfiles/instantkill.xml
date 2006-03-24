@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"INSTANT KILL"</title>
+	<category type="Skill"/>
+<content>
+As the name implies, &quot;instant kill&quot; provides the character with a very
+minuscule chance of killing a player or mob instantly, upon the application
+of a successful backstab.
+</content>
+	<see-also file="backstab"/>
+	<see-also file="skillassassin"/>
+</help-file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_SHOUT</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle shout
+
+This toggle affects your ability to &quot;Shout&quot; and hear other people's shouts.
+</content>
+	<see-also file="shout"/>
+	<see-also file="toggle"/>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GRANT</title>
+	<category type="General Information"/>
+<content>
+Syntax: grant list 
+        grant add &lt;name&gt; 
+        grant rem &lt;name&gt; 
+
+Grant enables you to let other people access your personal storage locker. 
+To view your list, type 'grant list'. You can add or remove people on the 
+list, which will be saved. Be careful who you allow to access your storage!
+Please note that the grant command is used within your locker itself. 
+</content>
+	<see-also file="locker"/>
+	<see-also file="storage"/>
+</help-file>

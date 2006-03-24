@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FULL HARM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+This is a more potent version of the spell &quot;Harm&quot; and can inflict a 
+devastating amount of damage. Like &quot;Harm&quot;, this spell is not quite capable
+of dealing the final deathblow to the enemy.
+</content>
+	<see-also file="harm"/>
+</help-file>

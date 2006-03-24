@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PROTECTION FROM GOOD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+This spell will create a magical armor on the recipient that will make the 
+target less prone to attacks from good aligned monsters and characters.
+</content>
+	<see-also file="protectionfromevil"/>
+</help-file>

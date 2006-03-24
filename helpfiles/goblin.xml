@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GOBLIN</title>
+<content>
+Goblins are an inhospitable, evil race that prefers to dwell deep within
+the depths of the Underdark. They live in a largely tribal society where
+the strongest rule over the rest, existing preferably in underground caves
+and similar dismal surroundings. Despite their primitive habitat they are a
+rather clever and devious people that have mastered many of the same skills
+and magics of the sun-loving races. Goblins are avid slavers and routinely
+capture others to serve at their bidding, especially gnomes and mountain
+dwarves whom they hate more than anything else.
+
+Goblins range in appearance from a dark, dull green to a dull orange or
+brick red. It is rumored that Goblins are distantly related to the Kobolds,
+but to this day that claim has yet to be proven.
+
+Class list:       Warrior, Cleric, Shaman, Sorcerer, Necromancer, Reaver,
+                  Conjurer, Thief, Assassin, Mercenary, Bard, Alchemist,
+                  Illusionist.
+Statistics:       Goblins are a very intelligent people, therefore they
+                  have become a feared race of proficient casters. They are
+                  also quite nimble, making them naturals at stealing and
+                  stealth.
+Innate abilities: ultravision, flurry, disappear.
+
+Warning: As one of the evil races on Duris, Goblins are extremely difficult
+to play and face many hardships. Their hometown has been specifically
+designed to make life hell and death waits around every corner. Goblins
+will most certainly encounter situations that would be deemed &quot;unfair&quot; to
+any of the surface races. We did this to create a new challenge for those
+advanced players who have &quot;beaten&quot; the challenge of life on the surface
+world and are looking for something more difficult. You should NOT play a
+Goblin unless you are a *very* advanced player and are used to the Duris
+style of MUDding, or are willing to face the hardships without complaint,
+as it will NOT be easy.
+</content>
+	<see-also file="races"/>
+	<see-also file="ultravision"/>
+	<see-also file="infravision"/>
+	<see-also file="innate"/>
+</help-file>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LINK LAG</title>
+	<category type="General Information"/>
+<content>
+Many players have problems with their links to the game. This could be very
+dangerous to your health in the middle of combat. However, we at Duris feel
+it is unfair to place the responsibility for quality of the link on us.
+Thus, deaths and injury due to link loss are not our problem.
+
+If your link freezes up for some reason, a god will usually be willing to
+release the link, letting you reconnect. If the system that runs the MUD
+itself freezes up, your character will not be harmed, as everything and
+everyone else in the game will also be frozen. However, if another system
+en route to this one lags, you will be put in a dangerous position and your
+character could die.
+
+If the network looks shaky, don't put your character in a dangerous
+position, as we will NOT reimburse you for losses.
+
+If your WIMPY toggle is enabled, you will automatically flee when your hit
+points reach the wimpy level.
+</content>
+	<see-also file="reimbursement"/>
+	<see-also file="wimpy"/>
+	<see-also file="toggle"/>
+</help-file>

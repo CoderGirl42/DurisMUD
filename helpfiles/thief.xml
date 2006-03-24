@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>THIEF</title>
+	<category type="Specialization"/>
+<content>
+Thieves are masters of stealth, deceit, concealment, and they'll relieve
+you of your valuables if you don't watch your purse. The main cause of
+thieves is to take what is yours and to make it their own, preferably
+without their victims knowing about it. But if backed into a corner,
+thieves can be deadly enemies and are more than capable of fighting their
+way out of tight spots. The dreaded thief is also renowned for its ability
+to pick locks, alter their identity, to vanish into the shadows, not to
+mention hunting their prey to the ends of the world to get what they want.
+
+Thieves are held fully to the rules listed in Help Raid for equipment
+guidelines, and while engaged in pstealing or pkilling they are considered
+&quot;primary&quot; characters and as such must wear the best equipment available up
+to and including removing equipment from their other characters to meet
+these guidelines. This DOES include artifacts, uniques, and iouns, *unless*
+they are not usable by a thief.  
+
+ALL items stolen by a thief must be worn by the thief *unless* they cannot
+use the object or are currently wearing better in that slot, in which case
+it may be stored or given away.
+
+ALL slots must be filled on a thief when at all possible, this includes
+removing pieces of equipment from other characters that may not make much
+sense on a thief.
+
+For example, if you have the max_int ioun on another character, you MUST
+remove it and put it on your thief when playing it. The only exception is
+if the thief is currently wearing another ioun.
+
+Thieves CANNOT be shared by multiple players at once. If any thief is found
+being shared, they will be terminated whether or not the owner is online. 
+Trying to get by these rules will be met with harsh consequences. If you
+are unsure about what is legal or not, ask a god.
+
+Skills
+---------------------------------------------------------------------------
+30th: Trip
+30th: Dirttoss
+30th: Listen
+30th: Feign Death
+36th: Enhanced Riposte
+51st: Hamstring
+56th: Evade
+</content>
+	<see-also file="rogue"/>
+	<see-also file="skillrogue"/>
+	<see-also file="classes"/>
+	<see-also file="skills"/>
+	<see-also file="assassin"/>
+	<see-also file="bravo"/>
+</help-file>

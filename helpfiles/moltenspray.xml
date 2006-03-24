@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MOLTEN SPRAY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;victim&gt; &lt;direction&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Elemental
+
+&quot;Molten Spray&quot; sends a deadly spray of molten rock at the victim, damaging
+him considerably.
+</content>
+</help-file>

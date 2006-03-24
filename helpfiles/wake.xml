@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WAKE REST SIT STAND KNEEL RECLINE ALERT</title>
+<content>
+As in the real world, your character will eventually get tired and run out
+of energy or get injured in the line of fire. When this occurs, you may
+wish to sit and rest or sleep for a quick bit. You recover more quickly
+when sleeping than when resting, and more quickly resting than standing.
+
+Persons who are asleep may be awakened with the &quot;Wake&quot; command, although
+this does not work if the sleep is magical.
+
+The new position/status system commands are as follows:
+
+         stand                 stand up
+         sit                   sit down
+         kneel                 go to your knees
+         recline               lay down
+         rest                  relax and sit down
+         alert                 pay attention, doesn't change position
+         sleep                 go to sleep, doesn't change position
+         wake                  wake up, doesn't change position.
+</content>
+	<see-also file="sleep"/>
+</help-file>

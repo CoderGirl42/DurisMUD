@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_ECHO</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle echo
+
+This toggle option allows you to view your written communications as they 
+appear to others.
+If, for example, you type:
+
+                say Hi, Fizzwig
+  
+You would see:
+                You say 'Hi, Fizzwig!
+</content>
+	<see-also file="toggle"/>
+</help-file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SWITCH OPPONENTS"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         kill/hit/murder/etc. &lt;different opponent&gt;
+
+This enables you to switch opponents mid-battle, directing your damage
+towards a new opponent.
+</content>
+	<see-also file="kill"/>
+</help-file>

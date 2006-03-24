@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GREATER EARTHEN GRASP"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Elemental
+
+&quot;Greater Earthen Grasp&quot; causes many earthen fists to burst from the ground
+grasping as many victims as they can, squeezing the life out of them for 
+serious damage and possible paralysis.
+</content>
+	<see-also file="earthengrasp"/>
+	<see-also file="minorparalysis"/>
+</help-file>

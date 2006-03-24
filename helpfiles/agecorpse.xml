@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"AGE CORPSE"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         examine corpse
+
+&quot;Age Corpse&quot; is the ability to determine the length of time a corpse has
+left until it rots away by examining it.
+</content>
+	<see-also file="examine"/>
+</help-file>

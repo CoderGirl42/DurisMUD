@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"VENTRILOQUATE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;object&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Instantaneous
+Type of spell:  Generic
+Syntax:         cast 'ventriloquate' &lt;victim | object&gt; &lt;text&gt;
+
+All those in the room falling to the caster's enchantment will believe
+that the victim or object has spoken the desired text.
+</content>
+</help-file>

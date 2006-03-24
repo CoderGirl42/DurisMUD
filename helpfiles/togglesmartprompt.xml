@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_SMARTPROMPT</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle smartprompt
+
+This option allows you to select whether your prompt displays after any
+new output (OFF), or just when you input a new command (ON).  The ON
+setting is to reduce spam (i.e. screen roll that makes it difficult to 
+absorb the MUD's output).
+</content>
+	<see-also file="toggle"/>
+</help-file>

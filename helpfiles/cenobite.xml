@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CENOBITE</title>
+	<category type="MultiClass"/>
+<content>
+A Cenobite is a multi-class Druid/Cleric.
+
+Notes on Cenobite:
+Druids commune, which is heavilly based on terrain, for both spells
+and commune times.
+Clerics pray, and require no spellbooks or totems.
+If you start as a Druid, you will commune all your spells.
+If you start as a Cleric, you will pray spells.
+</content>
+</help-file>

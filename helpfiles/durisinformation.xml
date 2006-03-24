@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DURIS INFORMATION" INFORMATION</title>
+<content>
+The following is a list of all available help that pertains to
+Duris as a MUD, and other miscellaneous information you may wish to
+read.  An asterisk beside an entry indicates that there is more help
+available on that entry.  Type &quot;help &lt;entry&gt;&quot; for more information.
+
+Example:  &quot;help races&quot; will bring up an explanation of races, a list
+of all the available ones, and how to obtain further help on each one.
+
+  AREA MAKING               CALENDAR MONTHS	WORLD
+  CLASSES                   CREDITS             DAYS
+  INNATE                    MOTD                NEWBIE MUD
+  NEWS                      RACES               RACEWARS PKILL
+  TIME                      WIZLIST   		ZONES      
+</content>
+</help-file>

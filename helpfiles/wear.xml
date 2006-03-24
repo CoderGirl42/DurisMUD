@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WEAR</title>
+<content>
+Syntax:  wear &lt;object&gt;
+         wear all
+
+&quot;Wear&quot; will allow you to try on some of the armor or items you have
+obtained during your travels. If you are carrying more than one item of the
+same time, and you want to exchange them, use the following syntax:
+
+        remove &lt;item&gt;           (you now hold two of this item)
+        wear 2.&lt;item&gt;
+
+The last item you remove or pick up always appears at the top of your
+inventory pile.
+</content>
+	<see-also file="remove"/>
+	<see-also file="wield"/>
+	<see-also file="equipment"/>
+	<see-also file="inventory"/>
+</help-file>

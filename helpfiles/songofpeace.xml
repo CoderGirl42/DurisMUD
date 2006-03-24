@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF PEACE"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	No
+Cumulative:	N/A
+Duration:	Instantaneous
+Type of song:	Enchantment
+
+&quot;Song of peace&quot; brings a soothing calmness to the room and has the chance
+to cause all those fighting in the room to be brought to peace.
+</content>
+	<see-also file="songs"/>
+	<see-also file="instrument"/>
+	<see-also file="play"/>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+</help-file>

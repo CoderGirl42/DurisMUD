@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPELL CIRCLE"</title>
+	<category type="General Information"/>
+<content>
+Just as in AD&amp;D, Duris has placed its spells in various levels called
+circles. As a caster gains in level, he learns more of the magical arts and
+has a larger repertoire of spells to choose fro . These new spells exist in
+&quot;Circles&quot;. At any given level, a caster can draw from a specified number of
+circles and can memorize/pray/tupor/assimilate/commune for a certain number 
+of spells in each circle which fit into &quot;Spell Slots&quot;. As a caster's level 
+increases he learns more magic and can draw from more circles as well as 
+regenerate more spells from each circle. The circles are gained as follows:
+
+        Level 1 -1st Circle
+        Level 6 -2nd Circle
+        Level 11 -3rd Circle
+        Level 16 -4th Circle
+        Level 21 -5th Circle
+        Level 26 -6th Circle
+        Level 31 -7th Circle
+        Level 36 -8th Circle
+        Level 41 -9th Circle
+        Level 46 -10th Circle
+        Level 51 -11th Circle
+        Level 56 -12th Circle
+
+See the specific help files on each class to find out which spells belong
+to each circle for any given class. There is a slight chance of spell
+failure for the last circle learned.
+</content>
+	<see-also file="spellslot"/>
+	<see-also file="memorize"/>
+	<see-also file="pray"/>
+	<see-also file="commune"/>
+	<see-also file="assimilate"/>
+	<see-also file="tupor"/>
+</help-file>

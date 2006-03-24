@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"POWER WORD KILL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+This spell causes instant death to a victim with less than a certain amount 
+of lifeforce, with the amount determined by the spellcaster's proficiency.  
+It has no effect on a victim with more lifeforce.
+</content>
+</help-file>

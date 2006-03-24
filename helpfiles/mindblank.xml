@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MIND BLANK"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       Dependent on proficiency of caster.
+Type of Spell:  Enchantment
+
+This spell has the unique ability to mentally cloak the caster by altering
+the perception of all who would gaze upon him. Since the victims mind
+itself is being altered, all detection magics have no effect on the ability
+to perceive the caster.
+</content>
+</help-file>

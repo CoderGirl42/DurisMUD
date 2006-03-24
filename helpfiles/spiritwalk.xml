@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPIRIT WALK"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Spiritual
+
+This spiritual spell allows the caster to cross the boundaries of the
+outer planes and seek the lifeforce of the dearly departed. After the
+lost soul has been found, a mystical conduit is opened between the
+Spiritualist, the soul and the soul's corporeal body, pulling the caster
+to the last site of death.  However, if the corporeal body has been
+embalmed, or tampered with via other forms of preservation, this spell
+has unpredictable results.
+</content>
+	<see-also file="spiritualist"/>
+</help-file>

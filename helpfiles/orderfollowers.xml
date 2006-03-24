@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ORDER FOLLOWERS"</title>
+	<category type="Command"/>
+<content>
+Syntax:         order &lt;petname&gt; &lt;command&gt;
+                order followers &lt;command&gt;
+
+The &quot;order&quot; command is used in two seperate ways. Classes that have the 
+ability to charm mobs must &quot;order&quot; the &quot;pet&quot; to do what the player wants.
+
+Example:        order wolf kill duck
+
+To order multiple followers use the command &quot;order followers&quot;
+
+Example:        order followers kill duck
+
+The second type of &quot;order&quot; command is used by players that have purchased 
+a ship. For more information on how the &quot;order&quot; command applies to ships, 
+see &quot;help ships.&quot;
+</content>
+	<see-also file="pets"/>
+	<see-also file="ships"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INGREDIENTS</title>
+	<category type="General Information"/>
+<content>
+Various &quot;Ingredients&quot; are located throughout the world, buried under the 
+ground. Herbs, Garlic, Nightshade, Mandrake Roots and Dragon's Blood are
+just a few of the many ingredients that exist. Alchemists require stock-
+piles of these ingredients in order to &quot;Mix&quot; their potions. Whereas, 
+Forest Druids only require Herbs. You can gather ingredients via the
+&quot;Forage&quot; command.
+</content>
+	<see-also file="forestdruid"/>
+	<see-also file="alchemist"/>
+</help-file>

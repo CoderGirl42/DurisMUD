@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GUARDIAN</title>
+	<category type="Specialization"/>
+<content>
+As their name suggests, the Guardian is a true savior to all. They are 
+able to dive in and often rescue their entire group in the heat of battle. 
+They can also use their shield as a weapon to cause extra damage by Shield 
+Punching their opponent, then following up with extended riposte abilities.
+
+Skills
+---------------------------------------------------------------------------
+31st level:     Follow-Up Riposte
+46th level:     Shield Punch
+51st level:     Rescue All
+
+</content>
+	<see-also file="shieldpunch"/>
+	<see-also file="followupriposte"/>
+	<see-also file="rescueall"/>
+	<see-also file="rescue"/>
+</help-file>

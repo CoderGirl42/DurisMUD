@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"EARTHEN MAUL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Earthen Maul&quot; invokes the earth to form and strike the victim, causing a
+good deal of damage and a possibility that the target may be knocked down.
+</content>
+	<see-also file="bash"/>
+</help-file>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WILDMAGE</title>
+<content>
+The chaos mage will draw power from beyond reality, from the realm of Chaos.
+This realm has immense power reserves but it is very hard to control. This 
+will manifest itself by letting the mage get random results (often more 
+powerful) when he casts his spell. The drawback is that he can loose control 
+over the strong magic and harm random people in the room, be it friend of foe.
+                
+Innate Abilities
+---------------------------------------------------------------------------
+41st level:     Wildmagic
+
+Spells
+---------------------------------------------------------------------------
+12th circle:    Chaotic Ripple
+</content>
+	<see-also file="chaoticripple"/>
+	<see-also file="sorcerer"/>
+	<see-also file="wildmagic"/>
+</help-file>

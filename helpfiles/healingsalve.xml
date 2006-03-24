@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HEALING SALVE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       3 waves
+Type of spell:  Healing
+
+&quot;Healing Salve&quot;, when applied to a hurt victim, will restore hitpoints over
+the period of three waves, with each restoring a bit more.
+</content>
+	<see-also file="heal"/>
+</help-file>

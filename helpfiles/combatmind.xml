@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"COMBAT MIND"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on caster
+Type of spell:  Enchantment
+
+This spell prepares your mind for combat. By lowering your ac and increases
+your hit and dam.
+</content>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BARKSKIN</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+This spell causes the victim's skin to toughen and harden to the consistency 
+of bark, granting a significant armor class improvement and slight 
+protection from melee damage. This also means there is a somewhat higher 
+increase in damage from fire.
+</content>
+</help-file>

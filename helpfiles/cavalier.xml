@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CAVALIER</title>
+	<category type="Specialization"/>
+<content>
+Cavaliers are the ultimate horsemen. When mounted upon a Pegasus, they
+possess the ability to charge the enemy with their lance while nimbly
+sidestepping attacks. 
+ 
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Knight
+
+Skills
+---------------------------------------------------------------------------
+31st level:     Sidestep
+41st level:     Lance Charge
+
+</content>
+	<see-also file="lancecharge"/>
+	<see-also file="paladin"/>
+	<see-also file="sidestep"/>
+</help-file>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF DRIFTING"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Group
+Aggressive:	No
+Cumulative:	N/A	
+Duration:	Dependant on proficiency of singer
+Type of song:	Transportation
+
+A powerful song that resonates through the air, changing the very fabric
+of the environment around you, transporting and teleporting you and your
+group to a new random location.
+</content>
+	<see-also file="songs"/>
+	<see-also file="instrument"/>
+	<see-also file="play"/>
+	<see-also file="bard"/>
+	<see-also file="piper"/>
+	<see-also file="skillbard"/>
+	<see-also file="teleport"/>
+</help-file>

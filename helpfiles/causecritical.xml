@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CAUSE CRITICAL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Cause Critical&quot; inflicts damage on the victim, more than the similar
+spells &quot;Cause Light&quot; or &quot;Cause Serious&quot;, but less than the spell &quot;Harm&quot;.
+</content>
+	<see-also file="causelight"/>
+	<see-also file="causeserious"/>
+</help-file>

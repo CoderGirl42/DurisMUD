@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CLASSES</title>
+	<category type="General Information"/>
+<content>
+Once you have selected the race of being you wish to play, you must select
+a class. A class is the trade or profession at which your character will
+excel. Not all classes are available for each race, as it would be highly
+unlikely that an unintelligent, clumsy troll would take up the demanding
+profession of assassin. There are four main &quot;types&quot; of classes (Fighters,
+Priests, Rogues and Magic-Users) available, and the available classes are
+listed below the headings of each one.
+
+Fighter         Priest          Rogue           Magic-User
+=======        ======         =====          ==========
+Warrior         Cleric          Thief           Sorcerer
+Ranger          Druid           Assassin        Necromancer
+Paladin         Shaman          Mercenary       Conjurer
+Anti-Paladin    Warlock         Bard            Psionicist
+Monk            Ethermancer     Unholy-Piper    Illusionist
+Reaver                                          Alchemist
+Berserker
+Dreadlord
+
+NOTE: For more information on each class, type:
+      &quot;help &lt;classname&gt;&quot; or &quot;help skill_&lt;classname&gt;&quot;
+</content>
+</help-file>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DOUBLE STRIKE"</title>
+	<category type="Skill"/>
+<content>
+&quot;Double Strike&quot; allows the Blademaster a potential hit on a random second 
+target in the room, other than the intended primary target.
+</content>
+	<see-also file="blademaster"/>
+</help-file>

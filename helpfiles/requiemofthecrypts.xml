@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"REQUIEM OF THE CRYPTS"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	No
+Cumulative:	N/A	
+Duration:	Dependent on proficiency of singer
+Type of song:	Enchantment
+
+&quot;Requiem of the Crypts&quot; brings a soothing calmness to the room and has  he
+chance to cause all those fighting in the room to be brought to peace.
+</content>
+	<see-also file="instrument"/>
+	<see-also file="wail"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+</help-file>

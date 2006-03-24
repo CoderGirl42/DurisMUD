@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"UNHOLY ALLIANCE"</title>
+	<category type="Innate"/>
+<content>
+&quot;Unholy Alliance&quot; is a passive innate ability possessed by the Reaper
+Necromancer that insures that their pets will never go &quot;rogue&quot;.
+</content>
+	<see-also file="reaper"/>
+	<see-also file="pets"/>
+	<see-also file="order"/>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"INVOKE NEGATIVE ENERGY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+This spell opens a channel of pure negative planar energy between the
+caster and his victim.  The victim's energy is drained, and passed on
+to the invoker of the negative force.
+</content>
+</help-file>

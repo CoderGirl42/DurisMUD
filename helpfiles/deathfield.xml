@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DEATH FIELD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;area&gt;
+Aggressive:     Yes
+Cumulative:     N/A
+Duration:       Instantaneous
+Type of spell:  Generic
+
+This spell bursts from around the caster sweeping the area with deadly
+energy causing heavy damage. Other players in the same zone will see a
+message if someone casts this.
+</content>
+</help-file>

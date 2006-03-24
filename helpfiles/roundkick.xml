@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ROUNDKICK</title>
+	<category type="Skill"/>
+<content>
+Syntax:         Roundkick &lt;victim&gt;
+Aggressive:     Yes
+
+Roundkick is a martial arts skill where the attacker spins around on one
+foot and strikes out at their enemy with the other. A well-placed roundkick
+damages its victim, possibly stunning him. A badly failed roundkick will
+send the attacker crashing to the ground.
+</content>
+</help-file>

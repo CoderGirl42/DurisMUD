@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ZEALOT</title>
+	<category type="Specialization"/>
+<content>
+The Zealot Cleric focuses on damage, with the Fighter skill &quot;Offense&quot; and 
+the ability to call upon the God of Tempus to infuse them with power. Their
+offensive nature allows them to be extremely adept at fighting, particulary
+raiding.
+
+Skills
+---------------------------------------------------------------------------
+31st level: 	Raised skill caps to 1h bludgeon
+				     2h bludgeon
+		 		     dodge
+51st level:     Double attack 
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Tempus God Call
+
+Spells
+---------------------------------------------------------------------------
+11th circle:    Plague
+
+</content>
+	<see-also file="godcall"/>
+	<see-also file="cleric"/>
+	<see-also file="offense"/>
+</help-file>

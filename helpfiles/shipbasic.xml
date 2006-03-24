@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHIP_BASIC</title>
+<content>
+A dock is much like any other shop, you use &quot;buy #&quot; and &quot;list&quot; to see what 
+ships and ship accessories are available at the docks.  You can only buy 
+a ship at one of the major docks in the world.  An example is Tharnadia on 
+the Goodie Continent.  To buy your first ship, you must also give it a name. 
+Names of ship use ANSI commands so you should first use &quot;Testcolor&quot; command 
+to perfect the name of your ship, otherwise you could end up with a lousy 
+looking shipname.
+
+The syntax for buying your first ship is &quot;buy # &lt;shipname&gt;&quot; where # is 
+the number of the hull you wish to purchase, and shipname is the above 
+mentioned name you create using ANSI commands. 
+
+Ok, now you've purchased your ship, the &quot;list&quot; menu at all docks will 
+have changed.  You can now see 4 sections instead of just one. From now 
+on, you will not have to state a shipname when you buy or upgrade your 
+hull.  You are PERMANENTLY stuck with that shipname for this character. 
+
+Next suggested reading: &quot;help SHIP_LIST&quot; 
+
+</content>
+	<see-also file="ansi"/>
+	<see-also file="testcolor"/>
+	<see-also file="shiplist"/>
+	<see-also file="ships"/>
+</help-file>

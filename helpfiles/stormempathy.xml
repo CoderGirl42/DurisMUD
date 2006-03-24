@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STORM EMPATHY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Storm Empathy&quot; grants the victim some protection from lightning and cold. 
+It also gives added protection from all cold and lightning type beings and
+attacks.
+</content>
+</help-file>

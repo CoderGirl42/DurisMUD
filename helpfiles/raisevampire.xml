@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"RAISE VAMPIRE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;corpse&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Animation lasts until undead follower dies (again)
+Type of spell:  Summoning
+
+If the Necromancer has a suitable corpse at his feet, &quot;Raise Vampire&quot; 
+infuses the corpse with the brutal power of a Vampire. Vampires by nature 
+are powerful warriors and enjoy tearing into warm, mortal flesh.
+</content>
+	<see-also file="masspreserve"/>
+	<see-also file="order"/>
+	<see-also file="pets"/>
+	<see-also file="preserve"/>
+</help-file>

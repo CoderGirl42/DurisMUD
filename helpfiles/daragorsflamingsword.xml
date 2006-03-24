@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DARAGORS FLAMING SWORD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Self
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+Uses the power of Daragor to infuse your wielded sword with the fury of
+flame and fire, causing extra damage in battle. If the reaver is also affected
+by fireshield, the inflicted fire damage is even bigger.
+</content>
+	<see-also file="fireshield"/>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"LIFE WARD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Up to 1 day, dependent upon proficiency of caster
+Type of spell:  Cold
+
+This spell erects a dark wall of power over a room exit, chosen by the
+caster. The wall attempts to prevent living things from passing through
+it and will zap their movements if they succeed.
+</content>
+</help-file>

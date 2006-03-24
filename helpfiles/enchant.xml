@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ENCHANT</title>
+	<category type="Skill"/>
+<content>
+This skill will imbue a piece of equipment of your choosing with any spell
+up to a certain power that is currently affecting the casting alchemist.
+There are some restrictions in the type of spells that may be enchanted;
+Offensive spells or any spells that are of the &quot;self only&quot; cast type cannot
+be enchanted into the item. Only one enchant affect can be held on a piece
+of equipment at any one time and the effect will wear off in the
+appropriate time span. Enchanting an item can be an expensive exercise and
+you will need to carry the necessary funds to use this skill. An enchanted
+item will display a flag indicating that status if successful, however, 
+beware that unsuccessful enchant attempts may actually damage the item in 
+the process. Example Syntax: enchant cloak 'vitality'
+</content>
+	<see-also file="alchemist"/>
+	<see-also file="skillalchemist"/>
+</help-file>

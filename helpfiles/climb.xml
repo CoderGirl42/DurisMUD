@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CLIMB</title>
+	<category type="Skill"/>
+<content>
+Syntax:         climb
+
+Climb is used when you need to trek through mountainous terrain without the
+benefit of flight spells. Climbing through mountains expends high numbers
+of movement points, so, you may have to stop and rest. 
+
+NOTE: Some mountains cannot be climbed.
+</content>
+</help-file>

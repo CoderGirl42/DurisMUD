@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DEATHLORD</title>
+	<category type="Specialization"/>
+<content>
+The Deathlord is a creature of destruction and doom, it thrives on the 
+moments when 'life' hangs in the delicate balance of fate. Their very souls
+feed from the powers of death and decay, bringing the chill of the undead
+to the world around them.
+
+Skills
+---------------------------------------------------------------------------
+21st level:    Call of the Grave
+31st level:    Embrace Death
+36th level:    Soul Trap
+
+Please note, this is a new spec, some sections may still be under review
+and development, and as such are liable to changes.
+
+</content>
+	<see-also file="callofthegrave"/>
+	<see-also file="dreadlord"/>
+	<see-also file="skilldreadlord"/>
+	<see-also file="speclist"/>
+</help-file>

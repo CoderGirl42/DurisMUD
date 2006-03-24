@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FORTITUDE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Fortitude&quot; increases your ability to live for longer periods of time
+while bleeding to death.  It does not prevent such death, however.
+</content>
+</help-file>

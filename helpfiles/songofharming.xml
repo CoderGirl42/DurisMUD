@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF HARMING"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	Yes
+Cumulative: 	N/A	
+Duration:	Instantaneous/Depends
+Type of song:	Generic/Enchantment
+
+&quot;Song of harming&quot; removes some lifeforce from those in the room not grouped
+with the singer, the amount dependent on both level and skill. This song
+has also been known to cause other affects, such as blindness. It is not
+possible to kill using this song.
+</content>
+	<see-also file="songs"/>
+	<see-also file="instrument"/>
+	<see-also file="play"/>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PRISMATIC CUBE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on color of caster
+Type of spell:  Generic
+
+&quot;Prismatic Cube&quot; raises walls which cover all exits of the room that the 
+caster is in. Each wall has a random effect if touched, similar to that of 
+the spell 'Prismatic Spray'.
+</content>
+	<see-also file="prismaticspray"/>
+</help-file>

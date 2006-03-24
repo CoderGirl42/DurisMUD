@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DIVINE FURY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       2 hours
+Type of spell:  Enchantment
+
+&quot;Divine Fury&quot; temporarily raises the caster's 'double attack' skill.
+</content>
+</help-file>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BASH</title>
+	<category type="Skill"/>
+<content>
+Syntax:         bash &lt;victim&gt;
+
+To bash someone is to attempt to knock that person over. If you succeed,
+you will inflict minor damage and cause the victim to fall down. Both you
+and the victim will then be unable to respond to any commands for a short
+duration. If you fail to bash successfully, you will lose your balance and
+fall. It is more difficult to bash someone who is sitting/resting already,
+although you can inflict greater damage. It is much easier to bash someone
+if you are using a shield. Some creatures may be unbashable due to size or
+other considerations.
+
+NOTE: Bash will not work in places where there is no footing.
+</content>
+</help-file>

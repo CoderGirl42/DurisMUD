@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FLESH ARMOR"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent of caster
+Type of spell:  Enchantment
+
+This spell causes your flesh to gain a harden look to it. Protecting you
+a bit more from damage.
+</content>
+</help-file>

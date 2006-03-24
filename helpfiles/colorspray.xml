@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"COLOR SPRAY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Color Spray&quot; causes a burst of multi-colored magical energy to issue forth
+from the caster's fingertips, which can stun the victim or knock them
+unconscious.
+</content>
+</help-file>

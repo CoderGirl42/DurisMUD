@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"UNHOLY STRENGTH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Unholy Strenth&quot; expands the lifeforce capacity of the victim by a
+significant amount for a limited period of time. The amount of lifeforce
+granted is dependent on the proficiency of the caster.
+</content>
+	<see-also file="vitality"/>
+</help-file>

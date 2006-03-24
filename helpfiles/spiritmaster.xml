@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SPIRITMASTER</title>
+	<category type="MultiClass"/>
+<content>
+A Spiritmaster is a multi-class Shaman/Cleric.
+
+Notes on Spiritmaster:
+Shamans use totems, and memorize spells without spellbooks.
+Clerics pray, and require no spellbooks or totems.
+If you start as a Shaman, you will memorize spells, but you will no longer
+need totems, for ANY of your spells.
+If you start as a Cleric, you will pray spells, but again, you will not
+need totems, for ANY of your spells.
+</content>
+</help-file>

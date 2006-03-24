@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SEARCH</title>
+	<category type="Command"/>
+<content>
+Syntax:  search &lt;container&gt;
+         search
+
+There are times when items, items in containers, doors or even creatures
+and players are not evident. This command may or may not reveal such things
+to you. You may have to search several times to find what is hidden, this
+is based on how intelligent of a creature you are.
+</content>
+	<see-also file="hide"/>
+</help-file>

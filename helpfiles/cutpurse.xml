@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CUTPURSE</title>
+	<category type="Specialization"/>
+<content>
+As their name suggests, the Cutpurse is experienced in the fine art of
+stealing. They have an enhanced steal and can take off with a targets
+belongings without being detected. They can also use lightning fast
+reflexes to strike their target with a high amount of damage. With a trap
+they can be alerted when an enemy is near. 
+
+Skills
+---------------------------------------------------------------------------
+30th level:     Enhanced Steal
+36th level:     Sneaky Strike
+41st level:     Quick Step
+56th level:     Trap
+</content>
+	<see-also file="trap"/>
+	<see-also file="speclist"/>
+</help-file>

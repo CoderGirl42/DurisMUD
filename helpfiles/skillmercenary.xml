@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_MERCENARY</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills available to the Mercenary class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h flaying, 1h piercing, 1h slashing,
+             2h bludgeon, 2h flaying, 2h slashing, backstab, bandage,
+             capture, carve, climb, dodge, double attack, dual wield,
+             first aid, fishing, headbutt, hide, kick, mine, mount, parry,
+             rescue, riposte, shield block, swim, switch opponents, track,
+             unarmed damage
+20th level:  tackle, appraise            
+30th level:  reach weapons
+51st level:  switch opponents, throat crush
+56th level:  double headbutt, triple attack 
+
+Mercenary Specializations
+---------------------------------------------------------------------------
+Brigand, Bounty Hunter
+</content>
+	<see-also file="mercenary"/>
+</help-file>

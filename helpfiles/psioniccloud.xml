@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PSIONIC CLOUD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect:	&lt;victim&gt;
+Aggressive:	Yes
+Cumulative:	N/A
+Duration:	Dependent on proficiency of caster
+
+&quot;Psionic cloud&quot; sends out a wave towards the caster's victims, with the
+chance of lowing the power and vigor of everyone in the room.
+</content>
+</help-file>

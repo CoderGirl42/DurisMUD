@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, WIZMSG"</title>
+<content>
+Syntax:  wizmsg [&lt;level&gt;] &lt;text&gt;
+
+With no level arguments, it will deliver a message to all the gods. This
+command will also allow you to specify the minimum level of god who can
+hear your message. Currently &lt;level&gt; cannot go below the lowest god level
+or above the highest one.
+</content>
+</help-file>

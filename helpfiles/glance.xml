@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GLANCE</title>
+<content>
+Syntax: glance [opponent]
+        glance &lt;target&gt;
+
+While in battle, it is often advantageous to check the health condition of
+your comrades or the mob that you are fighting. Instead of using the &quot;look&quot;
+command, which will list all the equipment the player or mob is wearing,
+use the &quot;glance&quot; command. This command will provide you with a synopsis of
+the current health of the mob or player that you are glancing at. Others
+cannot see you glancing.
+</content>
+	<see-also file="look"/>
+</help-file>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STAFF MASTERY"</title>
+	<category type="Skill"/>
+<content>
+This skill will grant the Necrolyte a bonus when wielding a staff type 
+weapon.
+</content>
+	<see-also file="necrolyte"/>
+	<see-also file="weapons"/>
+</help-file>

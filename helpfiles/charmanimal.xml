@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CHARM ANIMAL"</title>
+	<category type="Innate"/>
+<content>
+&quot;Charm Animal&quot; allows you to enchant an animal mob, causing it to follow 
+you around and follow your orders to an extent. They will neither attack you
+nor leave you while charmed. They will only stop following orders from you
+after you attack it, it dies or you rent from the game.
+</content>
+</help-file>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FLAME BLADE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Forever
+Type of spell:  Summoning
+
+This spell summons a blade of pure flame to appear for the Druid to wield.
+</content>
+</help-file>

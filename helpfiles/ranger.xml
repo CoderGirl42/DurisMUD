@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>RANGER</title>
+	<category type="Sub-Class of: Fighter"/>
+<content>
+Rangers are Fighters who are trained and skilled at woodland survival and
+techniques. They are one with nature and they are the best in the world at
+two-weapon combat. Although, Rangers are not quite as generally skilled in 
+battle as Warriors are, they have the advantage of possessing limited 
+spell-casting abilities. These abilities are granted to them once they 
+progress upward in level and become powerful enough to use the magic as a 
+reward for their mastery of woodland survival.
+
+Allowable races:  Human, Grey Elf, Half-Elf, Centaur
+Innate abilities: Outdoor Sneak
+Equipment usage:  Rangers have their own classification of item
+                  restriction. They can use almost all weapons and most
+                  types of armor. They are somewhat limited in their use of
+                  miscellaneous magical items.     
+
+<R>NOTE</R>: Rangers must stay good aligned or else they lose their magical
+     abilities until they mend their ways.
+</content>
+	<see-also file="skillranger"/>
+</help-file>

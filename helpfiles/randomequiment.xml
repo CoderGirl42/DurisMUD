@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>RANDOM "RANDOM EQUIMENT" "RANDOM MOB" "RANDOM ZONE"</title>
+<content>
+The chaotic nature of Duris manifest's itself in the spontaneous creation
+of creatures, areas and equipment in places not generally found.
+
+Random Equipment
+---------------------------------------------------------------------------
+These items are forged by the swirl of powers inherent upon that moment of
+death, and can occasionally be found on the corpses of defeated creatures.
+
+Random Mobs
+---------------------------------------------------------------------------
+Tossed through the ether from latent world magic's gone awry, creatures far
+from home can be found wandering lost on the lands. Beware approaching 
+these bewildered souls, as fear may drive them past all reasoning and
+sanity into beings of unrivaled aggression and power.
+
+Random Zones
+---------------------------------------------------------------------------
+Powerful shifts and changes within the earth's crust toss up areas from the
+depths. Still half buried, these require a shovel and some hard digging
+before they can be accessed and explored to find what treasures and beasts
+may lurk hidden and lie within.
+
+</content>
+	<see-also file="zone"/>
+	<see-also file="mob"/>
+	<see-also file="equipment"/>
+	<see-also file="dig"/>
+</help-file>

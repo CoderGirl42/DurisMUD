@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BREATHE "INNATE BREATHE"</title>
+	<category type="Innate"/>
+<content>
+Syntax:		inn breathe &lt;victim&gt;
+
+This command sends a shuddering burst of cold from the barbarian's mouth
+towards his/her victim.
+</content>
+</help-file>

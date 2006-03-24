@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ALCHEMIST</title>
+	<category type="Sub-Class of: Magic-User"/>
+<content>
+Alchemists are a class that can make things out of seemingly mundane
+materials. They have the ability to craft items of all types including body
+armor, rings, bracelets, etc. They also have the ability to forge weapons.
+In addition to crafting and forging they can mix potions and throw them at
+their enemies and at higher levels they are said to be capable of creating
+scrolls and the ability to magically enhance items.   
+
+Allowable races: 	Human, Gnome, Goblin, Orc.  		
+Equipment usage:        Like all classes on Duris, alchemists have their
+                        own specific item restrictions. They are restricted
+                        in their use of weapons, mainly using maces, clubs
+                        and staves. Some exceptions are allowed, however.
+                        They can wear almost any type of armor, but are
+                        mildly restricted in the use of miscellaneous
+                        magical items.	
+</content>
+	<see-also file="craft"/>
+	<see-also file="forge"/>
+	<see-also file="mix"/>
+	<see-also file="skillalchemist"/>
+</help-file>

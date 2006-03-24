@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MEMORIZE PRAY FORGET</title>
+	<category type="General Information"/>
+<content>
+Syntax:  memorize | pray (while resting)
+         memorize &lt;spellname&gt; | pray &lt;spellname&gt; (while resting)
+         forget &lt;spellname&gt;
+
+&quot;Memorize&quot; and &quot;Pray&quot; let you put a spell in your active repertoire. To 
+successfully memorize or pray for a spell, you must be holding or have in 
+your inventory the appropriate item, dependent on your class. Magic-User 
+subclasses must have a spellbook which contains the scribed spell to 
+successfully memorize it.
+
+Memorizing or praying without specifying a spellname allows you to
+resume your studies/prayers and lists the time remaining to complete
+each spell.
+
+&quot;Forget&quot; lets you purge a spell from your active repertoire.
+</content>
+	<see-also file="spellslot"/>
+	<see-also file="cast"/>
+	<see-also file="practice"/>
+	<see-also file="meditate"/>
+</help-file>

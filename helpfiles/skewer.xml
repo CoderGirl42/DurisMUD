@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKEWER</title>
+	<category type="Skill"/>
+<content>
+Syntax:         bash &lt;victim&gt;
+
+When bashing, there is a chance to &quot;Skewer&quot; the enemy. A successful
+&quot;Skewer&quot; will inflict more damage than the average &quot;Bash&quot; and will keep the
+opponent on the ground for a longer time.
+</content>
+	<see-also file="bash"/>
+</help-file>

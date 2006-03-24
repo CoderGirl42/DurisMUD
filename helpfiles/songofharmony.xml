@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF HARMONY"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	Yes
+Cumulative:	N/A	
+Duration:	Instantaneous/Depends
+Type of song:	Generic
+
+The Bard's Song of Discord rings through the air in waves, causing physical
+damage to all those of 'evil' in its path. It will affect all creatures of
+evil, but be they friend or foe so be warned!
+</content>
+	<see-also file="songofdiscord"/>
+	<see-also file="dispelevil"/>
+	<see-also file="instrument"/>
+</help-file>

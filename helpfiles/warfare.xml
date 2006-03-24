@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WARFARE</title>
+	<category type="General Information"/>
+<content>
+The following is a list of all HELP available that deals with battle.  Type 
+&quot;help &lt;entry&gt;&quot; for more information.
+
+Example:  &quot;help ac&quot; will bring up an explanation of armor class and
+how it affects you.
+
+AC &quot;ARMOR CLASS&quot;        AGGR AGGRESSIVE         CONSIDER
+DAMAGE                  DISBAND                 EQUIPMENT
+EXPERIENCE XP           FLEE                    FOLLOW
+GLANCE                  GROUP                   GUILD
+HOLD GRAB               INVENTORY               KILL HIT
+WIMPY                   WIELD                   PRACTICE
+RACEWARS PKILL          REMOVE                  SCORE ATTRIBUTES
+SKILLS                  SPLIT                   TANK
+THAC0                   TROPHY                  VICIOUS
+WEAR                                     
+</content>
+</help-file>

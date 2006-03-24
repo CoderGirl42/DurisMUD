@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FLAME REAVER"</title>
+	<category type="Specialization"/>
+<content>
+
+The Flame Reaver has mastered the use of <r>fi</r><R>re</R> and it shows in their 
+abilities. They gain the power to shroud themselves in fire and to unleash
+fireballs by drawing upon the power of their flaming swords. They may also
+tap into the fiery shroud surrounding them to send out waves of incendiary
+gates at their opponents, though this will drain the shroud until it finally
+will dissipate.
+
+Innate Abilities
+---------------------------------------------------------------------------
+31st level:	Immolate
+
+Spells
+---------------------------------------------------------------------------
+7th circle:     Fireshield
+
+</content>
+	<see-also file="reaver"/>
+	<see-also file="fireshield"/>
+	<see-also file="pyrokinesis"/>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ICE MISSILE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;victim&gt; &lt;direction&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Cold
+
+&quot;Ice Missile&quot; causes one to four missiles to fly from the caster's 
+fingertips, hitting the victim. The number of missiles is based on the 
+caster's ability.
+</content>
+</help-file>

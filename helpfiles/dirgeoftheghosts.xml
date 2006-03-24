@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DIRGE OF THE GHOSTS"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Room
+Aggressive:	No
+Cumulative:	No	
+Duration:	Dependent on proficiency of singer
+Type of song:	Enchantment
+
+Dirge of the Ghosts allows you to fly around wherever you want, regardless 
+of terrain, and helps movement. Flying is not possible in some small caves
+or tunnels. The song itself will attempt to fly any players or mobs in a
+room that are not flying.
+
+<R>Warning</R>: If your spell expires while you are high in the air or
+without any ground beneath you, the fall can hurt or kill you. This 
+could result in the possibility of an irretrievable corpse.
+</content>
+	<see-also file="instrument"/>
+	<see-also file="wail"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+</help-file>

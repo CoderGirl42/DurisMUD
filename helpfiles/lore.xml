@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LORE</title>
+	<category type="Skill"/>
+<content>
+Area of Effect: &lt;object&gt; | &lt;victim&gt;
+
+The skill &quot;Lore&quot; allows you to try and ascertain more information about 
+something's or someone's properties.
+</content>
+	<see-also file="look"/>
+	<see-also file="examine"/>
+	<see-also file="identify"/>
+	<see-also file="legend"/>
+	<see-also file="lore"/>
+</help-file>

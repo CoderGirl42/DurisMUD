@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FARSEE</title>
+	<category type="Spell"/>
+<content>
+Syntax:         look &lt;direction&gt;
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Farsee&quot; enables the caster to look into an adjacent room, as if the
+caster were actually there, but without the corresponding risks.
+
+This can also be an innate ability.
+</content>
+	<see-also file="look"/>
+</help-file>

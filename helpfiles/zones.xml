@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ZONES</title>
+	<category type="General Information"/>
+<content>
+The majority of the Duris world is made up of different areas commonly
+called &quot;zones&quot;. Within these zones, a variety of things can be found, they
+are filled with mobs, equipment and numerous other things. A set theme 
+normally follows within each zone, created by the zone builder, and there 
+several different level ranges a zone is intended for. Before exploring, it 
+might be wise to type &quot;credits&quot;.
+</content>
+	<see-also file="zonegod"/>
+	<see-also file="areamaking"/>
+	<see-also file="credits"/>
+</help-file>

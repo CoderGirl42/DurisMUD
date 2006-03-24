@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DEATH KNIGHT"</title>
+	<category type="General Information"/>
+<content>
+The Death Knight is a twisted form of a Lich. A race of undead warriors
+spawned by a demon prince (popular thought credits Demogorgon), from fallen
+human paladins. No one knows exactly why this was done except for the
+obvious explanation: The raising of an army that was never used. The
+perverted soul of the former paladin lives through eternal torment in its
+undead state, killing anything that will satisfy its rage at what has been
+done to it.
+
+Allowable races:       Anti-paladin, Warrior, Mercenary.
+
+Death knight stats:    Unlike Liches, Death Knights wear heavy armor and 
+                       the weapons of warriors. They will usually be riding
+                       a nightmare which they often summon to do their
+                       bidding.
+
+Innate abilities: Ultravision, summon mount, anti-good, vampiric touch,
+                  fireball, fireshield, firestorm, protection from fire
+</content>
+	<see-also file="antipaladin"/>
+	<see-also file="skillantipaladin"/>
+</help-file>

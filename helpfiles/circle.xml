@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CIRCLE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         circle &lt;victim&gt;
+Aggressive:     Yes
+
+Circling is an attempt to backstab the opponent while in combat. This is
+only possible if you are not tanking, i.e., the target of the opponent who
+is taking the damage.
+
+&quot;Circle&quot; also refers to spheres of knowledge of spell casting classes, with
+higher circles denoting more powerful groups of spells. Spell casters (all
+Mage and Priest sub-classes) and &quot;semi-casters&quot; (Rangers, Paladins, and
+Anti-Paladins) gain in circle at levels 6, 11, 16, 21, 26, 31, 36, 41, and
+46.
+</content>
+	<see-also file="spellcircle"/>
+	<see-also file="backstab"/>
+	<see-also file="tank"/>
+</help-file>

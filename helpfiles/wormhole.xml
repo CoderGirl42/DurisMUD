@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WORMHOLE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; &amp; &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Approximately 30 seconds or until its limit is reached
+Type of spell:  Generic
+
+This spell attacks the very fabric of space and time. Given enough 
+willpower, the caster can actually rip a hole in these barriers causing a 
+brief passage to open to the location of their choosing. Be warned, nature
+tends to correct this violation fairly quickly.
+</content>
+	<see-also file="shadowgate"/>
+	<see-also file="dispelmagic"/>
+	<see-also file="moonwell"/>
+</help-file>

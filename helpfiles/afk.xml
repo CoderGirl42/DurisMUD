@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>AFK BRB BBL</title>
+	<category type="Command"/>
+<content>
+Common acronyms used by players. These terms are commonly used on Duris by
+players rather than typing out the full words. They mean:
+
+     AFK   -away from keyboard
+     BRB   -be right back
+     BBL   -be back later
+     OMG   -oh my goodness
+
+They are also socials that can be used by simply typing them, announcing to
+a person or the room. You can type &quot;command socials&quot; for a full list.
+</content>
+	<see-also file="socials"/>
+</help-file>

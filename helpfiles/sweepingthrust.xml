@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SWEEPING THRUST"</title>
+	<category type="Skill"/>
+<content>
+Syntax: sweeping thrust &lt;victim&gt;
+
+In the heat of battle the Warrior will swing low and hard in their attack,
+sweeping their weapon at the legs of their opponent. A successful sweeping
+thrust will do enough damage to the legs of the victim to knock them from
+their feet, causing them lose some of the movement.
+</content>
+</help-file>

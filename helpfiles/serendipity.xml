@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SERENDIPITY</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+This enchantment makes the recipient a slightly stronger magnet for the
+randomly benevolent forces of the universe.  Things just might start
+going your way a little more while under this spell.
+</content>
+	<see-also file="luck"/>
+</help-file>

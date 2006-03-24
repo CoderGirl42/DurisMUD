@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FROST MAGUS"</title>
+<content>
+The &quot;Frost Magus&quot; aligns itself with the offensive nature of the storms. 
+They are able to call upon the rage of the wind to aid them in their 
+regeneration of magic and summon a furious squall to smite their victims. 
+
+Spells
+---------------------------------------------------------------------------
+10th circle:    Windrage
+11th circle:    Squall
+
+</content>
+	<see-also file="ethermancer"/>
+	<see-also file="windrage"/>
+	<see-also file="squall"/>
+</help-file>

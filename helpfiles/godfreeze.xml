@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, FREEZE"</title>
+<content>
+Syntax:  freeze &lt;victim&gt;
+
+The mud will accept no commands from the victim until you freeze them
+again, toggling it off. This is a very effective command, and should be
+used sparingly.
+</content>
+</help-file>

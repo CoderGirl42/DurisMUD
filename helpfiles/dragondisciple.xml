@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DRAGON DISCIPLE"</title>
+<content>
+A monk specialized in the Way of the Dragon is usually referred to as a 
+Dragon Disciple. They focus on abilities derived of the power and might of 
+the  ancient dragons. The abilities of the followers of the this path 
+manifest themselves in four different ways.
+
+Innates
+---------------------------------------------------------------------------
+36th level:	Mind of Dragon
+
+Skills
+---------------------------------------------------------------------------
+31st level: 	Enhanced springleap
+46th level:     Fist of Dragon
+51st level:	Enhanced heroism
+</content>
+	<see-also file="monk"/>
+	<see-also file="mind"/>
+	<see-also file="of"/>
+	<see-also file="dragon"/>
+	<see-also file="fist"/>
+	<see-also file="of"/>
+	<see-also file="dragon"/>
+	<see-also file="springleap"/>
+	<see-also file="heroism"/>
+</help-file>

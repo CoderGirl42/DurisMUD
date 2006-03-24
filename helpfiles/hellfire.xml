@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HELLFIRE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Caster
+Aggressive:     No
+Cumulative:     n/a
+Duration:       Dependant on level of caster
+Type of spell:  Protection
+
+&quot;Hellfire&quot; opens a channel from the bowels of hell unto the antipaladin
+himself. Imbued with the power of pure hellborne fire, the antipaladin not
+only has a more acute vampiric touch, but his touch extends through to the
+tip of his weapon. In other words, he can vamp while wielding and the vamp 
+is based only on the dice of that weapon.
+</content>
+	<see-also file="vampirictouch"/>
+</help-file>

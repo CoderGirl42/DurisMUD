@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHRIEK</title>
+	<category type="Innate"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  General
+
+The astounding vocal range of a Disharmonist has given them the ability to
+utilize their very voice as a weapon against their foe. The terrible 
+shriek of the Disharmonist causes disturbing damage to the enemy despite
+taking a toll on their throat, forcing them to rest for a period of time
+before they can again strain their range to such a high limit.
+</content>
+	<see-also file="disharmonist"/>
+	<see-also file="bard"/>
+</help-file>

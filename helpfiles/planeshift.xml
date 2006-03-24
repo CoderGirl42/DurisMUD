@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PLANE SHIFT"</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn plane &lt;planename&gt;
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+&quot;Plane Shift&quot; transports the caster instantly to another plane of existence.  
+The shift is a one way trip and does now allow for a return home, except by 
+another means of teleportation.
+
+The planes that may be shifted to are:
+
+	-<y>The Elemental Plane Of Earth</y>
+	-<b>The Elemental Plane Of Water</b>
+	-<C>The Elemental Plane Of Air</C>
+	-<r>The Elemental Plane Of Fire</r>
+	-<R>The Plane Of Avernus On The Nine Hells</R>
+	-<L>The Negative Material Plane</L>
+	-<L>The Ethereal Plane</L>
+	-The Astral Plane
+
+<R>Warning:</R> Shifting can be dangerous, as you just may land on a aggro
+        mob!
+</content>
+	<see-also file="gate"/>
+</help-file>

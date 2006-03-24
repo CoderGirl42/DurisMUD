@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>AGILITY</title>
+	<category type="General Information"/>
+<content>
+Agility is a measure of how coordinated you are overall; how well you
+handle movements of your whole body. It is the primary attribute of Rogue
+and Fighter type classes. For Thieves, it will enable them to have better 
+chances with skills such as &quot;Trip&quot;. For Fighters and Rogues, it will 
+increase the rate at which they &quot;Dodge&quot; and &quot;Parry&quot; attacks.
+</content>
+	<see-also file="enhanceagility"/>
+	<see-also file="statistics"/>
+</help-file>

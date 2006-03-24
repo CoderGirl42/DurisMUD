@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SENSE HOLINESS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Sense Holiness&quot; grants the recipient the ability to detect who is holy
+and who is not.  &quot;Holy&quot; is defined as being of a religious order and pure 
+of spirit, whether that spirit is purely good or evil.
+</content>
+</help-file>

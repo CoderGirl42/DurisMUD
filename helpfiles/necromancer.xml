@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NECROMANCER</title>
+	<category type="Sub-Class of: Magic-User"/>
+<content>
+Necromancers are the branch of magic-users devoted to spells dealing with
+the dead and undead. The spells available to a Necromancer are primarily
+offensive in nature and are not granted by a deity. In fact, many of a
+Necromancer's spells are viewed as evil by the gods. However, the
+Necromancer's dark art can transcend the boundary between life and death,
+and harness the energies of those on both sides.
+
+Allowable races:        Human, Half-Elf, Drow, Orc, Goblin, Githyanki,
+                        Lich, Vampire
+Innate abilities:       No class-specific innate abilities.
+Equipment usage:        Necromancers have their own classification of item
+			restriction. They have a small range of weapons
+			that they can wield and a smaller range of armor to
+			choose from. They can, however, use most magical
+			items.
+			
+</content>
+	<see-also file="skillnecromancer"/>
+</help-file>

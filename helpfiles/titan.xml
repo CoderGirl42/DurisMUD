@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"TITAN"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: one titan
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+When cast, &quot;Titan&quot; creates a illusionary 60 foot tall replica of the 
+caster that will carry out his or her orders without question until ether 
+the victim dies or the illusion has taken enough damage!
+</content>
+</help-file>

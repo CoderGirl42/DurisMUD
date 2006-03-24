@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"PRISMATIC SPRAY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       Dependent on color of beam
+Type of spell:  Generic
+
+&quot;Prismatic Spray&quot; is an extremely powerful area-effect spell that fires 
+multiple beams of color, striking multiple targets in the room. Each color 
+of beam stands for a different effect:
+
+        red             most damage
+        orange          medium damage
+        yellow          least damage, though still sizable
+        blue            &quot;Minor Paralysis&quot;
+        indigo          &quot;Feeblemind&quot;
+        green           &quot;Poison&quot;
+        violet          &quot;Dispel Magic&quot;
+        azure           &quot;Blindness&quot;
+
+If there is no color effect, then the beam misses.
+</content>
+	<see-also file="minorparalysis"/>
+	<see-also file="dispelmagic"/>
+</help-file>

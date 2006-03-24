@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SHADOW AURA"</title>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Up to 5 hours
+Type of spell:  Enchantment
+
+This spell intensifies the aura that the victim's life force emits.
+When soul linked to a warlock, their energy transfer is greatly
+intensified.
+</content>
+	<see-also file="soullink"/>
+</help-file>

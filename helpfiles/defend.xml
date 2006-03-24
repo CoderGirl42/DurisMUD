@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DEFEND</title>
+	<category type="Skill"/>
+<content>
+Syntax:         defend &lt;name&gt;
+
+This is a very advanced defensive skill. A defending paladin has a chance
+to protect a chosen person from offensive spells or incoming blows.
+</content>
+	<see-also file="guard"/>
+	<see-also file="rescue"/>
+</help-file>

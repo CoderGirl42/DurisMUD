@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BOUNTY HUNTER"</title>
+<content>
+The Bounty Hunter uses stealth and wits to lure their victims. They can set
+traps to locate the enemy and hide themselves more effectively than their
+unspecialized Mercenary counterparts. With the skill to eavesdrop and their
+enhanced view of the world, they make excellent scouts.
+
+Skills
+---------------------------------------------------------------------------
+30th level:     Listen
+51st level:     Trap  
+
+Innate Abilities
+---------------------------------------------------------------------------
+31st level:     Perception 
+41st level:     Battleaid 
+
+</content>
+	<see-also file="perception"/>
+	<see-also file="battleaid"/>
+	<see-also file="listen"/>
+	<see-also file="trap"/>
+	<see-also file="mercenary"/>
+</help-file>

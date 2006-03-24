@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"INTELLECT FORTRESS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       1 day
+Type of Spell:  Enchantment
+
+&quot;Intellect Fortress&quot; fortifies the mind of the caster with a superior
+intelligence. This spell helps reduce the effects of mental attacks.
+</content>
+</help-file>

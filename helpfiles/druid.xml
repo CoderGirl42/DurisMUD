@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DRUID</title>
+	<category type="Sub-Class of: Priest"/>
+<content>
+Druids are powerful priestly types that concentrate their discipline toward
+the betterment of nature and world preservation. They generally worship 
+deities of the forest and of nature and will dispatch anyone attempting to 
+desecrate or destroy a forest. Although their spell-like powers are 
+primarily defensive in nature, they do command some very potent offensive 
+magic once they attain the higher circles.
+
+Druids have shunned the pantheon of gods and allied themselves with the 
+natural world instead. They must 'commune' with their surroundings to 
+derive the natural essence that is necessary for their spells. This essence
+is most abundant in the untamed wilds.
+
+The Druid class does not pray for spells like other &quot;priests&quot;, instead,
+their spell slots refill automatically as long as they are not fighting,
+casting, unconscious, etc. It is unnecessary to designate a specific array
+of spells to memorize (see below). To offset this, the rate of spell 
+recovery depends on the availability of natural essence in the Druid's 
+surroundings. This essence is readily available in forests, but becomes 
+more scarce on other types of terrain, especially indoors. Furthermore,
+the essence is automatically channeled into the lowest circle that is not 
+completely full before it is channeled into higher circles, so it is 
+impossible to prioritize what spells to regain first. Overall, Druids have 
+slower, more constant spell recovery.
+
+Allowable races:        Human, Grey Elf, Half-Elf, Centaur
+
+Innate abilities:       Shapechange, Charm Animal, Plane Shift
+
+Equipment Usage:        Druids fall under the Priest classification of
+                        item restriction. This means they are generally 
+                        restricted to the use of non-edged weapons. Some 
+                        exceptions are made depending on which deity the 
+                        druid worships. They can wear almost all types of 
+                        armor, and are only mildly restricted in usage of 
+                        certain miscellaneous magical items.  
+</content>
+	<see-also file="skilldruid"/>
+	<see-also file="commune"/>
+</help-file>

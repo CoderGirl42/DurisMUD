@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TRACK</title>
+	<category type="Skill"/>
+<content>
+Syntax:         track &lt;victim&gt;
+                track off
+Aggressive:     No
+
+This allows you to track your quarry. How successfully you track down a
+potential victim depends on your skill level and how far away your target
+is. You can not track down specific racewar enemies, even if you happen to
+know the name of a particularly notorious foe. When you have given up the
+trail, you must type 'track off' in order stop tailing the quarry.
+</content>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHOUT</title>
+	<category type="Command"/>
+<content>
+Syntax:         shout &lt;text&gt;
+                toggle shout
+
+&quot;Shout&quot; sends a message to all players within a certain range of you. If 
+you are in a zone, the message will only be heard by those in that  
+particular zone. If you are on the world map, the message will only be  
+heard by those on that particular continent. In order to hear shouts, you 
+must be conscious and have shout toggled on.
+</content>
+	<see-also file="toggleshout"/>
+</help-file>

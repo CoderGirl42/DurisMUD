@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>JUDGEMENT</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Judgement&quot; calls down holy retribution down upon everyone and everything in 
+the same room unfortunate enough to be evil or undead. This mighty spell has 
+a chance of incapacitating its victims in a variety of unpleasant manners. 
+Victims that are sufficiently lower level than the attacking Paladin suffer 
+more dire consequences.
+</content>
+	<see-also file="apocalypse"/>
+</help-file>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FOLLOW</title>
+	<category type="Command"/>
+<content>
+Syntax:  follow &lt;character&gt;
+         toggle follow
+
+If two or more players decide to travel in the same direction, why not
+have one of them lead and the rest follow?
+
+For example:
+
+Fizzwig and Manwich decide to go to visit the Sorcerers Guild. Fizzwig 
+follows Manwich by typing:
+
+        'follow manwich'
+
+Manwich then leads the way and Fizzwig just sits back and enjoys the 
+scenery. Once Fizzwig gets tired of following Manwich around, she can just 
+type:
+
+        follow me
+           -OR-
+        follow self
+           -OR-
+        follow fizzwig
+</content>
+	<see-also file="group"/>
+</help-file>

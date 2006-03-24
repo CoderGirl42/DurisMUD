@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHREWTAMENESS</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Animal
+
+This spell decreases the victim's strength and damage-dealing ability,
+causing him to be less of a threat to the caster.
+</content>
+	<see-also file="lionrage"/>
+</help-file>

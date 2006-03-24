@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ASSIST</title>
+	<category type="General Information"/>
+<content>
+Syntax:         assist &lt;target&gt;
+Aggressive:     Yes
+
+This command is used to come to the aid of a particular person, and you
+begin fighting whomever (or whatever) they are fighting. It is useful to
+prevent possibly deadly mistakes if there is more than one of a particular
+monster in a room.
+</content>
+</help-file>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SUMMON HORDE"</title>
+	<category type="Innate"/>
+<content>
+Syntax:         summon horde
+Aggressive:     on demand
+Level:          10+
+
+This innate skill allows the Orc to call upon his brethren for assistance
+in battle.  A great many number of low level orc warriors will show up in
+a short amount of time to help the Orc in his battles.
+</content>
+</help-file>

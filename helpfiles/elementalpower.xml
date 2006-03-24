@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ELEMENTAL POWER"</title>
+	<category type="Innate"/>
+<content>
+This skill causes all elemental spells to do more damage. It is a passive
+innate and is always active.
+</content>
+	<see-also file="elementalist"/>
+</help-file>

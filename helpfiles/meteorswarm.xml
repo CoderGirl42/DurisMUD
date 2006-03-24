@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>METEORSWARM</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Meteorswarm&quot; pulls a large number of small meteors out of the dark vacuum
+surrounding the world and calls them directly to the caster, smashing into
+their victims.
+</content>
+</help-file>

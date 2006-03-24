@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MINSTREL</title>
+	<category type="Specialization"/>
+<content>
+Minstrel's are the elite of the classic bards or piper, they have taken
+their pure bardic abilities and enhanced and expanded the power and ability
+of them. Their enhanced songs now touch wider ranges of scale, giving many
+different effects and abilities.
+
+Skills
+---------------------------------------------------------------------------
+36th level:     Legend Lore
+
+Songs
+---------------------------------------------------------------------------
+36th level:     Song of Healing / Song of the Unholy (Enhanced)
+36th level:     Song of Harming / Song of Decay (Enhanced)
+41st level:     Song of Storms / Chime of the Vampire (Enhanced)
+46th level:     Song of Chaos / Song of the Night (Enhanced)
+51st level:     Song of Drifting (Drums)
+
+Innate Abilities
+---------------------------------------------------------------------------
+If the Minstrel has extraordinary skill level in a particular instrument,
+they are able to continue to play and sing while blind.
+
+</content>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+	<see-also file="speclist"/>
+	<see-also file="shriek"/>
+	<see-also file="shatter"/>
+</help-file>

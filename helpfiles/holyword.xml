@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"HOLY WORD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       Dependent on effect and proficiency of caster
+Type of spell:  Generic
+
+This good spell affects only those of evil alignment and can cause the 
+following effects, dependent on the proficiency of the caster: kill, 
+blindness, stun or massive damage. If the caster's alignment is evil, the 
+spell can have nasty side effects.
+</content>
+	<see-also file="unholyword"/>
+</help-file>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_REAVER</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all the skills available to the Reaver class.
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h slashing, bandage, carve, climb, dodge, double attack,
+             dual wield, first aid, fishing, mine, mount, retreat, scribe,
+             shield block, switch opponents
+10th level:  sorcerous spell knowledge
+11th level:  blindfighting, quick chant
+18th level:  parry
+21st level:  meditate
+26th level:  riposte
+41st level:  trip
+
+Spells
+---------------------------------------------------------------------------
+5th Circle:  Baladors Protection, Chill Touch
+6th Circle:  Ray of Enfeeblement
+7th Circle:  Ferrix Precision, Lightning Bolt
+8th Circle:  Dispel Magic, Fireball, Kanchelsis Fury
+9th Circle:  Eshabalas Vitality, Feeblemind
+10th Circle: Firestorm, Immolate
+11th Circle: Daragors Flaming Sword, Disintegrate, Squeriks Sneaky Ways
+
+Reaver Specializations
+---------------------------------------------------------------------------
+Blood Reaver, Flame Reaver
+</content>
+	<see-also file="reaver"/>
+	<see-also file="memorize"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>IMMOLATE</title>
+	<category type="Spell"/>
+<content>
+Area of effect:	&lt;victim&gt;
+Aggressive: 	Yes
+Cumulative:	Yes
+Duration: 	Varies
+Type of Spell: 	Fire
+
+A conflagration of fire is sent towards the victim, burning their flesh
+from one to five rounds. 
+</content>
+</help-file>

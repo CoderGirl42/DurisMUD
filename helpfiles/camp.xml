@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CAMP</title>
+	<category type="General Information"/>
+<content>
+Syntax:         camp
+
+When you are adventuring by road, it is often not advantageous to continue
+your journey through the night, so Duris has a &quot;Camp&quot; option. Locate a safe 
+place to camp for the night and then type &quot;camp&quot;. You must then wait a
+period of time before you can exit the game. If you leave the room in which 
+you are trying to set up camp or if you fight, camping will automatically
+cancel. Once you fully camp, you will be sent to the main menu, just as 
+when you rent.
+
+<R>Warning</R>: If you go link-dead, camping will stop (linkdead rent does 
+        *not* reset your homeroom).
+</content>
+	<see-also file="quit"/>
+	<see-also file="rent"/>
+	<see-also file="link"/>
+</help-file>

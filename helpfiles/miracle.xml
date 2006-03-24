@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MIRACLE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;group&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Miracle&quot; is just that, a miracle. Casting this potent spell grants 
+everyone in the Cleric's group the spells &quot;Vitality&quot;, &quot;Armor&quot;, and &quot;Bless&quot;.
+</content>
+	<see-also file="vitality"/>
+	<see-also file="armor"/>
+	<see-also file="bless"/>
+</help-file>

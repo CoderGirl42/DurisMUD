@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>EXPERIENCE XP EXP LEVELS</title>
+	<category type="General Information"/>
+<content>
+Syntax:   exp (to see how much experience you currently have)
+
+Whenever you kill a monster or a player, you earn experience points. Once 
+you have earned enough experience, you raise a level in your class. Duris 
+has 56 mortal levels; you can check your progress by typing 'experience'.  
+The levels after 50 are only received by quaffing a specific potion, found 
+in zones.
+
+Here are a few things you should know about experience points:
+
+	-Each pulse you hit or miss a monster when you are engaged
+	  you get experience points. 
+	-Healing a person who is in combat and grouped with you will 
+	  give you a lot of experience points.
+   	-You get exp for each spell you cast upon a monster or a player
+	  in your group if you are in combat. The amount of experience
+ 	  points received depends on which circle the spells is in. You
+	  also receive experience points for using skills in combat, such
+	  as bash, backstab, kick and so on.
+	-If you kill a monster of a higher level than yourself, you get 
+ 	  bonus experience points.
+	-If you kill a monster of a lower level, you will gain less 
+          experience points.
+	
+</content>
+	<see-also file="group"/>
+	<see-also file="trophy"/>
+	<see-also file="death"/>
+</help-file>

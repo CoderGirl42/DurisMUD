@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CONFUSE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Room 
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+
+This potent spell bathes all living things within the vision of the caster 
+in pure mental confusion. This assault causes all exposed to it to react in
+various manners. There is no way to determine how any individual will react
+when thoroughly disoriented.
+</content>
+</help-file>

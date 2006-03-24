@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ARIEKS SHATTERING ICEBALL" ICEBALL</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Elemental
+
+The legendary shaman Ariek discovered eons ago how to rapidly cool the air
+before him and extract the moisture from it, almost instantly condensing 
+it into a large, jagged and sharp ball of ice. The ball of ice then propels
+itself blindingly fast towards its victim causing bloody wounds after
+shattering.
+</content>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SONG OF PROTECTION"</title>
+	<category type="Song"/>
+<content>
+Area of effect:	Group
+Aggressive:	No
+Cumulative:	No
+Duration:	Dependent on proficiency of singer
+Type of song:	Protection
+
+At all levels, this song will magically improve your armor class for a
+limited time. At higher levels this song has a chance of other affects,
+protecting those in the group from both physical and magical attacks.
+</content>
+	<see-also file="armorclass"/>
+</help-file>

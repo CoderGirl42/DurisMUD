@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DISEASE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent upon level of caster
+Type of spell:  Enchantment
+
+&quot;Disease&quot; mildly poisons the victim, causing some of its abilities to
+suffer for a short time.
+</content>
+</help-file>

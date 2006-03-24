@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MAULER</title>
+	<category type="Specialization"/>
+<content>
+As the name implies, Mauler's have increased their skills when it comes
+to the control of their takedown skills. With the enhanced ability to
+channel these skills, they have learnt to automatically to recover more 
+quickly when they use their skill to take down an opponent. It is also 
+said that Mauler's focus so intensely upon attacking their opponents that 
+some seem to not even feel pain when attacked. It's also been rumored 
+that some Mauler's have been angered so badly that they have been known to 
+nearly rip the an opponents weapon and arm from it's socket.
+
+Skills
+---------------------------------------------------------------------------
+41st Level:   Boiling Blood
+51st Level:   Mangle
+
+</content>
+	<see-also file="boilingblood"/>
+	<see-also file="mangle"/>
+</help-file>

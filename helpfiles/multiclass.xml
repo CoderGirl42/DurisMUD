@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MULTI-CLASS" MULTICLASS</title>
+	<category type="General Information"/>
+<content>
+Upon reaching level 50, you may &quot;multi-class&quot; your character, meaning to
+add a second class choice to your character. This is not without its drawbacks
+however. Also, once you multi-class you CANNOT later change your choice if you
+do not like it.
+
+Here are some things to first consider. First you can only multi into classes
+that are offered by your race. Some combinations are not available so using 
+the command 'multi' on your character will tell you which combinations ARE
+available. Multiclasses will get the worst of both classes. All classes have 
+dam mod and pulse bonuses/drawbacks. Casters tend to get dam mod penalties. If 
+you multi between a hitter and caster the combo would get the casters dam mod, 
+pulse and hp. If you multiclass with a class that has fewer slots than other 
+casters (such as a bard) the multiclass will the same number of slots as the 
+class with the least. A cleric/bard would get bard slots.
+
+The spells/skills of the secondary class are ALL moved up 5 levels. This means  
+if a secondary class got a skill at level 51 it will be moved up to 56. This 
+means  the multiclass will never be able to gain the 51 skills/spells of the 
+secondary class. This because multiclasses will be capped at level 55 or 
+lower.
+
+Multiclasses will only be able to wear the eq the prime class can wear. This 
+goes for all types of eq, arti as well as normal. Let me repeat that. You 
+can ONLY use artifacts that your prime class can use.
+
+The maximum level you can go up to as a multi-class will be 55. Your second
+class will always be -5. So at 55 the highest your second class will recognize
+is 50. Also, when you multi you lose your specialization you had and go back 
+to level 1, with level 1 hitpoints.  Here are the options available to each 
+class &quot;IF ALLOWED BY YOUR RACE&quot;. Also, for sake of balance, some  
+combinations are not allowed (and not on the list of course).
+
+-Cleric: Warrior, Druid, Shaman
+-Bard: Sorcerer, Rogue
+-Sorcerer: Conjurer
+-Warrior: Cleric, Mercenary
+-Ranger: Warrior, Druid
+-Anti-Paladin: Warrior
+-Paladin: Warrior
+-Druid: Shaman, Cleric
+-Shaman: Conjurer, Druid, Cleric, Reaver
+-Mercenary: Rogue, Warrior
+-Rogue: Bard, Mercenary
+-Reaver: Shaman
+-Conjurer: Shaman, Sorcerer
+
+Multi-Class Names
+</content>
+</help-file>

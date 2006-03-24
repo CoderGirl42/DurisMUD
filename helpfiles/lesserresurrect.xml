@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"LESSER RESURRECT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;corpse&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Healing
+
+This powerful spell draws apart the misty curtains of destiny, reaching
+back and reversing what was once done. Breathing life back into the corpse
+of the fallen, the caster resurrects and re-unites the soul with the body.
+</content>
+	<see-also file="handofdeath"/>
+</help-file>

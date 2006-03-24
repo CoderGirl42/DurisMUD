@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SONGS</title>
+<content>
+These are the basic skills of the bard and spectral piper, and have various 
+magical
+properties.  Certain songs are only effective on certain instruments.
+
+6th level:      song of sleep (Flute)
+                piper: elegy of nightmares (Flute)
+16th level:     song of calming (Harp)
+                piper: funereal hymn (Harp)
+                song of discord (Flute}
+                song of harmony (Flute)
+21st level:     song of protection (Horn)
+                piper: dirge of bones (Horn)
+                song of forgetfulness (Mandolin)
+                piper: hymn of the zombie (Mandolin)
+                song of cowardice (Drums)
+                piper: terrorizing rhythms (Drums)
+26th level:     song of peace (Harp)
+                piper: requiem of the crypts (Harp)
+31st level:     song of flight (Horn)
+                piper: dirge of the ghosts (Horn)
+                song of dragons (Horn)
+                piper: draconic crescendo (Horn)
+36th level:     song of healing (Lyre)
+                piper: song of the unholy (Lyre)
+                song of harming (Flute)
+                piper: song of decay (Lyre)
+41st level:     song of storms (Drums)
+                piper: chime of the vampire (Drums)
+46th level:     song of heroism (Drums)
+                piper: stanza of the fury (Drums)
+                song of revelation (Mandolin)
+                piper: hymn of morbid visions (Mandolin)
+                song of chaos (Drums)
+                piper: song of the night (Drums)
+51st level:     song of charming (Flute)
+                piper: chant of subversion (Flute)
+</content>
+	<see-also file="instrument"/>
+	<see-also file="play"/>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+	<see-also file="wail"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+</help-file>

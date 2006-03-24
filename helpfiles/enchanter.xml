@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ENCHANTER</title>
+	<category type="MultiClass"/>
+<content>
+An Enchanter is a multi-class Bard/Sorcerer.
+
+Both classes use memorize/spellbooks, so there is no change to how you
+acquire/memorize/cast your spells when you multiclass.
+</content>
+</help-file>

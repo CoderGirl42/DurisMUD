@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WEATHER</title>
+<content>
+This command tells you the weather conditions in your current zone, but
+will not give you any information if you are indoors.
+</content>
+</help-file>

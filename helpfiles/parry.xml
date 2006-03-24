@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PARRY</title>
+	<category type="Skill"/>
+<content>
+This skill is very similar to the &quot;Dodge&quot; skill, but the one performing the parry deflects the person's incoming attack rather than avoiding it.
+</content>
+	<see-also file="dodge"/>
+</help-file>

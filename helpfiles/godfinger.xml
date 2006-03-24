@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, FINGER"</title>
+<content>
+Syntax: finger &lt;player&gt;
+
+This gives you a player's name, title, level, class, race, and the last
+time they saved.
+</content>
+</help-file>

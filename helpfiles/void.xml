@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>VOID</title>
+	<category type="General Information"/>
+<content>
+Your character will enter the &quot;Void&quot; after prolonged periods of inactivity.  
+After entering the void, you character will automatically &quot;Idle Rent&quot;.
+</content>
+	<see-also file="idle"/>
+	<see-also file="rent"/>
+</help-file>

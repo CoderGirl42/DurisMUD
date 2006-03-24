@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DECREPIFY</title>
+	<category type="Innate"/>
+<content>
+By dark ritual the character is surrounded by a dark aura of power. When
+a victim comes into contact with this aura it will weaken their defenses
+versus all sorts of magic allowing their enemies a stronger chance of 
+winning.
+</content>
+	<see-also file="antipaladin"/>
+	<see-also file="innate"/>
+</help-file>

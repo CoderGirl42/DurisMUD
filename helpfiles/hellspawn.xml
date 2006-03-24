@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HELLSPAWN</title>
+	<category type="Specialization"/>
+<content>
+A dealer of death, the Hellspawn is able to instinctively detect the target 
+with the least vital energies remaining. Should they receive the killing 
+blow, there is the possibility to &quot;Spawn&quot; a creature of Undead from the 
+fresh corpse.
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Sense Weakness
+
+Spells
+---------------------------------------------------------------------------
+9th circle:     Spawn
+
+</content>
+	<see-also file="senseweakness"/>
+	<see-also file="antipaladin"/>
+</help-file>

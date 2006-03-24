@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CURSE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;object&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       7 days, Permanent on objects
+Type of spell:  Enchantment
+
+A successful &quot;Curse&quot; cast on a person causes his or her hitroll to drop
+and an increased susceptibility to almost every kind of magical attack.
+
+&quot;Curse&quot; cast on an object makes that object undroppable. In addition, curse
+will affect the stats of the object in a negative way. Because of the
+nature of the spell, exactly how much the item is hurt by the spell is not
+known, but rumors have circulated indicating that the change is 
+significant.
+
+Note: The effects of this spell can only be counteracted by the spell
+&quot;Remove Curse.&quot;
+</content>
+	<see-also file="removecurse"/>
+</help-file>

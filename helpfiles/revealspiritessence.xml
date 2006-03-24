@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"REVEAL SPIRIT ESSENCE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Spiritual
+
+This spell reveals your target's alignment to you.
+</content>
+	<see-also file="detectgood"/>
+	<see-also file="detectevil"/>
+</help-file>

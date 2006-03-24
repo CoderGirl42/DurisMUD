@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_ILLUSIONIST</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the
+ILLUSIONIST class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h piercing, 2h bludgeon, bandage, carve, climb,
+             dodge, first aid, fishing, meditate, mine, mount, quick chant,
+             retreat, scribe, sorcerous spell knowledge, swim
+
+Spells:
+---------------------------------------------------------------------------
+1st circle:  Detect Magic, Magic Missile, Phantom Armor, Minor Creation 
+2nd circle:  Burning Hands, Continual Light, Darkness, Dispel Magic               
+3rd circle:  Blindness, Concealment, Mirror Image, Shadow Monster
+4th circle:  Farsee, Infravision, Insects, Levitate, Sleep
+5th circle:  Boulder, Illusionary Wall, Shadow Travel              
+6th circle:  Nightmare, Reflection, Stunning Visions
+7th circle:  Dispel Invisible, Hammer, Reveal True Name
+8th circle:  Fly, Mask, Shadow Shield, Vanish
+9th circle:  Detect Illusion, Dream Travel, Mass Invisibility
+10th circle: Clone Form, Delirium, Imprisonment
+11th circle: Flicker, Nonexistence, Titan
+12th circle: Dragon
+
+Illusionist Specializations
+---------------------------------------------------------------------------
+Magician, Dark Dreamer
+BOOO YEA!  Go hug a god, cuz Illu specs are done!
+</content>
+	<see-also file="illusionist"/>
+	<see-also file="memorize"/>
+</help-file>

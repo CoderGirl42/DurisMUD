@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHADOWMAGE</title>
+	<category type="Specialization"/>
+<content>
+The Master of the paths of magic and silent transference. A Shadowmage 
+deeply studied will not feel the discomfort, unease and disorientation as 
+other casters do upon using spells such as teleport, relocate and dimension 
+door. They can also &quot;Blink&quot; out of the way causing foes hitting them bodily 
+to fall as they fail their swing, possibly causing them to abort offensive 
+magics against this Mage.
+
+Spells
+---------------------------------------------------------------------------
+6th circle:     Blink
+
+</content>
+	<see-also file="blink"/>
+</help-file>

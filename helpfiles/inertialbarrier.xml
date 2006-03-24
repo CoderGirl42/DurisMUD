@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"INERTIAL BARRIER"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       3 hours
+Type of spell:  Enchantment
+
+&quot;Inertial Barrier&quot; causes the caster to be enveloped in a low powered
+gravitational field that significantly reduces the effectiveness of
+physical attacks.
+</content>
+</help-file>

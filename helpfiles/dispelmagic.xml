@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DISPEL MAGIC"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; | &lt;object&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Generic
+
+If successful, this spell will dispel some of the spells (if any)
+surrounding the victim or remove any enchantments on an object.
+</content>
+</help-file>

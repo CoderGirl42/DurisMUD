@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STORM DRUID"</title>
+	<category type="Specialization"/>
+<content>
+The Storm Druid specialization focuses on offensive magic, with spells that
+mainly do damage in battle.
+
+Spell
+---------------------------------------------------------------------------
+9th circle:     Storm Shield
+11th circle:    Blood to Stone
+12th circle:    Hurricane
+</content>
+	<see-also file="stormshield"/>
+	<see-also file="bloodtostone"/>
+</help-file>

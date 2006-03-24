@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_PSIONICIST</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the
+Psionicist class:
+
+SKILLS
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h piercing, 2h bludgeon, bandage, carve, climb,
+             dodge, first aid, fishing, meditate, mine, mount, quick chant,
+             retreat, swim
+
+SPELLS
+---------------------------------------------------------------------------
+1st CIRCLE:  Adrenaline Control, Combat Mind, Ego Whip
+2nd CIRCLE:  Ballistic Attack, Enhance Agility, Enhance Constitution,
+             Enhance Dexterity, Enhance Strength
+3rd CIRCLE:  Aura Sight, Lend Health, Molecular Agitation
+4th CIRCLE:  Ego Blast, Energy Containment, Flesh Armor
+5th CIRCLE:  Inflict Pain 
+6th CIRCLE:  Cell Adjustment, Create Sound, Flight, Intellect Fortress
+7th CIRCLE:  Detonate
+8th CIRCLE:  Cannibalize, Ectoplasmic Form, Inertial Barrier,
+             Molecular control
+9th CIRCLE:  Ether Warp, Psychic Crush
+10th CIRCLE: Death Field, Wormhole
+11th CIRCLE: Biofeedback, Tower of Iron Will
+12th CIRCLE: Enrage
+
+Psionicist specializations
+---------------------------------------------------------------------------
+Pyromancer, Enslaver, Psycheporter
+</content>
+	<see-also file="psionicist"/>
+</help-file>

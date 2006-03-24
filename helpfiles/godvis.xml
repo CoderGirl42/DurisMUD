@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, VIS"</title>
+<content>
+&quot;vis&quot; makes you invisible to other players with levels below a certain
+limit.
+
+Example:
+  &gt; vis         : Returns current minimum visibility level.
+  &gt; vis 10      : Sets minimum visibility level so that players with
+                  levels &lt;=10 cannot see you.
+</content>
+	<see-also file="display"/>
+	<see-also file="vis"/>
+</help-file>

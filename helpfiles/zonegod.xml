@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ZONE GOD"</title>
+	<category type="General Information"/>
+<content>
+The &quot;Melkivar&quot; and &quot;Railand&quot; scripts, also known as &quot;zone god scripts&quot; are
+capable of interpreting user submitted zonefiles, they are capable of
+generating zonefiles on their own but more often than not a large majority
+of their system processes are taken up by correcting (herein known as
+rewriting) user submitted zonefiles.
+</content>
+	<see-also file="immortals"/>
+	<see-also file="coder"/>
+	<see-also file="wizlist"/>
+	<see-also file="zones"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NPC "NON PLAYER CHARACTER"</title>
+	<category type="General Information"/>
+<content>
+NPC is short for &quot;non player character&quot; and usually refers to a monster or
+mobile in the game that is not controlled by an actual person. These are
+the mobs created by zone makers or immortals to fill Duris for purposes
+such as experience, equipment, quests, and other things.
+</content>
+	<see-also file="pc"/>
+	<see-also file="mobile"/>
+	<see-also file="experience"/>
+	<see-also file="equipment"/>
+</help-file>

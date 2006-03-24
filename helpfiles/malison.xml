@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MALISON</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Spiritual
+
+&quot;Malison&quot; curses the victim, causing him to be more susceptible to magical
+attacks. &quot;Malison&quot; can be cured with the spell &quot;Purify Spirit&quot; or the 
+duration it lasts can be shortened by the spell &quot; id&quot;.
+</content>
+	<see-also file="purifyspirit"/>
+</help-file>

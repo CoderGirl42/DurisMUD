@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MAGE FLAME"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Summoning
+
+This spell causes a bright torch-like light to appear over the casters'
+head, illuminating the entire room. The light travels with the caster until 
+its duration expires.
+</content>
+</help-file>

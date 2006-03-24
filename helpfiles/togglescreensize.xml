@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"TOGGLE_SCREEN SIZE"</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle screensize &lt;size&gt;
+                toggle screensize default
+                toggle screensize off
+
+This lets you determine the size of the MUD's output to you (for use with 
+the paging option), or turn it off entirely. The default is 24 lines.
+</content>
+	<see-also file="paging"/>
+	<see-also file="toggle"/>
+</help-file>

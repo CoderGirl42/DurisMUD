@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WEB</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Exit
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+This spell creates a large, sticky web over an exit, entangling those
+who pass through it with a chance of holding the victims in place.
+</content>
+	<see-also file="wallofstone"/>
+	<see-also file="wallofice"/>
+	<see-also file="wallofflames"/>
+	<see-also file="wallofforce"/>
+	<see-also file="lightningcurtain"/>
+	<see-also file="minorparalysis"/>
+</help-file>

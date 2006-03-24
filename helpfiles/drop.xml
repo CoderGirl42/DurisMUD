@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DROP</title>
+	<category type="Command"/>
+<content>
+Syntax:        drop &lt;object&gt;
+
+If you find you no longer need an item, or if you accidentally pick up the
+wrong one, you can drop it on the ground. Due to the fact that leaving
+items lying around is messy and causes a lot of game overhead, we suggest
+that you drop, bury, hide or sell objects that you do not wish to keep.
+
+If you feel like getting rid of all the items you are currently
+carrying, you may use the command &quot;drop all.&quot;
+
+NOTE: Items left on the ground will not be there after reboots.
+</content>
+	<see-also file="get"/>
+	<see-also file="take"/>
+	<see-also file="bury"/>
+	<see-also file="hide"/>
+	<see-also file="sell"/>
+</help-file>

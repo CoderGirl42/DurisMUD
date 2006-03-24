@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CONJURE ELEMENTAL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: One elemental
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Summoning
+
+When cast, &quot;Conjure Elemental&quot; summons an elemental from a random elemental
+plane which will follow the player as though charmed for a limited period
+of time. There is no way to control which type of elemental is summoned.
+
+If the elemental is aggressive when the charm wears off, it will attack you
+and others.
+</content>
+	<see-also file="conjuregreaterelemental"/>
+</help-file>

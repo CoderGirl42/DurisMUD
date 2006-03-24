@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FIRE MAGUS"</title>
+<content>
+The Fire Magus concentrates on offensive magic by using the element of 
+fire. He possesses extremely powerful spells, reducing his enemies to a 
+mere pile of ash.
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     Protection from Fire
+
+Spells
+---------------------------------------------------------------------------
+8th circle:     Magma Burst
+9th circle:     Solar Flare
+</content>
+	<see-also file="protectionfromfire"/>
+	<see-also file="magmaburst"/>
+	<see-also file="solarflare"/>
+	<see-also file="conjurer"/>
+</help-file>

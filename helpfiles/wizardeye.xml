@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"WIZARD EYE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Divination
+
+This spell allows the caster to remotely view the inside of the victim's 
+room, if it is in the same zone.
+</content>
+</help-file>

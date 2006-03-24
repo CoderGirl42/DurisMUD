@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DREAD WAVE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       3 waves
+Type of spell:  Generic
+
+&quot;Dread Wave&quot; will emit choking waves of gaseous fumes at the victim,
+causing considerable damage.
+</content>
+	<see-also file="creepingdoom"/>
+	<see-also file="magmaburst"/>
+</help-file>

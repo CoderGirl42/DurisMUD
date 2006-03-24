@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, RELEASE"</title>
+<content>
+Syntax:  release &lt;socket_number&gt;
+
+This releases a given socket and the corresponding character's
+connection.
+</content>
+	<see-also file="god ban"/>
+	<see-also file="god allow"/>
+	<see-also file="god users"/>
+</help-file>

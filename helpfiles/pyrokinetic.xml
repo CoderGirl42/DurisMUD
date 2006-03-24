@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PYROKINETIC</title>
+	<category type="Specialization"/>
+<content>
+Upon choosing the path of Pyrokinetic, the psionicist is imbued with the
+willpower to manipulate the flame. Under the effect of such pure focus, he
+or she can greatly reduce/negate the damage from any fire based attack, or
+at higher levels, absorb it completely. Also, due to their superior focus,
+they can channel the power of flames directly through their detonates,
+making them much more deadly.
+
+Skills
+---------------------------------------------------------------------------
+41st level:     disperse flames
+
+46th level:     flame mastery 
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th level:     fireshield, protection from fire
+
+Spells
+---------------------------------------------------------------------------
+7th circle:    improved detonate
+12th circle:   confuse, fire aura
+
+</content>
+	<see-also file="psionicist"/>
+	<see-also file="will"/>
+	<see-also file="flame"/>
+	<see-also file="mastery"/>
+	<see-also file="disperse"/>
+	<see-also file="flames"/>
+	<see-also file="fire"/>
+	<see-also file="aura"/>
+</help-file>

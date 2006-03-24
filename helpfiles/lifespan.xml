@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LIFESPAN</title>
+	<category type="General Information"/>
+<content>
+Below is a chart that lists the starting and the maximum age of each race. 
+Note that once you reach the maximum age for your race, your character, just 
+like any old person starts to feel the affects of its years and will not 
+have the stamina of its youth. A Necromancer can help using their powers of
+rejuvenation to bring life back to your old bones.
+
+Race          Game Start Age    Death Age    
+-------------------------------------------
+Barbarian           15             80   
+Centaur             10             80 
+Death Knight         1             20
+Drow Elf           100           1000 
+Duergar Dwarf       40            450      
+Gargoyle            14             65   
+Githyanki           20            125   
+Gnome               90            750 
+Goblin              20            200
+Grey Elf           250           2000 
+Halfling            33            199 
+Half-Elf            40            325    
+Harpy               14             65 
+Human               17            120
+Lich                 1             20 
+Minotaur            10            125              
+Mountain Dwarf      50            525 
+Ogre                25            135                                                 
+Orc                 15             80 
+Phantom              1             20  
+Revenant            12             70
+Shade               90            750
+Shadow Beast         1             20 
+Storm Giant         25            135  
+Swamp Troll         12             70                
+Thri-Kreen           5             65     
+Vampire              1             20
+Wight                1             20
+</content>
+	<see-also file="age"/>
+</help-file>

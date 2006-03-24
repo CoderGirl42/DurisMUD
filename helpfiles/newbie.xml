@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NEWBIE</title>
+	<category type="General Information"/>
+<content>
+The term &quot;newbie&quot; is given to a player who is new to the MUD or to MUDding
+in general. If you fit this category, we suggest that you spend some time
+reading the help files. This will allow you to enter the game and play with
+some degree of confidence.
+
+Newbies are encouraged to ask questions of their fellow adventurers often,
+to group for protection and to read thoroughly the HELP and INFO files for
+information on the MUD.
+
+MUD is an acronym for &quot;multi-user dungeon&quot;.  Although there are different
+types of MUDs all over the world, Duris runs on modified UBC code and is
+loosely based on the Forgotten Realms series of AD&amp;D (Advanced Dungeons and
+Dragons) products from TSR, Inc.
+
+NEWBIE TIPS:
+---------------------------------------------------------------------------
+If you are new to Duris and the Duris style of MUDding, there are some tips
+you can follow that can help you get better oriented and give you more
+control over the way you see the world.
+
+First and most importantly, Duris can be a very difficult world, and if you
+are not an advanced player it is HIGHLY recommended you play a good raced
+character rather than an evil one. Evils face many hardships of various
+kinds, and in general evils do not take kindly upon strangers.
+
+Some commands that will help you further: 
+
+<W>1. READ 'HELP COMMANDS'</W>. 
+This will list all the basic commands you will need to act and interact 
+within the MUD. Spend time experimenting with the commands until you feel 
+confident using them.
+
+<W>2. TOGGLES</W>. 
+Typing 'toggle' will give you a list of personal settings you can switch 
+on and off for your character. These toggles affect elements such as what 
+your character sees, how it communicates, how it behaves in combat and 
+much more. Make sure you read 'HELP TOGGLE' for more in-depth info mation 
+on individual toggles.
+
+<W>3. DISPLAY</W>. 
+Typing 'help display' will give you a list of display commands. Experiment 
+with these commands until you are familiar with how each one affects what 
+you see while playing. After your character first enters the game, we 
+strongly recommend typing 'DISPLAY ALL'. This should make things easier on 
+you.
+
+If you require any further help, ask your fellow adventurers or check out
+the Duris website. Try to group with those near your level to do experience, 
+if you are a good raced character you are able to use &quot;nchat&quot; (newbie chat 
+channel) to ask questions, or petition a god for help if you're truly lost.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="display"/>
+	<see-also file="commands"/>
+	<see-also file="website"/>
+	<see-also file="forums"/>
+	<see-also file="index"/>
+	<see-also file="nchat"/>
+</help-file>

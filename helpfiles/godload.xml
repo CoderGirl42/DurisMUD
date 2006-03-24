@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, LOAD"</title>
+<content>
+For loading new objects or characters from the database. The format is:
+
+     load &lt;type&gt; &lt;number&gt;
+
+where &lt;type&gt; is either 'obj' or 'char', and number is the v-number of the
+object or character you wish to create.
+
+Example: load o 1400
+</content>
+	<see-also file="god lookup"/>
+</help-file>

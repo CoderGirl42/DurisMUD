@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_NECROMANCER</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the
+Necromancer class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h piercing, 2h bludgeon, bandage, carve, 
+             climb, dodge, feign death, first aid, fishing, meditate, 
+             mine, mount, quick chant, retreat, scribe,
+             sorcerous spell knowledge, swim
+20th level:  age corpse
+
+Spells
+---------------------------------------------------------------------------
+1st CIRCLE:  Detect Magic, Magic Missile, Minor Creation, Preserve,
+             Protection From Undead 
+2nd CIRCLE:  Chill Touch, Protection From Cold, Protection From Living,
+             Sleep, Vampiric Touch
+3rd CIRCLE:  Animate Dead, Dispel Magic, Embalm, Sense Follower 
+4th CIRCLE:  Rejuvenate Minor, Strength, Wither 
+5th CIRCLE:  Coldshield, Concealment, Feeblemind, Fireshield, Heal Undead
+             Levitate, Raise Spectre, Teleport 
+6th CIRCLE:  Cone of Cold, Energy Drain, Minor Globe of Invulnerability 
+             Rejuvenate Major 
+7th CIRCLE:  Frostbite, Protect Undead, Raise Wraith, Reveal True Name 
+8th CIRCLE:  Detect Invisibility, Dispel Invisible, Haste, 
+             Improved Invisibility 
+9th CIRCLE:  Age, Dark Compact, Dimension Door, Raise Vampire 
+10th CIRCLE: Cloak of Fear, Fly, Mass Embalm, Raise Lich, Vampiric Trance
+11th CIRCLE: Corpseform, Create Dracolich, Power Word Kill, Unholy Word 
+12th CIRCLE: Create Greater Dracolich
+
+Necromancer Specializations
+---------------------------------------------------------------------------
+Diabolis, Necrolyte, Reaper
+</content>
+	<see-also file="necromancer"/>
+	<see-also file="memorize"/>
+</help-file>

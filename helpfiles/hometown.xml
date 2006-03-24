@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HOMETOWN HOMETOWNS</title>
+<content>
+A &quot;hometown&quot; is a city of a particular race of Duris. There are numerous
+hometowns across the land, and you will start in your race's birth 
+hometown when you enter the game. When you die, you will respawn in the
+city of your birth, unless you have paid to reset your home to another 
+place (see help home). 
+
+Some of these Hometowns include:
+
+   -Tharnadia, the Birthplace of Humans
+   -Charing, City of Elves
+
+</content>
+	<see-also file="home"/>
+	<see-also file="tharnadia"/>
+	<see-also file="charing"/>
+</help-file>

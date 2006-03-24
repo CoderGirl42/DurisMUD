@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TRAP</title>
+	<category type="Skill"/>
+<content>
+Syntax:         &quot;drop trap&quot; and &quot;hide trap&quot;
+Area of effect: &lt;room&gt;
+
+&quot;Trap&quot; is a skill possessed by Thieves and specialized Mercenaries or 
+Rangers. These individuals have the ability to &quot;set&quot; traps in a room that
+when triggered by a mob or a player, will notify the character. Traps must
+be purchased from Rogue shops found throughout the world.
+</content>
+</help-file>

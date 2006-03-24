@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CAPTURE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         capture &lt;victim&gt;
+Aggressive:     yes
+
+&quot;Capture&quot; attempts to grab and bind another player to drag in for a bounty. 
+It enables the Mercenary to bind without first having to paralyze or 
+incapacitate the victim. You be wielding no weapons and be holding a rope
+for this to work.
+</content>
+	<see-also file="bind"/>
+	<see-also file="unbind"/>
+	<see-also file="drag"/>
+</help-file>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SHIELD PUNCH"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         shield punch &lt;victim&gt;
+
+Specialized Warriors may hit an opponent with their shield, inflicting 
+damage and causing the target to be unable to respond to any commands for a 
+period of time.
+</content>
+	<see-also file="guardian"/>
+</help-file>

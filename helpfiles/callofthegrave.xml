@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CALL OF THE GRAVE"</title>
+	<category type="Skill"/>
+<content>
+Drawing upon the power of the damned the Dreadlord shrieks out an ominous
+chant, leaving the air thick and deathly still. Skeletons rise from their
+cold graves within the earth beneath, tearing and clawing at the foe of 
+their new Deathlord master, wreaking physical damage as they attempt to
+bring them down.
+</content>
+	<see-also file="deathlord"/>
+</help-file>

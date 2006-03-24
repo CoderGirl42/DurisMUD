@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STORM SHIELD"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Storm Shield&quot; enchants the Druid's shield with electrical energy that 
+discharges a bolt of lightning at the attacker for each successful shield
+block. 
+</content>
+	<see-also file="shieldblock"/>
+	<see-also file="lightningbolt"/>
+</help-file>

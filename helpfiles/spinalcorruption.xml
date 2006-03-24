@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SPINAL CORRUPTION"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+Using the power of his mind, the caster disrupts the victims' brains'
+ability to communicate with the rest of his central nervous system.
+This causes the victim to have trouble travelling about, and
+in extreme cases, makes it harder for them to escape from combat.
+</content>
+</help-file>

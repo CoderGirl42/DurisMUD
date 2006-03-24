@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HOME</title>
+	<category type="General Information"/>
+<content>
+Your home is the place you respawn after dying and is set by default to
+your starting hometown. In order to change your home, you must have 50
+platinum in your possession and type 'home' in a hometown.
+</content>
+	<see-also file="society"/>
+	<see-also file="guild"/>
+	<see-also file="guildhall"/>
+</help-file>

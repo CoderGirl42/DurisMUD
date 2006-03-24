@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>EARTHQUAKE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Earthquake&quot; causes the ground to tremble and quake, making everyone
+and everything in the room fall to the ground and take damage, unless they
+are grouped with the caster.
+</content>
+</help-file>

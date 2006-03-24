@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BRAVO</title>
+	<category type="Specialization"/>
+<content>
+The Bravo is a Rogue sub-class with enhanced melee abilties. Bravos
+are quite agile allowing them to strike their foes with exceptional speed
+and ferocity. 
+
+Innate Abilities
+---------------------------------------------------------------------------
+30th: Innate Dual Daggers
+
+Skills
+---------------------------------------------------------------------------
+30th: Trip
+36th: Enhanced Riposte
+51st: Triple Attack
+</content>
+	<see-also file="rogue"/>
+	<see-also file="skillrogue"/>
+	<see-also file="classes"/>
+	<see-also file="skills"/>
+	<see-also file="assassin"/>
+	<see-also file="thief"/>
+</help-file>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SCRIBE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         hold quill | hold spellbook
+                scribe &lt;spell&gt;       : copy from book/scroll in inventory
+	        practice &lt;spell&gt;     : learn a spell from a teacher in room
+
+
+In order for a Magic-User to cast spells, they must first possess a
+spellbook filled with spells to cast. To do this, you must have a spellbook, 
+quill and either a teacher mob or another player's already scribed 
+spellbook. Once you are holding both the quill and book, you can start to 
+write them in your spellbook by typing one of the above commands, depending 
+on who you are copying/learning from. Proficiency at scribing affects how 
+quickly a Magic-User will inscribe new spells into his/her spellbook when 
+practicing or adding new spells.
+</content>
+	<see-also file="spellsystem"/>
+	<see-also file="spellslot"/>
+	<see-also file="spellcircle"/>
+	<see-also file="practice"/>
+	<see-also file="magicuser"/>
+	<see-also file="mystics"/>
+</help-file>

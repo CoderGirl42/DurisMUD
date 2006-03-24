@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BANDAGE</title>
+	<category type="Skill"/>
+<content>
+Syntax:         bandage &lt;victim&gt;
+
+The bandage skill can be used to save a player who is mortally wounded.
+By bandaging, the player will begin to regenerate hitpoints once again, 
+thereby saving their life. Players cannot bandage players while either
+the bandager or the recipient is in combat.
+</content>
+</help-file>

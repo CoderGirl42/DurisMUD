@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CONSIDER</title>
+	<category type="General Information"/>
+<content>
+Syntax:         consider &lt;opponent&gt;
+
+This command will compare your character's level with that of the monster's
+or player's and give you a rough estimate of your chances of defeating it. 
+This estimate is by no means exact and does not take hit points, special 
+attacks or damage into consideration.
+
+Example:        consider dog
+</content>
+</help-file>

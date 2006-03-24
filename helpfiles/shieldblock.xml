@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SHIELD BLOCK"</title>
+	<category type="Skill"/>
+<content>
+When wearing a shield, you have a chance of blocking attacks during combat.
+&quot;Shield Block&quot; is similar to parry, except you must be wearing a shield for 
+it to work at all.
+</content>
+</help-file>

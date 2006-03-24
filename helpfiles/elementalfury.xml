@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ELEMENTAL FURY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Elemental
+
+&quot;Elemental Fury&quot; calls down the power of the elemental planes upon the
+Shaman's enemies. Anyone in the area not allied with the caster will suffer 
+the onslaught of earth, ice and burning air.
+</content>
+	<see-also file="elementalist"/>
+</help-file>

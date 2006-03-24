@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MASS HEAL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+&quot;Mass Heal&quot; heals anyone and anything in the same room as the caster, for
+the same as a regular &quot;Heal&quot; spell.
+</content>
+	<see-also file="negativeenergyvortex"/>
+	<see-also file="heal"/>
+</help-file>

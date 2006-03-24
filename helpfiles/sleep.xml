@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SLEEP</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+A successful spellcast will cause the victim to fall magically asleep for a
+time. A victim under this spell cannot awaken on their own; they must wait 
+for the spell to wear off or be awoken by taking damage.
+</content>
+	<see-also file="wake"/>
+</help-file>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CHAIN LIGHTNING"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Electric
+
+This spell is similar to the &quot;Lightning Bolt&quot; spell, except that the bolt
+cast strikes multiple victims and is much more powerful and damaging.
+</content>
+	<see-also file="lightningbolt"/>
+</help-file>

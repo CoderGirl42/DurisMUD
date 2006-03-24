@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LOOK</title>
+	<category type="General Information"/>
+<content>
+&quot;Look&quot; is used for studying your surroundings and is more often used in its
+short form variation of &quot;l.&quot;
+
+Eg : look
+     l
+     look dragon
+     look at board
+     look board
+     l at board
+     look in bag
+     l in bag
+     l in 2.bag (if you have more than one bag)
+     l south
+     l candle (if there's an extra description of a candle in a room)
+
+Note that if you type &quot;look at &lt;container&gt;&quot; you will not see its contents.
+To see what's inside a container (e.g., a corpse), use the syntax &quot;look IN
+&lt;object&gt;.&quot; For this type of inspection, it's best to use the command
+&quot;examine.&quot;
+
+&quot;Look&quot; is also used when utilizing one of Duris's many ships, although with
+different syntax.
+</content>
+	<see-also file="examine"/>
+	<see-also file="glance"/>
+	<see-also file="read"/>
+	<see-also file="ships"/>
+</help-file>

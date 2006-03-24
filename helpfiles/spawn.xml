@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SPAWN</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Summoning
+
+When under the influence of &quot;Spawn&quot;, there is the possibility to &quot;Spawn&quot; a 
+creature of Undead from the fresh corpse, who will then take any orders
+from its maker. 
+
+NOTE: This will only occur if the Hellspawn received the killing blow.
+</content>
+	<see-also file="pet"/>
+	<see-also file="order"/>
+	<see-also file="follow"/>
+</help-file>

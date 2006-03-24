@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WOLFSPEED</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent upon proficiency of caster
+Type of spell:  Animal
+
+This spell causes the victim's maximum movement to increase, allowing them 
+to travel further without tiring. As the caster improves, so do the results 
+of the spell.
+</content>
+	<see-also file="pantherspeed"/>
+</help-file>

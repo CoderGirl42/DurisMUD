@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, RESTORE"</title>
+<content>
+When used on a mortal, &quot;restore&quot; restores their hit points, mana, and
+movement points to full.
+
+When used on an immortal, &quot;restore&quot; also resets various fields to
+their proper values.
+
+Immortals should take cautionary measures if they decide to restore a
+player, as this is normally frowned upon.
+
+Syntax:  restore &lt;character&gt;
+</content>
+</help-file>

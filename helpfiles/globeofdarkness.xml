@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GLOBE OF DARKNESS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: Room
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+&quot;Globe of Darkness&quot; creates a globe to appear over the casters' head which
+emanates total darkness around the room.  The dark globe travels with the 
+caster until its duration expires or it is cancelled by &quot;mage flame&quot;.
+</content>
+	<see-also file="mageflame"/>
+</help-file>

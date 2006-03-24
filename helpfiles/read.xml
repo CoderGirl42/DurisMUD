@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>READ BOARD</title>
+	<category type="General Information"/>
+<content>
+Syntax:  read &lt;message # | object&gt;
+
+Use the &quot;read&quot; command when you wish to read something, such as a
+message on the bulletin board or a sign.
+
+To remove a message that you have posted on the mortal board, use the
+&quot;remove&quot; command.
+
+Example:
+
+  &gt; remove 23           : will delete message 23 if you wrote the message
+</content>
+	<see-also file="write"/>
+</help-file>

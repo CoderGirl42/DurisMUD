@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CELL ADJUSTMENT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       Instantaneous
+
+This spell allows the caster to rearrange the cellular makeup of their body 
+to their own liking. This comes in handy when afflicted with various
+maladies.
+</content>
+</help-file>

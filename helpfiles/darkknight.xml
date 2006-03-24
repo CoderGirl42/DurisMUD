@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DARK KNIGHT"</title>
+	<category type="Specialization"/>
+<content>
+The Dark Knight's main focus is on damage, possessing the added ability to 
+&quot;Skewer&quot; their enemies. It is rumored that when under the &quot;Armageddon&quot; 
+spell, strange things may occur.
+
+Skills
+---------------------------------------------------------------------------
+41st level:     Skewer
+
+Spells
+---------------------------------------------------------------------------
+9th circle:     Armageddon
+
+</content>
+	<see-also file="antipaladin"/>
+	<see-also file="skewer"/>
+	<see-also file="armageddon"/>
+</help-file>

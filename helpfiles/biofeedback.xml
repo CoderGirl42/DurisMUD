@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BIOFEEDBACK</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Psionic
+
+This impressive mental discipline causes the atmosphere surrounding the
+caster to coalesce into a nearly solid vapor, making it extremely difficult
+to cause physical harm to the protected person. Like all forms of
+protection, the barrier can be worn down if repeatedly attacked enough.
+</content>
+	<see-also file="stoneskin"/>
+</help-file>

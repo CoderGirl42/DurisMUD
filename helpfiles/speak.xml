@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SPEAK</title>
+<content>
+Syntax:  speak &lt;language&gt;
+         speak
+
+This command lets you change which language you are currently speaking to a
+new one by typing &quot;speak &lt;language&gt;.&quot;  Note that you cannot change if you
+are not proficient enough in the target language. &quot;Speak&quot; alone shows a
+list of your language proficiencies, also your currently spoken language.
+</content>
+	<see-also file="languages"/>
+</help-file>

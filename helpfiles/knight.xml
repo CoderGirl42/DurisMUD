@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>KNIGHT</title>
+	<category type="Innate"/>
+<content>
+This innate ability improves the horseman's proficiency with lance-type
+weapons and his capability to &quot;Trample&quot;.
+</content>
+	<see-also file="demonicrider"/>
+	<see-also file="cavalier"/>
+</help-file>

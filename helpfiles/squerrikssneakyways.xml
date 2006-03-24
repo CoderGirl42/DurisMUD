@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SQUERRIKS SNEAKY WAYS" "SQUERRIK'S SNEAKY WAYS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+This spell provides you with the ability to fade and turn invisibile from
+the view of others, and grants you the ability to move silently and travel 
+from place to place without others noticing.
+</content>
+	<see-also file="outdoorsneak"/>
+	<see-also file="sneak"/>
+	<see-also file="udsneak"/>
+</help-file>

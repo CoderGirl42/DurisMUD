@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MOLECULAR CONTROL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     N/A
+duration:       Proficiency of caster
+type of spell:  Generic
+
+This spell allows the caster to control the molecules in his/her body,
+making them very thin allowing the caster to go through closed or locked
+places.
+</content>
+</help-file>

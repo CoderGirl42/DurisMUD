@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TIME</title>
+<content>
+&quot;Time&quot; gives you the current game-time of Duris. There are:
+
+        7 days in a week
+       35 days in a month
+       17 months in a year
+
+and 60 real-life seconds for each game-hour. Some situations, such as the
+opening of the Tharnadia city gates, are also dependent on game-time.
+</content>
+	<see-also file="calendar"/>
+	<see-also file="day"/>
+</help-file>

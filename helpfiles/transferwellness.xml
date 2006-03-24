@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"TRANSFER WELLNESS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Spiritual
+
+This spell transfers some life from the caster to the victim. At lower
+levels, the caster will lose a large amount more than the victim gains,
+whereas at higher levels, it will even out.
+</content>
+</help-file>

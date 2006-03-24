@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HELP</title>
+	<category type="General Information"/>
+<content>
+The &quot;help&quot; command lets you access things like this entry. Type &quot;help&quot;
+alone to see a list of major topics.
+
+                      Duris DikuMUD - Main Help Menu
+
+  Type:                   Produces:
+  HELP....................This screen
+  HELP INDEX..............Help File Index
+  HELP POLICIES and.......Master list of Duris Policies and rules. These
+  HELP RULES              are a *must* read for all players.
+  HELP &lt;keyword&gt;..........Information on a policy, command, skill or spell
+  HELP COMMANDS...........List of the most frequently used commands (on most
+                          Dikus, the original HELP screen)
+  NEWS....................Up to date information on Duris
+  COMMANDS................List of *all* available commands, including SOCIAL
+                          ACTIONS
+  INFO....* NEW! *........The INFO help screen.
+  FAQ.....* NEW! *........The FAQ (Duris's Frequently Asked Questions)
+  ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  Duris help is divided into two sections: HELP and INFO. The HELP section
+  deals with the everyday functions, policies and stuff you need to know in
+  order to play successfully here on Duris. The INFO section gives you the
+  background on each of the gods here, and will be expanded to include the
+  general background on each of the mobs (monsters) you may encounter here.
+</content>
+	<see-also file="version"/>
+</help-file>

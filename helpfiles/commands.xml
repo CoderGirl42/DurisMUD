@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>COMMANDS</title>
+	<category type="General Information"/>
+<content>
+<W>Movement:</W>                           | <m>Communication:</m>
+NORTH SOUTH EAST WEST UP DOWN       | SAY ' SHOUT TELL ASK WHISPER
+SLEEP WAKE REST SIT STAND FOLLOW    | GSAY SPEAK EMOTE IGNORE
+KNEEL RECLINE ALERT DRAG            | PETITION 
+---------------------------------------------------------------------------
+<r>Information:</r>                        | <c>Objects:</c>
+HELP WHO NEWS MOTD TIME WIZLIST     | GET TAKE DROP PUT WEAR GRAB HOLD
+CREDITS ATTRIBUTES SCORE WORLD      | REMOVE GIVE LOCK UNLOCK OPEN CLOSE
+COMMANDS SPELLS LOOK EXAMINE        | FILL POUR TASTE EAT SIP DRINK
+SEARCH EXITS MAP WEBSITE            | INVENTORY EQUIPMENT
+---------------------------------------------------------------------------
+<y>Combat:</y>                             | <G>Utility:</G>
+KILL WIELD GLANCE GROUP DISBAND     | BUG IDEA TYPO QUIT SAVE RENT
+CONSIDER PRACTICE TROPHY AGGR FLEE  | OFFER CAMP TOGGLE DISPLAY WRITE
+---------------------------------------------------------------------------
+<M>Monetary: </M>                          | <B>Common help subjects:</B>
+BALANCE DEPOSIT WITHDRAW EXCHANGE   | RACES, INNATE, RULES, PRACTICE,
+BUY SELL LIST VALUE CURRENCY        | SPELLCAST, INDEX,
+                                    | POLICIES, COMMANDS
+                                    | &lt;class&gt;, &lt;race&gt;, &lt;spell&gt;, &lt;skill&gt;
+</content>
+</help-file>

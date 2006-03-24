@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MAGMA BURST"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     Yes
+Duration:       3 waves
+Type of spell:  Fire
+
+This spell sends a burst of magma at the victim causing considerable 
+damage. Once it hits it has a chance to ignite the victim for a period of 
+time causing additional damage.
+</content>
+	<see-also file="creepingdoom"/>
+	<see-also file="dreadwave"/>
+</help-file>

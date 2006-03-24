@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_WARLOCK</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the Warlock
+class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:      1h bludgeon, 1h piercing, 2h bludgeon, bandage, carve, 
+                climb, dodge, first aid, meditate, mount, quick chant, 
+                sorcerous spell knowledge, swim
+10th level:     clerical spell knowledge
+
+Spells
+---------------------------------------------------------------------------
+1st circle:     Sense Holiness, Sleep, Unholy Wind
+2nd circle:     Protection from Cold, Protection from Living, Unmaking
+3rd circle:     Invoke Negative Energy, Protection from Fire, Protection 
+                from Good, Remove Poison, Blindness
+4th circle:     Dispel Good, Lifelust
+5th circle:     Devitalize, Purge Living, Remove Curse, Unholy Strength,
+                Heal Undead
+6th circle:     Cure Blind, Darkness, Frostbite, Nether Touch, Slowness,
+                Negative Energy Barrier
+7th circle:     Greater Heal Undead
+8th circle:     Dispel Lifeforce, Negative Energy Vortex, Dispel Magic
+9th circle:     Alter Energy Polarity, Plane Shift, Word of Recall
+10th circle:    Life Ward, Nether Gate, Shadow Gate, Channel Negative 
+                Energy, Hand of Death
+11th circle:    Entropy Storm, Shadow Vision, Group Recall 
+12th circle:    Death Blessing  
+
+NOTE:           Spell circles are gained at levels 6, 11, 16, 21, 26, 31, 
+                36, 41, 46, 51 and 56
+                Use help &lt;spellname&gt; | &lt;skillname&gt;  for more information.
+
+Warlock Specializations
+---------------------------------------------------------------------------
+There are no specializations available to Warlocks at this time.
+
+</content>
+	<see-also file="spellcircle"/>
+	<see-also file="spellsystem"/>
+	<see-also file="spellslot"/>
+	<see-also file="priest"/>
+	<see-also file="warlock"/>
+</help-file>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_MAP</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle map
+
+This command will turn your view of ANSI wilderness maps on and off.
+</content>
+	<see-also file="toggle"/>
+</help-file>

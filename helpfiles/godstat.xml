@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, STAT"</title>
+<content>
+&quot;Stat&quot; reveals information about rooms, zones, objects, and
+characters.
+
+Syntax:
+   stat room &lt;room #&gt;
+   stat zone &lt;zone #&gt;
+   stat char|mob #|'name'
+   stat obj|item  #|'name'
+
+Do not reveal stats to mortals.  This is punishable by deletion.
+</content>
+	<see-also file="god lookup"/>
+</help-file>

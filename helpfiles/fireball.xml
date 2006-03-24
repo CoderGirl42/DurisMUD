@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FIREBALL</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn fireball (for Drow Elf)
+Area of effect: &lt;victim&gt; | &lt;victim&gt; &lt;direction&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Fire
+
+&quot;Fireball&quot; is a very potent spell that causes a small ball of flame to
+shoot forth from the caster's fingertips. Upon contact with the victim, it
+explodes in a huge blast, burning the victim quite profoundly.
+</content>
+</help-file>

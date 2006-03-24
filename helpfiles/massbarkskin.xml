@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MASS BARKSKIN"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;group&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Mass Barkskin&quot; is identical to &quot;Barkskin&quot;, except that anyone grouped with 
+the caster receives the spell's benefits with one casting.
+</content>
+	<see-also file="barkskin"/>
+</help-file>

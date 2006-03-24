@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BATTLEAID</title>
+	<category type="Innate"/>
+<content>
+Battleaid improves the potency of the Mercenary's &quot;First Aid&quot; and
+&quot;Bandage&quot; skills, 
+</content>
+	<see-also file="firstaid"/>
+	<see-also file="bandage"/>
+</help-file>

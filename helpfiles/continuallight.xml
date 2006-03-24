@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CONTINUAL LIGHT"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;object&gt; | &lt;Room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Temporary in Rooms, Permanent on items
+Type of spell:  Enchantment
+
+&quot;Continual Light&quot; allows the spell caster to enchant an item by granting it
+its own light, making it a permanent light source. Not specifying an object
+causes the whole room to be temporarily lit by a magical light.  
+</content>
+	<see-also file="darkness"/>
+</help-file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>UD-SNEAK "UD SNEAK"</title>
+	<category type="Innate"/>
+<content>
+This signifies the ability to naturally sneak in the underdark and
+underground terrain.
+</content>
+	<see-also file="outdoorsneak"/>
+	<see-also file="squerrikssneakyways"/>
+	<see-also file="sneak"/>
+</help-file>

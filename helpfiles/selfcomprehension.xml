@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SELF COMPREHENSION"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+&quot;Self Comprehension&quot; allows the victim to understand any spoken language in
+the world, regardless of how proficient the victim is in the language on his
+own.
+</content>
+</help-file>

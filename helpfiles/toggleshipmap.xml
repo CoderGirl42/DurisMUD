@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"TOGGLE_SHIP MAP"</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle ship map
+
+Setting this option ON will allow you to see the map while sailing on a 
+ship, whether it be your ship or someone else's.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="ship"/>
+</help-file>

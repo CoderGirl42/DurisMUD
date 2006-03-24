@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"RAISE SHADOW"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;corpse&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Animation lasts until undead follower dies (again)
+Type of spell:  Summoning
+
+If the Necrolyte has a suitable corpse at his feet, this spell will force 
+the soul of the slain back into their body, transforming them into a 
+shadow. The shadow is a translucent being that attacks the enemy with the
+power of its mind.
+</content>
+	<see-also file="necrolyte"/>
+</help-file>

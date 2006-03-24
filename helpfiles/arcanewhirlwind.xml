@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ARCANE WHIRLWIND"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+&quot;Arcane Whirlwind&quot;, when successful, transfers magic from the victim to 
+the caster. Any and/or all magic the victim has, positive or negative,
+may be potentially be stripped from the victim and granted to the caster.
+</content>
+</help-file>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FIRST AID"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         first aid
+
+&quot;First Aid&quot; allows you to recover from a small amount of physical
+damage.  It cannot be used while engaged and can only be done once per game
+day.
+</content>
+</help-file>

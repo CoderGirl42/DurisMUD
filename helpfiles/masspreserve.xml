@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MASS PRESERVE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt; (corpses only)
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+This spell preserves all corpses in the room with the caster.
+</content>
+	<see-also file="massembalm"/>
+	<see-also file="preserve"/>
+	<see-also file="embalm"/>
+</help-file>

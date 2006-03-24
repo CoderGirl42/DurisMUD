@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DIMENSION DOOR"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; &amp; &lt;player&gt; or &lt;mob&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+&quot;Dimension Door&quot; creates a short-lived extra dimensional corridor that 
+allows the caster to teleport to any player or mob within that zone without 
+possibility of arriving in the wrong place. This spell is distance-specific 
+and can only be used within a certain number of rooms dependant on the 
+proficiency of the caster.
+</content>
+	<see-also file="spiritjump"/>
+	<see-also file="teleport"/>
+</help-file>

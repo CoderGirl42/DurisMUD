@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ROBOTS ACTIONS</title>
+<content>
+A robot is a character that can run independently by triggers and/or
+actions through a client such as Tin-Tin. Actions are allowed on Duris for
+such things as eating, drinking, retrieving weapons, and looting corpses.
+However, if you can leave the keyboard for an extended amount of time,
+chances are you are running a robot.
+
+  <R>ROBOTS WILL BE DELETED</R> 
+</content>
+	<see-also file="multi"/>
+	<see-also file="rules"/>
+	<see-also file="laws"/>
+</help-file>

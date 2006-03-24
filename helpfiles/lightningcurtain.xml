@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"LIGHTNING CURTAIN"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;direction&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependant on proficiency of caster.
+Type of spell:  Electric
+
+This spell creates a curtain of lighting that blocks an exit, if someone 
+tries to pass through this obstacle they take a large amount of damage.
+</content>
+	<see-also file="dispelmagic"/>
+</help-file>

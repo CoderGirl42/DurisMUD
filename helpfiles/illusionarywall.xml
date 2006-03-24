@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ILLUSIONARY WALL"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: direction
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependent on proficiency of caster 
+Type of spell:  Illusion
+
+This spell creates an illusion that effectively hides normal exits from
+the naked eye. Anyone attempting to try and exit in the direction that this 
+wall exists has a chance to disbelieve the illusion and pass. One can also
+try to search the area around where the exit once was and may find the wall
+thus negating the effects. 
+</content>
+</help-file>

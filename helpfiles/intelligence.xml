@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INTELLIGENCE</title>
+	<category type="General Information"/>
+<content>
+Intelligence is a measure of quickness and accuracy of thought, basically, 
+how well you can think. Intelligence is the primary attribute for Mages and 
+is certainly useful for all others as well.
+</content>
+	<see-also file="statistics"/>
+</help-file>

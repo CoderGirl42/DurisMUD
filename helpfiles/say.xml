@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SAY TELL WHISPER ASK</title>
+	<category type="Command"/>
+<content>
+Syntax:         say &lt;text&gt; <G>-or-</G> ' &lt;text&gt;
+                tell &lt;character&gt; &lt;text&gt;
+                whisper &lt;character&gt; &lt;text&gt;
+                ask &lt;character&gt; &lt;text&gt;
+
+In order to communicate with other players, you must begin your sentences 
+with one of the above commands. Use &quot;Say&quot; if you wish everyone in the room 
+to hear you (characters who are asleep are incommunicado, except to gods).  
+The single character ' is a shortcut for &quot;Say&quot; and has precisely the same 
+syntax. &quot;Tell&quot;, &quot;Whisper&quot; and &quot;Ask&quot; are used to keep your conversations
+private and must be accompanied by the name of the player with whom you wish 
+to converse. &quot;Whisper&quot; and &quot;Ask&quot; can only be used if the player you want to 
+converse with is the same room. Whereas, &quot;Tell&quot; is used for global 
+communication. You can &quot;Tell&quot; anyone who is awake and has the tell toggle
+ON, no matter where they are in the MUD.
+
+Toggling &quot;Tell&quot; will effectively allow you to turn off this line of 
+communication. However, it will not prevent a God from speaking to you.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="toggletell"/>
+</help-file>

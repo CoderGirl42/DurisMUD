@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FLURRY "INNATE FLURRY"</title>
+	<category type="Innate"/>
+<content>
+Syntax:	inn flurry
+
+&quot;Flurry&quot; causes the victim to move much more quickly for a limited amount
+of time, increasing their number of attacks.  
+</content>
+	<see-also file="daktasfury"/>
+	<see-also file="blur"/>
+	<see-also file="haste"/>
+</help-file>

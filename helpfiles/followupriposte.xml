@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FOLLOW-UP RIPOSTE"</title>
+	<category type="Skill"/>
+<content>
+Specialized Warriors have the additional reflexive ability for an extra
+damage riposte. A riposte is a fencing move made when you successfully 
+parry your opponent's attack and manage to score a minor hit of your own in 
+reply. The success of your riposte depends heavily on the success of your 
+parry.
+</content>
+	<see-also file="riposte"/>
+</help-file>

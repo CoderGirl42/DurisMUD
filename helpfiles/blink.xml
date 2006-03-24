@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BLINK</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; 
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Generic
+
+While in combat, the Shadowmage may escape damage by casting the spell
+&quot;Blink&quot;. By blinking out of existence for a fraction of a second, the enemy
+will fumble their attack and possibly fall. If the foe is a caster, they
+may abort an offensive spell mid-chant.
+</content>
+</help-file>

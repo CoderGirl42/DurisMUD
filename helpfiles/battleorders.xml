@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BATTLE ORDERS"</title>
+	<category type="Skill"/>
+<content>
+A Dreadlord leading their troop into battle can use their heightened sense
+of engagement to direct it's troops with a precision like yet unseen. With
+a single command an entire company of undead may switch upon its hissed
+word, making its group targeting force unequalled.
+</content>
+	<see-also file="dreadlord"/>
+	<see-also file="skilldreadlord"/>
+</help-file>

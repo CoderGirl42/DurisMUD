@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_WARRIOR</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills available to the Warrior class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h flaying, 1h piercing, 1h slashing, 
+             2h bludgeon, 2h flaying, 2h slashing, bandage, bash, berserk,
+             blindfighting, carve, climb, disarm, dodge, double attack,
+             dual wield, first aid, fishing, hitall, kick, mine, mount,
+             parry, rescue, retreat, riposte, shield block, swim,
+             switch opponents, unarmed damage
+25th level:  reach weapons
+51st level:  triple attack
+56th level:  quadruple attack
+
+Warrior Specializations
+---------------------------------------------------------------------------
+Swordsman, Guardian            
+</content>
+	<see-also file="warrior"/>
+</help-file>

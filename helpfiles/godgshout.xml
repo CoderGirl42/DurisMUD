@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, GSHOUT"</title>
+<content>
+This command is like &quot;shout,&quot; but it rings out across the world.
+
+Example: gshout I'm the greatest in the universe.
+         will appear to most people as
+         Bippy shouts from the heavens 'I'm the greatest in the universe.'
+</content>
+	<see-also file="shout"/>
+</help-file>

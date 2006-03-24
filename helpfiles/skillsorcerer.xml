@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_SORCERER</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all skills and spells available to the Sorcerer 
+class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h piercing, 2h bludgeon, bandage, carve, 
+             climb, dodge, first aid, fishing, meditate, mine, mount,
+             quick chant, retreat, scribe, sorcerous spell knowledge, swim
+
+Spells
+---------------------------------------------------------------------------
+1st circle:  Detect Magic, Magic Missile, Minor Creation
+2nd circle:  Burning Hands, Chill Touch, Sleep, Strength
+3rd circle:  Acid Blast, Concealment, Dexterity, Shocking Grasp
+4th circle:  Dispel Magic, Farsee, Infravision, Levitate, Lightning Bolt,
+             Minor Paralysis, Ray of Enfeeblement, Wizard Eye
+5th circle:  Coldshield, Cone of Cold, Dimension Door,
+             Minor Globe of Invulnerability
+6th circle:  Color Spray, Feeblemind, Fireball, Fireshield, Ice Storm,
+             Teleport
+7th circle:  Bigbys Clenched Fist, Haste, Improved Invisibility,
+             Power Word Blind, Power Word Stun, Reveal True Name
+8th circle:  Dispel Invisible, Fly, Immolate, Power Word Kill,
+             Stone Skin
+9th circle:  Detect Invisibility, Disintegrate, Incendiary Cloud,
+             Mass Invisibility, Prismatic Ray, Relocate
+10th circle: Chain Lightning, Meteorswarm
+11th circle: Bigbys Crushing Hand, Enlarge, Reduce
+12th circle: Deflect
+
+Sorcerer Specializations
+---------------------------------------------------------------------------
+Wildmage, Shadowmage, Wizard
+</content>
+	<see-also file="sorcerer"/>
+	<see-also file="tupor"/>
+	<see-also file="memorize"/>
+</help-file>

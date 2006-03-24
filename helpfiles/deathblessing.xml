@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"DEATH BLESSING"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;group&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Enchantment
+
+This potent spell grants all those grouped with the caster &quot;Vitality&quot; and
+&quot;Protection from Living&quot; spells.
+</content>
+	<see-also file="protectionfromliving"/>
+	<see-also file="vitality"/>
+</help-file>

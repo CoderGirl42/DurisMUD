@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_TERSE</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle terse
+
+This option condenses all physical hits during battle into one line per 
+character, with the number of hits in parentheses (). It helps to
+cut down on spam.
+</content>
+	<see-also file="toggle"/>
+</help-file>

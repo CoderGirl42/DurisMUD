@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BERSERKER</title>
+	<category type="Sub-Class of: Fighter"/>
+<content>
+Howling Screams, whirling whips, snacking on danger and dining on death. 
+Berserkers attack in a focused battle rage that can grant them many
+advantages on the battlefield. While at the same time their style tends to
+be sloppier than that of warriors. Hence they tend to take more damage and
+lack some skills with the shield. Many have been known to wield 2 handed
+weapons with a fury almost unmatched. Their rage tends to focus themselves
+totally on a single target at a time. So while in their younger years they
+tend to attack more than warriors. As they age, they finally learn that
+sometimes you must switch whom you fight. Bards sing of rumors that some
+Berserkers have found a way to increase their size. If these stories are
+true or not, it is not truly known. They are said to pray to the ancient
+gods of the Nordic Lands. Such names as Odin, Loki, Thor, Beretorn, and
+Kvasir. What powers are granted by these beings is a closely guarded
+secret. Only the ancient dervish knows the true power that can be
+unleashed. He dominates the Raven Realms dealing out death to those that
+dare travel where they were never meant to be.
+
+Allowable races:    Orc, Human
+Equipment usage:    Like all classes on Duris, Berserkers have their own
+                    item restrictions. They can use most heavy armor and
+                    Non-slashing weapons but are more limited in using
+                    magical items.
+
+</content>
+	<see-also file="skillberserker"/>
+</help-file>

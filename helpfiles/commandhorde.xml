@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"COMMAND HORDE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: victims in room
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Generic
+
+With this spell, the necromancer attempts to seize magical control of all
+undead in the room via a mass &quot;command undead&quot; spell.
+</content>
+</help-file>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HURRICANE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Summoning
+
+&quot;Hurricane&quot; summons a gale of wind that passes through the room, inflicting 
+damage to all that are ungrouped, with a chance of knocking them down.
+</content>
+	<see-also file="cyclone"/>
+	<see-also file="bash"/>
+</help-file>

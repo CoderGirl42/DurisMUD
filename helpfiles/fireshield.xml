@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>FIRESHIELD</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn fireshield (for innate)
+Area of effect: &lt;self&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Up to 3 hours, dependent on proficiency of caster
+Type of spell:  Fire
+
+&quot;Fireshield&quot; provides protection from magical fire attacks and some
+protection against physical attacks, reflecting the damage back at the
+attacker. It is similar to the spell &quot;Coldshield.&quot;
+</content>
+	<see-also file="coldshield"/>
+	<see-also file="innate"/>
+</help-file>

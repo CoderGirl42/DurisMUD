@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"COSMIC VACUUM"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt; 
+Aggressive: Yes 
+Cumulative: No 
+Duration: Dependent of proficiency of caster. 
+Type of spell: Cosmic 
+
+Creates a cosmic vacuum on the target so vicious it drains them of all 
+defense. 
+</content>
+	<see-also file="ethermancer"/>
+	<see-also file="cosmomancer"/>
+</help-file>

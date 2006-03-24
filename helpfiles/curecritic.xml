@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CURE CRITIC"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+&quot;Cure Critic&quot; cures more damage than the similar spells &quot;Cure Light&quot; and
+&quot;Cure Serious&quot;, but less than the much more powerful spell &quot;Heal.&quot;
+</content>
+	<see-also file="curelight"/>
+	<see-also file="cureserious"/>
+</help-file>

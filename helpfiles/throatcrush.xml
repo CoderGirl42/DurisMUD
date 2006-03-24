@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"THROAT CRUSH"</title>
+	<category type="Skill"/>
+<content>
+Aggressive:     Yes
+
+Crushing a victim's throat cripples their ability to speak effectively for 
+a short time, which in turn takes away their ability to cast spells.
+</content>
+</help-file>

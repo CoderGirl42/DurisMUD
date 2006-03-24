@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"BATTLE ECSTASY"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;group&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Protection
+
+&quot;Battle Ecstasy&quot; allows the Anti-Paladin that casts it to gain power from
+the bloodletting of his comrades. When the Anti-Paladin's group mates
+inflict damage on the enemy in battle, he gains strength from their
+bloodlust.
+</content>
+</help-file>

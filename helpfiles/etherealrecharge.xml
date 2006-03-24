@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ETHEREAL RECHARGE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+&quot;Ethereal Recharge&quot; is a spell that grants a recharge of hitpoints, it 
+can only be use on beings composed of ethereal matter.
+</content>
+	<see-also file="heal"/>
+</help-file>

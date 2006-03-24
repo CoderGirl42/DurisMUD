@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, COMMANDS"</title>
+<content>
+The format to access help for god commands is structured as follows:
+
+     help god, &lt;command&gt;
+
+Help on the following god commands and god information areas is available:
+
+accept, decline, advance, advancement, at, cheating, clone, debug, demote,
+echo, echoa, echoz, finger, force, freeze, goto, grant, revoke, gshout,
+ingame, inroom, knowledge, levels, lightning, load, lookup, pardon,
+participation, pflags, poofin, poofout, ptell, purge, reinitphys, release,
+restore, secret, setattr, setbit, sethome, silence, snoop, snowball,
+spells, stat, string, supervise, switch, return, teleport, title, trans,
+users, vis, where, wizhelp, wizloc, wizmsg
+</content>
+</help-file>

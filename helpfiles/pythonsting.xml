@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PYTHONSTING</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Animal
+
+This spell causes a poisonous python to appear for a brief second, biting
+the victim (doing minor damage) and possibly poisoning the victim.
+</content>
+	<see-also file="greaterpythonsting"/>
+</help-file>

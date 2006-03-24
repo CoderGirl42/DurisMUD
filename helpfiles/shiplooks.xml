@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHIP_LOOKS</title>
+<content>
+
+Look Out
+---------------------------------------------------------------------------
+This command looks outside your ship, at the immediate surroundings. If 
+you are in a dock zone, it will tell you the available exits much like when 
+you are walking around normally. This will tell you other ships in your 
+square, and it will show you a small portion of the worldmap (in squares) 
+when you are outside. 
+
+Look Tactical
+---------------------------------------------------------------------------
+look tactical (optional parameters are &lt;X&gt; &lt;Y&gt;) 
+
+This will show you a tactical map centered on you (or x,y with 50,50 
+being the center of the map -ie YOU). It is displayed as a hex grid and 
+any nearby ships will be displayed according to their ID. The Hex grid is 
+the square setup basically &quot;converted&quot; to a hex grid, so it is not always 
+perfect in appearance. If the optional parameters &lt;X&gt; and &lt;Y&gt; are given the
+map will center on that coord if it is within 35 hexes. This is a
+calculated value, if you provide numbers outside the range, you will see an
+error message. You cannot Look Tactical inside a dock zone. 
+
+Look cargo
+---------------------------------------------------------------------------
+This will tell you what cargo you currently have on your ship, and the 
+price you paid for that cargo. 
+
+Look Status/Look Ship
+---------------------------------------------------------------------------
+This will show you a detailed status of your ship with HPs and weapon 
+status (whether its reloading or ready to fire) and ammo remaining. It 
+will also show your position, speed, heading and target. The ID number on 
+the upper right corner of the status display is your current ID if you are 
+sailing, or a ** if you are docked. This ID starts at AA for the first 
+ship out, and continues for as many ships are currently sailing. It can be 
+an indicator of how many other ships are sailing the world, also. 
+
+Look Weaponspec
+---------------------------------------------------------------------------
+This will show you the specifications of all your weapons. It will show 
+their weapon ranges and damage each shot will do as well as if the weapon
+is destroyed or not. 
+
+Look Sight &lt;#&gt;
+---------------------------------------------------------------------------
+This will show your percent chance to hit with a specific weapon.
+
+Look Sight &lt;weapon number&gt; 
+---------------------------------------------------------------------------
+If your have a target this command will show you your percentage to hit
+the current locked target with that particular weapon. 
+
+Look Contacts
+---------------------------------------------------------------------------
+This will display a list of all ships within a 35 square radius of your 
+ship. This is the heart of getting info on your target. The list is broken 
+into several parts and will look kinda like this:
+
+Contact listing 
+===============================================
+[AN] 'NorgDog'         X:53  Y:50  Z:0   R:3.0   B:90  H:0   S:0 |S 
+
+&quot;AN&quot; is the ship's ID this is the parameter you pass to lock to lock onto 
+this target. 
+
+'Norgdog' is the ship's name. 
+
+X:53 and Y:50 are their x, y coords on your tactical map, so if you do a 
+'look tactical 53 50', it will center the map on Norgdog. 
+
+R:3.0 is Range, so in this case, Norgdog is 3 Squares from you. 
+
+B:90 is their bearing to you, so in this case, Norgdog is to your east 
+since 90 is east, so if you were to head east, you would be facing 
+Norgdog. 
+
+H:0 is Norgdog's heading.. so in this case, Norgdog is facing north 
+since 0 is North. 
+
+S:0 is Norgdog's speed so in this case, its not moving since it's 0. 
+
+Last bit is the S, which means it is on your starboard firing 
+arc, so if you have any weapons on your starboard side, they can fire at 
+Norgdog. 
+
+Next suggested reading: &quot;help SHIP_COMMANDS&quot; 
+
+</content>
+	<see-also file="shipcommands"/>
+	<see-also file="ships"/>
+</help-file>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MAGICIAN</title>
+<content>
+   - Skill: Expeditious retreat: improved retreat in any direction, even
+      when tanking
+   - Spell (10th): obscuring mist: when cast, the room the illusionist is 
+      in becomes no-scan
+   - Spell (11th): supress sound: when cast, the illusionist silences his own
+      group, allowing them to not make any noise when walking
+   - Innate: Improved Flee: when the illusionist flees, it appears that he
+      flees in several directions
+</content>
+</help-file>

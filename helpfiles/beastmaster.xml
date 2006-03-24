@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BEASTMASTER</title>
+	<category type="MultiClass"/>
+<content>
+A Beastmaster is a multi-class Shaman/Druid.
+
+Notes on Beastmaster:
+Shamans use totems, and memorize spells without spellbooks.
+Druids commune, which is heavilly based on terrain, for both spells
+and commune times.
+If you start as a Druid, you will commune all of your spells.
+If you start as a Shaman, you will memorize spells, but you will no longer
+need totems, for ANY of your spells.
+</content>
+</help-file>

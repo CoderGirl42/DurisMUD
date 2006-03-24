@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>BLADEMASTER</title>
+	<category type="Specialization"/>
+<content>
+A Blademaster is a swift warrior able to strike two opponents at a time and 
+fight even faster with the help of &quot;Whirlwind&quot;. Under the influence of 
+&quot;Whirlwind&quot;, the Blademaster moves so rapidly that he will tire quickly and
+must rest.
+
+Skills
+---------------------------------------------------------------------------
+31st level:     Whirlwind
+36th level:     Double Strike
+
+</content>
+	<see-also file="doublestrike"/>
+</help-file>

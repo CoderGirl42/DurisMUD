@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"ETHEREAL GROUNDS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Summoning
+
+This spell temporarily transforms the room into something much similar to
+the Air Plane, with all of the benefits and drawbacks of that terrain.
+</content>
+</help-file>

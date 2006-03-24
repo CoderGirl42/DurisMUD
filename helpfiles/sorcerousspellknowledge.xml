@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SORCEROUS SPELL KNOWLEDGE"</title>
+	<category type="Skill"/>
+<content>
+This skill lets you recognize and identify sorcerous-type spells as they 
+are being cast by others. As you become more proficient in the category, 
+you will recognize more spells.
+</content>
+	<see-also file="clericalspellknowledge"/>
+	<see-also file="shamanspellknowledge"/>
+</help-file>

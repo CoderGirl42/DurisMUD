@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DOORBASH</title>
+	<category type="Innate"/>
+<content>
+Syntax:         doorbash &lt;direction&gt;
+Aggressive:     No
+
+This ability lets you use your huge weight to bash in a door and charge
+into a room, although there is the distinct possibility of something nasty
+waiting in the room. Unpickable doors cannot be bashed in.
+</content>
+</help-file>

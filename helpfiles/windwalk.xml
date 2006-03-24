@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WINDWALK</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;caster&gt; &amp; &lt;player&gt; or &lt;mob&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Teleportation
+
+&quot;Windwalk&quot; is a more powerful version of the &quot;Teleport&quot; spell. It allows the 
+caster to ride the winds and instantly travel to any player or mob within a 
+distance-specific area (distance is dependant on the proficiency of the 
+caster).
+</content>
+	<see-also file="spiritjump"/>
+	<see-also file="dimensiondoor"/>
+	<see-also file="shadowtravel"/>
+	<see-also file="teleport"/>
+	<see-also file="gate"/>
+</help-file>

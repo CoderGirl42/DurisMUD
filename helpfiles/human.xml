@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>HUMAN</title>
+	<category type="General Information"/>
+<content>
+The human race encompasses the general population of civilized towns
+and cities.  They are commonplace beings, and are found in most
+populated areas.  Humans have the broadest range of classes from which
+to choose, but no extraordinary innate abilities.
+
+Class list:       Warrior, Ranger, Paladin, Cleric, Druid, Sorcerer,
+                  Necromancer, Conjurer, Thief
+, Assassin, Mercenary,
+                  Bard, Monk, Alchemist, Illusionist, Shaman.
+Statistics:       Humans are the baseline against which all other races are
+                  compared, as a result, they have no strengths or
+                  weaknesses.
+Innate abilities: None
+
+</content>
+	<see-also file="races"/>
+	<see-also file="innate"/>
+</help-file>

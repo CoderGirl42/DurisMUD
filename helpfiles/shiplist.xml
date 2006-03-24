@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHIP_LIST</title>
+<content>
+This is one of few single commands that will be covered in a helpfile, 
+simply because this command holds so much information. When you type 
+&quot;list&quot; at a dock, after you have purchased a ship, you see 4 sections: 
+
+-Hull Upgrades 
+-Sail 
+-Weapons 
+-and then a set of sample commands. 
+
+
+Hull Upgrades
+---------------------------------------------------------------------------
+This section tells you all the larger ship classes you can upgrade your 
+current ship to. A portion of the cost of your current hull will be 
+deducted from the cost of upgrading to a higher hull class. This means, 
+if you buy a sloop, and then a clipper, it will be more expensive than 
+simply buying a clipper to start with. However, it will not be as costly 
+as buying two separate ships (the clipper and the sloop). Again, you will 
+not need to restate the name of your ship, when you upgrade your hull. 
+
+Sail
+---------------------------------------------------------------------------
+Your ship requires a sail to move (sorry, you cannot move a galleon by 
+paddling it with your hands). Sails are free, but depending on the size of 
+the sail, it can take a long time to make the sail and put it on the ship. 
+If you do not have enough sail, your ship is immobile (your sail isn't very 
+effective with big holes in it). Likewise, if your sail is damaged, you 
+will move slower and slower until you are also immobile. 
+
+Weapons
+---------------------------------------------------------------------------
+Weapons are the fun part of sailing. Shooting down other players and 
+their ships! Combat will be covered in &quot;Help SHIP_COMBAT.&quot; When you buy a
+weapon, you must state what part of the ship the weapon should be mounted
+on. You should read &quot;Help SHIP_COMBAT&quot; before you buy weapons, so you can
+develop your fighting strategy and buy your weapons to match. To buy a
+weapon, you type &quot;buy weapon # &lt;location&gt;&quot; where # is the weapon ID number
+when you type &quot;list&quot; at the docks, and location is the part of the ship you
+wish to place the weapon. 
+
+At the moment, capitol weapons require 2000 ship frags to purchase.
+
+Finally, the commands list at the bottom of the &quot;list&quot; command output a few 
+commands on how to operate the buying, selling, repairing, reloading, etc. 
+of your ship. There is also a line &quot;Available space on ship:&quot; which tells 
+you how much space you have to purchase more cargo, sail, or weapons. The 
+higher the ship class, generally means you have more room for each of these 
+items. 
+
+Next suggested reading: &quot;help SHIP_MOVEMENT&quot; 
+
+</content>
+	<see-also file="shipcombat"/>
+	<see-also file="shipcommands"/>
+	<see-also file="ships"/>
+</help-file>

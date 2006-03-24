@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FOREST DRUID"</title>
+	<category type="Specialization"/>
+<content>
+The Frost Druid specialization focuses on utilizing the forces of nature
+for both offensive and defensive purposes.
+
+Spell
+---------------------------------------------------------------------------
+10th circle:    Grow
+11th circle:    Vines
+12th circle:    Awaken Forest
+
+</content>
+	<see-also file="awakenforest"/>
+	<see-also file="grow"/>
+	<see-also file="vines"/>
+</help-file>

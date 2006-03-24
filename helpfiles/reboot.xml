@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>REBOOT CRASH</title>
+	<category type="General Information"/>
+<content>
+The term &quot;reboot&quot; refers to when the game is manually shut down for a short
+period of time and restarted. Restarting the game causes all monsters,
+areas and equipment to be reloaded as if the game had not been touched. If
+a reboot occurs while you are logged on, you will reappear after the reboot
+in the same location as you were immediately before the reboot. This is
+independent of where you last rented.
+
+The term &quot;crash&quot; refers to when the games simply shuts down without warning
+due to reasons outside of the gods' control. As in a reboot, all monsters,
+areas, and equipment will load after a crash. The main difference between
+the two is that you will appear in the game at the last place that you
+rented or camped following a crash.
+
+PLAYER CORPSES WILL RE-LOAD FOLLOWING A REBBOT OR CRASH. REIMBURSEMENTS
+FOR DYING BEFORE EITHER WILL NOT BE GIVEN. CORPSES WILL DECAY AS NORMAL.
+THERE ARE NO REIMBURSEMENTS FOR ITEMS &quot;LOST&quot; DUE TO A REBOOT OR CRASH.
+</content>
+	<see-also file="decay"/>
+	<see-also file="reimbursement"/>
+	<see-also file="policies"/>
+</help-file>

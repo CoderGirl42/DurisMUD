@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GROUP</title>
+	<category type="General Information"/>
+<content>
+Syntax:  group &lt;playername&gt; (to add a member to your group)
+         group me (to leave a group)
+         group (to see who is currently in your group)
+
+As you gain levels, you will find that a &quot;Group&quot; will be needed to progress
+further in Duris. In order to form a group, first you must find other 
+players to group with. Once you have all gotten together in one place and
+are ready to go, a leader must be selected. All players must &quot;Consent&quot; the
+leader to be part of the group by typing 'consent &lt;leadername&gt;'. The leader 
+can now toggle group membership for each player by typing 
+'group &lt;playername&gt;'. In addition, if all potential group members are 
+following the group leader, he can type 'group all' to automatically group 
+anyone following him who is not already grouped. When a person groups 
+others, he is automatically included in the group as the group leader.
+
+For example, Fizzwig and Oinkoink wish to form a group with Manwich.
+
+Manwich toggles group membership by typing:
+        group fizzwig
+        group oinkoink
+
+If Manwich types 'group fizzwig' after the group has been formed, Fizzwig 
+will be kicked out of the group. If a group member, including the group 
+leader, types 'group me', they will be removed from the group and the next 
+player down the group list will automatically become the leader. Typing 
+'group' with no argument will show you a list of people in the group and 
+their condition.
+
+Groups are comprised of the group leader and people in front and rear ranks.  
+Type 'group &lt;playername&gt; front' to send a group member to the front ranks, 
+and type 'group &lt;playername&gt; rear' to send a group member to the rear 
+ranks.  Your position in the ranks determines how much damage you inflict 
+(and receive) from spells and physical attacks.
+
+Players that form a group still get the FULL amount of experience points 
+when they kill a monster. This means there is no reason not to group with
+another player if you only look at the experience factor. Everyone gets exp
+regardless if they participate in the fight or not. In addition, frags are
+divided among grouped players. 
+
+If you find yourself in need of a group, you may implement the &quot;Group
+Needed&quot; toggle.
+</content>
+	<see-also file="disband"/>
+	<see-also file="experience"/>
+	<see-also file="follow"/>
+	<see-also file="gsay"/>
+	<see-also file="consent"/>
+	<see-also file="ranks"/>
+	<see-also file="frag"/>
+</help-file>

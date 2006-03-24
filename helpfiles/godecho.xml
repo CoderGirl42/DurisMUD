@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GOD, ECHO"</title>
+<content>
+&quot;Echo&quot; will send a message to the room which will display to all players in
+the room, regardless of their state of consciousness.
+
+Example: echo This is a test.
+         will show to others as
+         This is a test.
+</content>
+	<see-also file="god gshout"/>
+	<see-also file="god echoa"/>
+	<see-also file="god echoz"/>
+</help-file>

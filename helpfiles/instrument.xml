@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INSTRUMENT INSTRUMENTS MUSIC</title>
+	<category type="General Information"/>
+<content>
+Instruments are a necessity of a bard and needed to create magical affects.
+The bard must first be holding the appropriate instrument and then type
+'play &lt;songname&gt;'.  The various instruments are as follows:  flute, harp,
+horn, drums, lyre, mandolin.  Unlike spells, the music played by a bard 
+is continuous when the bard begins playing and will continue until he/she
+ends the song or begins a new song.  Songs do eventually end, of course. 
+</content>
+	<see-also file="play"/>
+	<see-also file="songs"/>
+	<see-also file="bard"/>
+	<see-also file="skillbard"/>
+	<see-also file="piper"/>
+	<see-also file="skillpiper"/>
+</help-file>

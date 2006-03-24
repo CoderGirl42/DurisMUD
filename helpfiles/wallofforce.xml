@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"WALL OF FORCE"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;direction&gt;
+Aggressive:     No
+Cumulative:     N/A
+Duration:       Dependant on proficiency of caster.
+Type of spell:  Generic
+
+This spell creates a invisible force field that blocks any exit that it has
+been cast on, no-one can pass through this obstacle no matter what.
+</content>
+	<see-also file="wallofstone"/>
+	<see-also file="wallofiron"/>
+	<see-also file="wallofice"/>
+	<see-also file="wallofflames"/>
+</help-file>

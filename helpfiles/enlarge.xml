@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>ENLARGE</title>
+	<category type="Spell"/>
+<content>
+Syntax:         inn enlarge (for Duergar Dwarf and Shadow Beast)
+Area of effect: &lt;victim&gt; (for spell) | &lt;self&gt; (for innate)
+Aggressive:     No
+Cumulative:    	Yes 
+Duration:	Dependent on proficiency of caster
+Type of spell:  Generic
+
+This spell causes the victim to grow almost twice his size. The victim will 
+become stronger but will lose agility and dexterity.
+
+NOTE: The recipient must consent the caster in order to receive this spell.
+</content>
+	<see-also file="reduce"/>
+	<see-also file="consent"/>
+</help-file>

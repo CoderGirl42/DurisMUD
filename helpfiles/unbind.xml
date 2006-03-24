@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>UNBIND</title>
+	<category type="Command"/>
+<content>
+Syntax: unbind &lt;name&gt;
+
+This command permits you to unbind yourself or another player. The chance of 
+successfully freeing yourself depends upon your strength. If you are a 
+thief, Your chances of unbinding yourself quickly are much greater.
+</content>
+	<see-also file="bind"/>
+	<see-also file="capture"/>
+</help-file>

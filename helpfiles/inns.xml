@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INNS</title>
+	<category type="General Information"/>
+<content>
+Inns are places located throughout the world that are used to store your 
+gathered equipment while you are not playing the game. If you wish to quit 
+the game and not lose any of your gear, you must &quot;rent&quot; a room at an inn or 
+camp.
+</content>
+	<see-also file="rent"/>
+	<see-also file="camp"/>
+	<see-also file="quit"/>
+</help-file>

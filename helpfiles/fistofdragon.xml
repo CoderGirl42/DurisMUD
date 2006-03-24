@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"FIST OF DRAGON"</title>
+<content>
+The monk harnesses his inner chi-powers using it to cause his hands to 
+harden. For the duration the monk can apply full force while hitting on 
+creatures with protective spells, such as stone skin, rendering this type 
+of defense useless. The duration of the chant goes up as the skill of the 
+monk improves.
+</content>
+	<see-also file="monk"/>
+</help-file>

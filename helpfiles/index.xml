@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>INDEX</title>
+	<category type="General Information"/>
+<content>
+The Duris help files have been indexed into the following six categories.
+Please note that the POLICIES section is a <R>MUST READ</R> for every player.
+
+POLICIES                          WARFARE
+DURIS INFORMATION                 MYSTICS
+COMMUNICATIONS UTILITIES          MUNDANE LIFE
+
+For more information on each one, type HELP &lt;category&gt;.
+</content>
+	<see-also file="commands"/>
+</help-file>

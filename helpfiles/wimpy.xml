@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>WIMPY</title>
+	<category type="Disabled"/>
+<content>
+Syntax:         toggle wimpy &lt;number_of_hit_points&gt;
+
+Toggling this on makes you flee automatically when you fall below the 
+hitpoint limit while fighting. You must specify a hitpoint value for &quot;Wimpy&quot;
+to be activated. Typing &quot;toggle wimpy 0&quot; will deactivate it.
+</content>
+	<see-also file="toggle"/>
+	<see-also file="togglewimpy"/>
+</help-file>

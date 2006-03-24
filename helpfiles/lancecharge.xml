@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"LANCE CHARGE"</title>
+	<category type="Skill"/>
+<content>
+Syntax:         charge &lt;victim&gt;
+                charge &lt;victim&gt; &lt;direction&gt;
+
+When mounted on his trusty steed, the specialized Paladins and 
+Anti-Paladins can charge their enemies with a lance (provided the have one
+equipped). This brave attack inflicts a great deal of damage and just may 
+knock the victim to the ground.
+</content>
+	<see-also file="demonicrider"/>
+	<see-also file="cavalier"/>
+</help-file>

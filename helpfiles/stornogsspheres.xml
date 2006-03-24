@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"STORNOGS SPHERES"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     N/A
+Cumulative:     No
+Duration:       Dependent on proficiency of caster or until dispelled
+Type of spell:  Protection
+
+&quot;Stornogs Spheres&quot; brings into existence a series of orange spheres that 
+rotate around the caster.  These spheres absorb magical energies directed at 
+the caster leaving him unharmed.  The amount of energy the spheres can absorb
+depends on the casters' level.  
+</content>
+	<see-also file="groupstornogsspheres"/>
+</help-file>

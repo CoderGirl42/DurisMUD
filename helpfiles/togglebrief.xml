@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOGGLE_BRIEF</title>
+	<category type="Command"/>
+<content>
+Syntax:         toggle brief
+
+This toggle turns on and off room descriptions. If you have Brief Mode
+toggled ON but you wish to see a room description, type 'look room'.
+</content>
+	<see-also file="toggle"/>
+</help-file>

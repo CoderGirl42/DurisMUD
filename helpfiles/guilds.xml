@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GUILDS ASSOCIATIONS CLANS</title>
+	<category type="General Information"/>
+<content>
+This document is designed to answer any questions regarding the creation
+of player guilds on Duris. Under the current guild system players are
+responsible for the organization of their own guilds. 
+The gods themselves will not be responsible or serve any function in the
+running of a guild.
+
+How To Begin A Guild
+---------------------------------------------------------------------------
+
+a) The requirements for forming a guild are as follows :
+    -All guild members must be at least 25th level or above. The level
+      requirement is simply to ensure that the people in the guild are
+      familiar with Duris and how it's run.
+    -A guild may have upto, but no more than, 3 shared characters.
+      These characters can be accessable by some/all members of the guild,
+      but are not directly owned by anybody in the guild.
+    -Guilds must also keep a member count of at least 5 members, 
+      this 5 does <R>NOT</R> include the 3 shared characters.  The guild is
+      also limited to a maximum of 35 members in the guild at a time.
+    -A one time fee of 1,000 platinum is required to start the guild.
+      This not does include a guildhall.
+
+IMPORTANT
+    -You may only have one character in a guild, and at most one alt in the
+      <R>SAME GUILD</R>, at a time.  No exceptions.
+    -You as a player can only secede from three different guilds EVER.
+      If you leave your third different guild, that's it.
+    -If you leave a guild you must wait one real week before joining
+      another.
+    -You may only kick out one member per mud month at a time.
+
+b) What this allows -Once this happens the guild will be created and the
+   person forming the guild will be flagged as a guild 'leader'. This will
+   allow him/her to recruit members into the guild and promote/demote them
+   accordingly. This is done completely without god interference and
+   controlled by the code. Any new members will be automatically be flagged
+   and titled as a member of the guild. This also will create a guild bank
+   account which is accessible by Leaders and Deputies.
+   Once a guild has been started and approved by Duris, the guild members
+   of that guild must run their own activities. How many people there are
+   of a certain guild rank is entirely up to the players. The gods
+   themselves will have no interference with the running of the guild
+   themselves. Any new members, once enrolled will automatically be titled
+   as a basic member of that guild.
+
+Guild Structure
+---------------------------------------------------------------------------
+Guilds have specific ranks within them which give their members to ability
+do different things depending on their rank. How this works is as follows :
+
+Leader -A leader can change the names of all the ranks (this allows an
+guild of sorcerers to name the leader as &quot;ArchMage&quot; rather than &quot;Leader&quot;.
+These titles must be realistic in a <Y>fantasy world</Y>. A leader also has the
+ability to flag a player as an enemy to the guild (leaders are the only
+ones that can remove this flag as well). The leader can also add on an
+'on parole' flag to members.
+
+Deputy -A deputy (or higher) can delete, promote and demote members and
+also has access to withdraw money from the guild's bank account.
+
+Officer -An officer (or higher) has the right to fine lower members
+(dealing out punishments etc).
+
+Senior member -A senior member (or higher) has the right to enroll new
+members.
+
+Normal member -A Normal member just has general abilities, access to any
+guildhalls that might be available etc. They can also see what other guild
+members are online.
+
+Enemy -The guild leader has the ability to flag a member as a guild enemy
+as well. This will cause the guild npc's (if any) to attack the player on
+sight and is used for betrayal etc.
+
+Applying for Membership
+---------------------------------------------------------------------------
+In order to be allowed into a guild the player must first apply himself as
+an applicant. You can do this by using the 'Society Apply &lt;member&gt;' command
+where &lt;member&gt; is the enrolling member of the guild you wish to join.
+
+Guild Locker
+---------------------------------------------------------------------------
+All guilds currently have a guild locker.  Go to any bank in a hometown
+where you can access your personal locker, and you can access your guild
+locker with <Y>enter locker guild</Y>.  All members share access to this
+locker.  This replaces the need for guild chests in guildhalls.
+
+</content>
+	<see-also file="construct"/>
+	<see-also file="society"/>
+	<see-also file="guildhall"/>
+	<see-also file="title"/>
+</help-file>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"WORD OF COMMAND"</title>
+	<category type="Spell"/>
+<content>
+Area of effect:	&lt;victim&gt;
+Aggressive:	Yes	
+Cumulative:	No
+Duration:	Instantaneous
+Type of spell:	Generic
+
+This spell causes the victim to become stunned for a short period of time,
+halting them mid-cast.
+</content>
+</help-file>

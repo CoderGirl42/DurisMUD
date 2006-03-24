@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>TOTEMS</title>
+	<category type="General Information"/>
+<content>
+Totems are required by Shamans to cast their spells, as they allow them to
+focus their energies into magic.
+
+Shaman spells are divided into &quot;spheres&quot; -animal, elemental, and
+spiritual. Lesser totems are used to cast spells in a certain sphere below
+6th circle, while greater totems are used to cast those spells 6th and
+over. Totems can also grant more than one sphere or high/low-level spells.
+Totems must be held while casting (but not required during memorizing).
+
+Newbie Shamans load with three totems (raven, limestone, ivory), each of
+which grants the lower spells for a certain sphere. (raven =animal,
+limestone =elemental, ivory =spiritual).
+
+Higher totems can be bought at various Shaman-related stores around the
+mud, as well as created by the &quot;Minor Creation&quot; spell.
+</content>
+	<see-also file="shaman"/>
+	<see-also file="skillshaman"/>
+</help-file>

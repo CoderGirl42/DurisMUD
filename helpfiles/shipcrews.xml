@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SHIP_CREWS</title>
+<content>
+In Sarmiz'Duul, you will find a pub that has several crews for hire.
+
+Syntax:
+hire &lt;number&gt; &lt;sail/gun&gt;
+
+-==Sail Crews==-
+Standard Crew        Repair Rating:20      Cost: Free (starting crew)
+Veteran Crew         Repair Rating:30      Cost: 2000 platinum
+Elite Crew           Repair Rating:40      Cost: 5000 platinum
+Repair Crew          Repair Rating:70      Cost: 750 platinum
+-==Gun Crews==-
+Standard Crew        Stamina:70            Cost: Free (starting crew)
+Veteran Archers      Stamina:100           Cost: 2000 platinum
+Elite Catapult Crew  Stamina:130           Cost: 5000 platinum
+Stamina Crew         Stamina:200           Cost: 750 platinum
+
+Veteran crews (of both types) require 500 ship frags to purchase.
+Elite crews require 1000 ship frags to purchase.
+
+It is rumored that an expert machinist has perfected the construction of
+Automoton crews, but most believe this to be just a rumor.
+Under the <Y>remote</Y> possibility it <Y>were</Y> true, it would require an <R>INSANE</R>
+number of ship frags for him to even <Y>consider</Y> selling you the crews.
+
+Each crew has an experience level that looks like this:  5/10
+The lower number is how much exp your crew currently has, and the higher
+number is the max exp that crew can achieve.
+
+If your ship frags drops below the amount needed to purchase that crew
+you will lose that crew.
+
+At the moment, experience is a reflection of your ship frags:
+200 ship frags = 2 experience.
+500 ship frags = 5 experience.
+
+</content>
+	<see-also file="ships"/>
+</help-file>

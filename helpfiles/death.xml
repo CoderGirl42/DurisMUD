@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DEATH CORPSE DYING</title>
+	<category type="General Information"/>
+<content>
+When you die, you re-enter the game at your birthplace (where you started
+the game). You can retrieve your corpse  y traveling to where you died and
+getting the items from inside. Each time you die you lose a percentage of
+experience for your level. It is wise to be careful to avoid death when you
+have recently gained a level. If the experience lost due to death is more
+than you have gained in your current level, you will &quot;lose a level&quot; and the
+maximum hitpoint difference between the two levels. If you were killed by
+another player of an opposite racewar side, it is possible that you will
+also lose &quot;Frags&quot;.
+</content>
+	<see-also file="decay"/>
+	<see-also file="experience"/>
+	<see-also file="drag"/>
+	<see-also file="consent"/>
+	<see-also file="get"/>
+	<see-also file="resurrect"/>
+	<see-also file="frag"/>
+	<see-also file="raid"/>
+</help-file>

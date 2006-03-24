@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>CHARGE</title>
+	<category type="Innate"/>
+<content>
+Syntax:	        charge &lt;victim&gt;
+	        charge &lt;victim&gt; &lt;direction&gt;
+
+This allows the Minotaur to lower his head and charge at his opponents in
+the same room or up to one room away, inflicting damage and potentially
+stunning them.
+</content>
+</help-file>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DEFENDER</title>
+	<category type="MultiClass"/>
+<content>
+A Defender is a multi-class Paladin/Warrior.
+
+Warriors normally do not have any spells, so there is no change to how you
+acquire/pray/cast your spells when you multiclass.
+</content>
+</help-file>

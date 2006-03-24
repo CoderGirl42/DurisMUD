@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CHILL TOUCH"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Cold
+
+Upon a successful cast, this spell sends a searing, chilling cold through
+your victim, causing unmentionable pain.
+</content>
+</help-file>

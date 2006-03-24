@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>DIG</title>
+	<category type="Command"/>
+<content>
+Syntax: Dig
+
+If you are holding a shovel, you can use the 'dig' command to dig a hole in
+the ground.
+</content>
+	<see-also file="bury"/>
+</help-file>

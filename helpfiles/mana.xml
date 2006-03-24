@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>MANA</title>
+	<category type="General Information"/>
+<content>
+A number of classes on Duris still use the mana system (rather than the
+memorize system).  What this means is rather than praying or memorizing
+for spell slots, each spell takes a specific number of mana to cast.  If
+the caster runs out of mana, or exceeds him/herself when casting a spell,
+he/she will pass out for a short period of time.  
+</content>
+	<see-also file="psionicist"/>
+	<see-also file="commune"/>
+</help-file>

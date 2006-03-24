@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"MOUNTAIN DWARF" MOUNTAIN DWARF</title>
+	<category type="General Information"/>
+<content>
+Preferring to dwell in fortresses built into huge mountain ranges,
+mountain dwarves are a mining race known for their fine craftsmanship of
+weapons and armor. They are good-natured, sturdy, fearsome warriors who
+possess, due to extremely dense muscle and bone structure, high endurance.
+Stronger but clumsier than humans, mountain dwarves tend to live to be 
+hundreds of years old and often acquire great wisdom with their age. This 
+accumulation of intense wisdom frequently induces many of this race to 
+become mentors later in life. Mountain dwarves are born with natural 
+infravision, which allows them to maneuver quite skillfully in the dark. 
+They are well respected among most of the other races, and often trade 
+among the general colonies. Mountain dwarves hold a deep abhorrence for the
+races of the Underdark, particularly their evil cousins, the gray dwarves, 
+more commonly known as duergar.
+
+Class list:       Warrior, Cleric, Thief, Assassin, Mercenary.
+Statistics:       Dwarves are stronger and hardier than humans, and
+                  somewhat more dexterous, but tend to be less intelligent
+                  and agile.
+Innate abilities: infravision, strength
+
+</content>
+	<see-also file="races"/>
+	<see-also file="duergar"/>
+	<see-also file="innate"/>
+	<see-also file="infravision"/>
+</help-file>

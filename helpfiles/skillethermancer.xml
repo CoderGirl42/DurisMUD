@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>SKILL_ETHERMANCER</title>
+	<category type="Skillset"/>
+<content>
+The following is a list of all the skills and spells available to the
+Ethermancer class:
+
+Skills
+---------------------------------------------------------------------------
+1st level:   1h bludgeon, 1h piercing, 1h slashing, bandage, carve, 
+             clerical spell knowledge, climb, dodge, double attack, 
+             first aid, fishing, mine, quick chant, retreat, swim
+
+Spells
+---------------------------------------------------------------------------
+1st circle:  Faerie Fire, Ice Missile, Vapor Armor
+2nd circle:  Chill Touch, Detect Magic, Purify Spirit
+3rd circle:  Faerie Fog, Frost Bolt, Wind Blade
+4th circle:  Coldshield, Cone of Cold, Faerie Sight 
+5th circle:  Ice Storm, Storm Empathy, Vapor Strike
+6th circle:  Frost Beacon, Frostbite, Lightning Curtain
+7th circle:  Cold Snap, Forked Lightning, Windwalk
+8th circle:  Ethereal Form, Ethereal Recharge
+9th circle:  Arcane Whirlwind, Plane Shift
+10th circle: Induce Tupor, Purge
+11th circle: Blur, Mass Fly, Tempest Terrain
+12th circle: Path of Frost
+
+Ethermancer Specializations
+---------------------------------------------------------------------------
+Windtalker, Frost Magus, Cosmomancer
+</content>
+	<see-also file="ethermancer"/>
+	<see-also file="tupor"/>
+</help-file>

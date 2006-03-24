@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>STATS STATISTICS</title>
+	<category type="General Information"/>
+<content>
+Duris character abilities are on a bell-curved 1-100 scale. The number 
+given to any statistic is a measure of how you rate WITHIN YOUR OWN RACE. A 
+Gnome with 100 Strength, for example, is as strong as it is possible for a 
+Gnome to be, without major magical enhancement. However, even a moderately 
+strong Ogre would be vastly stronger than a 100 strength Gnome. Ogres are 
+known for strength, Gnomes are not. The conversion factors for a given race 
+are hidden and not available to players. Experimentation will no doubt 
+discover some of them, and checking the help on a race will give you an 
+idea where their strengths and weaknesses lie. All races of Duris use the 
+same scale (1-100) and all races have their own set of conversion factors. 
+Do not bother asking a God what these factors are, most won't know.
+Furthermore, the ones that do know will not tell you, experiment and find 
+out.
+</content>
+	<see-also file="strength"/>
+	<see-also file="dexterity"/>
+	<see-also file="agility"/>
+	<see-also file="constitution"/>
+	<see-also file="power"/>
+	<see-also file="intelligence"/>
+</help-file>

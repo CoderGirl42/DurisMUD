@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>LIONRAGE</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Animal
+
+This spell increases the victim's strength and damage-dealing ability,
+while decreasing his agility. Because of the spell's detrimental effects,
+the victim will save against it. Thus, if the victim wants to be the
+recipient, he should &quot;consent&quot; the caster.
+</content>
+	<see-also file="shrewtameness"/>
+	<see-also file="consent"/>
+</help-file>

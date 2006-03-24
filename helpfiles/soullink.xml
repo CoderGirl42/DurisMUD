@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SOUL LINK"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Up to 10 hours, dependent on proficiency of caster
+Type of spell:  Enchantment
+
+This spell links the essences of the caster and the spell's recipient.
+An enhancement of healing in the spell recipient is created by the link.
+However, the caster will sacrifice his ability to absorb health while
+the link is active.
+</content>
+</help-file>

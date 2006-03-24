@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"GREY ELF"</title>
+	<category type="General Information"/>
+<content>
+Unlike their cousins the drow, grey elves live on the surface and prefer to
+dwell in forests. They are exceptionally intelligent and swift, but are
+inclined to be weaker and smaller than humans. Grey elves have a good-
+natured disposition and tend to love animals and nature, although they
+loathe drow. They are born with infravision, but, unlike drow, can see
+perfectly in daylight.
+
+Class list:       Warrior, Ranger, Cleric, Conjurer, Druid, Sorcerer,
+                  Thief, Bard.
+Statistics:       Elves tend to be weaker and frailer than Humans, but are
+                  also quicker and more intelligent. Grey elves also have
+                  an innate resistance to magic attacks.
+Innate abilities: infravision, outdoor sneak
+
+</content>
+	<see-also file="races"/>
+	<see-also file="drow"/>
+	<see-also file="infravision"/>
+	<see-also file="sneak"/>
+	<see-also file="innate"/>
+</help-file>

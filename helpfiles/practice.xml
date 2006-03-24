@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>PRACTICE</title>
+	<category type="Command"/>
+<content>
+Syntax:         practice (t  see a list of spells that may be scribed)
+                practice &lt;spell&gt; (while holding both a spellbook and quill
+                                  and resting)
+		practice all (this will scribe all spells into the book
+			      currently held by the player if there is 
+			      enough room left)
+
+Practice is a method of scribing your spells. This is done with the help
+of a teacher in the room. For this to be done, you must have a spellbook
+and quill in hand and resting comfortably. You can then 'practice &lt;spell&gt;'
+to add a spell to your spellbook. If this command is typed without any 
+parameters and you are in the presence of a teacher it will show your list
+of spells.  
+
+In the past, the practice command was also used to increase your skills.
+This is no longer the case on Duris, and you must use your skills in battle
+to improve them or by gaining levels.
+</content>
+	<see-also file="spellsystem"/>
+	<see-also file="spellslot"/>
+	<see-also file="spellcircle"/>
+	<see-also file="scribe"/>
+</help-file>

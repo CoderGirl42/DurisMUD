@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CURE SERIOUS"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;victim&gt;
+Aggressive:     No
+Cumulative:     Yes
+Duration:       Instantaneous
+Type of spell:  Healing
+
+&quot;Cure Serious&quot; cures more physical damage than the similar &quot;Cure Light&quot;
+spell, but less than the &quot;Cure Critic&quot; spell.
+</content>
+	<see-also file="curelight"/>
+	<see-also file="curecritic"/>
+</help-file>

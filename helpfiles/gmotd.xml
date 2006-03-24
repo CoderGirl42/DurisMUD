@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>GMOTD</title>
+<content>
+This command gives you your Guild Message Of The Day, otherwise known as
+the news flashes for your guild that you see when you log in.
+
+Setting up your GMOTD: Only guild leaders are able to change and set your
+guild's GMOTD. To do this the leader writes the motd onto a piece of paper
+(which can be minor c'ed) and then type 'gmotd paper' to activate it. If
+you just type 'gmotd' or you are not a leader, it will show your current
+guild motd.
+</content>
+	<see-also file="news"/>
+	<see-also file="gmotd"/>
+</help-file>

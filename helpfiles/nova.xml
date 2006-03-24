@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>NOVA</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;	
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Summoning
+
+&quot;Nova&quot; coalesces a focal point of energy comprised of pure sunlight. The
+focal point grows, and grows, and grows, sucking all ambient light from
+around it. This nexus of light swells until it explodes, inflicting
+gruesome damage to anyone unlucky enough to be near it.
+</content>
+</help-file>

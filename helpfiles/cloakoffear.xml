@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"CLOAK OF FEAR"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;room&gt;
+Aggressive:     Yes
+Cumulative:     No
+Duration:       Instantaneous
+Type of spell:  Fear
+
+When cast, this spell causes the caster to assume the visage of the worst 
+nightmare of everyone else in the room. The immense and sudden fear can
+cause anyone not grouped with the caster to flee in terror in a random
+direction.
+</content>
+	<see-also file="entropystorm"/>
+</help-file>

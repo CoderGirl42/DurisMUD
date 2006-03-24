@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<help-file>
+	<title>"SUMMON BEAST"</title>
+	<category type="Spell"/>
+<content>
+Area of effect: &lt;none&gt;
+Aggressive:     No
+Cumulative:     No
+Duration:       Dependent on proficiency of caster
+Type of spell:  Animal
+
+This spell summons a beast and binds it to the caster's control. The
+creature summoned is based on surrounding terrain and the toughness of
+the beast itself is based on the caster's proficiency.
+</content>
+	<see-also file="greatersummonbeast"/>
+</help-file>
