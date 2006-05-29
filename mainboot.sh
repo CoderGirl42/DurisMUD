@@ -7,6 +7,7 @@ ulimit -c unlimited
 while [ $RESULT != 0 ]; do
   if [ $RESULT != 52 ]; then
     if [ -f src/dms_new ]; then
+      mv dms dms.old
       mv src/dms_new dms
     fi
     if [ -f areas/tworld.wld ]; then
