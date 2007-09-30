@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
-<help-file>
-	<title>NORTH SOUTH EAST WEST UP DOWN SOUTHWEST SOUTHEAST NORTHWEST NORTHEAST</title>
-<content>
-To walk in a given direction, type that direction as a command. These may
-be shortened to the first letter of each word:  n s e w u d sw se nw ne.
-</content>
-</help-file>
