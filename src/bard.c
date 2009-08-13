@@ -499,24 +499,12 @@ void bard_drifting(int l, P_char ch, P_char victim, int song)
 {
   int skill = GET_CHAR_SKILL(ch, SONG_DRIFTING);
   
-  if(!ch)
-  {
-    logit(LOG_EXIT, "bard_drifting in bard.c called without ch");
-    raise(SIGSEGV);
-  }
-  if(ch) // Just making sure.
-  {
-    if(IS_ALIVE(ch) ||
-      !victim ||
-      !IS_ALIVE(victim))
-    {
-      if(IS_ALIVE(ch) &&
-        (skill / 2) > number(1, 100))
-      {
-        spell_group_teleport(l, ch, 0, 0, victim, 0);
-      }
-    }
-  }
+  if(!(ch) ||
+     !IS_ALIVE(ch))
+        return;
+ 
+  if(skill > number(1, 300))
+    spell_group_teleport(l, ch, 0, 0, victim, 0);
 }
 
 void bard_healing(int l, P_char ch, P_char victim, int song)
@@ -524,60 +512,52 @@ void bard_healing(int l, P_char ch, P_char victim, int song)
   struct affected_type af;
   int empower = GET_CHAR_SKILL(ch, SKILL_EMPOWER_SONG);
 
-  if(!ch)
-  {
-    logit(LOG_EXIT, "bard_healing in bard.c called without ch");
-    raise(SIGSEGV);
-  }
-  if(ch) // Just making sure.
-  {
-    if(!IS_ALIVE(ch))
-    {
-      return;
-    }
-    if(IS_NPC(ch))
-    {
-      empower += 100;
-    }
-    if(GET_SPEC(ch, CLASS_BARD, SPEC_MINSTREL))
-    {
-      if(IS_AFFECTED(victim, AFF_BLIND) &&
-          GET_CHAR_SKILL(ch, SONG_HEALING) >= 90)
-      {
-        spell_cure_blind(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
-      }
-      if(IS_AFFECTED2(victim, AFF2_POISONED) &&
-          GET_CHAR_SKILL(ch, SONG_HEALING) >= 50)
-      {
-        spell_remove_poison(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
-      }
-      if(GET_CHAR_SKILL(ch, SONG_HEALING) >= 70 &&
-        (affected_by_spell(victim, SPELL_DISEASE) ||
-        affected_by_spell(victim, SPELL_PLAGUE)))
-      {
-        spell_cure_disease(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
-      }
-    }
-    else if(GET_SPEC(ch, CLASS_BARD, SPEC_DISHARMONIST))
-    {
-      if(IS_AFFECTED2(ch, AFF2_SILENCED) &&
-          GET_CHAR_SKILL(ch, SONG_HEALING) >= 90)
-      {
-        affect_from_char(ch, SPELL_SILENCE);
-      }
-    }
-    if(is_linked_to(ch, victim, LNK_SONG))
-    {
-      return;
-    }
-    memset(&af, 0, sizeof(af));
-    af.bitvector4 = AFF4_REGENERATION;
-    af.type = song;
-    af.location = APPLY_HIT_REG;
-    af.modifier = (int) (11 * l + (empower / 10));
+  if(!(ch) ||
+     !IS_ALIVE(ch))
+        return;
 
-    linked_affect_to_char(victim, &af, ch, LNK_SONG);
+  if(IS_NPC(ch))
+  {
+    empower += 100;
   }
+  if(GET_SPEC(ch, CLASS_BARD, SPEC_MINSTREL))
+  {
+    if(IS_AFFECTED(victim, AFF_BLIND) &&
+        GET_CHAR_SKILL(ch, SONG_HEALING) >= 90)
+    {
+      spell_cure_blind(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
+    }
+    if(IS_AFFECTED2(victim, AFF2_POISONED) &&
+        GET_CHAR_SKILL(ch, SONG_HEALING) >= 50)
+    {
+      spell_remove_poison(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
+    }
+    if(GET_CHAR_SKILL(ch, SONG_HEALING) >= 70 &&
+      (affected_by_spell(victim, SPELL_DISEASE) ||
+      affected_by_spell(victim, SPELL_PLAGUE)))
+    {
+      spell_cure_disease(GET_LEVEL(ch), ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
+    }
+  }
+  else if(GET_SPEC(ch, CLASS_BARD, SPEC_DISHARMONIST))
+  {
+    if(IS_AFFECTED2(ch, AFF2_SILENCED) &&
+        GET_CHAR_SKILL(ch, SONG_HEALING) >= 90)
+    {
+      affect_from_char(ch, SPELL_SILENCE);
+    }
+  }
+  if(is_linked_to(ch, victim, LNK_SONG))
+  {
+    return;
+  }
+  memset(&af, 0, sizeof(af));
+  af.bitvector4 = AFF4_REGENERATION;
+  af.type = song;
+  af.location = APPLY_HIT_REG;
+  af.modifier = (int) (11 * l + (empower / 10));
+
+  linked_affect_to_char(victim, &af, ch, LNK_SONG);
 }
 
 void bard_charm(int l, P_char ch, P_char victim, int song)
