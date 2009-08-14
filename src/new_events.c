@@ -29,7 +29,7 @@
 #include "profile.h"
 
 #define MAX_FUNCTIONS 5000
-#define FUNCTION_NAMES_FILE "lib/event_names"
+#define FUNCTION_NAMES_FILE "lib/misc/event_names"
 
 extern Skill skills[];
 struct event_type_data
