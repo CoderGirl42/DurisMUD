@@ -3787,7 +3787,7 @@ void spell_wellness(int level, P_char ch, char *arg, int type, P_char victim,
   if(!(ch))
     return;
   
-  gain = (int)(dice(9, 7 + (level / 10)));
+  gain = (int)(dice(4, 7 + (level / 10)));
   
   if(has_innate(ch, INNATE_IMPROVED_HEAL))
     gain += GET_LEVEL(ch);
