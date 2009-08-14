@@ -758,11 +758,11 @@ int exp_mod(P_char k, P_char victim)
     mod = 55;
   else if (diff > 2)            /* 3-5    */
     mod = 90;
-  else if (diff > -3)           /* -2 - 2    */
+  else if (diff > -5)           /* -2 - 2    */
     mod = 100;
-  else if (diff > -7)           /* -6 - -3    */
+  else if (diff > -10)           /* -6 - -3    */
     mod = 107;
-  else if (diff > -11)          /* -10 - -7    */
+  else if (diff > -21)          /* -10 - -7    */
     mod = 115;
   else
     mod = 125;                  /* < -10 */
@@ -772,8 +772,8 @@ int exp_mod(P_char k, P_char victim)
 
 int gain_exp(P_char ch, P_char victim, const int value, int type)
 {
-  int      i, range, XP;
-  double   new_xp;
+  int      i, range;
+  double   new_xp, XP;
   bool pvp = FALSE;
 
   if (GET_LEVEL(ch) >= MINLVLIMMORTAL || CHAR_IN_ARENA(ch))
@@ -866,47 +866,113 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
  
   if (XP > 0 && victim)
   {
-    if (IS_SHOPKEEPER(victim))
-      return 0;
-
-    if (CHAR_IN_TOWN(ch) && (GET_LEVEL(victim) > 30) && !IS_PC(victim))
-      XP = (int) (XP * 0.2);
  
-    if (CHAR_IN_TOWN(ch) && (GET_LEVEL(victim) > 40) && !IS_PC(victim))
+// Non multi-class mobs exp modifiers are below.
+    if(!IS_MULTICLASS_NPC(victim))
+    {
+      if(GET_CLASS(victim, CLASS_WARRIOR))
+        XP *= 0.50;
+      else if(GET_CLASS(victim, CLASS_MERCENARY))
+        XP *= 0.50;
+      else if(GET_CLASS(victim, CLASS_ROGUE))
+        XP *= 0.50;
+      else if(GET_CLASS(victim, CLASS_AVENGER))
+        XP *= 0.75;
+      else if(GET_CLASS(victim, CLASS_DREADLORD))
+        XP *= 0.75;
+      else if(GET_CLASS(victim, CLASS_SORCERER))
+        XP *= 1.25;
+      else if(GET_CLASS(victim, CLASS_CONJURER))
+        XP *= 1.25;
+      else if(GET_CLASS(victim, CLASS_NECROMANCER))
+        XP *= 1.25;
+      else if(GET_CLASS(victim, CLASS_PSIONICIST))
+        XP *= 1.25;
+      else if(GET_CLASS(victim, CLASS_PALADIN))
+        XP *= 0.75;
+      else if(GET_CLASS(victim, CLASS_ANTIPALADIN))
+        XP *= 0.90;
+      else if(GET_CLASS(victim, CLASS_ETHERMANCER))
+        XP *= 1.15;
+      else if(GET_CLASS(victim, CLASS_BERSERKER))
+        XP *= 0.50;
+      else if(GET_CLASS(victim, CLASS_MONK))
+        XP *= 0.75;
+      else if(GET_CLASS(victim, CLASS_CLERIC))
+        XP *= 0.85;
+      else if(GET_CLASS(victim, CLASS_SHAMAN))
+        XP *= 1.25;
+      else if(GET_CLASS(victim, CLASS_DRUID))
+        XP *= 1.25;
+      else
+        XP *= 0.50;
+    }
+    
+    if(GET_RACE(victim) == RACE_DROW)
+      XP *= 1.15;
+    
+    if(GET_RACE(victim) == RACE_GREY)
+      XP *= 1.15;
+      
+    if(GET_RACE(victim) == RACE_PLICH)
+      XP *= 1.15;
+      
+    if(GET_RACE(victim) == RACE_GIANT)
+      XP *= 1.50;
+      
+    if(IS_ELEMENTAL(victim))
+      XP *= 1.30;
+    
+    if(IS_UNDEADRACE(victim))
+      XP *= 1.30;      
+      
+    if(IS_SET(victim->specials.act, ACT_HUNTER))
+      XP *= 1.25;
+
+    if(IS_ANIMAL(victim) ||
+       IS_SLIME(victim))
+      XP *= 0.50;
+      
+    if(IS_GREATER_RACE(victim))
+      XP *= 3.00;
+      
+    if(IS_ELITE(victim))
+      XP *= 3.00;
+    
+    if(IS_PC_PET(victim))
       return 0;
 
-    // TODO: no exp for in guildhall
+    if(IS_SHOPKEEPER(victim))
+      return 0;
+      
+    if(IS_SET(world[victim->in_room].room_flags, GUILD_ROOM | ROOM_HOUSE | SAFE_ZONE))
+      return 0;
+      
+    if(CHAR_IN_TOWN(ch) && (GET_LEVEL(victim) > 20) && !IS_PC(victim))
+      XP = (int) (XP * 0.2);
 
-    if (!GET_EXP(victim))
+    if(!GET_EXP(victim))
       return 0;
 
     XP = (XP * exp_mod(ch, victim)) / 100;
 
-    if (GET_CLASS(ch, CLASS_PALADIN) && IS_GOOD(victim))
+    if(GET_CLASS(ch, CLASS_PALADIN) && IS_GOOD(victim))
       XP = (int) (XP * get_property("exp.factor.paladin.vsGood", 0.2));
 
-    if (GET_CLASS(ch, CLASS_PALADIN) && IS_EVIL(victim))
+    if(GET_CLASS(ch, CLASS_PALADIN) && IS_EVIL(victim))
       XP = (int) (XP * get_property("exp.factor.paladin.vsEvil", 1.1));
 
-    if (GET_CLASS(ch, CLASS_ANTIPALADIN) && IS_GOOD(victim))
+    if(GET_CLASS(ch, CLASS_ANTIPALADIN) && IS_GOOD(victim))
       XP = (int) (XP * get_property("exp.factor.antipaladin.vsGood", 1.05));
 
-	/* Elite Exp */
-
-	if (IS_SET(victim->specials.act, ACT_ELITE))
-    {
-      XP = (int) (XP * 1.5);
-    }
-
     /* Racial experience */
-    if( GET_RACE(ch) >= 1 && GET_RACE(ch) <= LAST_RACE )
+    if(GET_RACE(ch) >= 1 && GET_RACE(ch) <= LAST_RACE )
     {
       char prop_buf[128];
       sprintf(prop_buf, "exp.factor.%s", race_names_table[GET_RACE(ch)].no_spaces);
       XP = (int) ( XP * (float) get_property(prop_buf, 1.0) );
-    }    
-  
-  }
+    }
+  }  
 
   if (XP > 0 && type != EXP_RESURRECT)
   {
@@ -929,7 +995,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
   }
 
   range = (int) (new_exp_table[GET_LEVEL(ch) + 1] / 3);
-  XP = BOUNDED(-range, XP, range);
+  XP = BOUNDED(-range, (int)(XP), range);
 
   if( pvp )
   {
@@ -942,18 +1008,18 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 
   if( !pvp )
   {
-    XP = modify_exp_by_zone_trophy(ch, type, XP);    
+    XP = modify_exp_by_zone_trophy(ch, type, (int)(XP));    
   }
 
-  XP = check_nexus_bonus(ch, XP, NEXUS_BONUS_EXP);
+  XP = check_nexus_bonus(ch, (int)(XP), NEXUS_BONUS_EXP);
 
   // increase exp only to some limit (comulative exp till 61)
   if (XP < 0 || GET_EXP(ch) < global_exp_limit)
   {
-    GET_EXP(ch) += XP;
+    GET_EXP(ch) += (int)(XP);
   }
 
-  display_gain(ch, XP);
+  display_gain(ch, (int)(XP));
 
   if (GET_LEVEL(ch) > MAXLVLMORTAL)
     return 0;
@@ -977,7 +1043,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     }
   }
 
-  return XP;
+  return (int)(XP);
 }
 
 

@@ -206,32 +206,14 @@ void convertMob(P_char ch)
   GET_GOLD(ch) = (int) (GET_LEVEL(ch) * gold * number(75, 125) / 100);
   GET_SILVER(ch) = (int) (GET_LEVEL(ch) * silv * number(75, 125) / 100);
   GET_COPPER(ch) = (int) (GET_LEVEL(ch) * copp * number(75, 125) / 100);
-
-  GET_EXP(ch) = (int) (GET_EXP(ch) * 1.62);
+  
+// EXP modifiers are found in limits.c in gain_exp().
+  
   /* handle special situations for special races in regards to
-     money/exp */
+     money */
   if(IS_GREATER_RACE(ch) ||
      IS_ELITE(ch))
-  {
-    GET_PLATINUM(ch) *= 4;
-    GET_EXP(ch) = (int) (GET_EXP(ch) * 1.33);
-  }
-
-  if(IS_SET(ch->specials.act, ACT_HUNTER))
-    GET_EXP(ch) = (int) (GET_EXP(ch) * 1.25);
-
-  /* find those mobs this don't DO anything, and lower their xp.
-     Note: some mobs don't need to have a class, or shouldn't.  For
-     those, leave 'em alone */
-
-  if (((ch->player.m_class == 0)        /*||
-                                           (GET_CLASS(ch) == CLASS_PSIONICIST) */ ) && (GET_LEVEL(ch) > 15) &&
-      !IS_UNDEAD(ch) && !IS_ANIMAL(ch) && !IS_DEMON(ch) && !IS_DRAGON(ch))
-  {
-
-    GET_EXP(ch) = (int) (GET_EXP(ch) * 0.50);
-    GET_PLATINUM(ch) = (int) (GET_PLATINUM(ch) * 0.50);
-  }
+      GET_PLATINUM(ch) *= 4;
 
   /* finally, rarefy valuable platinum */
   xhigh = GET_PLATINUM(ch);
