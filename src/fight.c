@@ -5384,7 +5384,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
 
 int calculate_ac(P_char ch) 
 {
-  int victim_ac = BOUNDED(-1000, GET_AC(ch), 100);
+  int victim_ac = BOUNDED(-750, GET_AC(ch), 100);
 
   if(GET_AC(ch) < 1 &&
      load_modifier(ch) > 50)
@@ -5395,7 +5395,7 @@ int calculate_ac(P_char ch)
 
   victim_ac += io_agi_defense(ch);
 
-  return BOUNDED(-1000, victim_ac, 100);
+  return BOUNDED(-750, victim_ac, 100);
 }
 
 int calculate_thac_zero(P_char ch, int skill)
@@ -5621,6 +5621,12 @@ bool monk_critic(P_char ch, P_char victim)
 
   send_to_char("You sneak in and deliver a strike to a pressure point!\r\n",
       ch);
+      
+  if(!(ch) ||
+     !IS_ALIVE(ch) ||
+     !(victim) ||
+     !IS_ALIVE(victim))
+        return false;
 
   if (GET_SPEC(ch, CLASS_MONK, SPEC_WAYOFSNAKE))
   {
@@ -6434,8 +6440,9 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
     dam = (int) ((float) dam * ((float) number(4, 7) / 2.00));
   }
 
-  if (GET_CLASS(ch, CLASS_MONK) && GET_LEVEL(ch) > 50 &&
-      (sic == -1 || diceroll < GET_LEVEL(ch) - 40))
+  if(GET_CLASS(ch, CLASS_MONK) &&
+    GET_LEVEL(ch) > 30 &&
+    (sic == -1 || diceroll < GET_LEVEL(ch) - 40))
   {
     if(sic != -1)
     {
@@ -7350,30 +7357,31 @@ int blockSucceed(P_char victim, P_char attacker, P_obj wpn)
 
 int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
 {
-  int percent, learned, skl;
+  int percent, learned;
+  int skl = GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS);
   
   if(!(attacker) ||
-  !(victim) ||
-  !IS_ALIVE(victim) ||
-  !IS_ALIVE(attacker) ||
-  IS_IMMOBILE(victim) ||
-  !AWAKE(victim))
+      !(victim) ||
+      !GET_CLASS(victim, CLASS_MONK) ||
+      !IS_ALIVE(victim) ||
+      !(skl) ||
+      !IS_ALIVE(attacker) ||
+      IS_IMMOBILE(victim) ||
+      IS_BLIND(victim) ||
+      !AWAKE(victim) ||
+      IS_STUNNED(victim))
   {
     return 0;
   }
-
-  if(!GET_CLASS(victim, CLASS_MONK))
-    return 0;
-    
-  if(IS_PC(victim))
-    learned = GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS);
-  else
-    learned = BOUNDED(0, (GET_LEVEL(victim) * 7 / 3), 98) / 2;
-
-  if(learned < 1)
-    return 0;
-
-  percent = learned - WeaponSkill(attacker, wpn) / 2;
+  
+  if(IS_PC(victim) &&
+     notch_skill(victim, SKILL_MARTIAL_ARTS, get_property("skill.notch.defensive", 100)))
+        return 0;
+        
+  if(IS_ELITE(victim))
+    skl = (int)(skl * 1.25);
+  
+  percent = (int)(skl / 2) - (int)(WeaponSkill(attacker, wpn) / 3);
 
   percent += dex_app[STAT_INDEX(GET_C_DEX(victim))].reaction * 8;
   percent += str_app[STAT_INDEX(GET_C_STR(victim))].tohit * 3;
@@ -7381,8 +7389,28 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
               str_app[STAT_INDEX(GET_C_STR(attacker))].todam);
 
   if(!MIN_POS(victim, POS_STANDING + STAT_NORMAL))
-    percent /= 3;
-
+  {
+  
+  // This allows monks a chance to regain their feet based on agil and 
+  // martial arts skill. Aug09 -Lucrot
+    if(GET_C_AGI(victim) > number(1, 1000) &&
+       GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS) > number(1, 100))
+    {
+      act("$n tucks in $s arms, rolls quickly away, then thrust $s feet skywards, leaping back to $s feet!",
+        TRUE, victim, 0, attacker, TO_NOTVICT);
+      act("$n tucks in $s arms, rolls away from $N's attack, then thrust $s feet skywards, and leaps to $s feet!",
+        TRUE, victim, 0, attacker, TO_VICT);
+      act("You tuck in your arms, roll away from $N's blow, then leap to your feet!",
+        TRUE, victim, 0, attacker, TO_CHAR);
+      SET_POS(victim, POS_STANDING + GET_STAT(victim));
+      CharWait(victim, (1 * WAIT_SEC));
+      update_pos(victim);
+      return false;
+    }
+    
+    percent = 5;
+  }
+  
   if(!MIN_POS(attacker, POS_STANDING + STAT_NORMAL))
     percent *= 2;
 
@@ -7392,16 +7420,10 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
     !IS_DRACOLICH(attacker))
       percent /= 2;
 
-  if(percent < (number(10, 100)) &&
-    !notch_skill(victim, SKILL_MARTIAL_ARTS, get_property("skill.notch.defensive", 100)))
-      return 0;
-  
-  /* Ok, we're gonna hit em back now... let's check to see if we
-     dodge it too!! */
-
-  skl = GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS);
-  if(number(1, 101) > skl ||
-    number(1, 10) > (GET_LEVEL(victim) / 7))
+  if(number(1, 150) > percent)
+    return 0;
+    
+  if(number(1, 150) > skl)
   {
     act("$n arches around $N's blow, and deals a brutal counterattack!", TRUE,
       victim, 0, attacker, TO_NOTVICT);
@@ -7412,16 +7434,14 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
     hit(victim, attacker, NULL);
     return false;
   }
-  /* woohoo we hit em, and dodged too! full riposte */
-  act
-    ("$n completely sidesteps $N's blow, shifts $s balance, and strikes back at $M!",
+
+  act("$n completely sidesteps $N's blow, shifts $s balance, and strikes back at $M!",
      TRUE, victim, 0, attacker, TO_NOTVICT);
-  act
-    ("$n completely sidesteps your blow, shifts $s balance, and strikes back at YOU!",
+  act("$n completely sidesteps your blow, shifts $s balance, and strikes back at YOU!",
      TRUE, victim, 0, attacker, TO_VICT);
-  act
-    ("You completely sidestep $N's blow, shift your balance, and strike back at $M!",
+  act("You completely sidestep $N's blow, shift your balance, and strike back at $M!",
      TRUE, victim, 0, attacker, TO_CHAR);
+  
   hit(victim, attacker, NULL);
   return true;
 }
