@@ -3720,6 +3720,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   if (!victim)
   {
     send_to_char("Headbutt whom?\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   
@@ -5314,6 +5315,7 @@ void do_tackle(P_char ch, char *arg, int cmd)
     if(!vict)
     {
       send_to_char("Tackle who?\n", ch);
+      CharWait(ch, 1 * WAIT_SEC);
       return;
     }
   }
@@ -5327,7 +5329,7 @@ void do_tackle(P_char ch, char *arg, int cmd)
     }
   }
 
-  if(GET_CHAR_SKILL(ch, SKILL_TACKLE) == 0)
+  if(GET_CHAR_SKILL(ch, SKILL_TACKLE) < 1)
   {
     send_to_char("You really dont know how.\n", ch);
     return;
@@ -6323,7 +6325,6 @@ void shieldpunch(P_char ch, P_char victim)
      !IS_ALIVE(victim)) // Something bad happened. 
   {
     return;
-    
   }
 
   if(GET_CHAR_SKILL(ch, SKILL_SHIELDPUNCH) == 0) // Need the skill.
@@ -6345,6 +6346,7 @@ void shieldpunch(P_char ch, P_char victim)
   if(!victim)
   {
     send_to_char("Punch who?\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   if(!CanDoFightMove(ch, victim))
@@ -6555,6 +6557,7 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
   if(!victim) // No target.
   {
     send_to_char("Hit who?\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   
@@ -7183,6 +7186,7 @@ void do_trample(P_char ch, char *argument, int cmd)
   else if(!(victim))
   {
     send_to_char("Trample who or what?\r\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
 
@@ -7387,6 +7391,7 @@ void do_bodyslam(P_char ch, char *arg, int cmd)
   if(!victim)
   {
     send_to_char("Bodyslam who?\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   
@@ -7430,7 +7435,7 @@ void bodyslam(P_char ch, P_char victim)
 
   appear(ch);
 
-  percent_chance = 75;
+  percent_chance = 50;
 
   percent_chance =
     (int) (percent_chance *
@@ -7941,7 +7946,7 @@ void do_trip(P_char ch, char *argument, int cmd)
     return;
   }
   
-  if(GET_CHAR_SKILL(ch, SKILL_TRIP) == 0)
+  if(GET_CHAR_SKILL(ch, SKILL_TRIP) < 1)
   {
     send_to_char
       ("Battle-field tripping is too acrobatic for you to attempt.\n", ch);
@@ -7968,6 +7973,7 @@ void do_trip(P_char ch, char *argument, int cmd)
   if(!vict)
   {
     send_to_char("Trip who?\n", ch);
+    CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   
@@ -8279,6 +8285,12 @@ void event_call_grave(P_char ch, P_char victim, P_obj obj, void *data)
 {
   int      i, room, num, skill;
   P_char   skeleton;
+  
+  if (IS_SET(world[ch->in_room].room_flags, SINGLE_FILE))
+  {
+    send_to_char("&+LYou find no corpses in this narrow environment.\r\n", ch);
+    return;
+  }
 
   act
     ("&+LThe ground starts to buckle and crack as &+Wskeletons &+Lburst from the ground.",
@@ -8516,7 +8528,7 @@ void do_gaze(P_char ch, char *argument, int cmd)
     else
     {
       send_to_char("Gaze at who?\n", ch);
-      CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));      
+      CharWait(ch, 1 * WAIT_SEC);      
     }
   }
   else

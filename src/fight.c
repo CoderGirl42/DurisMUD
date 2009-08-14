@@ -2599,11 +2599,11 @@ void kill_gain(P_char ch, P_char victim)
 
       /* power leveler stopgap measure */
       if ((GET_LEVEL(gl->ch) + 40) < highest_level)
-        XP /= 5;
+        XP /= 100;
       else if ((GET_LEVEL(gl->ch) + 30) < highest_level)
-        XP /= 4;
+        XP /= 75;
       else if ((GET_LEVEL(gl->ch) + 20) < highest_level)
-        XP /= 3;
+        XP /= 50;
       else if ((GET_LEVEL(gl->ch) + 10) < highest_level)
         XP /= 2;
 

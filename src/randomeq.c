@@ -746,10 +746,10 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
   howgood = (int) ((GET_LEVEL(killer) + GET_LEVEL(mob)) / 2.0);
   howgood = (int) (howgood * (get_property("random.drop.modifier.quality", 80.000) / 100.0));
   
-  if(IS_PC(killer))
-  {
-      howgood = howgood + (killer->only.pc->frags / 200);  // the rewards for pvp increase...
-  }
+  // if(IS_PC(killer))
+  // {
+      // howgood = howgood + (killer->only.pc->frags / 200);  // the rewards for pvp increase...
+  // }
       
   if (material_type == -1)
     material = BOUNDED(1, number(MIN(GET_LEVEL(killer) / 3, howgood), howgood), MAXMATERIAL);
@@ -838,7 +838,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
             strip_ansi(material_data[material].m_name).c_str(),
             strip_ansi(slot_data[slot].m_name).c_str(), strip_ansi(buf_temp).c_str());
 
-    if(!number(0, 2))  //  only 33 percent chance of an affect max
+    if(!number(0, 6))
     {
       obj = setsuffix_obj_new(obj);
       int sufcount = 0; // to ensure that we don't infinite loop if difficulty isn't set
@@ -877,7 +877,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
               slot_data[slot].m_name, buf_temp);
     }
     obj = setsuffix_obj_new(obj);
-    while (!number(0, 1))
+    while (!number(0, 6))
     {
       obj = setsuffix_obj_new(obj);
     }
@@ -923,7 +923,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
            slot_data[slot].m_ac + number(0, 1));
 
   if(IS_SET(obj->wear_flags, ITEM_WEAR_SHIELD))
-    obj->weight = (obj->weight * number(1, 3));
+    obj->weight = (obj->weight * number(2, 3));
 
   /*        Item Attributes    */
   if (1)
@@ -933,14 +933,14 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
              slot_data[slot].m_stat + number(0, 20));
     obj = setprefix_obj(obj, value / 18, 0);
   }
-  if (!number(0, 1) && GET_LEVEL(killer) > 35)
+  if (!number(0, 2) && GET_LEVEL(killer) > 35)
   {
     value =
       (int) (material_data[material].m_stat * prefix_data[prefix].m_stat *
              slot_data[slot].m_stat + number(0, 20));
     obj = setprefix_obj(obj, value / 19, 1);
   }
-  if (!number(0, 3) && GET_LEVEL(killer) > 49)
+  if (!number(0, 5) && GET_LEVEL(killer) > 49)
   {
     value =
       (int) (material_data[material].m_stat * prefix_data[prefix].m_stat *
@@ -1043,12 +1043,12 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
       if( tries < 100 )
       {
         obj->value[5] = spells_data[splnum].spell;
-        obj->value[6] = number(10, MAX(10, GET_LEVEL(mob) - 12));
-        obj->value[7] = number(30, 50);        
+        obj->value[6] = number(15, MAX(20, GET_LEVEL(mob) - 10));
+        obj->value[7] = number(45, 60);        
       }
     }
 
-    if (number(!0, 2))
+    if(number(0, 2))
       SET_BIT(obj->extra2_flags, ITEM2_MAGIC);
 
   }
@@ -1108,7 +1108,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
 
 P_obj setsuffix_obj_new(P_obj obj)
 {
-  switch (dice(3,8) + number(0,1))
+  switch (dice(3,8) + number(0, 1))
   {
   case 3:
     SET_BIT(obj->bitvector, AFF_DETECT_INVISIBLE);
