@@ -943,6 +943,10 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
       
     if(IS_ELITE(victim))
       XP *= 3.00;
+      
+    if(!IS_PC(ch) &&
+       !IS_SET(ch->specials.act, ACT_MEMORY))
+      XP *= 0.25;
     
     if(IS_PC_PET(victim))
       return 0;
