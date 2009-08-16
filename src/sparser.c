@@ -1564,7 +1564,7 @@ bool parse_spell(P_char ch, char *argument,
     {
       send_to_char
         ("You aren't holding the correct totem to cast that spell.\n", ch);
-      CharWait(ch, PULSE_VIOLENCE);
+      // CharWait(ch, PULSE_VIOLENCE);
       return FALSE;
     }
   }
