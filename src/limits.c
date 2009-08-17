@@ -869,7 +869,8 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
  
 // Non multi-class mobs exp modifiers are below.
     if(!IS_MULTICLASS_NPC(victim) &&
-        GET_LEVEL(victim) > 20)
+        GET_LEVEL(victim) > 20 &&
+        !IS_PC(victim))
     {
       if(GET_CLASS(victim, CLASS_WARRIOR))
         XP *= (get_property("gain.exp.mod.warrior", 1.00));
@@ -935,6 +936,9 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
       
     if(GET_RACE(victim) == RACE_PLICH)
       XP *= (get_property("gain.exp.mod.victim.race.plich", 1.00));
+      
+    if(CAN_BREATHE(victim))
+      XP *= (get_property("gain.exp.mod.victim.ability.breath.weapon", 1.00));
       
     if(IS_GREATER_RACE(victim))
       XP *= (get_property("gain.exp.mod.victim.race.greater", 1.00));
