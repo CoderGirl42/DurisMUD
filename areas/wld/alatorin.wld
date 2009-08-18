@@ -13405,6 +13405,11 @@ D2
 ~
 ~
 0 0 83758
+D3
+&+LThe &N&+ywooden door&+L to a &N&+msmall shop&+L is to the west.
+~
+door~
+1 0 83790
 S
 #83758
 &+LA &NCo&+ybb&+Lle&Nst&+yon&+Le St&n&+yre&Net&N~
@@ -14041,4 +14046,20 @@ D1
 ~
 ~
 0 0 83788
+S
+#83790
+&+mA Small Shop&N~
+   &+mThis small shop is covered with various &+ytraveling gear &n&+mand
+&+mother various inventory items.  There are scattered scrolls, daggers,
+&+mrings and other relics randomly strewn about the table, and larger
+&+mitems hanging from the walls and lined along the floors.  This shop
+&+mis quite large, the structure having been made of imported wood, as very
+&+mfew trees grow on the Shanatar mountain.
+~
+831 0 1
+D1
+&+LThis &N&+ywooden door&+L leads back to the cobblestone streets of Deramuth.
+~
+door~
+1 0 83757
 S

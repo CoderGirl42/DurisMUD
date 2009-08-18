@@ -4070,7 +4070,7 @@ pd 0 81920 -1
 0.0.0.0 0
 8 8 1
 #83357
-sneaky clansdwarf~
+sneaky clansdwarf duergar dwarf~
 &+La sneaky &N&+rclansdwarf&N~
 &+LA sneaky &N&+rclansdwarf &n&+Lsneaks through the shadows.
 ~
@@ -4079,7 +4079,7 @@ sneaky clansdwarf~
 &+Lin his eyes may be a side effect of the sheer &N&+rbloodlust &+Lfilling his
 &+Lveins at this moment.
 ~
-1073744010 64 0 24 0 0 0 -1000 S
+1073744010 1 0 24 0 0 0 -1000 S
 pd 0 8192 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -4098,5 +4098,69 @@ deramuth guard patrolling~
 1140850844 0 0 134217752 0 0 0 0 S
 pf 0 16384 -1
 46 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83359
+wide-eyed shopkeeper~
+&+ya wide-eyed &+mshopkeeper&N~
+&+yA wide-eyed &N&+mshopkeeper&N sells his wares here.
+~
+   &+yThis halfling man has taken up shop here in &+WDeramuth Port&n&+y.
+&+yHe has curly brown hair and a wide, &ntoothy &+ysmile.  He dazzles
+&+yonlookers with his bright and colorful jewelry, sporting two large gold
+&+Yhoop &N&+yearrings and a couple large diamond rings.
+~
+2250 0 0 24 0 0 0 0 S
+pf 0 32768 -1
+51 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83360
+deramuth mercenary~
+&+ya &+WDeramuth &N&+ymercenary&N~
+&+yA halfling mercenary from &+WDeramuth Port &N&+ysits here, sipping his drink.
+~
+   &+yThis mercenary wears fine halfling leather and a proud look of
+&+ydetermination on his youthful face.  Having been employed from the
+&+WDeramuth Port &N&+yauthority for so long, this halfling has taken
+&+yon the name of a '&+WDeramuth &N&+yMerc' to the people of &N&+cAlatorin
+&+ywho have ears beyond the mountain walls.
+~
+1073744074 0 0 24 0 0 0 0 S
+pf 0 16384 -1
+40 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83361
+halfling dockhand dock hand~
+&+ya halfling &n&+cdock hand&N~
+&+LA halfling dock hand works the docks&N&+c, lending a hand.
+~
+   &+yThis young, strong halfling works the docks performing tasks
+&+yfrom carrying crates to anchoring ships.  He has an able, strong
+&+ybody and a youthful exhuberance shining brightly in his day-to-day
+&+yactivities.
+~
+2250 0 0 0 0 0 0 1000 S
+pf 0 1 -1
+36 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83362
+general helgor dwarf warlord duergar~
+&+rGeneral &+RHel&N&+rgor&N~
+&+rGeneral &+RHelgor &N&+rthe fearsome duergar &+Lwarlord &N&+rstands here, axe in hand.
+~
+   &+rGeneral &+RHel&N&+rgor may as well be of &+Ykingly &N&+rstatus to the
+&+rduergar people, having fought side-by-side of General Bakarakh during the
+&+rthird war.  Although never have having contact with &+RTaark Shanat&N&+r, the
+&+Gking &N&+rof &+cAlatorin&+r and ruler of &N&+yShanatar&+r, General &+RHel&N&+rgor
+&+rhas been held in the highest respect of the &Nsh&+Wie&Nld &+Ydwarf &N&+rking.
+   &+rGeneral &+RHel&N&+rgor is quite tall for a duergar, and impressively-
+&+rmuscular.  He wears thick ringmail, which is draped by his thick mighty beard.
+~
+1073744074 64 0 939524120 14528 0 0 -1000 S
+pd 0 16777233 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
