@@ -906,15 +906,14 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
         XP *= (get_property("gain.exp.mod.shaman", 1.00));
       else if(GET_CLASS(victim, CLASS_DRUID))
         XP *= (get_property("gain.exp.mod.druid", 1.00));
+      else if(GET_CLASS(victim, CLASS_RANGER))
+        XP *= (get_property("gain.exp.mod.ranger", 1.00));
+      else if(GET_CLASS(victim, CLASS_MINDFLAYER))
+        XP *= (get_property("gain.exp.mod.mindflayer", 1.00));
+      else if(GET_CLASS(victim, CLASS_REAVER))
+        XP *= (get_property("gain.exp.mod.reaver", 1.00));
       else
         XP *= (get_property("gain.exp.mod.other", 1.00));
-    }
-    
-    if(GET_LEVEL(victim) > 20)
-    {
-      if(IS_ANIMAL(victim) ||
-         IS_SLIME(victim))
-        XP *= (get_property("gain.exp.mod.easyraces", 1.00));
     }
     
 // Exp penalty for classes that advance too quickly.
@@ -928,27 +927,12 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     if(GET_CLASS(ch, CLASS_MERCENARY))
       XP *= (get_property("gain.exp.mod.player.merc", 1.00));
     
-    if(GET_RACE(victim) == RACE_DROW)      
-      XP *= (get_property("gain.exp.mod.victim.race.drow", 1.00));
-    
-    if(GET_RACE(victim) == RACE_GREY)
-      XP *= (get_property("gain.exp.mod.victim.race.grey", 1.00));
-      
-    if(GET_RACE(victim) == RACE_PLICH)
-      XP *= (get_property("gain.exp.mod.victim.race.plich", 1.00));
-      
 // Careful with the breath modifier since many greater race mobs have a breathe weapon.
     if(CAN_BREATHE(victim))
       XP *= (get_property("gain.exp.mod.victim.ability.breath.weapon", 1.00));
       
-    if(IS_GREATER_RACE(victim))
-      XP *= (get_property("gain.exp.mod.victim.race.greater", 1.00));
-    else if(IS_ELITE(victim))
+    if(IS_ELITE(victim))
       XP *= (get_property("gain.exp.mod.victim.race.elite", 1.00));
-    else if(GET_RACE(victim) == RACE_GIANT)
-      XP *= (get_property("gain.exp.mod.victim.race.giant", 1.00));
-    else if(IS_ELEMENTAL(victim))
-      XP *= (get_property("gain.exp.mod.victim.race.elemental", 1.00));
       
     if(IS_SET(victim->specials.act, ACT_HUNTER))
       XP *= (get_property("gain.exp.mod.victim.act.hunter", 1.00));
@@ -956,6 +940,15 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     if(!IS_PC(ch) &&
        !IS_SET(ch->specials.act, ACT_MEMORY))
       XP *= (get_property("gain.exp.mod.victim.act.nomemory", 1.00));
+    
+// Victim race exp modifiers.
+    if(GET_RACE(victim) >= 1 &&
+       GET_RACE(victim) <= LAST_RACE )
+    {
+      char prop_buf1[128];
+      sprintf(prop_buf1, "gain.exp.mod.victim.race.%s", race_names_table[GET_RACE(victim)].no_spaces);
+      XP *= (get_property(prop_buf1, 1.000));
+    }
     
     if(IS_PC_PET(victim))
       return 0;
