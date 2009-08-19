@@ -682,6 +682,12 @@ void shopping_sell(char *arg, P_char ch, P_char keeper, int shop_nr)
   sprintf(Gbuf1, "The shopkeeper gives you %s.\r\n", coin_stringv(sale));
   send_to_char(Gbuf1, ch);
   
+  if(sale &&
+     sale >= get_property("stats.sell.log", 50000))
+      statuslog(ch->player.level,
+        "&+LSALE:&n (%s) just sold [%d] (%s) for (%s)!",
+          GET_NAME(ch), GET_OBJ_VNUM(temp1), temp1->short_description, coin_stringv(sale));
+  
   ADD_MONEY(ch, sale);
 /*  if (shop_index[shop_nr].shop_is_roaming == 1) */
   SUB_MONEY(keeper, sale, 0);
