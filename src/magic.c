@@ -13909,9 +13909,9 @@ void spell_lesser_resurrect(int level, P_char ch, char *arg, int type, P_char vi
 
     StopAllAttackers(t_ch);
     
-    if(IS_PC(victim) &&
-       IS_RIDING(victim))
-          stop_riding(victim);
+    if(IS_PC(t_ch) &&
+       IS_RIDING(t_ch))
+          stop_riding(t_ch);
 
     for (af = t_ch->affected; af; af = next_af)
     {
