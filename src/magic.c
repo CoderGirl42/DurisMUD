@@ -13508,8 +13508,9 @@ void spell_resurrect(int level, P_char ch, char *arg, int type, P_char victim,
       }
     }
     
-    if(get_linked_char(t_ch, LNK_RIDING))
-      stop_riding(t_ch);
+    if(IS_PC(t_ch) &&
+       IS_RIDING(t_ch))
+          stop_riding(t_ch);
       
     act("$n &+rhowls &+win pain as $s body crumbles to &+Ldust&+w.&n",
       FALSE, t_ch, 0, 0, TO_ROOM);
@@ -13907,6 +13908,10 @@ void spell_lesser_resurrect(int level, P_char ch, char *arg, int type, P_char vi
       stop_fighting(t_ch);
 
     StopAllAttackers(t_ch);
+    
+    if(IS_PC(victim) &&
+       IS_RIDING(victim))
+          stop_riding(victim);
 
     for (af = t_ch->affected; af; af = next_af)
     {
