@@ -457,10 +457,13 @@ int lightning_sword(P_obj obj, P_char ch, int cmd, char *arg)
   if (!e_pos)
     return FALSE;
 
- if (number(0, 30))
-   return FALSE;
-
   if (!IS_FIGHTING(ch))
+    return FALSE;
+    
+  if(CheckMultiProcTiming(ch))
+    return false;
+    
+  if(number(0, 32))
     return FALSE;
 
   dam = dice(obj->value[1], obj->value[2]);
@@ -516,13 +519,11 @@ int lightning_sword(P_obj obj, P_char ch, int cmd, char *arg)
 
         return TRUE;
       }
-
     }
-
   }
 
-    act("You score a CRITICAL HIT!!!!!\r\n", FALSE, ch, obj, vict, TO_CHAR);
-    spell_chain_lightning(16, ch, NULL, SPELL_TYPE_SPELL, 0, 0);
+  act("You score a CRITICAL HIT!!!!!\r\n", FALSE, ch, obj, vict, TO_CHAR);
+  spell_chain_lightning(16, ch, NULL, SPELL_TYPE_SPELL, 0, 0);
   
   return FALSE;
 }
