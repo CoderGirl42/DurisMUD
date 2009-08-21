@@ -520,6 +520,7 @@ void bard_healing(int l, P_char ch, P_char victim, int song)
   {
     empower += 100;
   }
+  
   if(GET_SPEC(ch, CLASS_BARD, SPEC_MINSTREL))
   {
     if(IS_AFFECTED(victim, AFF_BLIND) &&
@@ -551,13 +552,28 @@ void bard_healing(int l, P_char ch, P_char victim, int song)
   {
     return;
   }
-  memset(&af, 0, sizeof(af));
-  af.bitvector4 = AFF4_REGENERATION;
-  af.type = song;
-  af.location = APPLY_HIT_REG;
-  af.modifier = (int) (11 * l + (empower / 10));
+  
+  if(!affected_by_spell(victim, SONG_HEALING))
+  {
+    memset(&af, 0, sizeof(af));
+    af.bitvector4 = AFF4_REGENERATION;
+    af.type = SONG_HEALING;
+    af.location = APPLY_HIT_REG;
+    af.modifier = (int) (11 * l + (empower / 10));
 
-  linked_affect_to_char(victim, &af, ch, LNK_SONG);
+    linked_affect_to_char(victim, &af, ch, LNK_SONG);
+  }
+  
+  if(!affected_by_spell(ch, SONG_HEALING))
+  {
+    memset(&af, 0, sizeof(af));
+    af.bitvector4 = AFF4_REGENERATION;
+    af.type = SONG_HEALING;
+    af.location = APPLY_HIT_REG;
+    af.modifier = (int) (11 * l + (empower / 10));
+
+    linked_affect_to_char(ch, &af, ch, LNK_SONG);
+  }
 }
 
 void bard_charm(int l, P_char ch, P_char victim, int song)
@@ -922,27 +938,27 @@ void bard_heroism(int l, P_char ch, P_char victim, int song)
     ch == victim)
       spell_haste(l, ch, 0, 0, victim, NULL);
 
-  if(!affected_by_spell(victim, song))
+  if(!affected_by_spell(victim, SONG_HEROISM))
   {
     memset(&af, 0, sizeof(af));
-    af.type = song;
+    af.type = SONG_HEROISM;
     af.location = APPLY_COMBAT_PULSE;
-    af.modifier = -1 * l / 20;
+    af.modifier = -1;
     linked_affect_to_char(victim, &af, ch, LNK_SONG);
     af.location = APPLY_SPELL_PULSE;
-    af.modifier = -1 * l / 20;
+    af.modifier = -1;
     linked_affect_to_char(victim, &af, ch, LNK_SONG);
     if(IS_MELEE_CLASS(victim))
-      send_to_char("&+yYour combat maneuvers seem faster...", victim);
+      send_to_char("&+yYour combat maneuvers seem faster...\r\n", victim);
     else
-      send_to_char("&+cYour spell casting seems faster...", victim);
+      send_to_char("&+cYour spell casting seems faster...\r\n", victim);
   }
 
-  if(!affected_by_spell(victim, SKILL_HEROISM))
+  if(!affected_by_spell(victim, SONG_HEROISM))
   {
     memset(&af, 0, sizeof(af));
     af.duration = l / 3;
-    af.type = SKILL_HEROISM;
+    af.type = SONG_HEROISM;
     af.location = APPLY_DAMROLL;
     af.modifier = (l / 10) + (empower / 15);
     affect_to_char(victim, &af);
@@ -950,6 +966,37 @@ void bard_heroism(int l, P_char ch, P_char victim, int song)
     af.location = APPLY_HITROLL;
     af.modifier = (l / 10) + (empower / 15);
     affect_to_char(victim, &af);
+    send_to_char("&+WA sense of &+yheroism &+Wgrows in your &+rheart.\r\n&N", victim);
+  }
+  
+  if(!affected_by_spell(ch, SONG_HEROISM))
+  {
+    memset(&af, 0, sizeof(af));
+    af.type = SONG_HEROISM;
+    af.location = APPLY_COMBAT_PULSE;
+    af.modifier = -1 * l / 20;
+    linked_affect_to_char(ch, &af, ch, LNK_SONG);
+    af.location = APPLY_SPELL_PULSE;
+    af.modifier = -1 * l / 20;
+    linked_affect_to_char(ch, &af, ch, LNK_SONG);
+    if(IS_MELEE_CLASS(ch))
+      send_to_char("&+yYour combat maneuvers seem faster...\r\n", victim);
+    else
+      send_to_char("&+cYour spell casting seems faster...\r\n", victim);
+  }
+
+  if(!affected_by_spell(ch, SONG_HEROISM))
+  {
+    memset(&af, 0, sizeof(af));
+    af.duration = l / 3;
+    af.type = SONG_HEROISM;
+    af.location = APPLY_DAMROLL;
+    af.modifier = (l / 10) + (empower / 15);
+    affect_to_char(ch, &af);
+
+    af.location = APPLY_HITROLL;
+    af.modifier = (l / 10) + (empower / 15);
+    affect_to_char(ch, &af);
     send_to_char("&+WA sense of &+yheroism &+Wgrows in your &+rheart.\r\n&N", victim);
   }
 }
@@ -1118,17 +1165,11 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
   int x = GET_LEVEL(ch);
   int empower = GET_CHAR_SKILL(ch, SKILL_EMPOWER_SONG);
 
-  if(!(ch))
-  {
-    return;
-  }
+  if(!(ch) ||
+     !IS_ALIVE(victim) ||
+     !IS_ALIVE(ch))
+        return;
   
-  if(!IS_ALIVE(victim) ||
-    !IS_ALIVE(ch))
-  {
-    return;
-  }
-
   if(IS_NPC(ch))
   {
     empower += 100;
@@ -1143,9 +1184,10 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
     affect_to_char(victim, &af);
     send_to_char("&+RYou feel protected from the fire!\r\n", victim);
   }
+  
   if(!affected_by_spell(victim, SPELL_PROTECT_FROM_COLD) &&
-  (l > 17) &&
-  (number(0, 3)))
+    (l > 17) &&
+    (number(0, 3)))
   {
     bzero(&af, sizeof(af));
     af.type = SPELL_PROTECT_FROM_COLD;
@@ -1154,6 +1196,7 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
     affect_to_char(victim, &af);
     send_to_char("&+WYou feel protected from the cold!\r\n", victim);
   }
+  
   if(!affected_by_spell(victim, SPELL_PROTECT_FROM_GAS) &&
     (l > 19) && 
     (number(0, 3)))
@@ -1165,6 +1208,7 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
     affect_to_char(victim, &af);
     send_to_char("&+GYou feel protected from the poisonous gasses!\r\n", victim);
   }
+  
   if(!affected_by_spell(victim, SPELL_PROTECT_FROM_ACID) &&
     (l > 21) &&
     (number(0, 3)))
@@ -1176,6 +1220,7 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
     affect_to_char(victim, &af);
     send_to_char("&+MYou feel protected from acid!\r\n", victim); 
   }
+  
   if(!affected_by_spell(victim, SPELL_PROTECT_FROM_LIGHTNING) &&
     (l > 23) &&
     (number(0, 3)))
@@ -1187,22 +1232,19 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
     affect_to_char(victim, &af);
     send_to_char("&+CYou feel protected from the lightning!\r\n", victim);
   }
-  // if(!affected_by_spell(victim, SPELL_INDOMITABILITY) &&
-    // (empower > 50) &&
-    // !number(0, 49))
-  // {
-    // bzero(&af, sizeof(af));
-    // af.type = SPELL_INDOMITABILITY;
-    // af.duration = (int) (x / 3);
-    // af.bitvector4 = AFF4_NOFEAR;
-    // affect_to_char(victim, &af);
-    // send_to_char("&+WYou feel your fear of &+Rdragons &+Wdisappear!&n\r\n", victim);
-  // }
-  if(!affected_by_spell(victim, song))
+
+  if(!affected_by_spell(victim, SONG_DRAGONS))
   {
     memset(&af, 0, sizeof(af));
     af.type = song;
     linked_affect_to_char(victim, &af, ch, LNK_SONG);
+  }
+  
+  if(!affected_by_spell(ch, SONG_DRAGONS))
+  {
+    memset(&af, 0, sizeof(af));
+    af.type = song;
+    linked_affect_to_char(ch, &af, ch, LNK_SONG);
   }
 } 
 
