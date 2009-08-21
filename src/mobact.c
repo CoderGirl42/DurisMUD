@@ -342,6 +342,10 @@ int room_has_evil_enemy(const P_char ch)
 
   for (temp = world[room].people; temp; temp = temp->next_in_room)
   {
+    if(IS_NPC(temp) &&
+       GET_VNUM(temp) == IMAGE_RELFECTION_VNUM)
+          continue;
+          
     if(!char_deserves_helping(ch, temp, TRUE))
     {
       if(IS_PC(temp))
@@ -372,6 +376,10 @@ int room_has_good_enemy(const P_char ch)
 
   for (temp = world[room].people; temp; temp = temp->next_in_room)
   {
+    if(IS_NPC(temp) &&
+       GET_VNUM(temp) == IMAGE_RELFECTION_VNUM)
+          continue;
+    
     if(!char_deserves_helping(ch, temp, TRUE))
     {
       if(IS_PC(temp))
@@ -3588,7 +3596,7 @@ bool CastEtherSpell(P_char ch, P_char victim, int helping)
 
 bool CastClericSpell(P_char ch, P_char victim, int helping)
 {
-  P_char   target = NULL, tempch;
+  P_char   target = NULL, tempch, tmp;
   int      dam = 0, lvl = 0, spl = 0;
 
   /* make sure I'm even able to cast in this room! */
@@ -3617,25 +3625,32 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
    * my birthplace, get home!
    */
 
-  if(!spl && IS_FIGHTING(ch) && (GET_HIT(ch) < (GET_MAX_HIT(ch) >> 2)) &&
-      (world[ch->in_room].number != GET_BIRTHPLACE(ch)) &&
-      npc_has_spell_slot(ch, SPELL_WORD_OF_RECALL) &&
-      !IS_SET(world[ch->in_room].room_flags, NORECALL) &&
-      !IS_SET(world[real_room0(GET_BIRTHPLACE(ch))].room_flags, NORECALL))
-    spl = SPELL_WORD_OF_RECALL;
+  if(!spl &&
+     IS_FIGHTING(ch) &&
+     ch == target &&
+     (GET_HIT(ch) < (GET_MAX_HIT(ch) >> 2)) &&
+     (world[ch->in_room].number != GET_BIRTHPLACE(ch)) &&
+     npc_has_spell_slot(ch, SPELL_WORD_OF_RECALL) &&
+     !IS_SET(world[ch->in_room].room_flags, NORECALL) &&
+     !IS_SET(world[real_room0(GET_BIRTHPLACE(ch))].room_flags, NORECALL))
+        spl = SPELL_WORD_OF_RECALL;
 
-  if(!spl && (ch == target) && !IS_AFFECTED2(ch, AFF2_SOULSHIELD) &&
-      !affected_by_spell(ch, SPELL_SOULSHIELD) && !IS_AFFECTED4(ch, AFF4_NEG_SHIELD) &&
-      ((GET_ALIGNMENT(ch) <= -950) ||
-      (GET_ALIGNMENT(ch) >= 950)) &&
-      npc_has_spell_slot(ch, SPELL_SOULSHIELD) &&
-      (!IS_FIGHTING(ch) || number(0, 2)))
-  spl = SPELL_SOULSHIELD;
+  if(!spl &&
+     (ch == target) &&
+     !IS_AFFECTED2(ch, AFF2_SOULSHIELD) &&
+     !affected_by_spell(ch, SPELL_SOULSHIELD) &&
+     !IS_AFFECTED4(ch, AFF4_NEG_SHIELD) &&
+     ((GET_ALIGNMENT(ch) <= -950) ||
+     (GET_ALIGNMENT(ch) >= 950)) &&
+     npc_has_spell_slot(ch, SPELL_SOULSHIELD) &&
+     (!IS_FIGHTING(ch) || number(0, 2)))
+        spl = SPELL_SOULSHIELD;
 
   if(!spl &&
     (affected_by_spell(target, SPELL_POISON) ||
     IS_AFFECTED2(target, AFF2_POISONED)) &&
-    (!IS_FIGHTING(ch) || !number(0, 3)))
+    (!IS_FIGHTING(ch) ||
+    !number(0, 3)))
   {
     if(npc_has_spell_slot(ch, SPELL_PURIFY_SPIRIT))
     {
@@ -3651,21 +3666,27 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
     }
   }
 
-  if(!spl && affected_by_spell(target, SPELL_CURSE) &&
-      npc_has_spell_slot(ch, SPELL_REMOVE_CURSE) &&
-      (!IS_FIGHTING(ch) || !number(0, 5)))
-    spl = SPELL_REMOVE_CURSE;
+  if(!spl &&
+     affected_by_spell(target, SPELL_CURSE) &&
+     npc_has_spell_slot(ch, SPELL_REMOVE_CURSE) &&
+     (!IS_FIGHTING(ch) || !number(0, 5)))
+        spl = SPELL_REMOVE_CURSE;
 
   if(!spl && IS_AFFECTED(target, AFF_BLIND) &&
-      npc_has_spell_slot(ch, SPELL_CURE_BLIND) &&
-      (!IS_FIGHTING(ch) || !number(0, 2)))
-    spl = SPELL_CURE_BLIND;
+     npc_has_spell_slot(ch, SPELL_CURE_BLIND) &&
+     (!IS_FIGHTING(ch) || !number(0, 2)))
+    if(npc_has_spell_slot(ch, SPELL_PURIFY_SPIRIT))
+      spl = SPELL_PURIFY_SPIRIT;
+    else
+      spl = SPELL_CURE_BLIND;
   else if(!spl && IS_AFFECTED(target, AFF_BLIND) &&
            npc_has_spell_slot(ch, SPELL_HEAL) &&
            (!IS_FIGHTING(ch) || !number(0, 2)))
-    spl = SPELL_HEAL;
-  else if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-           room_has_valid_exit(ch->in_room) && !fear_check(ch) )
+              spl = SPELL_HEAL;
+  else if(!spl &&
+          IS_AFFECTED(ch, AFF_BLIND) &&
+          room_has_valid_exit(ch->in_room) &&
+          !fear_check(ch) )
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -3704,35 +3725,38 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
         spl = SPELL_MASS_HEAL;
     }
 
-    if(!spl && npc_has_spell_slot(ch, SPELL_VITALITY) &&
-        !affected_by_spell(target, SPELL_VITALITY) && (number(0, 1) ||
-                                                       !IS_FIGHTING(ch)))
-      spl = SPELL_VITALITY;
+    if(!spl &&
+       lvl >= 46 && // Low level vitality has a short duration.
+       npc_has_spell_slot(ch, SPELL_VITALITY) &&
+       !affected_by_spell(target, SPELL_VITALITY) &&
+       (number(0, 1) || !IS_FIGHTING(ch)))
+          spl = SPELL_VITALITY;
 
     // if not fighting, might as well cast the shit heal spells
 
-    else if(!spl && !IS_FIGHTING(ch) && (dam > 0))
+    else if(!spl &&
+            !IS_FIGHTING(ch) &&
+            (dam > 0))
     {
       if(npc_has_spell_slot(ch, SPELL_CURE_CRITIC))
         spl = SPELL_CURE_CRITIC;
       else if(npc_has_spell_slot(ch, SPELL_CURE_SERIOUS))
         spl = SPELL_CURE_SERIOUS;
-      else if(npc_has_spell_slot(ch, SPELL_CURE_LIGHT))
-        spl = SPELL_CURE_LIGHT;
     }
   }
 
-  if(!spl && (!IS_FIGHTING(ch) || (number(0, 4) == 2)))
+  if(!spl &&
+    (!IS_FIGHTING(ch) || (number(0, 4) == 2)))
   {
     if(!affected_by_spell(target, SPELL_ARMOR) &&
         npc_has_spell_slot(ch, SPELL_ARMOR) &&
         GET_RACE(target) != RACE_ANIMAL)
-      spl = SPELL_ARMOR;
+            spl = SPELL_ARMOR;
     else
       if(!affected_by_spell(target, SPELL_BLESS) &&
           npc_has_spell_slot(ch, SPELL_BLESS) &&
           GET_RACE(target) != RACE_ANIMAL)
-      spl = SPELL_BLESS;
+            spl = SPELL_BLESS;
   }
 
   /* this stuff is all of limited usefulness in combat (the prot spells are nice,
@@ -3741,9 +3765,11 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
 
   if(!IS_FIGHTING(ch) || (number(0, 10) == 3))
   {
-    if(!spl && !affected_by_spell(ch, SPELL_TRUE_SEEING)
-        && npc_has_spell_slot(ch, SPELL_TRUE_SEEING) && (ch == target))
-      spl = SPELL_TRUE_SEEING;
+    if(!spl &&
+       !affected_by_spell(ch, SPELL_TRUE_SEEING) &&
+        npc_has_spell_slot(ch, SPELL_TRUE_SEEING) &&
+        (ch == target))
+           spl = SPELL_TRUE_SEEING;
 
     if(!spl && !IS_AFFECTED4(ch, AFF4_SANCTUARY) &&
         npc_has_spell_slot(ch, SPELL_LESSER_SANCTUARY) && (ch == target))
@@ -3831,8 +3857,6 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
             return (CastClericSpell(ch, tch, TRUE));
         }
       }
-
-      send_to_char("error in random number crap\r\n", ch);
     }
   }
   if((victim == ch) || helping)
@@ -3850,16 +3874,34 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
      group */
 
   if(!spl &&
-     number(0,1) &&
+     number(0, 1) &&
      !affected_by_spell(target, SPELL_PLAGUE) &&
      npc_has_spell_slot(ch, SPELL_PLAGUE))
   {
     spl = SPELL_PLAGUE;
   }
+  
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_SILENCE) &&
+     !IS_AFFECTED2(target, AFF2_SILENCED) &&
+     number(0, 2) &&
+     GET_CLASS(target, CLASS_SORCERER | CLASS_NECROMANCER | CLASS_CONJURER | CLASS_CLERIC | CLASS_DRUID | CLASS_ETHERMANCER))
+        spl = SPELL_SILENCE;
 
   if(!spl &&
+     !number(0, 9) &&
+     npc_has_spell_slot(ch, SPELL_DISPEL_MAGIC))
+  {
+    tmp = FindDispelTarget(ch, lvl);
+    if(tmp && !(tmp == ch))
+      spl = SPELL_DISPEL_MAGIC;
+    else
+      tmp = NULL;
+  }
+  
+  if(!spl &&
      npc_has_spell_slot(ch, SPELL_DISPEL_MAGIC) &&
-     number(0, 9) == 9)
+     number(0, 3) == 3)
   {
     spl = SPELL_DISPEL_MAGIC;
   }
@@ -3881,7 +3923,11 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
     }
   }
 
-  if(!spl && npc_has_spell_slot(ch, SPELL_BANISH) && number(0,1))
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_BANISH) &&
+     number(0, 1) &&
+     IS_PC_PET(target) &&
+     GET_LEVEL(ch) >= GET_LEVEL(target))
   {
     P_char tch;
     for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
@@ -3904,12 +3950,6 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
   if(spl && ch)
     return (MobCastSpell(ch, target, 0, spl, lvl));
 
-  if(!spl &&
-    npc_has_spell_slot(ch, SPELL_SUNRAY))
-  {
-    spl = SPELL_SUNRAY;
-  }
-  
   if(!spl &&
      npc_has_spell_slot(ch, SPELL_DESTROY_UNDEAD) &&
      (GET_HIT(target) > 5) &&
@@ -3945,34 +3985,42 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
     case 3:
       if(!spl && npc_has_spell_slot(ch, SPELL_FEAR))
         spl = SPELL_FEAR;
+    
+    default:
+      break;
     }
   }
-  if(!spl && npc_has_spell_slot(ch, SPELL_FULL_HARM) &&
-      (GET_HIT(target) > 10))
-    spl = SPELL_FULL_HARM;
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_FULL_HARM) &&
+     (GET_HIT(target) > 10))
+        spl = SPELL_FULL_HARM;
 
-  if(!spl && OUTSIDE(ch) && !IS_GLOBED(target) && npc_has_spell_slot(ch, SPELL_CALL_LIGHTNING))
-  {
-    spl = SPELL_CALL_LIGHTNING;
-  }
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_FLAMESTRIKE))
+        spl = SPELL_FLAMESTRIKE;
 
-  if(!spl && npc_has_spell_slot(ch, SPELL_FLAMESTRIKE) && !IS_GLOBED(target))
-    spl = SPELL_FLAMESTRIKE;
-
-  if(!spl && npc_has_spell_slot(ch, SPELL_DISPEL_EVIL) && !IS_EVIL(ch) && IS_EVIL(target)
-     && (!IS_GLOBED(target) || !IS_MINGLOBED(target)))
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_DISPEL_EVIL) &&
+     !IS_EVIL(ch) &&
+     IS_EVIL(target) &&
+     (!IS_GLOBED(target) || !IS_MINGLOBED(target)))
   {
     spl = SPELL_DISPEL_EVIL;
   }
 
-  if(!spl && npc_has_spell_slot(ch, SPELL_DISPEL_GOOD) && !IS_GOOD(ch) && IS_GOOD(target)
-     && (!IS_GLOBED(target) || !IS_MINGLOBED(target)))
+  if(!spl &&
+    npc_has_spell_slot(ch, SPELL_DISPEL_GOOD) &&
+    !IS_GOOD(ch) &&
+    IS_GOOD(target) &&
+    (!IS_GLOBED(target) || !IS_MINGLOBED(target)))
   {
     spl = SPELL_DISPEL_GOOD;
   }
 
-  if(!spl && npc_has_spell_slot(ch, SPELL_HARM) && !IS_GLOBED(target))
-    spl = SPELL_HARM;
+  if(!spl &&
+     npc_has_spell_slot(ch, SPELL_HARM) &&
+     !IS_GLOBED(target))
+        spl = SPELL_HARM;
 
   /* cause crit etc are only any good if barehand damage sucks */
 
