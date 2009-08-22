@@ -213,7 +213,7 @@ struct randomeq_prefix prefix_data[MAXPREFIX + 1] = {
   {16, "&+Yg&+Wl&+Yitt&+We&+Yri&+Wn&+Yg&n", 1.05, 1.4},
   {17, "&+ytwined&n", 0.75, 0.8},
   {18, "&+cdented&n", 0.68, 0.9},
-  {19, "&+gmoldy&n", 0.62, 0.62},
+  {19, "&+gpitted&n", 0.62, 0.62},
   {20, "&+wcrude&n", 0.55, 0.70},
   {21, "&+ycracked&n", 0.5, 0.5},
   {22, "&+Wexquisite&n", 1.39, 1.4},
@@ -237,20 +237,20 @@ struct randomeq_prefix prefix_data[MAXPREFIX + 1] = {
   {40, "&+Lsinister&n", 1.2, 1.20},
   {41, "&+Wsta&n&+wtic&n", 1.1, 1.20},
   {42, "&+Cgle&n&+cam&+Wing&n", 1.22, 0.9},
-  {43, "&+wfaded&n", 0.6, 0.5},
+  {43, "&+wwell-used&n", 0.6, 0.5},
   {44, "&+Wleg&n&+wend&+Lary&n", 1.5, 1.4},
   {45, "&+Wknight's&n", 1.0, 1.11},
   {46, "&+Lsold&n&+wier's&n", 0.8, 0.9},
   {47, "&+Rbrutal&n", 0.8, 1.40},
   {48, "&+Cbor&+Weal&n", 0.8, 0.8},
   {49, "&+rbl&+Roo&+rdy&n", 0.9, 1.2},
-  {50, "&+yfilthy&n", 0.5, 0.6},
+  {50, "&+rblood-stained&n", 0.5, 0.6},
   {51, "&+Wlight&n", 0.8, 0.9},
   {52, "&+Ldark&n", 0.8, 0.9},
   {53, "&+cfr&+Cagi&+cle&n", 1.0, 1.0},
   {54, "&+rb&+yurn&+rt&n", 1.2, 0.9},
-  {55, "&+mswirling&n", 1.23, 1.20},
-  {56, "&+Rcrooked&n", 1.03, 1.00},
+  {55, "&+mpatched&n", 1.23, 1.20},
+  {56, "&+Rmisshaped&n", 1.03, 1.00},
   {57, "&+La&+ws&+Lh&+we&+Ln&n", 1.11, 1.20}
 };
 
@@ -724,11 +724,16 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
 
   if (object_type == -1)
   {
-    slot = number(1, MAX_SLOT - 1);
+// This is hack to make equipment load more often than weapons. Aug09 -Lucrot
+    
+    if(number(0, 2))
+      slot = number(0, 70); // Worn eq
+    else
+      slot = number(0, MAX_SLOT - 1); // Anything
   }
   else
   {
-    slot = BOUNDED(0, object_type, MAX_SLOT);
+    slot = BOUNDED(0, object_type, MAX_SLOT - 1);
   }
 
   if (slot_data[slot].wear_bit == ITEM_WIELD)
@@ -798,7 +803,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
     }
     /*  Zone named items get a higher chance to get multiple affects set */
     obj = setsuffix_obj_new(obj);
-    while (!number(0, 9))
+    while (!number(0, 19))
     {
       obj = setsuffix_obj_new(obj);
     }
@@ -841,7 +846,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
     {
       obj = setsuffix_obj_new(obj);
       int sufcount = 0; // to ensure that we don't infinite loop if difficulty isn't set
-      while (!number(0, zone->difficulty) && sufcount < 2)  // zone difficulty generally 1, harder zones might be 2
+      while (!number(0, zone->difficulty + 2) && sufcount < 2)  // zone difficulty generally 1, harder zones might be 2
       {
         obj = setsuffix_obj_new(obj);
         sufcount++; 
@@ -876,7 +881,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
               slot_data[slot].m_name, buf_temp);
     }
     obj = setsuffix_obj_new(obj);
-    while (!number(0, 9))
+    while (!number(0, 19))
     {
       obj = setsuffix_obj_new(obj);
     }
@@ -954,6 +959,11 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
 
   convertObj(obj);
   material_restrictions(obj);
+  
+  if(isname("unique", obj->name))
+  {
+    obj->craftsmanship = OBJCRAFT_HIGHEST;
+  }
 
   if (isname("quiver", obj->name))
   {
@@ -1101,6 +1111,7 @@ P_obj create_random_eq_new(P_char killer, P_char mob, int object_type,
       // quickmod = -quickmod;
     // obj->affected[1].modifier = quickmod;
   // }
+  
   return obj;
 
 }
@@ -1186,7 +1197,7 @@ P_obj setsuffix_obj_new(P_obj obj)
 P_obj setprefix_obj(P_obj obj, int modifier, int affectnumber)
 {
 
-  switch (number(0, 26))
+  switch (number(0, 30))
   {
   case 0:
     obj->affected[affectnumber].location = APPLY_HITROLL;
@@ -1292,7 +1303,17 @@ P_obj setprefix_obj(P_obj obj, int modifier, int affectnumber)
   case 26:
     obj->affected[affectnumber].location = APPLY_LUCK_MAX;
     break;
-
+  case 27:
+  case 28:
+  case 29:
+  case 30:
+    obj->affected[affectnumber].location = APPLY_HIT;
+    modifier = (8 * modifier);
+    break;
+  default:
+    obj->affected[affectnumber].location = APPLY_HIT;
+    modifier = (8 * modifier);
+    break;
   }
   if(modifier == 0)
   obj->affected[affectnumber].location = APPLY_NONE;
