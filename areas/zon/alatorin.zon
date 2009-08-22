@@ -1,6 +1,6 @@
 #831
 &+CAlatorin &+L- the &N&+rForge &+LCity~
-83811 2 0 40 50 1
+83813 2 0 40 50 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -789,13 +789,13 @@ D 0 83700 2 1 100 0 0 0
 *     south exit from "The Assassin's Essentials" to
 *     "A Shady Dead-End" - closed
 *
-D 0 83549 2 1 100 0 0 0
-*     south exit from "A Shady Dead-End" to
-*     "A Dark, Ancient Chamber" - closed
+D 0 83549 1 8 100 0 0 0
+*     east exit from "A Shady Dead-End" to
+*     "Entrance to a Contraband Storage Cave" - open/blocked
 *
-D 0 83699 0 1 100 0 0 0
-*     north exit from "A Dark, Ancient Chamber" to
-*     "A Shady Dead-End" - closed
+D 0 83812 3 0 100 0 0 0
+*     west exit from "Entrance to a Contraband Storage Cave" to
+*     "A Shady Dead-End" - open
 *
 D 0 83582 0 1 100 0 0 0
 *     north exit from "The Iron Gates of Helgor Outpost" to
@@ -1512,6 +1512,7 @@ O 0 43125 1 83546 100 0 0 0        * (object type not in this .obj file)
 O 0 83180 2 83546 100 0 0 0        * a huge crate
 O 0 18718 1 83546 100 0 0 0        * (object type not in this .obj file)
 O 0 83332 1 83547 100 0 0 0        * a small wooden engraving
+O 0 83422 1 83549 100 0 0 0        * a huge boulder
 O 0 83337 1 83554 100 0 0 0        * a dwarven inscription
 O 0 83368 1 83564 100 0 0 0        * a display case
 O 0 83367 1 83566 100 0 0 0        * a display case
@@ -1856,8 +1857,8 @@ M 0 83108 2 83196 100 0 0 0        * a relaxing Alatorin guard
 M 0 83152 4 83196 100 0 0 0        * a young commoner
 M 0 83152 4 83196 100 0 0 0        * a young commoner
 M 0 83170 1 83196 100 0 0 0        * Gru'dank the half orc hunter
-E 1 83275 4 16 100 0 0 0           *   a concealed dirk
-E 1 83275 4 17 100 0 0 0           *   a concealed dirk
+E 1 83275 6 16 100 0 0 0           *   a concealed dirk
+E 1 83275 6 17 100 0 0 0           *   a concealed dirk
 G 1 83276 1 0 100 0 0 0            *    the bloody head of Gru'Dank
 M 0 83173 1 83197 100 0 0 0        * Barlow Brewstash
 E 1 83334 1 9 100 0 0 0            *   some rugged gloves of thick hide
@@ -2301,8 +2302,8 @@ M 0 85617 1 83361 33 0 0 0         * (mob type not in this .mob file)
 M 0 120037 5 83361 99 0 0 0        * (mob type not in this .mob file)
 M 0 83378 1 83377 100 0 0 0        * a notorious thief named Jenk
 G 1 83387 1 0 100 0 0 0            *    the bloody heart of Jenk
-G 1 83275 4 0 100 0 0 0            *    a concealed dirk
-G 1 83275 4 0 100 0 0 0            *    a concealed dirk
+G 1 83275 6 0 100 0 0 0            *    a concealed dirk
+G 1 83275 6 0 100 0 0 0            *    a concealed dirk
 M 0 83360 3 83379 100 0 0 0        * a Deramuth mercenary
 M 0 83184 1 83381 100 0 0 0        * a hooded shield dwarf merchant
 G 1 83185 999 0 100 0 0 0          *    a bottomless bag of the shield dwarves
@@ -2843,6 +2844,15 @@ G 1 500 999 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 368 999 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 53 999 0 100 0 0 0             *    (object type not in this .obj file)
 G 1 377 999 0 100 0 0 0            *    (object type not in this .obj file)
+M 0 83380 8 83699 100 0 0 0        * a human smuggler
+M 0 83380 8 83699 100 0 0 0        * a human smuggler
+M 0 83381 1 83699 100 0 0 0        * Metlan the smuggler leader
+E 1 83424 1 8 100 0 0 0            *   some thick orog-hide moccasins
+E 1 83275 6 16 100 0 0 0           *   a concealed dirk
+E 1 83275 6 17 100 0 0 0           *   a concealed dirk
+E 1 83423 1 20 100 0 0 0           *   a smuggler's black mask
+F 1 83380 8 83699 100 0 0 0        * a human smuggler (following)
+F 1 83380 8 83699 100 0 0 0        * a human smuggler (following)
 M 0 83379 1 83700 100 0 0 0        * a fast-talking goblin dealer
 G 1 83420 999 0 100 0 0 0          *    a potion of bloodrage
 G 1 83418 999 0 100 0 0 0          *    a potion of minor invisibility
@@ -2987,5 +2997,9 @@ G 1 74282 1 0 15 0 0 0             *    (object type not in this .obj file)
 M 0 83365 1 83795 100 0 0 0        * an eager moneychanger
 F 1 83366 2 83795 100 0 0 0        * a mercenary guard (following)
 F 1 83366 2 83795 100 0 0 0        * a mercenary guard (following)
+M 0 83380 8 83813 100 0 0 0        * a human smuggler
+M 0 83380 8 83813 100 0 0 0        * a human smuggler
+M 0 83380 8 83813 100 0 0 0        * a human smuggler
+M 0 83380 8 83813 100 0 0 0        * a human smuggler
 *
 S

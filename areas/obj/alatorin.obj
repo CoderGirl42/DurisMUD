@@ -5018,3 +5018,59 @@ bottle crimson poison~
    &+LThis bottle is full of a thick &+Rcrimson &+Lliquid and has
 &+La large label written in common reading '&+RPoIsOn&+L'
 ~
+#83422
+huge boulder~
+&+ya huge boulder&N~
+&+yA huge boulder sits here filling the eastern end of the tunnel.~
+~
+29 11 5 0 7 0 0 0 0 0 0
+270 83549 1 1 0 0 0 0
+0 0 100
+E
+huge boulder~
+&+yThis massive stone boulder fills the entire eastern end of the tunnel.
+~
+#83423
+smuggler's black smuggler mask~
+&+La smuggler's black mask&N~
+&+LA smuggler's black mask has been left here.~
+~
+9 13 2 0 8 0 0 262145 0 0 0
+5 0 0 3 0 0 0 0
+0 3434 100
+E
+smuggler's black smuggler mask~
+   &+LThis tight mask is one of the signature garments from which the
+&+Ldangerous smugglers of the realm are known to wear.  It is made of
+&+Ltight black leather and conceals the wearers face and head in a
+&+Lsleek fashion.
+~
+A
+18 3
+A
+19 2
+#83424
+thick orog-hide orog hide moccasins~
+&n&+csome thick &N&+yo&+Lr&N&+yo&+Lg&N-&+yhide &N&+cmoccasins&N~
+&+cSome thick &N&+yorog-hide &+cmoccasins have been left here.~
+~
+9 12 2 0 7 0 0 65 0 0 0
+5 0 0 0 0 0 0 0
+2 153 100
+E
+thick orog-hide orog hide moccasins~
+   &+cThese thick moccasins are made of the stiff, hardened hide of
+&+can orog.
+~
+A
+13 17
+A
+19 1
+#83425
+ancient petrified casket~
+&+Lan ancient petrified &N&+ycasket&N~
+&+LAn ancient, petrified &N&+ycasket&+L sits here in the center of the chamber.~
+~
+29 15 3 0 7 0 0 0 0 0 0
+50 0 0 0 0 0 0 0
+0 0 100

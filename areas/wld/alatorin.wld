@@ -9277,11 +9277,10 @@ D0
 ~
 door~
 1 0 83700
-D2
-&+LA door to an ancient hold.
+D1
 ~
-door~
-1 0 83699
+~
+8 0 83812
 D3
 ~
 ~
@@ -12157,11 +12156,10 @@ S
 &+Lfor years.  The walls are decorated with aging, fading fresco.
 ~
 831 32768 0
-D0
-&+LA large door.
+D4
 ~
-door~
-1 0 83549
+~
+0 0 83813
 S
 #83700
 &+rThe Assassin's &n&+yEssentials&N~
@@ -14521,4 +14519,42 @@ D1
 ~
 ~
 0 0 83809
+S
+#83812
+&+LEntrance to a Contraband &N&+yStorage Cave&N~
+   &+LThis ancient, dark cavern has severl large &N&+mmithril &+Land adamantite
+&+Lsupports fastened, giving the cavern an almost dwarven hall-like feeling.
+&+LThe ground is quite level, and perhaps doctored by the inhabiting dwarves.
+&+LFilling this massive cavern are massive crates, old and new, of all sizes
+&+Land covered in different languages.  The area is dusty, dark, wet, and
+&+Lquite far removed from the publics eye and knowledge.
+~
+831 33554432 15
+D2
+~
+~
+0 0 83813
+D3
+~
+~
+0 0 83549
+S
+#83813
+&+LWithin a Contraband &N&+yStorage Cave&N~
+   &+LThis ancient, dark cavern has severl large &N&+mmithril &+Land adamantite
+&+Lsupports fastened, giving the cavern an almost dwarven hall-like feeling.
+&+LThe ground is quite level, and perhaps doctored by the inhabiting dwarves.
+&+LFilling this massive cavern are massive crates, old and new, of all sizes
+&+Land covered in different languages.  The area is dusty, dark, wet, and
+&+Lquite far removed from the publics eye and knowledge.
+~
+831 33554432 15
+D0
+~
+~
+0 0 83812
+D5
+~
+~
+0 0 83699
 S

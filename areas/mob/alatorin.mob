@@ -4428,3 +4428,34 @@ hg 0 1 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#83380
+human grim smuggler~
+&+La &+Chuman &N&+ysmuggler&N~
+&+LA grim &N&+chuman &N&+ysmuggler tends to the haul.
+~
+   &+LThis middle-aged human smuggler is one of those brought in to
+&+Laid in smuggling contraband in and out of Alatorin; currently
+&+Lstashing within the undercity.  He has large, muscular arms and
+&+La hairy chest peaks out from beneath his stained cloth shirt.
+&+LLeather boots and gloves adorn his gloves and hands.
+~
+1140852746 1 0 0 0 0 0 0 S
+PH 0 16384 -1
+46 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83381
+metlan smuggler leader~
+&+RMet&+Blan &+Lthe &N&+ysmuggler leader&N~
+&+RMet&+Blan &+Lthe &+Chuman &n&+ysmuggler &+Lstands here&N, looking angry.
+~
+&+RMet&+Blan &N&+gis a one-time bandit of the Winterhaven rogues, but has long
+&+gsince taken up a profession in smuggling.  He wears fine studded leather
+&+gand wields a shiny blade.  Commanding the other smugglers below him, he
+&+gsees to it that his operations bring him lots of extra platinum.
+~
+1140852938 0 0 24 0 0 0 -700 S
+PH 0 28672 -1
+53 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
