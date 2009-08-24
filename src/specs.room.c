@@ -93,7 +93,7 @@ int berserker_proc_room(int room, P_char ch, int cmd, char *arg)
     return TRUE;
   }  
   
-  if(GET_LEVEL(ch) < 46)
+  if(GET_LEVEL(ch) < (get_property("berserker.quest.level.req.min", 41)))
   {
     send_to_char("You need more &+ylevels&n to undergo the &+Rbattlerager&n transformation.\r\n", ch);
     return TRUE;
