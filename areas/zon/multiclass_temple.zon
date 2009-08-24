@@ -18,10 +18,7 @@ O 0 52901 1 52904 100 0 0 0        * a flux of energy
 *
 M 0 52902 1 52904 100 0 0 0        * an ice golem
 M 0 31402 1 52909 100 0 0 0        * (mob type not in this .mob file)
-M 0 31403 4 52909 100 0 0 0        * (mob type not in this .mob file)
-M 0 31403 4 52909 100 0 0 0        * (mob type not in this .mob file)
-M 0 31403 4 52909 100 0 0 0        * (mob type not in this .mob file)
-M 0 31403 4 52909 100 0 0 0        * (mob type not in this .mob file)
+M 0 31403 1 52909 100 0 0 0        * (mob type not in this .mob file)
 M 0 52901 1 52913 100 0 0 0        * an ancient white dragon
 *
 S
