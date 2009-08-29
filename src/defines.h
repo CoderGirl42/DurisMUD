@@ -26,6 +26,7 @@
 #endif
 
 #include <sys/types.h>
+#include <limits.h>
 
 #ifdef _LINUX_SOURCE
 #include <linux/time.h>
