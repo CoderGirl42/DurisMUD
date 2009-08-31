@@ -2615,7 +2615,7 @@ void kill_gain(P_char ch, P_char victim)
       else if ((GET_LEVEL(gl->ch) + 20) < highest_level)
         XP /= 1000;
       else if ((GET_LEVEL(gl->ch) + 10) < highest_level)
-        XP /= 2;
+        XP /= 200;
 
       if (XP && IS_PC(gl->ch))
       {
