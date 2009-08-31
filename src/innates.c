@@ -2138,7 +2138,7 @@ void do_fireball(P_char ch, char *arg, int cmd)
 void do_fireshield(P_char ch, char *arg, int cmd)
 {
   spell_fireshield(GET_LEVEL(ch), ch, NULL, 0, ch, 0);
-  CharWait(ch, PULSE_VIOLENCE * 5);
+  CharWait(ch, PULSE_VIOLENCE);
 }
 
 void do_firestorm(P_char ch, char *arg, int cmd)
