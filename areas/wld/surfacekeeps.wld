@@ -27852,9 +27852,9 @@ D3
 0 0 121992
 S
 #121994
-&+WZone Entrance&n~
+&N&+yAbove a Rocky Cave Opening&N~
 ~
-1200 0 0 0
+1200 0 4 0
 D0
 ~
 ~
@@ -27871,6 +27871,10 @@ D3
 ~
 ~
 0 0 121993
+D5
+~
+~
+0 0 83832
 S
 #121995
 &n&+yThe Mountain Peaks of &+LS&n&+yh&+La&n&+yn&+La&n&+yt&+La&N&+yr~

@@ -4895,3 +4895,35 @@ hg 0 512 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#83410
+cloaked visitor druid~
+&+ga cloaked visitor&N~
+&+gA cloaked druid pays the port a visit.
+~
+   &+mThis cloaked druid's race is hidden behind the darkness of his
+&+mmassive hood.  Two glimimers of &+Yyellow light&N&+m shine from
+&N&+mbeneath the &N&+celven &+mfibers.  He walks with a foreign
+&+melegance and speaks only to the seagulls and other various
+&+mshore-dwelling critters around him.
+~
+2120 0 0 134217752 0 0 0 0 S
+p2 0 128 -1
+39 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#83411
+wandering halfling mercenary~
+&+La wandering &N&+ymercenary&N~
+&+LA wandering &N&+yhalfling mercenary&+L of &+WDeramuth Port &+Lwalks the streets, &Neyeing the visitors.
+~
+   &+yThis mercenary wears fine halfling leather and a proud look of
+&+ydetermination on his youthful face.  Having been employed from the
+&+WDeramuth Port &N&+yauthority for so long, this halfling has taken
+&+yon the name of a '&+WDeramuth &N&+yMerc' to the people of &N&+cAlatorin
+&+ywho have ears beyond the mountain walls.
+~
+1073744074 0 0 24 0 0 0 0 S
+pf 0 16384 -1
+40 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1

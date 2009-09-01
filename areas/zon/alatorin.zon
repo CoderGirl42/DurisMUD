@@ -1,6 +1,6 @@
 #831
 &+CAlatorin &+L- the &N&+rForge &+LCity~
-83831 2 0 40 50 1
+83837 2 0 40 50 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -879,10 +879,10 @@ D 0 83606 5 1 100 0 0 0
 *
 D 0 83600 1 2 100 0 0 0
 *     east exit from "An Adamantite-Reinforced Tunnel" to
-*     "A Huge Grimy Cavern" - closed/locked
+*     "A Huge Grimey Cavern" - closed/locked
 *
 D 0 83602 3 2 100 0 0 0
-*     west exit from "A Huge Grimy Cavern" to
+*     west exit from "A Huge Grimey Cavern" to
 *     "An Adamantite-Reinforced Tunnel" - closed/locked
 *
 D 0 83600 2 8 100 0 0 0
@@ -1038,20 +1038,20 @@ D 0 83754 2 1 100 0 0 0
 *     "The Promenade, Before Rocks Arranged as Steps" - closed
 *
 D 0 83756 1 1 100 0 0 0
-*     east exit from "A Twisting Cobblestone Street" to
+*     east exit from "A Twisting Cobblstone Street" to
 *     "Entrance of the Golden Pearl Tavern" - closed
 *
 D 0 83759 3 1 100 0 0 0
 *     west exit from "Entrance of the Golden Pearl Tavern" to
-*     "A Twisting Cobblestone Street" - closed
+*     "A Twisting Cobblstone Street" - closed
 *
 D 0 83757 3 1 100 0 0 0
-*     west exit from "A Cobblestone Street Beside a Beach Staircase" to
+*     west exit from "A Cobbletone Street BBeside a Beach Staircase" to
 *     "A Small Shop" - closed
 *
 D 0 83790 1 1 100 0 0 0
 *     east exit from "A Small Shop" to
-*     "A Cobblestone Street Beside a Beach Staircase" - closed
+*     "A Cobbletone Street BBeside a Beach Staircase" - closed
 *
 D 0 83758 1 1 100 0 0 0
 *     east exit from "A Cobblestone Street" to
@@ -1103,10 +1103,10 @@ D 0 83770 1 1 100 0 0 0
 *
 D 0 83776 0 1 100 0 0 0
 *     north exit from "The Docks of Deramuth Port" to
-*     "A Money changer's Stand" - closed
+*     "A Moneychanger's Stand" - closed
 *
 D 0 83795 2 1 100 0 0 0
-*     south exit from "A Money changer's Stand" to
+*     south exit from "A Moneychanger's Stand" to
 *     "The Docks of Deramuth Port" - closed
 *
 D 0 83792 0 5 100 0 0 0
@@ -1678,12 +1678,12 @@ M 0 83100 4 83103 100 0 0 0        * an entry guard of Alatorin
 E 1 83112 999 11 100 0 0 0         *   an iron shield bearing the crest of Alatorin
 E 1 83111 999 16 100 0 0 0         *   an iron broadsword
 M 0 83101 2 83104 100 0 0 0        * a burly bouncer
-M 0 83102 3 83104 100 0 0 0        * a stumbling drunk goblin
+M 0 83102 4 83104 100 0 0 0        * a stumbling drunk goblin
 M 0 83106 1 83105 100 0 0 0        * the Stonebrew bartender
 M 0 83107 4 83105 100 0 0 0        * a patron
 M 0 83107 4 83105 100 0 0 0        * a patron
 M 0 83108 2 83105 100 0 0 0        * a relaxing Alatorin guard
-M 0 83102 3 83106 100 0 0 0        * a stumbling drunk goblin
+M 0 83102 4 83106 100 0 0 0        * a stumbling drunk goblin
 M 0 83103 1 83106 100 0 0 0        * a hungry dwarf
 M 0 83104 2 83106 100 0 0 0        * a fat dwarf
 M 0 83105 1 83107 100 0 0 0        * the Stonebrew cook
@@ -1762,24 +1762,24 @@ M 0 83232 1 83134 100 0 0 0        * a minotaur
 E 1 83234 8 16 100 0 0 0           *   a massive tauren battle-axe
 M 0 83197 1 83135 100 0 0 0        * Gradden the Dwarf Bounty Hunter
 G 1 94336 5 0 100 0 0 0            *    (object type not in this .obj file)
-M 0 83128 5 83138 100 0 0 0        * a battle-ready siege dwarf
-E 1 83176 1 5 100 0 0 0            *   a suit of heavy spiked siege armor
+M 0 83128 5 83138 100 0 0 0        * a battle-ready seige dwarf
+E 1 83176 1 5 100 0 0 0            *   a suit of heavy spiked seige armor
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83174 10 17 100 0 0 0          *   a bloody warhammer
-M 0 83128 5 83138 100 0 0 0        * a battle-ready siege dwarf
+M 0 83128 5 83138 100 0 0 0        * a battle-ready seige dwarf
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83174 10 17 100 0 0 0          *   a bloody warhammer
-M 0 83128 5 83138 100 0 0 0        * a battle-ready siege dwarf
+M 0 83128 5 83138 100 0 0 0        * a battle-ready seige dwarf
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83174 10 17 100 0 0 0          *   a bloody warhammer
-M 0 83128 5 83138 100 0 0 0        * a battle-ready siege dwarf
+M 0 83128 5 83138 100 0 0 0        * a battle-ready seige dwarf
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83174 10 17 100 0 0 0          *   a bloody warhammer
-M 0 83128 5 83138 100 0 0 0        * a battle-ready siege dwarf
+M 0 83128 5 83138 100 0 0 0        * a battle-ready seige dwarf
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83174 10 17 100 0 0 0          *   a bloody warhammer
 M 0 83129 5 83138 100 0 0 0        * a battlerager
-E 1 83213 1 8 100 0 0 0            *   some spiked siege boots
+E 1 83213 1 8 100 0 0 0            *   some spiked seige boots
 E 1 83175 12 16 100 0 0 0          *   a barbed longsword
 E 1 83173 8 17 100 0 0 0           *   a spiked stone mace
 M 0 83129 5 83138 100 0 0 0        * a battlerager
@@ -1798,7 +1798,7 @@ M 0 83147 1 83145 100 0 0 0        * Sturb Ironhead
 E 1 83228 1 14 100 0 0 0           *   a spiked mithril wristguard
 E 1 83229 2 16 100 0 0 0           *   a spiked mithril mace
 E 1 83229 2 17 100 0 0 0           *   a spiked mithril mace
-F 1 83175 1 83145 100 0 0 0        * a commander of the siege army (following)
+F 1 83175 1 83145 100 0 0 0        * a commander of the seige army (following)
 M 0 83174 1 83145 100 0 0 0        * Birch Scruden
 E 1 83173 8 16 100 0 0 0           *   a spiked stone mace
 E 1 83173 8 17 100 0 0 0           *   a spiked stone mace
@@ -1872,11 +1872,11 @@ E 1 83111 999 16 100 0 0 0         *   an iron broadsword
 M 0 83120 16 83168 100 0 0 0       * an Alatorin elite guard
 E 1 83112 999 11 100 0 0 0         *   an iron shield bearing the crest of Alatorin
 E 1 83111 999 16 100 0 0 0         *   an iron broadsword
-M 0 83125 1 83170 100 0 0 0        * Rzayk the githzerai planes traveler
+M 0 83125 1 83170 100 0 0 0        * Rzayk the githzerai planestraveler
 G 1 22944 2 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 22944 2 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 83298 1 0 15 0 0 0             *    a tiny rune-inscribed ring
-M 0 83186 1 83171 100 0 0 0        * Grem the hooded prophesier
+M 0 83186 1 83171 100 0 0 0        * Grem the hooded prophecizer
 M 0 83177 1 83175 100 0 0 0        * a tiny gnome summoner
 E 1 83179 1 18 100 0 0 0           *   a staff of golem creation
 F 1 83179 2 83175 100 0 0 0        * a flesh golem (following)
@@ -2280,7 +2280,7 @@ E 1 83166 1 1 100 0 0 0            *   a crystal ring set with a jade
 E 1 83167 1 16 100 0 0 0           *   a crystal longsword
 G 1 94336 5 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 83185 1 83295 30 0 0 0         * Mishanen, the centaur herbalist
-E 1 83186 1 37 100 0 0 0           *   a tail ring of gilded sun petals
+E 1 83186 1 37 100 0 0 0           *   a tail ring of gilded sunpetals
 G 1 83187 1 0 100 0 0 0            *    a gnarled wooden wand
 M 0 83157 18 83295 100 0 0 0       * an Alatorin peacekeeper
 E 1 83112 999 11 100 0 0 0         *   an iron shield bearing the crest of Alatorin
@@ -2326,9 +2326,9 @@ M 0 83180 1 83311 100 0 0 0        * Sharsta the shadowmage
 M 0 83135 3 83318 100 0 0 0        * a regal zebra
 M 0 83135 3 83318 100 0 0 0        * a regal zebra
 M 0 83135 3 83318 100 0 0 0        * a regal zebra
-M 0 83133 3 83319 100 0 0 0        * a savanna lion
-M 0 83133 3 83319 100 0 0 0        * a savanna lion
-M 0 83133 3 83319 100 0 0 0        * a savanna lion
+M 0 83133 3 83319 100 0 0 0        * a savannah lion
+M 0 83133 3 83319 100 0 0 0        * a savannah lion
+M 0 83133 3 83319 100 0 0 0        * a savannah lion
 M 0 83134 5 83323 100 0 0 0        * a prairie dog
 M 0 83134 5 83323 100 0 0 0        * a prairie dog
 M 0 83134 5 83323 100 0 0 0        * a prairie dog
@@ -2424,12 +2424,12 @@ M 0 83384 4 83377 100 0 0 0        * a derro rogue
 M 0 83384 4 83377 100 0 0 0        * a derro rogue
 M 0 83383 1 83378 100 0 0 0        * a huge sloppy fat dwarf
 G 1 40444 2 0 100 0 0 0            *    (object type not in this .obj file)
-M 0 83303 3 83378 100 0 0 0        * a raucous goblin drunk
+M 0 83303 4 83378 100 0 0 0        * a raucous goblin drunk
 M 0 83360 3 83379 100 0 0 0        * a Deramuth mercenary
 M 0 83384 4 83379 100 0 0 0        * a derro rogue
 M 0 83384 4 83379 100 0 0 0        * a derro rogue
 M 0 83385 1 83379 100 0 0 0        * a Gruneegth goblin warrior
-M 0 83102 3 83379 100 0 0 0        * a stumbling drunk goblin
+M 0 83102 4 83379 100 0 0 0        * a stumbling drunk goblin
 M 0 83184 1 83381 100 0 0 0        * a hooded shield dwarf merchant
 G 1 83185 999 0 100 0 0 0          *    a bottomless bag of the shield dwarves
 M 0 83131 1 83382 100 0 0 0        * Sslitheran the exiled drow
@@ -2688,7 +2688,7 @@ M 0 83299 1 83515 100 0 0 0        * a dwarven baritonist
 E 1 83319 1 18 100 0 0 0           *   a heavy brass baritone horn
 M 0 83304 2 83515 100 0 0 0        * a private of the Hammerhelm militia
 M 0 83304 2 83515 100 0 0 0        * a private of the Hammerhelm militia
-M 0 83303 3 83516 100 0 0 0        * a raucous goblin drunk
+M 0 83303 4 83516 100 0 0 0        * a raucous goblin drunk
 M 0 83301 1 83517 100 0 0 0        * the Hammer and Shield tavern cook
 M 0 83305 4 83517 100 0 0 0        * a starving warrior
 G 1 38303 2 0 100 0 0 0            *    (object type not in this .obj file)
@@ -2703,9 +2703,9 @@ M 0 83305 4 83517 100 0 0 0        * a starving warrior
 G 1 88823 1 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 38303 2 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 83104 2 83517 100 0 0 0        * a fat dwarf
-M 0 83314 1 83518 100 0 0 0        * a massive siege dwarf
+M 0 83314 1 83518 100 0 0 0        * a massive seige dwarf
 E 1 83174 10 16 100 0 0 0          *   a bloody warhammer
-M 0 83303 3 83518 83 0 0 0         * a raucous goblin drunk
+M 0 83303 4 83518 83 0 0 0         * a raucous goblin drunk
 M 0 83297 1 83520 100 0 0 0        * the Hammer and Shield bartender
 M 0 83298 1 83520 100 0 0 0        * Bariic the Mighty
 E 1 83191 999 7 100 0 0 0          *   some tempered mithril leg plates
@@ -2780,19 +2780,19 @@ F 1 83318 4 83582 100 0 0 0        * a gate guard of Helgor outpost (following)
 E 1 83350 9 5 100 0 0 0            *   a full suit of heavy adamantite
 E 1 83351 9 6 100 0 0 0            *   a heavy adamantite full-faced helmet
 E 1 83352 9 16 100 0 0 0           *   a huge dwarven battle axe
-M 0 83323 8 83585 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83585 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83587 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83587 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83589 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83589 100 0 0 0        * a Helgor crossbowman
+M 0 83323 8 83585 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83585 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83587 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83587 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83589 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83589 100 0 0 0        * a Helgor crossbowmnan
 M 0 83334 4 83589 100 0 0 0        * a burly guard of Helgor outpost
 E 1 83350 9 5 100 0 0 0            *   a full suit of heavy adamantite
 E 1 83351 9 6 100 0 0 0            *   a heavy adamantite full-faced helmet
 E 1 83352 9 16 100 0 0 0           *   a huge dwarven battle axe
 R 1 83321 6 83589 100 0 0 0        * a huge warg (being ridden)
-M 0 83323 8 83590 100 0 0 0        * a Helgor crossbowman
-M 0 83323 8 83590 100 0 0 0        * a Helgor crossbowman
+M 0 83323 8 83590 100 0 0 0        * a Helgor crossbowmnan
+M 0 83323 8 83590 100 0 0 0        * a Helgor crossbowmnan
 M 0 83324 4 83594 100 0 0 0        * an outpost clansdwarf
 G 1 44404 9 0 100 0 0 0            *    (object type not in this .obj file)
 G 1 44404 9 0 100 0 0 0            *    (object type not in this .obj file)
@@ -3045,6 +3045,8 @@ F 1 83374 3 83743 100 0 0 0        * a soldier of Alatorin (following)
 F 1 83374 3 83743 100 0 0 0        * a soldier of Alatorin (following)
 M 0 83372 1 83748 100 0 0 0        * a short monk
 M 0 83375 3 83750 100 0 0 0        * a shield dwarf
+M 0 83410 1 83750 100 0 0 0        * a cloaked visitor
+G 1 93901 1 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 83368 1 83751 100 0 0 0        * a traveling gypsy
 G 1 83407 1 0 100 0 0 0            *    a moorwood harp
 G 1 83408 1 0 100 0 0 0            *    a set of moorwood pan pipes
@@ -3052,10 +3054,12 @@ G 1 83409 1 0 100 0 0 0            *    a moorwood mandolin
 G 1 83410 1 0 100 0 0 0            *    some moorwood drums
 G 1 83411 1 0 100 0 0 0            *    a moorwood horn
 G 1 83412 1 0 100 0 0 0            *    a moorwood lyre
+M 0 83411 4 83751 100 0 0 0        * a wandering mercenary
 M 0 43137 7 83752 100 0 0 0        * (mob type not in this .mob file)
 M 0 43152 1 83752 100 0 0 0        * (mob type not in this .mob file)
 M 0 83399 3 83752 100 0 0 0        * a merchant sailor
 G 1 40441 5 0 100 0 0 0            *    (object type not in this .obj file)
+M 0 83411 4 83752 100 0 0 0        * a wandering mercenary
 M 0 83358 4 83753 100 0 0 0        * a Deramuth guard
 E 1 83403 6 16 100 0 0 0           *   a wooden spear with a tied off red flag
 M 0 83399 3 83753 100 0 0 0        * a merchant sailor
@@ -3067,6 +3071,7 @@ M 0 43137 7 83757 100 0 0 0        * (mob type not in this .mob file)
 M 0 83375 3 83757 100 0 0 0        * a shield dwarf
 M 0 83358 4 83758 100 0 0 0        * a Deramuth guard
 E 1 83403 6 16 100 0 0 0           *   a wooden spear with a tied off red flag
+M 0 83303 4 83759 100 0 0 0        * a raucous goblin drunk
 M 0 83360 3 83760 100 0 0 0        * a Deramuth mercenary
 M 0 83360 3 83760 100 0 0 0        * a Deramuth mercenary
 M 0 43133 1 83760 100 0 0 0        * (mob type not in this .mob file)
@@ -3077,6 +3082,7 @@ M 0 93183 2 83761 100 0 0 0        * (mob type not in this .mob file)
 M 0 93183 2 83761 100 0 0 0        * (mob type not in this .mob file)
 M 0 43183 1 83761 100 0 0 0        * (mob type not in this .mob file)
 M 0 83392 1 83761 100 0 0 0        * Bimk the goblin seafarer
+M 0 83102 4 83761 100 0 0 0        * a stumbling drunk goblin
 M 0 43134 2 83762 100 0 0 0        * (mob type not in this .mob file)
 G 1 40441 5 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 43134 2 83762 100 0 0 0        * (mob type not in this .mob file)
@@ -3094,11 +3100,13 @@ M 0 43123 2 83771 90 0 0 0         * (mob type not in this .mob file)
 M 0 43124 2 83771 90 0 0 0         * (mob type not in this .mob file)
 M 0 43149 2 83771 60 0 0 0         * (mob type not in this .mob file)
 M 0 43150 2 83771 60 0 0 0         * (mob type not in this .mob file)
+M 0 83411 4 83775 100 0 0 0        * a wandering mercenary
 M 0 83399 3 83777 100 0 0 0        * a merchant sailor
 G 1 40441 5 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 83358 4 83778 100 0 0 0        * a Deramuth guard
 E 1 83403 6 16 100 0 0 0           *   a wooden spear with a tied off red flag
 M 0 83375 3 83778 100 0 0 0        * a shield dwarf
+M 0 83411 4 83778 100 0 0 0        * a wandering mercenary
 M 0 83361 7 83782 100 0 0 0        * a halfling dock hand
 M 0 43137 7 83782 100 0 0 0        * (mob type not in this .mob file)
 M 0 83361 7 83786 100 0 0 0        * a halfling dock hand

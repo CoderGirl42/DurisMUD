@@ -14913,3 +14913,107 @@ D1
 door~
 2 83436 83182
 S
+#83832
+&N&+yEntrance of a &N&+mFetid &N&+yTunnel&N~
+   &+yThis rough, jagged tunnel starts after a jagged spike
+&+yin the entrance from the mountain trail.  There is strange
+&+mfungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor.  A pungent stench fills the tunnel as a misty air
+&+ysettles, penetrating the senses.
+~
+831 33587200 13
+D4
+~
+~
+0 0 121994
+D5
+~
+~
+0 0 83833
+S
+#83833
+&+yA Rocky Tunnel Opening&N~
+&+y  This long jagged tunnel twists deep beneath Shanatar.
+&+yA fungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor releases a  pungent stench.  Spores release noxious
+&+ygas which eventually settles, penetrating the senses.  A
+&+yterrible smell fills the cavern air.
+~
+831 33587200 13
+D2
+~
+~
+0 0 83834
+D4
+~
+~
+0 0 83832
+S
+#83834
+&+yA Fetid Tunnel Covered With &N&+mM&+yu&+ms&+yh&+mr&+yo&+mo&+ym&+ms &+yand &+yF&+Mu&N&+yn&+Mg&N&+yu&+Ms&N~
+&+y  This long jagged tunnel twists deep beneath Shanatar.
+&+yA fungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor releases a  pungent stench.  Spores release noxious
+&+ygas which eventually settles, penetrating the senses.  A
+&+yterrible smell fills the cavern air.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83833
+D2
+~
+~
+0 0 83835
+S
+#83835
+&+yA Turn in a Fetid Tunnel Covered with &N&+mM&+yu&+ms&+yh&+mr&+yo&+mo&+ym&+ms &+yand &+MF&N&+yu&+Mn&N&+yg&+Mu&N&+ys&N~
+&+y  This long jagged tunnel twists deep beneath Shanatar.
+&+yA fungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor releases a  pungent stench.  Spores release noxious
+&+ygas which eventually settles, penetrating the senses.  A
+&+yterrible smell fills the cavern air.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83834
+D3
+~
+~
+0 0 83836
+S
+#83836
+&+yA Fetid Tunnel Covered With &N&+mM&+yu&+ms&+yh&+mr&+yo&+mo&+ym&+ms &+yand &+yF&+Mu&N&+yn&+Mg&N&+yu&+Ms&N~
+&+y  This long jagged tunnel twists deep beneath Shanatar.
+&+yA fungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor releases a  pungent stench.  Spores release noxious
+&+ygas which eventually settles, penetrating the senses.  A
+&+yterrible smell fills the cavern air.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83835
+D3
+~
+~
+0 0 83837
+S
+#83837
+&+yA Fetid Tunnel Covered With &N&+mM&+yu&+ms&+yh&+mr&+yo&+mo&+ym&+ms &+yand &+yF&+Mu&N&+yn&+Mg&N&+yu&+Ms&N~
+&+y  This long jagged tunnel twists deep beneath Shanatar.
+&+yA fungus &+ygrowing across the cavern walls, ceiling, and
+&+yfloor releases a  pungent stench.  Spores release noxious
+&+ygas which eventually settles, penetrating the senses.  A
+&+yterrible smell fills the cavern air.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83836
+S
