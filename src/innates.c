@@ -1125,9 +1125,9 @@ void do_innate_anti_evil(P_char ch, P_char vict)
   afp = get_spell_from_char(ch, TAG_PALADIN_VIT);
   if (!afp)
   {
-    act ("&+WA halo of white light settles over $n as $e charges into battle.&n",
+    act ("&+WA halo of white light settles over&n $n &+Was $e charges into battle.&n",
        FALSE, ch, 0, vict, TO_NOTVICT);
-    act ("&+WA halo of white light descends upon $n &+Yburning &+Wyour soul.&n",
+    act ("&+WA halo of white light descends upon&n $n &+Yburning &+Wyour soul.&n",
        FALSE, ch, 0, vict, TO_VICT);
     act("&+WDivine power encases you as you turn to battle evil.&n",
         FALSE, ch, 0, vict, TO_CHAR);
