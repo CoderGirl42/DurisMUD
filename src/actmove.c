@@ -1042,6 +1042,7 @@ char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
             ch->specials.z_cord > 0 ? "flies in" :
             LEVITATE(ch, exitnumb) ? "floats in" :
             IS_SLIME(ch) ? "oozes in" :
+            GET_RACE(ch) == RACE_DRAGON ? "lumbers in" :
             load_modifier(ch) > 199 ? "staggers in" :
             (SNEAK(ch) && !mount) ? "sneaks in" :
             GET_POS(ch) == POS_PRONE ? "slithers in" :
