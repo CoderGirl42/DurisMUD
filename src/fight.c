@@ -3729,22 +3729,17 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
           dam *= dam_factor[DF_ELSHIELDRED_TROLL];
         else if (IS_AFFECTED(victim, AFF_PROT_FIRE))
           dam *= dam_factor[DF_PROTECTION_TROLL];
-        
-        struct affected_type af;
-        
-        int regeneration = hit_regen(ch) * 2;
-        if(hit_regen < 0)
-          regeneration = 0;
 
-        send_to_char("&+RThe flames cause your flesh to smoke!\r\n", victim);
+        send_to_char("&+RThe flames cause your skin to &+Lsmoke!\r\n", victim);
         act("&+rThe intense &+Rflames &+rcause&n $n's skin to &+rsmolder and &+Yburn!&n",
           FALSE, victim, 0, 0, TO_CHAR);
         act("&+rThe intense &+Rflames &+rcause&n $n's skin to &+rsmolder and &+Yburn!&n",
           FALSE, victim, 0, 0, TO_NOTVICT);
-
           
         if(!affected_by_spell(ch, TAG_TROLL_BURN))
         {
+          struct affected_type af;
+          
           bzero(&af, sizeof(af));
           af.type = TAG_TROLL_BURN;
           af.flags = AFFTYPE_SHORT | AFFTYPE_NOSHOW | AFFTYPE_NODISPEL;
