@@ -634,7 +634,8 @@
 #define SPELL_ENERVATION             585
 #define SPELL_LIFE_BOLT              586
 #define SPELL_CELERITY               587
-#define LAST_SPELL SPELL_CELERITY
+#define SPELL_MIELIKKI_VITALITY      588
+#define LAST_SPELL SPELL_MIELIKKI_VITALITY
 
 #define FIRST_SKILL                  1000  /* should be a decent split point */
 #define SKILL_SNEAK                  1000

@@ -1291,7 +1291,8 @@ void set_title(P_char);
 /* commented out declarations before have been "cleaned up", and are temporarily
  * declared in the spell.c section of this file until we finish cleaning up
  * and move everything back to its proper place. 06 May 2003 dbb */
-
+ 
+void spell_mielikki_vitality(int, P_char, char *, int, P_char, P_obj);
 bool can_relocate_to(P_char, P_char);
 void cure_arrow_wound(P_char);
 void set_up_portals(P_char, P_obj, P_obj, int);

@@ -121,8 +121,14 @@ void spell_eshabalas_vitality(int level, P_char ch, char *arg, int type,
                               P_char victim, P_obj obj)
 {
   struct affected_type af;
-
+  bool message = false;
   int      healpoints = (2 * level) + number(40, 90);
+  
+  if(affected_by_spell(ch, SPELL_MIELIKKI_VITALITY))
+  {
+    send_to_char("&+WThe vitality spell fails.\r\n", ch);
+    return;
+  }
 
   if (affected_by_spell(ch, SPELL_ESHABALAS_VITALITY))
   {
@@ -131,19 +137,23 @@ void spell_eshabalas_vitality(int level, P_char ch, char *arg, int type,
     for (af1 = victim->affected; af1; af1 = af1->next)
       if (af1->type == SPELL_ESHABALAS_VITALITY)
       {
-        af1->duration = 32;
+        af1->duration = 15;
+        message = true;
       }
     
+    if(message)
+      send_to_char("&+mEshabalas vitality flows through you!&n\n", ch);
+      
     return;
   }
   bzero(&af, sizeof(af));
   af.type = SPELL_ESHABALAS_VITALITY;
-  af.duration = 32;
+  af.duration = 15;
   af.modifier = healpoints;
   af.location = APPLY_HIT;
   affect_to_char(victim, &af);
 
-  af.duration = 32;
+  af.duration = 15;
   af.modifier = number(20, 45);
   af.location = APPLY_MOVE;
   affect_to_char(victim, &af);

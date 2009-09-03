@@ -1218,7 +1218,13 @@ void initialize_skills()
   SPELL_CREATE("depart", SPELL_DEPART, PULSE_SPELLCAST,
                 TAR_SELF_ONLY, spell_depart);
   SPELL_ADD(CLASS_PSIONICIST, 7);
-
+  
+  SPELL_CREATE_MSG("mielikki vitality", SPELL_MIELIKKI_VITALITY, PULSE_SPELLCAST * 3,
+                TAR_SELF_ONLY | TAR_NOCOMBAT,
+                spell_mielikki_vitality, "&+GMielikii's blessing fades.&n");
+  SPELL_ADD(CLASS_DRUID, 7); 
+  SPELL_ADD(CLASS_RANGER, 8);  
+  
   SPELL_CREATE_MSG("bless", SPELL_BLESS, PULSE_SPELLCAST,
                 TAR_OBJ_INV | TAR_OBJ_EQUIP | TAR_CHAR_ROOM | TAR_NOCOMBAT,
                 spell_bless, "You feel less &+Wrighteous&n.");
