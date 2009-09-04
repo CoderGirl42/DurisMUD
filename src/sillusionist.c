@@ -291,7 +291,7 @@ void spell_boulder(int level, P_char ch, char *arg, int type, P_char victim,
     raise(SIGSEGV);
   }
 
-  dam = dice(2 * level, 8);
+  dam = dice(2 * level, 7);
   
   if(NewSaves(victim, SAVING_SPELL, 0))
     dam >>= 1;
@@ -1208,7 +1208,7 @@ void spell_hammer(int level, P_char ch, char *arg, int type, P_char victim,
     stunself = 1;
   }
 
-  dam = dice(3 * level, 7);
+  dam = dice(3 * level, 6);
   
   if(spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NOSHRUG, &messages)  
     != DAM_NONEDEAD)
