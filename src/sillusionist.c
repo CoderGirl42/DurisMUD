@@ -291,7 +291,7 @@ void spell_boulder(int level, P_char ch, char *arg, int type, P_char victim,
     raise(SIGSEGV);
   }
 
-  dam = dice(2 * level, 7);
+  dam = dice(2 * level, 8);
   
   if(NewSaves(victim, SAVING_SPELL, 0))
     dam >>= 1;
