@@ -480,7 +480,9 @@ void do_stampede(P_char ch, char *arg, int cmd)
        if (number(1, 150) > (GET_LEVEL(ch) * 2 - STAT_INDEX(GET_C_AGI(mob)) +
        dice(10, 5))) {
      */
-    if (number(1, 100) >
+    if(!number(0, 9))
+    { }
+    else if (number(1, 100) >
         (GET_LEVEL(ch) - GET_LEVEL(mob) - STAT_INDEX(GET_C_AGI(mob)) +
          dice(10, IS_AFFECTED(mob, AFF_AWARE) ? 5 : 10)) ||
         !on_front_line(mob))
