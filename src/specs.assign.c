@@ -275,7 +275,7 @@ void assign_mobiles(void)
   mob_index[real_mobile0(82521)].func.mob = money_changer;
 
   /* NAX */
-  mob_index[real_mobile0(37764)].func.mob = world_quest;
+  mob_index[real_mobile0(37764)].func.mob = world_quest; // Nax
 
   /* arcium */
   world[real_room0(22439)].funct = inn;
@@ -719,12 +719,12 @@ void assign_mobiles(void)
   mob_index[real_mobile0(6031)].func.mob = tharn_crier_one;
   */
  
- mob_index[real_mobile0(36420)].func.mob = world_quest; //town crier tharn
- mob_index[real_mobile0(97540)].func.mob = world_quest;
- mob_index[real_mobile0(6055)].func.mob = world_quest;
- mob_index[real_mobile0(16553)].func.mob = world_quest;
+ mob_index[real_mobile0(36420)].func.mob = world_quest; // Drow HT
+ mob_index[real_mobile0(97540)].func.mob = world_quest; // Ixie
+ //mob_index[real_mobile0(6055)].func.mob = world_quest; Mob does not exist.
+ mob_index[real_mobile0(16553)].func.mob = world_quest; // Woodseer
  
- mob_index[real_mobile0(53670)].func.mob = world_quest;
+ mob_index[real_mobile0(53670)].func.mob = world_quest; // Sunwell
  
 
   /* Hall of the Ancients */

@@ -13660,18 +13660,18 @@ void spell_resurrect(int level, P_char ch, char *arg, int type, P_char victim,
   if(IS_PC(t_ch) && !IS_TRUSTED(t_ch))
   {
     resu_exp = obj->value[4];
+    
     if(!IS_TRUSTED(ch))
     {
-      resu_exp = (long) (resu_exp * .8);
+      if(EVIL_RACE(t_ch) &&
+         GET_LEVEL(t_ch) >= 52)
+        resu_exp = (long)(resu_exp * (get_property("gain.exp.mod.res.evil.52", 0.333)));
+      else if(IS_ILLITHID(t_ch))
+        resu_exp >> 1;
+      else
+        resu_exp = (long)(get_property("gain.exp.mod.res.normal", 0.8));
     }
-    if(IS_ILLITHID(t_ch))
-    {
-      resu_exp >>= 1;
-    }
-/*
-    else if(EVIL_RACE(t_ch)) resu_exp >>= 1;
-    */
-
+  
     logit(LOG_DEATH,
           "Resu debug: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
           GET_NAME(t_ch), GET_LEVEL(t_ch), GET_NAME(ch), GET_LEVEL(ch),
