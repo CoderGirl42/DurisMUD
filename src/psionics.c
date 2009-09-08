@@ -1224,9 +1224,9 @@ void spell_psychic_crush(int level, P_char ch, char *arg, int type, P_char victi
 
 // Pow difference stat save and it is harder (25% only) to do extra damage.
 // Crushing hand does *2 damage on failed spell saves.
-  if(!StatSave(victim, APPLY_POW, POW_DIFF(ch, victim)) &&
-     !number(0, 4))
-        dam = (int)(dam * 1.25);
+  // if(!StatSave(victim, APPLY_POW, POW_DIFF(ch, victim)) &&
+     // !number(0, 4))
+        // dam = (int)(dam * 1.25);
 
   if(spell_damage(ch, victim, dam, SPLDAM_PSI, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD)
     return;
