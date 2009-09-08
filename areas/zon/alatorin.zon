@@ -1,6 +1,6 @@
 #831
 &+CAlatorin &+L- the &N&+rForge &+LCity~
-83863 2 0 40 50 1
+83868 2 0 40 50 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -205,9 +205,9 @@ D 0 83385 1 1 100 0 0 0
 *     east exit from "Maggeynel's World of Enchantment" to
 *     "A Runed Hallway" - closed
 *
-D 0 83182 3 1 100 0 0 0
+D 0 83182 3 2 100 0 0 0
 *     west exit from "The Mystic Ward" to
-*     "A Shimmering Portal" - closed
+*     "A Shimmering Portal" - closed/locked
 *
 D 0 83831 1 1 100 0 0 0
 *     east exit from "A Shimmering Portal" to
@@ -1054,12 +1054,12 @@ D 0 83759 3 1 100 0 0 0
 *     "A Twisting Cobblstone Street" - closed
 *
 D 0 83757 3 1 100 0 0 0
-*     west exit from "A Cobbletone Street BBeside a Beach Staircase" to
+*     west exit from "A Cobblestone Street Beside a Beach Staircase" to
 *     "A Small Shop" - closed
 *
 D 0 83790 1 1 100 0 0 0
 *     east exit from "A Small Shop" to
-*     "A Cobbletone Street BBeside a Beach Staircase" - closed
+*     "A Cobblestone Street Beside a Beach Staircase" - closed
 *
 D 0 83758 1 1 100 0 0 0
 *     east exit from "A Cobblestone Street" to
@@ -1188,6 +1188,14 @@ D 0 83826 5 2 100 0 0 0
 D 0 83829 4 2 100 0 0 0
 *     up exit from "An Elemental Prison" to
 *     "Base of the Tower of Xamora" - closed/locked
+*
+D 0 83832 5 2 100 0 0 0
+*     down exit from "Entrance of a Fetid Tunnel" to
+*     "A Rocky Tunnel Opening" - closed/locked
+*
+D 0 83833 4 2 100 0 0 0
+*     up exit from "A Rocky Tunnel Opening" to
+*     "Entrance of a Fetid Tunnel" - closed/locked
 *
 *
 O 0 83100 1 83103 100 0 0 0        * a giant statue of a dwarven warrior
@@ -1655,11 +1663,11 @@ O 0 83114 6 83769 100 0 0 0        * a closet
 P 1 97041 1 83114 100 0 0 0        *   (object type not in this .obj file)
 P 1 97047 1 83114 100 0 0 0        *   (object type not in this .obj file)
 P 1 97048 1 83114 100 0 0 0        *   (object type not in this .obj file)
+O 0 83405 999 83790 100 0 0 0      * a crude map of the Shanatar mountains
 O 0 3097 2 83795 100 0 0 0         * (object type not in this .obj file)
 O 0 83357 1 83796 100 0 0 0        * a broad sign
 O 0 72 2 83801 100 0 0 0           * (object type not in this .obj file)
 O 0 83432 1 83823 100 0 0 0        * a swirling portal of mist
-O 0 7371 1 83823 100 0 0 0         * (object type not in this .obj file)
 O 0 83434 1 83823 100 0 0 0        * a shimmering portal
 O 0 83429 1 83827 100 0 0 0        * a cluttered bookshelf
 P 1 55134 1 83429 90 0 0 0         *   (object type not in this .obj file)
@@ -3046,15 +3054,6 @@ M 0 4530 11 83726 100 0 0 0        * (mob type not in this .mob file)
 M 0 4530 11 83727 100 0 0 0        * (mob type not in this .mob file)
 M 0 4530 11 83727 100 0 0 0        * (mob type not in this .mob file)
 M 0 4530 11 83727 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
-M 0 15517 9 83736 100 0 0 0        * (mob type not in this .mob file)
 M 0 83373 1 83743 100 0 0 0        * an Alatorin captain
 E 1 83112 999 11 100 0 0 0         *   an iron shield bearing the crest of Alatorin
 E 1 83142 999 16 100 0 0 0         *   a huge warhammer

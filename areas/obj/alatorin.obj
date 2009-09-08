@@ -4775,7 +4775,7 @@ crude map shanatar mountains~
 0 0 0 0 0 0 0 0
 0 5332 89
 E
-object unnamed~
+crude map shanatar mountains~
 &+L________________________________________________________
 &+L|                                                       |
 &+L|&N&+y       ____________________                           &+L  |
@@ -5251,7 +5251,7 @@ scroll revelations~
 ~
 10 29 2 0 7 0 1 8404993 64 0 0
 51 45 262 0 0 0 0 0
-0 14332 100
+0 8333 100
 E
 scroll revelations~
    &+yThis parchment scroll was transcribed with a magical, &n&+mglowing
@@ -5262,9 +5262,9 @@ key shimmering light~
 &+La &N&+ckey &+Lof &+Wshimmering &+Ylight&N~
 &+LA key of &+Wshimmering &+light &+Lburns brilliantly.~
 ~
-18 1 2 0 7 0 0 0 0 0 0
+18 24 2 0 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0
-0 50444 100
+0 195000 100
 E
 key shimmering light~
    &+LThis small stone key burns with a brilliant magical light.

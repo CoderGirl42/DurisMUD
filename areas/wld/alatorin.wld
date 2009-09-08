@@ -13403,7 +13403,7 @@ D3
 0 0 83755
 S
 #83757
-&+LA &N&+yC&No&+Lb&N&+yb&Nle&+yt&+Lo&Nn&+ye S&+Ltr&Ne&+yet &+LBBeside a &n&+yBeach &+LStaircase&N~
+&+yA C&No&+Lb&N&+yb&nl&+ye&+Ls&Nto&+yn&+Le &N&+ySt&Nre&+Let &+LBeside a &N&+yBeach Staircase~
    &+LThis long street is made up of huge cobblestones of different shapes,
 &+Lsizes, colors, and origins.  Leading through &+WDeramuth Port&+L, this
 &+ycobblestone &+Lroad sees much traffic by its diverse users.  This street
@@ -14932,9 +14932,10 @@ D4
 ~
 0 0 121994
 D5
+&+yA gate with an 'Under Construction' sign is posted below.
 ~
-~
-0 0 83833
+gate~
+3 0 83833
 S
 #83833
 &+yA Rocky Tunnel Opening&N~
@@ -14952,7 +14953,7 @@ D2
 D4
 ~
 ~
-0 0 83832
+3 0 83832
 S
 #83834
 &+yA Fetid Tunnel Covered With &N&+mM&+yu&+ms&+yh&+mr&+yo&+mo&+ym&+ms &+yand &+yF&+Mu&N&+yn&+Mg&N&+yu&+Ms&N~
@@ -15424,6 +15425,10 @@ S
 &+Lthe minds that have occupied this place.
 ~
 831 33587200 13
+D0
+~
+~
+0 0 83864
 D4
 ~
 ~
@@ -15515,4 +15520,90 @@ D8
 ~
 ~
 0 0 123314
+S
+#83864
+&+LA Short &N&+bTunnel~
+   &+LThis short, dark hallway deep within the stone of the Shanatar
+&+Lmountains leads beneath the troglodyte caverns into its leaders
+&+Llair.  A second tunnel branching off to the east leads lairs of
+&+Lthe &+Wwhite-faced &+Ltrogs, marked by a massive white hand print
+&+Lon the far ajoining wall.  The rocky tunnel floor is filthy, wet
+&+Land covered with &N&+mfungus.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83865
+D2
+~
+~
+0 0 83857
+S
+#83865
+&+LThe Tunnel &N&+mSplits&N~
+   &+LThis short, dark hallway deep within the stone of the Shanatar
+&+Lmountains leads beneath the troglodyte caverns into its leaders
+&+Llair.  A second tunnel branching off to the east leads lairs of
+&+Lthe &+Wwhite-faced &+Ltrogs, marked by a massive white hand print
+&+Lon the far ajoining wall.  The rocky tunnel floor is filthy, wet
+&+Land covered with &N&+mfungus.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83867
+D2
+~
+~
+0 0 83864
+D3
+~
+~
+0 0 83866
+S
+#83866
+&+mAn Ancient &+LNatural Tunnel&N~
+   &+LThis ancient, natural tunnel sits with long stalagmites and
+&+Lstalagtits nearly joining with sharp, pointy stone tips.  This
+&+Lcavernous mass is the result of the lands shifting; mountains
+&+Lpushing up against each other and others seperating.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83865
+D3
+~
+~
+0 0 83868
+S
+#83867
+&+mAn Ancient &+LNatural Tunnel&N~
+   &+LThis ancient, natural tunnel sits with long stalagmites and
+&+Lstalagtits nearly joining with sharp, pointy stone tips.  This
+&+Lcavernous mass is the result of the lands shifting; mountains
+&+Lpushing up against each other and others seperating.
+~
+831 33587200 13
+D3
+~
+~
+0 0 83865
+S
+#83868
+&+LBefore the &n&+rLeader's Lair~
+   &+LA huge iron gate has been fastened onto the this natural
+&+Ltunnel, blocking off the portion just ahead to those of only
+&+Lpriviledged access.  Quite a marvel in troglodyte craftsmanship
+&+Lcauses one to wonder whether this was created by the trogs
+&+Lthemselves oer perhaps by some of their more advanced slaves.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83866
 S
