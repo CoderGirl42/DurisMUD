@@ -512,7 +512,7 @@ int vamp(P_char ch, double fhits, double fcap)
 void heal(P_char ch, P_char healer, int hits, int cap)
 {
   P_char   victim;
-  int      exp;
+  int exp;
 
   if(!(ch))
   {
@@ -521,18 +521,23 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   }  
 
   if(IS_HARDCORE(healer))
+  {
     hits = (int) (hits * 1.20);
-
-  if(IS_AFFECTED3(ch, AFF3_ENHANCE_HEALING))
+  }
+  
+  if(IS_AFFECTED3(healer, AFF3_ENHANCE_HEALING))
+  {
     hits = (int) (hits * get_property("enhancement.healing.mod", 1.2));
-
+  }
+  
   hits = vamp(ch, hits, cap);
-  victim = ch->specials.fighting;
 
-  if(victim && hits > (GET_LEVEL(healer) > 30 ? 2 : 1) * GET_LEVEL(healer))
-    gain_exp(healer, victim, 0, EXP_HEALING);
-  else if(victim)
-    gain_exp(healer, victim, 0, EXP_DAMAGE);
+  if(IS_PC(healer) &&
+     ch->specials.fighting &&
+     hits > 5)
+  {
+    gain_exp(healer, ch->specials.fighting, 0, EXP_HEALING);
+  }
 }
 
 bool soul_trap(P_char ch, P_char victim)
@@ -2694,20 +2699,20 @@ void dam_message(double fdam, P_char ch, P_char victim,
     return;
   }
   
-  if(messages->obj)
-  {
-    wield = messages->obj;
-     
-    if((messages->obj->value[1] * messages->obj->value[2]) >= 0)
-      max_dam = messages->obj->value[1] * messages->obj->value[2];
-    else
-      max_dam = 0;
-  }
-  else if(ch->equipment[WIELD])
+  if(ch->equipment[WIELD])
   {
     wield = ch->equipment[WIELD];
     max_dam = ch->equipment[WIELD]->value[1] * ch->equipment[WIELD]->value[2];
   }
+  // else if(messages->obj)
+  // {
+    // wield = messages->obj;
+     
+    // if((messages->obj->value[1] * messages->obj->value[2]) >= 0)
+      // max_dam = messages->obj->value[1] * messages->obj->value[2];
+    // else
+      // max_dam = 0;
+  // }
   else
   {
      max_dam = ch->points.damnodice * ch->points.damsizedice;
@@ -5183,8 +5188,8 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
       victim->desc->prompt_mode = 1;
     }
     
-    /* exp for damage */
-    if(dam > (GET_LEVEL(ch) > 30 ? GET_LEVEL(ch) : GET_LEVEL(ch) * 0.7) &&
+// Exps for damage
+    if(dam > 5 &&
       !(flags & RAWDAM_NOEXP))
     {
       gain_exp(ch, victim, 0, EXP_DAMAGE);
@@ -5193,9 +5198,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
     sprintf(buffer, "Damage: %d\n", (int) dam);
 
     for (tch = world[victim->in_room].people; tch; tch = tch->next_in_room)
-#ifndef TEST_MUD
       if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_DAMAGE) )
-#endif
         send_to_char(buffer, tch);
 
     if (messages->type & DAMMSG_TERSE)
@@ -8116,7 +8119,9 @@ void perform_violence(void)
 
     if (pulse % PULSE_VIOLENCE == 0 && opponent)
     {
-      if (IS_SET(ch->specials.act2, PLR2_MELEE_EXP) && !IS_CASTING(ch))
+      if(IS_SET(ch->specials.act2, PLR2_MELEE_EXP) &&
+        !IS_CASTING(ch) &&
+        !IS_IMMOBILE(ch))
       {
         gain_exp(ch, opponent, 0, EXP_MELEE);
         REMOVE_BIT(ch->specials.act2, PLR2_MELEE_EXP);

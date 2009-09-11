@@ -13657,31 +13657,44 @@ void spell_resurrect(int level, P_char ch, char *arg, int type, P_char victim,
    */
   clevel = obj->value[2];
 
+
+// Resurrect restores 60 percent of your exps now.
+// Evils level 52 and higher are restored 30 percent of their exps. -Lucrot Sept09
   if(IS_PC(t_ch) && !IS_TRUSTED(t_ch))
   {
     resu_exp = obj->value[4];
     
-    if(!IS_TRUSTED(ch))
-    {
-      if(EVIL_RACE(t_ch) &&
-         GET_LEVEL(t_ch) >= 52)
-        resu_exp = (long)(resu_exp * (get_property("gain.exp.mod.res.evil.52", 0.333)));
-      else if(IS_ILLITHID(t_ch))
-        resu_exp >> 1;
-      else
-        resu_exp = (long)(get_property("gain.exp.mod.res.normal", 0.8));
-    }
-  
-    logit(LOG_DEATH,
+    if(!IS_TRUSTED(ch)) 
+    { 
+      if(EVIL_RACE(t_ch) && 
+	      GET_LEVEL(t_ch) >= 52)
+      {
+	      resu_exp =
+          (long)(resu_exp * (get_property("gain.exp.mod.res.evil.52", 0.300)));
+      }
+      else if(EVIL_RACE(t_ch))
+      {
+	      resu_exp =
+          (long)(resu_exp * (get_property("gain.exp.mod.res.evil", 0.500)));
+      }          
+	    else
+      {
+        resu_exp =
+          (long)(resu_exp * get_property("gain.exp.mod.res.normal", 0.600)); 
+      }
+    }     
+    
+    logit(LOG_EXP,
           "Resu debug: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
           GET_NAME(t_ch), GET_LEVEL(t_ch), GET_NAME(ch), GET_LEVEL(ch),
           GET_EXP(t_ch), GET_EXP(t_ch) + resu_exp, resu_exp);
-    debug("Resu debug: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
+    debug("&+RResurrect&n: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
           GET_NAME(t_ch), GET_LEVEL(t_ch), GET_NAME(ch), GET_LEVEL(ch),
           GET_EXP(t_ch), GET_EXP(t_ch) + resu_exp, resu_exp);
-          
+    
     gain_exp(t_ch, NULL, resu_exp, EXP_RESURRECT);
   }
+  
   GET_HIT(t_ch) = GET_MAX_HIT(t_ch);
   GET_MANA(t_ch) = MAX(0, GET_MAX_MANA(t_ch) >> 2);
   GET_VITALITY(t_ch) = MIN(0, GET_MAX_VITALITY(t_ch));
@@ -13718,8 +13731,7 @@ void spell_resurrect(int level, P_char ch, char *arg, int type, P_char victim,
     send_to_char("There was a problem saving your character!\n", t_ch);
     send_to_char("Contact an Implementor ASAP.\n", t_ch);
   }
-/*  if(clevel == 56)
-    advance_level(t_ch);*/
+
   extract_obj(obj, TRUE);
 }
 
@@ -14046,26 +14058,6 @@ void spell_lesser_resurrect(int level, P_char ch, char *arg, int type, P_char vi
    * restore lost exp from death
    */
   clevel = obj->value[2];
-
-  /*
-  if(IS_PC(t_ch) && !IS_TRUSTED(t_ch))
-  {
-    resu_exp = 0;
-  else if(EVIL_RACE(t_ch))
-    resu_exp >>= 1;
-
-    logit(LOG_DEATH,
-          "Lesser Res debug: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
-          GET_NAME(t_ch), GET_LEVEL(t_ch), GET_NAME(ch), GET_LEVEL(ch),
-          GET_EXP(t_ch), GET_EXP(t_ch) + resu_exp, resu_exp);
-    debug("Lesser Res debug: %s (%d) by %s (%d): old exp: %d, new exp: %d, +exp: %d",
-      GET_NAME(t_ch), GET_LEVEL(t_ch), GET_NAME(ch), GET_LEVEL(ch),
-      GET_EXP(t_ch), GET_EXP(t_ch) + resu_exp, resu_exp);
-    
-    if(!RACE_EVIL(t_ch))
-       gain_exp(t_ch, NULL, resu_exp, EXP_RESURRECT);
-  }
-  */
 
   GET_HIT(t_ch) = GET_MAX_HIT(t_ch);
   GET_MANA(t_ch) = MAX(0, GET_MAX_MANA(t_ch) >> 2);
