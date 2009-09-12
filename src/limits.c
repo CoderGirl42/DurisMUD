@@ -1112,7 +1112,7 @@ debug("melee 7 exp gain (%d)", XP);
       return 0;
     }
 
-    XP = (int)(-1 * (new_exp_table[GET_LEVEL(ch) + 1] >> 4));
+    XP = (int)(-1 * (new_exp_table[GET_LEVEL(ch) + 1] >> 5));
   }
   else if(type == EXP_KILL)
   {
