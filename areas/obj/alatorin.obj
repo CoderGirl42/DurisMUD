@@ -3779,13 +3779,22 @@ A
 A
 22 -4
 #83343
-object unnamed~
-an unnamed object~
-An unnamed object lies here, looking lonely and forelorn.~
+string duergar dwarf ears~
+&+La string of &n&+rduergar dwarf &N&+years&N~
+&+LA disgusting string of rotting &N&+rduergar dwarf &+years&N has been left here.~
 ~
-13 15 3 0 7 0 0 0 0 0 0
-0 0 0 0 0 0 0 0
-0 0 100
+9 2 3 0 7 0 0 16389 0 0 0
+5 0 0 0 0 0 0 0
+0 500 100
+E
+string duergar dwarf ears~
+   &+yThis foul, disgusting string is haphazardly made of the rotting ears
+&+ythat have been cut from the heads of several unfortunate duergar dwarves.
+~
+A
+1 4
+A
+35 3
 #83344
 magical emerald shortsword sword~
 &n&+ga magical emerald shortsword&N~
@@ -5485,3 +5494,11 @@ A
 13 32
 A
 24 -1
+#83450
+object unnamed~
+an unnamed object~
+An unnamed object lies here, looking lonely and forelorn.~
+~
+13 15 3 0 7 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 100

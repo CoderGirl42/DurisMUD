@@ -591,9 +591,15 @@ qc_action 50~
 ~
 MA
 hi hello~
-&+CChesynn says 'YOu must be wondering about my leg.  I took a nasty bite from a
+&+CChesynn says 'You must be wondering about my leg.  I took a nasty bite from a
 &+Cparticular tundra panther.  They call the beast 'Grey Fang' and he lurks in
 &+Cthe southeastern part of the Tundra.  Bring me his paw!'
+&NWith a pause, $n continues '$N, have you even encountered the &+Wpanthers?'
+~
+MA
+yes panther panthers tundra~
+&n$N and $n discuss the native &+Wtundra panthers&N for a moment.
+&N$n says 'Bring me five of their teeth, I will string them together for you $N.  You will have proven your worth as a tundra hunter.'
 ~
 QA
 &+CChesynn the &+WTundra &+CHunter &+Csays 'Excellent! The beast is slain and I am
@@ -606,6 +612,16 @@ G I 500022
 D
 &+CChesynn runs off into the distance.
 ~
+QA
+&N$n bows at $N and says 'Well done.'
+After a few short moments of fiddling with the &+Wfangs&N and a bit of string..
+~
+R I 500053
+G I 43140
+G I 43140
+G I 43140
+G I 43140
+G I 43140
 S
 #500096
 M

@@ -15093,7 +15093,7 @@ D3
 0 0 83838
 S
 #83841
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Corner of a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15116,7 +15116,7 @@ D2
 0 0 83842
 S
 #83842
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Jagged Bend in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15135,7 +15135,7 @@ D3
 0 0 83846
 S
 #83843
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Bend in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15177,7 +15177,7 @@ D2
 0 0 83845
 S
 #83845
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Corner in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15196,7 +15196,7 @@ D3
 0 0 83853
 S
 #83846
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Jagged Bend in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15238,7 +15238,7 @@ D3
 0 0 83861
 S
 #83848
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Bend in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15257,7 +15257,7 @@ D3
 0 0 83847
 S
 #83849
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Bend in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15299,7 +15299,7 @@ D3
 0 0 83849
 S
 #83851
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Sharp Turn in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15318,7 +15318,7 @@ D3
 0 0 83850
 S
 #83852
-&+LA Filthy, &N&+yRank Tunnel~
+&+LA Sharp Turn in a &N&+yRank Tunnel~
    &+LThis long, twisting tunnel violates nearly all of the senses.
 &+LA terrible &N&+yrank smell&+L wafts through the dark cavern air.
 &+LAn echoing mix of roars, grunts, and screams barrels through the
@@ -15698,4 +15698,117 @@ D2
 ~
 ~
 0 0 83867
+D5
+~
+~
+0 0 83874
+S
+#83874
+&+LA Junction of &+WWhite &+LHand &+WP&+Lr&+Wi&+Ln&+Wt&+L-Covered &+WTunn&+Lels&N~
+   &+LThis dark cavern is full of &+Wwhite handprints&+L, covering the
+&+Lcavern walls and floors.  This chaotic, distrubing obsession is
+&+Lcult-like within the inner circle of the ritualistic religion
+&+Lcarried by their species.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83879
+D1
+~
+~
+0 0 83877
+D2
+~
+~
+0 0 83875
+D3
+~
+~
+0 0 83878
+D4
+~
+~
+0 0 83873
+S
+#83875
+&+LA Da&+Wrk Tu&+Lnnel Cov&+Wered&+L with W&+Whit&+Le Han&+Wd Pri&+Lnts&N~
+   &+LThis dark cavern is full of &+Wwhite handprints&+L, covering the
+&+Lcavern walls and floors.  This chaotic, distrubing obsession is
+&+Lcult-like within the inner circle of the ritualistic religion
+&+Lcarried by their species.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83874
+D1
+~
+~
+0 0 83876
+S
+#83876
+&+LA Tu&+Wrn In a &+LTunnel Co&+Wve&+Lred &+WWith &+LWhite &+WHand &+LPrints&N~
+   &+LThis dark cavern is full of &+Wwhite handprints&+L, covering the
+&+Lcavern walls and floors.  This chaotic, distrubing obsession is
+&+Lcult-like within the inner circle of the ritualistic religion
+&+Lcarried by their species.
+~
+831 33587200 13
+D0
+~
+~
+0 0 83877
+D3
+~
+~
+0 0 83875
+S
+#83877
+&+LA Tunnel &+WDe&+Lco&+Wr&+Lated Wi&+Wt&+Lh &+WWhite &+LHand &+WP&+Lr&+Wi&+Ln&+Wt&+Ls&N~
+   &+LThis dark cavern is full of &+Wwhite handprints&+L, covering the
+&+Lcavern walls and floors.  This chaotic, distrubing obsession is
+&+Lcult-like within the inner circle of the ritualistic religion
+&+Lcarried by their species.
+~
+831 33587200 13
+D2
+~
+~
+0 0 83876
+D3
+~
+~
+0 0 83874
+S
+#83878
+&+WA Bone Heap~
+   &+WThis massive bone heap sits in a deep, natural tunnel within
+&+Lthe bowels of the Shanatar Mountains.  The rocky, jagged cavern
+&+Wwalls, floor, ceiling, and all around are covered in sloppy, big
+&+Lwhite hand prints.  This absurd decoration fills these tunnels
+&+Wand the cavern containing this massive heap of gnawed-up bones.
+~
+831 33587200 13
+D1
+~
+~
+0 0 83874
+S
+#83879
+&+LA &N&+mDomed &+LCavern~
+   &+LThis domed cavern has been strangely unoccupied to the same degree
+&+Las the rest of these troglodyte tunnels.  A massive stone golem grows
+&+Lfrom a depressed soft spot in the center of the cavern, from which
+&+Ltwo giant fist-ended arms reach out from a monolithic trunk.  This
+&+Lcavern is domed and odd, almost as if it is more ancient and fear-
+&+Linstilling then the presence of the troglodytes.
+~
+831 33587200 13
+D2
+~
+~
+0 0 83874
 S

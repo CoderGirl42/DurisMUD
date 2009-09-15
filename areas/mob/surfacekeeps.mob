@@ -410,7 +410,7 @@ duergar dwarf~
 &+ranother.  He is dressed in &+Ldark-colored &N&+rgarments and walks with
 &+rcareful, deft steps.
 ~
-2248 0 0 1572924 0 0 0 -1000 S
+2248 0 0 524348 0 0 0 -1000 S
 pd 0 12288 -1
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -920,7 +920,7 @@ dk 0 1 2
 0.0.0.0 0
 8 8 1
 #120060
-roaming white dragon~
+roaming white dragon _spec1_~
 &+Wa roaming white dragon~
 &+WA white dragon roams the mountains in search of prey.
 ~
@@ -929,9 +929,9 @@ roaming white dragon~
 &+Wof prey.   Most likely only searching for sustenance, this white dragon rages
 &+Won, possibly attracted by a recent sound, sniffing out cornices for life.
 ~
-2568 1 0 134217752 0 0 0 -800 S
-d 0 513 -1
-49 0 0 1d1+1 1d1+1
+1073744392 1 0 134217752 0 0 0 -800 S
+d 0 1 -1
+53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #120061
@@ -963,7 +963,37 @@ blendyl storm druid centaur _spec2_~
 &+ypeaks of Duris, traveling from site to site.
 ~
 2248 0 0 0 0 0 0 0 S
-ct 0 0 -1
-1 0 0 1d1+1 1d1+1
+ct 0 128 -1
+51 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
+#120063
+tall golden knight~
+&+Ya tall golden knight&N~
+&+YA tall golden knight visits the prestigious city.
+~
+  &+YThis massive human knight is dressed in fine golden platemail, brandishing
+&+Yan equally-pure two-handed bastard sword.  He has flowing blonde hair to
+&+Ymatch his lustrous armor, walking with poise and pride.
+~
+1073743882 0 0 939524120 14552 0 0 1000 S
+PH 0 24 -1
+50 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#120064
+zyka troll stalker~
+&+CZyka &N&+cthe Troll Stalker&N~
+&+CZyka &N&+cthe Troll Stalker fades &+Win &N&+cand &+Lout &N&+cof existence here.
+~
+   &+CZyka&N&+c, one of the legendary 33 Troll Stalkers that prowl the
+&+charshest of terrains within the Duris realms, resembles a female
+&+cswamp troll in every way except for her &+Cethereal form&N&+c, causing
+&+cher to exist in a &+Bflux&N&+c-reality.  She has a gaping, wart-covered
+&+ctoothy grin and scraggly, &+Lknotted &N&+chair.
+~
+1090521480 0 0 940048408 8403136 0 34080768 -1000 S
+pt 0 288 -1
+59 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 2

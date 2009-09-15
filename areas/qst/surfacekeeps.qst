@@ -8,6 +8,12 @@ qc_action 100~
 &N$n smiles happily at a particular nearby passing dwarf.
 ~
 S
+#120011
+M
+qc_action 350~
+&N&+mA hooded dwarf slowly fades out of existence, returning moments later in a different spot.
+~
+S
 #120013
 M
 qc_action 45~

@@ -1,6 +1,6 @@
 #831
 &+CAlatorin &+L- the &N&+rForge &+LCity~
-83873 2 0 40 50 1
+83879 2 0 40 50 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -2948,6 +2948,7 @@ F 1 83345 12 83659 100 0 0 0       * a dwarven archer (following)
 F 1 83345 12 83659 100 0 0 0       * a dwarven archer (following)
 F 1 83345 12 83659 100 0 0 0       * a dwarven archer (following)
 M 0 83413 1 83665 100 0 0 0        * Artukin the dwarven ragelord
+E 1 83343 1 3 100 0 0 0            *   a string of duergar dwarf ears
 F 1 83349 4 83665 100 0 0 0        * a dwarven battlerager (following)
 F 1 83349 4 83665 100 0 0 0        * a dwarven battlerager (following)
 M 0 83346 4 83666 100 0 0 0        * a fearless guard of Khoralator Fort
