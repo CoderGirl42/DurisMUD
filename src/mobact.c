@@ -1631,7 +1631,8 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
            !IS_AFFECTED(target, AFF_BLIND) &&
            ((GET_LEVEL(target) < GET_LEVEL(ch))) &&
            number(0,1) &&
-           !EYELESS(target))
+           !EYELESS(target) &&
+           GET_C_POW(ch) > GET_C_POW(target))
   {
     spl = SPELL_PWORD_BLIND;
   }
@@ -1718,8 +1719,14 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
     spl = SPELL_PWORD_KILL;
   }
 
-  if(!spl && npc_has_spell_slot(ch, SPELL_PWORD_BLIND) && !(target == ch)
-     && !IS_AFFECTED(target, AFF_BLIND) && ((GET_LEVEL(target) <= GET_LEVEL(ch) + number(-5, 5))))
+  if(!spl &&
+    npc_has_spell_slot(ch, SPELL_PWORD_BLIND) &&
+    target != ch &&
+    !IS_AFFECTED(target, AFF_BLIND) &&
+    ((GET_LEVEL(target) < GET_LEVEL(ch))) &&
+    number(0,1) &&
+    !EYELESS(target) &&
+    GET_C_POW(ch) > GET_C_POW(target))
   {
     spl = SPELL_PWORD_BLIND;
   }
@@ -5069,72 +5076,87 @@ void BreathWeapon(P_char ch, int dir)
  * with) which will knock down several opponents (like bash), if they fail
  * a save against Dex (at -2) -JAB
  */
-
-void SweepAttack(P_char ch)
+ 
+ void SweepAttack(P_char ch)
 {
   P_char   tch, tch_next, chMaster = NULL;
-  int in_room;
   
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if(!SanityCheck(ch, "SweepAttack"))
   {
     return;
   }
 
-  if(IS_PC_PET(ch))
+  if (IS_PC_PET(ch))
   {
     chMaster = GET_MASTER(ch);
   }
-  
-  act("$n lashes out with $s mighty tail!", 0, ch, 0, 0, TO_ROOM);
+    
+  act("$n &=LWlashes&n out with $s mighty tail!",
+    0, ch, 0, 0, TO_ROOM);
 
   for (tch = world[ch->in_room].people; tch; tch = tch_next)
   {
-    if(chMaster &&
-      !IS_FIGHTING(ch))
-      if((tch == chMaster) ||
-         (tch == ch))
-            continue;
-    else if(IS_NPC(tch) &&
-            (!tch->following || IS_NPC(tch->following)) && 
-            (ch->specials.fighting != tch) &&
-            (tch->specials.fighting != ch)) 
-      continue;
-    
-    if(IS_TRUSTED(tch))
-      continue;
-    
-    if(IS_NPC(tch) &&
-      (IS_ASSOC_GOLEM(tch) || 
-      IS_NEXUS_GUARDIAN(tch) || 
-      IS_ELITE(tch) || 
-      IS_IMMATERIAL(tch) ||
-      IS_GREATER_RACE(tch)))
-        continue;
-    
-    if(grouped(ch, tch))
-          continue;
-          
-    if(IS_NPC(ch) &&
-       !IS_PC_PET(ch) &&
-       IS_NPC(tch) &&
-       !IS_PC_PET(tch))
-          continue;
-    
-    if(!IS_DRAGON(tch))
+    tch_next = tch->next_in_room;
+
+    if(!(tch))
     {
-      if(!StatSave(tch, APPLY_AGI, (int) (-1 * GET_LEVEL(ch) / 10)) &&
-         GET_POS(tch) == POS_STANDING)
+      continue;
+    }
+    
+    if (chMaster &&
+        !IS_FIGHTING(ch))
+    { 
+      if (tch == chMaster ||
+          tch == ch)
+      {
+        continue;
+      }
+    }
+    else if(!IS_PC(tch) &&
+            (!tch->following || IS_NPC(tch->following)) &&
+            (ch->specials.fighting != tch) &&
+            (tch->specials.fighting != ch))
+    {
+      continue;
+    }
+    
+    if (IS_TRUSTED(tch))
+    {
+      continue;
+    }
+    
+    if(IS_ASSOC_GOLEM(tch) || 
+       IS_NEXUS_GUARDIAN(tch) || 
+       IS_ELITE(tch) || 
+       IS_IMMATERIAL(tch) ||
+       IS_GREATER_RACE(tch) ||
+       GET_POS(tch) != POS_STANDING)
+    {
+      continue;
+    }
+    
+    if(ch->group != NULL &&
+       ch->group == tch->group)
+    {
+      continue;
+    }
+    
+    if(((IS_FIGHTING(tch) &&
+        (tch->specials.fighting == ch)) ||
+        !IS_FIGHTING(tch)) &&
+        !IS_DRAGON(tch))
+    {
+      if (!StatSave(tch, APPLY_AGI, (int) (-1 * GET_LEVEL(ch) / 10)))
       {
         SET_POS(tch, POS_SITTING + GET_STAT(tch));
-        CharWait(tch, PULSE_VIOLENCE * (number(1, 3)));
-        act("The powerful sweep sends you crashing to the ground!",
+        CharWait(tch, PULSE_VIOLENCE * 2);
+        act("&+yThe powerful sweep sends you crashing to the &+Lground!&n",
           FALSE, tch, 0, 0, TO_CHAR);
-        act("$n crashes to the ground!",
+        act("$n &+ycrashes to the &+Lground!&n",
           FALSE, tch, 0, 0, TO_ROOM);
 
         damage(ch, tch,
-               MIN(dice(10, (GET_LEVEL(ch) / 5)) , GET_HIT(tch) + 8),
+               dice(4, (GET_LEVEL(ch) / 2)),
                TYPE_UNDEFINED);
       }
       else
@@ -5143,11 +5165,13 @@ void SweepAttack(P_char ch)
         act("$N dodges your sweep.", 0, ch, 0, tch, TO_CHAR);
       }
     }
-    
-    if(!char_in_list(ch))
+    if (!char_in_list(ch))
+    {
       return;
+    }
   }
 }
+
 
 bool MobAlchemist(P_char ch)
 {
@@ -10055,11 +10079,14 @@ void event_agg_attack(P_char ch, P_char victim, P_obj obj, void *data)
 
   if(!(ch) ||
      !(victim) ||
-     (victim->in_room == NOWHERE) ||
-     (GET_STAT(victim) == STAT_DEAD) ||
-     (ch->in_room == NOWHERE) ||
+     victim->in_room == NOWHERE ||
+     GET_STAT(victim) == STAT_DEAD ||
+     ch->in_room == NOWHERE ||
      !MIN_POS(ch, POS_STANDING + STAT_RESTING) ||
-     !is_aggr_to(ch, victim))
+     !is_aggr_to(ch, victim) ||
+     IS_IMMOBILE(ch) ||
+     !AWAKE(ch) ||
+     IS_STUNNED(ch))
   {
     return;
   }
@@ -10070,7 +10097,7 @@ void event_agg_attack(P_char ch, P_char victim, P_obj obj, void *data)
   }
   
   if(ch->in_room == victim->in_room)
-  {
+  {   
     if((IS_MAGE(victim) ||
        IS_CLERIC(victim)) &&
        !number(0, 2) &&

@@ -1208,6 +1208,8 @@ struct material_data {
 #define IMAGE_RELFECTION_VNUM 250
 #define DRAGONLORD_PLATE_VNUM 25723
 #define REVENANT_CROWN_VNUM 22070
+#define SNEAK(ch) (IS_AFFECTED(ch, AFF_SNEAK) || UD_SNEAK(ch) || OUTDOOR_SNEAK(ch))
+#define LEVITATE(ch, dir) (IS_AFFECTED(ch, AFF_LEVITATE) && ((dir == UP) || (dir == DOWN)))
 
 // world_quest_.c
 #define FIND_AND_SOMETHING   0

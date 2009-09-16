@@ -916,9 +916,6 @@ int can_enter_room(P_char ch, int room, int show_msg)
   return (1);
 }
 
-#define SNEAK(ch) (IS_AFFECTED(ch, AFF_SNEAK) || UD_SNEAK(ch) || OUTDOOR_SNEAK(ch))
-#define LEVITATE(ch, dir) (IS_AFFECTED(ch, AFF_LEVITATE) && ((dir == UP) || (dir == DOWN)))
-
 char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
                        int was_in, int foo)
 {
@@ -1670,7 +1667,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
           isname("_nosneak_", GET_NAME(tch)) &&
           is_aggr_to(tch, ch))
         {
-          add_event(event_agg_attack, 0, tch, ch, 0, 0, 0, 0);
+          add_event(event_agg_attack, 1, tch, ch, 0, 0, 0, 0);
         }
 
         else if(IS_TRUSTED(tch) ||

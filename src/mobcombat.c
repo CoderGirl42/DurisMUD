@@ -831,145 +831,161 @@ bool Mob_Furious(P_char ch, P_char victim, int chance)
 
 bool DragonCombat(P_char ch, int awe)
 {
-  int      i, breath_chance = 4, attacktype = 0;
+  int      i, breath_chance = 2, attacktype = 0;
   P_char   tchar1 = NULL, tchar2 = NULL, vict, next_ch;
   void     (*funct) (int, P_char, char *, int, P_char, P_obj);
   bool     bIsPet = false;
   P_char   chMaster = NULL;
 
-  if(!(ch) ||  
-     !IS_ALIVE(ch)) 
-        return false;
+  /* check for non-dragon breathers .. */
   
-  if(IS_PC_PET(ch))
+  /* the rules are changing...  dragon pets (dracoliches) don't use specials
+     unless the master is in the room.  If the necro wants specials used,
+     they need to be in the room taking risks along with the pet! */
+  if (IS_PC_PET(ch))
   {
     bIsPet = true;
     chMaster = GET_MASTER(ch);
-    
-    if(ch->in_room != chMaster->in_room)
-        return FALSE;
+    if (ch->in_room != chMaster->in_room)
+    {
+      return FALSE;
+    }
   }
     
-  if(!IS_DRAGON(ch) &&
-     awe)
-        return FALSE;
-  
-// Level 60+ elite has 50% breath weapon.
-  if(IS_ELITE(ch))
-    breath_chance -= 2;
-  
-  if(GET_LEVEL(ch) >= 60)
-    breath_chance -= 1;
-  
-  if(!IS_DRAGON(ch) &&
-     CAN_BREATHE(ch))
+  if (!IS_DRAGON(ch) &&
+      awe)
   {
-    if(number(0, breath_chance))
+    return FALSE;
+  }
+  
+  if (!IS_DRAGON(ch) &&
+      CAN_BREATHE(ch))
+  {
+    if (number(0, breath_chance))
+    {
       return FALSE;
+    }
 
     BreathWeapon(ch, -1);
-
     return TRUE;
   }
 
-/* awe should never kill anyone, since DragonCombat is called from
+  /* awe should never kill anyone, since DragonCombat is called from
      set_fighting() and assumes just that */
 
   if(awe &&
-    (GET_STAT(ch) > STAT_INCAP))
+     number(0, 2))
   {
-    if(!IS_DRAGON(ch))
-    {                  
+    /*
+     * means we were called from start_fighting, dragons get a
+     * special initial 'fear' and 'awe' attack at start on combat,
+     * low levels are going to be sent fleeing in terror, and
+     * maybe some not-so low levels too.  Even young dragons are
+     * nasty opponents
+     */
+
+    /*
+     * Example: red drag in sewers, level 19, characters will: 1-
+     * 6  panic flee, no save 7-18  save vs para at +1 or flee in
+     * terror 19-50  save vs para at -2 or flee
+     */
+    if (!IS_DRAGON(ch))
+    {                           
       send_to_char("No roaring for you, bud.\r\n", ch);
       return FALSE;
     }
-    
-    if(IS_MORPH(ch) ||
+    if (IS_MORPH(ch) ||
        IS_PC(ch))
     {
       CharWait(ch, 9);
     }
     
-    act("Your ROAR fills your victims with sheer terror!", 0, ch, 0, 0,
-        TO_CHAR);
-    act("$n&N &+RROARS&n, filling your heart with sheer terror!", 1, ch,
-        0, 0, TO_ROOM);
+    act("Your ROAR fills your victims with sheer terror!",
+      0, ch, 0, 0, TO_CHAR);
+    act("$n&N &+RROARS&n, filling your heart with &+Lsheer terror!&n",
+      1, ch, 0, 0, TO_ROOM);
     
-    for(tchar1 = world[ch->in_room].people; tchar1; tchar1 = tchar2)
+    for (tchar1 = world[ch->in_room].people; tchar1; tchar1 = tchar2)
     {
       tchar2 = tchar1->next_in_room;
       
-      if(grouped(tchar1, ch))
+      if (grouped(tchar1, ch))
+      {
         continue;
-     
-      if(chMaster == tchar1)
-        continue;
+      }
       
-      if(affected_by_spell(tchar1, SONG_DRAGONS))
+      if (chMaster == tchar1)
+      {
         continue;
+      }
       
-      if(!IS_DRAGON(tchar1) &&
-         !IS_TRUSTED(tchar1) &&
+      if (affected_by_spell(tchar1, SONG_DRAGONS))
+      {
+        continue;
+      }
+      
+      if (!IS_DRAGON(tchar1) &&
+          !IS_TRUSTED(tchar1) &&
          (tchar1->specials.z_cord == ch->specials.z_cord))
       {
-        if(IS_NPC(tchar1) &&
-          !GET_MASTER(tchar1) &&
-          tchar1->group && (tchar1->group == ch->group))
+
+        if (IS_NPC(tchar1) &&
+            !GET_MASTER(tchar1) &&
+            tchar1->group && (tchar1->group == ch->group))
         {
           continue;
         }
         
-        if(IS_ILLITHID(tchar1))
+        if (IS_ILLITHID(tchar1))
         {
           continue;
         }
         
-        /* prevent pet roar abuse: non-charmed sentinal NPC's and followers of NPCs never flee */
-        if(bIsPet &&
+        if (bIsPet &&
            IS_NPC(tchar1))
         {
-          if((tchar1->following && IS_NPC(tchar1->following)) || 
-            (IS_SET(tchar1->specials.act, ACT_SENTINEL) && !GET_MASTER(tchar1)))
+          if ((tchar1->following &&
+              IS_NPC(tchar1->following)) || 
+              (IS_SET(tchar1->specials.act, ACT_SENTINEL) &&
+              !GET_MASTER(tchar1)))
           {
             continue;
           }
         }
         /* for non-pets: allow any non-PC-following NPCs to ignore it */
-        else if(IS_NPC(tchar1) &&
-               (!tchar1->following || IS_NPC(tchar1->following)) &&
-               (ch->specials.fighting != tchar1) &&
-               (tchar1->specials.fighting != ch))
+        else if (IS_NPC(tchar1) &&
+                (!tchar1->following || IS_NPC(tchar1->following)) &&
+                (ch->specials.fighting != tchar1) &&
+                (tchar1->specials.fighting != ch))
         {
           continue;
         }
         
-        if(fear_check(tchar1) ||
-           IS_AFFECTED4(ch, AFF4_NOFEAR)) // fear_check should cover all bases.
+        if (fear_check(tchar1))
         {
           continue;
         }
         
-        if(GET_LEVEL(tchar1) < (GET_LEVEL(ch) / 2))
+        if (GET_LEVEL(tchar1) < (GET_LEVEL(ch) / 2))
         {
           do_flee(tchar1, 0, 2);        /* panic flee, no save */
         }
         
-        if(GET_LEVEL(tchar1) >= GET_LEVEL(ch))
+        if (GET_LEVEL(tchar1) >= GET_LEVEL(ch))
         {
-          if(!NewSaves(tchar1, SAVING_FEAR, -5))
+          if (!NewSaves(tchar1, SAVING_FEAR, -5))
           {
             do_flee(tchar1, 0, 1);
           }
         }
-        else if(!NewSaves(tchar1, SAVING_FEAR, (int) (GET_LEVEL(ch) / 10)))
+        else if (!NewSaves(tchar1, SAVING_FEAR, -2))
         {
           do_flee(tchar1, 0, 1);        /* fear, but not panic */
         }
       }
-      
-      if(ch->in_room != tchar1->in_room)
+      if (ch->in_room != tchar1->in_room)
       {
-        if(IS_FIGHTING(tchar1))
+        if (IS_FIGHTING(tchar1))
         {
           stop_fighting(tchar1);
         }
@@ -996,21 +1012,16 @@ bool DragonCombat(P_char ch, int awe)
       return TRUE;
     }
   }
-  
-  if(IS_FIGHTING(ch) &&
-     !IS_PC_PET(ch) &&
-     Mob_Furious(ch, GET_OPPONENT(ch), 5))
-// Furious adds to mob toughness.
-  {
-    return true;
-  }
-  
-// If breath_chance is 4, 20% probability to breath.
-  if(number(0, breath_chance))
-    return FALSE;
 
-  if(bIsPet)
+  if (number(0, breath_chance))
+  {
     return FALSE;
+  }
+
+  if (bIsPet)
+  {
+    return FALSE;
+  }
   
   BreathWeapon(ch, -1);
   return TRUE;
