@@ -224,7 +224,7 @@ M 0 25744 5 25825 100 0 0 0        * an air leprechaun
 M 0 25732 5 25826 100 0 0 0        * a movanic deva
 M 0 25702 3 25832 100 0 0 0        * an aerial servant
 M 0 25714 1 25835 100 0 0 0        * Grindlor, master of the guard
-E 1 25719 1 6 35 0 0 0             *   the helm of the dragonlords
+E 1 25719 1 6 10 0 0 0             *   the helm of the dragonlords
 G 1 25739 1 0 100 0 0 0            *    a blackened iron key
 F 1 25715 2 25835 100 0 0 0        * an adult silver dragon (following)
 F 1 25715 2 25835 100 0 0 0        * an adult silver dragon (following)
