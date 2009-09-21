@@ -1120,7 +1120,8 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch)) && !IS_ANIMAL(ch))
 
 #define CAN_SING(ch) (!IS_IMMOBILE(ch) && \
         !IS_AFFECTED2(ch, AFF2_SILENCED) && \
-        !IS_STUNNED(ch))
+        !IS_STUNNED(ch) && \
+        GET_STAT(ch) >= STAT_RESTING)
 
 #define IS_IMMOBILE(ch) (IS_AFFECTED2(ch, AFF2_MAJOR_PARALYSIS) || \
        IS_AFFECTED2(ch, AFF2_MINOR_PARALYSIS) || \
