@@ -867,6 +867,26 @@ R I 500050
 R I 500050
 G I 500047
 S
+#500121
+M
+qc_action 400~
+&N$n says 'Hammer those nails, spread that sealant, load those cannons!'
+~
+S
+#500124
+M
+qc_action 500~
+&+yA dock worker climbs up on the side of a docked Ketch, hammering &+Cnails&N&+y into a new supporting beam.
+~
+M
+qc_action 500~
+&+yA dock worker douses a huge sealing substance across the hull of ship after ship, adding strength and weather-resistance to the bulky hulls.
+~
+M
+qc_action 500~
+&N&+yA dock worker ties on a large &+Wmast &N&+yatop the previously-damaged hull of a Ketch.
+~
+S
 #500188
 M
 qc_action 70~

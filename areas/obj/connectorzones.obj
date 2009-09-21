@@ -839,3 +839,42 @@ wicked wand shadow stalker~
 3 15 3 0 7 0 1 16385 64 0 0
 53 6 6 417 0 0 0 0
 0 0 100
+#53665
+large tent~
+&+La large &N&+ytent&N~
+&+LA large &N&+ytend &+Lof thick &N&+yhide&L sits beside the docks.~
+~
+25 15 3 0 7 0 0 0 0 0 0
+54240 7 -1 0 0 0 0 0
+0 0 100
+E
+large tent~
+&+yThis large tent is covered with a layer of thick hides - severan skins
+&+ydeep.  The tent is supported by several large &N&+rjodani &+ywood stalks,
+&+yeach opened around an opening at the top from which &+Lsmoke &N&+yemerges.
+~
+#53666
+tent flap~
+&+La tent &N&+yflap~
+&+LA tent &N&+yflap hangs open, &N&+bexposing the fiord dock.~
+~
+25 15 3 0 7 0 0 0 0 0 0
+559633 7 -1 0 0 0 0 0
+0 0 100
+E
+tent flap~
+&+LThis large tent &N&+yflap &+Lopens up to the fiord dock.
+~
+#53667
+bowl seafood bisque~
+&+ya bowl of &N&+rseafood &+cbi&+Bsq&N&+cue&N~
+&+yA bowl of &N&+rseafood &N&+cbisque &N&+yhas been left here.~
+~
+19 48 3 0 7 0 0 0 0 0 0
+35 8 17 0 0 0 0 0
+0 5 100
+E
+bowl seafood bisque~
+&+rThis steaming bowl of soup is filled with large chunks of
+&+rchopped shrimp and huge bits of seasoned &+ycrab &+rmeat.
+~

@@ -14,6 +14,7 @@ O 0 500041 1 531902 100 0 0 0      * an old sign
 O 0 500040 1 531925 100 0 0 0      * a snow-covered sign
 O 0 23616 4 542492 100 0 0 0       * (object type not in this .obj file)
 O 0 500037 1 549305 100 0 0 0      * a *HUGE* sign
+O 0 53665 1 559633 100 0 0 0       * (object type not in this .obj file)
 O 0 500002 1 564065 100 0 0 0      * an old wooden cabin
 O 0 500039 1 568886 100 0 0 0      * a sign
 O 0 500038 1 568893 100 0 0 0      * a large sign
@@ -598,6 +599,13 @@ M 0 500059 8 558093 100 0 0 0      * a highwayman
 M 0 500058 17 558093 100 0 0 0     * an elite highwayman
 M 0 500058 17 559293 100 0 0 0     * an elite highwayman
 M 0 500121 1 559633 100 0 0 0      * Flann, the broad-chested shipmaster
+M 0 500124 3 559633 100 0 0 0      * a dock worker
+M 0 500124 3 559633 100 0 0 0      * a dock worker
+M 0 500124 3 559633 100 0 0 0      * a dock worker
+M 0 500122 2 559633 100 0 0 0      * a human seafarer
+M 0 500122 2 559633 100 0 0 0      * a human seafarer
+M 0 500123 1 559633 100 0 0 0      * a battle-scarred shield dwarf sailor
+M 0 500125 1 559633 100 0 0 0      * a barbarian traveler
 M 0 500225 1 560075 100 0 0 0      * Taa, the human magician
 M 0 500058 17 560493 100 0 0 0     * an elite highwayman
 M 0 500222 1 561318 100 0 0 0      * Nival

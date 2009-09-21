@@ -1784,6 +1784,70 @@ PH 0 64 5
 59 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#500122
+human seafarer~
+&+Ca human seafarer&N~
+&+CA human seafarer stands here&n&+y, awaiting the completion of his latest ship work.
+~
+   &+CThis tall, dwell-dressed seafarer is among the most-prosperous
+&+Cof those to have emerged from these realms.  He eagerly awaits at
+&+Cthe western &N&+ydocks&+C for the completion of his latest repairs and
+&+Cupgrades, contracted by &n&+yFlann&+C.
+~
+2058 0 0 0 0 0 0 600 S
+PH 0 1 -1
+33 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#500123
+battle-scarred shield dwarf sailor~
+&+La battle-scarred &Nsh&+Wie&Nld &+Ydwarf &+Ysailor&N~
+&+LA battle-scarred &Nsh&+Wie&Nld &+Ydwarf sailor &Nawaits a repair on his ship.
+~
+   &+LThis hefty &Nsh&+Wie&Nld &+Ydwarf &+Lis dressed in fine
+&+Lbanded armor, plated with shiny &n&+mmithril&+L slabs.
+&+LHe walks with a strong confidence, maneuvering easily
+&+Lby his massive &N&+ymuscles&+L.  Most likely a former
+&+Lsoldier of the &n&+cAlatorin&+L militia, this &Nsh&+Wie&Nld
+&+Ydwarf&+L pays this realm a visit, awaiting a repair to
+&+Lhis ship.
+~
+2058 0 0 24 0 0 0 600 S
+pm 0 1 -1
+55 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#500124
+dock worker~
+&+ya dock &Nworker&N~
+&+yA dock worker of the fiord ship yard&N works on a ship.
+~
+   &+yThis humanoid dock worker goes about his business, rigorously
+&+yhammering, sawing, and doing amateur welding on various ships.
+&+yHe answers to Flann, working with a strong dedication to his
+&+ycraft, and a stronger devotion to the coin.
+~
+2058 0 0 0 0 0 0 50 S
+h 0 1 -1
+36 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#500125
+barbarian traveler~
+&+Ba barbarian &N&+ytraveler&N~
+&+BA burly barbarian &N&+ytraveler&+B visits the fiord.
+~
+   &+BThis burly barbarian has recently trek'd out to this western
+&+Bcoast from his native village of &N&+yUgta&+B.  He has a large,
+&+Bsloping brow casting a shadow over his stern, wide face.  He wears
+&+Bthe thick &+Wfurred &+Bhides of the beasts personally-slain in
+&+Bhis locality.
+~
+2058 0 0 0 0 0 0 200 S
+pb 0 16384 -1
+41 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
 #500150
 reaver snudk goblin shock_reaver teacher _spec3_~
 &+gSnudk&+L, the &+Ggoblin &+Yshock &+Lreaver&N~

@@ -220,3 +220,28 @@ D
 &+Lwell worth the effort.'
 ~
 S
+#53720
+M
+qc_action 400~
+&N$n stirs his soup around a bid, tossing in various &+rshrimp &Nand &+yhairy crabs&N.
+~
+MA
+hi hello~
+&N$n smirks at $N and exclaims 'No time for chat, must make the soup!'
+~
+MA
+soup~
+&N$n grins toothily at $N and says 'Best soup in the world!  The best part is, you get to do the fishing yourself!'
+$n starts cackling with insane glee.
+~
+MA
+fishing~
+&N$n says 'Aye $N!  Bring me some &N&+rshrimp &Nand &N&+yhairy crabs&N that you find, and I will brew ya some of my famous soup!'
+~
+Q
+~
+R I 53667
+R I 53667
+G I 330
+G I 332
+S

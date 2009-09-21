@@ -1,6 +1,6 @@
 #536
 &+LThe Great &n&+yRealm &+Lof &N&+rDuris&N~
-54239 2 0 40 50 1
+54240 2 0 40 50 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -366,6 +366,7 @@ O 0 53655 1 54217 100 0 0 0        * a large crack
 O 0 53656 1 54218 100 0 0 0        * a large crack
 O 0 53657 1 54218 100 0 0 0        * a spider web
 P 1 54616 1 53657 100 0 0 0        *   (object type not in this .obj file)
+O 0 53666 1 54240 100 0 0 0        * a tent flap
 *
 M 0 53601 4 53601 100 0 0 0        * a tiny spider
 M 0 53600 1 53606 100 0 0 0        * an elite dwarven tunnel guard
@@ -738,5 +739,6 @@ M 0 53717 14 54234 100 0 0 0       * a small colorless worm
 M 0 53717 14 54237 100 0 0 0       * a small colorless worm
 M 0 53717 14 54237 100 0 0 0       * a small colorless worm
 M 0 53717 14 54237 100 0 0 0       * a small colorless worm
+M 0 53720 1 54240 100 0 0 0        * Asus the gnome brewer
 *
 S
