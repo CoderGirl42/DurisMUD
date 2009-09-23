@@ -2551,7 +2551,6 @@ int revenant_helm(P_obj obj, P_char ch, int cmd, char *arg)
   }
   return FALSE;
 }
-
 void event_dragonlord_check(P_char ch, P_char victim, P_obj obj, void *data)
 {
   struct affected_type *af;
@@ -2559,62 +2558,65 @@ void event_dragonlord_check(P_char ch, P_char victim, P_obj obj, void *data)
   int temp, dragonlord_slot = MAX_WEAR;
   bool bHasOtherArti = false;
 
-  if(GET_RACE(ch) != RACE_DRAGONKIN)
-  { 
-    act("Your scales smoke and burn as they &+Rdisintegrate!&n",
-      FALSE, ch, obj, 0, TO_CHAR);
-    wizlog(57,"Dragonlord armor worn by %s begins to melt due race check conflict!", GET_NAME(ch));
-    GET_HIT(ch) >> 1;
-    CharWait(ch, 2 * WAIT_SEC);
-  }
-  else if((af = get_spell_from_char(ch, SPELL_RACE_CHANGE)) == NULL)
+  if(ch)
   {
-    send_to_char
-      ("&+WPossible serious screwup in the dragonlord proc! Tell a coder as once!&n\r\n", ch);
-    wizlog(57, "Char %s found with racechange event but without racechange affect! Dragonlord proc", GET_NAME(ch));
-    return;
-  }
+    if(GET_RACE(ch) != RACE_DRAGONKIN)
+    { 
+      act("Your scales smoke and burn as they &+Rdisintegrate!&n",
+        FALSE, ch, obj, 0, TO_CHAR);
+      wizlog(57,
+      "Dragonlord armor worn by %s begins to melt due race check conflict!", GET_NAME(ch));
+      GET_HIT(ch) >> 1;
+    }
+    else if((af = get_spell_from_char(ch, SPELL_RACE_CHANGE)) == NULL)
+    {
+      send_to_char
+        ("&+WPossible serious screwup in the dragonlord proc! Tell a coder as once!&n\r\n", ch);
+      wizlog(57, "Char %s found with racechange event but without racechange affect! Dragonlord proc", GET_NAME(ch));
+      return;
+    }
 // Same code Necroplasm uses.
-  for (int i = 0; i < MAX_WEAR; i++)
-  {
-    if(ch->equipment[i] == armor)
+    for (int i = 0; i < MAX_WEAR; i++)
     {
-      dragonlord_slot = i;
+      if(ch->equipment[i] == armor)
+      {
+        dragonlord_slot = i;
+      }
+      if(ch->equipment[i] &&
+         IS_SET(ch->equipment[i]->extra_flags, ITEM_ARTIFACT) &&
+	 (ch->equipment[i] != armor))
+      {
+        bHasOtherArti = true;
+      }
     }
-    if(ch->equipment[i] &&
-       IS_SET(ch->equipment[i]->extra_flags, ITEM_ARTIFACT) &&
-       (ch->equipment[i] != armor))
+    
+    if(bHasOtherArti &&
+      (dragonlord_slot != MAX_WEAR) &&
+      ch->equipment[dragonlord_slot])
     {
-      bHasOtherArti = true;
+      act("The &+Wplatemail&n of the &+YDragonLord&n erupts acid and detaches from $n's body!&n", FALSE, ch, obj, 0, TO_ROOM);
+      act("The &+Wplatemail&n of the &+YDragonLord&n erupts acid as it detaches from your body!", FALSE, ch, obj, 0, TO_CHAR);
+      obj_to_char(unequip_char(ch, dragonlord_slot), ch);
     }
-  }
-  
-  if(bHasOtherArti &&
-    (dragonlord_slot != MAX_WEAR) &&
-    ch->equipment[dragonlord_slot])
-  {
-    act("The &+Wplatemail&n of the &+YDragonLord&n erupts acid and detaches from $n's body!&n",
-      FALSE, ch, obj, 0, TO_ROOM);
-    act("The &+Wplatemail&n of the &+YDragonLord&n erupts acid as it detaches from your body!",
-      FALSE, ch, obj, 0, TO_CHAR);
-    obj_to_char(unequip_char(ch, dragonlord_slot), ch);
-  }
-  else if(armor != NULL &&
-          obj_index[armor->R_num].virtual_number == DRAGONLORD_PLATE_VNUM)
-  {
-    add_event(event_dragonlord_check, (int)(0.5 * PULSE_VIOLENCE), ch, 0, 0, 0, 0, 0); 
+    else if(armor != NULL &&
+            obj_index[armor->R_num].virtual_number == 25723)
+    {
+      add_event(event_dragonlord_check, PULSE_VIOLENCE, ch, 0, 0, 0, 0, 0); 
+      return;
+    }
+    
+    ch->player.race = af->modifier;
+    
+    affect_remove(ch, af);
+    
+    GET_AGE(ch) = (int) (racial_data[(int) GET_RACE(ch)].base_age * 2.25);
+    
+    send_to_char
+      ("&+LThe dragon flesh is absorbed and your body returns to normal.&n\r\n", ch);
     return;
   }
-  
-  ch->player.race = af->modifier;
-  
-  affect_remove(ch, af);
-  
-  GET_AGE(ch) = (int) (racial_data[(int) GET_RACE(ch)].base_age * 2.25);
-  
-  send_to_char
-    ("&+LThe dragon flesh is absorbed and your body returns to normal.&n\r\n", ch);
   return;
+
   // int k = 0;
   // P_obj temp_obj;
   // for (k = 0; k < MAX_WEAR; k++)
@@ -2665,30 +2667,29 @@ int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
           obj_to_char(unequip_char(temp_ch, k), temp_ch);
         }
       }
+
+      if(!get_scheduled(temp_ch, event_dragonlord_check))
+      {
+        memset(&af, 0, sizeof(af));
+        af.type = SPELL_RACE_CHANGE;
+        af.flags = AFFTYPE_NOSAVE | AFFTYPE_NODISPEL;
+        af.duration = -1;
+        af.modifier = GET_RACE(temp_ch);
+        affect_to_char(temp_ch, &af);
+        
+        add_event(event_dragonlord_check, PULSE_VIOLENCE, temp_ch, 0, 0, 0, 0, 0);
       
-      send_to_char("Brr, you suddenly feel _almost_ naked.\r\n\n", temp_ch);
+        act("&+RPain &+Llike you have never felt before renders you momentarily dazed as your\n&+Lflesh is ripped apart.  Your &N&+rmuscles &+Lripple and flex as they grow in size and\n&+Lstrength and a new skin of &N&+whardened dragonscales begins to form upon your body.\n&+LYou emerge from the transformation, flex your mighty new wings and &+Rroar &+Lloudly!&n\r\n",
+            FALSE, temp_ch, obj, 0, TO_CHAR);
+        act("&+L$n shudders and drops to $s knees as the awesome transformation takes hold.\n&+L$n&+L's body grows more muscular, while thick scales replace the shedded skin\n&+Land two &+Rgreat wings &+Lsprout from $s back. $n's face twists and is replaced by the\n&+Lvisage of a dragon, jaws filled with razor sharp teeth as $e roars loudly!&n\r\n",
+            FALSE, temp_ch, obj, 0, TO_ROOM);
 
-      CharWait(temp_ch, 5 * WAIT_SEC);
+        temp_ch->player.race = RACE_DRAGONKIN;
 
-      memset(&af, 0, sizeof(af));
-      af.type = SPELL_RACE_CHANGE;
-      af.flags = AFFTYPE_NOSAVE | AFFTYPE_NODISPEL;
-      af.duration = -1;
-      af.modifier = GET_RACE(temp_ch);
-      affect_to_char(temp_ch, &af);
+        GET_AGE(temp_ch) += racial_data[RACE_DRAGONKIN].base_age * 2;
       
-      add_event(event_dragonlord_check, (int)(0.5 * PULSE_VIOLENCE), temp_ch, 0, 0, 0, 0, 0);
-    
-      act("&+RPain &+Llike you have never felt before renders you momentarily dazed as your\n&+Lflesh is ripped apart.  Your &N&+rmuscles &+Lripple and flex as they grow in size and\n&+Lstrength and a new skin of &N&+whardened dragonscales begins to form upon your body.\n&+LYou emerge from the transformation, flex your mighty new wings and &+Rroar &+Lloudly!&n\r\n",
-          FALSE, temp_ch, obj, 0, TO_CHAR);
-      act("&+L$n shudders and drops to $s knees as the awesome transformation takes hold.\n&+L$n&+L's body grows more muscular, while thick scales replace the shedded skin\n&+Land two &+Rgreat wings &+Lsprout from $s back. $n's face twists and is replaced by the\n&+Lvisage of a dragon, jaws filled with razor sharp teeth as $e roars loudly!&n\r\n",
-          FALSE, temp_ch, obj, 0, TO_ROOM);
-
-      temp_ch->player.race = RACE_DRAGONKIN;
-
-      GET_AGE(temp_ch) += racial_data[RACE_DRAGONKIN].base_age * 2;
-    
-      return TRUE;
+        return TRUE;
+      }
     }
   }
   return FALSE;
