@@ -110,11 +110,11 @@ void spell_faerie_sight(int level, P_char ch, char *arg, int type,
                         P_char victim, P_obj tar_obj)
 {
   struct affected_type af;
-  int count;	
+  int count;    
   P_obj    t_obj, next_obj;
   P_obj    used_obj[32];
   
-	memset(&af, 0, sizeof(af));
+        memset(&af, 0, sizeof(af));
 
   if (!(victim && ch))
   {
@@ -151,7 +151,7 @@ void spell_faerie_sight(int level, P_char ch, char *arg, int type,
       count++;
     }
   }
-	
+        
   if (GET_LEVEL(ch) >= 50 || count > 0)
   {
     af.bitvector2 = AFF2_DETECT_MAGIC;
@@ -163,9 +163,9 @@ void spell_faerie_sight(int level, P_char ch, char *arg, int type,
     af.bitvector2 = AFF2_DETECT_EVIL;
     affect_to_char(victim, &af);
     
-		if (count >  0) {
-	  	extract_obj(used_obj[0], TRUE);
-		}
+                if (count >  0) {
+                extract_obj(used_obj[0], TRUE);
+                }
   }
 
   send_to_char("&+mYour eyes begin to twinkle.&n\r\n", ch);
@@ -272,15 +272,15 @@ void spell_mass_fly(int level, P_char ch, char *arg, int type, P_char victim,
 
 void wind_blade_attack_routine(P_char ch, P_char victim)
 {
-	int attacks = BOUNDED(2, number(1, GET_LEVEL(ch)/10), 4);
-	
-	P_obj obj = ch->equipment[PRIMARY_WEAPON];
-	
-	if (!obj)
-	{
-		wizlog(MINLVLIMMORTAL, "Screw up in wind blade attack routine for %s", GET_NAME(ch));
-		return;
-	}
+        int attacks = BOUNDED(2, number(1, GET_LEVEL(ch)/10), 4);
+        
+        P_obj obj = ch->equipment[PRIMARY_WEAPON];
+        
+        if (!obj)
+        {
+                wizlog(MINLVLIMMORTAL, "Screw up in wind blade attack routine for %s", GET_NAME(ch));
+                return;
+        }
 
   act("&+CWinds gather in the area to guide your weapon against $N!", TRUE, ch, 0, victim, TO_CHAR);
   act("&+cWinds gather around $n &n&+cto guide $s &n&+cweapon in combat!", TRUE, ch, 0, victim, TO_ROOM);
@@ -298,12 +298,12 @@ void wind_blade_attack_routine(P_char ch, P_char victim)
 
   affect_total(ch, FALSE);
 
-	for (;attacks;attacks--)
-	{
-		if (IS_ALIVE(victim) && IS_ALIVE(ch))
-		{
-		  hit(ch, victim, obj);
-		}
+        for (;attacks;attacks--)
+        {
+                if (IS_ALIVE(victim) && IS_ALIVE(ch))
+                {
+                  hit(ch, victim, obj);
+                }
   }
 
   if (IS_ALIVE(ch) && affected_by_spell(ch, SPELL_WIND_BLADE))
@@ -312,17 +312,17 @@ void wind_blade_attack_routine(P_char ch, P_char victim)
 
 bool has_wind_blade_wielded(P_char ch)
 {
-	P_obj obj = ch->equipment[PRIMARY_WEAPON];
-	
-	int blade_vnum = WIND_BLADE;
-	
-	if (!obj)
-	  return FALSE;
-	
-	if (obj->R_num == real_object(blade_vnum))
-	  return TRUE;
-	else
-	  return FALSE;
+        P_obj obj = ch->equipment[PRIMARY_WEAPON];
+        
+        int blade_vnum = WIND_BLADE;
+        
+        if (!obj)
+          return FALSE;
+        
+        if (obj->R_num == real_object(blade_vnum))
+          return TRUE;
+        else
+          return FALSE;
 }
 
 bool has_wind_blade(P_char ch)
@@ -364,9 +364,9 @@ void grant_wind_blade(P_char ch)
   /* how about some gay de procs for wind blade? Yeah baby! */
   if (GET_LEVEL(ch) >= 21)
       {
-	  blade->value[5] = 191;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs ice missile
+          blade->value[5] = 191;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs ice missile
       }
   if (GET_LEVEL(ch) >= 26)
       {
@@ -378,21 +378,21 @@ void grant_wind_blade(P_char ch)
       }
   if (GET_LEVEL(ch) >= 36)
       {
-	  blade->value[5] = 10;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs cone of cold
+          blade->value[5] = 10;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs cone of cold
       }
   if (GET_LEVEL(ch) >= 41)
       {
       blade->value[5] = 325;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs frostbite
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs frostbite
       }
   if (GET_LEVEL(ch) >= 51)
       {
-	  blade->value[5] = 254;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs iceball
+          blade->value[5] = 254;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs iceball
       }
   if (GET_LEVEL(ch) >= 56)
       {
@@ -419,29 +419,29 @@ void spell_wind_blade(int level, P_char ch, char *arg, int type, P_char
     grant_wind_blade(ch);
   else
   {
-  	if (!IS_FIGHTING(ch))
-  	  send_to_char("&+cThe winds are already aiding you!\r\n", ch);
-  	if (!has_wind_blade_wielded(ch) && !ch->equipment[PRIMARY_WEAPON])
-  	{
-  	  for (obj = ch->carrying; obj; obj = next_obj) {
+        if (!IS_FIGHTING(ch))
+          send_to_char("&+cThe winds are already aiding you!\r\n", ch);
+        if (!has_wind_blade_wielded(ch) && !ch->equipment[PRIMARY_WEAPON])
+        {
+          for (obj = ch->carrying; obj; obj = next_obj) {
         next_obj = obj->next_content;
         if (obj_index[obj->R_num].virtual_number == WIND_BLADE)
         {
          wear(ch, obj, 12, TRUE);
         }
       }
-  	}
+        }
   }
 
   if (IS_FIGHTING(ch))
     if (has_wind_blade_wielded(ch))
     {
-    	if (P_char vict = ch->specials.fighting)
+        if (P_char vict = ch->specials.fighting)
         wind_blade_attack_routine(ch, vict);
     }
     else
     {
-    	send_to_char("You need to wield the gift of the air if you want to receive even greater aid!\r\n", ch);
+        send_to_char("You need to wield the gift of the air if you want to receive even greater aid!\r\n", ch);
     }
     
 }
@@ -627,7 +627,7 @@ void spell_forked_lightning(int level, P_char ch, char *arg, int type,
   };
 
   if (GET_LEVEL(ch) >= 53)
-	  num_missiles ++;
+          num_missiles ++;
   dam = 5 * MIN(level, 56) + number(1, 25);
 
   if (saves_spell(victim, SAVING_SPELL))
@@ -829,13 +829,13 @@ void spell_conjure_air(int level, P_char ch, char *arg, int type,
   lvl = number(mlvl, mlvl * 3);
 
   if (GET_SPEC(ch, CLASS_ETHERMANCER, SPEC_WINDTALKER))
-	  mob->player.level = BOUNDED(10, level, 51);
+          mob->player.level = BOUNDED(10, level, 51);
   else
       mob->player.level = BOUNDED(10, lvl, 45);
 
   if (GET_SPEC(ch, CLASS_ETHERMANCER, SPEC_WINDTALKER))
   {
-	GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
+        GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
     dice(GET_LEVEL(mob) / 2, 40) + GET_LEVEL(mob) + charisma;
   }
   else
@@ -988,8 +988,8 @@ void spell_arcane_whirlwind(int level, P_char ch, char *arg, int type,
 
   if (IS_TRUSTED(victim))
   {
-  	send_to_char("&+ROh no you don't!\r\n", ch);
-  	return;
+        send_to_char("&+ROh no you don't!\r\n", ch);
+        return;
   }
 
   if (victim->affected)
@@ -1377,7 +1377,8 @@ void spell_tempest(int level, P_char ch, char *arg, int type, P_char victim,
       act("&+wYou have difficulty summoning the squall.&n",
         FALSE, ch, 0, victim, TO_CHAR);
 
-  zone_spellmessage(ch->in_room,"&+wYou feel a bitterly &+Ccold&+w wisp of air.\r\n");
+  zone_spellmessage(ch->in_room,"&+wYou feel a bitterly &+Ccold&+w wisp of air.\r\n",
+                                "&+wYou feel a bitterly &+Ccold&+w wisp of air from the %s.\r\n");
 
   CharWait(ch, (int) (PULSE_SPELLCAST * 1));
 }
@@ -1595,7 +1596,7 @@ void spell_single_supernova(int level, P_char ch, char *arg, int type, P_char vi
     af.duration = level / 3 * WAIT_SEC;
   }
   else 
-  {	
+  {     
     af.duration = level / 10;
   }
 
@@ -1624,7 +1625,8 @@ void spell_supernova(int level, P_char ch, char *arg, int type, P_char victim, P
   act("&+LThrough your &+Yco&+Wsm&+Yic &+Lmanipulations you channel the powers of a distant &+Ynova &+Lright onto the battlefield!", FALSE, ch, 0, 0, TO_CHAR);
   act("$n &+Lchannels the powers of a distant &+Ynova &+Lright onto the battlefield!", FALSE, ch, 0, 0, TO_ROOM);
   
-  zone_spellmessage(ch->in_room, "&n&+cThe He&+Wav&n&+cens themselves &-L&+Yflash&n&+c as a &+YSupernova&n&+c is unleashed nearby!&n\r\n");
+  zone_spellmessage(ch->in_room, "&n&+cThe He&+Wav&n&+cens themselves &-L&+Yflash&n&+c as a &+YSupernova&n&+c is unleashed nearby!&n\r\n",
+                                 "&n&+cThe He&+Wav&n&+cens to the %s &-L&+Yflash&n&+c as a &+YSupernova&n&+c is unleashed nearby!&n\r\n" );
   cast_as_damage_area(ch, spell_single_supernova, level, victim, get_property("spell.area.minChance.supernova", 50), get_property("spell.area.chanceStep.supernova", 10));
   
   if (!is_char_in_room(ch, room)) 
@@ -1966,7 +1968,8 @@ void spell_polar_vortex(int level, P_char ch, char *arg, int type, P_char victim
     }
   }
   zone_spellmessage(ch->in_room,
-    "&+CA blast of &+cfreezing &+Cair swirls violently through the area.\r\n");
+    "&+CA blast of &+cfreezing &+Cair swirls violently through the area.\r\n",
+    "&+CA blast of &+cfreezing &+Cair from the %s swirls violently through the area.\r\n");
 }
 
 void spell_ethereal_travel(int level, P_char ch, char *arg, int type,
@@ -2126,7 +2129,8 @@ void spell_cosmic_rift(int level, P_char ch, char *arg, int type, P_char victim,
     spell_damage(ch, t, dam, SPLDAM_GENERIC, 0, &messages);
   }
   zone_spellmessage(ch->in_room,
-                     "&+LThe air visibly ripples and distorts.\r\n");
+                     "&+LThe air visibly ripples and distorts.\r\n",
+                     "&+LThe air to the %s visibly ripples and distorts.\r\n");
 }
 
 struct static_discharge_data

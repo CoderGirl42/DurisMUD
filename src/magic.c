@@ -403,10 +403,6 @@ void spell_prismatic_ray(int level, P_char ch, char *arg, int type,
     if(GET_STAT(victim) == STAT_DEAD)
       break;
   }
-  
-  if(i > 1)
-  zone_spellmessage(room,
-    "&+CC&+co&+Cl&+co&+Cr&+cf&+Cu&+cl&N &+Crays of &+Wlight &+Cstreak throughout the sky!&n");
 }
 
 void spell_color_spray(int level, P_char ch, char *arg, int type,
@@ -460,6 +456,10 @@ void spell_prismatic_spray(int level, P_char ch, char *arg, int type,
       }
     }
   }
+
+  zone_spellmessage(room,
+    "&+CC&+co&+Cl&+co&+Cr&+cf&+Cu&+cl&N &+Crays of &+Wlight &+Cstreak throughout the sky!&n",
+    "&+CC&+co&+Cl&+co&+Cr&+cf&+Cu&+cl&N &+Crays of &+Wlight &+Cstreak throughout the sky to the %s!&n");
 }
 
 
@@ -739,7 +739,7 @@ void spell_cone_of_cold(int level, P_char ch, char *arg, int type,
       {
         act("&+BThe chilling cold causes $N&+B to stammer, apparently weakened and slowed.&n", FALSE, ch, 0, victim, TO_CHAR);
         act("&+BThe cold goes right to the bone, you feel yourself weakening and slowing down!&n", FALSE, ch, 0, victim, TO_VICT);
-        act("&+B$N &+Bsags, apparently weakened and slowed from the frigid cold!&n", FALSE, ch, 0, victim, TO_NOTVICT);    		
+        act("&+B$N &+Bsags, apparently weakened and slowed from the frigid cold!&n", FALSE, ch, 0, victim, TO_NOTVICT);                 
         duration += 2;
         modifier -= number(5, 10);
         af.bitvector2 = AFF2_SLOW;
@@ -1354,7 +1354,7 @@ void spell_mirror_image(int level, P_char ch, char *arg, int type,
   if(!numb) numb = 1;
 
   for (i = 0; i < numb; i++) {
-	  if(!(image = make_mirror(ch))) {
+          if(!(image = make_mirror(ch))) {
       send_to_char("your mirror ain't imaging tonight bubba.  let a god know.\n", ch);
       return;
     }
@@ -1433,7 +1433,7 @@ P_char make_mirror (P_char ch) {
   GET_ALIGNMENT(image) = GET_ALIGNMENT(ch);
   GET_SIZE(image) = GET_SIZE(ch);
 
-	return image;
+        return image;
 }
 
 bool can_conjure_lesser_elem(P_char ch, int level)
@@ -1529,10 +1529,10 @@ int can_call_woodland_beings(P_char ch, int level)
 }
 
 void spell_call_woodland_beings(int level, P_char ch, char *arg, int type,
-					                              P_char victim, P_obj obj)
+                                                                      P_char victim, P_obj obj)
 {
-  P_char 	mob;
-  int 	sum, mlvl, lvl;
+  P_char        mob;
+  int   sum, mlvl, lvl;
 
   static struct
   {
@@ -1695,7 +1695,7 @@ void spell_elemental_swarm(int level, P_char ch, char *arg, int type,
     {
       duration = number(5,30) * WAIT_SEC;
       add_event(event_elemental_swarm_death, duration, mob, NULL, NULL, 0, NULL, 0);
-	}
+        }
   }
 
   if(victim)
@@ -2333,7 +2333,7 @@ void spell_conjour_greater_elemental(int level, P_char ch, char *arg,
     GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
       700 + number(0,50) + (life * 3) + charisma;
   else
-	  //big bonus for highest level pet, since it's rare
+          //big bonus for highest level pet, since it's rare
     GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
       800 + number(0,50) + (life * 3) + charisma;
 
@@ -2857,7 +2857,8 @@ void spell_chain_lightning(int level, P_char ch, char *arg, int type,
   act("A writhing &=LBbolt of lightning&n leaves $n's hands...", FALSE, ch, 0,
       0, TO_ROOM);
   zone_spellmessage(room,
-                       "&=LBThe sky lights up with brilliant lightning flashes!\n");
+                       "&=LBThe sky lights up with brilliant lightning flashes!\n",
+                       "&=LBThe sky to the %s lights up with brilliant lightning flashes!\n");
 
   hit = cast_as_damage_area(ch, spell_single_chain_lightning, level, victim,
                             get_property
@@ -2928,7 +2929,7 @@ void spell_cyclone(int level, P_char ch, char *arg, int type, P_char victim,
     return;
   }
 
-	dam = dice(level, 12);
+        dam = dice(level, 12);
 
 /*  play_sound(SOUND_WIND3, NULL, ch->in_room, TO_ROOM); */
 
@@ -2937,13 +2938,13 @@ void spell_cyclone(int level, P_char ch, char *arg, int type, P_char victim,
   if(IS_AFFECTED(victim, AFF_FLY) &&
     !NewSaves(victim, SAVING_PARA, svchance) &&
     GET_LEVEL(victim) < (GET_LEVEL(ch) + 10) &&
-		!IS_ELITE(victim))
+                !IS_ELITE(victim))
   {
     //door = number(0, NUMB_EXITS - 1);
     
-		affchance = number(1, 100);
+                affchance = number(1, 100);
     
-		if(affchance <= 50)         /* && (!check_wall(tch->in_room, door)) */
+                if(affchance <= 50)         /* && (!check_wall(tch->in_room, door)) */
     {
       act("The gail force of your spell sends $N crashing to the ground!",
           FALSE, ch, 0, victim, TO_CHAR);
@@ -2976,7 +2977,7 @@ void spell_cyclone(int level, P_char ch, char *arg, int type, P_char victim,
   }
 
   if(!StatSave(victim, APPLY_AGI, (GET_LEVEL(victim) - GET_LEVEL(ch)) / 5) &&
-	   !IS_ELITE(victim))
+           !IS_ELITE(victim))
   {
     spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages);
   }
@@ -3049,7 +3050,8 @@ void spell_meteorswarm(int level, P_char ch, char *arg, int type,
   }
 
   zone_spellmessage(ch->in_room,
-                       "&+rThe sky is full of &+Rflaming meteors!\r\n");
+                       "&+rThe sky is full of &+Rflaming meteors!\r\n",
+                       "&+rThe sky to %s is full of &+Rflaming meteors!\r\n");
   cast_as_damage_area(ch, spell_single_meteorswarm, level, victim,
                       get_property("spell.area.minChance.meteorswarm", 50),
                       get_property("spell.area.chanceStep.meteorswarm", 20));
@@ -3323,7 +3325,9 @@ void spell_earthquake(int level, P_char ch, char *arg, int type,
     }
     if(IS_ALIVE(ch))
     {
-      zone_spellmessage(ch->in_room, "&+yThe ea&+Lrt&+yh tr&+Lemb&+yle&+Ls an&+yd sh&+Liv&+yers!\n");
+      zone_spellmessage(ch->in_room,
+        "&+yThe ea&+Lrt&+yh tr&+Lemb&+yle&+Ls an&+yd sh&+Liv&+yers!\n",
+        "&+yThe ea&+Lrt&+yh tr&+Lemb&+yle&+Ls an&+yd sh&+Liv&+yers &+Lto the %s!\n");
     }
   }
 //  play_sound(SOUND_EARTHQUAKE2, NULL, ch->in_room, TO_ROOM);
@@ -3361,7 +3365,9 @@ void spell_firestorm(int level, P_char ch, char *arg, int type, P_char victim,
                ch);
   act("$n creates a &+Rraging&n &+rfirestorm&n!", FALSE, ch, 0, 0,
       TO_VICTROOM);
-  zone_spellmessage(ch->in_room, "&+YYou feel a blast of &+Rheat!\n");
+  zone_spellmessage(ch->in_room,
+                    "&+YYou feel a blast of &+Rheat!\n",
+                    "&+YYou feel a blast of &+Rheat &+Yfrom the %s!\n");
   cast_as_damage_area(ch, spell_single_firestorm, level, victim,
                       get_property("spell.area.minChance.firestorm", 90),
                       get_property("spell.area.chanceStep.firestorm", 10));
@@ -3526,12 +3532,14 @@ void event_call_lightning(P_char ch, P_char vict, P_obj obj, void *data)
     if(number(0, 1))
     {
       zone_spellmessage(ch->in_room,
-        "&+wThe air is filled with &+c&+Ce&+cl&+Ce&+cc&+Ct&+cr&+Ci&+cc &+Cs&+ct&+Ca&+ct&+Ci&+cc.\n");
+        "&+wThe air is filled with &+c&+Ce&+cl&+Ce&+cc&+Ct&+cr&+Ci&+cc &+Cs&+ct&+Ca&+ct&+Ci&+cc.\n",
+        "&+wThe air to the %s is filled with &+c&+Ce&+cl&+Ce&+cc&+Ct&+cr&+Ci&+cc &+Cs&+ct&+Ca&+ct&+Ci&+cc.\n");
     }
     else
     {
       zone_spellmessage(ch->in_room,
-       "&+WA clap of &+Lthunder&n &+Wbellows off in the distance.\n");
+       "&+WA clap of &+Lthunder&n &+Wbellows off in the distance.\n",
+       "&+WA clap of &+Lthunder&n &+Wbellows off to the %s.\n");
     }
     
     add_event(event_call_lightning, (int) ( PULSE_VIOLENCE / 2),
@@ -3554,7 +3562,8 @@ void spell_call_lightning(int level, P_char ch, P_char victim, P_obj obj)
   }
 
   zone_spellmessage(ch->in_room,
-    "&+LA storm is brewing nearby...\n");
+    "&+LA storm is brewing nearby...\n",
+    "&+LA storm is brewing to the %s...\n");
   
   send_to_room("&+LDark and ominous clouds aggregate overhead.\n",
                ch->in_room);
@@ -3697,7 +3706,8 @@ void event_nova(P_char ch, P_char victim, P_obj obj, void *data)
      FALSE, ch, 0, 0, TO_ROOM);
      
   zone_spellmessage(ch->in_room,
-    "&+YT&+yh&+Yi&+yn &+Yr&+ya&+Yy&+ys of &+Yli&+ygh&+Yt &+rex&+Rplo&+rde &+ythroughout the &+Warea!\n");
+    "&+YT&+yh&+Yi&+yn &+Yr&+ya&+Yy&+ys of &+Yli&+ygh&+Yt &+rex&+Rplo&+rde &+ythroughout the &+Warea!\n",
+    "&+YT&+yh&+Yi&+yn &+Yr&+ya&+Yy&+ys of &+Yli&+ygh&+Yt &+rex&+Rplo&+rde &+ythroughout the &+Warea to the %s!\n");
      
   cast_as_damage_area(ch, spell_sunray,
       IS_NPC(ch) ? GET_LEVEL(ch)
@@ -3735,13 +3745,13 @@ void spell_harmonic_resonance(int level, P_char ch, char *arg, int type,
       if(should_area_hit(ch, victim))
         spell_cdoom(level, ch, 0, SPELL_TYPE_SPELL, victim, NULL);
     }
-	break;
+        break;
   case SECT_FIELD:
     cast_call_lightning(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
     break;
   case SECT_HILLS:
-	spell_earthquake(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
-	break;
+        spell_earthquake(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
+        break;
   case SECT_MOUNTAIN:
   case SECT_EARTH_PLANE:
     spell_earthen_rain(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
@@ -3757,11 +3767,11 @@ void spell_harmonic_resonance(int level, P_char ch, char *arg, int type,
   case SECT_WATER_SWIM:
   case SECT_WATER_NOSWIM:
   case SECT_WATER_PLANE:
-	spell_miracle(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
-	break;
+        spell_miracle(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
+        break;
   case SECT_DESERT:
-	spell_firestorm(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
-	break;
+        spell_firestorm(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
+        break;
   case SECT_UNDERWATER:
     spell_tranquility(level, ch, 0, SPELL_TYPE_SPELL, 0, NULL);
     break;
@@ -4790,8 +4800,8 @@ void spell_aid(int level, P_char ch, char *arg, int type, P_char victim,
     {
       if(poison_common_remove(victim))
       {
-      	act("&+WYou neutralize the poison!", FALSE, ch, 0, 0, TO_CHAR);
-      	act("&+WThe poison in your bloodstream disappears!", FALSE, 0, 0, victim, TO_VICT);
+        act("&+WYou neutralize the poison!", FALSE, ch, 0, 0, TO_CHAR);
+        act("&+WThe poison in your bloodstream disappears!", FALSE, 0, 0, victim, TO_VICT);
       }
     } 
     if(GET_LEVEL(ch) > 16)
@@ -4988,9 +4998,9 @@ void spell_flame_blade(int level, P_char ch, char *arg, int type,
   /* how about some gay de procs for flame blade? Yeah baby! */
   if(GET_LEVEL(ch) >= 21)
       {
-	  blade->value[5] = 195;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs flameburst
+          blade->value[5] = 195;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs flameburst
       }
   if(GET_LEVEL(ch) >= 26)
       {
@@ -5002,21 +5012,21 @@ void spell_flame_blade(int level, P_char ch, char *arg, int type,
       }
   if(GET_LEVEL(ch) >= 36)
       {
-	  blade->value[5] = 26;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs fireball
+          blade->value[5] = 26;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs fireball
       }
   if(GET_LEVEL(ch) >= 41)
       {
       blade->value[5] = 21;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs flamestrike
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs flamestrike
       }
   if(GET_LEVEL(ch) >= 51)
       {
-	  blade->value[5] = 124;
-	  blade->value[6] = GET_LEVEL(ch);
-	  blade->value[7] = 40; //procs sunray
+          blade->value[5] = 124;
+          blade->value[6] = GET_LEVEL(ch);
+          blade->value[7] = 40; //procs sunray
       }
   if(GET_LEVEL(ch) >= 56)
       {
@@ -5265,7 +5275,7 @@ void spell_consecrate_land(int level, P_char ch, char *arg, int type,
 }
 
 void spell_summon_insects(int level, P_char ch, char *arg, int type,
-				                 P_char victim, P_obj obj)
+                                                 P_char victim, P_obj obj)
 {
 
     P_obj    t_obj, next_obj;
@@ -5323,7 +5333,7 @@ void spell_binding_wind(int level, P_char ch, char *arg, int type,
 
   if(!OUTSIDE(ch))
   {
-  	send_to_char("&+CYou cannot manipulate winds where there are none! Next time try it outside.\n", ch);
+        send_to_char("&+CYou cannot manipulate winds where there are none! Next time try it outside.\n", ch);
     return;
   }
 
@@ -6223,7 +6233,7 @@ void spell_water_to_life(int level, P_char ch, char *arg, int type,
         }
       }
 
-	 if(obj == NULL)
+         if(obj == NULL)
      {
        send_to_char("There is not enough water around!\n", ch);
        return;
@@ -8964,15 +8974,15 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
     /* based on intelligence and level of caster, inaccuracies will pop up */
 
     if( level < 60 )
-	 	{
-    	inacc = (110 - GET_C_INT(ch)) + (number(0, 40) - level) + number(0, 3);
-    	if(inacc < 0)
-      	inacc = 0;
-    	if(inacc > 20)
-      	inacc = 20;
-		} else {
-			inacc = 0;
-		}
+                {
+        inacc = (110 - GET_C_INT(ch)) + (number(0, 40) - level) + number(0, 3);
+        if(inacc < 0)
+        inacc = 0;
+        if(inacc > 20)
+        inacc = 20;
+                } else {
+                        inacc = 0;
+                }
 
     if(level < 60 && IS_SET(obj->extra_flags, ITEM_NOIDENTIFY))
     {
@@ -9213,12 +9223,12 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
           "and it's range is &+W%d&n\n", obj->value[0], obj->value[1]);
       send_to_char(Gbuf1, ch);
       break;
-	case ITEM_MISSILE:
+        case ITEM_MISSILE:
       sprintf(Gbuf1,
               "You magically sense that the damage dice for this type of arrow are '%dD%d'\n",
               obj->value[1], obj->value[2]);
       send_to_char(Gbuf1, ch);
-	  break;
+          break;
     case ITEM_WEAPON:
       sprintf(Gbuf1,
               "You magically sense that the damage dice for this weapon are '%dD%d'\n",
@@ -11485,7 +11495,7 @@ void spell_turn_undead(int level, P_char ch, char *arg, int type, P_char tch,
         act("As a powerful force emanating from the symbol drains the magic "
             "animating you, your body starts falling apart!",
             FALSE, victim, 0, 0, TO_CHAR);
-	die(victim, ch);
+        die(victim, ch);
       }
       else
       {
@@ -11618,8 +11628,8 @@ void spell_negative_energy_barrier(int level, P_char ch, char *arg, int type,
 
   if(IS_AFFECTED2(victim, AFF2_SOULSHIELD))
   {
-	send_to_char("&+LUsing this in conjuction with the putrid &+Wholy&+L energy is absurd.&n\n", ch);
-	return;
+        send_to_char("&+LUsing this in conjuction with the putrid &+Wholy&+L energy is absurd.&n\n", ch);
+        return;
   }
 
   if(!IS_AFFECTED4(victim, AFF4_NEG_SHIELD))
@@ -11740,7 +11750,9 @@ void spell_incendiary_cloud(int level, P_char ch, char *arg, int type,
         FALSE, ch, 0, 0, TO_ROOM);
   }
 
-  zone_spellmessage(ch->in_room, "&+yOff in the distance there is a &+Ythundering &+Rroar &+yand &+wbillowing &+Lsmoke.\n");
+  zone_spellmessage(ch->in_room,
+    "&+yOff in the distance there is a &+Ythundering &+Rroar &+yand &+wbillowing &+Lsmoke.\n",
+    "&+yOff in the distance to the %s there is a &+Ythundering &+Rroar &+yand &+wbillowing &+Lsmoke.\n");
  
   cast_as_damage_area(ch, spell_single_incendiary_cloud, level, victim,
                       get_property("spell.area.minChance.incendiaryCloud",
@@ -12300,8 +12312,8 @@ void spell_pword_kill(int level, P_char ch, char *arg, int type,
   int      dam;
   struct damage_messages messages = {
     "$N's life force is drained slightly by the power of your word.",
-	"$n's word of power causes you to sag, and you feel your vitality draining away!",
-	"$N seems to sag slightly, as $n viciously attacks $S life force.",
+        "$n's word of power causes you to sag, and you feel your vitality draining away!",
+        "$N seems to sag slightly, as $n viciously attacks $S life force.",
     "$N dies instantly from the power of your word.",
     "You hear a word of power, and die instantly.",
     "$N hears $n's word of power, and nothing more."
@@ -12436,7 +12448,8 @@ void spell_summon_ghasts(int level, P_char ch, char *arg, int type, P_char victi
   send_to_room("&+LDeathly incorporeal ghasts enter the realm of the living...\n",
      ch->in_room);
   zone_spellmessage(ch->in_room,
-    "&+LThe air &+cchills &+Land the odor of &+rdeath &+Land &+ydecay &+Lassault your senses.\n");
+    "&+LThe air &+cchills &+Land the odor of &+rdeath &+Land &+ydecay &+Lassault your senses.\n",
+    "&+LThe air to the %s &+cchills &+Land the odor of &+rdeath &+Land &+ydecay &+Lassault your senses.\n");
 
   add_event(event_summon_ghasts, PULSE_VIOLENCE * 1, ch, 0, 0, 0, &room, sizeof(room));
 
@@ -13679,17 +13692,17 @@ void spell_resurrect(int level, P_char ch, char *arg, int type, P_char victim,
     if(!IS_TRUSTED(ch)) 
     { 
       if(EVIL_RACE(t_ch) && 
-	      GET_LEVEL(t_ch) >= 52)
+              GET_LEVEL(t_ch) >= 52)
       {
-	      resu_exp =
+              resu_exp =
           (long)(resu_exp * (get_property("gain.exp.mod.res.evil.52", 0.300)));
       }
       else if(EVIL_RACE(t_ch))
       {
-	      resu_exp =
+              resu_exp =
           (long)(resu_exp * (get_property("gain.exp.mod.res.evil", 0.500)));
       }          
-	    else
+            else
       {
         resu_exp =
           (long)(resu_exp * get_property("gain.exp.mod.res.normal", 0.600)); 
@@ -14920,14 +14933,14 @@ void spell_true_seeing(int level, P_char ch, char *arg, int type,
 
 void spell_tree(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-		if(world[ch->in_room].sector_type != SECT_FOREST) {
-		 	send_to_char("&+GTrees&+g don't grow here!&n\n", ch);
-			return;
-		}
+                if(world[ch->in_room].sector_type != SECT_FOREST) {
+                        send_to_char("&+GTrees&+g don't grow here!&n\n", ch);
+                        return;
+                }
 
-		// DALRETH - 3/05
+                // DALRETH - 3/05
 
-		if(ch->specials.z_cord > 0)
+                if(ch->specials.z_cord > 0)
     {
       send_to_char("There isn't enough forest up here.\r\n", ch);
       return;
@@ -14959,16 +14972,16 @@ void spell_tree(int level, P_char ch, char *arg, int type, P_char victim, P_obj 
     CharWait(ch, PULSE_VIOLENCE * 3);
 
     /*  destroy your tracks! */
-	P_obj tobj, next_tobj=0;
-		for (tobj = world[ch->in_room].contents; tobj; tobj = next_tobj)
-		{
-			next_tobj = tobj->next_content;
-			if(tobj->R_num == real_object(1276))
-			{
-				extract_obj(tobj, TRUE);
-				tobj = NULL;
-			}
-		}
+        P_obj tobj, next_tobj=0;
+                for (tobj = world[ch->in_room].contents; tobj; tobj = next_tobj)
+                {
+                        next_tobj = tobj->next_content;
+                        if(tobj->R_num == real_object(1276))
+                        {
+                                extract_obj(tobj, TRUE);
+                                tobj = NULL;
+                        }
+                }
     send_to_char("&+wYou blend silently into the &+gforest.&n\r\n", ch);
     SET_BIT(ch->specials.affected_by, AFF_HIDE);
 
@@ -15462,7 +15475,7 @@ void spell_oldjudgement(int level, P_char ch, P_char victim, P_obj obj)
       {
         if((lev = GET_LEVEL(t)) < (level - 25))
         {                       /* < 26 death */
-	  die(t, ch);
+          die(t, ch);
           continue;
         }
         else if(!resists_spell(ch, t))
@@ -16453,7 +16466,7 @@ void spell_vampire(int level, P_char ch, char *arg, int type, P_char vict,
       stop_follower(tch);
       setup_pet(tch, ch, 2, PET_NOORDER);
      //force pets to die after 30 minutes when trance is cast, to remove the pet links
-	add_event(event_pet_death, 1800, tch, NULL, NULL, 0, NULL, 0);
+        add_event(event_pet_death, 1800, tch, NULL, NULL, 0, NULL, 0);
     }
    }
   }
@@ -16594,7 +16607,9 @@ void event_apocalypse(P_char ch, P_char victim, P_obj obj, void *data)
     send_to_room("&+LA distant &+wroar &+Lcan be heard from the skies...\n\n",
                  ch->in_room);
                  
-    zone_spellmessage(ch->in_room,"&+LA distant &+wroar &+Lcan be heard off in the distance...\n\n");
+    zone_spellmessage(ch->in_room,
+      "&+LA distant &+wroar &+Lcan be heard off in the distance...\n\n",
+      "&+LA distant &+wroar &+Lcan be heard off from the %s...\n\n");
 
     d->stage++;
     
@@ -18403,7 +18418,7 @@ void spell_perm_increase_str(int level, P_char ch, char *arg, int type,
     if(victim->base_stats.Str >= 95)
     {
         send_to_char("&+BNothing seem to happen..\n", victim);
-	return;
+        return;
     }
 
     send_to_char("&+BYou feel your strength improve..\n", victim);
@@ -18591,8 +18606,8 @@ void spell_shadow_gate(int level, P_char ch, char *arg, int type, P_char victim,
   set.throughput = MAX(0, (int)( (ch->player.level-46) )) + number( 2, maxToPass + specBonus);
 
   if(    !can_do_general_portal(level, ch, victim, &set, &msg)
-      //		|| (!IS_TRUSTED(ch)	&& (GET_MASTER(ch) && IS_PC(victim)) )
-      //		|| (!IS_TRUSTED(ch)	&& (!OUTSIDE(ch) || !OUTSIDE(victim)) )
+      //                || (!IS_TRUSTED(ch)     && (GET_MASTER(ch) && IS_PC(victim)) )
+      //                || (!IS_TRUSTED(ch)     && (!OUTSIDE(ch) || !OUTSIDE(victim)) )
     )
   {
     act(msg.fail_to_caster,      FALSE, ch, 0, 0, TO_CHAR);
@@ -18713,8 +18728,8 @@ void spell_moonwell(int level, P_char ch, char *arg, int type, P_char victim,
   set.throughput = MAX(0, (int)( (ch->player.level-46)/2 )) + number( 2, maxToPass + specBonus);
 
   if(    !can_do_general_portal(level, ch, victim, &set, &msg)
-      //		|| (!IS_TRUSTED(ch)	&& (GET_MASTER(ch) && IS_PC(victim)) )
-      //		|| (!IS_TRUSTED(ch)	&& (!OUTSIDE(ch) || !OUTSIDE(victim)) )
+      //                || (!IS_TRUSTED(ch)     && (GET_MASTER(ch) && IS_PC(victim)) )
+      //                || (!IS_TRUSTED(ch)     && (!OUTSIDE(ch) || !OUTSIDE(victim)) )
   )
   {
     act(msg.fail_to_caster,      FALSE, ch, 0, 0, TO_CHAR);
@@ -18967,7 +18982,7 @@ bool spell_general_portal( int level, P_char ch, P_char victim,
    if(victim && !IS_TRUSTED(ch))
    {
       sprintf(logbuf, "Portal(%d) from %s[%d] to %s[%d]",
-    		          settings->R_num,
+                          settings->R_num,
                       GET_NAME(ch), world[ch->in_room].number,
                       GET_NAME(victim), world[to_room].number);
       logit(LOG_PORTALS, logbuf);

@@ -1200,7 +1200,9 @@ void spell_scathing_wind(int level, P_char ch, char *arg, int type,
      ch);
   act("&+WA scathing gust of wind bursts from &n$n&n&+W's fingertips!", FALSE,
       ch, 0, 0, TO_ROOM);
-  zone_spellmessage(ch->in_room, "&+WYou feel a slight gust of hot air.\n");
+  zone_spellmessage(ch->in_room,
+                    "&+WYou feel a slight gust of hot air.\n",
+                    "&+WYou feel a slight gust of hot air from %s.\n");
   //radiate_message_from_room(ch->in_room, 
   //                          "&+WYou feel a slight gust of hot air.\n", 
   //                          7, // radius
@@ -1300,7 +1302,8 @@ void spell_earthen_rain(int level, P_char ch, char *arg, int type,
     FALSE, ch, 0, 0, TO_ROOM);
 
   zone_spellmessage(ch->in_room,
-                       "&+ySmall bits of &+Yearth &+yand rock rain from above!\n");
+                       "&+ySmall bits of &+Yearth &+yand rock rain from above!\n",
+                       "&+ySmall bits of &+Yearth &+yand rock rain from %sern sky!\n");
 
   cast_as_damage_area(ch, spell_single_earthen_rain, level, victim,
                       get_property("spell.area.minChance.earthenRain", 50),
@@ -1449,7 +1452,9 @@ void spell_greater_earthen_grasp(int level, P_char ch, char *arg, int type,
     return;
   }
   
-  zone_spellmessage(ch->in_room, "&+yThe ground rumbles &+Ldeeply &+ynearby...\n");
+  zone_spellmessage(ch->in_room,
+    "&+yThe ground rumbles &+Ldeeply &+ynearby...\n",
+    "&+yThe ground rumbles &+Ldeeply &+yto the %s...\n");
   send_to_char("&+yThe ground rumbles deeply as you finish your spell..&n\n", ch);
   act("&+yThe ground suddenly rumbles deeply..", FALSE, ch, 0, 0, TO_ROOM);
 
@@ -4680,7 +4685,7 @@ void spell_etherportal(int level, P_char ch, char *arg, int type,
   set.throughput = MAX(0, (int)( (ch->player.level-46) )) + number( 2, maxToPass + specBonus);
 
   if(    !can_do_general_portal(level, ch, victim, &set, &msg)
-//  || (!IS_TRUSTED(ch)	&& (GET_MASTER(ch) && IS_PC(victim)) )
+//  || (!IS_TRUSTED(ch) && (GET_MASTER(ch) && IS_PC(victim)) )
     )
   {
     act(msg.fail_to_caster,      FALSE, ch, 0, 0, TO_CHAR);

@@ -1068,3 +1068,187 @@ const char *continent_name(int continent_id)
   
   return NULL;
 }
+
+void calculate_map_coordinates()
+{
+    sh_int cur_section = 0;
+
+    int* room_stack = (int*) malloc(sizeof(int) * top_of_world);
+
+    unsigned rs_pointer = 0;
+    if (!room_stack)
+    {
+      logit(LOG_BOARD, " Error - malloc failed in map coordinate calculation");
+      exit(1);
+    }
+    for (int room = 0; room <= top_of_world; room++)
+    {
+      world[room].x_coord = 0;
+      world[room].y_coord = 0;
+      world[room].z_coord = 0;
+      world[room].map_section = 0;
+    }
+    bfs_clear_marks();
+    for (int room = 0; room <= top_of_world; room++)
+    {
+      if (IS_MARKED(room) || !IS_MAP_ROOM(room) || IS_OCEAN_ROOM(room))
+         continue;
+
+      cur_section++;
+      unsigned rs_start = rs_pointer;
+      BFSMARK(room);
+      world[room].x_coord = 0;
+      world[room].y_coord = 0;
+      world[room].z_coord = 0;
+      world[room].map_section = cur_section;
+       
+      room_stack[rs_pointer++] = room;
+      for (unsigned rs_pointer1 = rs_start; rs_pointer1 != rs_pointer; rs_pointer1++)
+      {
+        int curr_room = room_stack[rs_pointer1];
+        for (int curr_dir = 0; curr_dir < NUMB_EXITS; curr_dir++)
+        {
+          if(world[curr_room].dir_option[curr_dir])
+          {
+            int next_room = world[curr_room].dir_option[curr_dir]->to_room;
+
+            if (!world[next_room].dir_option[rev_dir[curr_dir]] ||
+               (world[next_room].dir_option[rev_dir[curr_dir]]->to_room != curr_room))
+            {
+               continue;  // skipping teleport exits
+            }
+
+            if (IS_MARKED(next_room) || !IS_MAP_ROOM(next_room) || IS_OCEAN_ROOM(next_room))
+              continue;
+
+            BFSMARK(next_room);                                           
+            switch(curr_dir)
+            {                                                             
+            case NORTH:                                                   
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord;        
+              world[next_room].y_coord = world[curr_room].y_coord + 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case EAST:                                                    
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord + 1;    
+              world[next_room].y_coord = world[curr_room].y_coord;        
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case SOUTH:                                                   
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord;        
+              world[next_room].y_coord = world[curr_room].y_coord - 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case WEST:                                                    
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord - 1;    
+              world[next_room].y_coord = world[curr_room].y_coord;        
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case UP:                                                      
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord;        
+              world[next_room].y_coord = world[curr_room].y_coord;        
+              world[next_room].z_coord = world[curr_room].z_coord + 1;    
+            } break;                                                      
+            case DOWN:                                                    
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord;        
+              world[next_room].y_coord = world[curr_room].y_coord;        
+              world[next_room].z_coord = world[curr_room].z_coord - 1;    
+            } break;                                                      
+            case NORTHWEST:                                               
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord - 1;    
+              world[next_room].y_coord = world[curr_room].y_coord + 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case SOUTHWEST:                                               
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord - 1;    
+              world[next_room].y_coord = world[curr_room].y_coord - 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case NORTHEAST:                                               
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord + 1;    
+              world[next_room].y_coord = world[curr_room].y_coord + 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            case SOUTHEAST:                                               
+            {                                                             
+              world[next_room].x_coord = world[curr_room].x_coord + 1;    
+              world[next_room].y_coord = world[curr_room].y_coord - 1;    
+              world[next_room].z_coord = world[curr_room].z_coord;        
+            } break;                                                      
+            default:                                                      
+              break;                                                      
+            };                                                            
+            world[next_room].map_section = cur_section;                   
+            room_stack[rs_pointer++] = next_room;                         
+          }
+        }
+      }
+      sh_int min_x = (sh_int)SHRT_MAX, min_y = (sh_int)SHRT_MAX, min_z = (sh_int)SHRT_MAX;
+      for (unsigned rs_pointer1 = rs_start; rs_pointer1 < rs_pointer; rs_pointer1++)
+      {
+        int curr_room = room_stack[rs_pointer1];
+        if (world[curr_room].x_coord < min_x) min_x = world[curr_room].x_coord;
+        if (world[curr_room].y_coord < min_y) min_y = world[curr_room].y_coord;
+        if (world[curr_room].z_coord < min_z) min_z = world[curr_room].z_coord;
+      }
+      for (unsigned rs_pointer1 = rs_start; rs_pointer1 < rs_pointer; rs_pointer1++)
+      {
+        int curr_room = room_stack[rs_pointer1];
+        world[curr_room].x_coord -= min_x;
+        world[curr_room].y_coord -= min_y;
+        world[curr_room].z_coord -= min_z;
+      }
+    }
+    free(room_stack);
+}
+
+const char* get_map_direction(int from, int to)
+{
+    if (world[from].map_section == 0 || world[from].map_section != world[to].map_section)
+      return "somewhere";
+    double delta_x = (double)(world[to].x_coord - world[from].x_coord);
+    double delta_y = (double)(world[to].y_coord - world[from].y_coord);
+
+    if (delta_x == 0)
+    {
+       if (delta_y > 0)
+         return "north";
+       if (delta_y < 0)
+         return "south";
+       return "somewhere";
+    }
+    double delta_tan = delta_y / delta_x;
+    double angle = atan (delta_tan) * 180 / 3.14159265358979323846;
+    if (delta_x < 0)
+      angle = 180 + angle;
+    else if (delta_x > 0 && angle < 0)
+      angle = 360 + angle;
+
+    if (angle < 20 || angle >= 340)
+      return "east";
+    else if (angle >= 20 && angle < 70)
+      return "northeast";
+    else if (angle >= 70 && angle < 110)
+      return "north";
+    else if (angle >= 110 && angle < 160)
+      return "northwest";
+    else if (angle >= 160 && angle < 200)
+      return "west";
+    else if (angle >= 200 && angle < 250)
+      return "southwest";
+    else if (angle >= 250 && angle < 290)
+      return "south";
+    else if (angle >= 290 && angle < 340)
+      return "southeast";
+
+    return "somewhere";
+}

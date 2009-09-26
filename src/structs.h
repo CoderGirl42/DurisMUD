@@ -382,16 +382,16 @@ struct edit_data {
 #define INNATE_HAMMER_MASTER     92
 #define INNATE_AXE_MASTER        93
 #define INNATE_GAZE              94
-#define INNATE_EMBRACE_DEATH	   95
+#define INNATE_EMBRACE_DEATH       95
 #define INNATE_LIFEDRAIN         96
 #define INNATE_IMMOLATE          97
-#define INNATE_VULN_SUN		 98
-#define INNATE_DECREPIFY	 99
-#define INNATE_GROUNDFIGHTING	 100
+#define INNATE_VULN_SUN          98
+#define INNATE_DECREPIFY         99
+#define INNATE_GROUNDFIGHTING    100
 #define INNATE_BOW_MASTERY       101
-#define INNATE_SUMMON_WARG	 102
-#define INNATE_HATRED		 103
-#define INNATE_EVASION		 104
+#define INNATE_SUMMON_WARG       102
+#define INNATE_HATRED            103
+#define INNATE_EVASION           104
 #define INNATE_DRAGONMIND           105
 #define INNATE_SHIFT_ETHEREAL       106
 #define INNATE_ASTRAL_NATIVE        107
@@ -458,7 +458,7 @@ struct obj_affect {
 
 /* ======================== Structure for object ========================= */
 struct obj_data {
-  long g_key;			/* Key generated upon creation     */
+  long g_key;                   /* Key generated upon creation     */
   int R_num;                    /* Where in data-base               */
   byte type;                    /* Type of item                     */
   byte str_mask;                /* for 'strung' char * fields       */
@@ -789,6 +789,10 @@ struct room_data {
   struct trackmainttype *track;
 //  struct troop_info_rec *troop_info;
   int bfs_mark;
+  sh_int x_coord;
+  sh_int y_coord;
+  sh_int z_coord;
+  sh_int map_section;
 };
 
 
@@ -1177,7 +1181,7 @@ struct pc_only_data {           /* values only used by PCs        */
 struct npc_only_data {          /* values only used by NPCs  */
   int R_num; // replacement for NPC's ->nr
 
-	int idnum;                    /* Given only to pets, used for crashsave */
+        int idnum;                    /* Given only to pets, used for crashsave */
   ulong aggro_flags;            /* Err..  aggro flags */
   ulong aggro2_flags;           /* aggro2 flags, more aggro goodness */
   ubyte default_pos;            /* Default position                       */
@@ -1266,18 +1270,18 @@ struct combat_data {
 #define LINKED_FOLLOWING      4
 
 class LINKED_OBJECTS {
-	public:
-	LINKED_OBJECTS *next;
-	int type;
-	P_obj object;
-	
-	LINKED_OBJECTS(P_obj o, int t, LINKED_OBJECTS *append );
-	~LINKED_OBJECTS();
-	
-	int Visible_Type(); // Returns link type 
-	char *Visible_Message(); // Returns link type message 
+        public:
+        LINKED_OBJECTS *next;
+        int type;
+        P_obj object;
+        
+        LINKED_OBJECTS(P_obj o, int t, LINKED_OBJECTS *append );
+        ~LINKED_OBJECTS();
+        
+        int Visible_Type(); // Returns link type 
+        char *Visible_Message(); // Returns link type message 
   P_obj Visible_Object(); // Returns pointer to visibly linked object
-};	
+};      
 
 void remove_linked_object(P_obj o);
 int get_object_link_type(P_obj o);
@@ -1445,7 +1449,7 @@ struct txt_q {
 #define CON_VERIFY_ACCT_INFO 79
 #define CON_ACCT_NEW_CHAR_NAME 80
 #define CON_HARDCORE     81
-#define CON_NEWBIE		82
+#define CON_NEWBIE              82
 
 
 /* modes of confirmation- SAM 7-94 */
@@ -1504,7 +1508,7 @@ struct descriptor_data {
   int out_compress;             /* are we compressing output ? */
   char *out_compress_buf;       /* MCCP output buffer */
   z_stream *z_str;           /* zlib internal state */
-  int movement_noise		;
+  int movement_noise            ;
   char client_str[MAX_INPUT_LENGTH];/* CLIENT SPECIFIC STRING */
   int last_map_update           ;/* CLIENT SPECIFIC INT */
   int last_group_update         ;/* CLIENT SPECIFIC INT */
@@ -1616,12 +1620,12 @@ struct shapechange_struct {
 #define SKILL_CATEGORY_DEFENSIVE BIT_2
 
 struct ClassSkillInfo {
-	ClassSkillInfo() {
-		for( int i = 0; i < MAX_SPEC+1; i++ ) {
-			rlevel[i] = 0;
-			maxlearn[i] = 0;
-		}
-	}
+        ClassSkillInfo() {
+                for( int i = 0; i < MAX_SPEC+1; i++ ) {
+                        rlevel[i] = 0;
+                        maxlearn[i] = 0;
+                }
+        }
   byte rlevel[MAX_SPEC+1];                  /* level required, for spells, spell circle #*/
   byte maxlearn[MAX_SPEC+1];                /* max % that can be gained */
   byte costmult;
@@ -1677,7 +1681,7 @@ struct hunt_data {
   ubyte retry;                  /* counter for retrying moves that
                                    don't work */
   ubyte retry_dir;              /* last failed direction I tried moving */
-  long  huntFlags;		// hunt flags passed to find_first_step
+  long  huntFlags;              // hunt flags passed to find_first_step
   union {
     P_char victim;              /* who am I hunting? */
     int room;                   /* what room am I hunting? */
@@ -2132,14 +2136,14 @@ struct portal_settings {
 //-----------------------
 
 struct vehicle_data {
-  int mob;			/* mob vnum that moves the vehicle */
-  int start1;			/* start room */
-  int destination1;		/* destination */
-  int destination2;		/* destination */
-  int destination3;		/* destination */
-  int destination;		/* initially set to zero */
-  int move_time;		/* time vehicle starts moving */
-  int freq;			/* after starting, how often repeat? */
+  int mob;                      /* mob vnum that moves the vehicle */
+  int start1;                   /* start room */
+  int destination1;             /* destination */
+  int destination2;             /* destination */
+  int destination3;             /* destination */
+  int destination;              /* initially set to zero */
+  int move_time;                /* time vehicle starts moving */
+  int freq;                     /* after starting, how often repeat? */
 };
 
 struct ALLOCATION_HEADER

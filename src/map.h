@@ -77,6 +77,8 @@ typedef struct _mapSymbolInfo
 void assign_continents();
 bool set_continent(int start_room, int continent);
 const char *continent_name(int continent_id);
+void calculate_map_coordinates();
+const char* get_map_direction(int from, int to);
 
 #endif // __MAP_H__
 

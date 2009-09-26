@@ -8768,7 +8768,8 @@ void send_to_zone_func(int z, int mask, const char *msg)
  * send a spell message to all in zone, EXCEPT those in 'room'. JAB
  */
 
-void zone_spellmessage(int room, const char *msg)
+static char buf[MAX_STRING_LENGTH];
+void zone_spellmessage(int room, const char *msg, const char *msg_dir)
 {
   int      z, mask;
   struct remember_data *chars_in_zone;
@@ -8777,20 +8778,38 @@ void zone_spellmessage(int room, const char *msg)
     return;
   z = world[room].zone;
 
-  mask = (int) (IS_SET(world[room].room_flags, INDOORS) ? INDOORS : -INDOORS);
+  bool indoors = IS_SET(world[room].room_flags, INDOORS);
 
   for (chars_in_zone = remember_array[z]; chars_in_zone;
        chars_in_zone = chars_in_zone->next)
   {
-    if(chars_in_zone->c->in_room == room)
+    int c_room = chars_in_zone->c->in_room;
+    if(c_room == room)
       continue;
-    if((mask > 0) &&
-        !IS_SET(world[chars_in_zone->c->in_room].room_flags, mask))
+    if(indoors && !IS_SET(world[c_room].room_flags, INDOORS))
       continue;
-    if((mask < 0) &&
-        IS_SET(world[chars_in_zone->c->in_room].room_flags, -mask))
+    if(!indoors && IS_SET(world[c_room].room_flags, INDOORS))
       continue;
-    send_to_char(msg, chars_in_zone->c);
+
+    if (IS_MAP_ROOM(room))
+    {
+      if (IS_MAP_ROOM(c_room) && world[room].map_section != 0 && world[room].map_section == world[c_room].map_section)
+      {
+        if (msg_dir != 0)
+        {
+          sprintf(buf, msg_dir, get_map_direction(c_room, room));
+          send_to_char(buf, chars_in_zone->c);
+        }
+        else
+          send_to_char(msg, chars_in_zone->c);
+      }
+      else
+        continue;
+    }
+    else
+    {
+      send_to_char(msg, chars_in_zone->c);
+    }
   }
 }
 

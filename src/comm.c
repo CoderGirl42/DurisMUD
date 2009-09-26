@@ -350,6 +350,8 @@ void run_the_game(int port)
   fprintf(stderr, "-- Updating zone database.\r\n");
   update_zone_db();
 
+  calculate_map_coordinates();
+  fprintf(stderr, "--  Done calculating maps coordinates.\r\n");
   
   fprintf(stderr, "-- Calculating avg mob level for each zone.\r\n");
   calc_zone_mob_level();

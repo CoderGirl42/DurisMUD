@@ -1570,6 +1570,10 @@ void do_stat(P_char ch, char *argument, int cmd)
             rm->current_speed, rm->current_direction, rm->chance_fall,
             rm->light, (IS_SUNLIT(i) ? "Yes" : "No"));
 
+    sprintf(o_buf + strlen(o_buf),
+            "&+YSection: &N%d  &+YX = &N%d  &+YY = &N%d  &+YZ = &N%d&N\n",
+            rm->map_section, rm->x_coord, rm->y_coord, rm->z_coord);
+
     if (rm->description)
       strcat(o_buf, rm->description);
 
@@ -1676,7 +1680,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     sprintf(o_buf + strlen(o_buf), "&+YDifficulty: &N%d ",
             zone->difficulty);
     
-		sprintf(o_buf + strlen(o_buf), "&+YAvg mob level: &N%d ",
+                sprintf(o_buf + strlen(o_buf), "&+YAvg mob level: &N%d ",
             zone->avg_mob_level);
     
     sprintf(o_buf + strlen(o_buf), "&+YLifespan: &N%d  &+YAge: &N%d  &+R",
@@ -1910,22 +1914,22 @@ void do_stat(P_char ch, char *argument, int cmd)
 /*
     if(cmd == 555) //special code for web eq stats
     {
-	if( j = get_obj_vis(ch, arg2) )
+        if( j = get_obj_vis(ch, arg2) )
         {
-    	  if( !strcmp(j->name, arg2) )
-	    break;
-	  else
-	  j = NULL;
-	}
+          if( !strcmp(j->name, arg2) )
+            break;
+          else
+          j = NULL;
+        }
 
-	if(j == NULL)
-	 return;
+        if(j == NULL)
+         return;
 
     }
     else
 */ if(!(j = get_obj_vis(ch, arg2)))
     {
-	send_to_char("No such object.\n", ch);
+        send_to_char("No such object.\n", ch);
       if (t_obj)
       {
         extract_obj(t_obj, FALSE);
@@ -2299,10 +2303,10 @@ void do_stat(P_char ch, char *argument, int cmd)
     
     /* Since quality of an item can have some meaning now, let's add it to stat command -Alver */
     { 
-    	int craft = j->craftsmanship;
-    	
-    	strcat(buf, "\n&+YQuality:&N ");
-    	
+        int craft = j->craftsmanship;
+        
+        strcat(buf, "\n&+YQuality:&N ");
+        
       if (craft < OBJCRAFT_LOWEST ||
           craft > OBJCRAFT_HIGHEST)
       {
@@ -2310,8 +2314,8 @@ void do_stat(P_char ch, char *argument, int cmd)
       }
       else
       {
-      	strcat(buf, craftsmanship_names[craft]);
-      	strcat(buf, "\n");
+        strcat(buf, craftsmanship_names[craft]);
+        strcat(buf, "\n");
       }
       strcat(o_buf, buf);
     }
@@ -4029,12 +4033,12 @@ void do_snoop(P_char ch, char *argument, int cmd)
 /*
       ch->desc->snoop.snooping->desc->snoop.snoop_by = 0;
 */
-			if( GET_LEVEL(ch) < FORGER )
+                        if( GET_LEVEL(ch) < FORGER )
       {
         sql_log(ch, WIZLOG, "Stopped snooping %s", GET_NAME(ch->desc->snoop.snooping));
       }
       
-			rem_char_from_snoopby_list(&ch->desc->snoop.snooping->desc->snoop.
+                        rem_char_from_snoopby_list(&ch->desc->snoop.snooping->desc->snoop.
                                  snoop_by_list, ch);
       ch->desc->snoop.snooping = 0;
     }
@@ -4274,7 +4278,7 @@ void do_force(P_char ch, char *argument, int cmd)
         logit(LOG_FORCE, "%s has forced %s to '%s' [%d/%d]", GET_NAME(ch),
               GET_NAME(vict), to_force, world[ch->in_room].number,
               world[vict->in_room].number);
-	sql_log(ch, WIZLOG, "Forced %s to '%s'", GET_NAME(vict), to_force);
+        sql_log(ch, WIZLOG, "Forced %s to '%s'", GET_NAME(vict), to_force);
         send_to_char("Ok.\n", ch);
         forced_command = 1;
         command_interpreter(vict, to_force);
@@ -4286,7 +4290,7 @@ void do_force(P_char ch, char *argument, int cmd)
   {                             /* force all  */
     wizlog(level, "%s has forced all to '%s'", GET_NAME(ch), to_force);
     logit(LOG_FORCE, "%s has forced all to '%s'", GET_NAME(ch), to_force);
-	sql_log(ch, WIZLOG, "Forced all to '%s'", to_force);
+        sql_log(ch, WIZLOG, "Forced all to '%s'", to_force);
     for (i = descriptor_list; i; i = i->next)
       if (i->character != ch && !i->connected)
       {
@@ -5086,9 +5090,9 @@ void do_restore(P_char ch, char *argument, int cmd)
     for (d = descriptor_list; d; d = d->next)
       if (!d->connected)
       {
-	victim = d->character;
+        victim = d->character;
         if (affected_by_spell(victim, TAG_BUILDING))
-	  continue;
+          continue;
         balance_affects(victim);
         if (GET_HIT(victim) < GET_MAX_HIT(victim))
           GET_HIT(victim) = GET_MAX_HIT(victim);
@@ -5147,7 +5151,7 @@ void do_restore(P_char ch, char *argument, int cmd)
       {
         victim = d->character;
         if (affected_by_spell(victim, TAG_BUILDING))
-	  continue;
+          continue;
         for (i = 0; i < MAX_WEAR; i++)
           if (victim->equipment[i])
             victim->equipment[i]->condition = 100;
@@ -6696,115 +6700,115 @@ void do_lookup(P_char ch, char *argument, int cmd)
    EXTREMELY SLOW!! Do not even think about running it on the running mud! */
 void do_money_supply(P_char ch, char *argument, int cmd)
 {
-	char buff[MAX_STRING_LENGTH];
-	char guild_name[MAX_STRING_LENGTH];
-	P_char tch;
-	FILE *flist, *f;
+        char buff[MAX_STRING_LENGTH];
+        char guild_name[MAX_STRING_LENGTH];
+        P_char tch;
+        FILE *flist, *f;
 
-	if(!ch || IS_NPC(ch) || !IS_TRUSTED(ch) )
-		return;
+        if(!ch || IS_NPC(ch) || !IS_TRUSTED(ch) )
+                return;
 
-	long  total_p = 0;
-	long  total_g = 0;
-	long  total_s = 0;
-	long  total_c = 0;
+        long  total_p = 0;
+        long  total_g = 0;
+        long  total_s = 0;
+        long  total_c = 0;
 
-	long p, g, s, c;
+        long p, g, s, c;
 
-	send_to_char("This will take awhile, please be patient...\r\n", ch);
+        send_to_char("This will take awhile, please be patient...\r\n", ch);
 
-	// find association cash
-	send_to_char("Associations:\r\n", ch);
+        // find association cash
+        send_to_char("Associations:\r\n", ch);
 
-	sprintf(buff, "/bin/ls -1 Players/Assocs/*.? > %s", "temp_assocsfile");
-	system(buff);
+        sprintf(buff, "/bin/ls -1 Players/Assocs/*.? > %s", "temp_assocsfile");
+        system(buff);
 
-	flist = fopen("temp_assocsfile", "r");
+        flist = fopen("temp_assocsfile", "r");
 
-	if( !flist ) {
-		send_to_char("error reading association files.\r\n", ch);
-		fclose(flist);
-		system("rm -f temp_assocsfile");
+        if( !flist ) {
+                send_to_char("error reading association files.\r\n", ch);
+                fclose(flist);
+                system("rm -f temp_assocsfile");
 
-	} else {
+        } else {
 
-		while( fscanf(flist, " %s \n", buff) != EOF ) {
-			f = fopen(buff, "r");
+                while( fscanf(flist, " %s \n", buff) != EOF ) {
+                        f = fopen(buff, "r");
 
-			if( !f ) continue;
+                        if( !f ) continue;
 
-			fgets(guild_name, MAX_STR_NORMAL, f);
+                        fgets(guild_name, MAX_STR_NORMAL, f);
 
-			for( int i = 0; i < 9; i++ ) {
-				fgets(buff, MAX_STR_NORMAL, f);
-			}
+                        for( int i = 0; i < 9; i++ ) {
+                                fgets(buff, MAX_STR_NORMAL, f);
+                        }
 
-			fscanf(f, "%i %i %i %i\n", &p, &g, &s, &c);
-			sprintf(buff, "%s: &+W%d p &+Y%d g &+w%d s &+y%d c\r\n", guild_name, p, g, s, c);
-			send_to_char(buff, ch);
+                        fscanf(f, "%i %i %i %i\n", &p, &g, &s, &c);
+                        sprintf(buff, "%s: &+W%d p &+Y%d g &+w%d s &+y%d c\r\n", guild_name, p, g, s, c);
+                        send_to_char(buff, ch);
 
-			total_p += p;
-			total_g += g;
-			total_s += s;
-			total_c += c;
+                        total_p += p;
+                        total_g += g;
+                        total_s += s;
+                        total_c += c;
 
-			fclose(f);
+                        fclose(f);
 
-		}
+                }
 
-		fclose(flist);
-		system("rm -f temp_assocsfile");
+                fclose(flist);
+                system("rm -f temp_assocsfile");
 
-	}
+        }
 
-	// find player cash
-	send_to_char("Players with more than 10k plat:\r\n", ch);
-	for( int l = 97; l < 123; l++ ) {
-		sprintf(buff, "/bin/ls -1 Players/%c > %s", l, "temp_letterfile");
-		system(buff);
+        // find player cash
+        send_to_char("Players with more than 10k plat:\r\n", ch);
+        for( int l = 97; l < 123; l++ ) {
+                sprintf(buff, "/bin/ls -1 Players/%c > %s", l, "temp_letterfile");
+                system(buff);
 
-		flist = fopen("temp_letterfile", "r");
+                flist = fopen("temp_letterfile", "r");
 
-		if( !flist ) {
-			sprintf(buff, "error reading from letter file %c\r\n", l);
-			send_to_char(buff, ch);
-			fclose(flist);
-			continue;
-		}
+                if( !flist ) {
+                        sprintf(buff, "error reading from letter file %c\r\n", l);
+                        send_to_char(buff, ch);
+                        fclose(flist);
+                        continue;
+                }
 
-		while( fscanf(flist, " %s \n", buff) != EOF ) {
-			tch = (struct char_data *) mm_get(dead_mob_pool);
-			tch->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
+                while( fscanf(flist, " %s \n", buff) != EOF ) {
+                        tch = (struct char_data *) mm_get(dead_mob_pool);
+                        tch->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
-			if( restoreCharOnly(tch, skip_spaces(buff)) >= 0 ) {
-				if( IS_TRUSTED(tch) ) continue;
+                        if( restoreCharOnly(tch, skip_spaces(buff)) >= 0 ) {
+                                if( IS_TRUSTED(tch) ) continue;
 
-				p = GET_PLATINUM(tch) + GET_BALANCE_PLATINUM(tch);
-				g = GET_GOLD(tch) + GET_BALANCE_GOLD(tch);
-				s = GET_SILVER(tch) + GET_BALANCE_SILVER(tch);
-				c = GET_COPPER(tch) + GET_BALANCE_COPPER(tch);
+                                p = GET_PLATINUM(tch) + GET_BALANCE_PLATINUM(tch);
+                                g = GET_GOLD(tch) + GET_BALANCE_GOLD(tch);
+                                s = GET_SILVER(tch) + GET_BALANCE_SILVER(tch);
+                                c = GET_COPPER(tch) + GET_BALANCE_COPPER(tch);
 
-				if( ((1000*p) + (100*g) + (10*s) + (c)) >= 10000000 ) {
-					sprintf(buff, "%s: &+W%d p &+Y%d g &+w%d s &+y%d c\r\n", GET_NAME(tch), p, g, s, c);
-					send_to_char(buff, ch);
-				}
+                                if( ((1000*p) + (100*g) + (10*s) + (c)) >= 10000000 ) {
+                                        sprintf(buff, "%s: &+W%d p &+Y%d g &+w%d s &+y%d c\r\n", GET_NAME(tch), p, g, s, c);
+                                        send_to_char(buff, ch);
+                                }
 
-				total_p += p;
-				total_g += g;
-				total_s += s;
-				total_c += c;
+                                total_p += p;
+                                total_g += g;
+                                total_s += s;
+                                total_c += c;
 
-			}
-		}
+                        }
+                }
 
-		fclose(flist);
+                fclose(flist);
 
-	}
+        }
 
-	system("rm -f temp_letterfile");
+        system("rm -f temp_letterfile");
 
     sprintf(buff, "\r\nTotal money in game: &+W%d platinum, &+Y%d gold, &+w%d silver, &+y%d copper\r\n", total_p, total_g, total_s, total_c);
-	send_to_char(buff, ch);
+        send_to_char(buff, ch);
 }
 
 void read_ban_file(void)

@@ -1368,7 +1368,8 @@ void spell_death_field(int level, P_char ch, char *arg, int type,
                       get_property("spell.area.chanceStep.deathField", 30));
 
   zone_spellmessage(ch->in_room,
-                    "&+LYour brain hurts as a black haze fills your psyche!\r\n");
+                    "&+LYour brain hurts as a black haze fills your psyche!\r\n",
+                    "&+LYour brain hurts as a black haze coming from the %s fills your psyche!\r\n");
   if((ch) &&
      IS_ALIVE(ch))
         CharWait(ch, (int) (PULSE_SPELLCAST * 1.5));
@@ -1665,7 +1666,8 @@ void spell_psionic_cloud(int level, P_char ch, char *arg, int type, P_char victi
   act("&+L$n &+Lsquints and a dark haze of psionic energy appears!", FALSE,
       ch, 0, 0, TO_ROOM);
   zone_spellmessage(ch->in_room,
-                    "&+LYou feel weakened as your psyche senses a massive energy influx!\r\n");
+                    "&+LYou feel weakened as your psyche senses a massive energy influx!\r\n",
+                    "&+LYou feel weakened as your psyche senses a massive energy influx coming from the %s!\r\n");
 
   return;
 }
@@ -3188,7 +3190,7 @@ void spell_wormhole(int level, P_char ch, char *arg, int type, P_char victim, P_
      set.throughput = (int)( (ch->player.level-46)/2 ) + number( 1, maxToPass + specBonus);
 
      if(!can_do_general_portal(level, ch, victim, &set, &msg)
-      || (!IS_TRUSTED(ch)	&& (!success || GET_MASTER(ch))))
+      || (!IS_TRUSTED(ch)       && (!success || GET_MASTER(ch))))
      {
        act(msg.fail_to_caster,      FALSE, ch, 0, 0, TO_CHAR);
        act(msg.fail_to_caster_room, FALSE, ch, 0, 0, TO_ROOM);
@@ -3523,8 +3525,8 @@ void spell_celerity(int level, P_char ch, char *arg, int type,
 
   if (GET_VITALITY(ch) > (GET_MAX_VITALITY(ch) - (movepoints/2)))
   {
-  	send_to_char("You are quite capable of running right now, no need for extra boost.\n", ch);
-  	return;
+        send_to_char("You are quite capable of running right now, no need for extra boost.\n", ch);
+        return;
   }
 
   act("&+WYou concentrate and attempt to transform part of your lifeforce....&n",
@@ -3543,6 +3545,6 @@ void spell_celerity(int level, P_char ch, char *arg, int type,
   act("$N &+Wappears invigorated.&n",
     FALSE, ch, 0, 0, TO_ROOM);
 
-  update_pos(ch);	
+  update_pos(ch);       
 }
 

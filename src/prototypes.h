@@ -1430,7 +1430,7 @@ void spell_wraithform(int, P_char, P_char, char *);
 void spell_greater_wraithform(int, P_char, P_char, char *);
 void teleport_to(P_char, int, int);
 void unequip_char_dale(P_obj);
-void zone_spellmessage(int, const char *);
+void zone_spellmessage(int, const char *, const char *msg_dir = 0);
 void zone_powerspellmessage(int, const char *);
 int CheckMindflayerPresence(P_char);
 void charm_generic(int, P_char, P_char);
@@ -3022,7 +3022,7 @@ void do_enchant(P_char, char *, int);
 P_obj check_furnace(P_char);
 void do_smelt(P_char, char *, int);
 
-	
+        
 /* mccp.c */
 int compress_get_ratio(P_desc player);
 int write_to_descriptor(int, const char *);
