@@ -514,7 +514,7 @@ void spell_windwalk(int level, P_char ch, char *arg, int type, P_char victim,
     return;
   }
   
-  distance = (int (level * 1.35));
+  distance = (int)(level * 1.35);
 
   if (!IS_TRUSTED(ch) &&
       (how_close(ch->in_room, victim->in_room, distance) < 0) &&

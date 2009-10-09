@@ -1135,12 +1135,15 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
        IS_PC(victim) &&
        CHAR_IN_TOWN(ch) &&
        GOOD_RACE(ch) &&
-       GOOD_RACE(victim))
+       GOOD_RACE(victim) &&
+       GET_LEVEL(victim) >= (int)(get_property("pvp.good.level.grief.victim", 20)) &&
+       GET_LEVEL(ch) >= (int)(get_property("pvp.good.level.grief.ch", 20)) ||
+       IS_PC_PET(ch))
     {
       XP = (int)(-1 * (new_exp_table[GET_LEVEL(ch) + 1] >> 4));
-      send_to_char("&+WThe divine frowns upon you...\r\n", ch);
+      send_to_char("&+WThe divine forces of &+RDuris &+Wfrowns upon you...\r\n", ch);
       send_to_char("&+WArcing bolts of energy drain away your life.\r\n", ch);
-      send_to_char("&+RA red aura surrounds you.\r\n", ch);
+      send_to_char("&+RA blood red aura surrounds you.\r\n", ch);
       
       struct affected_type af;
       bzero(&af, sizeof(af));
@@ -1148,7 +1151,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
       af.type = SPELL_CURSE;
       af.flags = AFFTYPE_NODISPEL | AFFTYPE_PERM;
       af.modifier = 20;
-      af.duration = 100;
+      af.duration = 25;
 
       af.location = APPLY_SAVING_SPELL;
       affect_to_char(ch, &af);
@@ -1162,6 +1165,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
       af.location = APPLY_SAVING_FEAR;
       affect_to_char(ch, &af);
       
+      af.modifier = 2;
       af.type = SPELL_SLOW;
       affect_to_char(ch, &af);
     }
