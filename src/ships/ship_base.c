@@ -4144,7 +4144,7 @@ int sell_ship(P_char ch, P_ship ship, const char* arg)
         i += (ship->armor[j] + ship->internal[j]);
         k += (ship->maxarmor[j] + ship->maxinternal[j]);
     }
-    int cost = (int) ((int) (SHIPTYPECOST(ship->m_class) * .75) * (float) ((float) i / (float) k));
+    int cost = (int) ((int) (SHIPTYPECOST(ship->m_class) * .90) * (float) ((float) i / (float) k));
     for (j = 0; j < MAXSLOTS; j++) 
     {
         if (ship->slot[j].type == SLOT_WEAPON) 
@@ -4956,7 +4956,7 @@ int buy_hull(P_char ch, P_ship ship, int owned, char* arg1, char* arg2)
                 }
             }
         }
-        cost = SHIPTYPECOST(i) - (int) (SHIPTYPECOST(oldclass) * .75);
+        cost = SHIPTYPECOST(i) - (int) (SHIPTYPECOST(oldclass) * .90);
         if (cost >= 0)
         {
             if (GET_MONEY(ch) < cost || epic_skillpoints(ch) < SHIPTYPEEPICCOST(i)) 

@@ -164,11 +164,11 @@ const WeaponData weapon_data[MAXWEAPON] = {
 // Name                          Cost Weight Ammo    Min     Max     Min     Max  Fragments Damage  Sail   Hull    Sail    Armor   Reload  Reload  Volley      Flags
 //                                                  range   range  damage  damage   count     arc    hit  damage  damage  pierce     time stamina    time 
  { "Small Ballistae",          50000,    3,   90,      0,      8,      2,      4,      1,      10,   20,    100,     50,     10,      30,      3,      7,  WPNFLAG01 },
- { "Medium Ballistae",        100000,    7,   60,      0,     10,      4,      6,      1,      10,   20,    100,     50,     10,      30,      5,      8,  WPNFLAG02 },
+ { "Medium Ballistae",        100000,    6,   60,      0,     10,      4,      6,      1,      10,   20,    100,     50,     10,      30,      5,      8,  WPNFLAG02 },
  { "Large Ballistae",         500000,   10,   30,      0,     12,      6,      9,      1,      10,   20,    100,     50,     10,      30,      7,     10,  WPNFLAG03 },
  { "Small Catapult",          500000,   10,   30,      5,     15,      2,      3,      4,     160,   20,    100,    100,      2,      30,     10,     18,  WPNFLAG04 },
  { "Medium Catapult",         800000,   13,   20,      5,     20,      2,      4,      5,     260,   20,    100,    100,      2,      30,     15,     24,  WPNFLAG05 },
- { "Large Catapult",         1200000,   17,   10,      5,     25,      2,      5,      6,     360,   20,    100,    100,      2,      30,     20,     30,  WPNFLAG06 },
+ { "Large Catapult",         1200000,   17,   12,      5,     25,      2,      5,      6,     360,   20,    100,    100,      2,      30,     20,     30,  WPNFLAG06 },
  { "Heavy Ballistae",        1000000,   15,    6,      0,      5,     15,     25,      1,      10,    0,    100,      0,     15,      30,     20,      3,  WPNFLAG07 },
  { "Quartz Beamcannon",      4000000,    7,   40,      0,     20,      4,     16,      1,      10,   20,    100,     50,     15,      45,     10,      0,  WPNFLAG08 },
  { "Darkstone Beamcannon",   5000000,    9,   40,      0,     23,      5,     22,      1,      10,   20,    100,     50,     15,      45,     12,      0,  WPNFLAG09 },
