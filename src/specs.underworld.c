@@ -172,9 +172,6 @@ int torment(P_obj obj, P_char ch, int cmd, char *arg)
     return (FALSE);
   }
   
-  if (!OBJ_WORN_POS(obj, WIELD))
-    return (FALSE);
-
   vict = (P_char) arg;
   
   if(OBJ_WORN_BY(obj, ch) &&
