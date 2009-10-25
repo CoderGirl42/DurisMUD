@@ -1848,6 +1848,28 @@ pb 0 16384 -1
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#500126
+frzzt undead boatman~
+&+rFrz&+Lzt, the undead &+rboat&+Lman&n~
+&+rFrz&+Lzt, the undead &+rboat&+Lman stands here, waiting to take you on a one way journey.&n
+~
+~
+2058 0 0 8 0 0 0 -1000 S
+sk 0 1 -1
+56 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
+#500127
+undead minion~
+&+Lan undead &+rmin&+Lion&n~
+&+LAn undead &+rmin&+Lion is busy loading cargo onto a nearby ship.&n
+~
+~
+2058 0 0 8 0 0 0 -999 S
+sk 0 0 -1
+50 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
 #500150
 reaver snudk goblin shock_reaver teacher _spec3_~
 &+gSnudk&+L, the &+Ggoblin &+Yshock &+Lreaver&N~
