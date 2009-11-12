@@ -1,5 +1,5 @@
 #19700
-tiamat dragon~
+tiamat dragon _nosneak_ _spec1_~
 &+LTiamat&n~
 &+LTiamat, the ruler of all evil dragon kind awaits here to feast on your soul.
 ~
@@ -12,9 +12,9 @@ her tail seems to shift in hue as it twitches from emerald green to midnight
 black to sapphire blue.  Tiamat's legs are thick as great trees, and her
 wings-black on the exterior and red as blood on the underside-are huge.
 ~
-1200031755 1 0 706291838 309469 0 0 -1000 S
+1200031755 1 0 706291838 268744925 68157568 0 -1000 S
 D 0 512 -1
-61 0 -350 10d10+22000 10d6+65
+61 0 -350 10d10+22000 20d40+75
 0.0.1000.5000 2000000
 8 8 2
 #19701

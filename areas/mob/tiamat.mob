@@ -210,8 +210,8 @@ into the air.  Its huge body and massive wings buffet the air around
 it.  Baleful eyes that have seen countless years, and countless
 armies destroyed, glare in anger at your approach.
 ~
-1109461066 1 0 536870936 0 0 0 -1000 S
-D 0 1 -1
+1109461066 1 0 536870936 0 0 0 0 S
+D 0 256 -1
 50 200 -100 1d100+30000 7d6+60
 0.0.0.0 10000000
 8 8 2
