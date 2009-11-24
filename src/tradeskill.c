@@ -522,23 +522,23 @@ int random_ore(int mine_quality)
 {
   int x = number(1, 100) + mine_quality;
     
-  if(x >= 105)
+  if(x >= 102)
     return LARGE_MITHRIL_ORE;
-  if(x >= 104) 
+  if(x >= 100) 
     return MEDIUM_MITHRIL_ORE;	
-  if(x >= 103)
+  if(x >= 98)
     return SMALL_MITHRIL_ORE;
 
-  if(x >= 102)
+  if(x >= 96)
     return LARGE_PLATINUM_ORE; 
-  if(x >= 100)
+  if(x >= 94)
     return MEDIUM_PLATINUM_ORE; 
-  if(x >= 97)
+  if(x >= 92)
     return SMALL_PLATINUM_ORE;
 
-  if(x >= 93)
+  if(x >= 90)
     return LARGE_GOLD_ORE;
-  if(x >= 89)
+  if(x >= 88)
     return MEDIUM_GOLD_ORE;
   if(x >= 85)
     return SMALL_GOLD_ORE;
