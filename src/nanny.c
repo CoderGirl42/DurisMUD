@@ -2265,6 +2265,11 @@ void enter_game(P_desc d)
     send_to_char("&+cThe &+Cdivine &+cinspiration withdraws from your soul.&n\r\n", ch);
   }
   
+  if(IS_SET(ch->specials.act, PLR_ANONYMOUS))
+  {
+    REMOVE_BIT(ch->specials.act, PLR_ANONYMOUS);
+  }
+  
   memset(&af1, 0, sizeof(af1));
   af1.type = TAG_SKILL_TIMER;
   af1.flags = AFFTYPE_STORE | AFFTYPE_SHORT;

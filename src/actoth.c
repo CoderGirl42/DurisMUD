@@ -4138,13 +4138,15 @@ void do_toggle(P_char ch, char *arg, int cmd)
                                  * in case some slipped through
                                  */
     }
-    else if (RACE_EVIL(ch) || RACE_PUNDEAD(ch) || IS_NHARPY(ch))
+    
+// Players can no longer be anonymous.
+    else if (IS_PC(ch))
     {
-      send_to_char("Sorry, you cannot be anonymous.\r\n", send_ch);
+      send_to_char("Nobody can be anonymous on Duris.\r\n", send_ch);
       return;
     }
-    else
-      result = PLR_TOG_CHK(ch, PLR_ANONYMOUS);
+    // else
+      // result = PLR_TOG_CHK(ch, PLR_ANONYMOUS);
     break;
   case 10:                     /*
                                  * petition
