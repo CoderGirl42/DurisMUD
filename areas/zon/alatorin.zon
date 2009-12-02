@@ -1379,6 +1379,9 @@ P 1 412 999 83180 100 0 0 0        *   (object type not in this .obj file)
 P 1 412 999 83180 100 0 0 0        *   (object type not in this .obj file)
 P 1 412 999 83180 100 0 0 0        *   (object type not in this .obj file)
 P 1 412 999 83180 100 0 0 0        *   (object type not in this .obj file)
+O 0 43101 6 83376 100 0 0 0        * (object type not in this .obj file)
+O 0 43125 3 83376 100 0 0 0        * (object type not in this .obj file)
+O 0 43101 6 83376 100 0 0 0        * (object type not in this .obj file)
 O 0 38314 1 83380 5 0 0 0          * (object type not in this .obj file)
 O 0 83197 1 83385 100 0 0 0        * a pacing bookshelf
 P 1 83196 1 83197 100 0 0 0        *   a flying spellbook
@@ -1663,10 +1666,12 @@ O 0 500001 1 83544 100 0 0 0       * (object type not in this .obj file)
 O 0 83330 1 83544 100 0 0 0        * a pile of rubble
 P 1 96820 1 83330 100 0 0 0        *   (object type not in this .obj file)
 O 0 83331 1 83544 100 0 0 0        * a circular boulder
-O 0 43125 2 83546 100 0 0 0        * (object type not in this .obj file)
+O 0 43125 3 83546 100 0 0 0        * (object type not in this .obj file)
 O 0 83180 2 83546 100 0 0 0        * a huge crate
 O 0 18718 1 83546 100 0 0 0        * (object type not in this .obj file)
+O 0 43101 6 83546 100 0 0 0        * (object type not in this .obj file)
 O 0 83332 1 83547 100 0 0 0        * a small wooden engraving
+O 0 83489 1 83547 100 0 0 0        * a mithril sign reading 'Cutpurse Killers'
 O 0 83422 1 83549 100 0 0 0        * a huge boulder
 O 0 83337 1 83554 100 0 0 0        * a dwarven inscription
 O 0 83368 1 83564 100 0 0 0        * a display case
@@ -1730,10 +1735,10 @@ O 0 83114 6 83769 100 0 0 0        * a closet
 P 1 97041 1 83114 100 0 0 0        *   (object type not in this .obj file)
 P 1 97047 1 83114 100 0 0 0        *   (object type not in this .obj file)
 P 1 97048 1 83114 100 0 0 0        *   (object type not in this .obj file)
-O 0 43125 2 83783 10 0 0 0         * (object type not in this .obj file)
-O 0 43101 3 83783 60 0 0 0         * (object type not in this .obj file)
-O 0 43101 3 83783 30 0 0 0         * (object type not in this .obj file)
-O 0 43101 3 83783 10 0 0 0         * (object type not in this .obj file)
+O 0 43125 3 83783 10 0 0 0         * (object type not in this .obj file)
+O 0 43101 6 83783 60 0 0 0         * (object type not in this .obj file)
+O 0 43101 6 83783 30 0 0 0         * (object type not in this .obj file)
+O 0 43101 6 83783 10 0 0 0         * (object type not in this .obj file)
 O 0 3097 2 83795 100 0 0 0         * (object type not in this .obj file)
 O 0 83357 1 83796 100 0 0 0        * a broad sign
 O 0 72 2 83801 100 0 0 0           * (object type not in this .obj file)
@@ -2062,7 +2067,8 @@ F 1 83157 19 83197 100 0 0 0       * an Alatorin peacekeeper (following)
 E 1 83111 999 16 100 0 0 0         *   an iron broadsword
 E 1 83111 999 17 100 0 0 0         *   an iron broadsword
 M 0 83221 2 83203 100 0 0 0        * a common man
-M 0 83224 4 83204 100 0 0 0        * a sleepy dwarf
+M 0 83224 5 83204 100 0 0 0        * a sleepy dwarf
+M 0 83224 5 83204 100 0 0 0        * a sleepy dwarf
 M 0 83223 3 83206 100 0 0 0        * a shield dwarf
 M 0 83223 3 83206 100 0 0 0        * a shield dwarf
 M 0 83225 2 83206 100 0 0 0        * a dwarven woman
@@ -2077,12 +2083,12 @@ M 0 83222 5 83211 100 0 0 0        * a dwarven child
 M 0 83222 5 83211 100 0 0 0        * a dwarven child
 M 0 83219 2 83211 100 0 0 0        * a mother dwarf
 M 0 83223 3 83211 100 0 0 0        * a shield dwarf
-M 0 83224 4 83212 100 0 0 0        * a sleepy dwarf
+M 0 83224 5 83212 100 0 0 0        * a sleepy dwarf
 M 0 83220 4 83214 100 0 0 0        * a young native dwarf
 M 0 83225 2 83214 100 0 0 0        * a dwarven woman
 M 0 83221 2 83214 100 0 0 0        * a common man
-M 0 83224 4 83216 100 0 0 0        * a sleepy dwarf
-M 0 83224 4 83216 100 0 0 0        * a sleepy dwarf
+M 0 83224 5 83216 100 0 0 0        * a sleepy dwarf
+M 0 83224 5 83216 100 0 0 0        * a sleepy dwarf
 M 0 83188 1 83217 100 0 0 0        * an plate and sword merchant
 G 1 83188 999 0 100 0 0 0          *    a tempered mithril breastplate
 G 1 83189 999 0 100 0 0 0          *    a tempered mithril helmet
@@ -2881,9 +2887,11 @@ G 1 83374 1 0 100 0 0 0            *    a tome of Clan Stealth Hunter lore
 M 0 83336 1 83552 100 0 0 0        * Ragmor
 E 1 83362 11 16 100 0 0 0          *   a slender adamantite dagger
 E 1 83362 11 17 100 0 0 0          *   a slender adamantite dagger
+E 1 83488 1 21 100 0 0 0           *   a durithalite earring shaped like a dagger
 M 0 83337 1 83552 100 0 0 0        * Romgar
 E 1 83362 11 16 100 0 0 0          *   a slender adamantite dagger
 E 1 83362 11 17 100 0 0 0          *   a slender adamantite dagger
+E 1 83490 1 19 100 0 0 0           *   a glass eye with a crimson iris
 M 0 83338 1 83552 100 0 0 0        * Tarkorsh
 E 1 83362 11 16 100 0 0 0          *   a slender adamantite dagger
 E 1 83362 11 17 100 0 0 0          *   a slender adamantite dagger
