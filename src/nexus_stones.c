@@ -44,6 +44,19 @@ void do_nexus(P_char ch, char *arg, int cmd)
 {
     // do nothing
 }
+P_obj get_random_enemy_nexus(P_char ch)
+{
+  return NULL;
+}
+
+P_obj get_nexus_stone(int stone_id)
+{
+  return NULL;
+}
+int check_nexus_bonus(P_char ch, int amount, int type)
+{
+  return 0;
+}
 #else
 
 //#include <mysql.h>

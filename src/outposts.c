@@ -51,6 +51,29 @@ void do_outpost(P_char ch, char *arg, int cmd)
 {
     // do nothing
 }
+
+int get_current_outpost_hitpoints(Building *building)
+{
+  return 0;
+}
+
+void outpost_update_resources(P_char ch, int wood, int stone)
+{
+  
+}
+
+int outpost_rubble(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  return 0;
+}
+void set_current_outpost_hitpoints(Building *building)
+{
+  
+}
+void outpost_death(P_char outpost, P_char killer)
+{
+  
+}
 #else
 
 extern MYSQL* DB;

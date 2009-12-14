@@ -306,6 +306,19 @@ int get_zone_exp(P_char ch, int zone_number)
   return 0;
 }
 
+#ifdef __NO_MYSQL__
+void load_zone_trophy(P_char ch)
+{
+}
+
+void zone_trophy_update()
+{
+}
+
+void save_zone_trophy(P_char ch)
+{
+}
+#else
 void load_zone_trophy(P_char ch)
 {
   if( !ch || !IS_PC(ch) )
@@ -381,6 +394,7 @@ void save_zone_trophy(P_char ch)
     mysql_free_result(res);    
   }
 }
+#endif
 
 /* this macro is used in the code to determine the size of a chars 'a'
  trophy.  If can be used to reduce trophy size based on <whatever> */

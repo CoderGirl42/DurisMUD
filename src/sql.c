@@ -178,6 +178,14 @@ void send_mud_info(const char* name, P_char ch)
   
 }
 
+void sql_update_bind_data(int vnum, int *owner_pid, int *timer)
+{
+}
+
+void sql_get_bind_data(int vnum, int *owner_pid, int *timer)
+{
+  
+}
 #else
 
 static void sql_resetConnectTimes(void);
