@@ -684,9 +684,10 @@ void setHeavenTime(P_char victim)
 void AddFrags(P_char ch, P_char victim)
 {
   P_char   tch;
-  int allies, recfrag = 0;
+  int allies, recfrag = 0, frag_gain;
   char buffer[1024];
   struct affected_type af, *afp, *next_af;
+
   int gain;
 
   if (IS_NPC(ch))
@@ -748,9 +749,10 @@ void AddFrags(P_char ch, P_char victim)
       
       if(gain + recfrag >= get_property("epic.frag.threshold", 0.10)*100 )
       {
-        int frag_gain = (int) ((gain/100.00) * (float)
-          (get_property("epic.frag.amount", 20.000)));
-        epic_frag(tch, GET_PID(victim), frag_gain);
+			frag_gain = (int) ((gain/100.00) * (float)
+			(get_property("epic.frag.amount", 20.000)));
+        
+			epic_frag(tch, GET_PID(victim), frag_gain);
       }
 
       if(!affected_by_spell(tch, TAG_PLR_RECENT_FRAG))
@@ -800,6 +802,19 @@ void AddFrags(P_char ch, P_char victim)
   sql_modify_frags(victim, -gain);
   victim->only.pc->frags -= gain;
   sprintf(buffer, "You just lost %.02f frags!\r\n", ((float) gain) / 100);
+ 
+ // When a player with a bood tasks dies, they now satisfy the pvp spill blood task.
+  if(afp = get_spell_from_char(victim, TAG_EPIC_ERRAND))
+  {
+	if(afp->modifier == -10 &&
+	   -gain < 0)
+	{
+      send_to_char("The &+yGods of Duris&n are very pleased with YOUR &+Rblood&n, too!!!\n", victim);
+      send_to_char("You can now progress further in your quest for epic power!\n", victim);
+      affect_remove(victim, afp);
+	}
+  }
+
   send_to_char(buffer, victim);
   checkFragList(victim);
 }
