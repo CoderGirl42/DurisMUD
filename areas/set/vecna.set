@@ -1,7 +1,7 @@
 alias eo edit obj
 set MainZoneName vecna
 set objaffect true
-set lastcommand edit mob 130035
-set startroom 130071
+set lastcommand edit dracolich
+set startroom 130002
 set textedit pico
 set IsMapZone true
