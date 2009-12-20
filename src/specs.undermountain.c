@@ -1994,7 +1994,7 @@ int flying_dagger(P_char ch, P_char pl, int cmd, char *arg)
 
 
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    special die aspect 
                                  */
@@ -2070,7 +2070,7 @@ int animated_sword(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    special die aspect 
                                  */
@@ -2090,7 +2090,7 @@ int helmed_horror(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    special die aspect 
                                  */
@@ -2155,7 +2155,7 @@ int malodine_two(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    special die aspect 
                                  */
@@ -2190,7 +2190,7 @@ int black_pudding(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    special die aspect 
                                  */

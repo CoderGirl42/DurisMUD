@@ -71,7 +71,7 @@ int      range_scan_track(P_char ch, int distance, int type_scan);
 
 int wh_corpse_to_object(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     P_obj    obj;
 
@@ -4356,7 +4356,7 @@ int key_mold(P_obj obj, P_char ch, int cmd, char *args)
 
 int tiamat_human_to_rareloads(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     P_obj    obj;
 
@@ -4398,7 +4398,7 @@ int tiamat_human_to_rareloads(P_char ch, P_char pl, int cmd, char *arg)
 
 int dragonnia_heart(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     P_obj    obj;
 
@@ -4480,7 +4480,7 @@ int dragon_heart_decay(P_obj obj, P_char ch, int cmd, char *args)
 
 int lanella_heart(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     P_obj    obj;
 

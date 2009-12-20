@@ -1301,7 +1301,7 @@ int purple_worm(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                    dead
                                  */

@@ -42,7 +42,7 @@ extern struct zone_data *zone_table;
 
 int forest_animals(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     P_obj    obj;
 

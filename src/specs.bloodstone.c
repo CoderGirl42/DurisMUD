@@ -750,7 +750,7 @@ int bs_soultaker(P_char ch, P_char pl, int cmd, char *arg)
   /*
      spec die 
    */
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
     return bs_undead_die(ch, pl, cmd, arg);
 
   if (!AWAKE(ch) || IS_FIGHTING(ch) || cmd)
@@ -1458,7 +1458,7 @@ int bs_undead_with_die(P_char ch, P_char pl, int cmd, char *arg)
   if (!ch)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
     return bs_undead_die(ch, pl, cmd, arg);
 
   if (!AWAKE(ch) || IS_FIGHTING(ch) || cmd)
@@ -3313,7 +3313,7 @@ int bs_undead_die(P_char ch, P_char pl, int cmd, char *arg)
   /*
      spec die 
    */
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
     act("$n turns into a black vapor and seeps into the ground.",
         FALSE, ch, 0, 0, TO_ROOM);
   return FALSE;

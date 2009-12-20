@@ -1370,7 +1370,7 @@ int hippogriff_die(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
     act("As $n dies, it disintegrates in a flash of bright light!",
         TRUE, ch, 0, 0, TO_ROOM);
   return (FALSE);
@@ -1388,7 +1388,7 @@ int crystal_golem_die(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
     act("As $n dies, it shatters into crystal dust which quickly dissipates.",
         TRUE, ch, 0, 0, TO_ROOM);
   return (FALSE);
@@ -3693,7 +3693,7 @@ int menden_figurine_die(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     act
       ("$n dies, crumbling into powder which is quickly swept away by a sudden breeze.",
@@ -3710,7 +3710,7 @@ int menden_inv_serv_die(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     act("$n, vanquished, dissolves into ethereal vapors and disappears.",
         FALSE, ch, 0, 0, TO_ROOM);
@@ -5209,7 +5209,7 @@ int skeleton(P_char ch, P_char pl, int cmd, char *arg)
   if (ch == pl)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     if (!ch->only.npc->spec[0])
       ch->only.npc->spec[0] = 3;
@@ -5284,7 +5284,7 @@ int animated_skeleton(P_char ch, P_char pl, int cmd, char *arg)
   else
     ch2 = ch;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     num = 0;
     for (followers = ch2->followers; followers; followers = followers->next)
@@ -5389,7 +5389,7 @@ int spore_ball(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     act("$n crumples, a noxious gas escaping its interior.", FALSE, ch, 0, 0,
         TO_ROOM);
@@ -5783,7 +5783,7 @@ int stone_crumble(P_char ch, P_char pl, int cmd, char *arg)
   if (!ch || IS_PC(ch))
     return (FALSE);
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                  * spec die
                                  */
@@ -6572,7 +6572,7 @@ int plant_attacks_paralysis(P_char ch, P_char pl, int cmd, char *arg)
   if (!ch || pl || cmd)
     return FALSE;
 
-  if (cmd == -1)                /*
+  if (cmd == CMD_DEATH)                /*
                                  * unwrap vines upon death of vine
                                  */
     LOOP_THRU_PEOPLE(vict, ch)
@@ -9069,7 +9069,7 @@ int ice_malice(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return TRUE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                  * special die aspect
                                  */
@@ -9137,7 +9137,7 @@ int neg_pocket(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return TRUE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                  * explode upon death
                                  */
@@ -9284,7 +9284,7 @@ int jotun_balor(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return TRUE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                  * explode upon death
                                  */
@@ -13155,7 +13155,7 @@ int annoying_mob(P_char ch, P_char pl, int cmd, char *arg)
    * check for periodic event calls
    */
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     temp = read_mobile(GET_RNUM(ch), REAL);
     if (temp)
@@ -16701,7 +16701,7 @@ int tentacler_death(P_char tentacler, P_char ch, int cmd, char *arg)
      return TRUE;
    }
 
-   if(cmd == -1)
+   if(cmd == CMD_DEATH)
    {
      P_obj tempobj;
      obj_load = number(0, 4);

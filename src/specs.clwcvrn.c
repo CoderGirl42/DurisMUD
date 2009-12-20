@@ -31,7 +31,7 @@ int clwcvrn_crys_die(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {
     act("$n shatters into a million sharp fragments that fly everywhere.",
         TRUE, ch, 0, 0, TO_ROOM);
@@ -64,7 +64,7 @@ int clwcvrn_golem_shatter(P_char ch, P_char pl, int cmd, char *arg)
   if (!ch || IS_PC(ch))
     return (FALSE);
 
-  if (cmd == -1)
+  if (cmd == CMD_DEATH)
   {                             /*
                                  * spec die
                                  */
