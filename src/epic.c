@@ -1026,11 +1026,11 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
 
     if( zone_number > 0 && zone_number != RANDOM_ZONE_ID)
     {
-      //update_epic_zone_frequency(zone_number);
-      update_epic_zone_alignment(zone_number, GET_RACEWAR(ch) == RACEWAR_EVIL ? -1 : 1);
+      int delta = GET_RACEWAR(ch) == RACEWAR_EVIL ? -1 : 1;
+      update_epic_zone_alignment(zone_number, delta);
 
 		  // set completed flag
-		  epic_zone_completions.push_back(epic_zone_completion(zone_number, time(NULL)));
+		  epic_zone_completions.push_back(epic_zone_completion(zone_number, time(NULL), delta));
     }
 
     act("$p flashes brightly then blurs, and remains still and powerless.",
@@ -1956,6 +1956,23 @@ bool epic_zone_done(int zone_number)
 	return false;
 }
 
+int epic_zone_data::displayed_alignment() const 
+{
+  int delta = 0;
+ 	for( vector<epic_zone_completion>::iterator it = epic_zone_completions.begin();
+      it != epic_zone_completions.end();
+      it++ )
+	{
+		if( (it->number == this->number) && (time(NULL) - it->done_at) < (int) get_property("epic.showCompleted.delaySecs", (15*60)) ) 
+    {
+      return this->alignment - it->delta;
+    }
+	}
+  
+  return this->alignment;
+}
+
+
 //void do_epic_zones(P_char ch, char *arg, int cmd)
 //{
 //  return;
@@ -2054,7 +2071,7 @@ void do_epic_zones(P_char ch, char *arg, int cmd)
 		if( epic_zone_done(epic_zones[i].number) ) done_str[0] = '*';
 		else done_str[0] = ' ';
     
-    int alignment_str = EPIC_ZONE_ALIGNMENT_MAX + epic_zones[i].alignment;
+    int alignment_str = BOUNDED(0, EPIC_ZONE_ALIGNMENT_MAX + epic_zones[i].displayed_alignment(), 10);
     
     sprintf(buff, "  %s%s %s\r\n", done_str, epic_zones[i].name.c_str(), alignment_strs[alignment_str] );
     send_to_char(buff, ch);
@@ -2243,7 +2260,7 @@ vector<epic_zone_data> get_epic_zones()
   return zones;
 #else
 
-  if( !qry("SELECT number, name, frequency_mod, alignment FROM zones WHERE epic_type > 0 ORDER BY (suggested_group_size*epic_payout)") )
+  if( !qry("SELECT number, name, frequency_mod, alignment FROM zones WHERE epic_type > 0 ORDER BY (suggested_group_size*epic_payout), id") )
   {
     return zones;
   }

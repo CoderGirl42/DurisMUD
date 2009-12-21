@@ -43,13 +43,15 @@ struct epic_zone_data
   string name;
   float freq;
   int alignment;
+  int displayed_alignment() const;
 };
 
 struct epic_zone_completion
 {
-  epic_zone_completion(int _number, int _done_at) : number(_number), done_at(_done_at) {}
+  epic_zone_completion(int _number, int _done_at, int _delta) : number(_number), done_at(_done_at), delta(_delta) {}
 	int number;
 	int done_at;
+  int delta;
 };
 
 void do_epic(P_char ch, char *arg, int cmd);
