@@ -2073,7 +2073,7 @@ void do_epic_zones(P_char ch, char *arg, int cmd)
     
     int alignment_str = BOUNDED(0, EPIC_ZONE_ALIGNMENT_MAX + epic_zones[i].displayed_alignment(), 10);
     
-    sprintf(buff, "  %s%s %s\r\n", done_str, epic_zones[i].name.c_str(), alignment_strs[alignment_str] );
+    sprintf(buff, "  %s%s %s\r\n", done_str, pad_ansi(epic_zones[i].name.c_str(), 45).c_str(), alignment_strs[alignment_str] );
     send_to_char(buff, ch);
   }
   
