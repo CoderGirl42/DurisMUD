@@ -5710,36 +5710,6 @@ void do_who(P_char ch, char *argument, int cmd)
 
     strcat(buf, buf3);
 
-    if( IS_SET(ch->specials.act, PLR_DEBUG) )
-    {
-      struct affected_type af, *afp;
-      sprintf(buf3, " Affected by:\n");
-      strcat(buf, buf3);
-      sprintf(buf3, " --------------------------------------------------\n");
-      strcat(buf, buf3);
-
-      for (afp = tch->affected; afp; afp = afp->next)
-      {
-         char bufbin[31];
-        if (afp->type == TAG_INNATE_TIMER )
-        {
-           sprintf(buf5, "innate");
-        }
-        else
-        {
-           sprintf(buf5, "%6d", afp->type);
-        }
-        decimal2binary(afp->flags, bufbin);
-        sprintf(buf3, " type: %s loc: %4d short: %d dur: %6d flags: %3d %10s mod: %d\n",
-                      buf5, afp->location, ((afp->flags & AFFTYPE_SHORT)!=0),
-                      afp->duration, afp->flags, bufbin, afp->modifier);
-        strcat(buf, buf3);
-      }
-
-      sprintf(buf3, " --------------------------------------------------\n");
-      strcat(buf, buf3);
-    }
-    
     send_to_char(buf, ch);
   }
 }
