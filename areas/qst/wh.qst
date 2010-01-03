@@ -834,13 +834,13 @@ qc_action 90~
 &+WRosenthal mumbles to himself, '&+LI wish the countryside was &+wsafe &+Lagain..&+W'&n
 ~
 MA
-safe~
+safe sighs~
 &+WRosenthal looks at you and says, '&+LYeah, a long time ago, the forests and lands around here
 &+Lwere as safe as anywhere in the world.. But ever since those &+revils &+Lgot organized and began
 &+Lkilling the innocents, everything has changed for the worse..&+W'&n
 ~
 MA
-evils~
+evils evil~
 &+WRosenthal says, '&+LYeah, I long time ago an ancient clan of evils broke through to
 &+Lthe surface world and waged a war that echoed throughout the universe.. My entire
 &+Lfamily was slain before my eyes during the last great war.&+W'
@@ -850,9 +850,16 @@ evils~
 &+Lfor those captives to be left alive.. I don't have much to offer, but I'm would give
 &+Lalmost anything to see their &+rhearts &+Lcarved from their bodies..&+W'&n
 ~
+M
+hi hello howdy hey~
+&+WRosenthal sighs and says, '&+LThe world isn't &+Wsafe &+Lanymore.&+W'&
+~
 Q
 ~
 R I 55063
+R I 55424
+R C 250000
+R E 325000
 G I 55013
 G I 55014
 G I 55015
@@ -1002,8 +1009,14 @@ bastard demon slayer sword~
 ~
 M
 fabled dagger ra~
-&+WSootfoot says to you, '&+mI don't recall how to make that item. Perhaps
-&+myou should check back with me at another time.&+W'&n
+&+WSootfoot says to you, '&+mThis little dagger is one of my favorite items. It is
+&+mforged from &+Yth&+We b&+Yro&+Wke&+Yn &+Wr&+Ya&+Wy&+Ys o&+Wf &+We&+Yve&+Wni&+Yng &+RS&+ru&+Rns&+re&+Rt &+mand &+Wm&+Yor&+Wni&+Yng &+rS&+Ru&+rnr&+Ri&+rs&+Re&+m. I'm sorry to
+&+msay that retrieving these two items is not an easy task. You must visit &+GYodono
+&+min the &+rCity of &+RBr&+rass &+mand the &+Lman-god &+mHephaestus in the &+LCharcoal Palace&+m. Only
+&+mthese two know the whereabouts of what you seek.&+W'&n
+
+&+W'&+mNonetheless, once in my possession, I will require &na &+cmagical &+Celectrum
+&+Wdagger&+m, &+Lthe &+Rgn&+romi&+Rsh &+Co&+Lr&+Cb &+Lof b&+Ci&+Ln&+Cd&+Li&+Cn&+Lg&+m, and &+La strange &+mglowing &+Lweapon hilt&+m.&+W'&n
 ~
 M
 gauntlets living legend~
@@ -3026,6 +3039,12 @@ Q
 ~
 R I 55239
 G I 55238
+S
+#55212
+M
+hi signal hello howdy~
+&+LThe Indomitable Snowman says to you, '
+~
 S
 #55217
 MA

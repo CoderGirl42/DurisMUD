@@ -8923,31 +8923,15 @@ Dispersement for psychomia plant mob~
 D0
 ~
 ~
-0 0 69228
-D1
-~
-~
-0 0 3712
-D2
-~
-~
-0 0 2020
-D3
-~
-~
-0 0 38316
+0 0 55402
 D4
 ~
 ~
-0 0 55613
+1 0 55613
 D5
 ~
 ~
-0 0 82510
-D6
-~
-~
-0 0 93610
+0 0 55614
 S
 #55400
 Distribution for Ambassadors~
@@ -12516,7 +12500,7 @@ door~
 D5
 ~
 ~
-0 0 55399
+1 0 55399
 S
 #55614
 &+LZone dispersal room for Incarnates.&n~

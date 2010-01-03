@@ -2087,7 +2087,7 @@ goblin~
 ~
 1074137098 1 0 0 0 65536 262144 0 S
 hg 0 65536 -1
-36 0 0 1d1+1 1d1+1
+56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55144
@@ -2098,7 +2098,7 @@ orc~
 ~
 1074137098 1 0 0 0 0 262144 0 S
 ho 0 8192 -1
-36 0 0 1d1+1 1d1+1
+56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55145
@@ -2962,6 +2962,21 @@ pl 0 262657 -1
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
+#55212
+indomitable snowman~
+&+Lthe In&+rdo&+Rm&+Li&+Rt&+rab&+Lle S&+rno&+Rw&+rma&+Ln&n~
+&+LThe In&+rdo&+Rm&+Li&+Rt&+rab&+Lle S&+rno&+Rw&+rma&+Ln &+Lstands here, waiting for &+LLrethlamn Soel.&n
+~
+&+L  This hulking beast of a &+WSnow &+BOgre &+Lstands nearly forty feet tall and has
+&+La set of shoulders wide enough to carry a dozen human-sized soldeirs. He
+&+Lis one of a very few surviving snowmen. He is a proud creature and stands
+&+Lin the bitter cold, waiting for the &+Wsignal&+L.&n
+~
+1073743880 0 0 0 0 0 0 0 S
+so 0 1048577 -1
+60 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
 #55217
 massive guard warrior _justiceshout1_~
 &+La &+Cmember &+Lof the &+Wcity &+Lpatrol&n~
@@ -3555,7 +3570,7 @@ divine guardsman _nosneak_~
 ~
 67504138 896 0 134217756 2076 0 67108864 0 S
 mg 0 8 -1
-56 0 0 1d1+1 1d1+1
+51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55256
@@ -3571,7 +3586,7 @@ unholy guardian~
 ~
 67504138 896 0 134217756 2076 0 67108864 0 S
 mg 0 16 -1
-56 0 0 1d1+1 1d1+1
+51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55257
@@ -3587,7 +3602,7 @@ fearsome warrior~
 ~
 67504138 33555328 0 134217756 2076 0 67108896 0 S
 sg 0 1048576 -1
-56 0 0 1d1+1 1d1+1
+41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55258
@@ -3603,7 +3618,7 @@ fearsome warrior~
 ~
 67504138 33555328 0 134217756 2076 0 67108896 0 S
 sg 0 1048576 -1
-56 0 0 1d1+1 1d1+1
+41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55259
@@ -3619,7 +3634,7 @@ powerful sage~
 ~
 67504138 33555328 0 134217756 8390684 0 67635200 0 S
 an 0 512 -1
-60 0 0 1d1+1 1d1+1
+46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55260
@@ -3635,7 +3650,7 @@ powerful sage~
 ~
 67504138 33555328 0 134217756 8390684 0 67635200 0 S
 an 0 512 -1
-60 0 0 1d1+1 1d1+1
+46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #55500

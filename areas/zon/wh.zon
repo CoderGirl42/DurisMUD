@@ -309,6 +309,14 @@ D 0 55222 0 1 100 0 0 0
 *     north exit from "A Set of Wooden Steps Leading Towards the Beach" to
 *     "A Small Alley Alongside a Massive Stone Wall" - closed
 *
+D 0 55399 4 1 100 0 0 0
+*     up exit from "Dispersement for psychomia plant mob" to
+*     "Temporary Imm Loading Room, for ze Mobs!" - closed
+*
+D 0 55613 5 1 100 0 0 0
+*     down exit from "Temporary Imm Loading Room, for ze Mobs!" to
+*     "Dispersement for psychomia plant mob" - closed
+*
 D 0 55400 5 1 100 0 0 0
 *     down exit from "Distribution for Ambassadors" to
 *     "Ambassador creation room" - closed
@@ -800,13 +808,13 @@ M 0 55085 4 55295 100 0 0 0        * a male commoner
 M 0 55084 4 55295 100 0 0 0        * a female commoner
 M 0 55084 4 55295 100 0 0 0        * a female commoner
 M 0 55023 6 55296 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55023 6 55296 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55023 6 55301 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55023 6 55301 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55171 1 55319 100 0 0 0        * Celarno
 M 0 55172 1 55324 100 0 0 0        * Duule
 M 0 55170 1 55333 100 0 0 0        * Ibaron
@@ -871,6 +879,7 @@ M 0 55175 1 55395 100 0 0 0        * Marigold
 M 0 55176 1 55396 100 0 0 0        * Nubija
 M 0 55173 1 55397 100 0 0 0        * Theft
 M 0 55174 1 55398 100 0 0 0        * Ugruk
+M 0 55212 1 55399 100 0 0 0        * the Indomitable Snowman
 M 0 55201 2 55400 100 0 0 0        * an ambassador from the Icecrag Castle
 M 0 55208 2 55400 100 0 0 0        * an ambassador from the Domain of Lost Souls
 M 0 55199 2 55400 100 0 0 0        * an ambassador from The Jade Empire
@@ -920,8 +929,6 @@ F 1 55055 1 55401 20 0 0 0         * a battle scarred mercenary (following)
 E 1 55314 1 20 100 0 0 0           *   a blank expression
 M 0 55550 4 55402 100 0 0 0        * The Incarnate of Fire
 M 0 55550 4 55402 100 0 0 0        * The Incarnate of Fire
-M 0 55551 4 55402 100 0 0 0        * The Incarnate of Frost
-M 0 55551 4 55402 100 0 0 0        * The Incarnate of Frost
 M 0 55552 4 55402 100 0 0 0        * The Incarnate of Stone
 M 0 55552 4 55402 100 0 0 0        * The Incarnate of Stone
 M 0 55553 4 55402 100 0 0 0        * The Incarnate of Air
@@ -930,6 +937,8 @@ M 0 55554 4 55402 100 0 0 0        * The Incarnate of Mischief
 M 0 55554 4 55402 100 0 0 0        * The Incarnate of Mischief
 M 0 55246 4 55402 100 0 0 0        * a tall psychomia treant
 M 0 55246 4 55402 100 0 0 0        * a tall psychomia treant
+M 0 55551 4 55402 100 0 0 0        * The Incarnate of Frost
+M 0 55551 4 55402 100 0 0 0        * The Incarnate of Frost
 M 0 55201 2 55403 50 0 0 0         * an ambassador from the Icecrag Castle
 M 0 55208 2 55403 50 0 0 0         * an ambassador from the Domain of Lost Souls
 M 0 55199 2 55403 50 0 0 0         * an ambassador from The Jade Empire
@@ -1015,9 +1024,9 @@ M 0 55518 26 55493 25 0 0 0        * a small carp
 M 0 55519 26 55493 25 0 0 0        * a medium carp
 M 0 55520 26 55493 25 0 0 0        * a large carp
 M 0 55023 6 55500 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55023 6 55500 100 0 0 0        * a mighty warrior
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
 M 0 55059 2 55504 100 0 0 0        * a jail guard
 M 0 55059 2 55504 100 0 0 0        * a jail guard
 M 0 55147 3 55507 100 0 0 0        * a security guard
@@ -1523,7 +1532,6 @@ G 1 55149 999 0 100 0 0 0          *    a thick and crunchy pretzel
 G 1 55151 999 0 100 0 0 0          *    a rootbeer float
 G 1 55150 999 0 100 0 0 0          *    a cup of soft ice cream
 M 0 55100 1 55605 100 0 0 0        * Rosenthal
-M 0 55026 1 55606 100 0 0 0        * Volo the Traveler
 M 0 55210 1 55608 100 0 0 0        * a mental projection of Drahknalloth
 M 0 55211 1 55611 100 0 0 0        * Drahknalloth
 M 0 55031 1 55612 100 0 0 0        * Salyyn
@@ -1545,38 +1553,22 @@ M 0 55254 1 55615 100 0 0 0        * a figureless haze
 G 1 55329 1 0 100 0 0 0            *    the second mold of the key of gnomish secrets
 M 0 55253 1 55615 100 0 0 0        * a figureless haze
 G 1 55330 1 0 100 0 0 0            *    the third mold of the key of gnomish secrets
-M 0 55241 2 55616 100 0 0 0        * an unholy guardian
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55241 2 55616 100 0 0 0        * an unholy guardian
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55255 2 55616 100 0 0 0        * a divine guardsman
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55255 2 55616 100 0 0 0        * a divine guardsman
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55258 2 55616 100 0 0 0        * a fearsome WaRRioR
-M 0 55258 2 55616 100 0 0 0        * a fearsome WaRRioR
-M 0 55259 2 55616 100 0 0 0        * a powerful sage
-M 0 55259 2 55616 100 0 0 0        * a powerful sage
-M 0 55256 2 55616 100 0 0 0        * an unholy guardian
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55256 2 55616 100 0 0 0        * an unholy guardian
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55240 2 55616 100 0 0 0        * a divine guardsman
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55240 2 55616 100 0 0 0        * a divine guardsman
-E 1 55333 8 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
-E 1 55334 14 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
-M 0 55257 2 55616 100 0 0 0        * a fearsome WaRRioR
-M 0 55257 2 55616 100 0 0 0        * a fearsome WaRRioR
-M 0 55260 2 55616 100 0 0 0        * a powerful sage
-M 0 55260 2 55616 100 0 0 0        * a powerful sage
+M 0 55241 1 55616 100 0 0 0        * an unholy guardian
+E 1 55333 4 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+M 0 55255 1 55616 100 0 0 0        * a divine guardsman
+E 1 55333 4 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+M 0 55258 1 55616 100 0 0 0        * a fearsome WaRRioR
+M 0 55259 1 55616 100 0 0 0        * a powerful sage
+M 0 55256 1 55616 100 0 0 0        * an unholy guardian
+E 1 55333 4 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+M 0 55240 1 55616 100 0 0 0        * a divine guardsman
+E 1 55333 4 11 100 0 0 0           *   a shield bearing the crest of Winterhaven
+E 1 55334 10 16 100 0 0 0          *   a large mithril sword of the Winterhaven Guard
+M 0 55257 1 55616 100 0 0 0        * a fearsome WaRRioR
+M 0 55260 1 55616 100 0 0 0        * a powerful sage
 M 0 55229 1 55618 100 0 0 0        * a large snow ogre chief
 M 0 55231 1 55619 25 0 0 0         * a snow ogre shaman
 M 0 55230 1 55620 25 0 0 0         * a snow ogre shaman
