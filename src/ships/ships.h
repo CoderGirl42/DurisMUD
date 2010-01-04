@@ -203,6 +203,7 @@ extern const int ship_allowed_weapons[MAXSHIPCLASS][MAXWEAPON];
 struct ShipArcProperties
 {
     int max_weapon_slots[4];
+    int max_weapon_weight[4];
     int armor[4];
     int internal[4];
 };

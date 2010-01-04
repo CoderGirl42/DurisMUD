@@ -974,16 +974,20 @@ void dock_ship(P_ship ship, int to_room)
 
 bool check_undocking_conditions(P_ship ship, P_char ch)
 {
-    int arc_weapons[4];
+    int arc_weapons[4], arc_weapon_weight[4];
 
     for (int a = 0; a < 4; a++)
+    {
         arc_weapons[a] = 0;
+        arc_weapon_weight[a] = 0;
+    }
 
     for (int sl = 0; sl < MAXSLOTS; sl++) 
     {
         if (ship->slot[sl].type == SLOT_WEAPON)
         {
             arc_weapons[ship->slot[sl].position]++;
+            arc_weapon_weight[ship->slot[sl].position] += weapon_data[ship->slot[sl].index].weight;
             if (!ship_allowed_weapons[ship->m_class][ship->slot[sl].index])
             {
                 sprintf(buf, "Remove weapon [%d], it is not allowed with this hull!\r\n", sl);
@@ -1002,6 +1006,17 @@ bool check_undocking_conditions(P_ship ship, P_char ch)
               ship_arc_properties[ship->m_class].max_weapon_slots[STARBOARD], 
               ship_arc_properties[ship->m_class].max_weapon_slots[PORT], 
               ship_arc_properties[ship->m_class].max_weapon_slots[REAR]);
+          send_to_char(buf, ch);
+          return FALSE;
+      }
+      if (arc_weapon_weight[a] > ship_arc_properties[ship->m_class].max_weapon_weight[a])
+      {
+          sprintf(buf, 
+              "Your have overloaded one side with weapons!\r\nMaximum allowed weapon weight for this ship is:\r\nFore: %d  Starboard: %d  Port: %d  Rear: %d\r\n",
+              ship_arc_properties[ship->m_class].max_weapon_weight[FORE], 
+              ship_arc_properties[ship->m_class].max_weapon_weight[STARBOARD], 
+              ship_arc_properties[ship->m_class].max_weapon_weight[PORT], 
+              ship_arc_properties[ship->m_class].max_weapon_weight[REAR]);
           send_to_char(buf, ch);
           return FALSE;
       }
@@ -4848,14 +4863,24 @@ int buy_weapon(P_char ch, P_ship ship, char* arg1, char* arg2)
     }
 
     int same_arc = 0;
+    int same_arc_weight = 0;
     for (int sl = 0; sl < MAXSLOTS; sl++) 
     {
         if (ship->slot[sl].type == SLOT_WEAPON && ship->slot[sl].position == arc)
+        {
             same_arc++;
+            same_arc_weight += weapon_data[ship->slot[sl].index].weight;
+        }
     }
     if (same_arc >= ship_arc_properties[ship->m_class].max_weapon_slots[arc])
     {
         sprintf(buf, "Your can not put more weapons to this side!\r\n");
+        send_to_char(buf, ch);
+        return TRUE;
+    }
+    if (same_arc_weight + weapon_data[w].weight > ship_arc_properties[ship->m_class].max_weapon_weight[arc])
+    {
+        sprintf(buf, "Your can not put more weight to this side! Maximum allowed: %d\r\n", ship_arc_properties[ship->m_class].max_weapon_weight[arc]);
         send_to_char(buf, ch);
         return TRUE;
     }

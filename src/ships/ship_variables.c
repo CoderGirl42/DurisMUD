@@ -166,9 +166,9 @@ const WeaponData weapon_data[MAXWEAPON] = {
  { "Small Ballistae",          50000,    3,   90,      0,      8,      2,      4,      1,      10,   20,    100,     50,     10,      30,      3,      7,  WPNFLAG01 },
  { "Medium Ballistae",        100000,    6,   60,      0,     10,      4,      6,      1,      10,   20,    100,     50,     10,      30,      5,      8,  WPNFLAG02 },
  { "Large Ballistae",         500000,   10,   30,      0,     12,      6,      9,      1,      10,   20,    100,     50,     10,      30,      7,     10,  WPNFLAG03 },
- { "Small Catapult",          500000,   10,   30,      5,     15,      2,      3,      4,     160,   20,    100,    100,      2,      30,     10,     18,  WPNFLAG04 },
+ { "Small Catapult",          500000,   10,   30,      4,     15,      2,      3,      4,     160,   20,    100,    100,      2,      30,     10,     18,  WPNFLAG04 },
  { "Medium Catapult",         800000,   13,   20,      5,     20,      2,      4,      5,     260,   20,    100,    100,      2,      30,     15,     24,  WPNFLAG05 },
- { "Large Catapult",         1200000,   17,   12,      5,     25,      2,      5,      6,     360,   20,    100,    100,      2,      30,     20,     30,  WPNFLAG06 },
+ { "Large Catapult",         1200000,   17,   12,      6,     25,      2,      5,      6,     360,   20,    100,    100,      2,      30,     20,     30,  WPNFLAG06 },
  { "Heavy Ballistae",        1000000,   15,    6,      0,      5,     15,     25,      1,      10,    0,    100,      0,     15,      30,     20,      3,  WPNFLAG07 },
  { "Quartz Beamcannon",      4000000,    7,   40,      0,     20,      4,     16,      1,      10,   20,    100,     50,     15,      45,     10,      0,  WPNFLAG08 },
  { "Darkstone Beamcannon",   5000000,    9,   40,      0,     23,      5,     22,      1,      10,   20,    100,     50,     15,      45,     12,      0,  WPNFLAG09 },
@@ -213,21 +213,21 @@ const ShipTypeData ship_type_data[MAXSHIPCLASS] = {
 
 extern const ShipArcProperties ship_arc_properties[MAXSHIPCLASS];
 const ShipArcProperties ship_arc_properties[MAXSHIPCLASS] = {
-//      Weapon slots                  Armor                   Internal
-//   Fwrd Port Rear Stbd       Fwrd Port Rear Stbd       Fwrd Port Rear Stbd  
-  { {  0,   0,   0,   0 },   {   2,   3,   1,   3 },   {   1,   1,   1,   1 } }, // Sloop
-  { {  1,   1,   1,   1 },   {   6,   8,   4,   8 },   {   3,   4,   2,   4 } }, // Yacht
-  { {  1,   2,   1,   2 },   {  29,  36,  18,  36 },   {  14,  18,   9,  18 } }, // Clipper
-  { {  1,   2,   1,   2 },   {  40,  50,  25,  50 },   {  20,  25,  12,  25 } }, // Ketch
-  { {  1,   3,   1,   3 },   {  53,  66,  33,  66 },   {  26,  33,  16,  33 } }, // Caravel
-  { {  1,   3,   1,   3 },   {  69,  86,  43,  86 },   {  34,  43,  21,  43 } }, // Carrack
-  { {  2,   3,   1,   3 },   {  88, 110,  55, 110 },   {  44,  55,  27,  55 } }, // Galleon
-
-  { {  1,   3,   1,   3 },   {  50,  63,  37,  63 },   {  22,  27,  13,  27 } }, // Corvette
-  { {  2,   3,   1,   3 },   {  67,  84,  50,  84 },   {  29,  36,  18,  36 } }, // Destroyer
-  { {  2,   3,   2,   3 },   {  87, 109,  65, 109 },   {  38,  47,  23,  47 } }, // Cruiser
-  { {  2,   4,   2,   4 },   { 122, 153,  91, 153 },   {  53,  66,  33,  66 } }, // Frigate
-  { {  3,   5,   2,   5 },   { 153, 191, 115, 191 },   {  66,  83,  41,  83 } }, // Dreadnought
+//      Weapon slots            Weapon weight                  Armor                   Internal
+//   Fwrd Port Rear Stbd      Fwrd Port Rear Stbd       Fwrd Port Rear Stbd       Fwrd Port Rear Stbd  
+  { {  0,   0,   0,   0 },   {  0,   0,   0,   0 },   {   2,   3,   1,   3 },   {   1,   1,   1,   1 } }, // Sloop
+  { {  1,   1,   1,   1 },   {  3,   3,   3,   3 },   {   6,   8,   4,   8 },   {   3,   4,   2,   4 } }, // Yacht
+  { {  1,   2,   1,   2 },   { 10,  15,  10,  15 },   {  29,  36,  18,  36 },   {  14,  18,   9,  18 } }, // Clipper
+  { {  1,   2,   1,   2 },   { 13,  20,  13,  20 },   {  40,  50,  25,  50 },   {  20,  25,  12,  25 } }, // Ketch
+  { {  1,   3,   1,   3 },   { 17,  27,  17,  27 },   {  53,  66,  33,  66 },   {  26,  33,  16,  33 } }, // Caravel
+  { {  1,   3,   1,   3 },   { 21,  35,  21,  35 },   {  69,  86,  43,  86 },   {  34,  43,  21,  43 } }, // Carrack
+  { {  1,   3,   1,   3 },   { 26,  40,  26,  40 },   {  88, 110,  55, 110 },   {  44,  55,  27,  55 } }, // Galleon
+                                                      
+  { {  1,   3,   1,   3 },   { 13,  30,  13,  30 },   {  50,  63,  37,  63 },   {  22,  27,  13,  27 } }, // Corvette
+  { {  2,   3,   1,   3 },   { 30,  40,  30,  40 },   {  67,  84,  50,  84 },   {  29,  36,  18,  36 } }, // Destroyer
+  { {  2,   3,   2,   3 },   { 34,  45,  34,  45 },   {  87, 109,  65, 109 },   {  38,  47,  23,  47 } }, // Cruiser
+  { {  2,   4,   2,   4 },   { 42,  60,  42,  60 },   { 122, 153,  91, 153 },   {  53,  66,  33,  66 } }, // Frigate
+  { {  3,   5,   2,   5 },   { 52,  75,  52,  75 },   { 153, 191, 115, 191 },   {  66,  83,  41,  83 } }, // Dreadnought
 };                                                                              
 
 extern const int ship_allowed_weapons[MAXSHIPCLASS][MAXWEAPON];
