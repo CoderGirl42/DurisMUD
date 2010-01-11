@@ -24,6 +24,7 @@ using namespace std;
 #include "timers.h"
 #include "assocs.h"
 #include "nexus_stones.h"
+#include "auction_houses.h"
 
 extern P_room world;
 extern P_index obj_index;
@@ -1898,6 +1899,12 @@ void do_epic(P_char ch, char *arg, int cmd)
 
   argument_interpreter(arg, buff2, buff3);
 
+  if( !str_cmp("reset", buff2) )
+  {
+    do_epic_reset(ch, arg, cmd);
+    return;
+  }
+  
   if( !str_cmp("skills", buff2) )
   {
     do_epic_skills(ch, arg, cmd);
@@ -2033,6 +2040,107 @@ int epic_zone_data::displayed_alignment() const
 //	send_to_char("\n* = already completed this boot.\n", ch);
 //
 //}
+
+void do_epic_reset(P_char ch, char *arg, int cmd)
+{
+  char buff2[MAX_STRING_LENGTH];
+  char buff3[MAX_STRING_LENGTH];
+  
+  argument_interpreter(arg, buff2, buff3);
+  
+  if( !ch || !IS_PC(ch) )
+    return;
+  
+  P_char t_ch = ch;
+  
+  if( IS_TRUSTED(ch) && strlen(buff3) )
+  {
+    if( !(t_ch = get_char_vis(ch, buff3)) || !IS_PC(t_ch) )
+    {
+      send_to_char("They don't appear to be in the game.\n", ch);
+      return;
+    }
+  }
+  
+  // run through skills
+  // for each skill that is epic:
+  //    for each skill point:
+  //      calculate epic point cost / plat cost
+  //      reimburse points / plat
+  
+  send_to_char("&+WResetting epic skills:\n", ch);
+  
+  int point_refund = 0;
+  int coins_refund = 0;
+  
+  for (int skill_id = 0; skill_id <= MAX_AFFECT_TYPES; skill_id++)
+  {
+    int learned = t_ch->only.pc->skills[skill_id].learned;
+    
+    if(IS_EPIC_SKILL(skill_id) && learned)
+    {
+      // find in epic_rewards
+      int s;
+      
+      bool found = false;
+      for( s = 0; epic_rewards[s].type; s++ )
+      {
+        if( epic_rewards[s].value == skill_id )
+        {
+          found = true;
+          break;
+        }
+      }
+      
+      if( !found )
+      {
+        continue;
+      }
+      
+      int points = 0;
+      int coins = 0;
+      
+      for( int skill_level = 0; skill_level < learned; skill_level += (int) get_property("epic.skillGain", 10) )
+      {
+        float cost_f = 1 + skill_level / get_property("epic.progressFactor", 30);
+        int points_cost = (int) (cost_f * epic_rewards[s].points_cost);
+        int coins_cost = (int) (cost_f * epic_rewards[s].coins);
+        
+        if(IS_MULTICLASS_PC(t_ch) &&
+           !IS_SET(epic_rewards[s].classes, t_ch->player.m_class) &&
+           IS_SET(epic_rewards[s].classes, t_ch->player.secondary_class))
+        {
+          points_cost *= (int) (get_property("epic.multiclass.EpicSkillCost", 2));
+          coins_cost *= (int) (get_property("epic.multiclass.EpicPlatCost", 3));
+        }
+        
+        points += points_cost;
+        coins += coins_cost;
+      }      
+      
+      sprintf(buff2, "&+W%s %d&n: &+W%d&n esp, %s\n", skills[skill_id].name, learned, points, coin_stringv(coins));
+      send_to_char(buff2, ch);
+      
+      point_refund += points;
+      coins_refund += coins;
+      
+      t_ch->only.pc->skills[skill_id].learned = t_ch->only.pc->skills[skill_id].taught = 0;
+    }
+  }
+  
+  sprintf(buff2, "Total: &+W%d&n esp, %s&n refunded\r\n", point_refund, coin_stringv(coins_refund));
+  send_to_char(buff2, ch);
+  
+  insert_money_pickup(GET_PID(t_ch), coins_refund);
+  t_ch->only.pc->epic_skill_points += point_refund;
+
+  sprintf(buff2, "\r\n&+GYour epic skills have been reset: your skill points have been refunded, \r\n&+Gand %s&+G has been reimbursed and is waiting for you at the nearest auction house.\r\n\r\n", coin_stringv(coins_refund));
+  
+  if( !send_to_pid(buff2, GET_PID(t_ch)) )
+    send_to_pid_offline(buff2, GET_PID(t_ch));
+  
+  do_save_silent(t_ch, 1);  
+}
 
 void do_epic_zones(P_char ch, char *arg, int cmd)
 {
