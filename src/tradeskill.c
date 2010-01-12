@@ -971,26 +971,50 @@ bool load_one_mine(int map)
   
   if( random < 1 )
   {
-    mine->value[0] = number(15, 20);
-    mine->value[1] = 25;
+    mine->value[0] = number(10, 15);
+    mine->value[1] = number(30, 50);
     mine->description = str_dup("&+LThe &+yearth &+Lhere is &+cbr&+Lim&+Cm&+Ling with &+Yore&+L - it's the &+GMother &+LLode!&n");
   }
-  else if( random < 18 )
+  if( random < 3 )
   {
-    mine->value[0] = number(10, 15);
-    mine->value[1] = 10;
+    mine->value[0] = number( 3,  7);
+    mine->value[1] = number(50, 60);
+    mine->description = str_dup("&+LThe &+yearth &+Lhere is &+cbr&+Lim&+Cm&+Ling with &+Yore&+L - it's the &+GMother &+LLode!&n");
+  }  
+  else if( random < 11 )
+  {
+    mine->value[0] = number(10, 20);
+    mine->value[1] = number(15, 25);
     mine->description = str_dup("&+LThe &+yearth&+L here is &+cst&+Lrea&+ck&+Led &+Lwith &+core&+L.&n");
   }
-  else if( random < 50 )
+  else if( random < 20 )
   {
-    mine->value[0] = number(7,12);
-    mine->value[1] = 8;
+    mine->value[0] = number(15, 20);
+    mine->value[1] = number(10, 20);
+    mine->description = str_dup("&+LThe &+yearth&+L here is &+cst&+Lrea&+ck&+Led &+Lwith &+core&+L.&n");
+  }  
+  else if( random < 45 )
+  {
+    mine->value[0] = number( 8, 15);
+    mine->value[1] = number(15, 20);
     mine->description = str_dup("&+LA few chunks of &+Yore &+Lpoke out of the ground here.&n");
   }
+  else if( random < 65 )
+  {
+    mine->value[0] = number( 5, 10);
+    mine->value[1] = number(20, 25);
+    mine->description = str_dup("&+LA few chunks of &+Yore &+Lpoke out of the ground here.&n");
+  }  
+  else if( random < 85 )
+  {
+    mine->value[0] = number(10, 15);
+    mine->value[1] = number( 5, 10);
+    mine->description = str_dup("&+LA few glimmers &+Ws&+wpa&+Wrk&+wle&+L in the &+yearth &+Lhere.&n");
+  }  
   else
   {
-    mine->value[0] = number(5,8);
-    mine->value[1] = 5;
+    mine->value[0] = number( 5, 10);
+    mine->value[1] = number(10, 15);
     mine->description = str_dup("&+LA few glimmers &+Ws&+wpa&+Wrk&+wle&+L in the &+yearth &+Lhere.&n");
   }
   
