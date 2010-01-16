@@ -1808,29 +1808,29 @@ int demon_slayer(P_obj obj, P_char ch, int cmd, char *arg)
 
           rand = number(0, 100);
     
-          if(rand <= 20)
+          if(rand <= 20) // 20%
           {
             spell_pword_blind(60, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
-          if(21 <= rand <= 40)
+          if(21 >= rand <= 40) // 19%
           {
             spell_pword_stun(56, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
-          if(41 <= rand <= 60)
+          if(41 >= rand <= 60) // 19%
           {
             spell_pword_stun(56, ch, 0, SPELL_TYPE_SPELL, vict, 0);
             spell_pword_blind(60, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
-          if(61 <= rand <= 85)
+          if(61 >= rand <= 85) // 24%
           {
             spell_bigbys_clenched_fist(45, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
-          if(86 <= rand <= 98)
+          if(86 >= rand <= 98) //12%
           {
             spell_bigbys_clenched_fist(45, ch, 0, SPELL_TYPE_SPELL, vict, 0);
             spell_bigbys_clenched_fist(45, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
-          if(99 <= rand <= 100)
+          if(99 >= rand <= 100) // 2%
           {
             spell_chaotic_ripple(56, ch, 0, SPELL_TYPE_SPELL, vict, 0);
           }
