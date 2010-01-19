@@ -2735,7 +2735,7 @@ void do_bash(P_char ch, char *argument, int cmd)
   if(!(victim) ||
      !IS_ALIVE(victim))
   {
-    CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
+    //CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
     return;
   }
 
@@ -4383,7 +4383,7 @@ int backstab(P_char ch, P_char victim)
        !IS_ALIVE(victim))
     {
       send_to_char("Backstab who?\n", ch);
-      CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
+      //CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
       return FALSE;
     }
   }
