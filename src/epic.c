@@ -2271,7 +2271,7 @@ float get_epic_zone_alignment_mod(int zone_number, ubyte racewar)
   if( alignment > 0 && racewar == RACEWAR_EVIL )
   {
     // good alignment, evil racewar
-    mod += ((float) alignment) * (float) get_property("epic.zone.alignmentMod", 0.10);
+    mod += ((float) alignment) * 2.0 * (float) get_property("epic.zone.alignmentMod", 0.10);
   }
   else if( alignment > 0 && racewar == RACEWAR_GOOD )
   {
@@ -2281,12 +2281,12 @@ float get_epic_zone_alignment_mod(int zone_number, ubyte racewar)
   else if( alignment < 0 && racewar == RACEWAR_EVIL )
   {
     // evil alignment, evil racewar
-    mod += ((float) alignment) * (float) get_property("epic.zone.alignmentMod", 0.10);    
+    mod += ((float) -alignment) * (float) get_property("epic.zone.alignmentMod", 0.10);    
   }
   else if( alignment < 0 && racewar == RACEWAR_GOOD )
   {
     // evil alignment, good racewar
-    mod += ((float) -alignment) * (float) get_property("epic.zone.alignmentMod", 0.10);    
+    mod += ((float) alignment) * 2.0 * (float) get_property("epic.zone.alignmentMod", 0.10);    
   }
   
   debug("get_epic_zone_alignment_mod(zone_number=%d, racewar=%d): %f", zone_number, (int) racewar, mod);
