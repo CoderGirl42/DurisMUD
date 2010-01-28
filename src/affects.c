@@ -694,7 +694,7 @@ void apply_affs(P_char ch, int mode)
      ch->equipment[SECONDARY_WEAPON])
 
   {
-    ch->points.hitroll += GET_LEVEL(ch) / 5;
+    ch->points.hitroll += GET_LEVEL(ch) / 6;
     ch->points.damroll += GET_LEVEL(ch) / 6;
   }
 
