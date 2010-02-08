@@ -12339,18 +12339,24 @@ void spell_pword_kill(int level, P_char ch, char *arg, int type,
   int      dam;
   struct damage_messages messages = {
     "$N's life force is drained slightly by the power of your word.",
-        "$n's word of power causes you to sag, and you feel your vitality draining away!",
-        "$N seems to sag slightly, as $n viciously attacks $S life force.",
+    "$n's word of power causes you to sag, and you feel your vitality draining away!",
+    "$N seems to sag slightly, as $n viciously attacks $S life force.",
     "$N dies instantly from the power of your word.",
     "You hear a word of power, and die instantly.",
     "$N hears $n's word of power, and nothing more."
   };
 
   percent = 100 - (BOUNDED(0, 2 * (level - GET_LEVEL(victim)), 100));
-  percent += number(-10, 30);
+  percent += number(-10, 10);
+  
+  if(IS_GREATER_RACE(victim) &&
+     percent > 0)
+       percent /= 2;
 
-  if(((percent < 100 || IS_TRUSTED(ch)) && (!IS_TRUSTED(victim)) &&
-       !NewSaves(victim, SAVING_SPELL, -5 + (100 - percent) / 10)))
+  if(((percent < 100 || IS_TRUSTED(ch)) && 
+    (!IS_TRUSTED(victim)) &&
+     !NewSaves(victim, SAVING_SPELL, -5 + (100 - percent) / 10)) &&
+     !IS_ELITE(victim))
   {
     act("&+Y$N &+Ydies instantly from the power of your word.&n", FALSE, ch, 0, victim, TO_CHAR);
     act("&+YYou hear a word of power, and die instantly.&n", FALSE, ch, 0, victim, TO_VICT);
@@ -12360,6 +12366,10 @@ void spell_pword_kill(int level, P_char ch, char *arg, int type,
   else
   {
    dam = ((dice(3, 6) + level) * 4);
+   
+   if(IS_PC_PET(ch))
+     dam /= 2;
+   
    spell_damage(ch, victim, dam, SPLDAM_NEGATIVE, 0, &messages);
   }
 }
