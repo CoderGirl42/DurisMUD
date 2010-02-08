@@ -357,7 +357,8 @@ const struct innate_data
   {"elemental body", 0},
   {"amorphous body", 0},
   {"engulf", do_engulf},
-  {"slime", do_slime}
+  {"slime", do_slime},
+  {"guardians bulwark", 0}
 };
 
 bool has_innate(P_char ch, int innate)
@@ -725,6 +726,7 @@ void assign_innates()
   /* class innates */
   
   ADD_CLASS_INNATE(INNATE_RAPIER_DIRK, CLASS_WARRIOR, 1, SPEC_SWASHBUCKLER);
+  ADD_CLASS_INNATE(INNATE_GUARDIANS_BULWARK, CLASS_WARRIOR, 41, SPEC_GUARDIAN);
 
   ADD_CLASS_INNATE(INNATE_MINER, CLASS_ALCHEMIST, 36, SPEC_BLACKSMITH);
   ADD_CLASS_INNATE(INNATE_FOUNDRY, CLASS_ALCHEMIST, 41, SPEC_BLACKSMITH);
