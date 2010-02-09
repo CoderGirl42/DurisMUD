@@ -993,7 +993,7 @@ int storage_locker_room_hook(int room, P_char ch, int cmd, char *arg)
       return TRUE;
     }
     
-    if (get_assoc_prestige(GET_A_NUM(ch)) < (int)get_property("prestige.locker.required", 1000))
+    if (get_assoc_prestige(GET_A_NUM(ch)) < get_property("prestige.locker.required", 0))
     {
       send_to_char("Your association is not yet prestigious enough to have a locker!\r\n", ch);
       return TRUE;
@@ -1173,13 +1173,7 @@ int guild_locker_room_hook(int room, P_char ch, int cmd, char *arg)
     send_to_char("Try becoming part of a guild first!\r\n", ch);
     return TRUE;
   }
-  
-  if (get_assoc_prestige(GET_A_NUM(ch)) < (int)get_property("prestige.locker.required", 1000))
-  {
-    send_to_char("Your association is not yet prestigious enough to have a locker!\r\n", ch);
-    return TRUE;
-  }
-  
+    
   sprintf(enterWho, "guild.%d", GET_A_NUM(ch));
   is_guild_locker = 1;
   

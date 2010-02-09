@@ -12,6 +12,8 @@
 #ifndef __STORAGE_LOCKERS_H__
 #define __STORAGE_LOCKERS_H__
 
+#include <string.h>
+
 int guild_locker_room_hook(int room, P_char ch, int cmd, char *arg);
 
 class LockerChest;
