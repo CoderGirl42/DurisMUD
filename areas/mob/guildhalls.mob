@@ -1,5 +1,5 @@
 #48000
-golem sorcerer~
+golem sorcerer djinn statue _ignore_~
 &+ba colossal &+cdjinn &+bstatue&n~
 &+bAn enormous statue of a &+cdjinn &+bresides here.&n
 ~
@@ -8,35 +8,35 @@ golem sorcerer~
 &+bIts skin, and the very essense of it crackle and spark with mystical&n
 &+benergy.&n
 ~
-4194312 0 0 0 0 0 0 0 S
+71307338 0 0 939524248 297180 21495808 109065216 0 S
 og 0 512 6
-60 0 0 1d1+1 1d1+1
+60 200 -444 2000d10+10000 12d8+99
 0.0.0.0 0
 8 8 0
 #48001
-golem warrior~
+golem warrior anubian soldier statue onyx _ignore_~
 &+Lthe statue of an &+yanu&+Lbian sol&+ydier&n~
 &+LA colossal onyx statue stands, &+Wsp&+Cea&+Wr &+Lat the ready!&n
 ~
    &+LOnyx skin and a glint of &+Wsi&+Clv&+Wer we&+Cap&+Won&+Cry &+Ldisplay the&n
 &+Lprowess of this towering anubian soldier.&n
 ~
-4194312 0 0 0 0 0 0 0 S
+71324746 0 0 939597976 309468 88604672 109065216 0 S
 og 0 1 6
-60 0 0 1d1+1 1d1+1
+60 200 -444 4000d10+10000 12d8+99
 0.0.0.0 0
 8 8 0
 #48002
-golem cleric~
-&+yA giant bronze statue overlooks this foyer.&n~
-&+ya bronzed statue&n
+golem cleric giant bronze statue _ignore_~
+&+yA giant bronze statue&n~
+&+yA giant bronzed statue overlooks this foyer&n
 ~
    &+yA calm expression permeates the face of this automaton.&n
 &+yStanding nearly ten meters tall, this bronzed hunk of&n
 &+ymetal stands vigil over this foyer.&n
 ~
-4194312 0 0 0 0 0 0 0 S
-og 0 512 6
-60 0 0 1d1+1 1d1+1
+71454794 0 0 939598008 309468 22544384 109065216 0 S
+og 0 32 6
+60 200 -444 2000d10+10000 12d8+99
 0.0.0.0 0
 8 8 0
