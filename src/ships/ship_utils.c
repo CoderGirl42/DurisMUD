@@ -831,6 +831,11 @@ void ShipSlot::clone(const ShipSlot& other)
     val4 = other.val4;
 }
 
+void ShipCrew::replace_members(float percent)
+{
+    skill = ship_crew_data[index].min_skill + (int)( (float)(skill - ship_crew_data[index].min_skill) * (100.0 - percent) / 100.0);
+}
+
 void ShipCrew::update()
 {
     skill = MAX(ship_crew_data[index].min_skill, skill);

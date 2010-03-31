@@ -375,11 +375,11 @@ bool ship_loose_frags(P_ship target, int frags)
   {
     target->frags = MAX(0, target->frags - frags);
 
-    float skill_loss = 15.0 + (float)frags / 50.0;
+    float members_loss = 15.0 + (float)frags / 30.0;
 
-    target->sailcrew.skill = (int)((float)target->sailcrew.skill * (100.0 - skill_loss) / 100.0);
-    target->guncrew.skill = (int)((float)target->guncrew.skill * (100.0 - skill_loss) / 100.0);
-    target->repaircrew.skill = (int)((float)target->repaircrew.skill * (100.0 - skill_loss) / 100.0);
+    target->sailcrew.replace_members(members_loss);
+    target->guncrew.replace_members(members_loss);
+    target->repaircrew.replace_members(members_loss);
 
     if (target->frags < ship_crew_data[target->sailcrew.index].min_frags * 0.8)
     {

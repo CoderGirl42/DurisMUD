@@ -250,6 +250,7 @@ struct ShipCrew
 {
     void update();
     void reset_stamina();
+    void replace_members(float percent);
 
     int index;
     int skill;
