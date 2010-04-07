@@ -2384,7 +2384,7 @@ int buckler_saints(P_obj obj, P_char ch, int cmd, char *arg)
       }
     }
   }
-
+/*
   if (arg && (cmd == CMD_SAY))
   {
     if (isname(arg, "verdonnaly"))
@@ -2413,7 +2413,7 @@ int buckler_saints(P_obj obj, P_char ch, int cmd, char *arg)
       }
     }
   }
-
+*/
   if(IS_FIGHTING(ch))
   {
     if (cmd == CMD_GOTHIT && !number(0,25))
