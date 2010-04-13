@@ -11606,7 +11606,7 @@ int Malevolence(P_char ch, P_char pl, int cmd, char *arg)
 {
   P_char   tch, vapor, vict = NULL;
   P_obj    item, next_item;
-  int      numbPCs = 0, luckyPC = 0, currPC = 0, numb, pos;
+  int      numbPCs = 0, luckyPC = 0, currPC = 0, numb, pos, room;
   int      randroom;
 
   /*
@@ -11618,6 +11618,10 @@ int Malevolence(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd)
     return FALSE;
 
+  if(!(ch) ||
+     !IS_ALIVE(ch))
+     return false;
+    
   if (!IS_FIGHTING(ch))
     return FALSE;
 
@@ -11625,7 +11629,28 @@ int Malevolence(P_char ch, P_char pl, int cmd, char *arg)
     return FALSE;
 
   /* loop number of PC, pick someone */
-
+  if (number(0, 49) == 0)
+  {
+    for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
+    {
+      if (IS_PC(tch) && !IS_TRUSTED(tch))
+      {
+        if (number(0, 10) >= 5)
+        {
+          vict = tch;
+          act("$n screams out in an unearthly howl '&+rI control reality! I control you! Begone from my domain and die within Celestia!' &n",
+             FALSE, ch, 0, vict, TO_VICT);
+          act("$n screams out in an unearthly howl '&+rI control reality! I control $N! Begone from my domain and die within Celestia!' &n",
+             FALSE, ch, 0, vict, TO_NOTVICT);
+          randroom = number(45500, 45520);
+          char_from_room(vict);
+          char_to_room(vict, real_room(randroom), -1);
+        }
+      }
+    }
+    return TRUE;
+  }
+  
   if (GET_HIT(ch) < (GET_MAX_HIT(ch) /3))
   {
     vapor = read_mobile(45571, VIRTUAL);
@@ -11662,30 +11687,6 @@ int Malevolence(P_char ch, P_char pl, int cmd, char *arg)
     act("$n screams out in an unearthly howl '&+rI LIVE!' &n", FALSE, vapor,
         0, vapor, TO_NOTVICT);
     die(ch, ch);
-  }
-
-  if (number(0, 10) >= 8)
-  {
-    for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
-    {
-      if (IS_PC(tch) && !IS_TRUSTED(tch))
-      {
-        if (number(0, 10) >= 5)
-        {
-          vict = tch;
-          act
-            ("$n screams out in an unearthly howl '&+rI control reality! I control you! Begone from my domain and die within Celestia!' &n",
-             FALSE, ch, 0, vict, TO_VICT);
-          act
-            ("$n screams out in an unearthly howl '&+rI control reality! I control $N! Begone from my domain and die within Celestia!' &n",
-             FALSE, ch, 0, vict, TO_NOTVICT);
-          randroom = number(45500, 45520);
-          char_from_room(vict);
-          char_to_room(vict, real_room(randroom), -1);
-        }
-      }
-    }
-    return TRUE;
   }
 
   return FALSE;
