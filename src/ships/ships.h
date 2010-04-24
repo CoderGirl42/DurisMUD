@@ -114,6 +114,7 @@ Updated with warships. Nov08 -Lucrot
 #define SQUID_SHIP          BIT_12
 #define MOB_SHIP            BIT_13
 #define SUMMONED            BIT_14
+#define SUNKBYNPC           BIT_15
 
 #define EVILSHIP          0
 #define GOODIESHIP        1
@@ -465,11 +466,13 @@ extern struct ShipFragData shipfrags[10];
 #define SHIPARMORCOND(maxhp, curhp) armor_condition_prefix[armorcondition((maxhp),(curhp))]
 #define SHIPINTERNALCOND(maxhp,curhp) internal_condition_prefix[armorcondition((maxhp),(curhp))]
 #define SHIPSINKING(shipdata) IS_SET((shipdata)->flags, SINKING)
+#define SHIPSUNKBYNPC(shipdata) IS_SET((shipdata)->flags, SUNKBYNPC)
 #define SHIPIMMOBILE(shipdata) (shipdata->get_maxspeed() == 0)
 #define SHIPISDOCKED(shipdata) IS_SET((shipdata)->flags, DOCKED)
 //#define GUNCREWSTAT(shipdata, stat) guncrewstats[(shipdata)->guncrew.type][(stat)]
 //#define SAILCREWSTAT(shipdata, stat) sailcrewstats[(shipdata)->sailcrew.type][(stat)]
 #define SHIPANCHORED(shipdata) IS_SET((shipdata)->flags, ANCHOR)
+#define ISNPCSHIP(shipdata) ((shipdata)->race == NPCSHIP)
 
 //movement related stuff
 //#define SHIPX(shipdata) (shipdata)->x
@@ -506,8 +509,8 @@ void initialize_newships();
 void shutdown_newships();
 void update_crew(P_ship ship);
 void reset_crew_stamina(P_ship ship);
-bool ship_loss_on_sink(P_ship target, int frags);
-bool ship_gain_frags(P_ship ship, int frags);
+bool ship_loss_on_sink(P_ship target, P_ship attacker, int frags);
+bool ship_gain_frags(P_ship ship, P_ship target, int frags);
 void setcrew(P_ship ship, int crew_index, int skill);
 void update_ship_status(P_ship ship, P_ship attacker = 0);
 int bearing(float x1, float y1, float x2, float y2);
@@ -524,7 +527,7 @@ void nameship(const char *name, P_ship ship);
 int loadship(P_ship shipdata, int to_room);
 
 struct ShipData *newship(int m_class, bool npc = false);
-void delete_ship(P_ship ship);
+void delete_ship(P_ship ship, bool npc = false);
 
 // shops
 int newship_shop(int room, P_char ch, int cmd, char *arg);
@@ -571,7 +574,7 @@ extern int  damage_hull(P_ship ship, P_ship target, int dam, int arc, int armor_
 extern int  getarc(int heading, int bearing);
 extern int  ybearing(int bearing, int range);
 extern int  xbearing(int bearing, int range);
-extern int getcontacts(P_ship ship);
+extern int getcontacts(P_ship ship, bool limit_range = true);
 extern int getmap(P_ship ship);
 extern P_ship getshipfromchar(P_char ch);
 extern int num_people_in_ship(P_ship ship);
@@ -586,6 +589,7 @@ extern int weaponsight(P_ship ship, P_ship target, int weapon, float mod);
 extern void calc_crew_adjustments(P_ship ship);
 extern bool try_load_pirate_ship(P_ship target);
 extern bool try_load_pirate_ship(P_ship target, P_char ch, int level);
+extern bool try_unload_pirate_ship(P_ship ship);
 
 
 int sell_cargo(P_char ch, P_ship ship, int slot);

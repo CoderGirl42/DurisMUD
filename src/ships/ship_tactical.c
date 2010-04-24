@@ -67,7 +67,7 @@ int epic_ship_damage_control(P_char ch, int dam)
     return dam;
 }
 
-int getcontacts(P_ship ship)
+int getcontacts(P_ship ship, bool limit_range)
 {
   int      i, j, counter;
   P_obj    obj;
@@ -99,7 +99,7 @@ int getcontacts(P_ship ship)
             if (obj != ship->shipobj)
             {
               temp = shipObjHash.find(obj);
-              if (range(ship->x, ship->y, ship->z, j, 100 - i, temp->z) <= 35)
+              if (!limit_range || range(ship->x, ship->y, ship->z, j, 100 - i, temp->z) <= 35)
               {
                 setcontact(counter, temp, ship, j, 100 - i);
                 counter++;
@@ -323,10 +323,7 @@ int calc_salvage(P_ship target)
 
 int calc_frag_gain(P_ship ship)
 {
-    if (ship->race != NPCSHIP)
-        return SHIPHULLWEIGHT(ship);
-    else
-        return 0; // TODO: maybe some for certain NPS's
+    return SHIPHULLWEIGHT(ship);
 }
 
 int calc_bounty(P_ship target)
@@ -334,13 +331,18 @@ int calc_bounty(P_ship target)
     return (int) ( target->frags * 10000 / get_property("ship.sinking.rewardDivider", 7.0) );
 }
 
-bool ship_gain_frags(P_ship ship, int frags)
+bool ship_gain_frags(P_ship ship, P_ship target, int frags)
 {
   if (frags > 0)
   {
-    ship->frags += frags;
-    sprintf(buf, "Your ship has gained %d frags!\r\n", frags);
-    act_to_all_in_ship(ship, buf);
+    if (!ISNPCSHIP(target))
+    {
+        ship->frags += frags;
+        sprintf(buf, "Your ship has gained %d frags!\r\n", frags);
+        act_to_all_in_ship(ship, buf);
+    }
+    else
+        frags /= 5;
 
       //act_to_all_in_ship(ship, "&+GYour Sail Crew has gained some experience!&N\r\n");
 
@@ -356,45 +358,48 @@ bool ship_gain_frags(P_ship ship, int frags)
   return true;
 }
 
-bool ship_loss_on_sink(P_ship target, int frags)
+bool ship_loss_on_sink(P_ship ship, P_ship attacker, int frags)
 {
   float members_loss;
-  if (frags > 0)
-      members_loss = 15.0 + (float)frags / 30.0;
+  if (ISNPCSHIP(attacker))
+  {
+    members_loss = 5.0 + (float)SHIPHULLWEIGHT(ship) / 100.0;
+    frags = 0;
+  }
   else
-      members_loss = 5.0 + (float)SHIPHULLWEIGHT(target) / 100.0;
+    members_loss = 15.0 + (float)frags / 30.0;
 
-  target->sailcrew.replace_members(members_loss);
-  target->guncrew.replace_members(members_loss);
-  target->repaircrew.replace_members(members_loss);
+  ship->sailcrew.replace_members(members_loss);
+  ship->guncrew.replace_members(members_loss);
+  ship->repaircrew.replace_members(members_loss);
 
   if (frags > 0)
   {
-    target->frags = MAX(0, target->frags - frags);
+    ship->frags = MAX(0, ship->frags - frags);
 
-    if (target->frags < ship_crew_data[target->sailcrew.index].min_frags * 0.8)
+    if (ship->frags < ship_crew_data[ship->sailcrew.index].min_frags * 0.8)
     {
-      act_to_all_in_ship(target, "&+RYour sail crew abandons you, due to your reputation!");
-      setcrew(target, sail_crew_list[0], -1);
+      act_to_all_in_ship(ship, "&+RYour sail crew abandons you, due to your reputation!");
+      setcrew(ship, sail_crew_list[0], -1);
     }
-    if (target->frags < ship_crew_data[target->guncrew.index].min_frags * 0.8)
+    if (ship->frags < ship_crew_data[ship->guncrew.index].min_frags * 0.8)
     {
-      act_to_all_in_ship(target, "&+RYour gun crew abandons you, due to your reputation!");
-      setcrew(target, gun_crew_list[0], -1);
+      act_to_all_in_ship(ship, "&+RYour gun crew abandons you, due to your reputation!");
+      setcrew(ship, gun_crew_list[0], -1);
     }
-    if (target->frags < ship_crew_data[target->repaircrew.index].min_frags * 0.8)
+    if (ship->frags < ship_crew_data[ship->repaircrew.index].min_frags * 0.8)
     {
-      act_to_all_in_ship(target, "&+RYour repair crew abandons you, due to your reputation!");
-      setcrew(target, repair_crew_list[0], -1);
+      act_to_all_in_ship(ship, "&+RYour repair crew abandons you, due to your reputation!");
+      setcrew(ship, repair_crew_list[0], -1);
     }
-    if (target->frags < ship_crew_data[target->rowingcrew.index].min_frags * 0.8)
+    if (ship->frags < ship_crew_data[ship->rowingcrew.index].min_frags * 0.8)
     {
-      act_to_all_in_ship(target, "&+RYour rowing crew abandons you, due to your reputation!");
-      setcrew(target, rowing_crew_list[0], -1);
+      act_to_all_in_ship(ship, "&+RYour rowing crew abandons you, due to your reputation!");
+      setcrew(ship, rowing_crew_list[0], -1);
     }
   }
 
-  update_crew(target);
+  update_crew(ship);
   return true;
 }
 
@@ -403,6 +408,8 @@ bool ship_gain_money(P_ship ship, P_ship target, int salvage, int bounty)
 {
   if (salvage > 0)
   {
+    if (ISNPCSHIP(target))
+        salvage /= 2;
     sprintf(buf,
       "You recieve %s for the salvage of %s!\r\nIt is currently in your ship's coffers.  To look, use 'look cargo', to get, use 'get money'\r\n",
       coin_stringv(salvage), target->name);
@@ -444,6 +451,8 @@ bool sink_ship(P_ship ship, P_ship attacker)
 
     if (attacker)
     {
+        if (ISNPCSHIP(attacker))
+            SET_BIT(ship->flags, SUNKBYNPC);
         logit(LOG_SHIP, "%s's ship sunk by %s", ship->ownername, attacker->ownername);
         statuslog(AVATAR, "%s's ship sunk by %s", ship->ownername, attacker->ownername);
     }
@@ -469,7 +478,7 @@ bool sink_ship(P_ship ship, P_ship attacker)
         int frag_gain = 0;
         int salvage = 0;
         int bounty = 0;
-        if (attacker->race != NPCSHIP)
+        if (!ISNPCSHIP(attacker))
         {
             if (attacker->race != ship->race)
             {
@@ -524,18 +533,14 @@ bool sink_ship(P_ship ship, P_ship attacker)
             
                 if (contacts[i].ship == attacker  || ( ch1 && ch2 && ch1->group && ch1->group == ch2->group) )
                 {
-                    ship_gain_frags(contacts[i].ship, frag_gain);
+                    ship_gain_frags(contacts[i].ship, ship, frag_gain);
                     ship_gain_money(contacts[i].ship, ship, salvage, bounty);
                     write_newship(contacts[i].ship);
                 }
             }
         }
-        else
-        {
-            ship->timer[T_MAINTENANCE] = 1000; // TODO: how to transfer info about sinker to finish_sinking()?
-        }
 
-        ship_loss_on_sink(ship, frag_gain);
+        ship_loss_on_sink(ship, attacker, frag_gain);
         write_newship(ship);
 
         if (attacker->target == ship)

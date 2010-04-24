@@ -245,6 +245,7 @@ int loadship(P_ship ship, int to_room)
    
    ship->target = NULL;
    REMOVE_BIT(ship->flags, SINKING);
+   REMOVE_BIT(ship->flags, SUNKBYNPC);
    REMOVE_BIT(ship->flags, RAMMING);
    SET_BIT(ship->flags, DOCKED);
    SET_BIT(ship->flags, LOADED);
@@ -363,7 +364,7 @@ struct ShipData *newship(int m_class, bool npc)
 }
 
 //--------------------------------------------------------------------
-void delete_ship(P_ship ship)
+void delete_ship(P_ship ship, bool npc)
 {
     char fname[256];
 
@@ -377,9 +378,12 @@ void delete_ship(P_ship ship)
             svs->target = NULL;
     }
 
-    write_newship(NULL);
-    sprintf(fname, "Ships/%s", ship->ownername);
-    unlink(fname);
+    if (!npc)
+    {
+        write_newship(NULL);
+        sprintf(fname, "Ships/%s", ship->ownername);
+        unlink(fname);
+    }
 
     obj_from_room(ship->panel);
     obj_from_room(ship->shipobj);
@@ -879,7 +883,7 @@ bool check_ship_name(P_ship ship, P_char ch, char* name)
     ShipVisitor svs;
     for (bool fn = shipObjHash.get_first(svs); fn; fn = shipObjHash.get_next(svs))
     {
-        if (svs == ship || svs->race == NPCSHIP)
+        if (svs == ship || ISNPCSHIP(svs))
             continue;
         if (!strcmp(strip_ansi(name).c_str(), strip_ansi(svs->name).c_str()))
         {
@@ -1636,6 +1640,21 @@ int do_fire (P_char ch, P_ship ship, char* arg)
         return TRUE;
     }
     arg = skip_spaces(arg);
+
+    half_chop(arg, arg1, arg2);
+    if (isname(arg1, "pirate") && IS_TRUSTED(ch)) 
+    {
+        int lvl = 0;
+        if (is_number(arg2)) lvl = atoi(arg2);
+        if (try_load_pirate_ship(ship, ch, lvl))
+            return true;
+        else
+        {
+            send_to_char("Failed to load pirate ship!\r\n", ch);
+            return true;
+        }
+    }
+    
     if (ship->target == NULL) 
     {
         send_to_char("No target locked.\r\n", ch);
@@ -1670,19 +1689,6 @@ int do_fire (P_char ch, P_ship ship, char* arg)
     else if (is_number(arg)) 
     {
         return fire_weapon(ship, ch, atoi(arg));
-    }
-    half_chop(arg, arg1, arg2);
-    if (isname(arg1, "pirate") && IS_TRUSTED(ch)) 
-    {
-        int lvl = 0;
-        if (is_number(arg2)) lvl = atoi(arg2);
-        if (try_load_pirate_ship(ship, ch, lvl))
-            return true;
-        else
-        {
-            send_to_char("Failed to load pirate ship!\r\n", ch);
-            return true;
-        }
     }
     send_to_char("Valid syntax: 'fire <fore/starboard/port/rear/weapon number>'\r\n", ch);
     return TRUE;
@@ -2877,13 +2883,12 @@ void finish_sinking(P_ship ship)
     act_to_outside_ships(ship, buf, ship);
     everyone_get_out_newship(ship);
 
-    if (ship->race != NPCSHIP)
+    if (!ISNPCSHIP(ship))
     {
-
         int insurance = 0;
         if (ship->m_class != SH_SLOOP) // no insurance for sloops
         {
-            if (ship->timer[T_MAINTENANCE] > 0)
+            if (SHIPSUNKBYNPC(ship))
                 insurance = (int)(SHIPTYPECOST(ship->m_class) * 0.90); // if sunk by NPC, you loose same amount as for switching hulls
             else if (ship->m_class < MAXSHIPCLASSMERCHANT) 
                 insurance = (int)(SHIPTYPECOST(ship->m_class) * 0.75);
@@ -2931,6 +2936,8 @@ void finish_sinking(P_ship ship)
             REMOVE_BIT(ship->flags, MAINTENANCE); 
         if(IS_SET(ship->flags, SINKING)) 
             REMOVE_BIT(ship->flags, SINKING); 
+        if(IS_SET(ship->flags, SUNKBYNPC)) 
+            REMOVE_BIT(ship->flags, SUNKBYNPC); 
         if(IS_SET(ship->flags, RAMMING)) 
             REMOVE_BIT(ship->flags, RAMMING); 
         if(IS_SET(ship->flags, ANCHOR)) 
@@ -3062,7 +3069,7 @@ void newship_activity()
         {
             act_to_all_in_ship(ship, "Your crew has recovered from mental shock.&N\r\n");
         }
-
+        
         for (j = 0; j < MAXTIMERS; j++) 
         {
             if (ship->timer[j] > 0) 
@@ -3073,7 +3080,7 @@ void newship_activity()
         {
             // STAMINA REGEN
             int stamina_inc = 1;
-            if (ship->race == NPCSHIP && ship->m_class == SH_DREADNOUGHT)
+            if (ISNPCSHIP(ship) && ship->m_class == SH_DREADNOUGHT)
                 stamina_inc = 5;
             if (ship->sailcrew.stamina < ship->sailcrew.max_stamina) 
                 ship->sailcrew.stamina += stamina_inc;
@@ -3465,8 +3472,21 @@ void newship_activity()
             if (ship->combat_ai)
                 ship->combat_ai->activity();
 
-            //if (number(0, 2000) == 0)
-            //    try_load_pirate_ship(ship);
+            if (ship->target == 0 && ship->speed > 0 && number(0, 2000) == 0)
+                try_load_pirate_ship(ship);
+        }
+    }
+
+    
+    bool unloaded = true;
+    while (unloaded) // this is because ship unloading invalidates the hash, have to repeat over
+    {
+        unloaded = false;
+        for (bool fn = shipObjHash.get_first(svs); fn; fn = shipObjHash.get_next(svs))
+        {
+            if (ISNPCSHIP(svs))
+                if ((unloaded = try_unload_pirate_ship(svs)) != FALSE)
+                    break;
         }
     }
 }
@@ -5429,14 +5449,14 @@ int write_newship(P_ship ship)
         ShipVisitor svs;
         for (bool fn = shipObjHash.get_first(svs); fn; fn = shipObjHash.get_next(svs))
         {
-            if (IS_SET(svs->flags, LOADED) && svs->race != NPCSHIP)
+            if (IS_SET(svs->flags, LOADED) && !ISNPCSHIP(svs))
                 fprintf(f, "%s~\n", svs->ownername);
         }
         fprintf(f, "$~");
         fclose(f);
         return TRUE;
     }
-    if (ship->race == NPCSHIP) {
+    if (ISNPCSHIP(ship)) {
         return FALSE;
     }
     if (!IS_SET(ship->flags, LOADED)) {

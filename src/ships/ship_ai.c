@@ -424,7 +424,7 @@ bool ShipCombatAI::weapon_ok(int w_num)
 bool ShipCombatAI::find_target()
 {
     bool found_target = false;
-    contacts_count = getcontacts(ship);
+    contacts_count = getcontacts(ship, false);
 
     // looking for a target
     // first, trying to find original target within range
@@ -466,13 +466,18 @@ bool ShipCombatAI::find_target()
     }
     if (found_target)
     {
+        ship->timer[T_MAINTENANCE] = 0;
         t_arc = getarc(ship->heading, t_bearing);
         your_arc = getarc(ship->target->heading, (t_bearing >= 180) ? (t_bearing - 180) : (t_bearing + 180));
         return true;
     }
     else
     {
-        send_message_to_debug_char("Could not find a new target\n");
+        if (ship->timer[T_MAINTENANCE] == 0)
+        {
+            ship->timer[T_MAINTENANCE] = 300;
+            send_message_to_debug_char("Could not find a new target\n");
+        }
         return false;
     }
 }
@@ -846,11 +851,11 @@ void ShipCombatAI::activity()
         return;
     }
 
-    // crap, no target in sight at all, keep moving/reloading for a bit, then disintegrate
+    // crap, no target in sight at all, keep moving around, then disintegrate
     if (!find_target())
     {
-        // TODO: set heading to last target bearing, check if its safe, init disappearance timer if not set
-        // TODO: reload weapons slowly
+        if (check_dir_for_land(ship->heading, 5)) new_heading += 10; 
+        set_new_dir();
         return;
     }
 
@@ -1715,7 +1720,17 @@ bool try_load_pirate_ship(P_ship target, P_char ch, int level)
     return true;
 }
 
-
+bool try_unload_pirate_ship(P_ship ship)
+{
+    if (ship->timer[T_MAINTENANCE] == 1)
+    {
+        everyone_get_out_newship(ship);
+        shipObjHash.erase(ship);
+        delete_ship(ship, true);
+        return TRUE;
+    }
+    return FALSE;
+}
 
 
 
