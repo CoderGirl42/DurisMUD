@@ -7228,15 +7228,24 @@ int handle_npc_assist(P_char ch)
          GET_CLASS(ch->following, CLASS_PALADIN) ||
          GET_CLASS(ch->following, CLASS_ANTIPALADIN))
       {
-
-// Players with non-undead pets are rescued if the player makes a charisma check. Apr09 -Lucrot
-        if(IS_NPC(ch->following) ||
-          (IS_PC_PET(ch) &&
-//           !IS_UNDEADRACE(ch) &&
-           GET_C_CHA(ch->following) > number(1, 500))) // 100 charisma ~= 20%
+        if(IS_NPC(ch->following) || IS_PC_PET(ch)) 
         {
-          rescue(ch, ch->following, FALSE);
-          return TRUE;
+          if (IS_UNDEADRACE(ch))
+          {
+            if (GET_C_POW(ch->following) > number(1, 500))// 100 pow ~= 20%
+            {
+              rescue(ch, ch->following, FALSE);
+              return TRUE;
+            }
+          }
+          else
+          {
+            if (GET_C_CHA(ch->following) > number(1, 500))// 100 charisma ~= 20%
+            {
+              rescue(ch, ch->following, FALSE);
+              return TRUE;
+            }
+          }
         }
       }
     }
