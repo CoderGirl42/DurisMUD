@@ -7224,10 +7224,6 @@ int handle_npc_assist(P_char ch)
       (NumAttackers(ch) < NumAttackers(ch->following)) &&
       ((GET_HIT(ch) > GET_HIT(ch->following)) || number(0, 1)))
     {
-      if(!IS_SET(ch->specials.act, ACT_MOUNT) ||
-         GET_CLASS(ch->following, CLASS_PALADIN) ||
-         GET_CLASS(ch->following, CLASS_ANTIPALADIN))
-      {
         if(IS_NPC(ch->following) || IS_PC_PET(ch)) 
         {
           if (IS_UNDEADRACE(ch))
@@ -7246,7 +7242,6 @@ int handle_npc_assist(P_char ch)
               return TRUE;
             }
           }
-        }
       }
     }
 
