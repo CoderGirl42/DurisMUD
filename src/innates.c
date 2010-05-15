@@ -728,7 +728,6 @@ void assign_innates()
   /* class innates */
   
   ADD_CLASS_INNATE(INNATE_RAPIER_DIRK, CLASS_WARRIOR, 1, SPEC_SWASHBUCKLER);
-  ADD_CLASS_INNATE(INNATE_GUARDIANS_BULWARK, CLASS_WARRIOR, 41, SPEC_GUARDIAN);
 
   ADD_CLASS_INNATE(INNATE_MINER, CLASS_ALCHEMIST, 36, SPEC_BLACKSMITH);
   ADD_CLASS_INNATE(INNATE_FOUNDRY, CLASS_ALCHEMIST, 41, SPEC_BLACKSMITH);
@@ -1930,7 +1929,7 @@ void do_flurry(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if(GET_RACE(ch, RACE_HALFLING))
+  if(GET_RACE(ch) == RACE_HALFLING)
   {
     send_to_char("&+WYou start to pick up momentum as your pulse quickens and the world slows down around you!\r\n", ch);
     act("$n's limbs start to move with &+cincredible speed.&n You can barely keep $s in focus!&n", FALSE, ch, 0, 0, TO_ROOM); 
