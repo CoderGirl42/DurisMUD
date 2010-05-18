@@ -246,22 +246,22 @@ void make_prompt(void)
           strcat(promptbuf, " Pos:");
         if (GET_POS(t_ch) == POS_STANDING)
           if (IS_ANSI_TERM(point))
-            strcat(promptbuf, "\033[0;32m standing\033[0m");
+            strcat(promptbuf, "\033[0;33m standing\033[0m");
           else
             strcat(promptbuf, " standing");
         else if (GET_POS(t_ch) == POS_SITTING)
           if (IS_ANSI_TERM(point))
-            strcat(promptbuf, "\033[0;32m sitting\033[0m");
+            strcat(promptbuf, "\033[0;36m sitting\033[0m");
           else
             strcat(promptbuf, " sitting");
         else if (GET_POS(t_ch) == POS_KNEELING)
           if (IS_ANSI_TERM(point))
-            strcat(promptbuf, "\033[0;32m kneeling\033[0m");
+            strcat(promptbuf, "\033[0;36m kneeling\033[0m");
           else
             strcat(promptbuf, " kneeling");
         else if (GET_POS(t_ch) == POS_PRONE)
           if (IS_ANSI_TERM(point))
-            strcat(promptbuf, "\033[0;32m on your ass\033[0m");
+            strcat(promptbuf, "\033[0;31m on your ass\033[0m");
           else
             strcat(promptbuf, " on your ass");
       
