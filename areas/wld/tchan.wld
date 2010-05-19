@@ -1,0 +1,168 @@
+#4800
+&+yThe Base of An &+CIcy &+yMountain &+WTrail&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 5
+D1
+~
+~
+0 0 4801
+D3
+~
+~
+0 0 516342
+S
+#4801
+&+yBefore a Treacherous Climb on An &+CIcy &+yMountain &+WTrail&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 5
+D3
+~
+~
+0 0 4800
+D4
+~
+~
+0 0 4802
+S
+#4802
+&+yClimbing a Treacherous &+CIcy &+yMountain &+WTrail&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 8
+D4
+~
+~
+0 0 4803
+D5
+~
+~
+0 0 4801
+S
+#4803
+&+yClimbing A Treacherous &+WTrail &+yup An &+CIcy &+yMountain Side&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 8
+D4
+~
+~
+0 0 4804
+D5
+~
+~
+0 0 4802
+S
+#4804
+&+yAtop a Treacherous Climb on An &+CIcy &+yMountain &+WTrail&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 8
+D1
+~
+~
+0 0 4805
+D5
+~
+~
+0 0 4803
+S
+#4805
+&+yA Craggy, Narrow &+WTrail &+yTo The &+WSummit&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+~
+48 32768 5
+D2
+~
+~
+0 0 4806
+D3
+~
+~
+0 0 4804
+S
+#4806
+&+yA Craggy, Narrow &+WTrail &+yTo The &+WSummit&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+&+yTo the east lies a Monestary.&n
+~
+48 32768 5
+D0
+~
+~
+0 0 4805
+D1
+~
+~
+0 0 4807
+S
+#4807
+&+yA Craggy, Narrow &+WTrail &+yTo The &+WSummit&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+&+yTo the east lies a Monestary.&n
+~
+48 32768 25
+D1
+~
+~
+0 0 4808
+D3
+~
+~
+0 0 4806
+S
+#4808
+&+yBeside A Small Monestary&n~
+&+y   Rubbled boulders evidence many landslides and loose rocks that have&n
+&+yfalling from the pathway above. Tiny &+Warc&+Ctic &+Gweeds &+ycling to a birm that&n
+&+ylines either side of this &+Ytrail&n. Far, far above, a &+Wtrail &+ydisappears in&n
+&+ythe distance into the mountainous, &+Cicy &+yslopes.&n
+&+yTo the east lies a Monestary.&n
+~
+48 32768 25
+D1
+~
+door~
+2 4800 4809
+D3
+~
+~
+0 0 4807
+S
+#4809
+&+yThe Monestary of &+WTranq&+Buil&+Mity&n~
+   &+yHigh above the mountain slopes, nestled withinin a peaceful &+Wsummit&+y,&n
+&+ythis monestary serves as the &+Wtranq&+Muil &+yhome of Tchan, the powerful monk&n
+&+ywho has harnassed the power of releasing the burdons of the &+Cs&+Wou&+Cl&+y.&n
+~
+48 32768 0
+D3
+~
+door~
+2 4800 4808
+S
