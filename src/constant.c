@@ -127,7 +127,7 @@ const mcname multiclass_names[] = {
   {CLASS_CLERIC, CLASS_BARD, "&+rSkald       "},
   {CLASS_CLERIC, CLASS_DRUID, "&+YCenobite    "},
   {CLASS_WARRIOR, CLASS_CLERIC, "&+cWar Priest  "},
-  {CLASS_WARRIOR, CLASS_PSIONICIST, "&+bPsion       "},
+  {CLASS_WARRIOR, CLASS_PSIONICIST, "&+YBody &+MTamer   "},
   {CLASS_REAVER, CLASS_SHAMAN, "&+LS&+wo&+Wulrend&+we&+Lr "},
   {CLASS_REAVER, CLASS_SORCERER, "&+LDe&+mfil&+Ler&n      "},
   {CLASS_DREADLORD, CLASS_WARLOCK, "&+LBaneguard   "},
