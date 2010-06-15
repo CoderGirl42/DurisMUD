@@ -18,62 +18,33 @@ using namespace std;
 
 const char *specdata[][MAX_SPEC] = {
   {"", "", "", ""},         //None
-/* Warrior */
   {"&+BSwordsman", "&+yGuardian", "&+CSw&+cas&+Lhbuc&+ckl&+Cer&n", ""},      //Warrior
-/* Ranger */
   {"&+cBlademaster", "&+gHuntsman", "&+gMa&+yrsha&+gll&n", ""},    //Ranger
-/* Psionicist */
   {"&+rPyr&+Rokine&+rtic", "&+MEn&+mslav&+Mer", "&+bPsyche&+Lporter", ""},         //Psionicist
-/* Paladin */
   {"&+wCrusa&+Wder", "&+WCavalier", "", ""},    //Paladin
-/* Anti-Paladin */
   {"&+LDark Knight", "&+LDem&+ronic Ri&+Lder", "", ""},  //Anti-Paladin
-/* Cleric */
   {"&+YZealot&n", "&+WHealer&n", "&+cHoly&+Wman&n", ""},      //Cleric
-/* Monk */
   {"&+rRe&+Rd Dra&+rgon", "&+gElap&+Ghi&+gdist", "", ""},   //Monk
   {"&+gFo&+Gre&+gst Druid", "&+cStorm &+CDruid", "&+YLunar &+gDruid&n", ""},       //Druid
-/* Druid */
-  {"&+gFo&+Gre&+gst Druid", "&+cStorm &+CDruid", "", ""},       //Druid
-/* Shaman */
   {"&+rEl&+Rem&+Lenta&+Rli&n&+rst", "&+WSpir&+Citua&+Wlist", "&+yAni&+Ymal&n&+yist", ""},       //Shaman
-/* Sorcerer */
   {"&+MWild&+mmage", "&+LWizard", "&+LShadow&+wmage", ""},      //Sorcerer
-/* Necromancer */
   {"&+mDia&+rbolis", "&+mNe&+Lcro&+mlyte", "&+LReap&+wer", ""}, //Necromancer
-/* Conjurer */
   {"&+CAir Magus", "&+BWater Magus", "&+rFire Magus", "&+yEarth Magus"},        //Conjurer
-/* Rogue */
   {"&+rAssassin&n", "&+LThief&n","Not Used" , "&+LSh&+wa&+Ldow &+BArc&+bher&n"},         //Rogue
-/* Obsolete */
   {"", "", "", ""}, //Assassin
-/* Mercenary */
   {"&+yBr&+Lig&+yand", "&+yBounty &+LHunter", "", ""},  //Mercenary
-/* Bard */
   {"&+rD&+mis&+gha&+crm&+yon&+bist", "&+RScoundrel", "&+YMin&n&+ystr&+Yel", ""},        //Bard
-/* Obsolete */
   {"", "", "", ""},         //Thief
-/* Obsolete */
   {"", "", "", ""},         //Warlock
-/* Right, like squids need specs */
   {"", "", "", ""},         //MindFlayer
-/* Obsolete */
   {"&+CBat&n&+ctle-For&+Cger&n", "&+LBla&+ccksm&+Lith&n", "", ""},   //Alchemist
-/* Berserker */
   {"&+rMa&+RUle&+rR", "&+RRa&+rGe&+Rlo&+rRd", "", ""},  //Berserker
-/* Reaver */
   {"&+CI&+Wc&+Ce &+LR&+Le&+wa&+wv&+Le&+Lr", "&+rF&+Rl&+Ya&+Rm&+re &+LR&+Le&+wa&+wv&+Le&+Lr", "&+bSh&+Bo&+Wck &+LR&+Le&+wa&+wv&+Le&+Lr", ""},      //Reaver
-/* Illusionist */
   {"&+BM&+Yag&+Bic&+Yia&+Bn&n", "&+LDark &+mDreamer&n", "", ""},         // Illusionist
-/* Obsolete */
   {"", "", "", ""},  // Unused
-/* Dreadlord */
   {"&+LDeath&+rlord", "&+LShadow&+rlord", "", ""},      // Dreadlord
-/* Ethermancer */
   {"&+cWindtalker", "&+WFro&+cst &+CMagus", "&+WCo&+Ysm&+Wom&+Yanc&+Wer", ""},     // Ethermancer
-/* Avenger */
   {"&+YLight&+Wbringer", "&+WInq&+wuisi&+Wtor", "", ""},       //Avenger
-/* Theurgist */
   {"", "", "", ""}, // Theurgist
 };
 /*
