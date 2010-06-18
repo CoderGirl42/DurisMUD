@@ -265,6 +265,8 @@ int whats_in_maproom(P_char ch, int room, int distance, int show_regardless)
   P_char   who, who_next;
   int z, zw, portal = FALSE, val = 100;
   int skill, chance, level; // for  seeing tracks
+  int skl_lvl, ch_lvl, percent_chance; // for whether a thief is a P
+  int percentroll = number(1, 100);
   /*  int room; */
 
   if(!ch ||
@@ -418,9 +420,17 @@ int whats_in_maproom(P_char ch, int room, int distance, int show_regardless)
       
       if(GET_SPEC(who, CLASS_ROGUE, SPEC_THIEF) &&
         IS_AFFECTED(who, AFF_SNEAK) &&
-        !IS_TRUSTED(ch))
+        !IS_TRUSTED(ch)) 
       {
-        continue;
+        skl_lvl = GET_CHAR_SKILL(who, SKILL_SNEAK);
+        ch_lvl = GET_LEVEL(who);
+        percent_chance = (skl_lvl * .46);
+        if(GET_LEVEL(who) >= 30)
+          percent_chance += (GET_LEVEL(who) - 29 * 2);
+        if (percent_chance > percentroll)
+        {
+          continue;
+        }
       }
       
       if(IS_NPC(who) && GET_VNUM(who) == VNUM_WITCH)
