@@ -684,7 +684,7 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 #define IS_GIANT(ch)  ((GET_RACE(ch) == RACE_GIANT) || \
                        (GET_RACE(ch) == RACE_OGRE) || \
                        (GET_RACE(ch) == RACE_SGIANT) || \
-                       (GET_RACE(ch) == RACE_MINOTAUR) || \ 
+                       (GET_RACE(ch) == RACE_MINOTAUR) || \
                        (GET_RACE(ch) == RACE_SNOW_OGRE) || \
                        (GET_RACE(ch) == RACE_FIRBOLG))
 

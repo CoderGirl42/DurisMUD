@@ -3312,6 +3312,7 @@ void select_race(P_desc d, char *arg)
   case 'S':
     strcpy(Gbuf, "MINOTAUR");
     break;
+  /* Not til pwipe! -Keja
   case 'a':
     GET_RACE(d->character) = RACE_KOBOLD;
 	break;
@@ -3347,13 +3348,14 @@ void select_race(P_desc d, char *arg)
     break;
   case 'Q':
     strcpy(Gbuf, "KUO TOA");
-  /*
+  */
   case 'p':
     GET_RACE(d->character) = RACE_OROG;
     break;
   case 'P':
     strcpy(Gbuf, "OROG");
     break;   
+  /*
        case '1':
        GET_RACE(d->character) = RACE_PLICH;
        break;
