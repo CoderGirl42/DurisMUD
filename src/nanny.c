@@ -4270,6 +4270,7 @@ void set_char_height_weight(P_char ch)
     case RACE_SGIANT:
     case RACE_OGRE:
     case RACE_WIGHT:
+	case RACE_FIRBOLG:
       mean_h = 90;
       range_h = 10;
       mean_w = 400;
@@ -4314,6 +4315,10 @@ void set_char_height_weight(P_char ch)
     case RACE_ORC:
     case RACE_PHANTOM:
 	case RACE_GITHZERAI:
+	case RACE_ELADRIN:
+	case RACE_PILLITHID:
+	case RACE_KUOTOA:
+	case RACE_WOODELF:
       mean_h = 68;
       mean_w = 150;
       range_h = 24;
@@ -4323,6 +4328,7 @@ void set_char_height_weight(P_char ch)
         female = 85;
         break;
     case RACE_HALFLING:
+	case RACE_KOBOLD:
       mean_h = 38;
       range_h = 6;
       mean_w = 55;
