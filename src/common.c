@@ -25,30 +25,28 @@ const char *specdata[][MAX_SPEC] = {
   {"&+LDark Knight", "&+LDem&+ronic Ri&+Lder", "", ""},  //Anti-Paladin
   {"&+YZealot&n", "&+WHealer&n", "&+cHoly&+Wman&n", ""},      //Cleric
   {"&+rRe&+Rd Dra&+rgon", "&+gElap&+Ghi&+gdist", "", ""},   //Monk
-  {"&+gFo&+Gre&+gst Druid", "&+cStorm &+CDruid", "&+YLunar &+gDruid&n", 
-""},       //Druid
+  {"&+gFo&+Gre&+gst Druid", "&+cStorm &+CDruid", "", ""},       //Druid
   {"&+rEl&+Rem&+Lenta&+Rli&n&+rst", "&+WSpir&+Citua&+Wlist", "&+yAni&+Ymal&n&+yist", ""},       //Shaman
   {"&+MWild&+mmage", "&+LWizard", "&+LShadow&+wmage", ""},      //Sorcerer
   {"&+mDia&+rbolis", "&+mNe&+Lcro&+mlyte", "&+LReap&+wer", ""}, //Necromancer
   {"&+CAir Magus", "&+BWater Magus", "&+rFire Magus", "&+yEarth Magus"},        //Conjurer
   {"&+rAssassin&n", "&+LThief&n","Not Used" , "&+LSh&+wa&+Ldow &+BArc&+bher&n"},         //Rogue
-  {"&+rAs&+Rs&+ra&+Rs&+rs&+Ri&+rn", "&+LSharpshooter", "&+rRogue", ""}, //Assassin
+  {"", "", "", ""}, //Assassin
   {"&+yBr&+Lig&+yand", "&+yBounty &+LHunter", "", ""},  //Mercenary
   {"&+rD&+mis&+gha&+crm&+yon&+bist", "&+RScoundrel", "&+YMin&n&+ystr&+Yel", ""},        //Bard
-  {"", "", "", ""},  //Thief
+  {"", "", "", ""},         //Thief
   {"", "", "", ""},         //Warlock
   {"", "", "", ""},         //MindFlayer
   {"&+CBat&n&+ctle-For&+Cger&n", "&+LBla&+ccksm&+Lith&n", "", ""},   //Alchemist
   {"&+rMa&+RUle&+rR", "&+RRa&+rGe&+Rlo&+rRd", "", ""},  //Berserker
   {"&+CI&+Wc&+Ce &+LR&+Le&+wa&+wv&+Le&+Lr", "&+rF&+Rl&+Ya&+Rm&+re &+LR&+Le&+wa&+wv&+Le&+Lr", "&+bSh&+Bo&+Wck &+LR&+Le&+wa&+wv&+Le&+Lr", ""},      //Reaver
-//  {"&+LD&+Ce&+wc&+Le&+civ&+Ce&+Wr&n", "&+LD&+yar&+Lk D&+yre&+Wam&+Ler&n", "", ""},   Disabled illusionist specs until tested
   {"&+BM&+Yag&+Bic&+Yia&+Bn&n", "&+LDark &+mDreamer&n", "", ""},         // Illusionist
   {"", "", "", ""},  // Unused
   {"&+LDeath&+rlord", "&+LShadow&+rlord", "", ""},      // Dreadlord
   {"&+cWindtalker", "&+WFro&+cst &+CMagus", "&+WCo&+Ysm&+Wom&+Yanc&+Wer", ""},     // Ethermancer
   {"&+YLight&+Wbringer", "&+WInq&+wuisi&+Wtor", "", ""},       //Avenger
+  {"&+wMedium&n", "&+YT&+Re&+rmpl&+Ra&+Yr&n", "&+C&+WT&+ch&+Ca&+Wu&+Cm&+ca&+Ct&+Wu&+Cr&+cg&+Ce&n", ""}, // Theurgist
 };
-
 /*
  * mob race lookup table, used to assign a race to a mob when reading them
  * from the .mob file.  Need to update this table when adding new races.
@@ -147,7 +145,15 @@ const struct race_names race_names_table[LAST_RACE + 2] = {
   {"Planetbound Illithid", "Pillithid", "&+MIllithid&n", "PI"},
   {"Kuo Toa", "KuoToa", "&+GKu&+Lo T&+Goa&n", "KT"},
   {"Wood Elf", "WoodElf", "&+gW&+Goo&+gd E&+Glf&n", "WE"},
-  //{"Firbolg", "Firbolg", "&+yFir&+cbolg&n", "FB"},
+  {"Firbolg", "Firbolg", "&+yFir&+cbolg&n", "FB"},
+  {"Phoenix", "Phoenix", "&+rP&+Rh&+Yo&+We&+Yn&+Ri&+rx&n", "PX"},
+  {"Archon", "Archon", "&+WA&+Rrch&+Wo&+Rn&n", "AR"},
+  {"Asura", "Asura", "&+YA&+Rs&+Yu&+Rra&n", "AU"},
+  {"Titan", "Titan", "&+CT&+Wi&+Ct&+Wa&+Cn&n", "TT"},
+  {"Avatar", "Avatar", "&+cAv&+Ca&+Wt&+Ca&+cr&n", "AV"},
+  {"Ghaele", "Ghaele", "&+cGh&+Cae&+cle&n", "GH"},
+  {"Braelani", "Bralani", "&+cBr&+ra&+cl&+ra&+cn&+ri&n", "BR"},
+  {"Whiner", "Whiner", "&+MW&+Wh&+Min&+We&+Mr&n", "WH"},
   {0}
 };
 
@@ -399,7 +405,8 @@ const char *where[] = {
   "<worn on rear feet>  ",
   "<worn in nose>       ",
   "<worn on horns>      ",
-  "<floating about head>"
+  "<floating about head>",
+  "<worn on spider body>"
 };
 
 const char *drinks[] = {
@@ -576,6 +583,7 @@ flagDef  wear_bits[] = {
   {"WEAR_NOSE", "Worn in nose", 1, 0},
   {"WEAR_HORN", "Worn on horns", 1, 0},
   {"WEAR_IOUN", "Worn as ioun stone", 1, 0},
+  {"WEAR_SPIDER_BODY", "Worn on spider's body", 1, 0},
   {0}
 };
 
@@ -776,6 +784,7 @@ const char *equipment_types[] = {
   "Worn in nose",
   "Worn on horns",
   "Worn above head",
+  "Worn on spider body",
   "\n"
 };
 
@@ -1106,11 +1115,11 @@ const struct class_names class_names_table[] = {
   {"Berserker", "&+rBeR&+RSeR&n&+rKeR&n", "Ber", 'u'},
   {"Reaver", "&+LRe&+Wav&+Ler&n", "Rev", 'v'},
   {"Illusionist", "&+WIl&+Clu&+csi&+Con&+Wist&n", "Ilu", 'y'},
-  {"Theurgist", "&+cTh&+Ceur&+Wgist&n", "The", 'x'},
+  {"Unholy Piper", "&+GUnholy Piper&n", "Pip", 'y'},
   {"Dreadlord", "&+LDread&+rlord&n", "Dre", 'e'},
   {"Ethermancer", "&+wEthermancer&n", "Eth", 'g'},
   {"Avenger", "&+WAvenger&n", "Ave", 'z'},
-  {"Theurgist", "&+cTh&+Ceur&+Wgis&+rt&n", "The", 'e'},
+  {"Theurgist", "&+cTh&+Ceur&+Wgist&n", "The", 'e'},
   {0}
 };
 
