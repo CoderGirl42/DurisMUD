@@ -1799,10 +1799,10 @@ bool NPCShipAI::inside_map(float x, float y)
 // returns exact dir or max_range if not found
 float NPCShipAI::calc_land_dist(float x, float y, float dir, float max_range)
 {
-    double loc_range;
+    float loc_range;
     float rad = dir * M_PI / 180.000;
-    double dir_cos = cos(rad);
-    double dir_sin = sin(rad);
+    float dir_cos = cos(rad);
+    float dir_sin = sin(rad);
     float range = 0;
     float next_x, next_y;
 
@@ -1854,27 +1854,37 @@ float NPCShipAI::calc_land_dist(float x, float y, float dir, float max_range)
             return range;
         }
 
-        double delta_y = next_y - y;
-        double delta_x = next_x - x;
+        float delta_y = next_y - y;
+        float delta_x = next_x - x;
         //send_message_to_debug_char("dx=%5.2f,dy=%5.2f,", delta_x, delta_y);
 
         if (dir_cos == 0)
         {
-            loc_range = abs(delta_x);
+            //loc_range = abs(delta_x);
+            loc_range = delta_x;
+            if (loc_range < 0.0) loc_range = loc_range * -1.0;
             x = next_x;
             // y doesnt change
         }
-        else if (abs(dir_sin / dir_cos) >  abs(delta_x / delta_y))  // w/e
+        else
         {
-            loc_range = delta_x / dir_sin;
-            x = next_x;
-            y = y + loc_range * dir_cos;
-        }
-        else // n/s
-        {
-            loc_range = delta_y / dir_cos;
-            x = x + loc_range * dir_sin;
-            y = next_y;
+            float r1 = dir_sin / dir_cos;
+            if (r1 < 0.0) r1 = r1 * -1.0;
+            float r2 = delta_x / delta_y;
+            if (r2 < 0.0) r2 = r2 * -1.0;
+            //if (abs(dir_sin / dir_cos) >  abs(delta_x / delta_y))  // w/e
+            if (r1 >  r2)  // w/e
+            {
+                loc_range = delta_x / dir_sin;
+                x = next_x;
+                y = y + loc_range * dir_cos;
+            }
+            else // n/s
+            {
+                loc_range = delta_y / dir_cos;
+                x = x + loc_range * dir_sin;
+                y = next_y;
+            }
         }
         range += loc_range;
         //send_message_to_debug_char("x=%5.2f,y=%5.2f, lr=%5.2f, r=%5.2f", x, y, loc_range, range);
