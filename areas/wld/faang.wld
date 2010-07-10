@@ -3785,6 +3785,11 @@ The cavern floor continues.
 ~
 0 0 15380
 S
+#15382
+&+RPLACEMENT CHECK&n~
+~
+152 0 0
+S
 #15383
 &+yCave of the Mercenary&N~
    This spacious cave has been claimed by the mercenary champion as his own
@@ -4274,6 +4279,21 @@ The exit.
 ~
 0 0 15326
 S
+#15408
+&+RPLACEMENT CHECK2&n~
+~
+152 0 0
+S
+#15409
+&+RUNUSED&n~
+~
+152 0 0
+S
+#15410
+&+RUNUSED&n~
+~
+152 0 0
+S
 #15411
 &+yA Steep Incline&N~
    This flat wet stone surface is slick. The water coating the surface makes
@@ -4291,6 +4311,281 @@ D5
 0 0 597886
 F
 100
+S
+#15412
+&+LA Dark Tunnel Leading &+mDeep Underground&n~
+   This tunnel leads down into the bowels of the Underdark beneath the
+Illithid city of Ixarkon. Tool marks and gauges into the rockface tell
+of obvious non-artisan hands excavating this tunnel. A deep feeling of
+sinister dread drifts up from below. Fleeting echoes of commotion waft
+in from below.
+~
+152 142639172 14
+D2
+~
+~
+0 0 96474
+D5
+~
+~
+0 0 15413
+S
+#15413
+&+LMakeshift &+cIron &+LGates&n~
+   A pair of imposing iron gates constructed of what appears to be the
+iron hull of a massive traveling vessel have been hoisted on to hinges
+embedded into the rock on either side of this tunnel.
+~
+152 142639168 14
+D0
+~
+~
+1 0 15414
+D4
+~
+~
+0 0 15412
+S
+#15414
+&+LA Dark Tunnel&n~
+   A pair of makeshift iron gates loom imposingly to the south, which
+temporarily block passage. The tunnel branches off to the north, west
+and northeast.
+~
+152 0 14
+D0
+~
+~
+0 0 15416
+D2
+~
+~
+1 0 15413
+D3
+~
+~
+0 0 15421
+D8
+~
+~
+0 0 15415
+S
+#15415
+&+LThe &+ySlave Pens&n~
+known as the Mausoleum of  Kitsero. The air is bone chilling cold and
+   The air hangs heavy with the stench of fecal matter and urine upon
+entering this niche filled with slaves of various races. The Illithid
+race is well known for its utilitarian nature when it comes to lesser
+species on the planet of Faerun.
+~
+152 0 14
+D7
+~
+~
+0 0 15414
+S
+#15416
+&+LA Tunnel Through The &+mEnca&+Mmpment&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15417
+D2
+~
+~
+0 0 15414
+S
+#15417
+&+LA Blackrock Tunnel&n~
+~
+152 142639168 14
+D2
+~
+~
+0 0 15416
+D8
+~
+~
+0 0 15418
+S
+#15418
+&+LA Dark Tunnel With &+rRed Carpet&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15419
+D7
+~
+~
+0 0 15417
+S
+#15419
+&+LThe Council Chamber&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15420
+D2
+~
+~
+0 0 15418
+S
+#15420
+&+LA &+mL&+Mavis&+mh &+LDwelling&n~
+   Scrolls, books, ledgers and lists lie in heaps and piles about the
+chamber. A phantasmal desk and chair set on the north end of the room
+sits beside a small mushroom capped chest and messy shelves.
+~
+152 142639168 14
+D2
+~
+~
+0 0 15419
+S
+#15421
+&+LA Dark Tunnel&n~
+~
+152 142639168 14
+D1
+~
+~
+0 0 15414
+D3
+~
+~
+0 0 15422
+S
+#15422
+&+LA Descending Tunnel&n~
+~
+152 142639168 14
+D1
+~
+~
+0 0 15421
+D6
+~
+~
+0 0 15423
+S
+#15423
+&+LThe Entrance To A Small &+cCity&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15424
+D9
+~
+~
+0 0 15422
+S
+#15424
+&+LA &+mMassive &+LFissure Strewn With Debris&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15425
+D1
+~
+~
+0 0 15426
+D2
+~
+~
+0 0 15423
+S
+#15425
+&+yThe &+RSpell&+YJammer &+CNautiloid &+yInn&n~
+~
+152 143163456 14
+D2
+~
+~
+0 0 15424
+S
+#15426
+&+LThe Center Causeway&n~
+~
+152 142639168 14
+D1
+~
+~
+0 0 15431
+D2
+~
+~
+0 0 15427
+D3
+~
+~
+0 0 15424
+S
+#15427
+&+LThe Center of A &+CBazaar&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15426
+D1
+~
+~
+0 0 15428
+D2
+~
+~
+0 0 15429
+D3
+~
+~
+0 0 15430
+S
+#15428
+&+LThe New &+mMem&+Mory&n~
+~
+152 142639168 14
+D3
+~
+~
+0 0 15427
+S
+#15429
+&+RWh&+rip&+Rped Hi&+rde&+Rs&n~
+~
+152 142639168 14
+D0
+~
+~
+0 0 15427
+S
+#15430
+&+rSc&+Rou&+rrg&+Rin&+rg I&+Rmp&+rle&+Rme&+rnt&+Rs&n~
+~
+152 142639168 14
+D1
+~
+~
+0 0 15427
+S
+#15431
+&+LA &+gPu&+Gtri&+gd &+LRoom&n~
+~
+152 142639168 14
+D3
+~
+~
+0 0 15426
 S
 #15500
 &+LA Steep Approach&n~

@@ -408,6 +408,31 @@ PO 0 1 -1
 51 13 35 20d35+140 3d4+2
 0.9.3.0 9720
 8 8 1
+#15233
+golem nyraala _no_move_~
+&+La &+mnyr&+Maala &+ygolem&n~
+&+LA &+mnyr&+Maala &+ygolem &+Lstands vigil here.&n
+~
+   A mass of flailing tentacles, misplaced beaks and huge black eyes
+twirl around in a chaotic disarray, this cephalopod construct glares
+down the entryway, keeping vigil for intruders.
+~
+100665418 72 0 0 0 0 0 -1000 S
+og 2 262145 6
+55 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
+#15234
+xiraxion grand master illithid wise old~
+&+MXiraxion&+L, the &+bGrand Master&n~
+&+LA wise old &+Millithid &+Lsits here, scanning through a &+Wledger&+L.&n
+~
+~
+8 0 0 0 0 0 0 -1000 S
+pi 0 4 -1
+58 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
 #15500
 purple worm~
 &+ma huge purple worm&n~

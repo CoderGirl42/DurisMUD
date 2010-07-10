@@ -37,6 +37,14 @@ D 0 15411 4 9 100 0 0 0
 *     up exit from "A Steep Incline" to
 *     "A Steep Incline" - closed/blocked
 *
+D 0 15413 0 1 100 0 0 0
+*     north exit from "Makeshift Iron Gates" to
+*     "A Dark Tunnel" - closed
+*
+D 0 15414 2 1 100 0 0 0
+*     south exit from "A Dark Tunnel" to
+*     "Makeshift Iron Gates" - closed
+*
 D 0 15526 3 8 100 0 0 0
 *     west exit from "Entrance to the Misty Caverns" to
 *     "Null" - open/blocked
@@ -220,6 +228,7 @@ O 0 15269 2 15263 100 0 0 0        * an underground river
 O 0 15269 2 15305 100 0 0 0        * an underground river
 O 0 15282 1 15393 100 0 0 0        * a large boulder
 O 0 15281 1 15411 100 0 0 0        * a large boulder
+O 0 3097 1 15428 100 0 0 0         * (object type not in this .obj file)
 O 0 361 3 15629 100 0 0 0          * (object type not in this .obj file)
 O 0 361 3 15641 100 0 0 0          * (object type not in this .obj file)
 O 0 15500 1 15665 100 0 0 0        * cave bison corpse
@@ -323,6 +332,9 @@ M 0 15219 4 15402 100 0 0 0        * a piranha
 M 0 15219 4 15402 100 0 0 0        * a piranha
 M 0 15219 4 15402 100 0 0 0        * a piranha
 M 0 15219 4 15402 100 0 0 0        * a piranha
+M 0 15233 2 15413 100 0 0 0        * a nyraala golem
+M 0 15233 2 15413 100 0 0 0        * a nyraala golem
+M 0 15234 1 15420 100 0 0 0        * Xiraxion, the Grand Master
 M 0 15603 5 15500 100 0 0 0        * a black lizard
 M 0 15592 4 15501 100 0 0 0        * a hairy spider
 M 0 15506 12 15503 100 0 0 0       * a common bat
