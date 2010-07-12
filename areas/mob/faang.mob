@@ -413,9 +413,11 @@ golem nyraala _no_move_~
 &+La &+mnyr&+Maala &+ygolem&n~
 &+LA &+mnyr&+Maala &+ygolem &+Lstands vigil here.&n
 ~
-   A mass of flailing tentacles, misplaced beaks and huge black eyes
-twirl around in a chaotic disarray, this cephalopod construct glares
-down the entryway, keeping vigil for intruders.
+&+L   With a jerk and a sputter, squeaks and shrill, deafening tones echo
+&+Lviolently. An ominous smell of &+rdread &+Lsuddenly fills the air, acrid and
+&+Lcaustic. This discombobulated mass of flailing &+mtentacles &+Land beaks and
+&+Leyes, this &+Mcephalopoid &+Lconstruct glares vigilantly up the passage, all
+&+Lof its focus on the entryway to this tunnel southward.
 ~
 100665418 72 0 0 0 0 0 -1000 S
 og 2 262145 6
@@ -427,10 +429,27 @@ xiraxion grand master illithid wise old~
 &+MXiraxion&+L, the &+bGrand Master&n~
 &+LA wise old &+Millithid &+Lsits here, scanning through a &+Wledger&+L.&n
 ~
+&+L   Standing roughly six feet tall, this Planetbound Illithid peruses&n
+&+Lfrantically through its ledgers, as though looking for something. It&n
+&+Lquickly turns to you and ponders for a moment.&n
+
+&+MXiraxion&+L, the &+bGrand Master &ninvades your mind with 'What seek ye?'
+&n
 ~
-8 0 0 0 0 0 0 -1000 S
-pi 0 4 -1
+3288369358 0 0 0 0 0 0 -1000 S
+pi 0 4196869 -1
 58 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 0
+#15235
+brainspawn undeveloped tentacle writhing~
+&+Lan &+run&+Rdevelop&+red &+mbrain&+Mspawn&n~
+&+LA writhing &+Mtentacle &+Lwriggles along, lashing randomly.&n
+~
+~
+67504328 1 0 1007200556 0 0 0 -1 S
+mf 0 0 1
+5 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
 #15500
