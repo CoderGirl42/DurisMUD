@@ -323,7 +323,7 @@ master gunner pirate northshore~
 &+Lthe dark, sweat stained tunic. An evil look gleams across his eyes as he
 &+Llooks upon his weapons, eager to unlease their fury.&n
 ~
-10312 0 0 0 0 0 0 0 S
+10312 1 0 0 0 0 0 0 S
 PH 0 4 -1
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -421,16 +421,16 @@ PH 0 1 -1
 0.0.0.0 0
 8 8 1
 #40230
-gunner pirate north shore northshore bolt~
+gunner pirate north shore northshore~
 &+La &+cgunner &+Lof the &+YNorth&+Wshore &+LPirates&n~
-&+LA strong pirate moves about, bringing &+cbolts &+Lto the ballista.&n
+&+LA strong pirate moves about, rearming munitions.&n
 ~
 &+L   This large pirate hussels about running from below deck to the ballista's.
 &+LCarrying the large bolts, this pirate has developed huge muscles which strain
 &+Lfrom the weight of the bolts. As the crew goes to war with its next victims,
 &+Lthis man helps fuel the destructive powers the ship can unleash.&n
 ~
-395272 0 0 0 0 0 0 -1000 S
+395272 1 0 0 0 0 0 -1000 S
 PH 0 4096 -1
 35 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -585,9 +585,9 @@ Ho 0 1 -1
 0.0.0.0 0
 8 8 1
 #40241
-gunner bolt pirate twilight cove buccaneer~
+gunner pirate twilight cove buccaneer~
 &+La &+Gg&+gu&+Gn&+gn&+Ge&+gr &+Lof the &+BT&+bw&+Bi&+bl&+Bi&+bg&+Bh&+bt &+LCove &+rBuccaneers&n~
-&+LA burly orc pirate stands here, husseling to stack bolts at the ballista.&n
+&+LA burly pirate moves about, husseling to rearm!&n
 ~
 &+L   This burly orc hussels about, making sure the weapons are well stocked
 &+Land ready for use. Huge scars criss cross this orcs arms, from various
@@ -758,7 +758,7 @@ swashbuckler swash buckler marauder four winds _spec3_ undead~
 &+Lhis work, an eager expression floats across his face. Eager for blood
 &+Lthis &+rvampire &+Lswashbuckler is ready to fight.&n
 ~
-10314 1 0 402653208 0 0 0 -1000 S
+10312 1 0 402653208 0 0 0 -1000 S
 U 0 1 -1
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -942,7 +942,7 @@ swash buckler swashbuckler dark sun syndicate _spec3_~
 &+LWith hisfairly dexterous nature, he is constantly being sent up
 &+Lto help ready sails or tie ropes high up on the ship.&n
 ~
-10314 1 0 402653208 0 0 0 -1000 S
+10312 1 0 402653208 0 0 0 -1000 S
 PH 0 1 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -981,7 +981,7 @@ x 0 34603008 -1
 0.0.0.0 0
 8 8 1
 #40265
-first mate scion abyss~
+first mate scion abyss _no_move_~
 &+Lthe &+Bfir&+bst m&+Bate &+Lof the &+rSci&+Rons &+Lof the &+WAb&+wy&+Lss&n~
 &+LA large d&+we&+Lm&+wo&+Ln stands here, helping his captain issue orders.&n
 ~
