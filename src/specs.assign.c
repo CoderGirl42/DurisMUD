@@ -2347,7 +2347,7 @@ void assign_rooms(void)
   //world[real_room0(6115)].funct = pet_shops;
   //world[real_room0(6369)].funct = pet_shops;
   //world[real_room0(6244)].funct = pet_shops;
-  //world[real_room0(9704)].funct = crew_shop;
+  world[real_room0(9704)].funct = crew_shop;
   //world[real_room0(6683)].funct = newship_shop;
   //world[real_room0(123113)].funct = newship_shop;
   world[real_room0(88846)].funct = newship_shop;
