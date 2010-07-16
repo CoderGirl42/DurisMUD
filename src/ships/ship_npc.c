@@ -672,7 +672,6 @@ P_ship load_npc_ship(int level, NPC_AI_Type type, int speed, int m_class, int ro
     
     dbg_char = ch;
 
-
     P_ship ship = newship(npcShipSetup[i].m_class, true);
     if (!ship)
     {
@@ -687,7 +686,9 @@ P_ship load_npc_ship(int level, NPC_AI_Type type, int speed, int m_class, int ro
 
     ship->race = NPCSHIP;
     ship->npc_ai = new NPCShipAI(ship, ch);
+    ship->npc_ai->type = type;
     ship->ownername = 0;
+
 
     int name_index = number(0, sizeof(pirateShipNames)/sizeof(char*) - 1);
     nameship(pirateShipNames[name_index], ship);
@@ -708,6 +709,8 @@ P_ship load_npc_ship(int level, NPC_AI_Type type, int speed, int m_class, int ro
 
 P_ship try_load_npc_ship(P_ship target)
 {
+    if (ISNPCSHIP(target))
+        return 0;
     if (target->m_class == SH_SLOOP || target->m_class == SH_YACHT)
         return 0;
 

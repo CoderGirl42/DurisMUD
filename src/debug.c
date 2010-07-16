@@ -169,9 +169,9 @@ void do_debug(P_char ch, char *argument, int cmd)
           {
               ship->npc_ai->debug_char = 0;
               send_to_char("Done.\r\n", ch);
-              return;
           }
         }
+        return;
       }
       else
       {

@@ -3882,7 +3882,7 @@ int summon_ship (P_char ch, P_ship ship)
         send_to_char ("There is already an order out on your ship.\r\n", ch);
         return TRUE;
     }
-    if (ship->timer[T_BSTATION] > 0) 
+    if (ship->timer[T_BSTATION] > 0 && !IS_TRUSTED(ch)) 
     {
         send_to_char ("Your crew is not responding to our summons!\r\n", ch);
         return TRUE;
