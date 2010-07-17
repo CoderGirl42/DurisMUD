@@ -681,14 +681,9 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 #define IS_DEMON(ch)  (GET_RACE(ch) == RACE_DEMON)
 #define IS_DEVIL(ch) (GET_RACE(ch) == RACE_DEVIL)
 
-#define IS_GIANT(ch)  ((GET_RACE(ch) == RACE_GIANT) || \
-                       (GET_RACE(ch) == RACE_OGRE) || \
+#define IS_GIANT(ch)  ((GET_RACE(ch) == RACE_GIANT) || (GET_RACE(ch) == RACE_OGRE) || \
                        (GET_RACE(ch) == RACE_SGIANT) || \
-                       (GET_RACE(ch) == RACE_MINOTAUR) || \
-                       (GET_RACE(ch) == RACE_SNOW_OGRE) || \
-                       (GET_RACE(ch) == RACE_FIRBOLG) || \
-                       (GET_RACE(ch) == RACE_FIREGIANT) || \
-                       (GET_RACE(ch) == RACE_FROSTGIANT))
+                       (GET_RACE(ch) == RACE_MINOTAUR) || GET_RACE(ch) == RACE_SNOW_OGRE)
 
 #define IS_INSECT(ch) ((GET_RACE(ch) == RACE_INSECT))
 
@@ -776,28 +771,17 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 #define IS_HUMANOID(ch) ((GET_RACE(ch) > RACE_NONE) && \
            (GET_RACE(ch) < 31) || \
            (GET_RACE(ch) == RACE_AGATHINON) || \
-           (GET_RACE(ch) == RACE_HUMANOID)  || \
-           (GET_RACE(ch) == RACE_HALFORC)   || \
-           (GET_RACE(ch) == RACE_FAERIE)    || \
-           (GET_RACE(ch) == RACE_VAMPIRE)   || \
-           (GET_RACE(ch) == RACE_RAKSHASA)  || \
-           (GET_RACE(ch) == RACE_ANGEL)     || \
-           (GET_RACE(ch) == RACE_DRIDER)    || \
+           (GET_RACE(ch) == RACE_HUMANOID) || \
+           (GET_RACE(ch) == RACE_HALFORC) || \
+           (GET_RACE(ch) == RACE_FAERIE) || \
+           (GET_RACE(ch) == RACE_VAMPIRE) || \
+           (GET_RACE(ch) == RACE_RAKSHASA) || \
+           (GET_RACE(ch) == RACE_ANGEL) || \
+           (GET_RACE(ch) == RACE_DRIDER) || \
            (GET_RACE(ch) == RACE_SNOW_OGRE) || \
-           (GET_RACE(ch) == RACE_LYCANTH)   || \
-           (GET_RACE(ch) == RACE_ZOMBIE)    || \
-           (GET_RACE(ch) == RACE_PRIMATE)   || \
-           (GET_RACE(ch) == RACE_ELADRIN)   || \
-           (GET_RACE(ch) == RACE_KOBOLD)    || \
-           (GET_RACE(ch) == RACE_PILLITHID) || \
-           (GET_RACE(ch) == RACE_KUOTOA)    || \
-           (GET_RACE(ch) == RACE_WOODELF)   || \
-           (GET_RACE(ch) == RACE_ARCHON)    || \
-           (GET_RACE(ch) == RACE_ASURA)     || \
-           (GET_RACE(ch) == RACE_GHAELE)    || \
-           (GET_RACE(ch) == RACE_BRALANI)   || \
-           (GET_RACE(ch) == RACE_INCUBUS)   || \
-           (GET_RACE(ch) == RACE_SUCCUBUS))
+           (GET_RACE(ch) == RACE_LYCANTH) || \
+           (GET_RACE(ch) == RACE_ZOMBIE) || \
+           (GET_RACE(ch) == RACE_PRIMATE))
 
 #define IS_MULTICLASS_NPC(ch) (IS_NPC(ch) && IS_AFFECTED4(ch, AFF4_MULTI_CLASS))
 
@@ -814,8 +798,7 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 
 #define COLDSHIELDED(ch) (IS_AFFECTED3(ch, AFF3_COLDSHIELD))
 
-#define IS_ILLITHID(ch) (GET_RACE(ch) == RACE_ILLITHID || \
-                         GET_RACE(ch) == RACE_PILLITHID)
+#define IS_ILLITHID(ch) (GET_RACE(ch) == RACE_ILLITHID)
 
 #define IS_OGRE(ch) (GET_RACE(ch) == RACE_OGRE)
 
@@ -870,17 +853,16 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 #define GOOD_RACE(ch) RACE_GOOD(ch)
 #define PUNDEAD_RACE(ch) RACE_PUNDEAD(ch)
 
-#define USES_COMMUNE(ch) ( \
+#define USES_MANA(ch) (((ch)->player.m_class & \
+    (CLASS_PSIONICIST | CLASS_MINDFLAYER)) || \
+    ((ch)->player.secondary_class & (CLASS_PSIONICIST | CLASS_MINDFLAYER)))
+#define USES_COMMUNE(ch) (!USES_MANA(ch) && \
     (IS_NPC(ch) || IS_SET((ch)->player.m_class, CLASS_DRUID)))
-#define USES_FOCUS(ch) ( \
-    (IS_NPC(ch) || IS_SET((ch)->player.m_class, CLASS_PSIONICIST)) || \
-    IS_SET((ch)->player.m_class, CLASS_MINDFLAYER))
-#define USES_SPELL_SLOTS(ch) ( \
+#define USES_SPELL_SLOTS(ch) (!USES_MANA(ch) && ( \
         USES_COMMUNE(ch) || \
         IS_PUNDEAD(ch) || \
         IS_HARPY(ch) || \
-        GET_CLASS(ch, CLASS_ETHERMANCER) || \
-        USES_FOCUS(ch))
+        GET_CLASS(ch, CLASS_ETHERMANCER)))
 
 #define IS_SPELL_S(n) (IS_SET(skills[n].targets, TAR_SPELL))
 #define IS_SPELL(n) (n>=FIRST_SPELL && n<=LAST_SPELL && IS_SPELL_S(n))
@@ -1002,9 +984,6 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch)) && !IS_ANIMAL(ch))
       (GET_RACE(ch) == RACE_CENTAUR) || \
       (GET_RACE(ch) == RACE_GITHZERAI) || \
       (GET_RACE(ch) == RACE_AGATHINON) || \
-	  (GET_RACE(ch) == RACE_WOODELF) || \
-	  (GET_RACE(ch) == RACE_FIRBOLG) || \
-	  (GET_RACE(ch) == RACE_ELADRIN) || \
       (OLD_RACE_NEUTRAL(ch) && \
        GET_ALIGNMENT(ch) >= 0))
 
@@ -1017,11 +996,7 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch)) && !IS_ANIMAL(ch))
       ((OLD_RACE_NEUTRAL(ch) && (GET_ALIGNMENT(ch)) < 0)) || \
       (GET_RACE(ch) == RACE_ORC) || \
       (GET_RACE(ch) == RACE_OROG) || \
-      (GET_RACE(ch) == RACE_TROLL) || \
-	  (GET_RACE(ch) == RACE_KUOTOA) || \
-	  (GET_RACE(ch) == RACE_PILLITHID) || \
-	  (GET_RACE(ch) == RACE_KOBOLD) || \
-	  (GET_RACE(ch) == RACE_DRIDER))
+      (GET_RACE(ch) == RACE_TROLL))
 
 #define OLD_RACE_PUNDEAD(ch) ((GET_RACE(ch) == RACE_PLICH) || \
       (GET_RACE(ch) == RACE_PVAMPIRE) || \
@@ -1165,7 +1140,7 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch)) && !IS_ANIMAL(ch))
        affected_by_spell(ch, SPELL_SLEEP))
 
 // Meeting the following define grants hitpoints.spellcaster.maxConBonus.
-#define IS_MAX_CON_BONUS_CLASS(ch) (GET_CLASS(ch, CLASS_ETHERMANCER | CLASS_DRUID | CLASS_CLERIC | CLASS_SORCERER | CLASS_NECROMANCER | CLASS_SHAMAN | CLASS_PSIONICIST | CLASS_ILLUSIONIST | CLASS_CONJURER | CLASS_BARD | CLASS_THEURGIST))
+#define IS_MAX_CON_BONUS_CLASS(ch) (GET_CLASS(ch, CLASS_ETHERMANCER | CLASS_DRUID | CLASS_CLERIC | CLASS_SORCERER | CLASS_NECROMANCER | CLASS_SHAMAN | CLASS_PSIONICIST | CLASS_ILLUSIONIST | CLASS_CONJURER | CLASS_BARD))
 
 #define IS_COLD_VULN(ch) (GET_RACE(ch) == RACE_THRIKREEN || \
                           GET_RACE(ch) == RACE_F_ELEMENTAL || \
@@ -1266,15 +1241,5 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch)) && !IS_ANIMAL(ch))
 
 #define IS_CONSTRUCT(ch) ((GET_RACE(ch) == RACE_GOLEM) || \
                           (GET_RACE(ch) == RACE_CONSTRUCT))
-
-#define IS_ANGEL(ch) ((GET_RACE(ch) == RACE_ANGEL) || \
-                      (GET_RACE(ch) == RACE_ELADRIN) || \
-                      (GET_RACE(ch) == RACE_AGATHINON) || \
-                      (GET_RACE(ch) == RACE_ARCHON) || \
-                      (GET_RACE(ch) == RACE_ASURA) || \
-                      (GET_RACE(ch) == RACE_TITAN) || \
-                      (GET_RACE(ch) == RACE_AVATAR) || \
-                      (GET_RACE(ch) == RACE_GHAELE) || \
-                      (GET_RACE(ch) == RACE_BRALANI))
-
+        
 #endif /* _DURIS_UTILS_H_ */
