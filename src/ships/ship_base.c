@@ -5830,6 +5830,8 @@ void newshipfrags()
         ShipVisitor svs;
         for (bool fn = shipObjHash.get_first(svs); fn; fn = shipObjHash.get_next(svs))
         {
+            if (ISNPCSHIP(svs))
+                continue;
             if (svs->frags >= max)
             {
                 int exists = 0;

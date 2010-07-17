@@ -353,6 +353,11 @@ bool NPCShipAI::find_new_target()
 {
     for (int i = 0; i < contacts_count; i++) 
     {
+        if (ship == npc_dreadnought)
+        {
+            if (contacts[i].range > 30)
+                continue;
+        }
         if (is_valid_target(contacts[i].ship))
         {
             ship->target = contacts[i].ship;
