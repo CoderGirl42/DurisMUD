@@ -18,15 +18,24 @@ enum NPC_AI_Type
     NPC_AI_ESCORT,
 };
 
+enum NPC_AI_Turning
+{
+    NPC_AI_NOT_TURNING,
+    NPC_AI_TURNING_LEFT,
+    NPC_AI_TURNING_RIGHT,
+};
+
 struct NPCShipAI
 {
     P_ship ship;
     P_char debug_char;
     NPC_AI_Type type;
-    NPC_AI_Mode mode;
+    struct NPCShipCrewData* crew_data;
     bool permanent;
     bool advanced;
-    struct NPCShipCrewData* crew_data;
+
+    NPC_AI_Mode mode;
+    NPC_AI_Turning turning;
     
     
     NPCShipAI(P_ship s, P_char ch = 0);

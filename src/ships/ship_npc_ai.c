@@ -109,6 +109,7 @@ NPCShipAI::NPCShipAI(P_ship s, P_char ch)
     advanced = false;
     permanent = false;
     mode = NPC_AI_IDLING;
+    turning = NPC_AI_NOT_TURNING;
     t_bearing = 0;
     t_arc = 0;
     s_arc = 0;
@@ -257,8 +258,19 @@ void NPCShipAI::cruise()
 {
     send_message_to_debug_char("Cruising: \r\n");
     reload_and_repair();
+
     if (calc_land_dist(ship->x, ship->y, ship->heading, 5.0) < 5.0) 
-        new_heading += 10; 
+    {
+        if (turning == NPC_AI_NOT_TURNING)
+            turning = (number(1, 2) == 1) ? NPC_AI_TURNING_LEFT : NPC_AI_TURNING_RIGHT;
+        if (turning == NPC_AI_TURNING_LEFT)
+            new_heading -= 20; 
+        else
+            new_heading += 20; 
+    }
+    else
+        turning == NPC_AI_NOT_TURNING;
+
     set_new_dir();
 }
 
