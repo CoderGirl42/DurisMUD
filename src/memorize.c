@@ -893,10 +893,11 @@ void handle_undead_mem(P_char ch)
     time = get_circle_memtime(ch, highest_empty);
     add_event(event_memorize, time, ch, 0, 0, 0, &time, sizeof(time));
   }
-  else if (!USES_COMMUNE(ch) || !USES_FOCUS(ch))
+  else if (!(USES_COMMUNE(ch) || USES_FOCUS(ch)))
   {
     send_to_char("&+rYou feel fully infused...\n", ch);
 
+    
     CharWait(ch, WAIT_SEC);
     
     if(IS_PUNDEAD(ch) ||
