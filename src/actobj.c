@@ -3603,7 +3603,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
           break;
         }
       }
-      if (ch->equipment[WEAR_BODY])
+      if (ch->equipment[WEAR_BODY] || ch->equipment[WEAR_SPIDER_BODY])
       {
         if (showit)
           send_to_char("You already wear something on your body.\r\n", ch);
