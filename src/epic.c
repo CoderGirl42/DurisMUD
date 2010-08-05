@@ -1048,6 +1048,7 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
 
 		  // set completed flag
 		  epic_zone_completions.push_back(epic_zone_completion(zone_number, time(NULL), delta));
+      db_query("UPDATE zones SET last_touch='%d' WHERE number='%d'", time(NULL), zone_number);
     }
 
     act("$p flashes brightly then blurs, and remains still and powerless.",
@@ -1058,6 +1059,56 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
   }
 
   return FALSE;
+}
+
+
+void epic_zone_balance()
+{
+  int i, alignment, delta, lt;
+  vector<epic_zone_data> epic_zones = get_epic_zones();
+  
+  for (i = 0; i <= epic_zones.size(); i++)
+  {
+    // No need to balance at 0, and code automatically fixes it to 1 or -1
+    if ( !qry("SELECT alignment, last_touch FROM zones WHERE number = %d", epic_zones[i].number) )
+      return;
+
+    MYSQL_RES *res = mysql_store_result(DB);
+
+    if (mysql_num_rows(res) < 1)
+      return;
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+
+    if (row)
+    {
+      alignment = atoi(row[0]);
+      lt = atoi(row[1]);
+    }
+
+    mysql_free_result(res);
+    
+    if (lt == 0)
+      db_query("UPDATE zones SET last_touch='%d' WHERE number='%d'", time(NULL), epic_zones[i].number);
+
+    if ((alignment == 0) || (alignment == 1) || (alignment == -1))
+      continue;
+    
+    //debug("zone %d alignment %d", epic_zones[i].number, alignment);
+
+    if (time(NULL) - lt < ((int)get_property("epic.alignment.reset.hour", 7*24*60*60)*60*60))
+    {
+      if(alignment > 0)
+        delta = -1;
+      else if (alignment < 0)
+        delta = 1;
+
+      //debug("calling update_epic_zone_alignment");
+      db_query("UPDATE zones SET last_touch='%d' WHERE number='%d'", time(NULL), epic_zones[i].number);
+      update_epic_zone_alignment(epic_zones[i].number, delta);
+      continue;
+    }
+  }
 }
 
 int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
@@ -2256,7 +2307,7 @@ void update_epic_zone_alignment(int zone_number, int delta)
   qry("UPDATE zones SET alignment = %d WHERE alignment > %d", EPIC_ZONE_ALIGNMENT_MAX, EPIC_ZONE_ALIGNMENT_MAX);
   qry("UPDATE zones SET alignment = %d WHERE alignment < %d", EPIC_ZONE_ALIGNMENT_MIN, EPIC_ZONE_ALIGNMENT_MIN);
   
-  debug("update_epic_zone_alignment(zone_number=%d, delta=%d)", zone_number, delta);
+  //debug("update_epic_zone_alignment(zone_number=%d, delta=%d)", zone_number, delta);
 #endif  
 }
 
