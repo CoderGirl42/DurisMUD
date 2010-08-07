@@ -6,7 +6,7 @@
 &+cvarious goods.  There is only one exit out of this store which
 &+cleads back into Tharnadia.
 ~
-1325 176193604 1
+1325 176193604 1 0
 D3
 There is a door leading back to Tharnadia.
 ~
@@ -34,7 +34,7 @@ S
 &+CM&+ce&+Cr&+cc&+Cy&+cf&+Cu&+cl &+CF&+ca&+Ct&+ce l&+Cau&+cghs &+Ca&+cs th&+Ce &+cw&+Cea&+ck &+Ca&+cr&+Ce &+ct&+Cra&+cm&+Cple&+cd &+Co&+cv&+Ce&+cr by the &+Ce&+cv&+Ci&+cl &+Csin&+cister &+Cs&+ctr&+Co&+cng.&N
 &+LNecromantia&+c, &+Cm&+cys&+Ct&+cica&+Cl &+cf&+Co&+crc&+Ce&+cs, s&+Co &+cm&+Ca&+cny th&+Ci&+cngs, &+Ce&+ce&+Cr&+ci&+Ce &+llight &+cd&+Ce&+csc&+Ce&+cnds, wh&+Ca&+cts &+Creal&+c?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Bt&+bw&+Bi&+bl&+Bi&+bg&+Bh&+bt &+Bt&+bo&+Bw&+be&+Br &+Lseems to continue on in this direction.&N
 ~
@@ -49,7 +49,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 ~
 ~
@@ -75,7 +75,7 @@ S
 &+gcity up to the large cliffs upon which the &+Ltwin keeps&+g are built.  A dirt road
 &+gleads away to the east toward a stone ramp and the plains beyond.&n
 ~
-1325 8388676 2
+1325 8388676 2 0
 D1
    This road leads away from Tharnadia to the east.
 ~
@@ -103,7 +103,7 @@ Inside the Eastern City Gates~
 &+wa vast grassy plains with mountains in the distance.  The wall road leads to
 &+wthe north and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road along the city wall continues north.
 ~
@@ -142,7 +142,7 @@ S
 &+WTharnadian&+w eastern gates.  To the west a small dwelling sags between its
 &+wneighbors.  The road continues north, while the city gates lie to the south.&n
 ~
-1325 142639169 1
+1325 142639169 1 0
 D0
    A Bend in the road along the wall.
 ~
@@ -179,7 +179,7 @@ S
 &+cwithin this alleyway, the dwelling is small, but livable.  A small doorway
 &+cleads out to the east.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    The eastern wall road lies to the east.
 ~
@@ -200,7 +200,7 @@ S
 &+wlies to the north, its ornate ivory entrance seems out of place in this part
 &+wof the city.  The road continues to the west and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The Tharnadian Bank lies to the north.
 ~
@@ -232,7 +232,7 @@ Tharnadian Bank~
 &+woff to one side, though it is not accessable from here due to the cell bars.
 &+wThe road along the city wall is south of here.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A bend in the road wall lies to the south.
 ~
@@ -260,7 +260,7 @@ S
 &+wdwelling sags between its neighbors.  The road continues west, while to the
 &+weast it bends south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    A bend in the road wall lies to the west.
 ~
@@ -283,7 +283,7 @@ S
 &+wof the city.  The road continues to the east and to the north.  There is a
 &+Lburned-out home&+w to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the road turns west.
 ~
@@ -308,7 +308,7 @@ S
 &+Lpermeating the air.  The northern wall road can be seen through the destroyed
 &+Ldoorway.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    A bend in the road wall lies to the north.
 ~
@@ -325,7 +325,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 176193608 0
+1325 176193608 0 0
 D0
 ~
 door~
@@ -352,7 +352,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -375,7 +375,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -398,7 +398,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -421,7 +421,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -441,7 +441,7 @@ Room #10~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -453,7 +453,7 @@ Room #9~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -465,7 +465,7 @@ Room #8~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -477,7 +477,7 @@ Room #7~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -489,7 +489,7 @@ Room #6~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -501,7 +501,7 @@ Room #5~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -517,7 +517,7 @@ S
 &+wdwelling sags between its neighbors.  The road continues west, while to the
 &+weast it bends south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The road to the south turns east.
 ~
@@ -539,7 +539,7 @@ S
 &+wto the north leads to the path of the &+WHoly Warrior&+w.  The road continues to the
 &+wwest and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The path of the holy warrior lies to the north.
 ~
@@ -566,7 +566,7 @@ built as the last mainstay of defense for the people.  The road continues
 east, while to the west it intersects with Keats street.  To the south the
 &+WTharnadian&+w stables open to the road.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern wall road continues east.
 ~
@@ -592,7 +592,7 @@ S
 &+Lbandits of the wilds.  Overhead a &+Wsteel&+L ladder hangs down from the tower
 &+Lthat guards the eastern end of the northern gates.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern wall road continues east.
 ~
@@ -625,7 +625,7 @@ The Northern Wall Road~
   The northern wall road leads of to the east and west. Two huge towers flank
 either side of this barren wall, providing the militia additional lookouts.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern wall road intersects with Keats street to the east.
 ~
@@ -651,7 +651,7 @@ S
 &+Lthis guild.  A trapdoor in the ceiling leads to street level, and the hallway
 &+Lcontinues on to the south.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D2
    The dark halls of the guild of rouges continue south.
 ~
@@ -677,7 +677,7 @@ S
 &+Lunsettling.  A small chamber opens up to the east, while the hall continues
 &+Lnorth and west.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
    The hallway continues north.
 ~
@@ -704,7 +704,7 @@ S
 &+Lroom slowly, obviously a device intended to discourage members of the guild
 &+Lfrom robbing their own shop.  The hall of the guild is west of here.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D3
    There is a dark hallway to the west.
 ~
@@ -731,7 +731,7 @@ S
 &+Lhere, while a small ladder leads down through a circular opening in the floor
 &+Lto a lower level of the guild.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D1
    The hallway continues east.
 ~
@@ -750,7 +750,7 @@ S
 &+Lset into the stone wall here, leading north, with no apparent keyhole
 &+Levident.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
    The door is black, with a small bronze handle.
 ~
@@ -770,7 +770,7 @@ S
 &+Lwhere the rouges of &+WTharnadia&+L practice their secret and deadly art, nicely
 &+Lhidden away from the hustle and bustle of the city above.&n
 ~
-1325 142770240 0
+1325 142770240 0 0
 D2
    The door is black, with a small bronze handle.
 ~
@@ -793,7 +793,7 @@ S
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads down to the eastern wall street.
 ~
@@ -818,7 +818,7 @@ S
 &+WTharnadian&+w eastern gates.  The road continues north to the city gates, while
 &+wto the south the road turns west.&n
 ~
-1325 142639169 1
+1325 142639169 1 0
 D0
    The eastern wall road leads north.
 ~
@@ -852,7 +852,7 @@ S
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads through the floor to the road below.
 ~
@@ -877,7 +877,7 @@ S
 &+WTharnadian&+w northern gates.  The road continues east to the city gates, and to
 &+wthe west the road continues on.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern city gates lie to the east.
 ~
@@ -911,7 +911,7 @@ and five feet tall protectors runs along the outside edge of the tower,
 probably used by archers in times of siege. A long &+Wsteel&+w ladder secured
 to the inside of the wall allows access to the street some fifty feet below.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    The steel ladder leads back down to the road.
 ~
@@ -935,7 +935,7 @@ and five feet tall protectors runs along the outside edge of the tower,
 probably used by archers in times of siege. A long &+Wsteel&+w ladder secured
 to the inside of the wall allows access to the street some fifty feet below.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    This steel ladder leads down to the road below.
 ~
@@ -959,7 +959,7 @@ S
 &+gthe paladins.  The doorway is open and appears to be open at all times.  The
 &+gpathway continues through an arch to the south.&n
 ~
-1325 142639172 2
+1325 142639172 2 0
 D0
    The doorway leads into the temple proper.
 ~
@@ -987,7 +987,7 @@ S
 &+wsymbols intermingled with a dozen swords.  The building's entrance lies to the
 &+wsouth, and a hallway leads eastward.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D1
    The hallway continues to the east.
 ~
@@ -1022,7 +1022,7 @@ S
 &+wsymbols intermingled with a dozen swords.  The main temple lies to the east,
 &+wand the supplies shop is to the north.  The hallway heads to the west.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
    A small shop lies to the north.
 ~
@@ -1061,7 +1061,7 @@ S
 &+wrests at the back of the room, probably where the establishments owner sits.
 &+wThe only exit from this room is to the south, back into the grand hallway.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D2
    There is an ornate hallway to the south.
 ~
@@ -1088,7 +1088,7 @@ S
 &+wchamber is illuminated by several stained glass windows, though only one exit
 &+wis available, leading west into the grand hallway.
 ~
-1325 142770240 0
+1325 142770240 0 0
 D3
    An elegant hallway leads out that way.
 ~
@@ -1105,7 +1105,7 @@ S
 &+wthe road as far off as the eye can see. To the west of here, the &+mG&+Wr&+me&+Wa&+mt &+LBazaar&+w,
 &+wwhere visiting merchants peddle their goods, opens up.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    The road continues east.
 ~
@@ -1128,7 +1128,7 @@ S
 &+weast, the &+RGrand Tharnadian Way&+w makes its way toward the eastern gates
 &+wof the city.  The bazaar continues to the south and west of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The Grand Tharnadian Way leads east.
 ~
@@ -1156,7 +1156,7 @@ S
 &+wthe only place where you can walk without bumping into people.  The bazaar
 &+wcontinues on in every direction from here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The bazaar continues north.
 ~
@@ -1189,7 +1189,7 @@ S
 &+wwest, &+LKeats street&+w can be seen making its north to south bisection of the
 &+wcity.  The bazaar continues to the north, east, and south of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The bazaar continues north.
 ~
@@ -1222,7 +1222,7 @@ S
 &+Lthat composed this avenue.   The road continues south, while to the north lies
 &+Lthe Tharnadia-Keats intersection.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The Tharnadia-Keats intersection lies to the north.
 ~
@@ -1248,7 +1248,7 @@ S
 &+wTharnadian Way heads off to the &+Bfountain&+w west of here.  To the east lies
 &+wthe Tharnadian combat arena.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Keats street continues to the north.
 ~
@@ -1287,7 +1287,7 @@ S
 &+Lthat composed this avenue.   The road continues to an intersection both north
 &+Land south of here.  To the west, a small storefront faces the street.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The northern Keats intersection lies that way.
 ~
@@ -1314,7 +1314,7 @@ S
 &+wmany goods that flow in and out of the great city.  The bazaar continues to the
 &+wnorth and east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The bazaar continues north.
 ~
@@ -1336,7 +1336,7 @@ S
 &+wmany goods that flow in and out of the great city.  The bazaar continues to the
 &+wnorth, east, and west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The bazaar continues north.
 ~
@@ -1363,7 +1363,7 @@ S
 &+wmany goods that flow in and out of the great city.  The bazaar continues to the
 &+wsouth and east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The bazaar continues east.
 ~
@@ -1385,7 +1385,7 @@ S
 &+wmany goods that flow in and out of the great city.  The bazaar continues to the
 &+wsouth and west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The bazaar continues south.
 ~
@@ -1409,7 +1409,7 @@ S
 &+wof here.  Painted on the window, in large red letters, are the words &+RKienar's
 &+RFast Foods&+w.  The bazaar continues to the north and west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The bazaar continues north.
 ~
@@ -1440,7 +1440,7 @@ S
 &+ycovered with white tablecloths for cleanliness.  Outside to the east, the
 &+yhawkcalls, of the merchants in the great bazaar, can be heard.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    THe great bazaar of Tharnadia lies through the wooden door to the west.
 ~
@@ -1461,7 +1461,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues
 &+wnorth and west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues to the north.
 ~
@@ -1482,7 +1482,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road to the west
 &+wturns south, while to the east it bends north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road to the east turns north.
 ~
@@ -1511,7 +1511,7 @@ S
 &+wup to the second floor.  The southern wall road can be seen through the door
 &+wto the north.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    The southern wall road lies to the north.
 ~
@@ -1558,7 +1558,7 @@ the kinks out of their routines.  Behind the couch near the eastern wall, a
 stone staircase leads through the floor to the tavern of the &+RBlood&+Wmoon&n,
 below.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D5
    The taproom to the Bloodmoon Rising Tavern lies down there.
 ~
@@ -1592,7 +1592,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues
 &+weast, while to the south it bends west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road leaves east.
 ~
@@ -1613,7 +1613,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues
 &+wwest, while to the north it bends east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns east.
 ~
@@ -1637,7 +1637,7 @@ S
 &+WTharnadian&+w southern gates.  To the north a large dwelling takes up most of the
 &+wstreet.  The road continues east, while the city gates lie to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A commoner's dwelling lies to the north.
 ~
@@ -1674,7 +1674,7 @@ S
 &+cstove at the center of the room.  A &+ywooden&+c doorframe, in the east wall, leads
 &+cto the dwelling's second room.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A worn and beaten wooden door sags on its hinges.
 ~
@@ -1704,7 +1704,7 @@ S
 &+Wmirror&+c hanging from the east wall.  A small &+ywooden&+c doorframe exits through the
 &+cwest wall into the main room of the dwelling.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    The dwelling's entrance lies to the east.
 ~
@@ -1731,7 +1731,7 @@ A Southern Gate Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder heads back to street level.
 ~
@@ -1749,7 +1749,7 @@ The Southern Wall Road~
   Wall road continues both east and west, passing underneath the tall towers,
 that provide the militia additional defense tactics.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The southern wall road continues to the east.
 ~
@@ -1775,7 +1775,7 @@ S
 &+Lbandits of the wilds.  Overhead a &+Wsteel&+L ladder hangs down from the tower
 &+Lthat guards the western end of the southern gates.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Keats street continues north.
 ~
@@ -1814,7 +1814,7 @@ A Southern Gate Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads back down to street level.
 ~
@@ -1838,7 +1838,7 @@ S
 &+Lthat composed this avenue.   The road continues north, while to the south it
 &+Lintersects with the southern wall road.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Keats street lies to the north.
 ~
@@ -1862,7 +1862,7 @@ S
 &+Lhere, while a tight and murky alley leads off to the west.  Keats street heads
 &+Loff to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues north.
 ~
@@ -1892,7 +1892,7 @@ S
 &+wwalls in all directions off in the distance.  There is a large &+Lplaque&+w fastened
 &+wto one edge of the fountain here with some lines of text printed on it.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The Tharnadian-Keats intersection is east of here.
 ~
@@ -1935,7 +1935,7 @@ S
 &+cornate &+yoak&+c staircase spirals in through the ceiling, its wooden steps leading
 &+cto the inn upstairs.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    A heavy oak door hangs from its hinges.
 ~
@@ -1966,7 +1966,7 @@ S
 &+cof the city's warriors wait for work.  Attached to the front of the counter is
 &+ca large sign.
 ~
-1325 8388680 0
+1325 8388680 0 0
 D3
 ~
 door~
@@ -2009,7 +2009,7 @@ S
 &+WGreat &+BFountain&+w of &+WTharnadia&+w sits in a large open area.  The smell of freshly
 &+wbaked bread, wafts from the bakery to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A maplewood door hangs from its hinges.
 ~
@@ -2036,7 +2036,7 @@ S
 &+wthe road as far off as the eye can see.  A small building opens up to the
 &+wsouth.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 ~
 ~
@@ -2068,7 +2068,7 @@ S
 &+wTo the north, a quiet alley runs its way through the wealthier part of the
 &+wcity.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A quiet ally meanders to the north.
 ~
@@ -2098,7 +2098,7 @@ S
 &+wwest, while to the east the road turns north.  The street looks highly
 &+wtraveled, with buildings flanking the road as far off as the eye can see.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, Tharnadian Way turns east.
 ~
@@ -2120,7 +2120,7 @@ S
 &+wflanking the road as far off as the eye can see.  The city's armory stands to
 &+wthe north of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The door is made of thick solid oak, and looks quite sturdy.
 ~
@@ -2146,7 +2146,7 @@ S
 &+wand west of here.  The street looks highly traveled, with buildings flanking
 &+wthe road as far off as the eye can see.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    Tharnadian Way continues east.
 ~
@@ -2168,7 +2168,7 @@ S
 &+wmaking the need for defense mute.  The &+RGrand Tharnadian Way&+w heads back to the
 &+weast through the center of &+WTharnadia&+w.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The western wall road continues to the north.
 ~
@@ -2200,7 +2200,7 @@ S
 &+BShoppe&+w in its front window.  You can vaguely make out the shapes of animals
 &+wthrough the dirty glass.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues north.
 ~
@@ -2226,7 +2226,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues both
 &+wto the north and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues north.
 ~
@@ -2247,7 +2247,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues both
 &+wto the west and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The road continues south.
 ~
@@ -2269,7 +2269,7 @@ S
 &+wto the north and to the east.  To the south, a small home overlooks the road,
 &+wa lone voyuer peering at a lustful wall.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the road bends west.
 ~
@@ -2295,7 +2295,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues both
 &+wto the west and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The road to the south bends east.
 ~
@@ -2316,7 +2316,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues to
 &+wthe east, while to the west it turns south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    To the east, the road turns south.
 ~
@@ -2337,7 +2337,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues both
 &+weast and west.  The &+WTharnadian&+w Jail stands to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern wall road continues east.
 ~
@@ -2366,7 +2366,7 @@ S
 &+WTharnadian&+w northern beach gates.  The road continues east, while the gates to
 &+wthe northern beach lie to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The wall road continues east.
 ~
@@ -2398,7 +2398,7 @@ Inside the Northern Beach Gates~
 &+wit easily opened and closed by a single operator.  To the north, a wide beach
 &+wopens up.  The wall road leads to the east and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Heavy and well fortified, the gates are made of iron.
 ~
@@ -2432,7 +2432,7 @@ S
 &+WTharnadian&+w northern beach gates.  The road continues west to a bend, while
 &+wthe gates to the northern beach lie to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern beach gates lie east of here.
 ~
@@ -2465,7 +2465,7 @@ S
 &+wup against the Shr'nn mesa, and turn south with the street.  The road proceeds
 &+wto the east and to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The northern road continues east.
 ~
@@ -2486,7 +2486,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues
 &+wwest, while to the north it intersects with Keats street.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The Southern Keats intersection lies to the north.
 ~
@@ -2507,7 +2507,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues east
 &+wand west, to two different bends in the street.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    To the east, the road turns north.
 ~
@@ -2528,7 +2528,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues both
 &+wsouth and east, while to the north a commoners dwelling sags in its place.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A wooden door sags on its hinges.
 ~
@@ -2555,7 +2555,7 @@ S
 &+wnorth and south, to two different turns in the street.  An adobe and wood
 &+wbuilding stands proudly to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the road turns east.
 ~
@@ -2581,7 +2581,7 @@ S
 &+wbuilt as the last mainstay of defense for the people.  The road continues both
 &+wto the north and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues north.
 ~
@@ -2602,7 +2602,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues west,
 &+wwhile to the east it turns north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road to the east turns north.
 ~
@@ -2624,7 +2624,7 @@ S
 &+weast and south, the southern road turning west.  A small jewelry shop stands
 &+wto the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Hernic's Fine Gems lies to the north.
 ~
@@ -2650,7 +2650,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues west,
 &+wwhile to the north it turns east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns east.
 ~
@@ -2672,7 +2672,7 @@ S
 &+wwest, while to the east it turns north.  A small home occupies the northern
 &+wcorner.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A small open archway leads into the building.
 ~
@@ -2699,7 +2699,7 @@ S
 &+weast and west.  A tight and murky alley winds its way between two buildings to
 &+wthe north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A murky alley leads off to the north.
 ~
@@ -2729,7 +2729,7 @@ S
 &+wthe southern beach lie to the east.  The entrance to a large domicile lies to
 &+wthe north, the rest of the building leaving to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    An oak door rests here.
 ~
@@ -2766,7 +2766,7 @@ Inside the Southern Beach Gates~
 &+wit easily opened and closed by a single operator.  To the south, a wide beach
 &+wopens up.  The wall road leads to the east and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The southern wall road continues east.
 ~
@@ -2801,7 +2801,7 @@ S
 &+wthe gates to the southern beach lie to the east.  A burned out house barely
 &+wstands to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A dangerously decayed building lies to the north.
 ~
@@ -2838,7 +2838,7 @@ S
 &+wwalls here, paved with large flat slabs of &+Lgranite&+w.  The road continues both
 &+wnorth and east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues.
 ~
@@ -2861,7 +2861,7 @@ A Northern Beach Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads down to the street below.
 ~
@@ -2885,7 +2885,7 @@ A Northern Beach Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads down to the street below.
 ~
@@ -2909,7 +2909,7 @@ A Southern Beach Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads back down to the street.
 ~
@@ -2933,7 +2933,7 @@ A Southern Beach Guard Tower~
 &+win times of siege.  A long &+Wsteel&+w ladder secured to the inside of the wall
 &+wallows access to the street some fifty feet below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    A steel ladder leads down to the street.
 ~
@@ -2955,7 +2955,7 @@ S
 &+wagainst the east wall, ascends to the bakery's second level.  A small door is
 &+wset in the southern wall of the shop.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    An maplewood door hangs from its hinges.
 ~
@@ -2980,7 +2980,7 @@ S
 &+wsee the &+RGrand Tharnadia Way&+w below, running off to the east and west.  A small
 &+wstaircase leads down into the &+ybakery&+w shop below.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D5
    The bakery is down these stairs.
 ~
@@ -3001,7 +3001,7 @@ S
 &+yshop to the east.
 &+LThere is a large sign posted on the west wall.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    A glass door stands in the doorway.
 ~
@@ -3033,7 +3033,7 @@ buys them.  They look quite hungry, Kylara having rarely fed them so as to get
 them obnoxious for all those twinks looking to cheat their way up levels using
 followers.
 ~
-1325 142770376 0
+1325 142770376 0 0
 S
 #132616
 &+MA Commoner's Dwelling&n~
@@ -3043,7 +3043,7 @@ S
 &+mcouch and bed that are neatly kept by its occupants.  The wall road can be
 &+mseen to the north through the doorway.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    A small wooden door hugs its frame.
 ~
@@ -3070,7 +3070,7 @@ S
 &+croom are lined with manacles and the center of the room is draped in an
 &+cawesome &+bblue&+c haze that crackles with magical energy.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    The jail lobby lies through that doorway.
 ~
@@ -3086,7 +3086,7 @@ S
 &+winmates, and how long they must remain prisoners.  The &+WTharnadian &+RCourt&+rhouse
 &+wis through a doorway to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
    The northern wall road lies through that archway.
 ~
@@ -3117,7 +3117,7 @@ S
 &+wunpleasant smell of &+bv&+mo&+rm&+yi&+gt&+w, body odor, and &+Yalcohol&+w sit heavily on the air in
 &+wthis foul place.&n
 ~
-1325 142905416 0
+1325 142905416 0 0
 D1
    The roof of the courthouse lies to the east.
 ~
@@ -3143,7 +3143,7 @@ S
 &+cimpossible to properly decorate their home.  A small doorway leads out to the
 &+csouth onto the southern wall road. &n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A wooden door sags on its hinges.
 ~
@@ -3157,7 +3157,7 @@ S
 &+cwhoever owns this home is of at least moderate wealth.  The doorway in the
 &+ceast wall leads out to the southern wall road.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    An oak door stands firm on its bridal.
 ~
@@ -3178,7 +3178,7 @@ S
 &+Lroom, the piping bent and mangled.  You feel uncomfortable, as if &+WD&+we&+La&+wt&+Wh
 &+Lhimself vacations here when he needs to get away from it all.&n
 ~
-1325 142639177 0
+1325 142639177 0 0
 D2
    You can see the southern wall street through that arch.
 ~
@@ -3202,7 +3202,7 @@ S
 &+Ldirection at a time.  The southern wall road can be seen through the destroyed
 &+Ldoorway.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The southern wall road lies to the south.
 ~
@@ -3218,7 +3218,7 @@ S
 &+csmall doorway leads west to the &+Wkitchen&+c, while to the south an &+yoak&+c door stands
 &+cfirm in its jam.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    The southern wall road lies to the south.
 ~
@@ -3251,7 +3251,7 @@ S
 &+Lin the south wall overlooks the southern wall road.  Through the arch in the
 &+Least wall, you can see the dwelling's living room.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    The living room is to the east.
 ~
@@ -3272,7 +3272,7 @@ of the northwestern part of the city.  Its numerous rooftops, and the boards
 that connect them, span out before your eyes in a cacophony of wood and
 plaster.  To the east, a small &+ywooden&n door hangs in its frame.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    A wood door sits in its frame.
 ~
@@ -3293,7 +3293,7 @@ S
 &+witems they own.  An &+yoak&+w door rests in the doorframe through the eastern wall,
 &+wblocking the egress to the hallway.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    A wood door sits in its frame.
 ~
@@ -3307,7 +3307,7 @@ S
 &+msomeone who enjoys comfort, and has gone to great lengths to make their house
 &+mextremely so.  The &+RGrand Thranadian Way&+m lies through the doorway to the north.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
   You can see the Grand Tharnadian Way through the doorway.
 ~
@@ -3329,7 +3329,7 @@ S
 &+Lof &+wsoot&+L that covers most of the shop.  Through an arch in the west wall, you
 &+Lcan see a storage room.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    The door is made of thick solid oak, and looks quite sturdy.
 ~
@@ -3352,7 +3352,7 @@ S
 &+wfaintly of &+yleather&+w and &+Loil&+w.  A small archway, to the east, leads back to the
 &+wfront of the shop.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    The front of the shop lies to the east.
 ~
@@ -3372,7 +3372,7 @@ A Small Library~
 &+yLcovered with more books.  A nicely crafted mahogany desk sits in the far corner,
 &+yLwith a half-open drawer protruding from its side.&n
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -3386,7 +3386,7 @@ and able to hold the weight of many travelers.  The &+yballustades&n are carved 
 the likeness of a great &+rd&+Ru&+Yr&+Wian dra&+Cg&+Bo&+bn&n, its jaws facing to the northern lands.
 &+LTern road&n continues north and south over the bridge.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3404,7 +3404,7 @@ and littered with potholes and shallow dips.  To either side of the road is an
 impassable &+Gforest&n, with trees rising up nearly a hundred feet.  The woods are
 so incredibly dense as to make travel in them nearly impossible.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
   Tern road continues in that direction.
 ~
@@ -3423,7 +3423,7 @@ nearly a hundred feet.  The forest is so incredibly dense as to make travel in
 it nearly impossible.  The &+ydirt&n road looks very ancient, with &+gweeds&n creeping in
 from the sides, and littered with potholes and shallow dips.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3442,7 +3442,7 @@ and littered with potholes and shallow dips.  To either side of the road is an
 impassable &+Gforest&n, with trees rising up nearly a hundred feet.  The woods are
 so incredibly dense as to make travel in them nearly impossible.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3461,7 +3461,7 @@ nearly a hundred feet.  The forest is so incredibly dense as to make travel in
 it nearly impossible.  The &+ydirt&n road looks very ancient, with &+gweeds&n creeping in
 from the sides, and littered with potholes and shallow dips.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3480,7 +3480,7 @@ and littered with potholes and shallow dips.  To either side of the road is an
 impassable &+Gforest&n, with trees rising up nearly a hundred feet.  The woods are
 so incredibly dense as to make travel in them nearly impossible.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3499,7 +3499,7 @@ with about a foot of standing &+bwater&n.  The basin appears to have developed w
 the ground beneath the road gave way and collapsed inward.  The &+ypath&n leads to
 the north and to the south.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3518,7 +3518,7 @@ nearly a hundred feet.  The forest is so incredibly dense as to make travel in
 it nearly impossible.  The &+ydirt&n road looks very ancient, with &+gweeds&n creeping in
 from the sides, and littered with potholes and shallow dips.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3537,7 +3537,7 @@ and littered with potholes and shallow dips.  To either side of the road is an
 impassable &+Gforest&n, with trees rising up nearly a hundred feet.  The woods are
 so incredibly dense as to make travel in them nearly impossible.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    Tern road continues in that direction.
 ~
@@ -3556,7 +3556,7 @@ nearly a hundred feet.  The forest is so incredibly dense as to make travel in
 it nearly impossible.  The &+ydirt&n road looks very ancient, with &+gweeds&n creeping in
 from the sides, and littered with potholes and shallow dips.
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
 Tern road continues north.
 ~
@@ -3578,7 +3578,7 @@ S
 &+ythe &+ymesa&+y upon which the &+Ltwin keeps&+y are built.  To the north, a great expanse
 &+yof &+Ybeach&+y rolls away into the sea.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The northern beach heads off to the sea.
 ~
@@ -3604,7 +3604,7 @@ S
 &+wgreat northern &+Ybeach&+w gates allow access to &+WTharnadia&+w, while to the
 &+wnorth the &+Bsea&+w wall begins its march.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The huge sea wall begins there.
 ~
@@ -3627,7 +3627,7 @@ S
 &+wslanted and uneven, with slippery &+Gmoss&+w covering many of them.  The wall
 &+wcontinues westward from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D2
    A huge pile of boulders is there.
 ~
@@ -3652,7 +3652,7 @@ S
 &+wfilling the air with mist and the smells of sea &+Wsalts&+w. The wall continues both
 &+weast and west from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall begins there, just north of the beach gates.
 ~
@@ -3677,7 +3677,7 @@ S
 &+wvessels within from the harshness of the open sea.  The wall continues both
 &+weast and west from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall continues in that direction.
 ~
@@ -3701,7 +3701,7 @@ S
 &+wtowards the northern &+Ybeach&+w gates and west to a small mansion just off the
 &+wsea wall.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall continues.
 ~
@@ -3733,7 +3733,7 @@ S
 &+weast and west, while a natural cubby hole has been formed between the rocks
 &+wbelow.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall continues in that direction.
 ~
@@ -3759,7 +3759,7 @@ S
 &+wlooks like the perfect place for &+Lfish&+w or &+gsnakes&+w to spawn in, protected from
 &+wthe waves in this small cubby.&n
 ~
-1325 142639172 6
+1325 142639172 6 0
 D4
    The sea wall is there.
 ~
@@ -3779,7 +3779,7 @@ S
 &+wvessels within from the harshness of the open sea.  The wall continues both
 &+weast and west from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
 A path leads to a large mansion.
 ~
@@ -3809,7 +3809,7 @@ S
 &+wfilling the air with mist and the smells of sea &+Wsalts&+w. The wall continues both
 &+weast and south from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall continues in that direction.
 ~
@@ -3834,7 +3834,7 @@ S
 &+wvessels within from the harshness of the open sea.  The wall continues both
 &+wnorth and west from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    The sea wall continues in that direction.
 ~
@@ -3859,7 +3859,7 @@ S
 &+wfilling the air with mist and the smells of sea &+Wsalts&+w. The wall continues
 &+weast, the long rocks terminating at the sea here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The sea wall continues in that direction.
 ~
@@ -3879,7 +3879,7 @@ S
 &+wto a turn in both directions.  To the east, the mercenaries guild opens up to
 &+wthe street.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns east.
 ~
@@ -3907,7 +3907,7 @@ S
 &+wonly make out one of the keeps from here, its eastern face a minuscule ebon
 &+wdot in the distance.  The road continues both to the north and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues.
 ~
@@ -3930,7 +3930,7 @@ S
 &+wmake out one of the keeps from here, its eastern face a minuscule ebon dot in
 &+wthe distance.  The road continues both to the east and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road to the east turns south.
 ~
@@ -3954,7 +3954,7 @@ S
 &+wdot in the distance.  The road continues both to the south and to the west.
 &+wTo the east, a quiet alley saunters off into the wealthy district.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    A quiet alley leads off to the east.
 ~
@@ -3983,7 +3983,7 @@ S
 &+wthe distance.  The road continues both to the south and to the north, both
 &+wcoming to a turn.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the road turns west.
 ~
@@ -4007,7 +4007,7 @@ S
 &+wdot in the distance.  The road continues to the north, while to the east it
 &+wturns south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues.
 ~
@@ -4031,7 +4031,7 @@ S
 &+wthe distance.  The road continues both to the south and to the west.  A small
 &+wsupply shoppe opens up to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    A glass door hinges there.
 ~
@@ -4060,7 +4060,7 @@ S
 &+wdot in the distance.  The road turns to the north, and intersects with the
 &+RGrand Tharnadian Way&+w to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns west.
 ~
@@ -4084,7 +4084,7 @@ S
 &+wthe distance.  The road continues to the south, while it intersects with the
 &+RGrand Tharnadian Way&+w to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The Grand Tharnadian Way lies to the north.
 ~
@@ -4109,7 +4109,7 @@ S
 &+wroad turns south.  A &+Lmurky alley&+w winds its way east, into the seedier parts of
 &+wthe city.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues.
 ~
@@ -4137,7 +4137,7 @@ S
 &+wmake out one of the keeps from here, its eastern face a minuscule ebon dot in
 &+wthe distance.  The road continues both to the south and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    To the east, the road turns north.
 ~
@@ -4160,7 +4160,7 @@ S
 &+wonly make out one of the keeps from here, its eastern face a minuscule ebon
 &+wdot in the distance.  The road continues both to the south and to the north.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north the road turns east.
 ~
@@ -4183,7 +4183,7 @@ S
 &+wmake out one of the keeps from here, its eastern face a minuscule ebon dot in
 &+wthe distance.  The road continues both to the north and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
   The road continues.
 ~
@@ -4206,7 +4206,7 @@ S
 &+wonly make out one of the keeps from here, its eastern face a minuscule ebon
 &+wdot in the distance.  The road continues both to the south and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road to the east turns north.
 ~
@@ -4229,7 +4229,7 @@ S
 &+wmake out one of the keeps from here, its eastern face a minuscule ebon dot in
 &+wthe distance.  The road continues both to the north and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns east.
 ~
@@ -4252,7 +4252,7 @@ S
 &+wonly make out one of the keeps from here, its eastern face a minuscule ebon
 &+wdot in the distance.  The road continues both to the south and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    To the east, the road turns north.
 ~
@@ -4275,7 +4275,7 @@ S
 &+wmake out one of the keeps from here, its eastern face a minuscule ebon dot in
 &+wthe distance.  The road continues both to the south and to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road to the north turns east.
 ~
@@ -4297,7 +4297,7 @@ S
 &+ythe &+ymesa&+y upon which the &+Ltwin keeps&+y are built.  To the west, a great expanse
 &+yof wave break rolls away into the sea.&n
 ~
-1325 142639172 2
+1325 142639172 2 0
 D0
    Solid looking and heavily fortified, the gates are made of iron.
 ~
@@ -4327,7 +4327,7 @@ S
 &+wvessels within from the harshness of the open sea.  The wall continues
 &+wsouth from here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D2
    A stone wall runs overtop of Tranquility Island there.
 ~
@@ -4344,7 +4344,7 @@ S
 &+wto the ground level below.  The stones proceed south from here, while
 &+wdescending to a rocky sea wall to the north.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    A rocky sea wall is there.
 ~
@@ -4366,7 +4366,7 @@ S
 &+wthis part of the wall to the ground level below.  The stones proceed both
 &+wnorth and south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
   The wall continues.
 ~
@@ -4387,7 +4387,7 @@ S
 &+Wlighthouse&+w sits at the northern most point of the isle, a brilliant &+Rcrimson&n
 &+wlight beaming from its top.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The wall continues.
 ~
@@ -4419,7 +4419,7 @@ S
 &+wto the ground level below.  The stones proceed south from here, while an
 &+waccess point is north.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The wall continues.
 ~
@@ -4441,7 +4441,7 @@ S
 &+wthis part of the wall to the ground level below.  The stones proceed north
 &+wfrom here, while a sea wall leads south.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The wall continues.
 ~
@@ -4466,7 +4466,7 @@ S
 &+wvessels within from the harshness of the open sea.  The wall continues both
 &+wnorth and south from here.&n
 ~
-1325 142639172 4
+1325 142639172 4 0
 D0
    A stone wall runs overtop of Tranquility Island there.
 ~
@@ -4486,7 +4486,7 @@ S
 &+gvery old.  The earth is composed mostly of &+Ldirt&+g and &+yclay&+g, with various &+Rplants
 &+gand &+Ggrass&+g growing on it.  The island continues south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
    The island continues.
 ~
@@ -4501,7 +4501,7 @@ S
 &+gisle is the largest in all of &+WTharnadia's&+g great &+bharbor&+g, stretching for about
 &+ghalf a mile in length.  The island continues north, east, and south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4526,7 +4526,7 @@ S
 &+gvery old.  The earth is composed mostly of &+Ldirt&+g and &+yclay&+g, with various &+Rplants&n
 &+gand &+Ggrass&+g growing on it.  The island continues south and west from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
    The island continues.
 ~
@@ -4547,7 +4547,7 @@ S
 &+ghalf a mile in length.  The island continues north, east, and south from here,
 &+gwhile a staircase leads up onto the wall to the west.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4578,7 +4578,7 @@ S
 &+gand &+Ggrass&+g growing on it.  The island continues north, south, and west from
 &+ghere.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4603,7 +4603,7 @@ S
 &+gisle is the largest in all of &+WTharnadia's&+g great &+bharbor&+g, stretching for about
 &+ghalf a mile in length.  The island continues north, east, and south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4628,7 +4628,7 @@ S
 &+gvery old.  The earth is composed mostly of &+Ldirt&+g and &+yclay&+g, with various &+Rplants&n
 &+gand &+Ggrass&+g growing on it.  The island continues north and west from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4648,7 +4648,7 @@ S
 &+gisle is the largest in all of &+WTharnadia's&+g great &+bharbor&+g, stretching for about
 &+ghalf a mile in length.  The island continues north from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4663,7 +4663,7 @@ S
 &+gvery old.  The earth is composed mostly of &+Ldirt&+g and &+yclay&+g, with various &+Rplants&n
 &+gand &+Ggrass&+g growing on it.  The island continues north from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4678,7 +4678,7 @@ S
 &+gisle is the largest in all of &+WTharnadia's&+g great &+bharbor&+g, stretching for about
 &+ghalf a mile in length.  The island continues north, south, and west from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4706,7 +4706,7 @@ S
 &+gand bottom so that it resembles a hatch.  The island continues north, east,
 &+gand south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4744,7 +4744,7 @@ S
 &+gand &+Ggrass&+g growing on it.  The island continues north, south, and west from
 &+ghere.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
    The island continues.
 ~
@@ -4769,7 +4769,7 @@ S
 &+gisle is the largest in all of &+WTharnadia's&+g great &+bharbor&+g, stretching for about
 &+ghalf a mile in length.  The island continues south from here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
    The island continues.
 ~
@@ -4788,7 +4788,7 @@ S
 &+gcould probably relax here, and think about whatever the &+Gworld&+g has brought
 &+gtheir way.&n
 ~
-1325 142770240 1
+1325 142770240 1 0
 D1
    The island continues there.
 ~
@@ -4807,7 +4807,7 @@ S
 &+gsight.  One could probably relax here, and think about whatever the world has
 &+gbrought their way.
 ~
-1325 142770240 1
+1325 142770240 1 0
 D1
    The island continues there.
 ~
@@ -4826,7 +4826,7 @@ S
 &+wAn iron hatch leads east out onto &+BTranquility &+yIsland&+w, and has a very small
 &+wkeyhole at its center.&n
 ~
-1325 142639180 0
+1325 142639180 0 0
 D1
    The hatch is made from iron, and is somewhat rusted.  A very small and
 complicated looking lock is set at the center of the door, and looks as
@@ -4849,7 +4849,7 @@ S
 &+Wsalts&+w.  Water can be heard, and sometimes felt, crashing into the northern
 &+wwall of the &+Wlighthouse&+w.
 ~
-1325 142639176 2
+1325 142639176 2 0
 D4
    The staircase continues.
 ~
@@ -4869,7 +4869,7 @@ S
 &+wcircular chamber, offering a view of the &+bTimeless Sea&+w outside.  Water can be
 &+wheard, and sometimes felt, crashing into the northern wall of the &+Wlighthouse&+w.
 ~
-1325 142639176 2
+1325 142639176 2 0
 D4
    The staircase enters into the lighthouse's upper level.
 ~
@@ -4898,7 +4898,7 @@ S
 &+wstone side of the &+yS&+Yh&+Wr'nn M&+Ye&+Gs&+ga&+w.  A narrow &+Liron&+w balcony is attached to the
 &+wwestern end of the &+Wlighthouse&+w, and a small ladder leads up to the rooftop.
 ~
-1325 142643264 1
+1325 142643264 1 0
 D3
    The balcony faces the sea there.
 ~
@@ -4931,7 +4931,7 @@ S
 &+Bstories of its past.  Majestic &+gforests&+B fill the landscape beyond &+WTharnadia&+B,
 &+Bwhich eventually become &+ymountains&+B on the distant horizon.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D5
    The trapdoor leads back down into the lighthouse.
 ~
@@ -4950,7 +4950,7 @@ S
 &+Bcomfort and the mood for contemplation.  A doorway leads back into the
 &+Wlighthouse&+B east of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The top level of the lighthouse is there.
 ~
@@ -4970,7 +4970,7 @@ S
 &+wThe wave break continues to the east toward the southern &+Ybeach&+w gates, and
 &+wnorth to &+BTranquility &+yIsland&+w.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
    The southern end of Tranquility Islnd lies to the north.
 ~
@@ -4994,7 +4994,7 @@ S
 &+wfrom here, lapping at the shores of the &+YSword Coast&+w for as far as the eye can
 &+wsee.  The wave break continues to the east and to the west of here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The blockade continues east.
 ~
@@ -5018,7 +5018,7 @@ S
 &+wsplash overtop the &+Lrocks&+w, making them slippery and difficult to walk across.
 &+wThe wave break continues to the east and to the west.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The wave break continues east.
 ~
@@ -5042,7 +5042,7 @@ S
 &+wfrom here, lapping at the shores of the &+YSword Coast&+w for as far as the eye can
 &+wsee.  The wave break continues to the east and to the west of here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The blockade continues east.
 ~
@@ -5066,7 +5066,7 @@ S
 &+wsplash overtop the &+Lrocks&+w, making them slippery and difficult to walk across.
 &+wThe wave break continues to the east and to the west.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The wave break continues east.
 ~
@@ -5091,7 +5091,7 @@ S
 &+wsee.  The wave break continues to the west, while the southern &+Ybeach&+w gates lie
 &+wto the east.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
    The southern beach gates lie to the east.
 ~
@@ -5112,7 +5112,7 @@ S
 &+Ltheir arsonals.  A &+Wsteel&+L door hangs in the eastern arch, while the western
 &+Larch leads to the barracks.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    The barracks lie to the east.
 ~
@@ -5131,7 +5131,7 @@ S
 &+Lrests at the bed's head.  A small &+Wwindow&+L in the north wall allows view of the&n
 &+ynorthern wall road&+L.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    The lobby of the Tharnadian mercenary's guild lies to the west.
 ~
@@ -5144,7 +5144,7 @@ Room #3~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -5159,7 +5159,7 @@ S
 &+cmore wealthy district of &+WTharnadia&+c.  A lavish looking home rises to the north.
 &+cThe alley leads off to the east here, while meeting wall road to the west.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    A wooden door hinges there.
 ~
@@ -5185,7 +5185,7 @@ S
 &+cand is actually kept quite clean.  The alley leads off to the west and to the
 &+csouth.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The alley continues south.
 ~
@@ -5206,7 +5206,7 @@ S
 &+cmore wealthy district of &+WTharnadia&+c.  A elegant looking home rises to the west.
 &+cThe alley leads off to the east and to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the alley turns west.
 ~
@@ -5232,7 +5232,7 @@ S
 &+cand is actually kept quite clean.  The alley leads off to the west and to the
 &+csouth.  A noble's home stands to the north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A glass door, reinforced by iron bars, hinges there.
 ~
@@ -5258,7 +5258,7 @@ S
 &+cmore wealthy district of &+WTharnadia&+c.  The alley leads off to the east and to
 &+cthe north.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    To the north, the alley turns west.
 ~
@@ -5279,7 +5279,7 @@ S
 &+cand is actually kept quite clean.  The alley leads off to the west and to the
 &+csouth.  A noble's home stands to the east.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A hand-carved wooden door rests in the jam.
 ~
@@ -5306,7 +5306,7 @@ S
 &+gwith the colorful tones of the wilderness.  The path continues west, while to
 &+gthe north the eastern road connects to the city.&n
 ~
-1325 142643268 3
+1325 142643268 3 0
 D0
    The eastern road lies to the north.
 ~
@@ -5329,7 +5329,7 @@ S
 &+gto the north and to the south.  The forest here comes to a halt as the eastern
 &+gdefensive &+Wwall&+g towers over the treeline.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D1
    To the east, the path turns north.
 ~
@@ -5352,7 +5352,7 @@ S
 &+gwilderness.  The &+ypath&+g continues north, while to the south there is an
 &+gintersection of paths.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path north bends east.
 ~
@@ -5375,7 +5375,7 @@ S
 &+gthe north, east, and the west.  The city walls bend to the west, allowing for
 &+gthe path to follow them on the outskirts of the forest.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path continues north.
 ~
@@ -5403,7 +5403,7 @@ S
 &+gwilderness.  The city walls turn south here, forcing the path to follow its
 &+gcourse.  The &+ypath&+g continues east and south to two intersections.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D1
    The path intersects to the east.
 ~
@@ -5426,7 +5426,7 @@ S
 &+gthe north, east, and the west.  The city walls bend to the west, allowing for
 &+gthe path to follow them on the outskirts of the forest.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path continues north.
 ~
@@ -5455,7 +5455,7 @@ S
 &+gthat u can see their trunks between the maples of the first circuit.  The path
 &+gleads back out to the west.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D3
    The path intersects to the west.
 ~
@@ -5473,7 +5473,7 @@ S
 &+gwilderness.  The &+ypath&+g continues east to an intersection, while to the south
 &+gthe path comes to a dead end.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D1
    The path intersects to the east.
 ~
@@ -5495,7 +5495,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path enters from the
 &+gnorth and comes to a dead end at a vine entangled &+yboulder&+g.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path north turns east.
 ~
@@ -5512,7 +5512,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path continues to
 &+gthe south and to the west.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D2
    The path continues south.
 ~
@@ -5534,7 +5534,7 @@ S
 &+gwell with the colorful tones of the wilderness.  The path continues north and
 &+gsouth.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path to the north turns west.
 ~
@@ -5556,7 +5556,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path continues to
 &+gthe north and to the east.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path continues north.
 ~
@@ -5578,7 +5578,7 @@ S
 &+gwell with the colorful tones of the wilderness.  The path continues north,
 &+geast, and west.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path to the north turns east.
 ~
@@ -5605,7 +5605,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path continues to
 &+gthe south and to the east.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D1
    The path east bends south.
 ~
@@ -5627,7 +5627,7 @@ S
 &+gwell with the colorful tones of the wilderness.  The path continues south and
 &+gwest.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D2
    There is an intersection to the south.
 ~
@@ -5649,7 +5649,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path continues to
 &+gthe north, south, and to the west.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path north bends west.
 ~
@@ -5676,7 +5676,7 @@ S
 &+gwell with the colorful tones of the wilderness.  The path continues north and
 &+gwest.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    There is an intersection to the north.
 ~
@@ -5697,7 +5697,7 @@ S
 &+gleft is the symbol of the &+Gdruids&+g.  Between the natural arch you can make out a
 &+gcircle of standing &+Lstones&+g.  The path continues east and west.&n
 ~
-1325 142643264 2
+1325 142643264 2 0
 D1
    The path east turns north.
 ~
@@ -5729,7 +5729,7 @@ S
 &+gsacrifices to the wilderness gods.  Paths pour out of the clearing to the east
 &+gand west.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
    The path continues east through two mammoth oaks.
 ~
@@ -5752,7 +5752,7 @@ S
 &+gcontinues west to a clearing, while to the east it comes upon the &+RCarnihern
 &+RCircle&+g.&n
 ~
-1325 142643264 2
+1325 142643264 2 0
 D1
    The path continues toward the druid stones.
 ~
@@ -5775,7 +5775,7 @@ S
 &+gforest broadcasts its fullness of life to the world.  The path heads out to
 &+gthe east and to the west.&n
 ~
-1325 142774336 2
+1325 142774336 2 0
 D1
    The path continues east.
 ~
@@ -5797,7 +5797,7 @@ S
 &+ga large clearing, with hills and a small pool.  The path continues east and
 &+gwest.&n
 ~
-1325 142643264 2
+1325 142643264 2 0
 D1
    The forest continues.
 ~
@@ -5828,7 +5828,7 @@ S
 &+ggoes well with the colorful tones of the wilderness.  The path continues to
 &+gthe north and to the east.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    The path continues north.
 ~
@@ -5850,7 +5850,7 @@ S
 &+gwell with the colorful tones of the wilderness.  The path continues north and
 &+gsouth.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D0
    There path to the north bends west.
 ~
@@ -5873,7 +5873,7 @@ S
 &+gthe south and to the west.  To the north, the city's defensive wall towers
 &+gover the treeline.&n
 ~
-1325 142643264 3
+1325 142643264 3 0
 D2
    The path continues south.
 ~
@@ -5896,7 +5896,7 @@ S
 &+gwest.  The city's defensive wall rises over the treeline to the north, its
 &+gguard tower a formindable sight.&n
 ~
-1325 142643268 3
+1325 142643268 3 0
 D1
    There path to the east bends south.
 ~
@@ -5912,7 +5912,7 @@ S
 &+ccovered with a two foot piece of glass.  A small doorway leads out to the
 &+csouth.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    The southern wall street lies beyond that arch.
 ~
@@ -5938,7 +5938,7 @@ S
 &+cupon the air.  There is a large &+ycounter&+c against the north wall.  The
 &+cdoorway to the east leads back out to &+LKeats street&+c.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    Keats street lies beyond the doorway.
 ~
@@ -5954,7 +5954,7 @@ S
 &+yclean it out like the aegean stables of lore.  The northern wall road can be
 &+yseen to the north and is the only exit.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
   The northern wall road runs past the doorway to the north.
 ~
@@ -5967,7 +5967,7 @@ S
 humans in need of transport.  You wonder, quite earnestly, what country bred
 these freaks of reality.
 ~
-1325 142639304 0
+1325 142639304 0 0
 S
 #132745
 &+LA Murky Alley~
@@ -5980,7 +5980,7 @@ S
 &+wthe darkest of places one can find in &+WTharnadia&+w.  The alley continues to the
 &+wwest, while opening east onto Keats street.&n
 ~
-1325 142639169 1
+1325 142639169 1 0
 D1
    Keats street lies to the east.
 ~
@@ -6003,7 +6003,7 @@ S
 &+waway from the wealthier northern sector.  The alley continues to the south and
 &+wto the east.  A community scathouse wafts its odors from the north.&n
 ~
-1325 142639169 1
+1325 142639169 1 0
 D0
    The community scathouse lies to the north.
 ~
@@ -6032,7 +6032,7 @@ S
 &+wwest and to the north.  A grubby tavern leans against its neighbors, to the
 &+weast.&n
 ~
-1325 142639169 1
+1325 142639169 1 0
 D0
    The ally to the north bends east.
 ~
@@ -6060,7 +6060,7 @@ S
 &+wto the west.  A dingy building stands to the south, its facade covered in
 &+wgrime.&n
 ~
-1325 142639173 1
+1325 142639173 1 0
 D1
    The alley east, turns north.
 ~
@@ -6087,7 +6087,7 @@ S
 &+Lspot for the weak of heart.  The road continues to the north and south, while
 &+La murky alley leads out to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The road continues north.
 ~
@@ -6114,7 +6114,7 @@ S
 &+Lmany evil secrets.  The road continues to the south, while a run down home
 &+Lopens up to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    An empty hovel lies to the east.
 ~
@@ -6135,7 +6135,7 @@ S
 &+Lwhere not even the city guards dare tread, and a land where the shadows hold
 &+Lmany evil secrets.  The road continues to the north and west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Eidolon road heads off to the north.
 ~
@@ -6157,7 +6157,7 @@ S
 &+Lspot for the weak of heart.  The road continues to the east and south, while a
 &+Lmurky alley leads out to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road continues east to a bend.
 ~
@@ -6184,7 +6184,7 @@ S
 &+Lmany evil secrets.  The road continues to the north and west.  A small home
 &+Lopens to the east, while a two story scathole stands to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Eidolon road heads off, to a bend, to the north.
 ~
@@ -6215,7 +6215,7 @@ S
 &+Lspot for the weak of heart.  The road continues to the east, while a murky
 &+Lalley leads out to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The road continues east to a bend.
 ~
@@ -6238,7 +6238,7 @@ S
 &+wthe darkest of places one can find in &+WTharnadia&+w.  The alley continues to the
 &+wnorth, while &+rE&+Ri&+Wdol&+wo&+Ln&+w road lies to the east.&n
 ~
-1325 142639173 1
+1325 142639173 1 0
 D0
    The ally to the north bends west.
 ~
@@ -6262,7 +6262,7 @@ S
 &+wto the west.  A dingy building stands to the north, its facade covered in
 &+wgrime.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A dingy building stands to the north.
 ~
@@ -6291,7 +6291,7 @@ S
 &+wsouth, while &+rE&+Ri&+Wdol&+wo&+Ln&+w road lies to the north.  The remains of a two story
 &+wbuilding, rise to the west.&n
 ~
-1325 142639173 1
+1325 142639173 1 0
 D0
    The ally to the north bends east.
 ~
@@ -6319,7 +6319,7 @@ S
 &+waway from the wealthier northern sector.  The alley continues to the north,
 &+wwhile the southern wall road opens to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The alley continues.
 ~
@@ -6340,7 +6340,7 @@ S
 &+Lclimbs up to the floor above.  A murky alley can be seen through the destroyed
 &+Ldoorway.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D1
    A murky alley remains outside this doorway.
 ~
@@ -6364,7 +6364,7 @@ S
 &+Lstarted, raging through and down to the first floor.  An unstable staircase
 &+Lleads down through the floor to the level below.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D5
    An unstable staircase leads to the first floor.
 ~
@@ -6380,7 +6380,7 @@ S
 &+wthe back of the shop is probably where one purchases many of the goods seen
 &+where.  The &+ywestern wall road&+W is west of here, through the doorway.&n
 ~
-1325 142639168 0
+1325 142639168 0 0
 D3
    A glass door hinges there.
 ~
@@ -6395,7 +6395,7 @@ S
 &+csoftly glowing magical lamps.  An doorway leads out to the north onto a
 &+cquiet alley.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A wooden door hinges there.
 ~
@@ -6418,7 +6418,7 @@ S
 &+wabout thirty feet around in size, and twelve feet high, lit by softly glowing
 &+wsconces.  An doorway leads out to the north onto a quiet alley.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D1
    A steel door rests in the jam.
 ~
@@ -6443,7 +6443,7 @@ S
 &+cto a political officer or captain of the guard, and is quite lavish.  A door
 &+cin the east wall leads out onto the road.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A glass door, reinforced by steel bars, hinges there.
 ~
@@ -6457,7 +6457,7 @@ S
 &+Lwall.  The noble who own's this home appears to be a miser, prefering the bare
 &+Lessentials to the oppulence of his station.&n
 ~
-1325 142639177 0
+1325 142639177 0 0
 D3
    A hand-carved wooden door rests in the jam.
 ~
@@ -6478,7 +6478,7 @@ S
 &+Land run-down establishment.  There is only one main exit, leading back out
 &+Lto the west into the alley.
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
 ~
 door~
@@ -6498,7 +6498,7 @@ S
 &+Lobviously meant to please the perverted minds of the bar's patrons.  The air
 &+Lsmells vaguely of body sweat, and your feet stick to the floor as you walk.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
    A grubby tavern opens up to the north.
 ~
@@ -6514,7 +6514,7 @@ S
 &+Ltoo nasty to use because some jerk left a &+yturd&+L perched happily on the edge of
 &+Lthe hole.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A murky alley lies to the south.
 ~
@@ -6534,7 +6534,7 @@ S
 &+ymainly simple rugs and home made cloth murals.  A murky alley runs outside to
 &+ythe north.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    You can see a murky alley through the doorway.
 ~
@@ -6550,7 +6550,7 @@ S
 &+Lair smells of soot and feels heavy on the lungs.  The doorway to the west
 &+Lleads back out to Eidolon road.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    The Eidolon road lies through the door to the west.
 ~
@@ -6567,7 +6567,7 @@ S
 &+Lremnant of a long gone time is now scarved by the work of termites and small
 &+Lfires.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D2
    A murky alley runs by to the south.
 ~
@@ -6583,7 +6583,7 @@ S
 &+mglowing orb &+Willumines&+m the chamber.  A heavy wooden door hangs in the doorway
 &+mto the west.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D3
    A heavy wooden door hangs in the doorway.
 ~
@@ -6598,7 +6598,7 @@ S
 &+Lfifteen feet high.  At the back of the chamber, a &+ywooden&+L staircase leads up to
 &+La second level.  Eidolon road is outside to the north.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D0
    Eidolon road lies to the north.
 ~
@@ -6617,7 +6617,7 @@ S
 &+Lsleep at &+mnight&+L.  Many short beds and blankets fill the chamber, with a  small
 &+ywooden&+L staircase leading down to the main level below.&n
 ~
-1325 142639176 0
+1325 142639176 0 0
 D4
    A trapdoor leads up to the roof.&n
 ~
@@ -6641,7 +6641,7 @@ of southwestern Tharnadia.  Most of the roofs are made from interlocking clay
 tiles fastened down with iron nails.  The rooftop is about one hundred to one
 hundred and ten feet above street level, and continues east of here.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Eidolon street lies, two hundred feet below, to the north.
 ~
@@ -6675,7 +6675,7 @@ S
 &+Bof the jewlery shop's roof.  It is devoid of any shingling, and small puddles
 &+Bhave gathered on its surface.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D3
    The rooftop of a huge building lies there.
 ~
@@ -6696,7 +6696,7 @@ S
 &+Bcobblestone of Eidolon road.  The view of the murky road is breathtaking,
 &+Bsuddenly all those rumors about its evils pale before its beauty.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The roof of a large building is there.
 ~
@@ -6717,7 +6717,7 @@ S
 &+Bcobblestone of Eidolon road.  The view of the murky road is breathtaking,
 &+Bsuddenly all those rumors about its evils pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A hovel's rooftop lies to the east.
 ~
@@ -6743,7 +6743,7 @@ S
 &+Bcobbles of a murky alley.  The view of the dismal road is breathtaking,
 &+Bsuddenly all those rumors about slumlords pale before its beauty.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The roof of a large building is there.
 ~
@@ -6764,7 +6764,7 @@ S
 &+Bcobbles of a murky alley.  The view of the dismal road is breathtaking,
 &+Bsuddenly all those rumors about slumlords pale before its beauty.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D4
    Way above a murky alley.
 ~
@@ -6787,7 +6787,7 @@ S
 &+BThe rooftop is about one hundred to one hundred and ten feet above street
 &+Blevel, and continues east of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftops continue.
 ~
@@ -6811,7 +6811,7 @@ S
 &+Ba common dwelling's roof.  It has a slight slope, but looks flat enough to
 &+Bsurvive a fall.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftop of a huge building lies there.
 ~
@@ -6833,7 +6833,7 @@ S
 &+Bis just a short jump off any of the remaining sides.  From this height,
 &+Bsouthern &+WTharnadia&+B is a little nicer looking than it is on the ground.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The southern wall road lies, down, in that direction.
 ~
@@ -6852,7 +6852,7 @@ S
 &+Bcobbles of the southern wall road.  The street below lies at the corner
 &+Binfront of the jewlery store, and runs east and south.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The jewlery store rooftop lies there.
 ~
@@ -6878,7 +6878,7 @@ S
 &+Bcobbles of a murky alley.  The view of the dismal road is breathtaking,
 &+Bsuddenly all those rumors about slumlords pale before its beauty.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    A common dwelling's rooftop lies there.
 ~
@@ -6901,7 +6901,7 @@ S
 &+Bsides.  From this height, &+Bsouthern &+WTharnadia&+B is a little nicer
 &+Blooking than it is on the ground.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The southern wall road lies, down, in that direction.
 ~
@@ -6925,7 +6925,7 @@ S
 &+Bcobbles of the southern wall road.  The street below runs north to south, and
 &+Bcomes to a turn in both directions.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D3
    The rooftop of a common dwelling lies there.
 ~
@@ -6946,7 +6946,7 @@ S
 &+Bcobbles of the southern wall road.  The street below runs east to west, and
 &+Bcomes to a turn in both directions.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The rooftop of a common dwelling lies there.
 ~
@@ -6971,7 +6971,7 @@ S
 &+Bheight, &+Bsouthern &+WTharnadia&+B is a little nicer looking than it is on
 &+Bthe ground.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    Eidolon road lies, down, in that direction.
 ~
@@ -6995,7 +6995,7 @@ S
 &+Bcobblestone of Eidolon road.  The view of the murky road is breathtaking,
 &+Bsuddenly all those rumors about its evils pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A hovel's rooftop lies to the east.
 ~
@@ -7023,7 +7023,7 @@ S
 &+Blegs if you jump.  To the north a wooden board spans over a murky alley to
 &+Banother dwelling, while a commoner's rooftop lies to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A wooden board spans a murky alley.
 ~
@@ -7049,7 +7049,7 @@ S
 &+BThe rooftop is about forty to fifty above street level, and continues east and
 &+Bwest of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The murky alley lies, down, in that direction.
 ~
@@ -7077,7 +7077,7 @@ S
 &+Blike a child's picture-map.  About forty feet below you are the cobbles of the
 &+Bsouthern wall road.  The street below runs to the east and to the south.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The rooftop of a common dwelling lies there.
 ~
@@ -7098,7 +7098,7 @@ S
 &+Bmurky alley.  The view of the dismal road is breathtaking, suddenly all those
 &+Brumors about slumlords pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A grubby tavern's rooftop lies there.
 ~
@@ -7125,7 +7125,7 @@ S
 &+Bsouthern gate guard tower blocks egress to the east.  To the west is the roof
 &+Bof a common dwelling, and the southern wall road lies to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The tavern's roof continues north.
 ~
@@ -7149,7 +7149,7 @@ S
 &+Bentire grey surface of this building.  The rooftop continues south, while the
 &+Bremaining directions open up to the streets below.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    A murky alley lies, down, in that direction.
 ~
@@ -7178,7 +7178,7 @@ S
 &+Bsouthern wall road.  The street below runs east to west, and comes to a turn
 &+Bin both directions.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The rooftop of a grubby bar lies there.
 ~
@@ -7199,7 +7199,7 @@ S
 &+BKeats street.  The road below runs north to south, and comes to a turn to the
 &+Bsouth.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D3
    The rooftop of a grubby bar lies there.
 ~
@@ -7221,7 +7221,7 @@ S
 &+wfor people to cross it single file.  Eidolon road runs by below, heading from
 &+weast to west.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    A sloped-roof hovel lies to the north.
 ~
@@ -7247,7 +7247,7 @@ S
 &+Bmurky alley.  The view of the dismal road is breathtaking, suddenly all those
 &+Brumors about slumlords pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D2
    A grubby tavern's rooftop lies there.
 ~
@@ -7270,7 +7270,7 @@ S
 &+Bheight, &+Bsouthern &+WTharnadia&+B is a little nicer looking than it is on
 &+Bthe ground.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftops continue.
 ~
@@ -7299,7 +7299,7 @@ S
 &+Bcobblestone of Eidolon road.  The view of the murky road is breathtaking,
 &+Bsuddenly all those rumors about its evils pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A hovel's rooftop lies to the east.
 ~
@@ -7320,7 +7320,7 @@ S
 &+Bmurky alley.  The view of the dismal road is breathtaking, suddenly all those
 &+Brumors about slumlords pale before its beauty.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The community scathouse's rooftop lies to the north.
 ~
@@ -7347,7 +7347,7 @@ S
 &+Bside of the inn blocks egress to the east.  To the north the &+RGrand Tharnadian
 &+RWay &+Bopens beneath you, while a murky alley opens to the south.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D0
    The Grand Tharnadian Way lies, down, to the north.
 ~
@@ -7379,7 +7379,7 @@ S
 &+Bonto the &+RGrand Tharnadian Way&+B.  To the south is the rooftop of the &+Lcommunity
 &+yscat&+Lhouse&+B.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The community scathouse's rooftop is there.
 ~
@@ -7400,7 +7400,7 @@ S
 &+BThe rooftop is about forty to fifty above street level, and continues east and
 &+Bsouth of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The Grand Tharnadian Way lies, down, in that direction.
 ~
@@ -7431,7 +7431,7 @@ S
 &+Bbefore the entrance to the Ogre's Foot Inn.  To the south is the rooftop of a
 &+Bdingy hovel.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D2
    A dingy hovel's rooftop is there.
 ~
@@ -7450,7 +7450,7 @@ S
 &+WTharnadia&+B, with its &+Lebon menhir&+B walls, flows north and west through the city.
 &+BTo the  east is the rooftop of a dingy hovel.&n
 ~
-1325 142639172 1
+1325 142639172 1 0
 D1
    A dingy hovel's rooftop is there.
 ~
@@ -7471,7 +7471,7 @@ S
 &+Bthe rooftops continue to the south.  A mere forty feet below, the northern
 &+Bwall road runs past to both the north and east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The northern wall road lies, down, in that direction.
 ~
@@ -7499,7 +7499,7 @@ S
 &+Bnorthern wall road.  The street below runs east to west, starting from a turn
 &+Bto the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The rooftop of the courthouse lies there.
 ~
@@ -7520,7 +7520,7 @@ S
 &+Bnorthern wall road.  The street below runs north and east, coming to a turn in
 &+Bboth directions.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
    The rooftop of a common dwelling lies there.
 ~
@@ -7548,7 +7548,7 @@ S
 &+BThe rooftop is about forty to fifty above street level, and continues west and
 &+Bsouth of here.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The northern wall road lies, down, in that direction.
 ~
@@ -7577,7 +7577,7 @@ S
 &+Bnorthern wall road.  The street below runs north to south, coming to a turn in
 &+Bboth directions.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D3
    A dwelling's rooftop lies to the west.
 ~
@@ -7600,7 +7600,7 @@ S
 &+Bof &+WTharnadia&+B.  This part of the city is immaculate as the noble's pay
 &+Bgood money to keep it clean.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftop of the courthouse lies there.
 ~
@@ -7629,7 +7629,7 @@ S
 &+Bof a quiet alley.  The street below runs south and west, starting from a turn
 &+Bto the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
    The rooftop of a dwelling lies there.
 ~
@@ -7650,7 +7650,7 @@ S
 &+Bof a quiet alley.  The street below runs south and west, coming to a turn in
 &+Bboth directions.
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftop of a dwelling lies there.
 ~
@@ -7678,7 +7678,7 @@ S
 &+BThe rooftop is about fifty feet above street level, and continues north of
 &+Bhere.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftops continue.
 ~
@@ -7706,7 +7706,7 @@ S
 &+Blike a child's picture-map.  About forty feet below you are the cobbles of the
 &+Bnorthern wall road.  The street below runs to the north and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D3
    The pet shop's rooftop lies to the west.
 ~
@@ -7727,7 +7727,7 @@ S
 &+Bof a quiet alley.  The street below runs south and west, intersecting with the
 &+RGrand Tharnadian Way&+B to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
    The rooftop of the pet shop lies there.
 ~
@@ -7748,7 +7748,7 @@ small counter is built into the northern wall, and upon this sits a small
 sign. Spiral stairs rise from the southwestern corner back to the lounge
 above.
 ~
-1325 142643276 0
+1325 142643276 0 0
 D4
 ~
 ~
@@ -7768,7 +7768,7 @@ towns population at once. Chairs arranged in neat rows, fac the northern
 wall where a large podium is built. A large sign hanging on the wall
 explains the rules.
 ~
-1325 142643276 0
+1325 142643276 0 0
 D2
 ~
 ~
@@ -7789,7 +7789,7 @@ As this place is run by all of the towns clerics taking shifts, it is
 purposely left non-denominational. A cabinet against the wall holds
 various worthless herbs, used more as placebos than anything else.
 ~
-1325 142643276 0
+1325 142643276 0 0
 D1
 ~
 ~
@@ -7801,7 +7801,7 @@ Room #2~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 door~
@@ -7813,7 +7813,7 @@ Room #1~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 door~
@@ -7824,7 +7824,7 @@ S
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -7848,7 +7848,7 @@ Room #12~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -7860,7 +7860,7 @@ Room #11~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -7871,7 +7871,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -7894,7 +7894,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -7917,7 +7917,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -7940,7 +7940,7 @@ A corridor~
 &+L  The corridor is long and you can see doors on both side of it all
 &+Lthe way down.
 ~
-1325 142639168 0
+1325 142639168 0 0
 D0
 ~
 ~
@@ -7960,7 +7960,7 @@ Room #20~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -7972,7 +7972,7 @@ Room #19~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -7986,7 +7986,7 @@ S
 &+Wthis evening's meal seems to remain, except for a small loaf of bread
 &+Wlying on the counter.&n
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -7998,7 +7998,7 @@ Room #17~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -8010,7 +8010,7 @@ Room #16~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -8022,7 +8022,7 @@ Room #15~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -8034,7 +8034,7 @@ Room #14~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D2
 ~
 ~
@@ -8046,7 +8046,7 @@ Room #13~
 &+Lten persons with no problem. There is a bed sitting along the wall and
 &+La big chest that can hold a lot.
 ~
-1325 176193612 0
+1325 176193612 0 0
 D0
 ~
 ~
@@ -8073,7 +8073,7 @@ S
 &+BM&+be&+Br&+bc&+By&+bf&+Bu&+bl &+BF&+ba&+Bt&+be l&+Bau&+bghs &+Ba&+bs th&+Be &+bw&+Bea&+bk &+Ba&+br&+Be &+bt&+Bra&+bm&+Bple&+bd &+Bo&+bv&+Be&+br by the &+Be&+bv&+Bi&+bl &+Bsin&+bister &+Bs&+btr&+Bo&+bng.&N
 &+LNecromantia&+b, &+Bm&+bys&+Bt&+bica&+Bl &+bf&+Bo&+brc&+Be&+bs, s&+Bo &+bm&+Ba&+bny th&+Bi&+bng&+Bs&+b, e&+Be&+br&+Bi&+be &+Blight &+bd&+Be&+bsc&+Be&+bnds, wh&+Ba&+bts &+Breal&+b?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8106,7 +8106,7 @@ S
 &+GM&+ge&+Gr&+gc&+Gy&+gf&+Gu&+gl &+GF&+ga&+Gt&+ge l&+Gau&+gghs &+Ga&+gs th&+Ge &+gw&+Gea&+gk &+Ga&+gr&+Ge &+gt&+Gra&+gm&+Gple&+gd &+Go&+gv&+Ge&+gr by the &+Ge&+gv&+Gi&+gl &+Gsin&+gister &+Gs&+gtr&+Go&+gng.&N
 &+LNecromantia&+g, &+Gm&+gys&+Gt&+gica&+Gl &+gf&+Go&+grc&+Ge&+gs, s&+Go &+gm&+Ga&+gny th&+Gi&+gng&+Gs&+g, e&+Ge&+gr&+Gi&+ge &+Glight &+gd&+Ge&+gsc&+Ge&+gnds, wh&+Ga&+gts &+Greal&+g?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Rt&+rw&+Ri&+rl&+Ri&+rg&+Rh&+rt &+Rt&+ro&+Rw&+re&+Rr &+Lseems to continue on in this direction.&N
 ~
@@ -8139,7 +8139,7 @@ S
 &+RM&+re&+Rr&+rc&+Ry&+rf&+Ru&+rl &+RF&+ra&+Rt&+re l&+Rau&+rghs &+Ra&+rs th&+Re &+rw&+Rea&+rk &+Ra&+rr&+Re &+rt&+Rra&+rm&+Rple&+rd &+Ro&+rv&+Re&+rr by the &+Re&+rv&+Ri&+rl &+Rsin&+rister &+Rs&+rtr&+Ro&+rng.&N
 &+LNecromantia&+r, &+Rm&+rys&+Rt&+rica&+Rl &+rf&+Ro&+rrc&+Re&+rs, s&+Ro &+rm&+Ra&+rny th&+Ri&+rng&+Rs&+r, e&+Re&+rr&+Ri&+re &+Rlight &+rd&+Re&+rsc&+Re&+rnds, wh&+Ra&+rts &+Rreal&+r?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D3
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8172,7 +8172,7 @@ S
 &+MM&+me&+Mr&+mc&+My&+mf&+Mu&+ml &+MF&+ma&+Mt&+me l&+Mau&+mghs &+Ma&+ms th&+Me &+mw&+Mea&+mk &+Ma&+mr&+Me &+mt&+Mra&+mm&+Mple&+md &+Mo&+mv&+Me&+mr by the &+Me&+mv&+Mi&+ml &+Msin&+mister &+Ms&+mtr&+Mo&+mng.&N
 &+LNecromantia&+m, &+Mm&+mys&+Mt&+mica&+Ml &+mf&+Mo&+mrc&+Me&+ms, s&+Mo &+mm&+Ma&+mny th&+Mi&+mng&+Ms&+m, e&+Me&+mr&+Mi&+me &+Mlight &+md&+Me&+msc&+Me&+mnds, wh&+Ma&+mts &+Mreal&+m?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8210,7 +8210,7 @@ S
 &+GM&+ge&+Gr&+gc&+Gy&+gf&+Gu&+gl &+GF&+ga&+Gt&+ge l&+Gau&+gghs &+Ga&+gs th&+Ge &+gw&+Gea&+gk &+Ga&+gr&+Ge &+gt&+Gra&+gm&+Gple&+gd &+Go&+gv&+Ge&+gr by the &+Ge&+gv&+Gi&+gl &+Gsin&+gister &+Gs&+gtr&+Go&+gng.&N
 &+LNecromantia&+g, &+Gm&+gys&+Gt&+gica&+Gl &+gf&+Go&+grc&+Ge&+gs, s&+Go &+gm&+Ga&+gny th&+Gi&+gng&+Gs&+g, e&+Ge&+gr&+Gi&+ge &+Glight &+gd&+Ge&+gsc&+Ge&+gnds, wh&+Ga&+gts &+Greal&+g?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D3
 &+L   This strange twisted &+Mt&+mw&+Mi&+ml&+Mi&+mg&+Mh&+mt &+Mt&+mo&+Mw&+me&+Mr &+Lseems to continue on in this direction.&N
 ~
@@ -8248,7 +8248,7 @@ S
 &+CM&+ce&+Cr&+cc&+Cy&+cf&+Cu&+cl &+CF&+ca&+Ct&+ce l&+Cau&+cghs &+Ca&+cs th&+Ce &+cw&+Cea&+ck &+Ca&+cr&+Ce &+ct&+Cra&+cm&+Cple&+cd &+Co&+cv&+Ce&+cr by the &+Ce&+cv&+Ci&+cl &+Csin&+cister &+Cs&+ctr&+Co&+cng.&N
 &+LNecromantia&+c, &+Cm&+cys&+Ct&+cica&+Cl &+cf&+Co&+crc&+Ce&+cs, s&+Co &+cm&+Ca&+cny th&+Ci&+cng&+Cs&+c, e&+Ce&+cr&+Ci&+ce &+Clight &+cd&+Ce&+csc&+Ce&+cnds, wh&+Ca&+cts &+Creal&+c?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Bt&+bw&+Bi&+bl&+Bi&+bg&+Bh&+bt &+Bt&+bo&+Bw&+be&+Br &+Lseems to continue on in this direction.&N
 ~
@@ -8281,7 +8281,7 @@ S
 &+CM&+ce&+Cr&+cc&+Cy&+cf&+Cu&+cl &+CF&+ca&+Ct&+ce l&+Cau&+cghs &+Ca&+cs th&+Ce &+cw&+Cea&+ck &+Ca&+cr&+Ce &+ct&+Cra&+cm&+Cple&+cd &+Co&+cv&+Ce&+cr by the &+Ce&+cv&+Ci&+cl &+Csin&+cister &+Cs&+ctr&+Co&+cng.&N
 &+LNecromantia&+c, &+Cm&+cys&+Ct&+cica&+Cl &+cf&+Co&+crc&+Ce&+cs, s&+Co &+cm&+Ca&+cny th&+Ci&+cng&+Cs&+c, e&+Ce&+cr&+Ci&+ce &+Clight &+cd&+Ce&+csc&+Ce&+cnds, wh&+Ca&+cts &+Creal&+c?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Bt&+bw&+Bi&+bl&+Bi&+bg&+Bh&+bt &+Bt&+bo&+Bw&+be&+Br &+Lseems to continue on in this direction.&N
 ~
@@ -8319,7 +8319,7 @@ S
 &+BM&+be&+Br&+bc&+By&+bf&+Bu&+bl &+BF&+ba&+Bt&+be l&+Bau&+bghs &+Ba&+bs th&+Be &+bw&+Bea&+bk &+Ba&+br&+Be &+bt&+Bra&+bm&+Bple&+bd &+Bo&+bv&+Be&+br by the &+Be&+bv&+Bi&+bl &+Bsin&+bister &+Bs&+btr&+Bo&+bng.&N
 &+LNecromantia&+b, &+Bm&+bys&+Bt&+bica&+Bl &+bf&+Bo&+brc&+Be&+bs, s&+Bo &+bm&+Ba&+bny th&+Bi&+bng&+Bs&+b, e&+Be&+br&+Bi&+be &+Blight &+bd&+Be&+bsc&+Be&+bnds, wh&+Ba&+bts &+Breal&+b?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Rt&+rw&+Ri&+rl&+Ri&+rg&+Rh&+rt &+Rt&+ro&+Rw&+re&+Rr &+Lseems to continue on in this direction.&N
 ~
@@ -8357,7 +8357,7 @@ S
 &+BM&+be&+Br&+bc&+By&+bf&+Bu&+bl &+BF&+ba&+Bt&+be l&+Bau&+bghs &+Ba&+bs th&+Be &+bw&+Bea&+bk &+Ba&+br&+Be &+bt&+Bra&+bm&+Bple&+bd &+Bo&+bv&+Be&+br by the &+Be&+bv&+Bi&+bl &+Bsin&+bister &+Bs&+btr&+Bo&+bng.&N
 &+LNecromantia&+b, &+Bm&+bys&+Bt&+bica&+Bl &+bf&+Bo&+brc&+Be&+bs, s&+Bo &+bm&+Ba&+bny th&+Bi&+bng&+Bs&+b, e&+Be&+br&+Bi&+be &+Blight &+bd&+Be&+bsc&+Be&+bnds, wh&+Ba&+bts &+Breal&+b?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Ct&+cw&+Ci&+cl&+Ci&+cg&+Ch&+ct &+Ct&+co&+Cw&+ce&+Cr &+Lseems to continue on in this direction.&N
 ~
@@ -8390,7 +8390,7 @@ S
 &+RM&+re&+Rr&+rc&+Ry&+rf&+Ru&+rl &+RF&+ra&+Rt&+re l&+Rau&+rghs &+Ra&+rs th&+Re &+rw&+Rea&+rk &+Ra&+rr&+Re &+rt&+Rra&+rm&+Rple&+rd &+Ro&+rv&+Re&+rr by the &+Re&+rv&+Ri&+rl &+Rsin&+rister &+Rs&+rtr&+Ro&+rng.&N
 &+LNecromantia&+r, &+Rm&+rys&+Rt&+rica&+Rl &+rf&+Ro&+rrc&+Re&+rs, s&+Ro &+rm&+Ra&+rny th&+Ri&+rng&+Rs&+r, e&+Re&+rr&+Ri&+re &+Rlight &+rd&+Re&+rsc&+Re&+rnds, wh&+Ra&+rts &+Rreal&+r?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D3
 &+L   This strange twisted &+Bt&+bw&+Bi&+bl&+Bi&+bg&+Bh&+bt &+Bt&+bo&+Bw&+be&+Br &+Lseems to continue on in this direction.&N
 ~
@@ -8423,7 +8423,7 @@ S
 &+GM&+ge&+Gr&+gc&+Gy&+gf&+Gu&+gl &+GF&+ga&+Gt&+ge l&+Gau&+gghs &+Ga&+gs th&+Ge &+gw&+Gea&+gk &+Ga&+gr&+Ge &+gt&+Gra&+gm&+Gple&+gd &+Go&+gv&+Ge&+gr by the &+Ge&+gv&+Gi&+gl &+Gsin&+gister &+Gs&+gtr&+Go&+gng.&N
 &+LNecromantia&+g, &+Gm&+gys&+Gt&+gica&+Gl &+gf&+Go&+grc&+Ge&+gs, s&+Go &+gm&+Ga&+gny th&+Gi&+gng&+Gs&+g, e&+Ge&+gr&+Gi&+ge &+Glight &+gd&+Ge&+gsc&+Ge&+gnds, wh&+Ga&+gts &+Greal&+g?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   The twisted &+Rt&+rw&+Ri&+rl&+Ri&+rg&+Rh&+rt &+Rt&+ro&+Rw&+re&+Rr &+Lappears like it continues on into the d&+barkne&+Lss.&N
 ~
@@ -8456,7 +8456,7 @@ S
 &+CM&+ce&+Cr&+cc&+Cy&+cf&+Cu&+cl &+CF&+ca&+Ct&+ce l&+Cau&+cghs &+Ca&+cs th&+Ce &+cw&+Cea&+ck &+Ca&+cr&+Ce &+ct&+Cra&+cm&+Cple&+cd &+Co&+cv&+Ce&+cr by the &+Ce&+cv&+Ci&+cl &+Csin&+cister &+Cs&+ctr&+Co&+cng.&N
 &+LNecromantia&+c, &+Cm&+cys&+Ct&+cica&+Cl &+cf&+Co&+crc&+Ce&+cs, s&+Co &+cm&+Ca&+cny th&+Ci&+cng&+Cs&+c, e&+Ce&+cr&+Ci&+ce &+Clight &+cd&+Ce&+csc&+Ce&+cnds, wh&+Ca&+cts &+Creal&+c?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This twisted &+Ct&+cw&+Ci&+cl&+Ci&+cg&+Ch&+ct &+Ct&+co&+Cw&+ce&+Cr &+Lseems like it continues on into the d&+barkne&+Lss.&N
 ~
@@ -8499,7 +8499,7 @@ S
 &+MM&+me&+Mr&+mc&+My&+mf&+Mu&+ml &+MF&+ma&+Mt&+me l&+Mau&+mghs &+Ma&+ms th&+Me &+mw&+Mea&+mk &+Ma&+mr&+Me &+mt&+Mra&+mm&+Mple&+md &+Mo&+mv&+Me&+mr by the &+Me&+mv&+Mi&+ml &+Msin&+mister &+Ms&+mtr&+Mo&+mng.&N
 &+LNecromantia&+m, &+Mm&+mys&+Mt&+mica&+Ml &+mf&+Mo&+mrc&+Me&+ms, s&+Mo &+mm&+Ma&+mny th&+Mi&+mng&+Ms&+m, e&+Me&+mr&+Mi&+me &+Mlight &+md&+Me&+msc&+Me&+mnds, wh&+Ma&+mts &+Mreal&+m?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Ct&+cw&+Ci&+cl&+Ci&+cg&+Ch&+ct &+Ct&+co&+Cw&+ce&+Cr &+Lseems to continue on in this direction.&N
 ~
@@ -8532,7 +8532,7 @@ S
 &+RM&+re&+Rr&+rc&+Ry&+rf&+Ru&+rl &+RF&+ra&+Rt&+re l&+Rau&+rghs &+Ra&+rs th&+Re &+rw&+Rea&+rk &+Ra&+rr&+Re &+rt&+Rra&+rm&+Rple&+rd &+Ro&+rv&+Re&+rr by the &+Re&+rv&+Ri&+rl &+Rsin&+rister &+Rs&+rtr&+Ro&+rng.&N
 &+LNecromantia&+r, &+Rm&+rys&+Rt&+rica&+Rl &+rf&+Ro&+rrc&+Re&+rs, s&+Ro &+rm&+Ra&+rny th&+Ri&+rng&+Rs&+r, e&+Re&+rr&+Ri&+re &+Rlight &+rd&+Re&+rsc&+Re&+rnds, wh&+Ra&+rts &+Rreal&+r?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Mt&+mw&+Mi&+ml&+Mi&+mg&+Mh&+mt &+Mt&+mo&+Mw&+me&+Mr &+Lseems to continue on in this direction.&N
 ~
@@ -8560,7 +8560,7 @@ S
 &+BM&+be&+Br&+bc&+By&+bf&+Bu&+bl &+BF&+ba&+Bt&+be l&+Bau&+bghs &+Ba&+bs th&+Be &+bw&+Bea&+bk &+Ba&+br&+Be &+bt&+Bra&+bm&+Bple&+bd &+Bo&+bv&+Be&+br by the &+Be&+bv&+Bi&+bl &+Bsin&+bister &+Bs&+btr&+Bo&+bng.&N
 &+LNecromantia&+b, &+Bm&+bys&+Bt&+bica&+Bl &+bf&+Bo&+brc&+Be&+bs, s&+Bo &+bm&+Ba&+bny th&+Bi&+bng&+Bs&+b, e&+Be&+br&+Bi&+be &+Blight &+bd&+Be&+bsc&+Be&+bnds, wh&+Ba&+bts &+Breal&+b?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8593,7 +8593,7 @@ S
 &+GM&+ge&+Gr&+gc&+Gy&+gf&+Gu&+gl &+GF&+ga&+Gt&+ge l&+Gau&+gghs &+Ga&+gs th&+Ge &+gw&+Gea&+gk &+Ga&+gr&+Ge &+gt&+Gra&+gm&+Gple&+gd &+Go&+gv&+Ge&+gr by the &+Ge&+gv&+Gi&+gl &+Gsin&+gister &+Gs&+gtr&+Go&+gng.&N
 &+LNecromantia&+g, &+Gm&+gys&+Gt&+gica&+Gl &+gf&+Go&+grc&+Ge&+gs, s&+Go &+gm&+Ga&+gny th&+Gi&+gng&+Gs&+g, e&+Ge&+gr&+Gi&+ge &+Glight &+gd&+Ge&+gsc&+Ge&+gnds, wh&+Ga&+gts &+Greal&+g?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D3
 &+L   This strange twisted &+Mt&+mw&+Mi&+ml&+Mi&+mg&+Mh&+mt &+Mt&+mo&+Mw&+me&+Mr &+Lseems to continue on in this direction.&N
 ~
@@ -8631,7 +8631,7 @@ S
 &+MM&+me&+Mr&+mc&+My&+mf&+Mu&+ml &+MF&+ma&+Mt&+me l&+Mau&+mghs &+Ma&+ms th&+Me &+mw&+Mea&+mk &+Ma&+mr&+Me &+mt&+Mra&+mm&+Mple&+md &+Mo&+mv&+Me&+mr by the &+Me&+mv&+Mi&+ml &+Msin&+mister &+Ms&+mtr&+Mo&+mng.&N
 &+LNecromantia&+m, &+Mm&+mys&+Mt&+mica&+Ml &+mf&+Mo&+mrc&+Me&+ms, s&+Mo &+mm&+Ma&+mny th&+Mi&+mng&+Ms&+m, e&+Me&+mr&+Mi&+me &+Mlight &+md&+Me&+msc&+Me&+mnds, wh&+Ma&+mts &+Mreal&+m?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D1
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8664,7 +8664,7 @@ S
 &+RM&+re&+Rr&+rc&+Ry&+rf&+Ru&+rl &+RF&+ra&+Rt&+re l&+Rau&+rghs &+Ra&+rs th&+Re &+rw&+Rea&+rk &+Ra&+rr&+Re &+rt&+Rra&+rm&+Rple&+rd &+Ro&+rv&+Re&+rr by the &+Re&+rv&+Ri&+rl &+Rsin&+rister &+Rs&+rtr&+Ro&+rng.&N
 &+LNecromantia&+r, &+Rm&+rys&+Rt&+rica&+Rl &+rf&+Ro&+rrc&+Re&+rs, s&+Ro &+rm&+Ra&+rny th&+Ri&+rng&+Rs&+r, e&+Re&+rr&+Ri&+re &+Rlight &+rd&+Re&+rsc&+Re&+rnds, wh&+Ra&+rts &+Rreal&+r?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D5
 &+L   This strange twisted &+Mt&+mw&+Mi&+ml&+Mi&+mg&+Mh&+mt &+Mt&+mo&+Mw&+me&+Mr &+Lseems to continue on in this direction.&N
 ~
@@ -8692,7 +8692,7 @@ S
 &+MM&+me&+Mr&+mc&+My&+mf&+Mu&+ml &+MF&+ma&+Mt&+me l&+Mau&+mghs &+Ma&+ms th&+Me &+mw&+Mea&+mk &+Ma&+mr&+Me &+mt&+Mra&+mm&+Mple&+md &+Mo&+mv&+Me&+mr by the &+Me&+mv&+Mi&+ml &+Msin&+mister &+Ms&+mtr&+Mo&+mng.&N
 &+LNecromantia&+m, &+Mm&+mys&+Mt&+mica&+Ml &+mf&+Mo&+mrc&+Me&+ms, s&+Mo &+mm&+Ma&+mny th&+Mi&+mng&+Ms&+m, e&+Me&+mr&+Mi&+me &+Mlight &+md&+Me&+msc&+Me&+mnds, wh&+Ma&+mts &+Mreal&+m?&N
 ~
-1325 1249935432 0
+1325 1249935432 0 0
 D4
 &+L   This strange twisted &+Gt&+gw&+Gi&+gl&+Gi&+gg&+Gh&+gt &+Gt&+go&+Gw&+ge&+Gr &+Lseems to continue on in this direction.&N
 ~
@@ -8712,7 +8712,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D1
 ~
 ~
@@ -8730,7 +8730,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D0
 ~
 ~
@@ -8748,7 +8748,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D1
 ~
 ~
@@ -8766,7 +8766,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D1
 ~
 ~
@@ -8784,7 +8784,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D3
 ~
 ~
@@ -8802,7 +8802,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D1
 ~
 ~
@@ -8820,7 +8820,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D0
 ~
 ~
@@ -8842,7 +8842,7 @@ The Road Leading From Tharnadia~
 &+ga small forest opens to the south and north.  The road continues west toward
 &+gthe city gates, and east toward a stone ramp.
 ~
-1325 134250496 2
+1325 134250496 2 0
 D1
 ~
 ~
@@ -8862,7 +8862,7 @@ S
 &+yevery direction here, listing off points of interest and some of the other major
 &+yhometowns that lie scattered across this contintent.&n
 ~
-1325 4194304 1
+1325 4194304 1 0
 D0
 ~
 ~
@@ -8870,7 +8870,7 @@ D0
 D1
 ~
 ~
-0 0 43301
+0 0 570424
 D2
 ~
 ~
@@ -8888,7 +8888,7 @@ S
 &+whas a list on it of the current mercenaries available to hire. The &+Ljail lobby&+w lies
 &+wto the east.
 ~
-1325 134250504 1
+1325 134250504 1 0
 D1
 ~
 ~
@@ -8898,7 +8898,7 @@ S
 Hirling Load Room~
 Dont be in here!
 ~
-1325 134250560 1
+1325 134250560 1 0
 S
 #132870
 &+yOutside the &+LWestern Arch~
@@ -8908,7 +8908,7 @@ S
 &+gheavily defended city gates.  A dirt &+yfootpath&+g winds its way up the &+ySh&+Yr'&+Wnn M&+Ye&+Gs&+ga&n
 &+gtoward &+LCaer Tannad&+g, the first of the twin keeps.  The path leaves west.&n
 ~
-1325 142639172 4
+1325 142639172 4 0
 D1
 The Grand Tharnadian Way proceedss through that arch.
 ~
@@ -8929,7 +8929,7 @@ S
 &+ysharp rocks jut out and loose stones seems to be perched precariously upon the
 &+ymesa's side.  The path continues up and east.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
 The western arch to Tharnadia lies to the east.
 ~
@@ -8950,7 +8950,7 @@ S
 &+yabout fifteen feet wide, comprised totally of dirt and devoid of any but small
 &+yrocks.  The path continues west and down.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D3
 The bottom of a steep rise lies to the west.
 ~
@@ -8973,7 +8973,7 @@ S
 &+yto assist in the climb up to &+LCaer Tannad&+y.  The path continues east to the top
 &+yof a small drop.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
 The path continues east.
 ~
@@ -8995,7 +8995,7 @@ S
 &+yrocks.  Large steps have been carved into the mesa's side, making it easier to
 &+yscale this steep incline.  The path continues up and down.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D4
 Stairs lead up the mesa.
 ~
@@ -9018,7 +9018,7 @@ S
 &+yto assist in the climb down to &+WTharnadia&+y.  The path continues west and down
 &+yfrom here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D3
 The landing continues to the west.
 ~
@@ -9039,7 +9039,7 @@ S
 &+yabout fifteen feet wide, comprised totally of dirt and devoid of any but small
 &+yrocks.  The path continues to the east and to the west.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
 The landing continues.
 ~
@@ -9062,7 +9062,7 @@ S
 &+yto assist in the climb up to &+LCaer Tannad&+y.  The path continues east and up
 &+yfrom here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D1
 The landing continues.
 ~
@@ -9084,7 +9084,7 @@ S
 &+yrocks.  Large steps have been carved into the mesa's side, making it easier to
 &+yscale this steep incline.  The path continues up and down.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D4
 The stairway continues.
 ~
@@ -9107,7 +9107,7 @@ S
 &+yto assist in the climb up to &+LCaer Tannad&+y.  The path continues up and down from
 &+yhere.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D4
 The stairway continues.
 ~
@@ -9129,7 +9129,7 @@ S
 &+yrocks.  Large steps have been carved into the mesa's side, making it easier to
 &+yscale this steep incline.  The path continues up and down.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D4
 The stairwell continues.
 ~
@@ -9152,7 +9152,7 @@ S
 &+yto assist in the climb down to &+WTharnadia&+y.  The path continues west and down
 &+yfrom here.&n
 ~
-1325 142639168 4
+1325 142639168 4 0
 D0
 The Great Park of Caer Tannad extends off to the north.
 ~
@@ -9186,7 +9186,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the west of here, while the stairs down the mesa stand to the north. &n
 ~
-1325 142639172 2
+1325 142639172 2 0
 D0
 The stairwell, down the mesa, lies to the north.
 ~
@@ -9211,7 +9211,7 @@ S
 &+gto the east and south of here, while a four foot wall blocks the way north to
 &+gthe gates of the prison.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9235,7 +9235,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and south, coming to a bend in each direction. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north, turns east.
 ~
@@ -9259,7 +9259,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the west and north of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9283,7 +9283,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the west, and comes to a bend east of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park to the east turns north.
 ~
@@ -9307,7 +9307,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the east, south and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9336,7 +9336,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9360,7 +9360,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, east, and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9389,7 +9389,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the east, south, and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9418,7 +9418,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and east of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9442,7 +9442,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the east, south, and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9471,7 +9471,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the east and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9495,7 +9495,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, east, and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9524,7 +9524,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and east of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9548,7 +9548,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, east, and south of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park to the north turns east.
 ~
@@ -9577,7 +9577,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north, south, and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9606,7 +9606,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, south, and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The path continues.
 ~
@@ -9635,7 +9635,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the east and south of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The path continues.
 ~
@@ -9659,7 +9659,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and south, while a small pond lies to the west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The path continues.
 ~
@@ -9690,7 +9690,7 @@ S
 &+ginviting waters.  This is where the park animals come to drink, and cool
 &+gduring the hot season.  The park continues to the east.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues to the east.
 ~
@@ -9709,7 +9709,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, south, and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -9738,7 +9738,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and east of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north turns east.
 ~
@@ -9762,7 +9762,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the east and south of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9786,7 +9786,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north, east, and south of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north turns east.
 ~
@@ -9815,7 +9815,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the east and south of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9839,7 +9839,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north, east, and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north turns east.
 ~
@@ -9868,7 +9868,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the east and south of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park east turns south.
 ~
@@ -9892,7 +9892,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the south and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
 The park continues.
 ~
@@ -9916,7 +9916,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, east and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north of here turns west.
 ~
@@ -9945,7 +9945,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the east and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park continues.
 ~
@@ -9969,7 +9969,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the north, east and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park to the north turns east.
 ~
@@ -9998,7 +9998,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the east and south of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D1
 The park east turns south.
 ~
@@ -10022,7 +10022,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the south and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
 The park continues.
 ~
@@ -10046,7 +10046,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north, east, and west of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north turns west.
 ~
@@ -10075,7 +10075,7 @@ S
 &+glandscape, the occasional oak impressing itself in your view.  The park heads
 &+gto the south and west of here.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D2
 The park continues.
 ~
@@ -10099,7 +10099,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the north and south of here. &n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park north turns west.
 ~
@@ -10124,7 +10124,7 @@ S
 &+gto the east and north of here, while a four foot wall blocks the way south to
 &+gthe gates of the prison.&n
 ~
-1325 142639168 2
+1325 142639168 2 0
 D0
 The park continues.
 ~
@@ -10148,7 +10148,7 @@ S
 &+gseems fresher and clean, in comparison to the city below.  The park continues
 &+gto the west of here, while the stairs down the mesa stand to the south. &n
 ~
-1325 142639172 2
+1325 142639172 2 0
 D2
 The stairs, down to the city, lie to the south.
 ~
@@ -10171,7 +10171,7 @@ S
 &+yside if hot oils are dropped from above.  All in all, this fortress is looks
 &+yextremely formidable and well protected.&n
 ~
-1325 142639172 2
+1325 142639172 2 0
 D1
 The stairs down the mesa to the city, lie east.
 ~
@@ -10198,7 +10198,7 @@ S
 &+wswing a gargantuan door open or closed.  A dismal hallway leads away north and
 &+wsouth, while the gateway exits out onto the mesa's top and the areas beyond.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 A dark hallway leads north.
 ~
@@ -10236,7 +10236,7 @@ S
 &+Lcontinues north to a turn, while to the south the gates of Caer Tannad lock
 &+Lout the world.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway north turns west.
 ~
@@ -10262,7 +10262,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues north
 &+Land west.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D2
 The hallway continues.
 ~
@@ -10289,7 +10289,7 @@ S
 &+Lcontinues east to a turn, while to the west it heads toward the cellblock
 &+Lentrance.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The hallway east turns south.
 ~
@@ -10315,7 +10315,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues east
 &+Land west.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The dungeon entrance lies to the east.
 ~
@@ -10342,7 +10342,7 @@ S
 &+Lcontinues west to a turn, and east into the darkness.  To the south the
 &+Ldungeon entrance looms up ominously.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The hallway continues.
 ~
@@ -10380,7 +10380,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues east
 &+Land south.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The dungeon entrance lies in that direction.
 ~
@@ -10406,7 +10406,7 @@ S
 &+Lnavigate the dark halls of the prison scavaging for vermin.  The hallway
 &+Lcontinues north to a turn, and south into the darkness.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway to the north turns east.
 ~
@@ -10432,7 +10432,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues north
 &+Land south, while a steel ladder leads up the west wall to the level above.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway continues.
 ~
@@ -10463,7 +10463,7 @@ S
 &+Lnavigate the dark halls of the prison scavaging for vermin.  The hallway
 &+Lcontinues north and south into the darkness.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway continues.
 ~
@@ -10489,7 +10489,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues north
 &+Land east.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway continues.
 ~
@@ -10515,7 +10515,7 @@ S
 &+Lnavigate the dark halls of the prison scavaging for vermin.  The hallway
 &+Lcontinues east and west into the darkness.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The hallway continues.
 ~
@@ -10541,7 +10541,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues east
 &+Land west.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The hallway continues.
 ~
@@ -10567,7 +10567,7 @@ S
 &+Lnavigate the dark halls of the prison scavaging for vermin.  The hallway
 &+Lcontinues east and west into the darkness.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D1
 The hallway continues to a turn north.
 ~
@@ -10593,7 +10593,7 @@ S
 &+Lbefore they reach the &+Rflames&+L of the afterlife.  The hallway continues north
 &+Land west.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The hallway continues.
 ~
@@ -10619,7 +10619,7 @@ S
 &+Lnavigate the dark halls of the prison scavaging for vermin.  The hallway
 &+Lcontinues north and south into the darkness.&n
 ~
-1325 142639176 1
+1325 142639176 1 0
 D0
 The gates to the keep stand north of here.
 ~
@@ -10645,7 +10645,7 @@ S
 &+mcontinues to the east, while to the north the door opens into the hallway
 &+mbeyond.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D0
 The door is made of iron and seems to be able to withstand a great deal of
 damage.
@@ -10678,7 +10678,7 @@ S
 &+mon these granite enclosures.  The dungeon continues to the west and south.  A
 &+ywooden&+m door opens up to the east.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D1
 The door is made of hand polished and carved wood.
 ~
@@ -10716,7 +10716,7 @@ S
 &+mcontinues to the north and south, while iron bars guard the cells on either
 &+mside of the hallway.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D0
 The dungeon to the north turns west.
 ~
@@ -10758,7 +10758,7 @@ S
 &+mon these granite enclosures.  The dungeon continues to the north.  Steel bars
 &+mguard the cells to either side of the hallway.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D0
 The dungeon continues.
 ~
@@ -10795,7 +10795,7 @@ S
 &+Lof this place begins to wear even on you, one destined not to spend eternity
 &+Lhere.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D3
 The bars are set in a solid steel frame, and look quite strong.
 ~
@@ -10821,7 +10821,7 @@ S
 &+Lof this place begins to wear even on you, one destined not to spend eternity
 &+Lhere.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D1
 The bars are set in a solid steel frame, and look quite strong.
 ~
@@ -10847,7 +10847,7 @@ S
 &+Lof this place begins to wear even on you, one destined not to spend eternity
 &+Lhere.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D3
 The bars are set in a solid steel frame, and look quite strong.
 ~
@@ -10873,7 +10873,7 @@ S
 &+Lof this place begins to wear even on you, one destined not to spend eternity
 &+Lhere.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D1
 The bars are set in a solid steel frame, and look quite strong.
 ~
@@ -10896,7 +10896,7 @@ S
 &+cenjoyed silence.  Various medals and documents of commendation decorate the
 &+ceastern wall of this room, a tribute to the prestige of this mighty man.&n
 ~
-1325 142774349 0
+1325 142774349 0 0
 D3
 The door is made of handcarved and polished wood.
 ~
@@ -10920,7 +10920,7 @@ S
 &+Lkeeps most people safe at night, you can't shake the feeling that perhaps its
 &+Lnot as safe in here as it is out there.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The ladder ascends into the gloom.
 ~
@@ -10943,7 +10943,7 @@ S
 &+Lkeeps most people safe at night, you can't shake the feeling that perhaps its
 &+Lnot as safe in here as it is out there.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The ladder proceeds up into the darkness.
 ~
@@ -10966,7 +10966,7 @@ S
 &+Lkeeps most people safe at night, you can't shake the feeling that perhaps its
 &+Lnot as safe in here as it is out there.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The ladder leads through the ceiling to the parapets above.
 ~
@@ -10993,7 +10993,7 @@ S
 &+Ldungeons&+w below, while the walk continues to the north and south.   A stone
 &+wwalkway leads east into the innerkeep.&n
 ~
-1325 142643264 1
+1325 142643264 1 0
 D0
 The walkway continues.
 ~
@@ -11028,7 +11028,7 @@ S
 &+wnorth and to the south.  Up above, to the south, you can see the &+LGreat
 &+LSpanning Bridge&+w, that connects the two keeps, as it climbs through the air.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway to the north turns east.
 ~
@@ -11053,7 +11053,7 @@ S
 &+wbrought up from the harbor to the west.  The walkway continues to the east and
 &+wto the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -11077,7 +11077,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -11101,7 +11101,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -11126,7 +11126,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the east and
 &+wto the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway to the east turns south.
 ~
@@ -11150,7 +11150,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+wsouth and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
 The walkway continues.
 ~
@@ -11175,7 +11175,7 @@ S
 &+wnorth and to the south.  A &+rsc&+Ror&+Ypi&+Won&+w ballista has been mounted here to defend
 &+wthe entrance to the keep below.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway to the north turns west.
 ~
@@ -11200,7 +11200,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the north
 &+wand to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -11225,7 +11225,7 @@ S
 &+wnorth and to the south.   A &+rsc&+Ror&+Ypi&+Won&+w ballista has been mounted here to defend
 &+wthe keep gates below.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -11249,7 +11249,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+wnorth and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -11274,7 +11274,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the east
 &+wand to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway to the east turns north.
 ~
@@ -11298,7 +11298,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -11322,7 +11322,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -11346,7 +11346,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+wnorth and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -11372,7 +11372,7 @@ S
 &+wand to the south.  Up above, to the north, you can see the &+LGreat Spanning
 &+LBridge&+w, which connects the two keeps, as it climbs through the air.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The entrance to the innerkeep lies to the north.
 ~
@@ -11394,7 +11394,7 @@ S
 &+wcalmer then on the parapet, but still chill enough to allow you to see your
 &+wbreathe before your face.  The path continues east and west.&n
 ~
-1325 142643264 1
+1325 142643264 1 0
 D1
 The door looks heavy, an iron ring set on its right side, acts as its
 handle.  The insignia of Caer Tannad has been painstakingly carved in its
@@ -11419,7 +11419,7 @@ S
 &+wleads to the parapets to the west.  The hallway continues to the north and to
 &+wthe south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -11459,7 +11459,7 @@ S
 &+wwest leads up into the tower of the ranger.  A small room adjoins this hall to
 &+wthe east of here.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -11492,7 +11492,7 @@ S
 &+wwest leads up into the tower of the cleric.  A small room adjoins this hall to
 &+wthe east of here.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A wooden door rests heavily in its jam.
 ~
@@ -11524,7 +11524,7 @@ S
 &+Lascent.  The stairwell curves up through the ceiling, while the hallway heads
 &+Lout to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The second floor hallway lies to the east.
 ~
@@ -11546,7 +11546,7 @@ S
 &+wdomed ends and &+Ygolden&+w rods supporting it at hand level.  The stairway leads up
 &+wto the &+LGreat Spanning Bridge&+w and, &+LCaer Dauthe&+w, beyond.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 The second floor hallway lies to the west.
 ~
@@ -11568,7 +11568,7 @@ S
 &+Lleather, which follows the stairs in their ascent.  The stairwell curves up
 &+Lthrough the ceiling, while the hallway heads out to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues to the east.
 ~
@@ -11589,7 +11589,7 @@ S
 &+Lascent up the sides of the tower, keeping people from accidentally falling to
 &+Ltheir doom below.  The stairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The stairway continues.
 ~
@@ -11612,7 +11612,7 @@ S
 &+Lascent up the sides of the tower, keeping people from accidentally falling to
 &+Ltheir doom below.  The stairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The top of the cleric's tower lies above you.
 ~
@@ -11636,7 +11636,7 @@ S
 &+wends capped with gold domed ends and &+Ygolden&+w rods supporting it at hand level.
 &+wThe stairway leads down to the second floor of &+LCaer Tannad&+w.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 The hallway continues.
 ~
@@ -11657,7 +11657,7 @@ S
 &+Lup the sides of the tower, keeping people from accidentally falling to their
 &+Ldoom below.  The stairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The stairwell continues.
 ~
@@ -11680,7 +11680,7 @@ S
 &+Lup the sides of the tower, keeping people from accidentally falling to their
 &+Ldoom below.  The stairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The top of the tower lies above you.
 ~
@@ -11705,7 +11705,7 @@ S
 &+wwhole of the world.  A granite staircase spirals down through the floor to the
 &+whallway below.&n
 ~
-1325 142774344 0
+1325 142774344 0 0
 D5
 A staircase spirals downward.
 ~
@@ -11726,7 +11726,7 @@ S
 &+gthink yourself to be in the middle of a vast forest.  A small staircase enters
 &+gthe room through the center of an oak tree to the north.&n
 ~
-1325 142774344 0
+1325 142774344 0 0
 D5
 A marble staircase leaves down through the base of a giant oak.
 ~
@@ -11750,7 +11750,7 @@ S
 in creating and repairing bows and arrows.  A man stands behind a long
 counter, greeting those who enter.
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 A wooden door rests heavily in its jam.
 ~
@@ -11774,7 +11774,7 @@ and any treaties signed would be on common ground.  A large bed filled with
 the swan feathers, takes up the most of the room, while various furnitures
 serve both elegant and functional purposes.  The hallway lies out to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 A wooden door rests heavily in its jam.
 ~
@@ -11799,7 +11799,7 @@ S
 &+LSpanning Bridge&+w leads to &+LCaer Dauthe&+w to the west.  The hallway continues to
 &+wthe north and to the south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -11836,7 +11836,7 @@ S
 &+wthe length of the floor.  The hallway continues to the south, while a magickal
 &+wshop lies to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D2
 The hallway continues.
 ~
@@ -11863,7 +11863,7 @@ S
 &+wthe length of the floor.  The hallway continues to the north, while a closet
 &+wopens to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues north.
 ~
@@ -11890,7 +11890,7 @@ S
 &+Lclear your sinuses.  A small door hangs in the wall to the east, leading back
 &+Lout into the hallway beyond.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D1
 A small wooden door hinges in the eastern wall.
 ~
@@ -11911,7 +11911,7 @@ S
 &+wfield to prevent theft.  A small &+ycounter&+w with a chair behind it sits at the
 &+wback of the room, and the shop's only exit is back to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A heavy wooden door hinges here.
 ~
@@ -11943,7 +11943,7 @@ S
 &+wfrom accidently falling to their dooms.  The &+LGreat Spanning Bridge&+w continues
 &+wto the west, while a &+ywooden&+w door opens up to the third level of &+LCaer Tannad&+w.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The door looks heavy and well fortified.
 ~
@@ -11973,7 +11973,7 @@ S
 &+wrocky bases of the twin mesas.  The &+LGreat Spanning Bridge&+w continues to the
 &+weast and to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The bridge continues.
 ~
@@ -12002,7 +12002,7 @@ S
 &+wboth sides of the bridge, to prevent people from accidently falling to their
 &+wdooms.  The &+LGreat Spanning Bridge&+w continues to the east and west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The bridge continues.
 ~
@@ -12033,7 +12033,7 @@ S
 &+weast and to the west.  A small fountain has been erected here, in memory of
 &+wthe people who's dreams kept the city of &+WTharnadia&+w alive.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The bridge continues.
 ~
@@ -12067,7 +12067,7 @@ S
 &+wkeep's first level, while the walk continues to the north and south.   A stone
 &+wwalkway leads west into the innerkeep.&n
 ~
-1325 142643264 1
+1325 142643264 1 0
 D0
 The walkway continues.
 ~
@@ -12102,7 +12102,7 @@ S
 &+wnorth and to the south.  Up above, to the south, you can see the &+LGreat
 &+LSpanning Bridge&+w, that connects the two keeps, as it climbs through the air.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway to the north turns west.
 ~
@@ -12127,7 +12127,7 @@ S
 &+wbrought up from the harbor to the west.  The walkway continues to the east and
 &+wto the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D2
 The walkway continues.
 ~
@@ -12151,7 +12151,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 To the east the walkway turns south.
 ~
@@ -12175,7 +12175,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -12200,7 +12200,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the east and
 &+wto the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues to the east.
 ~
@@ -12224,7 +12224,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+wsouth and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -12249,7 +12249,7 @@ S
 &+wnorth and to the south.  A &+rsc&+Ror&+Ypi&+Won&+w ballista has been mounted here to defend
 &+wthe entrance to the keep below.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway to the north turns east.
 ~
@@ -12274,7 +12274,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the north
 &+wand to the south.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -12299,7 +12299,7 @@ S
 &+wnorth and to the south.   A &+rsc&+Ror&+Ypi&+Won&+w ballista has been mounted here to defend
 &+wthe keep gates below.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -12323,7 +12323,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+wnorth and to the east.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -12348,7 +12348,7 @@ S
 &+wbrought up from the harbor to the west.   The walkway continues to the east
 &+wand to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -12372,7 +12372,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway continues.
 ~
@@ -12396,7 +12396,7 @@ S
 &+wupon the granite that makes up most of the keep.  The walkway continues to the
 &+weast and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D1
 The walkway east, turns north.
 ~
@@ -12420,7 +12420,7 @@ S
 &+ware the whole of &+WTharnadia&+w down to the east.  The walkway continues to the
 &+wnorth and to the west.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The walkway continues.
 ~
@@ -12446,7 +12446,7 @@ S
 &+wand to the south.  Up above, to the north, you can see the &+LGreat Spanning
 &+LBridge&+w, which connects the two keeps, as it climbs through the air.&n
 ~
-1325 142639168 1
+1325 142639168 1 0
 D0
 The entrance to the innerkeep lies to the north.
 ~
@@ -12468,7 +12468,7 @@ S
 &+wcalmer then on the parapet, but still chill enough to allow you to see your
 &+wbreathe before your face.  The path continues east and west.&n
 ~
-1325 142643264 1
+1325 142643264 1 0
 D1
 The guard's walk continues its march to the east.
 ~
@@ -12493,7 +12493,7 @@ S
 &+wleads to the parapets to the east.  The hallway continues to the north and to
 &+wthe south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -12533,7 +12533,7 @@ S
 &+weast leads up into the tower of the sorcerer.  The Queen's bedchamber adjoins
 &+wthis hall to the west of here.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -12566,7 +12566,7 @@ S
 &+weast leads up into the tower of the conjurer.  The King's bedchamber adjoins
 &+wthis hall to the west of here.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A staircase lies to the east.
 ~
@@ -12598,7 +12598,7 @@ S
 &+Lsolid air.  The stairwell curves up through the ceiling, while the hallway
 &+Lheads out to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 The second floor hallway lies to the west.
 ~
@@ -12620,7 +12620,7 @@ S
 &+wdomed ends and &+Ygolden&+w rods supporting it at hand level.  The stairway leads up
 &+wto the &+LGreat Spanning Bridge&+w and, &+LCaer Tannad&+w, beyond.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The second floor hallway lies to the east.
 ~
@@ -12642,7 +12642,7 @@ S
 &+Lroom.  The stairway curves up through the ceiling, while the hallway heads
 &+Lout to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 The hallway continues to the west.
 ~
@@ -12663,7 +12663,7 @@ S
 &+Lsmoke perpetually rises off it, no matter the temperature of the room.  The
 &+Lstairwell continues its languid climb both up and down.&n
 ~
-1325 176197704 0
+1325 176197704 0 0
 D4
 The stairway continues.
 ~
@@ -12686,7 +12686,7 @@ S
 &+Lsmoke perpetually rises off it, no matter the temperature of the room.  The
 &+Lstairwell continues its languid climb both up and down.&n
 ~
-1325 176197704 0
+1325 176197704 0 0
 D4
 The top of the conjurer's tower lies above you.
 ~
@@ -12710,7 +12710,7 @@ S
 &+wends capped with gold domed ends and &+Ygolden&+w rods supporting it at hand level.
 &+wThe stairway leads down to the second floor of &+LCaer Dauthe&+w.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -12731,7 +12731,7 @@ S
 &+Lroom looks empty, strange magics having turned the stairs to solid air.  The
 &+Lstairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The stairwell continues.
 ~
@@ -12752,7 +12752,7 @@ S
 &+Lroom looks empty, strange magics having turned the stairs to solid air.  The
 &+Lstairwell continues its languid climb both up and down.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 The top of the tower lies above you.
 ~
@@ -12779,7 +12779,7 @@ S
 &+cmethod of fast transit and communication.  A granite stairway spirals downward
 &+cthrough the floor.&n
 ~
-1325 142774344 0
+1325 142774344 0 0
 D5
 A staircase spirals downward.
 ~
@@ -12828,7 +12828,7 @@ S
 &+mA &+Ylightning&+m baustrade leads downwards from here into the lower levels of the
 &+mtower.&n
 ~
-1325 142774344 0
+1325 142774344 0 0
 D5
 An invisible stairway leaves down through the floor.
 ~
@@ -12873,7 +12873,7 @@ S
 &+wroom is beyond description, its craftsmanship unlike any you have
 &+wever before gazed upon.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A wooden door rests heavily in its jam.
 ~
@@ -12899,7 +12899,7 @@ S
 &+wrest, is a large window which shows the activities of the docks and sea
 &+wbelow.  A door exits to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A wooden door rests heavily in its jam.
 ~
@@ -12924,7 +12924,7 @@ S
 &+LSpanning Bridge&+w leads to &+LCaer Tannad&+w to the east.  The hallway continues to
 &+wthe north and to the south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -12961,7 +12961,7 @@ S
 &+wthe length of the floor.  The hallway continues to the south, while a mages'
 &+wsupply shop lies to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 A heavy wooden door hinges there.
 ~
@@ -12988,7 +12988,7 @@ S
 &+wthe length of the floor.  The hallway continues to the north, while a closet
 &+wopens to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -13015,7 +13015,7 @@ S
 &+Lclear your sinuses.  A small door hangs in the wall to the west, leading back
 &+Lout into the hallway beyond.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D3
 A small wooden door hinges in the western wall.
 ~
@@ -13038,7 +13038,7 @@ S
 &+rto the west.  The laboratory is lit by several small glowing &+corbs&+r fastened to
 &+rthe walls.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D3
 A heavy wooden door hinges here.
 ~
@@ -13073,7 +13073,7 @@ S
 &+wcontinues to the east, while a &+ywooden&+w door opens up to the third level of &+LCaer
 &+LDauthe&+w.&n
 ~
-1325 176197704 0
+1325 176197704 0 0
 D1
 The bridge continues.
 ~
@@ -13103,7 +13103,7 @@ S
 &+wrocky bases of the twin mesas.  The &+LGreat Spanning Bridge&+w continues to the
 &+weast and to the west.&n
 ~
-1325 176197704 0
+1325 176197704 0 0
 D1
 The bridge continues.
 ~
@@ -13132,7 +13132,7 @@ S
 &+wboth sides of the bridge, to prevent people from accidently falling to their
 &+wdooms.  The &+LGreat Spanning Bridge&+w continues to the east and west.&n
 ~
-1325 176197704 0
+1325 176197704 0 0
 D1
 The center of the bridge lies to the east.
 ~
@@ -13162,7 +13162,7 @@ S
 &+wfrom becoming stagnant.  The insignia of the &+WTharnadian Royal Family&+w is carved
 &+winto the granite of the southern wall.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 A landing continues to the north.
 ~
@@ -13202,7 +13202,7 @@ S
 &+wrelatively good shape.  A set of marble stairs descends the last two hundred
 &+wfeet to the hallway floor.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D2
 A spiral staircase lies to the south.
 ~
@@ -13225,7 +13225,7 @@ S
 &+wrelatively good shape.  A set of marble stairs descends the last two hundred
 &+wfeet to the hallway floor.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 A spiral staircase lies to the north.
 ~
@@ -13248,7 +13248,7 @@ S
 &+whigh ceiling has been painted a deep &+bturquoise&+w.  The stairwell continues down,
 &+wwhile above you is a small landing.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 A landing lies above you.
 ~
@@ -13277,7 +13277,7 @@ S
 &+wstairs, as it casually keeps pace with the staircase.  The stairwell continues
 &+wdown, while above you is a small landing.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D2
 The hallway to the south turns west.
 ~
@@ -13306,7 +13306,7 @@ S
 &+whigh ceiling has been painted a deep &+bturquoise&+w.  The stairwell continues down,
 &+wwhile above you is a small landing.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D4
 There is a landing above you.
 ~
@@ -13335,7 +13335,7 @@ S
 &+wstairs, as it casually keeps pace with the staircase.  The stairwell continues
 &+wdown, while above you is a small landing.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway to the north turns west.
 ~
@@ -13365,7 +13365,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues west, while a
 &+wstaircase rises up to the south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D2
 A staircase rises up toward the guard's walk.
 ~
@@ -13389,7 +13389,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the east and to
 &+wthe west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway to the east, turns south.
 ~
@@ -13413,7 +13413,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues east to west,
 &+wwhile a door opens upon the servant's quarter's to the south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -13437,7 +13437,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the east and to
 &+wthe west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -13461,7 +13461,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues to the east and
 &+wto the south.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -13485,7 +13485,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the north and to
 &+wthe south, while a small door sits to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway to the north turns east.
 ~
@@ -13514,7 +13514,7 @@ S
 &+wdocks of &+WTharnadia&+w open wide.  The hallway continues to the north and to the
 &+wsouth.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -13543,7 +13543,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the north and to
 &+wthe south, while a small door sits to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues to an intersection.
 ~
@@ -13567,7 +13567,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues to the north
 &+wand to the east.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 The hallway continues.
 ~
@@ -13591,7 +13591,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the east and to
 &+wthe west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -13615,7 +13615,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues to the east and
 &+wto the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway continues.
 ~
@@ -13639,7 +13639,7 @@ S
 &+wthat once thrived far to the east.  The hallway continues to the east and to
 &+wthe west, while a large archway to the dining hall opens north.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D1
 The hallway to the east turns north.
 ~
@@ -13663,7 +13663,7 @@ S
 &+wa long extinct kingdom to the far east.  The hallway continues to the north
 &+wand to the west.&n
 ~
-1325 142643272 0
+1325 142643272 0 0
 D0
 A staircase rises upward to the north.
 ~
@@ -13687,7 +13687,7 @@ S
 &+wrest, is a large window which shows the activities of the docks and sea
 &+wbelow.  A door exits to the west.&n
 ~
-1325 142643273 0
+1325 142643273 0 0
 D3
 A small wooden door hinges there.
 ~
@@ -13702,7 +13702,7 @@ S
 &+yappear to be attempting to rebuild the docks into something the Lord
 &+yKaynor would be less disappointed in.&N
 ~
-1325 143687744 1
+1325 143687744 1 0
 D0
 The northern pier extends north from the center.
 ~
@@ -13726,7 +13726,7 @@ S
 &+ydisaster looks slightly more stable where it connects to the large
 &+ykeep.&N
 ~
-1325 143687744 1
+1325 143687744 1 0
 D0
 The northern pier extends further north.
 ~
@@ -13745,7 +13745,7 @@ S
 &+ytied to the pier, and a gangway pulled up allowing people to embark, and
 &+ydisembark.
 ~
-1325 143687744 1
+1325 143687744 1 0
 D2
 The docks continue south.
 ~
@@ -13764,7 +13764,7 @@ S
 &+ydisaster looks slightly more stable where it connects to the large
 &+ykeep.
 ~
-1325 143687744 1
+1325 143687744 1 0
 D0
 The southern pier extends north.
 ~
@@ -13783,7 +13783,7 @@ S
 &+yoften tied to the pier, and a gangway pulled up allowing people to
 &+yembark and disembark.&N
 ~
-1325 143687744 1
+1325 143687744 1 0
 D0
 The docks continue north.
 ~
