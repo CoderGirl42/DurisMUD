@@ -30,7 +30,7 @@ void listen_broadcast(P_char ch, const char *buf, int cmd)
   P_desc i;
   P_char tch;
 
-  if (IS_TRUSTED(ch) || IS_ILLITHID(ch) || IS_NPC(ch))
+  if (IS_TRUSTED(ch) || IS_ILLITHID(ch) || IS_PILLITHID(ch) || IS_NPC(ch))
   {
     return;
   }

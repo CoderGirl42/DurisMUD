@@ -336,7 +336,7 @@ int illithid_sack(P_obj obj, P_char ch, int cmd, char *argument)
       return FALSE;
 
     /* ok they are attempting to get something from this chest */
-    if (!IS_ILLITHID(ch) && !IS_TRUSTED(ch))
+    if (!IS_ILLITHID(ch) && !IS_PILLITHID(ch)&& !IS_TRUSTED(ch))
     {
       act("&+L$n &+Lis &+Rzapped&+L as $e tries to put something into $p!",
           FALSE, ch, obj, 0, TO_ROOM);

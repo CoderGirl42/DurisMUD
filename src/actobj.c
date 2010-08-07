@@ -3603,7 +3603,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
           break;
         }
       }
-      if (ch->equipment[WEAR_BODY] || ch->equipment[WEAR_SPIDER_BODY])
+      if (ch->equipment[WEAR_BODY])
       {
         if (showit)
           send_to_char("You already wear something on your body.\r\n", ch);
@@ -3629,7 +3629,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
 
   case 4:
     if (CAN_WEAR(obj_object, ITEM_WEAR_HEAD)
-        && !IS_MINOTAUR(ch) && !IS_ILLITHID(ch))
+        && !IS_MINOTAUR(ch) && !IS_ILLITHID(ch) && !IS_PILLITHID(ch))
     {
       if (IS_SET(obj_object->extra_flags, ITEM_WHOLE_HEAD))
       {
@@ -3679,7 +3679,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
     {
       if (showit)
       {
-        if (IS_ILLITHID(ch))
+        if (IS_ILLITHID(ch) || IS_PILLITHID(ch))
           send_to_char("Sorry, you can't wear anything on your head.\r\n",
                        ch);
         else
@@ -4638,9 +4638,9 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
           send_to_char("You can't wear spider body armor.\r\n", ch);
         break;
       }
-      if (ch->equipment[WEAR_SPIDER_BODY] || ch->equipment[WEAR_BODY])
+      if (ch->equipment[WEAR_SPIDER_BODY])
       {
-        send_to_char("You're already wearing something on your body.\r\n", ch);
+        send_to_char("You're already wearing something on your spider body.\r\n", ch);
       }
       else
       {

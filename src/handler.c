@@ -2935,7 +2935,7 @@ P_char get_char_room_vis(P_char ch, const char *name)
     if (CAN_SEE(ch, i) && (ch->specials.z_cord == i->specials.z_cord) && (
        (IS_TRUSTED(ch) && isname(tmp, GET_NAME(i))) ||  // Is imm looking at existing name
        (isname(tmp, GET_NAME1(i)) && (!racewar(ch, i) || // Is name of real or disguised? & is there racewar?(no if same faction)
-       IS_ILLITHID(ch) || IS_TRUSTED(ch))) || 
+       IS_ILLITHID(ch) || IS_PILLITHID(ch) || IS_TRUSTED(ch))) || 
        //(IS_DISGUISE(i) && IS_DISGUISE_PC(i) && isname(tmp, GET_DISGUISE_NAME(i))) ||
        (IS_DISGUISE(i) && IS_DISGUISE_NPC(i) && isname(tmp, GET_DISGUISE_TITLE(i)) && racewar(ch, i)) ||
        ((isname(tmp, race_names_table[GET_RACE1(i)].normal) &&

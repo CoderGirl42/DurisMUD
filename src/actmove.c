@@ -1044,7 +1044,8 @@ char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
             (SNEAK(ch) && !mount) ? "sneaks in" :
             GET_POS(ch) == POS_PRONE ? "slithers in" :
             GET_POS(ch) == POS_KNEELING ? "crawls in" :
-            has_innate(ch, INNATE_HORSE_BODY) ? "trots in" : "enters");
+            has_innate(ch, INNATE_HORSE_BODY) ? "trots in" :
+	    has_innate(ch, INNATE_SPIDER_BODY) ? "skitters in" : "enters");
 
     if(SNEAK(ch) &&
       (!ch->lobj ||

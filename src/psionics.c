@@ -599,7 +599,7 @@ void spell_awe(int level, P_char ch, char *arg, int type, P_char victim, P_obj o
 
   max_total_levels = (int) (GET_LEVEL(ch) * 2);
 
-  if(IS_ILLITHID(ch))
+  if(IS_ILLITHID(ch) || IS_PILLITHID(ch))
   {
     if(level > 51)
       max_level = level + 5;

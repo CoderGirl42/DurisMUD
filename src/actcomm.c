@@ -366,7 +366,7 @@ int say(P_char ch, const char *argument)
         0, 0, TO_ROOM);
     return FALSE;
   }
-  else if ( ( IS_AFFECTED2(ch, AFF2_SILENCED) || affected_by_spell(ch, SPELL_SUPPRESSION) ) && !IS_ILLITHID(ch))
+  else if ( ( IS_AFFECTED2(ch, AFF2_SILENCED) || affected_by_spell(ch, SPELL_SUPPRESSION) ) && !IS_ILLITHID(ch)  && !IS_PILLITHID(ch))
   {
     send_to_char("You move your lips, but no sound comes forth!\r\n", ch);
     act("$n seems to be trying to say something, but you hear no words...",
@@ -392,9 +392,9 @@ int say(P_char ch, const char *argument)
     {
       if ((kala != ch) && (ch->specials.z_cord == kala->specials.z_cord))
       {
-        if (IS_ILLITHID(ch) || !strcmp(GET_NAME(ch), "Id"))
+        if (IS_ILLITHID(ch) || IS_PILLITHID(ch) || !strcmp(GET_NAME(ch), "Id"))
         {
-          if (IS_ILLITHID(kala) || IS_TRUSTED(kala))
+          if (IS_ILLITHID(kala) || IS_PILLITHID(kala) || IS_TRUSTED(kala))
             sprintf(Gbuf2, "$n projects '%s'", argument + i);
           else
             sprintf(Gbuf2, "$n invades your mind with '%s'", argument + i);
@@ -419,7 +419,7 @@ int say(P_char ch, const char *argument)
 
     if (IS_SET(ch->specials.act, PLR_ECHO) || IS_NPC(ch))
     {
-      if (IS_ILLITHID(ch) || !strcmp(GET_NAME(ch), "Id"))
+      if (IS_ILLITHID(ch) || IS_PILLITHID(ch) || !strcmp(GET_NAME(ch), "Id"))
         sprintf(Gbuf1, "You project '%s'\r\n", argument + i);
       else
         sprintf(Gbuf1, "You %s %s'%s'\r\n",
@@ -610,7 +610,7 @@ void do_project(P_char ch, char *argument, int cmd)
 
   if (IS_NPC(ch))
   {
-    if (!IS_ILLITHID(ch))
+    if (!IS_ILLITHID(ch) && !IS_PILLITHID(ch))
     {
       send_to_char("You're not an illithid ..\r\n", ch);
       return;
@@ -622,7 +622,7 @@ void do_project(P_char ch, char *argument, int cmd)
       ("Alas, the gods have taken away your ability to transmit..\r\n", ch);
     return;
   }
-  if (!IS_TRUSTED(ch) && !IS_ILLITHID(ch))
+  if (!IS_TRUSTED(ch) && !IS_ILLITHID(ch) && !IS_PILLITHID(ch))
   {
     send_to_char("Might not hurt if you knew _HOW_...\r\n", ch);
     return;
@@ -985,7 +985,7 @@ void do_whisper(P_char ch, char *argument, int cmd)
     act("$n whispers you something but you can't hear what!", FALSE, vict, 0,
         ch, TO_VICT);
   }
-  else if (vict == ch && !IS_ILLITHID(ch))
+  else if (vict == ch && !IS_ILLITHID(ch) && !IS_PILLITHID(ch))
   {
     act("$n whispers quietly to $mself.", FALSE, ch, 0, 0, TO_ROOM);
     send_to_char("You can't get your mouth close enough to your ear...\r\n",
@@ -1002,7 +1002,7 @@ void do_whisper(P_char ch, char *argument, int cmd)
 
     if (IS_SET(ch->specials.act, PLR_ECHO) || IS_NPC(ch))
     {
-      if (IS_ILLITHID(ch))
+      if (IS_ILLITHID(ch) || IS_PILLITHID(ch))
         sprintf(Gbuf1, "You softly project '%s' to %s\r\n", message,
                 dispname);
       else if (IS_NPC(ch) && !(GET_CLASS(vict, CLASS_DRUID)))
@@ -1015,7 +1015,7 @@ void do_whisper(P_char ch, char *argument, int cmd)
     }
     else
       send_to_char("Ok.\r\n", ch);
-    if (IS_ILLITHID(ch))
+    if (IS_ILLITHID(ch) || IS_PILLITHID(ch))
     {
       sprintf(Gbuf1, "A soft voice in your head whispers '%s'", message);
       act(Gbuf1, FALSE, ch, 0, vict, TO_VICT);
@@ -1070,7 +1070,7 @@ void do_ask(P_char ch, char *argument, int cmd)
     send_to_char("You're too charmed to ask anyone anything..\r\n", ch);
     return;
   }
-  else if (vict == ch && !IS_ILLITHID(ch))
+  else if (vict == ch && !IS_ILLITHID(ch) && !IS_PILLITHID(ch))
   {
     act("$n quietly asks $mself a question.", FALSE, ch, 0, 0, TO_ROOM);
     send_to_char("You think about it for a while...\r\n", ch);
@@ -1093,7 +1093,7 @@ void do_ask(P_char ch, char *argument, int cmd)
     }
     else
       send_to_char("Ok.\r\n", ch);
-    if (IS_ILLITHID(ch))
+    if (IS_ILLITHID(ch) || IS_PILLITHID(ch))
     {
       sprintf(Gbuf1, "A voice in your head asks '%s'", message);
       act(Gbuf1, FALSE, ch, 0, vict, TO_VICT);
@@ -1837,7 +1837,7 @@ void do_yell(P_char ch, char *argument, int cmd)
     send_to_char("You strain, but with no result.\r\n", ch);
     return;
   }
-  if (IS_ILLITHID(ch) && !IS_TRUSTED(ch))
+  if ((IS_ILLITHID(ch) || IS_PILLITHID(ch)) && !IS_TRUSTED(ch))
   {
     send_to_char
       ("You cannot project your thoughts to so many that you cannot see.\r\n",

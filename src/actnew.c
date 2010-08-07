@@ -3286,7 +3286,7 @@ void do_hamstring(P_char ch, char *arg, int cmd)
     update_pos(ch);
     return;
   }
-  if (!IS_HUMANOID(vict) || IS_ILLITHID(vict))
+  if (!IS_HUMANOID(vict) || IS_ILLITHID(vict) || IS_PILLITHID(vict))
   {
     send_to_char("Does that thing even HAVE a hamstring?!\r\n", ch);
     return;

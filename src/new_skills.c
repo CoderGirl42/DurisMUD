@@ -2240,7 +2240,7 @@ void do_ogre_roar(P_char ch, char *argument, int cmd)
   /* now checks on the race (size) and state of victim */
   /* big stuff isn't impressed at all, illithids have too much control
      over their minds to be scared */
-  if ((GET_ALT_SIZE(vict) > GET_ALT_SIZE(ch)) || IS_ILLITHID(vict))
+  if ((GET_ALT_SIZE(vict) > GET_ALT_SIZE(ch)) || IS_ILLITHID(vict) || IS_PILLITHID(vict))
   {
     act("$n roars loudly at $N, but $N isn't fazed at all.",
         FALSE, ch, 0, vict, TO_ROOM);
