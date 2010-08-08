@@ -1366,7 +1366,7 @@ const char *kingdom_type_list[] = {
 
 const char *town_name_list[] = {
   "Nowhere",                    /* must remain 'nowhere'! */
-  "Winterhaven",
+  "Tharnadia",
   "Ixarkon",
   "Arachdrathos",
   "Sylvandawn",
@@ -1675,7 +1675,7 @@ const int class_table[LAST_RACE + 1][CLASS_COUNT + 1] = {
 extern const int hometown_arena[LAST_HOME + 1][3];
 const int hometown_arena[LAST_HOME + 1][3] = {
   {0, 0, 0},                    /* godville */
-  {6001, 1701, 1725},           /* tharn */
+  {132501, 1701, 1725},           /* tharn */
   {0, 0, 0},                    /* squidly */
   {0, 0, 0},                    /* drowton */
   {0, 0, 0},                    /* elfie */
@@ -1694,7 +1694,7 @@ const int hometown_arena[LAST_HOME + 1][3] = {
 
 const int hometown[] = {
   1200,                         /* * Gods */
-  55500,                        /* * Winterhaven */
+  132500,                       /* * Tharnadia */
   96400,                        /* * Ixarkon */
   36329,                        /* * Arachdrathos */
   8001,                         /* Sylvandawn */
@@ -1748,7 +1748,7 @@ extern const int avail_hometowns[][LAST_RACE + 1];
 const int avail_hometowns[][LAST_RACE + 1] = {
 /* N  Hu Ba Dr Gr Mo Du Ha Gn Og Tr H2 Il Or Th Ce Gi Mi Ae Su Gb Li Va Dk Sb Sg Wg Ph Hr Oo Gt Dr Ko Pi Ku Wo Fi*/
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},   /* * None */
-  {0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0},   /* * Winterhaven */
+  {0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0},   /* * Tharnadia */
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0},   /* * Ixarkon */
   {0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},   /* * Arachdrathos */
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},   /* * Sylvandawn */

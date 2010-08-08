@@ -431,6 +431,10 @@ void load_obj_to_newbies(P_char ch)
                                              {
                                              706, 735, 731, 731, -1}));
 
+  CREATE_KIT(RACE_HUMAN, CLASS_THEURGIST, ((int[])
+                                             {
+                                             1112, 1114, 1115, 209, 614,
+                                             1131, -1}));
 /*END Human Classes*/
 
 
@@ -657,11 +661,14 @@ void load_obj_to_newbies(P_char ch)
                                          1112, 1128, 1129, 1130, 1131, 1132,
                                          412, 412, 412, 412, 412, -1}));
 
-	CREATE_KIT(RACE_HALFELF, CLASS_PALADIN, ((int[])
+  CREATE_KIT(RACE_HALFELF, CLASS_PALADIN, ((int[])
 	                                         {
-																					 1101, 1102, 1103, 1107, 1110, -1}));
+			                 1101, 1102, 1103, 1107, 1110, -1}));
 
-
+  CREATE_KIT(RACE_HALFELF, CLASS_THEURGIST, ((int[])
+                                             {
+                                             1112, 1114, 1115, 209, 614,
+                                             1131, -1}));
 /*END Half Elf Classes*/
 
 /*Halfling Basics*/
