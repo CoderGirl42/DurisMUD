@@ -69,7 +69,7 @@ void initialize_ships()
   }
 
   initialize_ship_cargo();
-  load_npc_dreadnought();
+  //load_npc_dreadnought();
 }
 
 //--------------------------------------------------------------------
