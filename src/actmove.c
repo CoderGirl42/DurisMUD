@@ -885,9 +885,6 @@ int can_enter_room(P_char ch, int room, int show_msg)
     if (IS_AFFECTED(ch, AFF_LEVITATE))
       has_boat = TRUE;
 
-    if (has_innate(ch, INNATE_SWAMP_SNEAK))
-      has_boat = TRUE;
-    
     if (!has_boat && !IS_TRUSTED(ch) && !IS_AFFECTED(ch, AFF_WRAITHFORM) &&
         ch->specials.z_cord < 1)
     {
@@ -1260,7 +1257,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
     return FALSE;
   }
 
-  if(has_innate(ch, INNATE_CALMING))
+  if(has_innate(ch, INNATE_SWAMP_SNEAK))
     calming = (int)get_property("innate.calming.delay", 10);
 
   if(!can_enter_room(ch, EXIT(ch, exitnumb)->to_room, TRUE))
@@ -2120,10 +2117,30 @@ int find_door(P_char ch, char *type, char *dir)
           if (isname(type, EXIT(ch, door)->keyword))
             return (door);
 
-    sprintf(Gbuf1, "I see no %s here.\n", type);
-    send_to_char(Gbuf1, ch);
-    return (-1);
   }
+
+  /* Making it possible to find doors based on direction specified alone.  */
+  /* We get here after checking for the door keyword handle, possible also */
+  /* with a direction specified.                                           */
+  
+  if ((door = search_block(type, dirs, FALSE)) != -1)
+  {
+	if (EXIT(ch, door) &&
+      !IS_SET(EXIT(ch, door)->exit_info, EX_SECRET) &&
+      !IS_SET(EXIT(ch, door)->exit_info, EX_BLOCKED))
+      return (door);
+    else
+        {
+          send_to_char("I see nothing suitable there.\n", ch);
+          return (-1);
+        }
+  }
+  
+  /* No keyword matching, no direction matching, nothing happens. */
+  
+  sprintf(Gbuf1, "I see no %s here.\n", type);
+  send_to_char(Gbuf1, ch);
+  return (-1);
 }
 
 void do_open(P_char ch, char *argument, int cmd)
