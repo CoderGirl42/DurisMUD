@@ -1197,8 +1197,8 @@ void spell_psychic_crush(int level, P_char ch, char *arg, int type, P_char victi
   struct affected_type af;
   struct damage_messages messages = {
     "$N's &+meyes briefly cloud over as $S entire psyche is wracked with wonderfully intense pain.",
-    "&+mAs your body is consumed with pain, pain, and more pain, you briefly go to that 'happy place' inside.",
-    "$N's &+meyes briefly cloud over as $S body is painfully ripped apart from within.",
+    "&+mAs your mind is consumed with pain, pain, and more pain, you briefly go to that 'happy place' inside.",
+    "$N's &+meyes briefly cloud over as $S mind is painfully ripped apart from within.",
     "$N &+mcrumples to the ground, blood seeping from $S ears as your psychic crush tears $S mind to pieces.",
     "&+mYou crumple to the ground, blood seeping from your ears as your mind is torn to pieces.",
     "&+RBlood &+mseeps from&n $N's &+mears as $S mind is torn to &+wpieces.", 0
@@ -3580,12 +3580,12 @@ void spell_pyrokinesis(int level, P_char ch, char *arg, int type, P_char victim,
   char     buf[256];
   struct affected_type af;
   struct damage_messages messages = {
-    "&+mYou ignite a &+rpersonal &+ri&+Rn&+rf&+Re&+rr&+Rn&+ro &+mwithin $N's body.",
+    "&+mYou ignite a &+rpersonal &+ri&+Rn&+rf&+Re&+rr&+Rn&+ro &+mwithin &N$N's &+mbody.",
     "&+mYou scream in &+Wa&+wg&+Wo&+wn&+Wy &+mas &+rs&+Rea&+rri&+Rng &+rh&+Re&+Ra&+rt &+wi&+rg&+wn&+wi&+rt&+we&+rs and &+rb&+Rur&+Ws&+wt&+Rs &+Ri&+Wn&+wt&+Ro f&+Wl&+wa&+Wm&+Re&+Rs &+mwithin your body.",
-    "&+m$N screams and doubles over in &+Wa&+wg&+Wo&+wn&+Wy &+mas &+rs&+Rea&+rri&+Rng &+rh&+Re&+Ra&+rt &+ri&+Rg&+wn&+Wit&+we&+Rs &+mwithin $S body.",
-    "&+mYou set $N's whole body &+Rab&+wl&+Wa&+wz&+Re&+m, leaving nothing but &+Lscorched &+mremains.",
+    "&N$N &+mscreams and doubles over in &+Wa&+wg&+Wo&+wn&+Wy &+mas &+rs&+Rea&+rri&+Rng &+rh&+Re&+Ra&+rt &+ri&+Rg&+wn&+Wit&+we&+Rs &+mwithin $S body.",
+    "&+mYou set &N$N's &+mwhole body &+Rab&+wl&+Wa&+wz&+Re&+m, leaving nothing but &+Lscorched &+mremains.",
     "&+RBl&+wa&+Wz&+wi&+Rn&+rg i&+Rn&+rf&+Re&+rr&+Rn&+ro &+mgrows from within and &+Lscorches &+myour whole body dead.",
-    "&+RRa&+rgi&+Rng &+rf&+Rla&+rme&+Rs &+Wb&+wu&+Wr&+ws&+Wt &+mfrom within and &+We&+wn&+Wg&+wu&+Wl&+wf &+m$N's whole body, leaving nothing but &+Lscorched &+mremains.", 0
+    "&+RRa&+rgi&+Rng &+rf&+Rla&+rme&+Rs &+Wb&+wu&+Wr&+ws&+Wt &+mfrom within and &+We&+wn&+Wg&+wu&+Wl&+wf &N$N's &+mwhole body, leaving nothing but &+Lscorched &+mremains.", 0
   };
 
   
@@ -3618,7 +3618,7 @@ void spell_pyrokinesis(int level, P_char ch, char *arg, int type, P_char victim,
     af.duration =  1;
     af.modifier = (int) (-1 * (level / 5));
 
-    act("&+m$n suddenly looks in pain as $e moves.&n",
+    act("&+m$n suddenly looks in pain as &N$e &+mmoves.&n",
         FALSE, victim, 0, 0, TO_ROOM);
 
     switch (number(0, 2))

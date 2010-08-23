@@ -904,7 +904,7 @@ void spell_soul_disturbance(int level, P_char ch, char *arg, int type,
    resists_spell(ch, victim))
     return;
 
-  dam = dice(level * 3, 3);
+  dam = dice(level * 3, 2);
   
   dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 
@@ -942,7 +942,7 @@ void spell_greater_soul_disturbance(int level, P_char ch, char *arg, int type,
      resists_spell(ch, victim))
       return;
       
-  dam = dice(level * 6, 3);
+  dam = dice(level * 6, 2);
   
   dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 
@@ -1032,10 +1032,10 @@ void spell_spirit_anguish(int level, P_char ch, char *arg, int type,
     return;
   }
 
-  dam = number(level * 2, level * 10);
+  dam = dice(level * 4, 2);
   
   if(IS_SPIRITUALIST(ch))
-    dam += (int)(level * 2);
+    dam += level;
   
   dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 

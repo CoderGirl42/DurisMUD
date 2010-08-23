@@ -182,6 +182,9 @@ void assign_mobiles(void)
   /* mob clear epic task */
   mob_index[real_mobile0(22428)].func.mob = clear_epic_task_spec;
   
+  /* monk quest mob */
+  mob_index[real_mobile0(55178)].func.mob = monk_remort;
+
   /* player castles */
 
   /* Shipyards */
@@ -2379,6 +2382,7 @@ void assign_rooms(void)
   world[real_room0(81021)].funct = crew_shop_proc;  // Ceothia
   world[real_room0(76859)].funct = crew_shop_proc;  // Jade shipguild
   world[real_room0(132766)].funct = crew_shop_proc;  // Tharnadia
+  world[real_room0(55418)].funct = crew_shop_proc;  // Winterhaven
   //world[real_room0()].funct = crew_shop_proc;  // TODO: Stronghold
 
   // Fiord on west side of GC.

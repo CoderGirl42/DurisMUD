@@ -15,6 +15,8 @@ using namespace std;
 
 extern P_room world;
 extern char *specdata[][MAX_SPEC];
+extern const struct class_names class_names_table[];
+extern const struct race_names race_names_table[];
 
 #define SPEC_ALL 0
 
@@ -49,6 +51,7 @@ struct allowed_race_spec_struct {
 	{RACE_HUMAN, CLASS_ILLUSIONIST, SPEC_ALL},
 	{RACE_HUMAN, CLASS_ETHERMANCER, SPEC_ALL},
 	{RACE_HUMAN, CLASS_THEURGIST,   SPEC_ALL},
+	{RACE_HUMAN, CLASS_MONK,        SPEC_ALL},
 	/* End Human Options */
 
 	/* Start Barbarian Options */
@@ -127,6 +130,7 @@ struct allowed_race_spec_struct {
         {RACE_GNOME, CLASS_ETHERMANCER, SPEC_WINDTALKER},
 	{RACE_GNOME, CLASS_BARD,        SPEC_DISHARMONIST},
 	{RACE_GNOME, CLASS_THEURGIST,   SPEC_MEDIUM},
+	{RACE_GNOME, CLASS_MONK, SPEC_ALL},
 	/* End Gnome Options */
 
 	/* Start Ogre Options */
@@ -177,6 +181,7 @@ struct allowed_race_spec_struct {
 	{RACE_ORC, CLASS_REAVER,        SPEC_ALL},
 	{RACE_ORC, CLASS_ILLUSIONIST,   SPEC_ALL},
 	{RACE_ORC, CLASS_ETHERMANCER,   SPEC_ALL},
+	{RACE_ORC, CLASS_MONK, SPEC_ALL},
 	/* End Orc Options */
 
 	/* Start Thri-Kreen Options */
@@ -232,7 +237,7 @@ struct allowed_race_spec_struct {
 	/* Start Githzerai Options */
 	{RACE_GITHZERAI, CLASS_WARRIOR, SPEC_SWORDSMAN},
 	{RACE_GITHZERAI, CLASS_CLERIC, SPEC_ZEALOT},
-	//{RACE_GITHZERAI, CLASS_MONK, SPEC_ALL},
+	{RACE_GITHZERAI, CLASS_MONK, SPEC_ALL},
 	{RACE_GITHZERAI, CLASS_SORCERER, SPEC_WILDMAGE},
 	/* End Githzerai Options */
 
@@ -259,6 +264,7 @@ struct allowed_race_spec_struct {
 	{RACE_KOBOLD, CLASS_CONJURER,    SPEC_EARTH},
 	{RACE_KOBOLD, CLASS_BARD,        SPEC_DISHARMONIST},
 	{RACE_KOBOLD, CLASS_ETHERMANCER, SPEC_WINDTALKER},
+	{RACE_KOBOLD, CLASS_MONK,        SPEC_ALL},
 	/* End Kobold Options */
 
 	/* Start Illithid Options */
@@ -279,6 +285,7 @@ struct allowed_race_spec_struct {
 	{RACE_KUOTOA, CLASS_CLERIC,  SPEC_ZEALOT},
 	{RACE_KUOTOA, CLASS_SHAMAN,  SPEC_ELEMENTALIST},
 	{RACE_KUOTOA, CLASS_ROGUE,   SPEC_ASSASSIN},
+	{RACE_KUOTOA, CLASS_MONK,    SPEC_ALL},
 	/* End Kuo Toa Options */
 
 	/* Start Wood Elf Options */
@@ -332,13 +339,78 @@ bool append_valid_specs(char *buf, P_char ch)
   return found_one;  
 }
 
+void do_spec_list(P_char ch)
+{
+  char Gbuf[MAX_STRING_LENGTH], list[MAX_STRING_LENGTH];
+  int race, cls, spec, comma, show;
+
+  send_to_char("&+WCurrent list of specializations available:&n\n\n", ch);
+  for (cls = 1; cls < CLASS_COUNT; cls++)
+  {
+    for (spec = 0; spec < MAX_SPEC; spec++)
+    {
+      show = 0;
+      if (strcmp(specdata[cls][spec], "") &&
+	  strcmp(specdata[cls][spec], "Not Used"))
+      {
+	show = 1;
+	break;
+      }
+    }
+    if (show)
+    {
+      sprintf(Gbuf, "&+W*&n %s &+W*&n\n", class_names_table[cls].ansi);
+      send_to_char(Gbuf, ch);
+    }
+    for (spec = 0; spec < MAX_SPEC; spec++)
+    {
+      if (strcmp(specdata[cls][spec], "") &&
+	  strcmp(specdata[cls][spec], "Not Used"))
+      {
+        sprintf(list, "%s:", specdata[cls][spec]);
+        comma = 0;
+	for (race = 1; race < RACE_PLAYER_MAX; race++)
+        {
+	  if (is_allowed_race_spec(race, 1 << (cls - 1), spec+1))
+          {
+            if (comma)
+	    {
+              sprintf(list + strlen(list), ", %s&n", race_names_table[race].ansi);
+	    }
+	    else
+	    {
+              comma = 1;
+	      sprintf(list + strlen(list), " %s&n", race_names_table[race].ansi);
+	    }
+	  }
+          continue;
+	}
+        send_to_char(list, ch);
+        send_to_char("\n", ch);
+      }
+      continue;
+    }
+    if (show)
+    {
+      send_to_char("\n", ch);
+    }
+    continue;
+  }
+}
+
 void do_specialize(P_char ch, char *argument, int cmd)
 {
   P_char teacher;
   int      i;
   char     buf[MAX_STRING_LENGTH] = "";
   bool found_one;
-  
+
+  if (!strcmp(argument, "list"))
+  {
+    do_spec_list(ch);
+    return;
+  }
+
   if (IS_MULTICLASS_PC(ch)) {
     send_to_char("You have already chosen another path!\n", ch);
     return;

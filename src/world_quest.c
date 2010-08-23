@@ -309,7 +309,7 @@ void quest_kill(P_char ch, P_char quest_mob)
   int exp_gain = quest_exp_reward(ch, FIND_AND_KILL);
 
   gain_exp(ch, NULL, exp_gain / ch->only.pc->quest_kill_original, EXP_WORLD_QUEST);
-  if (number(1, ch->only.pc->quest_kill_original) == 1)
+  if (number(1, ch->only.pc->quest_kill_original + 1) <= 2)
   {
     P_obj reward = quest_item_reward(ch);
     obj_to_char(reward, quest_mob);
