@@ -968,6 +968,8 @@ int exp_mod(P_char k, P_char victim)
 // -Lucrot Sep09
 int gain_exp(P_char ch, P_char victim, const int value, int type)
 {
+  int goodcap = get_property("exp.level.cap.good", 15);
+  int evilcap = get_property("exp.level.cap.evil", 15);
   if(!(ch))
   {
     return 0;
@@ -1043,7 +1045,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     P_char tank = GET_OPPONENT(victim);
     if (tank && tank != ch && IS_PC(tank) && grouped(tank, ch))
     {
-      if (GET_LEVEL(tank) >= GET_LEVEL(ch) - 15)  // powerleveling stopgap
+      if (GET_LEVEL(tank) >= GET_LEVEL(ch) - (RACE_GOOD(ch) ? goodcap : evilcap))  // powerleveling stopgap
       {
         gain_exp(tank, victim, XP, EXP_TANKING);
       }
@@ -1080,7 +1082,8 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     if (!attacker) // only for healing in fight
         return 0;
 
-    if (GET_LEVEL(victim) <= GET_LEVEL(ch) - 15 || GET_LEVEL(victim) >= GET_LEVEL(ch) + 15)  // powerleveling stopgap
+    if (GET_LEVEL(victim) <= GET_LEVEL(ch) - GOOD_RACE(ch) ? goodcap : evilcap || 
+	GET_LEVEL(victim) >= GET_LEVEL(ch) + GOOD_RACE(ch) ? goodcap :evilcap)  // powerleveling stopgap
     {
       return 0;
     }
