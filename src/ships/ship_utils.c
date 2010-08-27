@@ -242,14 +242,6 @@ void act_to_all_in_ship(P_ship ship, const char *msg)
   }
 }
 
-void act_to_outside(P_ship ship, const char *msg, ... )
-{
-  va_list args;
-  va_start(args, msg);
-  va_end(args);
-  act_to_outside(ship, 35, msg, args);
-}
-
 void act_to_outside(P_ship ship, int rng, const char *msg, ... )
 {
   va_list args;
@@ -270,14 +262,6 @@ void act_to_outside(P_ship ship, int rng, const char *msg, ... )
       }
     }
   }
-}
-
-void act_to_outside_ships(P_ship ship, P_ship target, const char *msg, ... )
-{
-  va_list args;
-  va_start(args, msg);
-  va_end(args);
-  act_to_outside_ships(ship, target, 35, msg, args);
 }
 
 void act_to_outside_ships(P_ship ship, P_ship target, int rng, const char *msg, ... )

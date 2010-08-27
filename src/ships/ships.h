@@ -35,6 +35,7 @@
 #define MAXSAIL          250
 #define BOARDING_SPEED     9
 #define SCAN_RANGE        20
+#define DEFAULT_RANGE     35
 
 // Inactivity time in seconds
 #define NEWSHIP_INACTIVITY 1814400
@@ -744,9 +745,7 @@ int get_next_speed_change(P_ship ship);
 
 void act_to_all_in_ship_f(P_ship ship, const char *msg, ... );
 void act_to_all_in_ship(P_ship ship, const char *msg);
-void act_to_outside_ships(P_ship ship, P_ship notarget, const char *msg, ... );
 void act_to_outside_ships(P_ship ship, P_ship notarget, int range, const char *msg, ... );
-void act_to_outside(P_ship ship, const char *msg, ... );
 void act_to_outside(P_ship ship, int range, const char *msg, ... );
 void everyone_get_out_ship(P_ship ship);
 void look_out_ship(P_ship ship, P_char ch);

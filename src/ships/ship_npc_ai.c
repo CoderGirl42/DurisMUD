@@ -724,6 +724,8 @@ bool NPCShipAI::check_ram()
         return false;
     if (!check_ram_arc(ship->heading, t_bearing, 120))
         return false;
+    if (SHIPISFLYING(ship) != SHIPISFLYING(ship->target))
+        return false;
 
     if (!advanced && !is_boardable(ship->target) && number(1, 3) > 1)
         return false; // dumb ones ram less in combat
@@ -1932,7 +1934,7 @@ int NPCShipAI::check_dir_for_land_from(float cur_x, float cur_y, float heading, 
 
         if (!inside_map(cur_x, cur_y)) return 0;
         int location = tactical_map[(int) cur_x][100 - (int) cur_y].rroom;
-        if (is_valid_sailing_location(ship, location))
+        if (!is_valid_sailing_location(ship, location))
             return r;
     }
     return 0;

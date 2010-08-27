@@ -1647,7 +1647,7 @@ void dock_ship(P_ship ship, int to_room)
 void crash_land(P_ship ship)
 {
     act_to_all_in_ship(ship, "&+yCRUNCH!! Your ship crashes into land!&N");
-    act_to_outside_ships(ship, NULL, "&+W[%s]&N:%s&N crashes into land!", SHIPID(ship), ship->name);
+    act_to_outside_ships(ship, NULL, DEFAULT_RANGE, "&+W[%s]&N:%s&N crashes into land!", SHIPID(ship), ship->name);
     int hits = (SHIPHULLWEIGHT(ship) / 25) + 1;
     for (int k = 0; k < hits; k++) 
     {
@@ -1674,13 +1674,13 @@ void finish_sinking(P_ship ship)
     {
         act_to_all_in_ship(ship, "&+yYour ship sinks and you swim out in time!\r\n");
         act_to_outside(ship, 10, "%s &+yhas sunk to the depths of the ocean!\r\n", SHIPNAME(ship));
-        act_to_outside_ships(ship, ship, "&+W[%s]:&N %s&N&+y sinks under the ocean.\r\n", SHIPID(ship), SHIPNAME(ship));
+        act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N&+y sinks under the ocean.\r\n", SHIPID(ship), SHIPNAME(ship));
     }
     else
     {
         act_to_all_in_ship(ship, "&+yYour ship falls apart and you jump out in time!\r\n");
         act_to_outside(ship, 10, "%s &+yhas fallen to pieces!\r\n", SHIPNAME(ship));
-        act_to_outside_ships(ship, ship, "&+W[%s]:&N %s&N&+y falls to pieces.\r\n", SHIPID(ship), SHIPNAME(ship));
+        act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N&+y falls to pieces.\r\n", SHIPID(ship), SHIPNAME(ship));
     }
     everyone_get_out_ship(ship);
 
@@ -1799,7 +1799,7 @@ void fly_ship(P_ship ship)
     }
     act_to_all_in_ship(ship, "&+WYour ship slowly ascends and floats in air!&N\r\n");
     act_to_outside(ship, 10, "%s &+Wslowly ascends and floats in air!&N", SHIPNAME(ship));
-    act_to_outside_ships(ship, ship, "&+W[%s]:&N %s&N &+Wslowly ascends and floats in air!&N\r\n", SHIPID(ship), SHIPNAME(ship));
+    act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N &+Wslowly ascends and floats in air!&N\r\n", SHIPID(ship), SHIPNAME(ship));
 
     ship->shipobj->z_cord = 4;
     update_ship_status(ship);
@@ -1819,7 +1819,7 @@ void land_ship(P_ship ship)
     {
         act_to_all_in_ship(ship, "&+WYour ship slowly descends and lands with a loud &+Bsplash&+W!&N\r\n");
         act_to_outside(ship, 10, "%s &+Wslowly descends and lands with a loud &+Bsplash&+W!&N", SHIPNAME(ship));
-        act_to_outside_ships(ship, ship, "&+W[%s]:&N %s&N &+Wslowly descends and lands with a loud &+Bsplash&+W!&N\r\n", SHIPID(ship), SHIPNAME(ship));
+        act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N &+Wslowly descends and lands with a loud &+Bsplash&+W!&N\r\n", SHIPID(ship), SHIPNAME(ship));
     }
     else
     {
@@ -1828,7 +1828,7 @@ void land_ship(P_ship ship)
 
         act_to_all_in_ship(ship, "&+WYour ship slowly descends and lands with &+Ycreaking &+Wsounds!&N\r\n");
         act_to_outside(ship, 10, "%s &+Wslowly descends and lands with a &+Ycreaking &+Wsounds!&N", SHIPNAME(ship));
-        act_to_outside_ships(ship, ship, "&+W[%s]:&N %s&N &+Wslowly descends and lands with a &+Ycreaking &+Wsounds!&N\r\n", SHIPID(ship), SHIPNAME(ship));
+        act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N &+Wslowly descends and lands with a &+Ycreaking &+Wsounds!&N\r\n", SHIPID(ship), SHIPNAME(ship));
     }
 
     ship->shipobj->z_cord = 0;
