@@ -383,9 +383,9 @@ P_char misfire_check(P_char ch, P_char victim, int flag)
   else // Racewar PvP section.
   {
     oversize = (get_number_allies_within_range(ch) - 
-      GOOD_RACE(ch) ? get_property("misfire.pvp.maxAllies.good", 14) :
-      get_property("missfire.pvp.maxAllies.evil", 12));
-      
+      (GOOD_RACE(ch) ? get_property("misfire.pvp.maxAllies.good", 14) :
+      get_property("misfire.pvp.maxAllies.evil", 12)));
+
     if(oversize <= 0 &&
       !affected_by_spell(ch, TAG_NOMISFIRE))
     {
