@@ -4852,7 +4852,13 @@ void do_score(P_char ch, char *argument, int cmd)
           send_to_char("\n", ch);
       }
   }
-       
+  
+  if (affected_by_spell(ch, TAG_SPAWN))
+   if (has_innate(ch, INNATE_SPAWN))
+     send_to_char("&+LYou are willing to summon spawns.\n", ch);
+   else if (has_innate(ch, INNATE_ALLY))
+     send_to_char("&+WYou are willing to summon allies.\n", ch);
+  
   tch = guarding(ch);
   if( tch )
   {

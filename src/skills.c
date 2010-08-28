@@ -4781,4 +4781,5 @@ SPELL_ADD(CLASS_NONE, 1);
   TAG_CREATE_WITH_MESSAGES("broken arm", TAG_ARMLOCK, "&+WYour arm has healed.&n", "$n's arm has healed.&n");
   TAG_CREATE_WITH_MESSAGES("broken leg", TAG_LEGLOCK, "&+WYour leg has healed.&n", "$n's leg has healed.&n");
   TAG_CREATE_WITH_MESSAGES("arrow bleed", TAG_ARROW_BLEED, "&+WYour bleeding wound has healed.&n", "$n's bleeding wound has healed.&n");
+  TAG_CREATE("summon spawn/ally", TAG_SPAWN);
 }

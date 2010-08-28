@@ -1051,6 +1051,7 @@
 #define TAG_RACE_CHANGE              2060
 #define TAG_GUILDHALL                2061
 #define TAG_DIRECTION                2062
+#define TAG_SPAWN                    2063
 
 #define DAMAGE_FALLING               2100       /* From falling to the ground */
 

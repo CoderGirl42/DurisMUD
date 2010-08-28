@@ -428,6 +428,7 @@ void do_mine(P_char, char *, int);
 void do_fish(P_char, char *, int);
 
 void do_exhume(P_char, char *, int);
+void do_spawn(P_char, char *, int);
 void do_summon_host(P_char, char *, int);
 void do_camp(P_char, char *arg, int);
 void do_climb(P_char, char *arg, int);
