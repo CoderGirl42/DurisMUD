@@ -66,37 +66,36 @@ int list_cargo(P_char ch, P_ship ship, int owned)
     send_to_char("\r\nTo buy cargo, type 'buy cargo <number of crates>'\r\n", ch);
     send_to_char("To sell cargo, type 'sell cargo'\r\n", ch);
 
-    if (ship->frags >= MINCONTRAFRAGS && GET_ALIGNMENT(ch) <= MINCONTRAALIGN) 
+    if (GET_ALIGNMENT(ch) <= MINCONTRAALIGN) 
     {
-
-        if (ship->frags >= required_ship_frags_for_contraband(rroom))
+        if (can_buy_contraband(ship, rroom))
         {
             send_to_char ("\r\n&+L---=== Contraband for sale ===---&N\r\n", ch);
-            
             cost = contra_sell_price(rroom);
-
-            //if( GET_LEVEL(ch) < 50 )
-            //    cost = (int) (cost * (float) GET_LEVEL(ch) / 50.0);
-
             send_to_char_f(ch, "%s&n: %s &+Lper crate.&N\r\n", contra_type_name(rroom), coin_stringv(cost));
         }
-        send_to_char("\r\n&+L---=== We buy contraband for ===---&N\r\n", ch);
-
+        bool caption = false;
         for (int i = 0; i < NUM_PORTS; i++) 
         {
             if (i == rroom)
                 continue;
           
-            cost = contra_buy_price(rroom, i);
-
-            //if( GET_LEVEL(ch) < 50 )
-            //    cost = (int) (cost * (float) GET_LEVEL(ch) / 50.0);
-
-            send_to_char_f(ch, "%s %s &nper crate.\r\n", pad_ansi(contra_type_name(i), 30).c_str(), coin_stringv(cost));
+            if (can_buy_contraband(ship, i))
+            {
+                if (!caption)
+                {
+                    send_to_char("\r\n&+L---=== We buy contraband for ===---&N\r\n", ch);
+                    caption = true;
+                }
+                cost = contra_buy_price(rroom, i);
+                send_to_char_f(ch, "%s %s &nper crate.\r\n", pad_ansi(contra_type_name(i), 30).c_str(), coin_stringv(cost));
+            }
         }
-
-        send_to_char("\r\nTo buy contraband, type 'buy contraband <number of crates>'\r\n", ch);
-        send_to_char("To sell contraband, type 'sell contraband'\r\n", ch);
+        if (caption)
+        {
+            send_to_char("\r\nTo buy contraband, type 'buy contraband <number of crates>'\r\n", ch);
+            send_to_char("To sell contraband, type 'sell contraband'\r\n", ch);
+        }
     }
 
     send_to_char("\r\n&+cYour cargo manifest\r\n", ch);
@@ -675,7 +674,6 @@ void check_contraband(P_ship ship, int to_room)
                 conf_chance = 0;
             }
             else*/ 
-            if (ship->frags >= required_ship_frags_for_contraband(type))
             {
                 conf_chance = get_property("ship.contraband.baseConfiscationChance", 0.0) + (float)crates / 2; // the more contraband you have, the bigger confiscation chance
                 conf_chance -= sqrt(ship->frags) / 5.0;
@@ -1300,7 +1298,7 @@ int buy_contra(P_char ch, P_ship ship, char* arg)
         send_to_char ("Goodie goodie two shoes like you shouldn't think of contraband.\r\n", ch);
         return TRUE;
     }
-    if (!IS_TRUSTED(ch) && ship->frags < required_ship_frags_for_contraband(rroom)) 
+    if (!IS_TRUSTED(ch) && !can_buy_contraband(ship, rroom)) 
     {
         send_to_char ("Contraband?! *gasp* how could you even think that I would sell such things!\r\n", ch);
         return TRUE;

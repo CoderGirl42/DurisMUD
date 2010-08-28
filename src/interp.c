@@ -1492,8 +1492,8 @@ void command_interpreter(P_char ch, char *argument)
         }
         
         if(ch->following &&
-           (IS_UNDEADRACE(ch) && GET_CLASS(ch->following, CLASS_NECROMANCER)) ||
-	   (IS_THEURPET_RACE(ch) && GET_CLASS(ch->following, CLASS_THEURGIST)))
+         ((IS_UNDEADRACE(ch) && GET_CLASS(ch->following, CLASS_NECROMANCER)) ||
+	 (IS_THEURPET_RACE(ch) && GET_CLASS(ch->following, CLASS_THEURGIST))))
         {
           i = 0;
         }
