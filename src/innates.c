@@ -118,6 +118,7 @@ void       do_divine_force(P_char, char *, int);
 int      get_relic_num(P_char ch);
 int      fight_in_room(P_char ch);
 
+extern const struct innate_data innates_data[];
 const struct innate_data
 {
   char    *name;
@@ -371,6 +372,31 @@ const struct innate_data
   {"melee mastery", 0},
   {"bulwark", 0}
 };
+
+string list_innates(int race, int cls)
+{
+  string return_str;
+  int innate;
+  
+  for (innate = 0; innate < LAST_INNATE; innate++)
+  {
+    if (race && racial_innates[innate][race - 1])
+    {
+      if (innates_data[innate].func)
+	return_str += "*";
+      else
+	return_str += " ";
+
+      return_str += "&+c";
+      return_str += string(innates_data[innate].name);
+      return_str += "&n\n";
+    }
+    if (cls)
+    {
+    }
+  }
+  return return_str;
+}
 
 bool has_innate(P_char ch, int innate)
 {
