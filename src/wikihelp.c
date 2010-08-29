@@ -199,10 +199,12 @@ string wiki_racial_stats(string title)
   return_str += stat_to_string3((int)get_property(race, 100));
   return_str += "&n\n";
   return_str += "\n==Racial Traits==\n";
-  return_str += "Damage Output: &+c";
-  sprintf(race, "damage.totalOutput.racial.%s", race_str.c_str());
-  return_str += stat_to_string_spell_pulse(get_property(race, 1.000));
-  return_str += "&n\n";
+  // Removing damage output because this is more of a fine tuning function
+  // for imm's, and will only confuse players.
+  //return_str += "Damage Output: &+c";
+  //sprintf(race, "damage.totalOutput.racial.%s", race_str.c_str());
+  //return_str += stat_to_string_spell_pulse(get_property(race, 1.000));
+  //return_str += "&n\n";
   return_str += "Combat Pulse : &+c";
   sprintf(race, "damage.pulse.racial.%s", race_str.c_str());
   return_str += stat_to_string_damage_pulse(get_property(race, 14.000));
