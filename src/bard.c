@@ -926,7 +926,7 @@ void bard_protection(int l, P_char ch, P_char victim, int song)
   if(IS_NPC(ch))
 	empower += 100;
 
-  if(GET_LEVEL(ch) > 51 &&
+  if(GET_LEVEL(ch) >= 51 &&
     !IS_AFFECTED2(victim, AFF2_GLOBE))
   {
     //if(ch == victim)
@@ -934,11 +934,11 @@ void bard_protection(int l, P_char ch, P_char victim, int song)
     //else if(!number(0, 9))
       //spell_globe(l, ch, 0, 0, victim, NULL);
   }
-  else if(GET_LEVEL(ch) > 31 &&
+  else if(GET_LEVEL(ch) >= 31 &&
           !IS_AFFECTED(victim, AFF_MINOR_GLOBE))
               spell_minor_globe(l, ch, 0, 0, victim, NULL);
   
-  if(GET_LEVEL(ch) > 46 &&
+  if(GET_LEVEL(ch) >= 46 &&
      !has_skin_spell(victim))
       if (IS_UNDEAD(victim) || IS_ANGEL(ch))
 	spell_prot_undead(l, ch, 0, 0, victim, NULL);
@@ -964,7 +964,7 @@ void bard_heroism(int l, P_char ch, P_char victim, int song)
   if(IS_NPC(ch))
 	empower += 100;
 
-  if(GET_LEVEL(ch) > 21 &&
+  if(GET_LEVEL(ch) >= 21 &&
     !IS_AFFECTED(victim, AFF_HASTE) &&
     ch == victim)
       spell_haste(l, ch, 0, 0, victim, NULL);
