@@ -822,12 +822,10 @@ int SpellCastTime(P_char ch, int spl)
   if (IS_AFFECTED2(ch, AFF2_FLURRY))
   {
     dura = (dura * .3);
-  debug("%d", dura);
   }
   else if (IS_AFFECTED(ch, AFF_HASTE))
   {
     dura = (dura * .8);
-  debug("%d", dura);
   }
   
   return MAX(1, dura);
