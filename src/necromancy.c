@@ -61,72 +61,72 @@ const struct golem_description golem_data[4] = {
 extern const struct undead_description undead_data[NECROPET_LAST + 1];
 const struct undead_description undead_data[NECROPET_LAST + 1] = {
   {
-   "skeleton", "", 2, ACT_NICE_THIEF, AFF_HASTE, 0, 1.2, 21, 1, CLASS_WARRIOR,
+   "skeleton", "", 2, ACT_NICE_THIEF, AFF_HASTE, 0, 1.2, 21, 10, CLASS_WARRIOR,
    RACE_SKELETON},
   {
-   "zombie", "", 4, ACT_NICE_THIEF + ACT_MEMORY, AFF_PROTECT_GOOD, AFF2_SLOW, 1.8, 26, 2, CLASS_WARRIOR,
+   "zombie", "", 4, ACT_NICE_THIEF + ACT_MEMORY, AFF_PROTECT_GOOD, AFF2_SLOW, 1.8, 26, 10, CLASS_WARRIOR,
    RACE_ZOMBIE},
   {
    "spectre", "", 20, ACT_MEMORY,
    AFF_FLY + AFF_INVISIBLE + AFF_DETECT_INVISIBLE + AFF_PROTECT_GOOD +
    AFF_SNEAK,
-   AFF2_PROT_COLD, 2, 31, 4, CLASS_ASSASSIN, RACE_SPECTRE},
+   AFF2_PROT_COLD, 2, 31, 10, CLASS_ASSASSIN, RACE_SPECTRE},
   {
    "wraith", "", 30, ACT_MEMORY, AFF_FLY + AFF_DETECT_INVISIBLE +
    AFF_INVISIBLE + AFF_PROTECT_GOOD,
-   AFF2_PROT_COLD, 3.2, 36, 5, CLASS_SORCERER, RACE_WRAITH},
+   AFF2_PROT_COLD, 3.2, 36, 22, CLASS_SORCERER, RACE_WRAITH},
   {
    "vampire", "", 40, ACT_MEMORY,
    AFF_FLY + AFF_DETECT_INVISIBLE + AFF_INVISIBLE + AFF_PROTECT_GOOD
    + AFF_HASTE, AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH,
-   12, 50, 6, CLASS_WARRIOR,
+   12, 50, 28, CLASS_WARRIOR,
    RACE_VAMPIRE},
   {
    "lich", "", 45, ACT_MEMORY,
    AFF_DETECT_INVISIBLE + AFF_SENSE_LIFE + AFF_FLY + AFF_INVISIBLE +
    AFF_PROTECT_GOOD + AFF_HASTE,
-   AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH, 5, 46, 7, CLASS_SORCERER,
+   AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH, 5, 46, 28, CLASS_SORCERER,
    RACE_PLICH},
   {
    "shadow", "", 40, ACT_MEMORY,
    AFF_HASTE + AFF_DETECT_INVISIBLE +
    AFF_SENSE_LIFE + AFF_FLY + AFF_INVISIBLE + AFF_PROTECT_GOOD,
    AFF2_PROT_COLD + AFF4_PHANTASMAL_FORM,
-   5, 50, 8, CLASS_PSIONICIST,
+   5, 50, 18, CLASS_PSIONICIST,
    RACE_SHADOW},
   {
-   "hound archon brawler", "&+yhou&+Yn&+yd &+Rarch&+Wo&+Rn &+rbr&+Raw&+rler&n", 2, ACT_NICE_THIEF, AFF_HASTE, 0, 1.2, 21, 1, CLASS_WARRIOR,
+   "hound archon brawler", "&+yhou&+Yn&+yd &+Rarch&+Wo&+Rn &+rbr&+Raw&+rler&n", 2, ACT_NICE_THIEF, AFF_HASTE, 0, 1.2, 21, 10, CLASS_WARRIOR,
    RACE_ARCHON},
   {
-   "lantern archon soldier", "&+Ylantern &+Rarch&+Wo&+Rn &+yso&+rldi&+yer&n", 4, ACT_NICE_THIEF + ACT_MEMORY, AFF_PROTECT_EVIL, AFF2_SLOW, 1.8, 26, 2, CLASS_WARRIOR,
+   "lantern archon soldier", "&+Ylantern &+Rarch&+Wo&+Rn &+yso&+rldi&+yer&n", 4, ACT_NICE_THIEF + ACT_MEMORY, AFF_PROTECT_EVIL, AFF2_SLOW, 1.8, 26, 10, CLASS_WARRIOR,
    RACE_ARCHON},
   {
    "asura avenger", "&+Rasu&+Yr&+Ra &+rave&+Lng&+rer&n", 20, ACT_MEMORY,
    AFF_FLY + AFF_INVISIBLE + AFF_DETECT_INVISIBLE + AFF_PROTECT_EVIL +
    AFF_SNEAK,
-   AFF2_PROT_COLD, 2, 31, 4, CLASS_ASSASSIN, RACE_ASURA},
+   AFF2_PROT_COLD, 2, 31, 10, CLASS_ASSASSIN, RACE_ASURA},
   {
    "bralani battlemage", "&+Cbral&+Wa&+Cni &+Rbattle&+Mmage&n", 30, ACT_MEMORY, AFF_FLY + AFF_DETECT_INVISIBLE +
    AFF_INVISIBLE + AFF_PROTECT_EVIL,
-   AFF2_PROT_COLD, 3.2, 36, 5, CLASS_SORCERER, RACE_BRALANI},
+   AFF2_PROT_COLD, 3.2, 36, 22, CLASS_SORCERER, RACE_BRALANI},
   {
    "knight-errant knight errant ghaele", "&+cgha&+Ce&+cle &+wkn&+Wi&+wght&+W-e&+wrr&+Wa&+wnt&n", 40, ACT_MEMORY,
    AFF_FLY + AFF_DETECT_INVISIBLE + AFF_INVISIBLE + AFF_PROTECT_EVIL
    + AFF_HASTE, AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH,
-   12, 50, 6, CLASS_WARRIOR,
+   12, 50, 28, CLASS_WARRIOR,
    RACE_GHAELE},
   {
-   "liberator holy ghaele", "&+cg&+Ch&+Wae&+Cl&+ce &+Wholy &+Cliber&+Wator&n", 45, ACT_MEMORY,
+   "liberator holy eladrin", "&+ce&+Cl&+Wadr&+Ci&+cn &+Wholy &+Cliber&+Wator&n", 45, ACT_MEMORY,
    AFF_DETECT_INVISIBLE + AFF_SENSE_LIFE + AFF_FLY + AFF_INVISIBLE +
    AFF_PROTECT_EVIL + AFF_HASTE,
-   AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH, 5, 46, 7, CLASS_SORCERER,
-   RACE_GHAELE},
+   AFF2_PROT_COLD + AFF2_VAMPIRIC_TOUCH, 5, 46, 28, CLASS_SORCERER,
+   RACE_ELADRIN},
   {
    "deva astral", "&+Lastral &+wd&+Wev&+wa&n", 40, ACT_MEMORY,
    AFF_HASTE + AFF_DETECT_INVISIBLE +
    AFF_SENSE_LIFE + AFF_FLY + AFF_INVISIBLE + AFF_PROTECT_EVIL,
    AFF2_PROT_COLD + AFF4_PHANTASMAL_FORM,
-   5, 50, 8, CLASS_PSIONICIST,
+   5, 50, 18, CLASS_PSIONICIST,
    RACE_DEVA}
 };
 
@@ -246,12 +246,12 @@ int count_undead(P_char ch)
     }
     else if(IS_GREATER_DRACO(follower) || IS_GREATER_AVATAR(follower))
     {
-      sum -= 3;
+      sum += 75;
       continue;
     }
     else if (IS_DRACOLICH(follower) || IS_TITAN(follower))
     {
-      sum -= 1;
+      sum += 37;
       continue;
     }
     else
@@ -291,29 +291,52 @@ int can_raise_draco(P_char ch, int level, bool bGreater)
   
   if(IS_TRUSTED(ch))
   {
-    return TRUE;
+    return true;
   }
   
-  if(numb > 0)
-  {
-    return FALSE;
-  }
+  //if(numb > 0)
+  //{
+  //  return FALSE;
+  //}
   
-  numb = -numb;
+  //numb = -numb;
 
   // if they aren't trying to raise a greater,
   // and have a single greater, count it as
   // a single draco.
-  if(!bGreater &&
-    (numb == 10))
-  {
-    numb = 1;
-  }
+  //if(!bGreater &&
+  //  (numb == 10))
+  //{
+  //  numb = 1;
+  //}
 
   // max allowed to exist already...
-  int maxAllowed = ((level <= 53) || (bGreater)) ? 1 : 2;
+  //int maxAllowed = ((level <= 53) || (bGreater)) ? 1 : 2;
 
-  return numb <= maxAllowed;
+  //return numb <= maxAllowed;
+  
+  int necro_power = GET_LEVEL(ch) * 2;
+  int cost = 0;
+  if( GET_SPEC(ch, CLASS_NECROMANCER, SPEC_NECROLYTE) ||
+     GET_SPEC(ch, CLASS_THEURGIST, SPEC_TEMPLAR) ) 
+     necro_power += 10;  
+ 
+  if (bGreater)
+    cost = 75;
+  else
+    cost = 37;
+    
+
+  if ((numb + cost > necro_power) &&
+      !IS_TRUSTED(ch) &&
+      IS_PC(ch))
+  {
+    act("You are too weak to animate more corpses!",
+      FALSE, ch, 0, 0, TO_CHAR);
+    return false;;
+  }
+
+  return true; 
 }
 
 
@@ -452,10 +475,10 @@ void raise_undead(int level, P_char ch, P_char victim, P_obj obj,
     typ = which_type;
   }
 
- int necro_power = GET_LEVEL(ch) / 3;
+ int necro_power = GET_LEVEL(ch) * 2;
  if( GET_SPEC(ch, CLASS_NECROMANCER, SPEC_NECROLYTE) ||
      GET_SPEC(ch, CLASS_THEURGIST, SPEC_TEMPLAR) ) 
-     necro_power += 4;  
+     necro_power += 10;  
      
   if ((sum + undead_data[typ].cost > necro_power) &&
       !IS_TRUSTED(ch) &&
@@ -925,7 +948,7 @@ void spell_call_titan(int level, P_char ch, char *arg, int type, P_char victim, 
     return;
 
   }
-  
+  /*
   if (count_undead(ch) > 0)
   {
     send_to_char
@@ -933,7 +956,7 @@ void spell_call_titan(int level, P_char ch, char *arg, int type, P_char victim, 
        ch);
     return;
   }
-  
+  */
   if (!can_raise_draco(ch, level, false))
   {
     send_to_char("You cannot control any more titans!\r\n", ch);
@@ -1144,7 +1167,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
     return;
 
   }
-  
+  /*
   if (count_undead(ch) > 0)
   {
     send_to_char
@@ -1152,7 +1175,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
        ch);
     return;
   }
-  
+  */
   if (!can_raise_draco(ch, level, false))
   {
     send_to_char("You cannot control any more draco-liches!\r\n", ch);
@@ -1591,6 +1614,7 @@ void spell_call_avatar(int level, P_char ch, char *arg, int type,
     act("You can't animate $p!", FALSE, ch, obj, 0, TO_CHAR);
     return;
   }
+  /*
   if(count_undead(ch) > 0)
   {
     send_to_char
@@ -1598,6 +1622,7 @@ void spell_call_avatar(int level, P_char ch, char *arg, int type,
        ch);
     return;
   }
+  */
   if((IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) &&
     !is_wearing_necroplasm(ch) &&
     !IS_NPC(ch)) ||
@@ -1817,6 +1842,7 @@ void spell_create_greater_dracolich(int level, P_char ch, char *arg, int type,
     act("You can't animate $p!", FALSE, ch, obj, 0, TO_CHAR);
     return;
   }
+  /*
   if(count_undead(ch) > 0)
   {
     send_to_char
@@ -1824,6 +1850,7 @@ void spell_create_greater_dracolich(int level, P_char ch, char *arg, int type,
        ch);
     return;
   }
+  */
   if((IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) &&
     !is_wearing_necroplasm(ch) &&
     !IS_NPC(ch)) ||
