@@ -7172,7 +7172,9 @@ void set_fighting(P_char ch, P_char vict)
   /* call for initial 'dragon fear' check.  -JAB */
 
   if(IS_NPC(ch) &&
-    IS_DRAGON(ch) &&
+    (IS_DRAGON(ch) ||
+     IS_TITAN(ch) ||
+     IS_AVATAR(ch)) &&
     !IS_MORPH(ch) &&
     !IS_PC_PET(ch))
   {
