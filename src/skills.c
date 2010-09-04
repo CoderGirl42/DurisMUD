@@ -2448,6 +2448,11 @@ SPELL_ADD(CLASS_NONE, 1);
                 TAR_IGNORE | TAR_NOCOMBAT, cast_wall_of_force);
   SPELL_ADD(CLASS_CONJURER, 9);
 
+  SPELL_CREATE("wall of bones", SPELL_WALL_OF_BONES, PULSE_SPELLCAST * 5,
+                TAR_IGNORE | TAR_NOCOMBAT, cast_wall_of_bones);
+  SPELL_ADD(CLASS_NECROMANCER, 10);
+  SPELL_ADD(CLASS_THEURGIST, 10);
+
   SPELL_CREATE("lightning curtain", SPELL_LIGHTNING_CURTAIN, PULSE_SPELLCAST * 4,
                 TAR_IGNORE | TAR_NOCOMBAT,
                 cast_lightning_curtain);

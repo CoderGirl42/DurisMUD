@@ -2498,6 +2498,7 @@ void cast_wall_of_ice(int, P_char, char *, int, P_char, P_obj);
 void cast_wall_of_stone(int, P_char, char *, int, P_char, P_obj);
 void cast_wall_of_iron(int, P_char, char *, int, P_char, P_obj);
 void cast_wall_of_force(int, P_char, char *, int, P_char, P_obj);
+void cast_wall_of_bones(int, P_char, char *, int, P_char, P_obj);
 void cast_wall_of_fog(int, P_char, char *, int, P_char, P_obj);
 void cast_wall_of_bones(int, P_char, char *, int, P_char, P_obj);
 void spell_water_to_life(int, P_char, char *, int, P_char, P_obj);
