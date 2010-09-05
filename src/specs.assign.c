@@ -2385,6 +2385,7 @@ void assign_rooms(void)
   world[real_room0(132766)].funct = crew_shop_proc;  // Tharnadia
   world[real_room0(55418)].funct = crew_shop_proc;  // Winterhaven
   //world[real_room0()].funct = crew_shop_proc;  // TODO: Stronghold
+  world[real_room0(22648)].funct = crew_shop_proc;  // Stronghold -temporary room
 
   // Fiord on west side of GC.
   world[real_room0(559633)].funct = ship_shop_proc;
