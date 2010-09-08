@@ -200,9 +200,8 @@ void everyone_get_out_ship(P_ship ship)
       if (obj)
       {
         obj_next = obj->next_content;
-        if (obj != ship->panel)
+        if (obj != ship->panel && !(obj->type == ITEM_CORPSE && !IS_SET(obj->value[1], NPC_CORPSE)))
         {
-          obj_next = obj->next_content;
           obj_from_room(obj);
           obj_to_room(obj, ship->location);
         }

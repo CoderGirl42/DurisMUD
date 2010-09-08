@@ -596,19 +596,19 @@ void NPCShipAI::board_target()
         if (!ok) break;
     } // j is number of used room
 
-    int board_count = j * 0.75;
-    if (crew_data->level > 2) board_count--;
-    int room_no = 0;
-    if (grunt_count)
+    int board_count = j * ((crew_data->level > 2) ? 0.50 : 0.75);
+
+    int grunt = crew_data->outer_grunts[number(0, grunt_count - 1)];
+    if (!load_npc_ship_crew_member(ship->target, ship->target->bridge, grunt, 0)) 
+        return;
+    board_count--;
+    while (board_count)
     {
-        while (board_count)
-        {
-            int grunt = crew_data->outer_grunts[number(0, grunt_count - 1)];
-            if (!load_npc_ship_crew_member(ship->target, ship->target->bridge + room_no, grunt, 0)) 
-                return;
-            board_count--;
-            room_no = number(0, j - 1);
-        }
+        int room_no = number(1, j - 1);
+        grunt = crew_data->outer_grunts[number(0, grunt_count - 1)];
+        if (!load_npc_ship_crew_member(ship->target, ship->target->bridge + room_no, grunt, 0)) 
+            return;
+        board_count--;
     }
 
     if (type == NPC_AI_PIRATE)

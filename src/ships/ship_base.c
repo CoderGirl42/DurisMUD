@@ -1679,7 +1679,7 @@ void ship_activity()
                 ship->npc_ai->activity();
 
             if (ship->target == 0 && ship->speed > 0 && number(0, get_property("ships.pirate.load.chance", 7200)) == 0)
-                try_load_npc_ship(ship);
+                try_load_pirate_ship(ship);
         }
     }
 }
