@@ -176,6 +176,49 @@ void setup_npc_ketch_04(P_ship ship) // level 0
     ship->crew.rpar_skill = 200;
     ship->frags = number(150, 250);
 }
+void setup_npc_ketch_05(P_ship ship) // level 1
+{
+    set_weapon(ship, 0, W_MEDIUM_CAT, SIDE_FORE);
+    set_weapon(ship, 1, W_MEDIUM_BAL, SIDE_STAR);
+    set_weapon(ship, 2, W_MEDIUM_BAL, SIDE_PORT);
+    ship->crew.sail_skill = 500;
+    ship->crew.guns_skill = 500;
+    ship->crew.rpar_skill = 500;
+    ship->frags = number(500, 600);
+}
+void setup_npc_ketch_06(P_ship ship) // level 1
+{
+    set_weapon(ship, 0, W_MEDIUM_CAT, SIDE_FORE);
+    set_weapon(ship, 1, W_MEDIUM_BAL, SIDE_STAR);
+    set_weapon(ship, 2, W_MEDIUM_BAL, SIDE_STAR);
+    ship->crew.sail_skill = 500;
+    ship->crew.guns_skill = 500;
+    ship->crew.rpar_skill = 500;
+    ship->frags = number(500, 600);
+}
+void setup_npc_ketch_07(P_ship ship) // level 1
+{
+    set_weapon(ship, 0, W_MEDIUM_CAT, SIDE_FORE);
+    set_weapon(ship, 1, W_MEDIUM_BAL, SIDE_PORT);
+    set_weapon(ship, 2, W_MEDIUM_BAL, SIDE_PORT);
+    ship->crew.sail_skill = 500;
+    ship->crew.guns_skill = 500;
+    ship->crew.rpar_skill = 500;
+    ship->frags = number(500, 600);
+}
+void setup_npc_ketch_08(P_ship ship) // level 1
+{
+    set_weapon(ship, 0, W_SMALL_CAT, SIDE_FORE);
+    set_weapon(ship, 1, W_SMALL_BAL, SIDE_STAR);
+    set_weapon(ship, 2, W_SMALL_BAL, SIDE_STAR);
+    set_weapon(ship, 3, W_SMALL_BAL, SIDE_PORT);
+    set_weapon(ship, 4, W_SMALL_BAL, SIDE_PORT);
+    set_weapon(ship, 5, W_SMALL_BAL, SIDE_REAR);
+    ship->crew.sail_skill = 500;
+    ship->crew.guns_skill = 500;
+    ship->crew.rpar_skill = 500;
+    ship->frags = number(500, 600);
+}
 void setup_npc_caravel_01(P_ship ship) // level 0
 {
     set_weapon(ship, 0, W_MEDIUM_CAT, SIDE_FORE);
@@ -626,6 +669,10 @@ NPCShipSetup npcShipSetup [] = {
     { SH_KETCH,       0,  9, &setup_npc_ketch_02 },
     { SH_KETCH,       0,  9, &setup_npc_ketch_03 },
     { SH_KETCH,       0,  9, &setup_npc_ketch_04 },
+    { SH_KETCH,       1,  9, &setup_npc_ketch_05 },
+    { SH_KETCH,       1,  9, &setup_npc_ketch_06 },
+    { SH_KETCH,       1,  9, &setup_npc_ketch_07 },
+    { SH_KETCH,       1,  9, &setup_npc_ketch_08 },
     { SH_CARAVEL,     0, 12, &setup_npc_caravel_01 },
     { SH_CARAVEL,     0, 12, &setup_npc_caravel_02 },
     { SH_CARAVEL,     1, 12, &setup_npc_caravel_03 },
@@ -757,7 +804,7 @@ P_ship try_load_npc_ship(P_ship target, NPC_AI_Type type, int level, P_char ch)
         return 0;
 
     ship->npc_ai->advanced = 0;
-    if (level == 1 && number(1, 4) == 1)
+    if (level == 1 && number(1, 5) == 1)
         ship->npc_ai->advanced = 1;
     if (level == 2 && number(1, 2) == 1)
         ship->npc_ai->advanced = 1;
