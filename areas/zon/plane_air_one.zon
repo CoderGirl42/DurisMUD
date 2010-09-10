@@ -50,7 +50,7 @@ M 0 24450 18 24432 100 0 0 0       * a winter wolf
 M 0 24450 18 24440 100 0 0 0       * a winter wolf
 M 0 24410 20 24441 100 0 0 0       * an air elemental
 M 0 24410 20 24441 100 0 0 0       * an air elemental
-M 0 24440 1 24450 100 0 0 0        * Something
+M 0 24440 1 24450 100 0 0 0        * Yan-C-Bin Prince of the Elemental Plane of Air
 E 1 24403 1 12 100 0 0 0           *   a cloak of swirling mist
 E 1 24402 2 21 100 0 0 0           *   a lightning earring
 G 1 67207 1 0 100 0 0 0            *    (object type not in this .obj file)

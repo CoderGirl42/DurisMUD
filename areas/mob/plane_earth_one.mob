@@ -63,7 +63,7 @@ EE 0 2048 -1
 8 8 1
 #23806
 ogremoch _nobutt_ _nosneak_ _spec1_~
-&+yOgremoch&n~
+&+yOgremoch &+LPrince of the &+yElemental &+LPlane of &+yEarth&n~
 &+yOgremoch stands here, roaming his vast domain.&N
 ~
 &+yOgremoch appears as a huge walking mountain of living rock. Ogremoch's
@@ -90,7 +90,7 @@ EE 0 256 -1
 8 8 0
 #23808
 entemoch _nobutt_ _nosneak_ _spec1_ _ignore_~
-&+LEntemoch&N~
+&+LEntemoch &+yPrince of the &+LElemental &+yPlane of &+LEarth&n~
 &+LEntemoch roams the plane looking for his brother.&N
 ~
 &+L   The brother to Ogremoch, Entemoch is identical to the Prince
