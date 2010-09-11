@@ -394,7 +394,7 @@ void do_spec_list(P_char ch)
       {
         sprintf(list, "%s:", specdata[cls][spec]);
         comma = 0;
-	for (race = 1; race < RACE_PLAYER_MAX; race++)
+	for (race = 1; race <= RACE_PLAYER_MAX; race++)
         {
 	  if (is_allowed_race_spec(race, 1 << (cls - 1), spec+1))
           {
