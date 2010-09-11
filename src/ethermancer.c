@@ -1291,8 +1291,8 @@ int door, target_room;
   "&+WYou are savagely tossed around by the &+cfreezing &+Wsquall!",
   "$N&+W is savagely tossed around by the sudden and intense squall.",
   "$N&+W is shredded by &+Cicicles &+Wand violent wind!",
-  "$N&+W is shredded and buffeted to death!",
-  "&+WYou feel so tired, &+wso very tired. &+LYou close your eyes...", 0
+  "&+WYou feel so tired, &+wso very tired. &+LYou close your eyes...",
+  "$N&+W is shredded and buffeted to death!", 0
   };
 
   if(!IS_ALIVE(victim) ||
