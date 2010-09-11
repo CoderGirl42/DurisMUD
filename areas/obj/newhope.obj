@@ -212,7 +212,7 @@ hammer~
 &+Ca massive hammer&n~
 &+rA massive &+Chammer&+r lays in a dent in the ground.&n~
 ~
-5 16 3 3 11 20 4202496 8193 1088 0 0
+5 16 3 3 11 20 4202496 8193 64 0 0
 4 3 5 7 0 0 0 0
 5 10355 100
 E
@@ -324,7 +324,7 @@ heart key~
 &+ra pe&+wt&+rr&+wi&+rfied h&+Re&+rar&+Rt&n~
 &+rA pe&+wt&+rr&+wi&+rfied h&+Re&+rar&+Rt&+r attached to a &+Csteel tube&+r lies on the floor.&n~
 ~
-18 16 1 0 7 0 41988105 8388609 1024 0 0
+18 16 1 0 7 0 41988105 8388609 0 0 0
 0 0 0 0 0 0 0 0
 0 1 100
 E
@@ -343,7 +343,7 @@ dagger shard~
 &+ya sh&+wa&+yrp&+wene&+yd s&+wt&+yone sh&+wa&+yrd&n~
 &+yA sh&+wa&+yrp&+wene&+yd sh&+wa&+yrd of s&+wt&+yone lies here.&n~
 ~
-5 11 1 1 7 0 33566720 8396801 1088 0 0
+5 11 1 1 7 0 33566720 8396801 64 0 0
 2 2 4 11 0 0 0 0
 1 1566 100
 E
@@ -362,7 +362,7 @@ dagger bone shard~
 &+wa pe&+Wt&+wri&+Wf&+wied &+Wb&+wone s&+Wh&+war&+Wd&n~
 &+yA piece of &+Wb&+wone&+y lies on the ground.&n~
 ~
-5 18 1 0 12 20 33562624 8396801 1088 0 0
+5 18 1 0 12 20 33562624 8396801 64 0 0
 2 2 3 11 0 0 0 0
 0 25666 100 4 0 2097152 0
 E
@@ -381,7 +381,7 @@ dagger splinter wood~
 &+ya sharpened wood splinter&n~
 &+yA sharp splinter of wood lies here.&n~
 ~
-5 6 1 0 7 0 8192 8396801 1088 0 0
+5 6 1 0 7 0 8192 8396801 64 0 0
 2 2 2 11 0 0 0 0
 0 750 100
 E
@@ -1181,7 +1181,7 @@ vest black leather~
 &+La black leather vest&n~
 &+yA vest crafted from &+Lblack leather&+y is hung here.&n~
 ~
-11 14 2 0 12 40 33562624 9 1088 0 0
+11 14 2 0 12 40 33562624 9 64 0 0
 0 0 0 0 0 0 0 0
 0 12000 100
 E
@@ -1202,7 +1202,7 @@ pants black leather~
 &+La pair of black leather pants&n~
 &+rA pair of &+Lblack leather &+rpants have been hung here.&n~
 ~
-11 14 2 0 12 40 33562624 33 1088 0 0
+11 14 2 0 12 40 33562624 33 64 0 0
 0 0 0 0 0 0 0 0
 0 12000 100
 E
@@ -1967,7 +1967,7 @@ mithral piece~
 &+Ca piece of mithral&n~
 &+rA piece of &+Cmithral&+r lies unnoticed in the dust.&n~
 ~
-13 18 1 0 7 0 8192 1 1026 0 0
+13 18 1 0 7 0 8192 1 2 0 0
 0 0 0 0 0 0 0 0
 0 1 100
 E
@@ -2039,7 +2039,7 @@ barbed dagger~
 &+ra &+Lb&+rar&+Lb&+re&+Ld d&+ra&+Lgg&+rer&n~
 &+rA &+Lb&+rar&+Lb&+re&+Ld d&+ra&+Lgg&+rer has been left behind.&n~
 ~
-5 16 1 0 10 30 8193 8396801 1026 0 0
+5 16 1 0 10 30 8193 8396801 2 0 0
 2 3 3 11 0 0 0 0
 1 18000 100 0 0 2097152 0
 E
@@ -2059,7 +2059,7 @@ two-handed hammer~
 &+wa &+Lt&+wwo-&+Lh&+wan&+Ld&+we&+Ld h&+wammer&n~
 &+rA huge &+Lh&+wammer&+r leans against a wall here.&n~
 ~
-5 16 3 0 11 40 37756928 8193 1026 0 0
+5 16 3 0 11 40 37756928 8193 2 0 0
 4 4 4 6 0 0 0 0
 8 24000 100
 E
@@ -2079,7 +2079,7 @@ braided pelt belt~
 &+wa &+yb&+wrai&+yd&+we&+yd p&+we&+ylt b&+we&+ylt&n~
 &+yA b&+we&+ylt b&+wrai&+yd&+we&+yd from different p&+we&+ylts lies here.&n~
 ~
-9 12 2 0 10 30 33562624 2049 1026 0 0
+9 12 2 0 10 30 33562624 2049 2 0 0
 7 0 0 1 0 0 0 0
 1 22000 100
 E
@@ -2097,7 +2097,7 @@ braided raccoon raccoonskin head headband~
 &+ya &+Lb&+yrai&+Ld&+ye&+Ld &+yraccoons&+Lk&+yin &+Lh&+yea&+Ldb&+yan&+Ld&n~
 &+yA &+Lh&+yea&+Ldb&+yan&+Ld &+ymade from raccoons&+Lk&+yin lies here.&n~
 ~
-9 12 2 0 9 20 270337 17 1026 0 0
+9 12 2 0 9 20 270337 17 2 0 0
 10 0 0 1 0 0 0 0
 1 22000 100
 E
@@ -2118,7 +2118,7 @@ boots ferret ferretskin~
 &+wa &+Lp&+wair o&+Lf f&+werre&+Lt&+ws&+Lk&+win &+Lb&+woo&+Lt&+ws&n~
 &+rA pair of &+Lf&+werre&+Lt&+ws&+Lk&+win &+Lb&+woo&+Lt&+ws &+rhas been dropped on the ground.&n~
 ~
-9 12 2 0 10 30 33562624 65 1026 0 0
+9 12 2 0 10 30 33562624 65 2 0 0
 5 0 0 2 0 0 0 0
 3 22000 100
 E
@@ -2184,7 +2184,7 @@ eye ogre~
 &+Bth&+be e&+By&+be o&+Bf th&+be o&+Bg&+bre&n~
 &+rAn &+bo&+Bg&+bre e&+By&+be &+rlies in the dust.&n~
 ~
-11 2 1 0 12 60 33562625 131073 1088 0 0
+11 2 1 0 12 60 33562625 131073 64 0 0
 0 0 0 0 0 0 0 0
 0 350000 100 33554472 0 0 0
 E
@@ -2206,7 +2206,7 @@ marble hammer~
 &+wa ma&+Gr&+gbl&+we &+gh&+wamme&+Gr&n~
 &+rA &+gh&+wamme&+Gr &+rmade from &+wma&+Gr&+gbl&+we&+r leans against a nearby wall.&n~
 ~
-5 38 2 0 11 40 8192 8193 1088 0 0
+5 38 2 0 11 40 8192 8193 64 0 0
 4 2 8 6 0 0 0 0
 5 10000 100 0 128 0 0
 E
@@ -2226,7 +2226,7 @@ leggings bone~
 &+rl&+we&+rgg&+win&+rg&+ws carve&+rd f&+wrom mino&+rt&+waur &+rb&+wones&n~
 &+rL&+we&+rgg&+win&+rg&+ws carve&+rd f&+wrom mino&+rt&+waur &+rb&+wones &+rl&+wie &+rh&+were.&n~
 ~
-9 10 3 0 10 30 8192 33 1088 0 0
+9 10 3 0 10 30 8192 33 64 0 0
 10 0 0 4 0 0 0 0
 5 20000 100
 E
@@ -2248,7 +2248,7 @@ femur bone totem~
 &+wa carve&+rd f&+wemur o&+rf &+wa s&+rt&+wu&+rp&+wi&+rd b&+war&+rb&n~
 &+rA carved &+wfemur&+r lies on the ground.&n~
 ~
-34 10 2 0 11 40 270337 16385 1088 0 0
+34 10 2 0 11 40 270337 16385 64 0 0
 63 0 0 0 0 0 0 0
 1 60000 100
 E
@@ -2271,7 +2271,7 @@ woven mithral tail ring~
 &+ca woven mi&+Cth&+cra&+Cl t&+cai&+Cl &+crin&+Cg&n~
 &+rA &+Ct&+cai&+Cl &+crin&+Cg&+r made from &+cwoven mi&+Cth&+cra&+Cl&+r lies on the ground.&n~
 ~
-9 18 1 0 12 50 8192 33554433 1026 0 0
+9 18 1 0 12 50 8192 33554433 2 0 0
 5 0 0 3 0 0 0 0
 0 15000 100
 E
@@ -2292,7 +2292,7 @@ necklace tail tails feather feathers~
 &+ya nec&+Lkl&+wa&+yce o&+Lf t&+wa&+yi&+Ll&+ys &+wa&+yn&+Ld f&+ye&+wa&+Lth&+yers&n~
 &+yA &+Lb&+yr&+wa&+yi&+Ld&+ye&+Ld l&+ye&+wa&+Lth&+yer nec&+Lkl&+wa&+yce &+wa&+Ld&+yorne&+Ld &+ywi&+Lth t&+wa&+yi&+Ll&+ys &+wa&+yn&+Ld f&+ye&+wa&+Lth&+yers &+Ll&+yies &+Lh&+yere.&n~
 ~
-9 12 2 0 10 30 33562624 5 1088 0 0
+9 12 2 0 10 30 33562624 5 64 0 0
 5 0 0 2 0 0 0 0
 1 15000 100
 E
@@ -2312,7 +2312,7 @@ green black oval earring~
 &+ga &+Lg&+green an&+Ld bl&+gac&+Lk &+gova&+Ll &+gearrin&+Lg&n~
 &+rA &+Lg&+green an&+Ld bl&+gac&+Lk &+gova&+Ll &+gearrin&+Lg &+rlies in the dust.&n~
 ~
-9 11 1 0 9 20 8192 524289 1088 0 0
+9 11 1 0 9 20 8192 524289 64 0 0
 5 0 0 1 0 0 0 0
 0 15000 100
 E
@@ -2332,7 +2332,7 @@ snuggly cuddlebunny toy spellbook bunny book~
 &+Ma s&+Wn&+Mug&+Wg&+Mly cu&+Wdd&+Mle&+Wb&+Munny&n~
 &+rA stuffed toy, a &+Ms&+Wn&+Mug&+Wg&+Mly cu&+Wdd&+Mle&+Wb&+Munny,&+r has been tossed aside.&n~
 ~
-33 29 2 0 12 50 33562688 8404993 1024 0 0
+33 29 2 0 12 50 33562688 8404993 0 0 0
 0 0 350 0 0 0 0 0
 0 16000 100 4 0 0 0
 E
@@ -2375,7 +2375,7 @@ mithral chain barding~
 &+ca se&+Ct &+co&+Cf &+cmi&+Cth&+cra&+Cl &+cc&+Ch&+cain &+Cb&+car&+Cd&+cin&+Cg&n~
 &+rA set of &+cmi&+Cth&+cra&+Cl &+cc&+Ch&+cain &+Cb&+car&+Cd&+cin&+Cg&+r lies crumpled on the ground.&n~
 ~
-9 18 4 0 12 50 33562688 16777217 1024 0 0
+9 18 4 0 12 50 33562688 16777217 0 0 0
 25 0 0 4 0 0 0 0
 10 22000 100
 E
@@ -2422,7 +2422,7 @@ mithral dagger~
 &+ca mi&+Cth&+cra&+Cl d&+ca&+Cgg&+cer&n~
 &+cA s&+Ch&+cinin&+Cg &+cmi&+Cth&+cra&+Cl d&+ca&+Cgg&+cer &+Cl&+cies &+Ch&+cere.&n~
 ~
-5 18 1 0 10 30 8256 8396801 1024 0 0
+5 18 1 0 10 30 8256 8396801 0 0 0
 2 2 3 11 0 0 0 0
 2 6332 100
 E
@@ -2441,7 +2441,7 @@ mithral shortsword sword short~
 &+ca mi&+Cth&+cra&+Cl &+cs&+Ch&+cor&+Ct&+cswor&+Cd&n~
 &+cA mi&+Cth&+cra&+Cl &+cs&+Ch&+cor&+Ct&+cswor&+Cd l&+cies &+Ch&+cere.&n~
 ~
-5 18 2 0 10 30 8256 8396801 1024 0 0
+5 18 2 0 10 30 8256 8396801 0 0 0
 9 3 2 3 0 0 0 0
 3 5436 100
 E
@@ -2460,7 +2460,7 @@ mithral longsword sword long~
 &+ca mi&+Cth&+cra&+Cl l&+con&+Cg&+cswor&+Cd&n~
 &+cA mi&+Cth&+cra&+Cl l&+con&+Cg&+cswor&+Cd l&+cies &+Ch&+cere.&n~
 ~
-5 18 3 0 10 30 8256 8396801 1024 0 0
+5 18 3 0 10 30 8256 8396801 0 0 0
 5 3 3 3 0 0 0 0
 4 9352 100
 E
@@ -2500,7 +2500,7 @@ tentacle~
 &+mth&+re &+mt&+ren&+mt&+rac&+ml&+re o&+mf th&+re &+mt&+ren&+mt&+rac&+ml&+rer&n~
 &+rA &+mt&+ren&+mt&+rac&+ml&+re &+mf&+rrom &+mth&+re &+mt&+ren&+mt&+rac&+ml&+rer &+ml&+ries &+mh&+rere.&n~
 ~
-5 2 3 0 7 0 12352 8193 1024 0 0
+5 2 3 0 7 0 12352 8193 0 0 0
 14 2 5 2 0 0 0 0
 5 25000 100
 E
@@ -2520,7 +2520,7 @@ shimmering blue breastplate breast~
 &+ba s&+Bh&+bimm&+Ber&+bin&+Bg bl&+bue &+Bb&+breas&+Btpl&+ba&+Bt&+be&n~
 &+rA s&+Bh&+bimm&+Ber&+bin&+Bg bl&+bue &+Bb&+breas&+Btpl&+ba&+Bt&+be &+rlies here.&n~
 ~
-9 35 3 0 12 50 33562688 9 1088 0 0
+9 35 3 0 12 50 33562688 9 64 0 0
 30 0 0 4 0 0 0 0
 8 95000 100 0 0 2097152 0
 E
@@ -2540,7 +2540,7 @@ shortsword sword dragonclaw claw~
 &+wa &+Ld&+wra&+Lg&+wonc&+Ll&+waw s&+Lh&+wor&+Lt&+wswor&+Ld&n~
 &+rA &+Ld&+wra&+Lg&+wonc&+Ll&+waw s&+Lh&+wor&+Lt&+wswor&+Ld&+r has been left here.&n~
 ~
-5 35 2 0 12 50 33566720 8193 1088 0 0
+5 35 2 0 12 50 33566720 8193 64 0 0
 9 3 3 3 0 0 0 0
 2 80000 100
 E
@@ -2560,7 +2560,7 @@ shimmering purple bracer~
 &+ma s&+Mh&+mimm&+Mer&+min&+Mg p&+mur&+Mpl&+me &+Mb&+mracer&n~
 &+rA &+ms&+Mh&+mimm&+Mer&+min&+Mg p&+mur&+Mpl&+me &+Mb&+mracer&+r lies on the ground.&n~
 ~
-9 35 2 0 12 50 33566721 4097 1088 0 0
+9 35 2 0 12 50 33566721 4097 64 0 0
 20 0 0 3 0 0 0 0
 1 75000 100 64 0 0 0
 E
@@ -2581,7 +2581,7 @@ shimmering green leggings~
 &+ga se&+Gt &+go&+Gf &+gs&+Gh&+gimm&+Ger&+gin&+Gg g&+green &+Gl&+ge&+Ggg&+gin&+Gg&+gs&n~
 &+rA set of &+gs&+Gh&+gimm&+Ger&+gin&+Gg g&+green &+Gl&+ge&+Ggg&+gin&+Gg&+gs&+r lies on the ground here.&n~
 ~
-9 35 3 0 12 50 33566784 33 1088 0 0
+9 35 3 0 12 50 33566784 33 64 0 0
 20 0 0 4 0 0 0 0
 4 85000 100 0 0 64 0
 E
@@ -2602,7 +2602,7 @@ shimmering red femur~
 &+ra s&+Rh&+rimm&+Rer&+rin&+Rg &+rre&+Rd f&+remur~
 &+rA s&+Rh&+rimm&+Rer&+rin&+Rg &+rre&+Rd f&+remur leans against a wall.&n~
 ~
-5 35 3 0 12 50 37761088 8193 1088 0 0
+5 35 3 0 12 50 37761088 8193 64 0 0
 12 4 2 0 0 0 0 0
 3 105000 100 4 0 0 0
 E
@@ -2662,7 +2662,7 @@ cracked dagger~
 &+ca cracked dagger&n~
 &+rA &+cdagger&+r with a cracked blade lies here.&n~
 ~
-18 16 2 0 7 0 8658944 16385 1026 0 0
+18 16 2 0 7 0 8658944 16385 2 0 0
 0 1 0 0 0 0 0 0
 0 250 50
 E
@@ -2679,7 +2679,7 @@ sword two-handed dark darkly glow glowing~
 &+ca &+rd&+car&+rkly gl&+cowin&+rg t&+cwo-&+rh&+can&+rd&+ce&+rd &+cswor&+rd&n~
 &+rA d&+car&+rkly gl&+cowin&+rg t&+cwo-&+rh&+can&+rd&+ce&+rd &+cswor&+rd leans against the wall.&n~
 ~
-5 16 4 0 11 40 37756928 8193 1088 0 0
+5 16 4 0 11 40 37756928 8193 64 0 0
 13 4 4 3 0 0 0 0
 5 22500 100
 E
@@ -2699,7 +2699,7 @@ ferrethide hide ring~
 &+ya &+wb&+yrai&+wd&+ye&+wd f&+yerre&+wth&+yi&+wd&+ye rin&+wg&n~
 &+rA &+wb&+yrai&+wd&+ye&+wd f&+yerre&+wth&+yi&+wd&+ye rin&+wg &+rlies on the ground.&n~
 ~
-9 12 1 0 10 30 270337 3 1088 0 0
+9 12 1 0 10 30 270337 3 64 0 0
 15 0 0 1 0 0 0 0
 0 22500 100
 E
@@ -2719,7 +2719,7 @@ pelt loincloth~
 &+ya &+wp&+ye&+wlt l&+yoinc&+wl&+yo&+wth&n~
 &+rA &+wl&+yoinc&+wl&+yo&+wth&+r made from a &+wp&+ye&+wlt&+r lies crumpled on the ground.&n~
 ~
-9 12 3 0 10 30 33562624 2049 1088 0 0
+9 12 3 0 10 30 33562624 2049 64 0 0
 15 0 0 3 0 0 0 0
 3 22500 100
 E
@@ -2738,7 +2738,7 @@ etched mithral bracer~
 &+can e&+Ct&+cc&+Ch&+ce&+Cd &+cmi&+Cth&+cra&+Cl b&+cracer&n~
 &+rAn &+ce&+Ct&+cc&+Ch&+ce&+Cd &+cmi&+Cth&+cra&+Cl b&+cracer&+r lies on the ground.&n~
 ~
-9 18 2 0 11 40 33562624 4097 1088 0 0
+9 18 2 0 11 40 33562624 4097 64 0 0
 10 0 0 4 0 0 0 0
 0 22500 100
 E
@@ -2758,7 +2758,7 @@ braided plant necklace~
 &+ga &+Gb&+grai&+Gd&+ge&+Gd pl&+gan&+Gt &+gnec&+Gkl&+gace&n~
 &+rA &+gnec&+Gkl&+gace&+r made from &+Gb&+grai&+Gd&+ge&+Gd pl&+gan&+Gt&+gs&+r has been tossed aside.&n~
 ~
-9 43 2 0 11 40 33562624 5 1088 0 0
+9 43 2 0 11 40 33562624 5 64 0 0
 5 0 0 1 0 0 0 0
 0 22500 100
 E
@@ -2780,7 +2780,7 @@ helm transparent~
 &+Wa &+wt&+Wrans&+wp&+Waren&+wt h&+We&+wl&+Wm&n~
 &+rA &+wt&+Wrans&+wp&+Waren&+wt h&+We&+wl&+wm&+r lies on the ground.&n~
 ~
-9 27 2 0 11 40 33562624 17 1088 0 0
+9 27 2 0 11 40 33562624 17 64 0 0
 10 0 0 4 0 0 0 0
 2 22500 100
 E
@@ -2799,7 +2799,7 @@ sunbeam flute~
 &+Ya sun&+Wb&+Yeam &+Wfl&+Yu&+Wt&+Ye&n~
 &+rA &+Wfl&+Yu&+Wt&+Ye&+r made from a &+Ysun&+Wb&+Yeam&+r floats here.&n~
 ~
-32 1 2 0 12 50 100933632 8404993 1088 0 0
+32 1 2 0 12 50 100933632 8404993 64 0 0
 184 1 1 1 0 0 0 0
 0 22500 100 32 0 0 0
 E
@@ -2820,7 +2820,7 @@ belt braided bearskin~
 &+ya &+wb&+ye&+wlt &+yo&+wf b&+yrai&+wd&+ye&+wd b&+years&+wk&+yin&n~
 &+rA &+wb&+ye&+wlt &+yo&+wf b&+yrai&+wd&+ye&+wd b&+years&+wk&+yin&+r lies in a coil on the ground.&n~
 ~
-9 12 2 0 12 50 33562624 2049 1088 0 0
+9 12 2 0 12 50 33562624 2049 64 0 0
 10 0 0 3 0 0 0 0
 1 22500 100
 E
@@ -2840,7 +2840,7 @@ oval tattered flesh~
 &+ran ova&+ml &+ro&+mf t&+ra&+mtt&+rere&+md fl&+re&+msh&n~
 &+rAn ova&+ml &+rof &+mt&+ra&+mtt&+rere&+md fl&+re&+msh&+r has been dropped on the ground.&n~
 ~
-9 2 0 0 11 40 33824768 2097153 1088 0 0
+9 2 0 0 11 40 33824768 2097153 64 0 0
 5 0 0 1 0 0 0 0
 0 22500 100
 E
@@ -2861,7 +2861,7 @@ necklace swirling feathers~
 &+Ca nec&+ykl&+Cace o&+yf &+Cswir&+yl&+Cin&+yg f&+Cea&+yth&+Cers&n~
 &+rA &+Cnec&+ykl&+Cace&+r made from &+Cswir&+yl&+Cin&+yg f&+Cea&+yth&+Cers&+r floats about here.&n~
 ~
-11 50 2 0 11 40 100671488 5 1088 0 0
+11 50 2 0 11 40 100671488 5 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 67108864 0 0 0
 E
@@ -2882,7 +2882,7 @@ ankylosaur tail club~
 &+ban an&+Bkyl&+bosaur &+Bt&+bai&+Bl &+bc&+Bl&+bu&+Bb&n~
 &+rA &+bc&+Bl&+bu&+Bb&+r made from an &+ban&+Bkyl&+bosaur &+Bt&+bai&+Bl&+r leans against the wall.&n~
 ~
-5 11 2 0 11 40 8193 8396801 1088 0 0
+5 11 2 0 11 40 8193 8396801 64 0 0
 10 3 4 0 0 0 0 0
 3 22500 100 4 0 0 0
 E
@@ -2901,7 +2901,7 @@ etched mithral faceguard mask~
 &+can e&+Ct&+cc&+Ch&+ce&+Cd &+cmi&+Cth&+cra&+Cl f&+cace&+Cg&+cuar&+Cd&n~
 &+rAn &+ce&+Ct&+cc&+Ch&+ce&+Cd &+cmi&+Cth&+cra&+Cl f&+cace&+Cg&+cuar&+Cd&+r lies in the dust.&n~
 ~
-11 18 2 0 11 40 8193 262145 1088 0 0
+11 18 2 0 11 40 8193 262145 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 0 0 2097152 0
 E
@@ -2921,7 +2921,7 @@ carved turquoise stud earring~
 &+ca carve&+wd t&+cur&+Lq&+cuoise s&+wt&+cu&+wd&n~
 &+rAn ear stud carved from &+wt&+cur&+Lq&+cuoise&+r has been dropped in the mud.&n~
 ~
-11 26 0 0 11 40 270337 524289 1088 0 0
+11 26 0 0 11 40 270337 524289 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 0 0 64 0
 E
@@ -2941,7 +2941,7 @@ calcified pachycephalosaurus skull dinosaur~
 &+wa ca&+Wl&+wci&+Wf&+wie&+Wd p&+wac&+Why&+wce&+Wph&+wa&+Wl&+wosaurus s&+Wk&+wu&+Wll&n~
 &+rA &+Wd&+winosaur s&+Wk&+wu&+Wll&+r lies in the dirt.&n~
 ~
-9 11 2 0 11 40 270337 17 1088 0 0
+9 11 2 0 11 40 270337 17 64 0 0
 10 0 0 5 0 0 0 0
 5 22500 100
 E
@@ -2963,7 +2963,7 @@ translucent crystal hemisphere mask~
 &+ma &+Mt&+mrans&+Ml&+mucent cr&+My&+ms&+Mt&+ma&+Ml h&+memis&+Mph&+mere&n~
 &+rA &+Mt&+mrans&+Ml&+mucent cr&+My&+ms&+Mt&+ma&+Ml h&+memis&+Mph&+mere&+r lies on the ground.&n~
 ~
-11 27 2 0 12 50 270337 262145 1088 0 0
+11 27 2 0 12 50 270337 262145 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 4 0 0 0
 E
@@ -2984,7 +2984,7 @@ braided elfskin headband~
 &+ma &+cb&+mrai&+cd&+me&+cd &+me&+clf&+ms&+ck&+min &+ch&+mea&+cdb&+man&+cd&n~
 &+rA &+ch&+mea&+cdb&+man&+cd&+r made from &+cb&+mrai&+cd&+me&+cd &+me&+clf&+ms&+ck&+min&+r lies in the dust.&n~
 ~
-11 12 2 0 11 40 33562624 17 1088 0 0
+11 12 2 0 11 40 33562624 17 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 33554432 0 0 0
 E
@@ -3006,7 +3006,7 @@ panther pantherhide hide quiver~
 &+ya pan&+wth&+yer&+wh&+yi&+wd&+ye &+wq&+yuiver&n~
 &+rA &+ypan&+wth&+yer&+wh&+yi&+wd&+ye &+wq&+yuiver&+r leans against a nearby wall.&n~
 ~
-30 12 2 0 11 40 270337 1048577 1088 0 0
+30 12 2 0 11 40 270337 1048577 64 0 0
 160 1 1 50 0 0 0 0
 0 22500 100
 E
@@ -3029,7 +3029,7 @@ carved jade ring~
 &+ga ca&+Gr&+gve&+Gd j&+ga&+Gd&+ge &+Gr&+gin&+Gg&n~
 &+rA &+gca&+Gr&+gve&+Gd j&+ga&+Gd&+ge &+Gr&+gin&+Gg&+r lies on the ground.&n~
 ~
-9 26 1 0 11 40 8193 3 1088 0 0
+9 26 1 0 11 40 8193 3 64 0 0
 10 0 0 1 0 0 0 0
 0 22500 100
 E
@@ -3048,7 +3048,7 @@ emerald lizard earring~
 &+gan eme&+Gr&+ga&+Gld l&+giza&+Grd &+gea&+Grr&+gin&+Gg&n~
 &+rAn &+geme&+Gr&+ga&+Gld l&+giza&+Grd &+gea&+Grr&+gin&+Gg&+r has been dropped on the ground.&n~
 ~
-11 32 1 0 11 40 33562624 524289 1088 0 0
+11 32 1 0 11 40 33562624 524289 64 0 0
 0 0 0 0 0 0 0 0
 0 22500 100 0 8192 0 0
 E
@@ -3068,7 +3068,7 @@ woven mithral choker~
 &+ca wo&+Cv&+cen mi&+Cth&+cra&+Cl &+cc&+Ch&+co&+Ck&+cer&n~
 &+rA &+cwo&+Cv&+cen mi&+Cth&+cra&+Cl &+cc&+Ch&+co&+Ck&+cer&+r lies on the ground.&n~
 ~
-9 18 2 0 11 40 33562624 5 1088 0 0
+9 18 2 0 11 40 33562624 5 64 0 0
 10 0 0 3 0 0 0 0
 0 22500 100
 E
@@ -3087,7 +3087,7 @@ acorn cap~
 &+yan a&+gc&+yorn &+gc&+yap&n~
 &+rWood shaped into an &+ya&+gc&+yorn &+gc&+yap&+r lies here.&n~
 ~
-9 6 2 0 11 40 33562624 17 1088 0 0
+9 6 2 0 11 40 33562624 17 64 0 0
 10 0 0 3 0 0 0 0
 0 22500 100
 E
@@ -3108,7 +3108,7 @@ collar triceratops frill~
 &+ca &+yt&+cricera&+yt&+co&+yp&+cs &+yf&+cri&+yll&n~
 &+rA high collar made from a &+yt&+cricera&+yt&+co&+yp&+cs &+yf&+cri&+yll&+r lies here.&n~
 ~
-9 10 3 0 11 40 33562624 5 1088 0 0
+9 10 3 0 11 40 33562624 5 64 0 0
 10 0 0 4 0 0 0 0
 0 22500 100
 E
@@ -3128,7 +3128,7 @@ bracelet woven wolverine hide~
 &+ya &+Lb&+yrace&+Ll&+ye&+Lt &+yo&+Lf &+ywoven wo&+Ll&+yverine&+Lh&+yi&+Ld&+ye&n~
 &+rA &+Lb&+yrace&+Ll&+yet o&+Lf &+ywoven wo&+Ll&+yverine&+Lh&+yi&+Ld&+ye&+r lies on the ground.&n~
 ~
-9 12 2 0 11 40 33562624 4097 1088 0 0
+9 12 2 0 11 40 33562624 4097 64 0 0
 10 0 0 2 0 0 0 0
 0 22500 100
 E
@@ -3357,7 +3357,7 @@ mask butterfly~
 &+ba &+Lb&+bu&+wtt&+ber&+Lfl&+wy &+bmas&+Lk&n~
 &+rA &+bmas&+wk &+rmade from &+Lb&+wl&+bue &+Lb&+bu&+wtt&+ber&+Lfl&+wy win&+wg&+bs&+r lies on the ground.&n~
 ~
-9 50 2 0 12 50 8193 131073 1088 0 0
+9 50 2 0 12 50 8193 131073 64 0 0
 5 0 0 2 0 0 0 0
 0 15530 100
 E
@@ -3380,7 +3380,7 @@ eye key~
 &+ra so&+ml&+ri&+md&+ri&+mf&+rie&+md t&+ren&+mt&+rac&+ml&+rer e&+my&+re&n~
 &+rA so&+ml&+ri&+md&+ri&+mf&+rie&+md t&+ren&+mt&+rac&+ml&+rer e&+my&+re &+mh&+ras &+mf&+ra&+mll&+ren on &+mth&+re &+mg&+rroun&+md.&n~
 ~
-18 11 1 0 7 0 41955336 16385 1088 0 0
+18 11 1 0 7 0 41955336 16385 64 0 0
 0 10 0 0 0 0 0 0
 0 1 100
 E
