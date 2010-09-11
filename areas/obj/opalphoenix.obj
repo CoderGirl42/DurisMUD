@@ -129,7 +129,7 @@ tome book midnight~
 &+ba midnight blue tome with &+cs&+Ci&+cl&+Cv&+ce&+Cr &+bbindings~
 &+ba midnight blue book lies here.~
 ~
-33 22 2 5 7 0 1 8388609 1024 1 0
+33 22 2 5 7 0 1 8388609 0 1 0
 0 0 320 0 0 0 0 0
 1 302652 100
 E
@@ -144,7 +144,7 @@ quill feather~
 &+yan ea&+Ygl&+ye feather quill~
 &+ya stunning feather has fallen here.~
 ~
-21 50 1 0 7 0 0 8404993 1024 1 0
+21 50 1 0 7 0 0 8404993 0 1 0
 0 0 0 0 0 0 0 0
 0 1 100
 E
@@ -156,7 +156,7 @@ robes~
 &+Wop&+wal&+Wes&+wce&+Wnt &+wrobes of the &+War&+wch&+Wma&+wgi~
 &+wa set of sh&+Wim&+wme&+Wri&+wng robes have been left here.~
 ~
-9 3 3 7 7 0 1025 1025 1024 3584 0
+9 3 3 7 7 0 1025 1025 0 3584 0
 11 0 0 2 0 0 0 0
 3 80000 100
 E
@@ -173,7 +173,7 @@ boots worn endurance~
 &+gbo&+Gots o&+yf en&+gdu&+yr&+Gan&+gce~
 &+ya pair of well worn leather boots have been discarded here.~
 ~
-9 13 2 5 7 0 64 65 1024 0 0
+9 13 2 5 7 0 64 65 0 0 0
 7 0 0 0 0 0 0 0
 1 35000 100
 E
@@ -192,7 +192,7 @@ opal beads prayer~
 &+Wa se&+wt of &+Wo&+wp&+Wa&+wl pr&+Waye&+wr be&+Wa&+wds~
 &+Wa bracelet of opal beads lies on the ground.~
 ~
-9 52 1 0 7 0 328 4097 1024 0 0
+9 52 1 0 7 0 328 4097 0 0 0
 10 0 0 1 0 0 0 0
 0 27000 100
 E
@@ -235,7 +235,7 @@ branch staff vigor~
 &+ya staff of woodland vigor~
 &+yan elegantly curving tree branch has fallen here.~
 ~
-4 6 3 6 7 0 0 16385 1024 67108447 0
+4 6 3 6 7 0 0 16385 0 67108447 0
 46 7 7 66 0 0 0 0
 3 100000 100
 E
@@ -253,7 +253,7 @@ flesh intestines~
 &+rthe intestines of a bear~
 &+rA quivering mass of flesh lies here.~
 ~
-12 2 2 0 7 0 4096 1 1024 1 0
+12 2 2 0 7 0 4096 1 0 1 0
 0 0 0 0 0 0 0 0
 0 1 100
 E
