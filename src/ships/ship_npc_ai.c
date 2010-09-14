@@ -177,6 +177,8 @@ void NPCShipAI::activity()
             break;
         }
 
+        check_for_jettison();
+
         if (check_dir_for_land_from(ship->x, ship->y, t_bearing, t_range))
         { // we have a land between us and target, forget about combat maneuvering for now, lets find a way to go around it
             b_attack(); // trying to fire over land
@@ -418,7 +420,6 @@ bool NPCShipAI::do_escort()
 }
 
 
-
 /////////////////////////
 // GENERAL COMBAT ///////
 /////////////////////////
@@ -543,6 +544,18 @@ bool NPCShipAI::check_ammo()
     return !out_of_ammo;
 }
 
+void NPCShipAI::check_for_jettison()
+{
+    if (SHIP_CARGO(ship) > 0 && !number(0, 30))
+    {
+        jettison_cargo(0, ship, number(4, 8));
+    }
+    else if (SHIP_CONTRA(ship) > 0 && !number(0, 100))
+    {
+        jettison_contraband(0, ship, number(2, 4));
+    }
+}
+
 bool NPCShipAI::check_boarding_conditions()
 {
     if (!is_boardable(ship->target))
@@ -613,16 +626,56 @@ void NPCShipAI::board_target()
 
     if (type == NPC_AI_PIRATE)
     {
-        for (int i = 0; i < MAXSLOTS; i++) // TODO: not all maybe, not instantly etc
-        {
-            if (ship->target->slot[i].type == SLOT_CARGO || ship->target->slot[i].type == SLOT_CONTRABAND)
-                ship->target->slot[i].clear();
-        }
+        steal_target_cargo();
         ship->target = 0;
         mode = NPC_AI_LEAVING;
         ship->timer[T_MAINTENANCE] = 300;
     }
 }
+
+int add_crate(P_ship ship, int index, int type);
+void NPCShipAI::steal_target_cargo()
+{
+    int total_load = SHIP_CARGO_LOAD(ship->target);
+    if (!total_load)
+        return;
+
+    int available = SHIP_AVAIL_CARGO_SALVAGE(ship);
+    if (!available)
+        return;
+
+    float lost = (float)number(40, 60) / 100.0;
+    float left = (float)number(40, 60) / 100.0;
+    float coeff = 1.0 + lost + left;
+
+    float stolen_pt;
+    if (available * coeff < total_load)
+        stolen_pt = (float) available / (float)total_load;
+    else
+        stolen_pt = 1.0 / coeff;
+    float lost_pt = stolen_pt * lost;
+
+    for (int i = 0; i < MAXSLOTS; i++) // TODO: not all maybe, not instantly etc
+    {
+        if (ship->target->slot[i].type == SLOT_CARGO || ship->target->slot[i].type == SLOT_CONTRABAND)
+        {
+            int stolen_crates = ship->target->slot[i].val0 * stolen_pt;
+            if (stolen_crates == 0)
+                stolen_crates = 1;
+
+            int lost_crates = ship->target->slot[i].val0 * lost_pt;
+
+            for (int j = 0; j < stolen_crates; j++)
+                add_crate(ship, ship->target->slot[i].index, ship->target->slot[i].type == SLOT_CARGO ? 1 : 2);
+
+            ship->target->slot[i].val0 -= (stolen_crates + lost_crates);
+            if (ship->target->slot[i].val0 <= 0)
+                ship->target->slot[i].clear();
+        }
+    }
+    update_ship_status(ship);
+}
+
 
 bool NPCShipAI::charge_target(bool for_boarding)
 {

@@ -1761,6 +1761,7 @@ void finish_sinking(P_ship ship)
         act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N&+y falls to pieces.\r\n", SHIP_ID(ship), SHIP_NAME(ship));
     }
     clear_ship_content(ship);
+    jettison_all(ship);
 
     if (!IS_NPC_SHIP(ship))
     {

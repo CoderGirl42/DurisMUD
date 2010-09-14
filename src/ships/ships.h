@@ -9,6 +9,7 @@
 #define SHIP_ZONE_START 50001
 #define SHIP_ZONE_END 50999
 #define BUILDTIME 1
+#define CARGO_CRATE_VNUM 40226
 #define DAVY_JONES_LOCKER 31725
 
 // Ship status
@@ -608,7 +609,10 @@ extern const char *ship_symbol[NUM_SECT_TYPES];
 #define SHIP_CARGO_LOAD(shipdata) (SHIP_CARGO(shipdata) + SHIP_CONTRA(shipdata))
 #define SHIP_AVAIL_CARGO_LOAD(shipdata) MIN( (SHIP_MAX_CARGO(shipdata) - SHIP_CARGO_LOAD(shipdata)), (SHIP_AVAIL_WEIGHT(shipdata) / 2) )
 #define SHIP_MAX_CARGO_LOAD(shipdata) (SHIP_CARGO_LOAD(shipdata) + SHIP_AVAIL_CARGO_LOAD(shipdata))
-
+#define SHIP_AVAIL_CARGO_SALVAGE(shipdata) \
+        MIN( ((IS_MERCHANT(ship) ? SHIP_MAX_CARGO(ship) : (SHIP_MAX_WEIGHT(ship) / 5)) - SHIP_CARGO_LOAD(shipdata)), \
+             (SHIP_AVAIL_WEIGHT(shipdata) / 2) )
+#define SHIP_MAX_CARGO_SALVAGE(shipdata) (SHIP_CARGO_LOAD(shipdata) + SHIP_AVAIL_CARGO_SALVAGE(shipdata))
 
 
 
@@ -706,6 +710,10 @@ void show_cargo_prices(P_char ch);
 void show_contra_prices(P_char ch);
 int ship_cargo_info_stick(P_obj obj, P_char ch, int cmd, char *arg);
 void do_world_cargo(P_char ch, char *arg);
+int salvage_cargo(P_char ch, P_ship ship, int crates);
+int jettison_cargo(P_char ch, P_ship ship, int crates);
+int jettison_contraband(P_char ch, P_ship ship, int crates);
+void jettison_all(P_ship ship);
 
 
 

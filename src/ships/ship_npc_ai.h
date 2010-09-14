@@ -76,6 +76,7 @@ struct NPCShipAI
     bool chase();
     float calc_intercept_heading(float h1, float h2);
     bool check_ammo();
+    void check_for_jettison();
     void set_new_dir();
     bool worth_ramming();
     bool check_ram();
@@ -83,6 +84,7 @@ struct NPCShipAI
     bool charge_target(bool for_boarding);
     bool check_boarding_conditions();
     void board_target();
+    void steal_target_cargo();
     void immobile_maneuver();
 
 
