@@ -102,6 +102,7 @@ void     add_quest_data(char *map);
 #define CONTAINS_GROUP       19
 #define CONTAINS_WITCH       20
 #define CONTAINS_GUILDHALL   21
+#define CONTAINS_CARGO       22
 
 #define HIDDEN_BY_FOREST(from_room,to_room) ( world[to_room].sector_type == SECT_FOREST && world[from_room].sector_type != SECT_FOREST )
 
@@ -380,6 +381,13 @@ int whats_in_maproom(P_char ch, int room, int distance, int show_regardless)
       {
         val = MIN(val, CONTAINS_GUILDHALL);
       }
+      else if(obj_index[obj->R_num].virtual_number == CARGO_CRATE_VNUM && 
+          (world[room].sector_type == SECT_WATER_NOSWIM || 
+           world[room].sector_type == SECT_OCEAN || 
+           world[room].sector_type == SECT_UNDRWLD_NOSWIM))
+      {
+        val = MIN(val, CONTAINS_CARGO);
+      }
     }
   }
   
@@ -652,6 +660,10 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
       else if(whats_in == CONTAINS_GUILDHALL)
       {
         strcat(buf, "&+CG&n");
+      }
+      else if(whats_in == CONTAINS_CARGO)
+      {
+        strcat(buf, "&=bB&+Lo&n");
       }
       else if(whats_in == CONTAINS_MOB)
       {

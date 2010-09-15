@@ -768,6 +768,7 @@ M 0 28533 1 28703 100 0 0 0        * a skulking Skexis
 E 1 28520 1 5 100 0 0 0            *   some tattered purple and red robes
 G 1 28574 1 0 100 0 0 0            *    the fused spine of a swamp mite
 G 1 358 1 0 100 0 0 0              *    (object type not in this .obj file)
+G 1 28598 1 0 100 0 0 0            *    the mummified tongue of a dwarf
 F 1 28534 3 28703 100 0 0 0        * a gartham (following)
 E 1 28519 5 16 100 0 0 0           *   a bloodstained serrated blade
 E 1 28580 1 27 100 0 0 0           *   a bloodstained serrated blade

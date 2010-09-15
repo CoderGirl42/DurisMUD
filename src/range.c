@@ -1928,6 +1928,57 @@ int check_wall(int room, int direction)
  return FALSE;
 }
 
+/* returns true if there is a wall in given direction and character can see it. */
+
+int check_visible_wall(P_char ch, int direction)
+{
+
+ P_obj    tobj, next;
+ int      dir, obj_num, room;
+
+ room = ch->in_room;
+ 
+ for (tobj = world[room].contents; tobj; tobj = next)
+ {
+   next = tobj->next_content;
+
+   obj_num = (tobj->R_num >= 0) ? obj_index[tobj->R_num].virtual_number : 0;
+
+   if ((obj_num >= 753) && (obj_num <= 767))
+   {
+     dir = tobj->value[1];
+     if (direction == dir && CAN_SEE_OBJ(ch, tobj))
+       return TRUE;
+   }
+ }
+ return FALSE;
+}
+
+/* returns pointer to a wall in given direction from character, assuming there is one */
+
+P_obj get_wall_dir(P_char ch, int dir)
+{
+ P_obj    tobj, next;
+ int      wall_dir, obj_num, room;
+
+ room = ch->in_room;
+ 
+ for (tobj = world[room].contents; tobj; tobj = next)
+ {
+   next = tobj->next_content;
+
+   obj_num = (tobj->R_num >= 0) ? obj_index[tobj->R_num].virtual_number : 0;
+
+   if ((obj_num >= 753) && (obj_num <= 767))
+   {
+     wall_dir = tobj->value[1];
+     if (wall_dir == dir)
+       return tobj;
+   }
+ }
+ return FALSE;
+}
+
 /* to take cover when someone fire from above */
 
 void do_cover(P_char ch, char *argument, int cmd)

@@ -2705,14 +2705,14 @@ void spell_pyrokinesis(int level, P_char ch, char *arg, int type, P_char victim,
      fire_dam = (int)(fire_dam* 1.15);
   }
   
-  if(spell_damage(ch, victim, fire_dam, SPLDAM_FIRE, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD)
-    return;
-
-  if ((IS_AFFECTED2(victim, AFF2_FIRE_AURA) && IS_AFFECTED2(victim, AFF2_FIRESHIELD)) || GET_RACE(victim) == RACE_F_ELEMENTAL)
-    return;
-
-  if(spell_damage(ch, victim, phys_dam, SPLDAM_PSI, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD)
-    return;
+  spell_damage(ch, victim, fire_dam, SPLDAM_FIRE, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT | RAWDAM_NOKILL, 0);
+  if(IS_ALIVE(victim))
+  {
+      if ((IS_AFFECTED2(victim, AFF2_FIRE_AURA) && IS_AFFECTED2(victim, AFF2_FIRESHIELD)) || GET_RACE(victim) == RACE_F_ELEMENTAL)
+        return;
+      if(spell_damage(ch, victim, phys_dam, SPLDAM_PSI, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD)
+        return;
+  }
   
   if(!affected_by_spell(victim, SPELL_PYROKINESIS))
   {

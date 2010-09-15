@@ -781,6 +781,9 @@ int check_ram_arc(float heading, float bearing, float size)
 
 int try_ram_ship(P_ship ship, P_ship target, float tbearing)
 {
+    int k = getcontacts(target);
+    attacked_by(target, ship, k);
+    
     float theading = target->heading, sheading = ship->heading;
     float sbearing = tbearing + 180;
     if (sbearing > 360) sbearing -= 360;
@@ -812,7 +815,7 @@ int try_ram_ship(P_ship ship, P_ship target, float tbearing)
         return FALSE;
     }
 
-    if (ship->race != target->race)
+    if (HAS_VALID_TARGET(ship))
         ship->crew.sail_skill_raise((float)number(1, 3));
 
     // Calculating relative speed 

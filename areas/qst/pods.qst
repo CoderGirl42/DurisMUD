@@ -19,12 +19,28 @@ time you come, you will bring me the crystal shard.  Then I - I! - will take
 my rightful place as emperor.  Me!  I should be emperor!  If you find shard,
 bring it to me, and I will reward you."
 ~
+M
+dwarf mummified mummy~
+'Ah yes, the dwarf. Mummified dwarf. Very, very clever work. Looks like it's alive. '
+'But in fact, it works like a chest. And wont be able to open without a key. Clever!'
+~
+M
+key~
+'A key? The key? To the dwarf? Do you even know what is inside? No? Taking chances?'
+...
+'Oh. Give me 50 shiny coins. White and heavy, not the yellow and heavy. And key is yours.'
+~
 QA
    "The shard?  You bring me the shard?"  His voice grows higher as he becomes
 excited.  "I will remember you for this, kind one.  Remember you forever!"
 ~
 R C 75000
 G I 28579
+Q
+'Here you are. And no complains. Skexis makes no refunds.'
+~
+R I 28598
+G C 50000
 S
 #28565
 M

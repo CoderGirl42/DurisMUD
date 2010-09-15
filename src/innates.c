@@ -40,6 +40,7 @@
 #define ADD_RACIAL_INNATE(innate, race, level) (racial_innates[(innate)][(race)-1] = (level))
 #define ADD_CLASS_INNATE(innate, ch_class, level, spec) {(class_innates[(innate)][flag2idx(ch_class)-1][(spec)] = (level));SET_BIT(class_innates_at_all[(innate)], ch_class);}
 
+extern Skill skills[];
 extern P_room world;
 extern P_event current_event;
 extern P_index mob_index;
@@ -117,6 +118,8 @@ void       do_divine_force(P_char, char *, int);
 
 int      get_relic_num(P_char ch);
 int      fight_in_room(P_char ch);
+
+int      bite_poison(P_char, P_char, int); 
 
 extern const struct innate_data innates_data[];
 const struct innate_data
@@ -1481,6 +1484,29 @@ void vampire_bite(P_char ch, P_char victim)
   affect_to_char(victim, &af);
 }
 
+/* replaces spell_poison() in insect and snake bites, to prevent magical shrug working on physical bites/poisons */
+int bite_poison(P_char ch, P_char victim, int mod)
+{
+  int was_poisoned;
+
+  if(NewSaves(victim, SAVING_SPELL, mod))
+    return FALSE;
+
+  was_poisoned = IS_SET(victim->specials.affected_by2, AFF2_POISONED);
+
+  if(!IS_TRUSTED(victim) && !IS_UNDEADRACE(victim))
+  {
+    (skills[number(FIRST_POISON, LAST_POISON)].spell_pointer) (GET_LEVEL(ch), ch, 0, 0, victim, 0);
+    act("&+G$n shivers slightly.", TRUE, victim, 0, 0, TO_ROOM);
+    if(was_poisoned)
+      send_to_char("&+GYou feel even more ill.\n", victim);
+    else
+      send_to_char("&+GYou feel very sick.\n", victim);
+  }
+  
+  return TRUE;
+}
+
 void insectbite(P_char ch, P_char victim)
 {
   struct damage_messages messages = {
@@ -1492,18 +1518,21 @@ void insectbite(P_char ch, P_char victim)
     "$n leaps towards $N and sinks $s jaws dripping with venom deep in $S flesh."};
   int i;
 
-  if (GET_LEVEL(ch) < number(1,100)) {
+  if ((GET_LEVEL(ch) + STAT_INDEX(GET_C_AGI(ch))) < number(1, GET_LEVEL(victim) + 2*STAT_INDEX(GET_C_AGI(victim)))) {
     send_to_char("You miss them by inches with your jaws!\n", ch);
     act("$n tries to sting $s foe with venom but misses.", FALSE, ch, 0, 0, TO_ROOM);
     return;
   }
 
-  if (raw_damage(ch, victim, GET_LEVEL(ch), RAWDAM_DEFAULT, &messages) ==
+  if (raw_damage(ch, victim, number(GET_LEVEL(ch), GET_LEVEL(ch)*3), RAWDAM_DEFAULT, &messages) ==
       DAM_NONEDEAD)
   {
     i = 1 + GET_LEVEL(ch)/12;
-    while (i-- && !IS_AFFECTED2(victim, AFF2_POISONED))
-      spell_poison(GET_LEVEL(ch), ch, 0, 0, victim, 0);
+    while (i-- && !bite_poison(ch, victim, i))
+	  ;
+/*	replaced by the above statement, to prevent magical shrug working on non-magical innate */
+/*    while (i-- && !IS_AFFECTED2(victim, AFF2_POISONED))
+      spell_poison(GET_LEVEL(ch), ch, 0, 0, victim, 0);*/
   }
 }
 
@@ -1525,18 +1554,21 @@ void event_snakebite(P_char ch, P_char victim, P_obj obj, void *data)
   if (!is_char_in_room(victim, ch->in_room))
     return;
 
-  if (GET_LEVEL(ch) < number(0, 100)) {
+  if ((GET_LEVEL(ch) + STAT_INDEX(GET_C_AGI(ch))) < number(1, GET_LEVEL(victim) + 2*STAT_INDEX(GET_C_AGI(victim)))) {
     act("$n misses $N by inches with $s fangs!", FALSE, ch, 0, victim, TO_NOTVICT);
     act("$n misses you by inches with $s fangs!", FALSE, ch, 0, victim, TO_VICT);
     return;
   }
 
-  if (raw_damage(ch, victim, GET_LEVEL(ch), RAWDAM_DEFAULT, &messages) ==
+  if (raw_damage(ch, victim, number(GET_LEVEL(ch), GET_LEVEL(ch)*3), RAWDAM_DEFAULT, &messages) ==
       DAM_NONEDEAD)
   {
     i = 1 + GET_LEVEL(ch)/12;
-    while (i-- && !IS_AFFECTED2(victim, AFF2_POISONED))
-      spell_poison(GET_LEVEL(ch), ch, 0, 0, victim, 0);
+    while (i-- && !bite_poison(ch, victim, i))
+	  ;
+/*	replaced by the above statement, to prevent magical shrug working on non-magical innate */
+/*    while (i-- && !IS_AFFECTED2(victim, AFF2_POISONED))
+      spell_poison(GET_LEVEL(ch), ch, 0, 0, victim, 0);*/
   }
 }
 
@@ -1574,7 +1606,8 @@ int parasitebite(P_char ch, P_char victim)
 
   damage = dice(level, 8+mod);
 
-  if (!StatSave(victim, APPLY_AGI, BOUNDED(-3, (GET_LEVEL(victim) - GET_LEVEL(ch)) / 5, 3)))
+  if (!StatSave(victim, APPLY_AGI, BOUNDED(-3, (GET_LEVEL(victim) - GET_LEVEL(ch) -
+                                           STAT_INDEX(GET_C_AGI(ch))/2) / 5, 3)))
   {
 /*  if (has_innate(ch, INNATE_LATCH) && !IS_ATTACHED(ch) && !number(0, 7-mod))
     {

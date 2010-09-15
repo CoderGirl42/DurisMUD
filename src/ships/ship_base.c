@@ -951,7 +951,7 @@ int ship_room_proc(int room, P_char ch, int cmd, char *arg)
        {
     //      if (SHIP_DOCKED(ship) || SHIP_ANCHORED(ship))
           {
-             if (world[ch->in_room].number == ship->entrance)
+             if (world[ch->in_room].number == ship->entrance || IS_TRUSTED(ch))
              {
                 if (!MIN_POS(ch, POS_STANDING + STAT_NORMAL) || IS_FIGHTING(ch)) 
                 {
@@ -987,7 +987,7 @@ int ship_room_proc(int room, P_char ch, int cmd, char *arg)
           SHIP_ROOM_EXIT(ship, j, WEST) == -1) {
           k = 1;
        }
-       if (!k) {
+       if (!k && !IS_TRUSTED(ch)) {
           send_to_char ("You are not close enough to the edge of the ship to jump out!\r\n", ch);
           return TRUE;
        }
@@ -1761,6 +1761,7 @@ void finish_sinking(P_ship ship)
         act_to_outside_ships(ship, ship, DEFAULT_RANGE, "&+W[%s]:&N %s&N&+y falls to pieces.\r\n", SHIP_ID(ship), SHIP_NAME(ship));
     }
     clear_ship_content(ship);
+    jettison_all(ship);
 
     if (!IS_NPC_SHIP(ship))
     {

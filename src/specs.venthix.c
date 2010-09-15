@@ -147,3 +147,5 @@ int orb_of_deception(P_obj obj, P_char ch, int cmd, char *arg)
   }
   return FALSE;
 }
+
+//test

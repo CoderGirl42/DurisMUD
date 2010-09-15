@@ -2905,6 +2905,10 @@ void show_exits_to_char(P_char ch, int room_no, int mode)
                          EX_CLOSED) ? "closed" : "open", FirstWord(EXIT(ch,
                                                                         i)->
                                                                    keyword));
+  	    
+  	    if (check_visible_wall(ch, i))   /* can we see that exit is walled off ?*/
+		      sprintf(buffer + strlen(buffer), "(%s) ", get_wall_dir(ch, i)->short_description);
+		      
         if (!IS_SET(EXIT(ch, i)->exit_info, EX_CLOSED))
         {
           if(!IS_TWILIGHT_ROOM(EXIT(ch, i)->to_room) &&
@@ -2975,8 +2979,8 @@ void do_read(P_char ch, char *argument, int cmd)
 
 void do_examine(P_char ch, char *argument, int cmd)
 {
-  char     name[MAX_INPUT_LENGTH], buf[MAX_INPUT_LENGTH + 4];
-  int      bits, wtype, craft, mat;
+  char     name[MAX_INPUT_LENGTH], buf[MAX_INPUT_LENGTH + 4], buf2[MAX_INPUT_LENGTH];
+  int      bits, wtype, craft, mat, percent;
   P_char   tmp_char;
   P_obj    tmp_object;
   float    result_space;
@@ -3136,6 +3140,31 @@ void do_examine(P_char ch, char *argument, int cmd)
       }
       sprintf(buf, "in %s", argument);
       do_look(ch, buf, -4);
+      
+      if (tmp_object->weight < 0)
+	      percent = 0;
+	    else
+	      percent = (int) (100 * tmp_object->weight / tmp_object->value[0]);
+	      
+  	  percent = BOUNDED(1, (int) percent, 100);
+  	  
+	    if (percent > 99)
+	      sprintf(buf2, "%s &nis full!\n", tmp_object->short_description);
+	    else if (percent > 80)
+	      sprintf(buf2, "%s &nis stuffed with items.\n", tmp_object->short_description);
+	    else if (percent > 60)
+	      sprintf(buf2, "%s &nis about three-quarters full.\n", tmp_object->short_description);
+	    else if (percent > 40)
+	      sprintf(buf2, "%s &nis about halfway full.\n", tmp_object->short_description);
+	    else if (percent > 30) 
+	      sprintf(buf2, "%s &nis partially filled.\n", tmp_object->short_description);
+	    else if (percent > 10)
+	      sprintf(buf2, "%s &ncan hold a lot more.\n", tmp_object->short_description);
+	    else
+	      sprintf(buf2, "%s &nis as good as empty.\n",  tmp_object->short_description);
+
+	    send_to_char(buf2, ch);
+            
     }
     else if (GET_ITEM_TYPE(tmp_object) == ITEM_CORPSE)
     {
@@ -6236,6 +6265,9 @@ void do_users_DEPRECATED(P_char ch, char *argument, int cmd)
 
 void do_inventory(P_char ch, char *argument, int cmd)
 {
+  char     buf[MAX_STRING_LENGTH];
+  int      i;
+
   if IS_AFFECTED
     (ch, AFF_WRAITHFORM)
       send_to_char("You have no place to keep anything!\n", ch);
@@ -6243,6 +6275,16 @@ void do_inventory(P_char ch, char *argument, int cmd)
   {
     send_to_char("You are carrying:\n", ch);
     list_obj_to_char(ch->carrying, ch, 1, TRUE);
+    
+    i = CAN_CARRY_N(ch) - IS_CARRYING_N(ch);
+	  
+	  if (i <= 0)
+	    send_to_char("You can carry no more items in your inventory.\n", ch);
+	  else
+	  {
+      sprintf(buf, "You can carry %d more items in your inventory.\n", i);
+      send_to_char(buf, ch);
+	  }
   }
 }
 

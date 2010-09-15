@@ -2033,6 +2033,39 @@ struct mcname {
 
 #define MAX_SPEC 4
 
+struct quest_msg_data
+{
+  char    *key_words;
+  char    *message;
+  bool     echoAll;
+  struct quest_msg_data *next;
+};
+
+struct goal_data
+{
+  char     goal_type;
+  int      number;
+  struct goal_data *next;
+};
+
+struct quest_complete_data
+{
+  char    *message;
+  struct goal_data *receive;
+  struct goal_data *give;
+  bool     disappear;
+  char    *disappear_message;
+  bool     echoAll;
+  struct quest_complete_data *next;
+};
+
+struct quest_data
+{
+  int      quester;             /* the mob id who is seeking the quest */
+  struct quest_msg_data *quest_message;
+  struct quest_complete_data *quest_complete;
+};
+
 struct proc_data {
         P_char victim;
         int dam;

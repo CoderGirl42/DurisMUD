@@ -40,82 +40,33 @@ int order_sail(P_char ch, P_ship ship, char* arg1, char* arg2)
 
 int jettison_cargo(P_char ch, P_ship ship, char* arg)
 {
-    int left = INT_MAX, done = 0;
+    int crates = INT_MAX;
     if (is_number(arg))
-        left = atoi(arg);
-
-    for (int i = 0; i < MAXSLOTS; i++)
-    {
-        if (ship->slot[i].type == SLOT_CARGO)
-        {
-            if (ship->slot[i].val0 > left)
-            {
-                send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", left, cargo_type_name(ship->slot[i].index));
-                ship->slot[i].val0 -= left;
-                done += left;
-                break;
-            }
-            else
-            {
-                send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", ship->slot[i].val0, cargo_type_name(ship->slot[i].index));
-                left -= ship->slot[i].val0;
-                done += ship->slot[i].val0;
-                ship->slot[i].clear();
-                if (left == 0)
-                    break;
-            }
-        }
-    }
-    if (done == 0) 
-    {
-        send_to_char("You have no cargo to jettison!\r\n", ch);
-    }
-    else
-    {
-        update_ship_status(ship);
-        write_ship(ship);
-    }
-    return TRUE;
+        crates = atoi(arg);
+    return jettison_cargo(ch, ship, crates);
 }
 
 int jettison_contraband(P_char ch, P_ship ship, char* arg)
 {
-    int left = INT_MAX, done = 0;
+    int crates = INT_MAX;
     if (is_number(arg))
-        left = atoi(arg);
+        crates = atoi(arg);
+    return jettison_contraband(ch, ship, crates);
+}
 
-    for (int i = 0; i < MAXSLOTS; i++)
+int salvage_cargo(P_char ch, P_ship ship, char* arg)
+{
+    if (ship->speed > 0)
     {
-        if (ship->slot[i].type == SLOT_CONTRABAND)
-        {
-            if (ship->slot[i].val0 > left)
-            {
-                send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", left, contra_type_name(ship->slot[i].index));
-                ship->slot[i].val0 -= left;
-                done += left;
-                break;
-            }
-            else
-            {
-                send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", ship->slot[i].val0, contra_type_name(ship->slot[i].index));
-                left -= ship->slot[i].val0;
-                done += ship->slot[i].val0;
-                ship->slot[i].clear();
-                if (left == 0)
-                    break;
-            }
-        }
+        send_to_char("You have to stop your ship to salvage!\r\n", ch);
+        return TRUE;
     }
-    if (done == 0) 
-    {
-        send_to_char("You have no contraband to jettison!\r\n", ch);
-    }
-    else
-    {
-        update_ship_status(ship);
-        write_ship(ship);
-    }
-    return TRUE;
+
+    int crates = INT_MAX;
+    if (is_number(arg))
+        crates = atoi(arg);
+
+    return salvage_cargo(ch, ship, crates);
 }
 
 int order_undock(P_char ch, P_ship ship)
@@ -823,7 +774,7 @@ int do_lock_target(P_char ch, P_ship ship, char* arg)
 
     if (!*arg) 
     {
-        send_to_char("Syntax: Lock <target id>\r\n", ch);
+        send_to_char("Syntax: Lock <id>/off\r\n", ch);
         return TRUE;
     }
     if (isname(arg, "off")) 
@@ -929,14 +880,14 @@ int look_cargo(P_char ch, P_ship ship)
             send_to_char_f(ch, "%s&n, &+Y%d&n crates, bought for %s.\r\n",
               cargo_type_name(ship->slot[slot].index),
               ship->slot[slot].val0,
-              coin_stringv(ship->slot[slot].val1));
+              ship->slot[slot].val1 != 0 ? coin_stringv(ship->slot[slot].val1) : "nothing");
         }
         else if (ship->slot[slot].type == SLOT_CONTRABAND) 
         {
             send_to_char_f(ch, "&+Y*&n%s&n, &+Y%d&n crates, bought for %s.\r\n",
               contra_type_name(ship->slot[slot].index),
               ship->slot[slot].val0,
-              coin_stringv(ship->slot[slot].val1));
+              ship->slot[slot].val1 != 0 ? coin_stringv(ship->slot[slot].val1) : "nothing");
         }
     }
 
@@ -1354,6 +1305,37 @@ int claim_coffer(P_char ch, P_ship ship)
     return TRUE;
 }
 
+int do_commands_help(P_ship ship, P_char ch)
+{
+    send_to_char("Valid info commands:\r\n", ch);
+    send_to_char(" look commands\r\n", ch);
+    send_to_char(" look ship/status\r\n", ch);
+    send_to_char(" look crew\r\n", ch);
+    send_to_char(" look cargo\r\n", ch);
+    send_to_char(" look weaponspec\r\n", ch);
+    send_to_char(" look contacts\r\n", ch);
+    send_to_char(" look tactical [<x> <y>]\r\n", ch);
+    send_to_char(" scan [<id>]\r\n\r\n", ch);
+
+    send_to_char("Valid control commands:\r\n", ch);
+    send_to_char(" order heading <N/E/S/W/NW/NE/SW/SE/heading>\r\n", ch);
+    send_to_char(" order speed <speed>:\r\n", ch);
+    send_to_char(" order sail <N/E/S/W/heading/off> <distance>:\r\n", ch);
+    send_to_char(" order jettison cargo/contraband [<ncrates>]\r\n", ch);
+    send_to_char(" order salvage [<ncrates>]\r\n", ch);
+    send_to_char(" order anchor/undock\r\n", ch);
+    send_to_char(" order maneuver <N/E/S/W>\r\n", ch);
+    send_to_char(" order fly/land\r\n", ch);
+    send_to_char(" order signal <id> <message>\r\n", ch);
+    send_to_char(" get coins/money\r\n\r\n", ch);
+
+    send_to_char("Valid combat commands:\r\n", ch);
+    send_to_char(" lock <id>/off\r\n", ch);
+    send_to_char(" look sight/weapon <weapon>\r\n", ch);
+    send_to_char(" fire <weapon/fore/rear/port/starboard>\r\n", ch);
+    send_to_char(" order ram [off]\r\n", ch);
+    return TRUE;
+}
 int ship_panel_proc(P_obj obj, P_char ch, int cmd, char *arg)
 {
     if (!ch && !cmd)
@@ -1408,7 +1390,7 @@ int ship_panel_proc(P_obj obj, P_char ch, int cmd, char *arg)
         half_chop(tmp_str, arg2, arg3);
       
         if (!(isname(arg1, "sail sa") ||
-              isname(arg1, "jettison j") ||
+              isname(arg1, "jettison j") || isname(arg1, "salvage") ||
               isname(arg1, "undock") ||
               isname(arg1, "maneuver") || isname(arg1, "m") ||
               isname(arg1, "anchor") ||
@@ -1455,6 +1437,10 @@ int ship_panel_proc(P_obj obj, P_char ch, int cmd, char *arg)
         if (isname(arg1, "sail sa")) 
         {
             return order_sail(ch, ship, arg2, arg3);
+        }
+        if (isname(arg1, "salvage"))
+        {
+            return salvage_cargo(ch, ship, arg2);
         }
         if (isname(arg1, "jettison j"))
         {
@@ -1534,6 +1520,10 @@ int ship_panel_proc(P_obj obj, P_char ch, int cmd, char *arg)
         half_chop(arg, arg1, tmp_str);
         half_chop(tmp_str, arg2, arg3);
 
+        if (isname(arg1, "commands")) 
+        {
+            return do_commands_help(ship, ch);
+        }
         if (isname(arg1, "cargo")) 
         {
             return look_cargo(ch, ship);
@@ -1572,3 +1562,4 @@ int ship_panel_proc(P_obj obj, P_char ch, int cmd, char *arg)
     }
     return FALSE;
 }
+

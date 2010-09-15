@@ -1487,3 +1487,197 @@ bool ocean_pvp_state()
     }
     return false;
 }
+
+
+
+
+int jettison_crates(P_ship ship, int crates, int index, int type)
+{
+    if (!IS_WATER_ROOM(ship->location))
+        return FALSE;
+    for (int i = 0; i < crates; i++)
+    {
+        if (number(1, 2) == 1)
+            continue;
+
+        int r_num;
+        if ((r_num = real_object(CARGO_CRATE_VNUM)) < 0)
+            return FALSE;
+        P_obj crate = read_object(r_num, REAL);
+        if (!crate) return FALSE;
+
+        crate->value[0] = index;
+        crate->value[1] = type;
+        obj_to_room(crate, ship->location);
+    }
+    return TRUE;
+}
+
+int jettison_cargo(P_char ch, P_ship ship, int left)
+{
+    int done = 0;
+
+    for (int i = 0; i < MAXSLOTS; i++)
+    {
+        if (ship->slot[i].type == SLOT_CARGO)
+        {
+            if (ship->slot[i].val0 > left)
+            {
+                if (ch) send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", left, cargo_type_name(ship->slot[i].index));
+                jettison_crates(ship, left, ship->slot[i].index, 1);
+                ship->slot[i].val0 -= left;
+                done += left;
+                break;
+            }
+            else
+            {
+                if (ch) send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", ship->slot[i].val0, cargo_type_name(ship->slot[i].index));
+                jettison_crates(ship, ship->slot[i].val0, ship->slot[i].index, 1);
+                left -= ship->slot[i].val0;
+                done += ship->slot[i].val0;
+                ship->slot[i].clear();
+                if (left == 0)
+                    break;
+            }
+        }
+    }
+    if (done == 0) 
+    {
+        if (ch) send_to_char("You have no cargo to jettison!\r\n", ch);
+    }
+    else
+    {
+        update_ship_status(ship);
+        write_ship(ship);
+    }
+    return TRUE;
+}
+
+int jettison_contraband(P_char ch, P_ship ship, int left)
+{
+    int done = 0;
+
+    for (int i = 0; i < MAXSLOTS; i++)
+    {
+        if (ship->slot[i].type == SLOT_CONTRABAND)
+        {
+            if (ship->slot[i].val0 > left)
+            {
+                if (ch) send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", left, contra_type_name(ship->slot[i].index));
+                jettison_crates(ship, left, ship->slot[i].index, 2);
+                ship->slot[i].val0 -= left;
+                done += left;
+                break;
+            }
+            else
+            {
+                if (ch) send_to_char_f(ch, "%d units of %s have been jettisoned!\r\n", ship->slot[i].val0, contra_type_name(ship->slot[i].index));
+                jettison_crates(ship, ship->slot[i].val0, ship->slot[i].index, 2);
+                left -= ship->slot[i].val0;
+                done += ship->slot[i].val0;
+                ship->slot[i].clear();
+                if (left == 0)
+                    break;
+            }
+        }
+    }
+    if (done == 0) 
+    {
+        if (ch) send_to_char("You have no contraband to jettison!\r\n", ch);
+    }
+    else
+    {
+        update_ship_status(ship);
+        write_ship(ship);
+    }
+    return TRUE;
+}
+
+void jettison_all(P_ship ship)
+{
+    jettison_cargo(0, ship, INT_MAX);
+    jettison_contraband(0, ship, INT_MAX);
+}
+
+int add_crate(P_ship ship, int index, int type)
+{
+    int slot = 0;
+    for (; slot < MAXSLOTS; ++slot) 
+    {
+        if (type == 1 && ship->slot[slot].type == SLOT_CARGO && ship->slot[slot].index == index && ship->slot[slot].val1 == 0)
+            break;
+        if (type == 2 && ship->slot[slot].type == SLOT_CONTRABAND && ship->slot[slot].index == index && ship->slot[slot].val1 == 0)
+            break;
+    }
+    if (slot != MAXSLOTS)
+    {
+        ship->slot[slot].val0++;
+    }
+    else
+    {
+        for (slot = 0 ; slot < MAXSLOTS; ++slot) 
+        {
+            if (ship->slot[slot].type == SLOT_EMPTY) 
+                break;
+        }
+        if (slot == MAXSLOTS) 
+            return FALSE;
+
+        if (type == 2)
+            ship->slot[slot].type =  SLOT_CONTRABAND;
+        else
+            ship->slot[slot].type =  SLOT_CARGO;
+        ship->slot[slot].index = index;
+        ship->slot[slot].position = SLOT_HOLD;
+        ship->slot[slot].val0 = 1;
+        ship->slot[slot].val1 = 0;
+    }
+    return TRUE;
+}
+
+
+int salvage_cargo(P_char ch, P_ship ship, int crates)
+{
+    if (crates <= 0)
+    {
+        if (ch) send_to_char("Invalid number of crates!\r\n", ch);
+        return TRUE;
+    }
+
+    int available = SHIP_AVAIL_CARGO_SALVAGE(ship);
+    if (available <= 0)
+    {
+        if (ch) send_to_char("You have no space on your ship!\r\n", ch);
+        return TRUE;
+    }
+
+    crates = MIN(crates, available);
+    
+    int i = 0;
+    P_obj obj = world[ship->location].contents;
+    while (obj && i < crates)
+    {
+        P_obj next_obj = obj->next_content;
+        if (obj_index[obj->R_num].virtual_number == CARGO_CRATE_VNUM)
+        {
+            if (!add_crate(ship, obj->value[0], obj->value[1]))
+            {
+                if (ch) send_to_char("There is no more space on your ship.\r\n", ch);
+                break;
+            }
+            i++;
+            extract_obj(obj, TRUE);
+        }
+        obj = next_obj;
+    }
+    if (i == 0)
+    {
+        if (ch) send_to_char("There is not nothing to pick up here.\r\n", ch);
+        return TRUE;
+    }
+    if (ch) send_to_char_f(ch, "Your crew hooks %d crates from the ocean surface.\r\n", i);
+
+    update_ship_status(ship);
+    return TRUE;
+}
+

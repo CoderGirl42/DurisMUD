@@ -262,3 +262,11 @@ key heavy bronze~
 18 20 3 0 7 0 1 1 0 0 0
 0 100 0 0 0 0 0 0
 1 10000 100
+#40226
+wooden crate~
+&+ya large wooden crate&N~
+&+yA large wooden crate floats here.&N~
+~
+13 5 3 0 7 0 8192 0 1024 0 0
+0 0 0 0 0 0 0 0
+0 0 100

@@ -2964,6 +2964,8 @@ P_obj find_missile(P_char, P_obj, const char *);
 P_obj find_throw(P_char, char *, int);
 int number_throw(P_char, char *);
 int check_wall(int, int);
+int check_visible_wall(P_char, int);
+P_obj get_wall_dir(P_char, int);
 bool can_obj_damage(P_obj, P_char);
 int is_slaying(P_obj, P_char, P_char);
 void return_home(P_char, P_char, P_obj, void*);
