@@ -1202,7 +1202,7 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
   percent += number(-5, 20);
 
   if (GET_CHAR_SKILL(ch, SKILL_ANATOMY))
-    percent += (int)(GET_CHAR_SKILL(ch, SKILL_ANAATOMY)/10);
+    percent += (int)(GET_CHAR_SKILL(ch, SKILL_ANATOMY)/10);
 
   if(!affected_by_spell(vict, SKILL_KI_STRIKE) &&
     (percent > number(1, 30)) &&
