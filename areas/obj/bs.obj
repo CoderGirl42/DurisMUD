@@ -1562,7 +1562,7 @@ A &+yband of deformities&N is lying here.~
 A
 10 -70
 A
-12 50
+27 10
 #74111
 ring triangular rubies~
 &+ra triangular ring of rubies&N~
@@ -1706,7 +1706,7 @@ A &+yband of barclay&N is lying here.~
 3 1 0 3 0 0 0 0
 0 3429 100
 A
-12 10
+14 10
 #74125
 wreath ivy~
 &+ga wreath of ivy&N~
@@ -2160,7 +2160,9 @@ A mask is lying here.~
 8 13 1 3 0 0 0 0
 1 21612 100
 A
-12 20
+28 5
+A
+26 5
 #74168
 shoes old brown~
 &+ysome old brown shoes&N~
