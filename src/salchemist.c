@@ -836,6 +836,12 @@ void do_encrust(P_char ch, char *argument, int cmd)
     act("Is THAT a jewel?!?!?", FALSE, ch, 0, 0, TO_CHAR);
     return;
   }
+  
+  if (jewel == item)
+  {
+  	act("Oh no you don't!", FALSE, ch, 0, 0, TO_CHAR);
+  	return;
+  }
 
   wizlog(56, "%s encrusted %s with %s", GET_NAME(ch), item->short_description,
          jewel->short_description);
