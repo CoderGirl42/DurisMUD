@@ -4,7 +4,7 @@
 It's eerily quiet as you approach and the air seems thicker.  Darkness
 starts to creep in, or is that just your imagination?
 ~
-1350 8388740 1
+1350 8388740 1 0
 D0
 You see a huge set of double doors leading into the mansion.
 The doors are thick and are made of solid oak.
@@ -15,7 +15,7 @@ D2
 The path leads back to an island.
 ~
 gate~
-0 0 6151
+0 0 132650
 S
 #135002
 &+bEntrance Hall&n~
@@ -32,7 +32,7 @@ in several places.  Under the stairs at the rear of the hall a
 third corridor leads east.  Glancing downwards you notice the ground
 looks dusty in some areas, and clean in others.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 The northern corridor runs that way.
 ~
@@ -70,7 +70,7 @@ You can hear ominous creaks as you walk along it.  A musty odor seems
 to be floating around as well.  A thin layer of dust covers the floor in
 most areas.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 A door lies in the northern wall.  It is open, and beyond it
 you can see a portion of a room.
@@ -101,7 +101,7 @@ many places have come away from the wall altogether.  Those few
 shelves still intact are empty.  The room gives off a musty smell from
 some of the remaining books.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 This leads back into the corridor.
 ~
@@ -116,7 +116,7 @@ riddled with damp rot.  There are three drawers in each pedestal and
 a large central drawer; the latter is closed but the others are all
 open -- two obviously broken open forcibly.
 ~
-1350 36872 0
+1350 36872 0 0
 D2
 This leads back into the corridor.
 ~
@@ -134,7 +134,7 @@ opens onto a small paved patio; the paving is now cracked and over-run
 with weeds.  There is a pile of refuse in the south east corner but otherwise,
 the room is bare.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 This leads back into the corridor.
 ~
@@ -153,7 +153,7 @@ To the south you see a door, and farther along there is another
 southern door.  A pungent odor hangs in the air, probably from some dead
 animal.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 The corridor continues eastward.
 ~
@@ -178,7 +178,7 @@ thing of any note in the room is a clump of tiny red mushrooms apparently
 growing out of the floor all around the fireplace in a roughly semicircular
 formation.  Otherwise, the room is bare.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 Out the door leads back to the corridor.
 ~
@@ -196,7 +196,7 @@ S
 particularly thick.  The only other exit besides the way back is a door
 in the southern wall.  It appears to be open.
 ~
-1350 36872 0
+1350 36872 0 0
 D2
 You can see into a room that looks like someone once lived there.
 ~
@@ -215,7 +215,7 @@ the room has been long since trashed and anything worth of value has been
 removed or destroyed.  The only matter of interest is that the plaster
 on the floor is significantly greater then elsewhere.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 Back through the door will take you to the eastern corridor.
 ~
@@ -228,7 +228,7 @@ S
 hall.  You can see a doorway to the west, and another one to the east.
 The corridor continues northwards, or southwards back to the entrance.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 The corridor continues northwards.
 ~
@@ -259,7 +259,7 @@ A broken chair stands against the wall between the windows and
 there is a heap of broken china in the north west corner.
 There doesn't look to be anything worth of value in here.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 Back through the doorway leads to the northern corridor.
 ~
@@ -273,7 +273,7 @@ The covers of both have been torn or cut and the stuffing has been
 pulled out; however, the wooden frames are still intact.  The pieces
 of a broken table lie on the floor near the north wall.
 ~
-1350 36872 0
+1350 36872 0 0
 D3
 To the west lies the northern corridor.
 ~
@@ -286,7 +286,7 @@ S
 The door is partially broken, and hanging off its hinges.  An odor of rotten
 food permeates the air here.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 Through the doorway you can see what used to be a kitchen.
 ~
@@ -312,7 +312,7 @@ fixed to the wall about 5' above floor level.
 left to right; even from the door it is obvious that the woodwork
 is decayed and a few of the treads are missing.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 A small doorway leads into an equally small room.
 ~
@@ -348,7 +348,7 @@ under the window; a small heap of crockery shards is on the floor
 beside it.  Stairs lead down into the darkness of what is presumably
 a cellar.
 ~
-1350 36872 0
+1350 36872 0 0
 D3
 This leads back into the kitchen.
 ~
@@ -375,7 +375,7 @@ the full width of the house, doors leading off it to the south.
 Opposite the western portion of the gallery is another corridor
 leading north.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This will take you along the upper northern corridor.
 ~
@@ -403,7 +403,7 @@ S
 Directy to the south is a door, and a little ways down the corridor
 you can see another door in the south wall.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 This leads back to the gallery.
 ~
@@ -428,7 +428,7 @@ Some of the floorboards are missing and there is rubbish scattered
 around.  A tall wooden cupboard stands against the wall opposite the
 fireplace, its door closed.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This leads back to the western corridor.
 ~
@@ -446,7 +446,7 @@ S
 which looks like another bedroom lies through it.  Otherwise you have
 to go back towards the gallery.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 This will take you back along the western corridor towards the gallery.
 ~
@@ -468,7 +468,7 @@ opposite the fireplace.  Its woodwork is worm-ridden and the curtains
 which once screened the bed are torn and stained.  There is no bed
 linen, but the carcass of the bed is relatively intact.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This leads back to the western corridor.
 ~
@@ -485,7 +485,7 @@ S
 your south, and the corridor continues farther east.  Faint layers of dust
 cover the floor.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 The upper eastern corridor continues.
 ~
@@ -512,7 +512,7 @@ from what appears to be a small, highly reflective object. Or was that
 just an illusion?
 There is no furniture in here.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This leads back to the eastern corridor.
 ~
@@ -524,7 +524,7 @@ S
    This corridor runs eastwards from the gallery.  There is a door to your
 south, and the corridor continues farther east.
 ~
-1350 36872 0
+1350 36872 0 0
 D1
 The upper eastern corridor continues.
 ~
@@ -548,7 +548,7 @@ S
 the floor in here does not look particularly safe; some floorboards
 are missing while others appear to have suffered partial collapse.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 The doorway leads back into the eastern corridor.
 ~
@@ -561,7 +561,7 @@ S
 Strangely, the southern door appears to be closed, and you can see
 a lock on the door.  Strangely, this area seems devoid of any dust.
 ~
-1350 36872 0
+1350 36872 0 0
 D2
 ~
 door~
@@ -582,7 +582,7 @@ S
 What used to be grand furniture has since been destroyed until nothing left
 of value remains.  There is a fireplace along the western wall.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This takes you back to the eastern corridor.
 ~
@@ -595,7 +595,7 @@ S
 to your east, and to the north the corridor continues.  Ominous creaks
 resound through the halls with each step.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 The northern corridor continues.
 ~
@@ -621,7 +621,7 @@ In the center is a single mattress which has been badly torn and from
 which the stuffing protrudes.  Under the window is a large wooden chest,
 the timbers split.
 ~
-1350 36872 0
+1350 36872 0 0
 D3
 Out the door takes you back to the corridor.
 ~
@@ -637,7 +637,7 @@ S
    This corrider runs north from the gallery.  You see a door in the wall
 to your east, and to the north the corridor continues.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 The northern corridor widens into a large room.
 ~
@@ -663,7 +663,7 @@ all broken, two splintered wooden buckets and a mildewed sack.  Just
 inside the door is a bundle of what looks like clothing; this bundle
 carries no dust and appears to have been put here recently.
 ~
-1350 36872 0
+1350 36872 0 0
 D3
 This takes you back to the corridor.
 ~
@@ -691,7 +691,7 @@ This has mostly collapsed -- only the lowest six step are still intact
 and there is no easy access to the hole in the ceiling to where the
 staircase used to lead.
 ~
-1350 36872 0
+1350 36872 0 0
 D2
 This leads back down the corridor towards the gallery.
 ~
@@ -719,7 +719,7 @@ There are pieces of broken furniture here and there, and rubbish is
 heaped about the floor.  There are two large sacks in the northwest
 corner.  Otherwise there appears to be nothing of interest here.
 ~
-1350 36872 0
+1350 36872 0 0
 D2
 This leads to the southern section of the attic.
 ~
@@ -739,7 +739,7 @@ storage room where the bric-a-brac of many years has been left.
 There are more broken pieces of furniture, a few sacks and piles of
 old clothes, but in general nothing of interest.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This leads to the northern section of the attic.
 ~
@@ -762,7 +762,7 @@ storage bins which appear to be empty.
    In the center of the room lies a human corpse.  It appears that this
 person has been long dead, and the malodorous stench confirms it.
 ~
-1350 36873 0
+1350 36873 0 0
 D2
 ~
 secret~
@@ -804,7 +804,7 @@ and earthenware cooking utensils, while next to it is a small pile of logs.
    Near the stove are two small, unbroached casks; next to them is a bolt
 of cloth.
 ~
-1350 4231176 0
+1350 4231176 0 0
 D0
 ~
 secret~
@@ -857,7 +857,7 @@ S
 to show that the room is only about 12' across, but to your left there
 is only darkness.  What little you can see is dingy and dirty.
 ~
-1350 36873 0
+1350 36873 0 0
 D1
 ~
 secret~
@@ -886,7 +886,7 @@ unlit candle remaining in it, and a variety of other items which,
 even in the dim light, shine with the warmth of pure gold.  One of these
 objects looks like a human skull.
 ~
-1350 134254601 0
+1350 134254601 0 0
 D3
 ~
 secret~
@@ -907,7 +907,7 @@ moveable shutter over the lens; the lantern is unlit.
    On a shelf above the table are stacked three books.
    In the northwest corner is a wooden cupboard with the door closed.
 ~
-1350 4231176 0
+1350 4231176 0 0
 D1
 This will take you back into the cellar.
 ~
@@ -946,7 +946,7 @@ S
 in diameter.  Faint sounds of water dripping echo throughout the cavern.
 There appears to be nothing of interest here.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 ~
 secret~
@@ -973,7 +973,7 @@ S
    This cavern is mainly used to get from one cavern to another.  The sound
 of water seems to be growing louder.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 This takes you to a large cavern.
 ~
@@ -991,7 +991,7 @@ S
 in diameter.  There appears to be nothing of interest here.  The smell of
 salt water fills the air here.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 This takes you to a small walkway passage.
 ~
@@ -1015,7 +1015,7 @@ S
 of salt water is becoming stronger along with the sounds of water echoing
 off the walls.
 ~
-1350 36873 0
+1350 36873 0 0
 D1
 This continues along the passage.
 ~
@@ -1038,7 +1038,7 @@ S
 of salt water is becoming stronger along with the sounds of water echoing
 off the walls.
 ~
-1350 36873 0
+1350 36873 0 0
 D1
 This leads into a natural cavern.
 ~
@@ -1061,7 +1061,7 @@ S
 held in brackets around the walls.  Salty smelling air is becoming the normal
 odor at this point.
 ~
-1350 36872 0
+1350 36872 0 0
 D3
 This takes you back to a side passage.
 ~
@@ -1075,7 +1075,7 @@ coarse matting has been laid in various places on the floor.  The
 passage narrows greatly here.  The smell of salt water is really strong by
 now.  The sound of waves and the ocean echo nearby.
 ~
-1350 36872 0
+1350 36872 0 0
 D0
 This takes you to a side passage.
 ~
@@ -1094,7 +1094,7 @@ salt water here is intense, and you can clearly make out the sounds of the
 ocean.  The walls here are slicked with what must be mist from the ocean
 nearby.
 ~
-1350 36873 0
+1350 36873 0 0
 D0
 This will take you to a narrow passage.
 ~
@@ -1114,7 +1114,7 @@ there is an obvious high water mark which in places is 3' above the
 floor.  Pulled up onto the sloping cave floor is a small one person boat
 which glows with a light blue nimbus around it.  Is the boat really there?
 ~
-1350 36873 0
+1350 36873 0 0
 D3
 This way leads to a natural cave.
 ~
