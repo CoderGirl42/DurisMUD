@@ -1296,11 +1296,11 @@ bool guildhall_map_check(P_char ch)
     if( dist )
       dist = (int) sqrt(dist); // calculate_map_distance returns the square of the distance
     
-    if( dist < 0 || dist > MAX_GH_HOMETOWN_RADIUS )
-    {
-      send_to_char("You need to build your guildhall closer to Tharnadia.\r\n", ch);
-      return FALSE;
-    }
+    //if( dist < 0 || dist > MAX_GH_HOMETOWN_RADIUS )
+    //{
+      //send_to_char("You need to build your guildhall closer to Tharnadia.\r\n", ch);
+      //return FALSE;
+    //}
   }
 
   if( GET_RACEWAR(ch) == RACEWAR_EVIL )
