@@ -3870,7 +3870,7 @@ void spell_destroy_undead(int level, P_char ch, char *arg, int type,
     return;
   }
 
-  dam = 9 * MIN(level, 56) + number(-40, 40);
+  dam = 15 * MIN(level, 56) + number(-40, 40);
 // dam = 13 * level + number(0, level);
   if(saves_spell(victim, SAVING_SPELL))
     dam >>= 1;
