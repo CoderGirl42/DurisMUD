@@ -342,9 +342,7 @@ int calculate_hitpoints(P_char ch)
   if(toughness > 0 &&
      !GET_CLASS(ch, CLASS_MONK))
   {
-    hps += (int) (toughness * get_property("epic.skill.toughness", 0.500));
-    if (GET_CLASS(ch, CLASS_WARRIOR | CLASS_PALADIN | CLASS_ANTIPALADIN | CLASS_MERCENARY))
-      hps *= 2;
+    hps += (int) (toughness * get_property("epic.skill.toughness", 0.500) * (GET_CLASS(ch, CLASS_WARRIOR | CLASS_PALADIN | CLASS_ANTIPALADIN | CLASS_MERCENARY) ? 2 : 1));
   }
   else
   {
