@@ -1168,7 +1168,7 @@ void event_leglock(P_char ch, P_char victim, P_obj obj, void *data)
   else
   {
     gclvl = GET_CHAR_SKILL(ch, SKILL_GRAPPLER_COMBAT)/20;
-    percent = BOUNDED(0, (GET_C_STR(ch) - GET_C_STR(victim)), 5+gclvl) + number(, 2);
+    percent = BOUNDED(0, (GET_C_STR(ch) - GET_C_STR(victim)), 5+gclvl) + number(0, 2);
     str = (int)(GET_C_STR(ch)/10);
 
     struct affected_type *afp;
