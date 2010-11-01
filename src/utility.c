@@ -5012,3 +5012,16 @@ const char *condition_str(P_char ch)
   else
     return "&+rbleeding, close to death";
 }
+
+int check_castle_walls(int from, int to)
+{
+  if ((world[to].sector_type == SECT_CASTLE_WALL &&
+       world[from].sector_type != SECT_CASTLE_WALL &&
+       world[from].sector_type != SECT_CASTLE) ||
+      (world[from].sector_type == SECT_CASTLE_WALL && 
+       (world[to].sector_type != SECT_CASTLE &&
+	world[to].sector_type != SECT_CASTLE_WALL)))
+    return TRUE;
+  else
+    return FALSE;
+}
