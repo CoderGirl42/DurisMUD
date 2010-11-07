@@ -685,6 +685,7 @@ void assign_mobiles(void)
 
   /* Tharn */
 
+  world[real_room0(132507)].funct = welfare_well;
   mob_index[real_mobile0(150115)].func.mob = outpost_captain;
   mob_index[real_mobile0(150116)].func.mob = outpost_captain;
   mob_index[real_mobile0(150117)].func.mob = outpost_captain;

@@ -3167,7 +3167,10 @@ void add_coins(P_obj pile, int copper, int silver, int gold, int platinum)
   else if (num == 0)
     return;
 
-  pile->weight = num / 75;
+  // Making money weightless per Kitsero due to money inflation causing
+  // issues with weight.  - Venthix Nov '10
+  //pile->weight = num / 75;
+  pile->weight = 0;
 
   if (num >= 1000000)
   {

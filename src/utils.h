@@ -522,7 +522,8 @@ int race_size(int race);
 #define GET_OBJ_SIZE(obj)  (((obj)->size > 0) ? (obj)->size : 0)
 #define GET_OBJ_SPACE(obj)  (((obj)->space > 0) ? (obj)->space : 0)
 
-#define COIN_WEIGHT(c, s, g, p) (((c) + (s) + (g) + (p)) / 50)
+#define COIN_WEIGHT(c, s, g, p) (0)
+//#define COIN_WEIGHT(c, s, g, p) (((c) + (s) + (g) + (p)) / 50)
 
 #define CAN_CARRY_W(ch) (str_app[STAT_INDEX(GET_C_STR(ch))].carry_w + (IS_TRUSTED(ch)? 20000: 0))
 

@@ -339,12 +339,18 @@ int building_mob_proc(P_char ch, P_char pl, int cmd, char *arg)
       gl = pl->group;
       while (gl)
       {
-	if (GET_A_NUM(gl->ch) == GET_A_NUM(ch))
+	if (GET_A_NUM(gl->ch) == building->guild_id)
 	  allow = TRUE;
         gl = gl->next;
       }
     }
     
+    if (allow && IS_FIGHTING(pl))
+    {
+      act("&+WYou cannot enter a guildhall in combat!", FALSE, pl, 0, 0, TO_CHAR);
+      return TRUE;
+    }
+
     if (!allow)
     {
       send_to_char("You don't own this outpost!\r\n", pl);
