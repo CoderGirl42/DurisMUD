@@ -2158,7 +2158,8 @@ void do_give(P_char ch, char *argument, int cmd)
       return;
     }
 
-    if ((IS_NPC(vict) && (GET_RNUM(vict) == real_mobile(250))) ||
+    if ((IS_NPC(vict) && ((GET_RNUM(vict) == real_mobile(250)) ||
+	(GET_RNUM(vict) == real_mobile(650)))) ||
         IS_AFFECTED(vict, AFF_WRAITHFORM))
     {
       send_to_char("They couldn't carry that if they tried.\r\n", ch);
