@@ -14,10 +14,12 @@
 #include "new_combat.h"
 #include "utils.h"
 #include "damage.h"
+#include "db.h"
 #include <string.h>
 
 extern P_room   world;                 /* dyn alloc'ed array of rooms     */
 extern int rev_dir[];
+extern struct zone_data *zone_table;
 /*
  * getWeaponDamType
  */
@@ -107,6 +109,18 @@ void event_random_exit(P_char ch, P_char victim, P_obj obj, void *data)
       CREATE(world[s_room].dir_option[exit_dir], room_direction_data, 1, MEM_TAG_DIRDATA);
       memset(world[s_room].dir_option[exit_dir], 0, sizeof(struct room_direction_data));
     }
+    else
+    { // if an exit exists, we close off the zone the exit leads to
+      // if we are using this as a random exit generator instead leading
+      // to the same zone, it's ok, because we remove the closed flag of
+      // the destination zone below.  Example result: Desolate is closed,
+      // and Desolate Under Fire (default closed) becomes opened.  This
+      // will help prevent people shifting into the zone when they shouldn't.
+      if (!(zone_table[world[(world[s_room].dir_option[exit_dir])->to_room].zone].flags & ZONE_CLOSED))
+      { // close it...
+	SET_BIT(zone_table[world[(world[s_room].dir_option[exit_dir])->to_room].zone].flags, ZONE_CLOSED);
+      }
+    }
     if (!world[d_room].dir_option[rev_dir[exit_dir]]) {
       CREATE(world[d_room].dir_option[rev_dir[exit_dir]], room_direction_data, 1, MEM_TAG_DIRDATA);
       memset(world[d_room].dir_option[rev_dir[exit_dir]], 0, sizeof(struct room_direction_data));
@@ -114,6 +128,8 @@ void event_random_exit(P_char ch, P_char victim, P_obj obj, void *data)
     world[s_room].dir_option[exit_dir]->to_room = 
       real_room(obj->value[1]);
     world[d_room].dir_option[rev_dir[exit_dir]]->to_room = s_room;
+    if (zone_table[world[d_room].zone].flags & ZONE_CLOSED)
+      REMOVE_BIT(zone_table[world[d_room].zone].flags, ZONE_CLOSED);
   }
 
   extract_obj(obj, TRUE);
