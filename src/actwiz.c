@@ -2017,31 +2017,31 @@ void do_stat(P_char ch, char *argument, int cmd)
     if (j->bitvector)
     {
       sprintbitde(j->bitvector, affected1_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits  : &N%s\n", buf2);
+      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 1: &N%s\n", buf2);
     }
 
     if (j->bitvector2)
     {
       sprintbitde(j->bitvector2, affected2_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 2 : &N%s\n", buf2);
+      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 2: &N%s\n", buf2);
     }
 
     if (j->bitvector3)
     {
       sprintbitde(j->bitvector3, affected3_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet ch bits 3: &N%s\n", buf2);
+      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 3: &N%s\n", buf2);
     }
 
     if (j->bitvector4)
     {
       sprintbitde(j->bitvector4, affected4_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet ch bits 4: &N%s\n", buf2);
+      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 4: &N%s\n", buf2);
     }
 
     if (j->bitvector5)
     {
       sprintbitde(j->bitvector5, affected5_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet ch bits 5: &N%s\n", buf2);
+      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 5: &N%s\n", buf2);
     }
 
     if (j->extra_flags)
@@ -2066,7 +2066,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       sprintf(o_buf + strlen(o_buf), "&+Y%s : &N%s\n",
               IS_SET(j->extra_flags,
                      ITEM_ALLOWED_CLASSES) ? "Allowed classes" :
-              "Denied classes ", buf2);
+              "Denied classes", buf2);
     }
 
     if (j->anti2_flags)
@@ -2078,7 +2078,7 @@ void do_stat(P_char ch, char *argument, int cmd)
                   race_names_table[x + 1].no_spaces);
       sprintf(o_buf + strlen(o_buf), "&+Y%s  : &N%s\n",
               IS_SET(j->extra_flags,
-                     ITEM_ALLOWED_RACES) ? "Allowed races" : "Denied races ",
+                     ITEM_ALLOWED_RACES) ? "Allowed races" : "Denied races",
               buf2);
     }
 

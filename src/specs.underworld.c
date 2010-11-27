@@ -3068,7 +3068,7 @@ int barb(P_obj obj, P_char ch, int cmd, char *arg)
       }
       else if ((obj->timer[0] + 60 <= curr_time) &&
                (GET_RACE(ch) == RACE_MOUNTAIN ||
-               GET_RACE(ch) == RACE_DUERGAR))
+               GET_RACE(ch) == RACE_DUERGAR) && !GET_CLASS(ch, CLASS_BERSERKER))
       {
         act("You say 'power'", FALSE, ch, 0, 0, TO_CHAR);
         act("Your $q fills you with the power of the &+yancient dwarven battleragers!&n", FALSE, ch, obj, NULL, TO_CHAR);

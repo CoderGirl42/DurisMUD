@@ -61,7 +61,7 @@ void do_dread_wrath(P_char ch, P_char victim)
          FALSE, ch, 0, victim, TO_NOTVICT);
   act ("&+LYou feel terror strike at your very soul as $n&+L draws $s unholy weapon against you!",
          FALSE, ch, 0, victim, TO_VICT);
-  act ("&+LYou can almost taste the terror of $N&+L as you fiercly rush to strike $M down!",
+  act ("&+LYou can almost taste the terror of $N&+L as you fiercely rush to strike $M down!",
           FALSE, ch, 0, victim, TO_CHAR);
 
   notch_skill(ch, SKILL_DREAD_WRATH, 50);
