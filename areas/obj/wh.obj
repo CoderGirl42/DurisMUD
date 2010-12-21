@@ -356,9 +356,9 @@ vial bodyrush~
 &+La vial of &+ybody&+rrush&n~
 &+LA small vial of &+ybody&+rrush &+Lhas been thrown away here.&n~
 ~
-10 15 3 0 7 0 1 8388609 64 0 0
+10 7 3 0 7 0 1 8388609 64 0 0
 40 41 0 0 0 0 0 0
-0 0 100
+1 0 100
 #55033
 gnomish shopkeepers token _noquest_~
 &+La &+Rgn&+romi&+Rsh &+Lshopkeepers token&n~
@@ -536,23 +536,23 @@ mighty warmace smite _noquest_~
 ~
 5 10 3 0 12 0 0 8193 64 0 0
 7 4 4 0 0 0 0 0
-0 0 100
+7 0 100 32768 0 0 0
 A
-22 -4
+22 -3
 A
-31 4
+31 3
 #55054
 glorious ring underdark _noquest_~
 &+Lthe &+mglorious &+Lring of the &+MUnderdark&n~
 &+LA very &+mglorious &+Lring lies here.&n~
 ~
-9 1 3 0 7 0 1 3 64 0 0
+9 22 3 0 7 0 1 3 64 0 0
 0 0 0 0 0 0 0 0
-0 0 100 8 2 0 0
+1 0 100 8 0 0 0
 A
 20 -4
 A
-13 25
+13 15
 #55055
 token layla _noquest_~
 &+WLayla's &+Ctoken &+Lof &+Cappreciation~
@@ -608,11 +608,11 @@ cloak spun smoke _noquest_~
 ~
 9 1 3 0 7 0 0 1025 64 0 0
 0 0 0 0 0 0 0 0
-0 0 100 536870916 0 0 0
+2 0 100 536870916 0 0 0
 A
-55 4
+55 8
 A
-35 4
+32 3
 #55062
 engraved dragonscale bracelet _noquest_~
 &+Wan &+Lengraved &+rdragon&+Lscale &+Wbracelet&n~
@@ -735,7 +735,7 @@ spiked mace vampire _noquest_~
 &+LA dangerous looking &+rspiked &+Lmace lies here.&n~
 ~
 5 18 3 0 11 0 8192 8193 64 0 0
-0 4 3 0 0 0 0 0
+0 4 4 0 0 0 0 0
 0 0 100
 A
 18 5
@@ -2662,21 +2662,19 @@ power elixir _noquest_~
 &+Lthe &+Melixir &+Lof &+mpower~
 &+LA really &+mpowerful &+Melixir &+Llies here.&n~
 ~
-10 7 1 0 7 0 0 8404993 0 0 0
+10 7 1 0 7 0 72 8388609 0 0 0
 56 227 56 355 0 0 0 0
-0 25000 100
-T
-2 0 0 0
+2 150000 100
 #55205
 flaming axe illithid lords _noquest_~
 &+Lthe &+rf&+Rl&+ra&+Rm&+ri&+Rn&+rg &+Laxe of the &+MIllithid &+Llords&n~
 &+LA mysterious &+Mpurple &+Laxe lies on the ground.&n~
 ~
-5 19 3 0 15 0 9280 8193 66 87085083 0
-1 4 5 0 0 0 0 0
-4 0 100
+5 19 3 0 15 0 9280 8193 66 87048219 0
+1 5 5 0 0 0 0 0
+6 0 100
 A
-31 5
+31 4
 A
 19 5
 T
@@ -2726,11 +2724,11 @@ fabled electrum dagger ra _noquest_~
 &+Lthe &+Yf&+Wa&+Yb&+Wl&+Ye&+Wd &+Celectrum &+Ldagger named '&+YRa&+L'~
 &+LA shattered &+Ybeam &+Lof &+Ysunlight &+Llies here.&n~
 ~
-5 20 3 0 15 0 9280 8193 66 3198979 0
-2 2 11 0 0 0 0 0
+5 20 3 0 15 0 9280 8193 66 61440 0
+2 4 4 0 0 0 0 0
 4 0 100
 A
-32 7
+32 4
 A
 18 5
 T
@@ -2741,8 +2739,8 @@ spiked mace death seekers _noquest_~
 &+LA large spiked mace lies here.&n~
 ~
 5 20 3 0 15 0 8192 8193 66 0 0
-7 4 5 0 0 0 0 0
-4 0 100 16 0 0 262144
+7 4 3 0 0 0 0 0
+5 0 100 16 0 0 0
 A
 33 4
 A
@@ -2971,9 +2969,13 @@ wicked scepter chronomancer _noquest_~
 &+Lthe &+rwi&+Rck&+red &+Lscepter of the Chronomancer&n~
 &+La really &+rawe&+Rso&+rme &+Lscepter has been left here.&n~
 ~
-13 12 3 0 7 0 0 1 0 0 0
-0 0 0 0 0 0 0 0
-0 0 100
+5 6 3 0 7 0 0 8193 0 0 0
+7 3 3 0 0 0 0 0
+4 0 100
+A
+3 4
+A
+19 3
 #55239
 timeless quiver dragons _noquest_~
 &+Lthe &+mti&+Mme&+mle&+Mss &+Lquiver of the &+gdr&+Gago&+gns&n~
@@ -2987,8 +2989,8 @@ A
 A
 30 10
 #55240
-senew dragons heart _noquest_~
-&+Lthe &+rse&+Rn&+rew &+Lof a &+gdr&+Gago&+gns &+rhe&+Ra&+rrt&n~
+sinew dragons heart _noquest_~
+&+Lthe &+rsi&+Rn&+rew &+Lof a &+gdr&+Gago&+gns &+rhe&+Ra&+rrt&n~
 &+La pile of &+gdr&+Gago&+gn &+rfl&+Re&+rsh &+Llies here.&n~
 ~
 13 2 3 0 7 0 1 1 0 0 0
@@ -2999,13 +3001,13 @@ earring dragon lords _noquest_~
 &+Lthe &+mea&+Mrr&+min&+Mg &+Lof the &+gDr&+Gago&+gn &+rL&+Ror&+rds&n~
 &+LAn amazing &+mea&+Mrr&+min&+Mg &+Llies here.&n~
 ~
-9 12 3 0 7 0 0 524289 0 0 0
+9 26 3 0 7 0 0 524289 0 0 0
 0 0 0 0 0 0 0 0
-0 0 100 268435460 0 0 536870912
+1 0 100 268435460 0 0 0
 A
-57 -1
+23 -5
 A
-58 -1
+35 3
 #55242
 locket glacier _noquest_~
 &+Lthe locket of the &+wgl&+ca&+Cc&+ci&+wer&n~
@@ -3455,7 +3457,7 @@ T
 2 0 0 0
 #55277
 titan warhammer snow ogre kings _noquest_ _id_~
-&+Wthe &+Cti&+Wt&+Can &+Wwar&+Chammer &+Wof the &+Wsnow &+bogre &+Wkings&n~
+&+Wthe &+Cti&+Wt&+Can &+Wwarhammer &+Cof the &+WSnow &+bOgre &+Wkings&n~
 &+WA mighty warhammer lies here.&n~
 ~
 5 19 2 0 14 0 9288 8193 66 87081275 0
@@ -3476,8 +3478,6 @@ A
 18 5
 A
 19 5
-T
-2 0 0 0
 #55278
 strange gnomish contraption _noquest_~
 &+La strange &+Rgn&+romi&+Rsh &+Lcontraption~
@@ -3511,9 +3511,9 @@ gauntlets living legend _noquest_~
 0 0 0 0 1 0 0 0
 0 0 100 524288 0 0 0
 A
-13 35
+13 25
 A
-17 -75
+17 -25
 T
 2 0 0 0
 #55281
@@ -3782,28 +3782,24 @@ mystical longsword volo traveler _noquest_~
 &+cA r&+Leally &+cw&+Licked &+cl&+Looking &+cl&+Longsword &+cl&+Lies &+ch&+Lere.&n~
 ~
 5 19 2 0 15 0 9288 8193 66 87048219 0
-5 4 5 0 0 0 0 0
-0 0 100 32 0 16777216 0
+5 5 5 0 0 0 0 0
+6 0 100 32 0 16777216 0
 A
-55 4
+55 8
 A
 19 5
-T
-2 0 0 0
 #55307
 infamous platemail fame _noquest_~
 &+Lthe &+min&+Mfa&+mmo&+Mus &+Lplatemail named '&+mF&+Ma&+mm&+Me&+L'&n~
 &+LA really &+Mki&+mck&+Mas&+ms &+Lset of &+Mp&+Llate&+mm&+Lail lies here.&n~
 ~
-9 1 2 0 14 0 9224 9 66 87081019 0
+9 35 3 0 14 0 9224 9 66 83902489 0
 0 0 0 5 1 0 0 0
-0 0 100 16 0 0 0
+20 0 100 16 0 0 0
 A
-17 -100
+17 -75
 A
-26 10
-T
-2 0 0 0
+36 4
 #55308
 captured egos immortals _noquest_~
 &+Lthe captured &+Me&+mg&+Mo&+ms &+Lof the &+mim&+Mmo&+mrt&+Mal&+ms&n~
@@ -3956,13 +3952,13 @@ tower shield indomitability _noquest_~
 &+Lt&+rh&+Re &+Lt&+ro&+Rw&+re&+Lr &+Ls&+rh&+Rie&+rl&+Ld &+Lo&+rf &+LIn&+rdo&+Rmi&+Lta&+Rbi&+rli&+Lty&n~
 &+LA s&+rh&+Rie&+rl&+Ld &+Ll&+rie&+Ls &+Lh&+rer&+Le &+Lr&+rad&+Riat&+rin&+Lg &+Lp&+ro&+Rw&+re&+Lr.&n~
 ~
-37 1 2 0 14 0 33563656 513 66 87081017 0
+37 19 2 0 14 0 33563656 513 66 16409 0
 1 7 5 0 5 1 0 0
-0 0 100 128 0 0 1048576
+15 0 100 128 0 0 1048576
 A
-2 10
+36 3
 A
-22 -7
+22 -5
 T
 2 0 0 0
 #55321
@@ -4142,13 +4138,13 @@ rapier penetration _noquest_~
 &+ct&+Ch&+Le &+cr&+Ca&+Lpier &+cc&+Ca&+Llled &+W'&+cP&+Cenetration&+W'&n~
 &+cA &+Cslender &+cand &+Cbeautiful &+crapier lies here in the dust.&n~
 ~
-5 22 3 0 11 0 67108864 8193 64 0 0
-2 2 9 0 0 0 0 0
-0 0 100 0 0 0 1048576
+5 22 3 0 11 0 67239936 8193 64 0 0
+2 4 4 0 0 0 0 0
+4 0 100 0 0 0 1048576
 A
-32 7
+32 3
 A
-18 4
+18 3
 #55338
 massive trident poseidon _noquest_~
 &+Bthe&+Ce m&+Bas&+Csi&+Bve &+Ctr&+Bid&+Cen&+Bt o&+Co P&+Bos&+Cei&+Bdo&+Cn&n~
@@ -4186,13 +4182,13 @@ massive greatsword random _noquest_~
 &+Lthe &+Ymassive &+Lgreat&+Ysword &+Lcalled '&+YRandom&+L'&n~
 &+LA &+Ymassive &+Lgreat&+Ysword lies here.&n~
 ~
-5 10 3 0 14 0 4202496 8193 64 0 0
-13 4 5 0 0 0 0 0
-0 0 100
+5 10 4 0 14 0 4202496 8193 64 0 0
+13 7 4 0 0 0 0 0
+16 0 100 16 0 0 0
 A
 18 6
 A
-31 6
+31 4
 #55342
 infamous dagger venom crystal~
 &+Lthe &+rinfa&+Rmous &+gcry&+Gs&+gtal &+Ldagger named &+r'&+GVe&+gn&+Gom&+r'&n~
@@ -5080,13 +5076,13 @@ spiked crown mental resistance~
 &+Lthe &+mspiked &+Lcrown of &+mmental &+Lresistance&n~
 &+LA very large spiked crown lies in the dust.&n~
 ~
-9 15 3 0 7 0 0 17 0 0 0
+9 19 3 0 7 0 0 17 0 0 0
 0 0 0 0 0 0 0 0
-0 0 100 0 0 16777216 0
+4 0 100 0 0 16777216 0
 A
 37 4
 A
-13 50
+13 20
 #55430
 wicked battleaxe~
 &+La wicked looking double-bladed battleaxe&n~
