@@ -17,7 +17,7 @@ thin iron rapier~
 #55003
 bag _noquest_~
 the winterhaven bag of items~
-the winterhaven bag of items~
+The winterhaven bag of items is lying here.~
 ~
 3 15 3 0 7 0 0 0 0 0 0
 0 0 0 28 0 0 0 0
@@ -2188,7 +2188,7 @@ T
 #55170
 memory jade empire _noquest_~
 &+ga me&+Gmo&+gry of the The &+GJade &+gEmpire&n~
-&+ga &+Gmemory &+gof The &+GJade &+gEmpire&n~
+&+gA &+Gmemory &+gof The &+GJade &+gEmpire lies on the floor.&n~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2202,7 +2202,7 @@ T
 #55171
 memory _noquest_ castle du'maathe~
 &+La &+rmemory &+Lof the &+rDu'Maathe &+LCastle~
-&+La &+rmemory &+Lof the &+rDu'Maathe &+LCastle&n~
+&+LA &+rmemory &+Lof the &+rDu'Maathe &+LCastle lies on the floor.&n~
 ~
 9 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2216,7 +2216,7 @@ T
 #55172
 memory icecrag castle~
 &+Wa mem&+Cory &+Wof the Ice&+Ccrag &+LCastle~
-&+Wa mem&+Cory &+Wof the Ice&+Ccrag &+LCastle&n~
+&+WA mem&+Cory &+Wof the Ice&+Ccrag &+LCastle lies on the floor.&n~
 ~
 13 1 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2226,7 +2226,7 @@ T
 #55173
 memory _noquest_ fort boyard~
 &+ra &+Rmemory &+rof Fort &+RBoyard&n~
-&+ra &+Rmemory &+rof Fort &+RBoyard&n~
+&+rA &+Rmemory &+rof Fort &+RBoyard lies on the floor.&n~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2240,7 +2240,7 @@ T
 #55174
 memory _noquest_ city sky ultarium~
 &+Ba mem&+Wory of The &+BSky &+WCity of Ultarium&n~
-&+Ba mem&+Wory of The &+BSky &+WCity of Ultarium~
+&+BA mem&+Wory of The &+BSky &+WCity of Ultarium lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2254,7 +2254,7 @@ T
 #55175
 memory _noquest_ jotunheim~
 &+ca &+Cmemory &+cof &+CJotunheim&n~
-&+ca &+Cmemory &+cof &+CJotunheim&n~
+&+cA &+Cmemory &+cof &+CJotunheim&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2268,7 +2268,7 @@ T
 #55176
 memory _noquest_ krethik keep~
 &+Wa mem&+Lory &+Wof Kre&+Lthik Ke&+Wep&n~
-&+Wa mem&+Lory &+Wof Kre&+Lthik Ke&+Wep&n~
+&+WA mem&+Lory &+Wof Kre&+Lthik Ke&+Wep&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2282,7 +2282,7 @@ T
 #55177
 memory _noquest_ temple skrentherlog~
 &+La mem&+Yory &+Lof The Temple of &+YSkrentherlog&n~
-&+La mem&+Yory &+Lof The Temple of &+YSkrentherlog&n~
+&+LA mem&+Yory &+Lof The Temple of &+YSkrentherlog&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2296,7 +2296,7 @@ T
 #55178
 memory _noquest_ forest city aravne~
 &+wa &+Wmem&+wory &+Wof &+wthe &+WForest City of Aravne&n~
-&+wa &+Wmem&+wory &+Wof &+wthe &+WForest City of Aravne&n~
+&+wA &+Wmem&+wory &+Wof &+wthe &+WForest City of Aravne&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2310,7 +2310,7 @@ T
 #55179
 memory _noquest_ domain lost souls~
 &+La m&+We&+Cmo&+cr&+Ly of the Domain of &+WLost &+CS&+co&+Cul&+cs&n~
-&+La m&+We&+Cmo&+cr&+Ly of the Domain of &+WLost &+CS&+co&+Cul&+cs&n~
+&+LA m&+We&+Cmo&+cr&+Ly of the Domain of &+WLost &+CS&+co&+Cul&+cs&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2324,7 +2324,7 @@ T
 #55180
 memory _noquest_ tribal oasis~
 &+ya me&+Cm&+Gor&+Cy &+yof the Tribal &+CO&+Gasi&+Cs&n~
-&+ya me&+Cm&+Gor&+Cy &+yof the Tribal &+CO&+Gasi&+Cs&n~
+&+yA me&+Cm&+Gor&+Cy &+yof the Tribal &+CO&+Gasi&+Cs&n lies on the floor.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2352,7 +2352,7 @@ T
 #55182
 memory _noquest_ new cave city~
 &+La memory of &+yNew Cave &+LCity~
-&+La memory of &+yNew Cave &+LCity&n~
+&+LA memory of &+yNew Cave &+LCity&n lies on the floor.~
 ~
 13 10 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2362,7 +2362,7 @@ T
 #55183
 memory _noquest_ prisons carthapia~
 &+ma m&+Le&+mmo&+Lry &+mo&+Lf &+LThe Prisons of &+mCarthapia&n~
-&+ma m&+Le&+mmo&+Lry &+mo&+Lf &+LThe Prisons of &+mCarthapia&n~
+&+mA m&+Le&+mmo&+Lry &+mo&+Lf &+LThe Prisons of &+mCarthapia&n lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2376,7 +2376,7 @@ T
 #55184
 memory _noquest_ labyrinth return no~
 &+La &+wm&+Le&+rmo&+wr&+Ly &+rof &+Lthe &+wLabyrinth &+Lof &+rNo Return&n~
-&+La sigil of the &+WIce&+Ccrag &+LCastle&n~
+&+LA memory of &+Lthe &+wLabyrinth &+Lof &+rNo Return&n lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2390,7 +2390,7 @@ T
 #55185
 memory _noquest_ swamp~
 &+ga m&+mem&+gor&+my &+gof t&+mhe &+gSw&+mam&+gp~
-&+ga m&+mem&+gor&+my &+gof t&+mhe &+gSw&+mam&+gp&n~
+&+gA m&+mem&+gor&+my &+gof t&+mhe &+gSw&+mam&+gp lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2404,7 +2404,7 @@ T
 #55186
 memory _noquest_ keep evil~
 &+La memory of the Keep of Evil&n~
-&+La memory of the Keep of Evil&n~
+&+LA memory of the Keep of Evil lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2418,7 +2418,7 @@ T
 #55187
 memory _noquest_ citadel~
 &+Ba &+Lm&+Be&+Lmo&+Bry &+Lof The &+BCitadel&n~
-&+Ba &+Lm&+Be&+Lmo&+Bry &+Lof The &+BCitadel&n~
+&+BA &+Lm&+Be&+Lmo&+Bry &+Lof The &+BCitadel&n &+Blies here.~
 ~
 13 11 2 0 7 0 8388616 16385 64 0 0
 0 0 0 0 0 0 0 0
@@ -2432,7 +2432,7 @@ T
 #55188
 memory _noquest_ obsidian citadel~
 &+La memory of the Obsidian Citadel&n~
-&+La memory of the Obsidian Citadel&n~
+&+LA memory of the Obsidian Citadel lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2446,7 +2446,7 @@ T
 #55189
 memory _noquest_ zalkapfaan~
 &+ya m&+Lemo&+yry &+Lof Zalkapfaan&n~
-&+ya m&+Lemo&+yry &+Lof Zalkapfaan&n~
+&+yA m&+Lemo&+yry &+Lof Zalkapfaan &+ylies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2460,7 +2460,7 @@ T
 #55190
 memory _noquest_ lair gibberling king~
 &+La m&+Wem&+Lor&+Wy &+Lof the &+WLair of the Gibberling King&n~
-&+La m&+Wem&+Lor&+Wy &+Lof the &+WLair of the Gibberling King&n~
+&+LA m&+Wem&+Lor&+Wy &+Lof the &+WLair of the Gibberling King &+Llies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2474,7 +2474,7 @@ T
 #55191
 memory _noquest_ high moor forest~
 &+ga m&+Cem&+Mor&+gy &+Lof &+gThe &+CHigh &+MMoor &+gForest&n~
-&+ga m&+Cem&+Mor&+gy &+Lof &+gThe &+CHigh &+MMoor &+gForest&n~
+&+gA m&+Cem&+Mor&+gy &+Lof &+gThe &+CHigh &+MMoor &+gForest lies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2488,7 +2488,7 @@ T
 #55192
 memory _noquest_ ice tower~
 &+Wa m&+Cem&+Wor&+Cy o&+Wf t&+Ch&+We I&+Cc&+We &+CT&+Wo&+Cw&+We&+Cr&n~
-&+Wa m&+Cem&+Wor&+Cy o&+Wf t&+Ch&+We I&+Cc&+We &+CT&+Wo&+Cw&+We&+Cr&n~
+&+WA m&+Cem&+Wor&+Cy o&+Wf t&+Ch&+We I&+Cc&+We &+CT&+Wo&+Cw&+We&+Cr &+Wlies here.~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2502,7 +2502,7 @@ T
 #55193
 shimmering portal~
 &+La &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal~
-&+La &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal hovers before you.&n~
+&+LA &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal hovers before you.&n~
 ~
 25 11 2 0 7 0 8 0 64 0 0
 55608 7 -1 0 0 0 0 0
@@ -2516,7 +2516,7 @@ T
 #55194
 shimmering portal~
 &+La &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal~
-&+La &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal hovers before you.&n~
+&+LA &+Ys&+Wh&+Ci&+Wm&+Ym&+We&+Cr&+Wi&+Yn&+Wg &+Lportal hovers before you.&n~
 ~
 25 11 2 0 7 0 8 0 64 0 0
 55604 7 -1 0 0 0 0 0
@@ -2572,7 +2572,7 @@ T
 #55196
 book quests official _noquest_~
 &+Cthe official book of quests&n~
-&+Cthe official book of quests~
+&+CThe official book of WH quests is here.~
 ~
 12 28 2 0 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0
@@ -2590,7 +2590,7 @@ T
 #55197
 discussion board~
 &+ca discussion board&n~
-&+ca discussion board&n~
+&+cA discussion board hangs here.&n~
 ~
 13 11 2 0 7 0 0 0 0 0 0
 57 57 57 57 0 0 0 0
@@ -2600,7 +2600,7 @@ T
 #55198
 essence ogremoch _noquest_~
 &+Lthe essence of &+YOgremoch&n~
-&+Lthe essence of &+YOgremoch&n~
+&+LThe essence of &+YOgremoch &+Llies here.~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2610,7 +2610,7 @@ T
 #55199
 essence imix _noquest_~
 &+Lthe essence of &+MImix&n~
-&+Lthe essence of &+MImix&n~
+&+LThe essence of &+MImix&n &+Llies here.~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2620,7 +2620,7 @@ T
 #55200
 essence something yan-c-bin _noquest_~
 &+Lthe essence of &+CYan-c-bin&n~
-&+Lthe essence of &+CYan-c-bin&n~
+&+LThe essence of &+CYan-c-bin &+Llies here.&n~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2630,7 +2630,7 @@ T
 #55201
 essence menzellon _noquest_~
 &+Lthe essence of &+rMenzellon&n~
-&+Lthe essence of &+rMenzellon&n~
+&+LThe essence of &+rMenzellon &+Llies here.&n~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2640,7 +2640,7 @@ T
 #55202
 essence olhydra _noquest_~
 &+Lthe essence of &+BOlhydra&n~
-&+Lthe essence of &+BOlhydra&n~
+&+LThe essence of &+BOlhydra &+Llies here.~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2650,7 +2650,7 @@ T
 #55203
 essence demogorgon _noquest_~
 &+Lthe essence of &+GDemogorgon&n~
-&+Lthe essence of &+GDemogorgon&n~
+&+LThe essence of &+GDemogorgon &+Llies here.~
 ~
 13 1 2 0 7 0 40969 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -2750,7 +2750,7 @@ T
 #55212
 hide deer~
 &+Wthe hide of a &+Ydeer&n~
-&+Wthe hide of a &+Ydeer&n~
+&+WThe hide of a &+Ydeer &+Whas been left here.&n~
 ~
 13 12 3 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -2902,7 +2902,7 @@ skin carp~
 #55231
 vial smelly fish oil~
 &+La vial of &+Bsmelly &+Lfish &+Boil&n~
-&+La vial of &+Bsmelly &+Lfish &+Boil&+L lies here.~
+&+LA vial of &+Bsmelly &+Lfish &+Boil&+L lies here.~
 ~
 13 40 3 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -2910,7 +2910,7 @@ vial smelly fish oil~
 #55232
 centaur semen _noquest_~
 &+Wa handful of &+gcen&+Ltaur &+Wsemen&n~
-&+Wa handful of &+gcen&+Ltaur &+Wsemen lies here.&n~
+&+WA handful of &+gcen&+Ltaur &+Wsemen lies here.&n~
 ~
 13 40 3 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -2918,7 +2918,7 @@ centaur semen _noquest_~
 #55233
 baby centaur half-breed _noquest_~
 &+La baby &+gcen&+Ltaur half-breed&n~
-&+La baby &+gcen&+Ltaur half-breed cries here.&n~
+&+LA baby &+gcen&+Ltaur half-breed cries here.&n~
 ~
 13 2 3 0 7 0 0 8388609 0 0 0
 0 0 0 0 0 0 0 0
@@ -2934,7 +2934,7 @@ remains corpse centaur~
 #55235
 key snow ogre _noquest_~
 &+wa key forged by a &+Wsnow &+bogre&n~
-&+wa key forged by a &+Wsnow &+bogre &+wlies here.&n~
+&+wA key forged by a &+Wsnow &+bogre &+wlies here.&n~
 ~
 18 7 3 0 7 0 0 1 0 0 0
 0 100 0 0 0 0 0 0
@@ -2967,7 +2967,7 @@ painting~
 #55238
 wicked scepter chronomancer _noquest_~
 &+Lthe &+rwi&+Rck&+red &+Lscepter of the Chronomancer&n~
-&+La really &+rawe&+Rso&+rme &+Lscepter has been left here.&n~
+&+LA really &+rawe&+Rso&+rme &+Lscepter has been left here.&n~
 ~
 5 6 3 0 7 0 0 8193 0 0 0
 7 3 3 0 0 0 0 0
@@ -2979,7 +2979,7 @@ A
 #55239
 timeless quiver dragons _noquest_~
 &+Lthe &+mti&+Mme&+mle&+Mss &+Lquiver of the &+gdr&+Gago&+gns&n~
-&+La pile of &+mti&+Mme&+mle&+Mss &+gdr&+Gago&+gn &+Lskin lies here.~
+&+LA pile of &+mti&+Mme&+mle&+Mss &+gdr&+Gago&+gn &+Lskin lies here.~
 ~
 30 2 3 0 15 0 0 1048577 0 0 0
 250 5 1 0 0 0 0 0
@@ -2991,7 +2991,7 @@ A
 #55240
 sinew dragons heart _noquest_~
 &+Lthe &+rsi&+Rn&+rew &+Lof a &+gdr&+Gago&+gns &+rhe&+Ra&+rrt&n~
-&+La pile of &+gdr&+Gago&+gn &+rfl&+Re&+rsh &+Llies here.&n~
+&+LA pile of &+gdr&+Gago&+gn &+rfl&+Re&+rsh &+Llies here.&n~
 ~
 13 2 3 0 7 0 1 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3011,7 +3011,7 @@ A
 #55242
 locket glacier _noquest_~
 &+Lthe locket of the &+wgl&+ca&+Cc&+ci&+wer&n~
-&+La small locket lies on the floor.&n~
+&+LA small locket lies on the floor.&n~
 ~
 13 23 2 0 7 0 33554432 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3019,7 +3019,7 @@ locket glacier _noquest_~
 #55243
 locket volcano _noquest_~
 &+Lthe locket of the &+Lv&+rol&+Rc&+ran&+Lo&n~
-&+La small locket lies on the floor.&n~
+&+LA small locket lies on the floor.&n~
 ~
 13 23 2 0 7 0 33554432 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3027,7 +3027,7 @@ locket volcano _noquest_~
 #55244
 locket desert _noquest_~
 &+Lthe locket of the &+wd&+ye&+Yse&+yr&+wt&n~
-&+La small locket lies on the floor.&n~
+&+LA small locket lies on the floor.&n~
 ~
 13 23 2 0 7 0 33554432 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3035,7 +3035,7 @@ locket desert _noquest_~
 #55245
 locket squall _noquest_~
 &+Lthe locket of the &+bs&+Bq&+Cua&+Bl&+bl&n~
-&+La small locket lies on the floor.&n~
+&+LA small locket lies on the floor.&n~
 ~
 13 23 2 0 7 0 33554432 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3043,7 +3043,7 @@ locket squall _noquest_~
 #55246
 psychomia plant _noquest_~
 &+ga &+Lpsychomia &+gp&+Gla&+gnt&n~
-&+ga &+Lpsychomia &+gpl&+Gan&+gt &+Lgrows here.&n~
+&+gA &+Lpsychomia &+gpl&+Gan&+gt &+Lgrows here.&n~
 ~
 13 43 2 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3056,7 +3056,7 @@ psychomia plant _noquest_~
 #55247
 plastic bag drugs _noquest_~
 &+Wa small &+wplastic &+Wbag filled with &+gdr&+Gu&+ggs&n~
-&+Wa small &+wplastic &+Wbag has been left here.&n~
+&+WA small &+wplastic &+Wbag has been left here.&n~
 ~
 13 49 2 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3064,7 +3064,7 @@ plastic bag drugs _noquest_~
 #55248
 super secret invitation _noquest_~
 &+La super &+wsecret &+Linvitation&n~
-&+La cool looking invitation lies here.&n~
+&+LA cool looking invitation lies here.&n~
 ~
 13 28 2 0 7 0 33554432 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3072,7 +3072,7 @@ super secret invitation _noquest_~
 #55249
 key hideout rogue _noquest_~
 &+La key to the rogue's &+rhideout&n~
-&+La shady looking &+rkey &+Llies on the floor.&n~
+&+LA shady looking &+rkey &+Llies on the floor.&n~
 ~
 18 23 2 0 7 0 0 1 0 0 0
 0 0 0 0 0 0 0 0
@@ -3080,7 +3080,7 @@ key hideout rogue _noquest_~
 #55250
 deer hide boots~
 &+Wa pair of &+Ydeer-hide &+Wboots&n~
-&+Wa pair of &+Ylovely &+Wboots have been left here.&n~
+&+WA pair of &+Ylovely &+Wboots have been left here.&n~
 ~
 9 12 3 0 11 0 8192 65 0 0 0
 0 0 0 0 0 0 0 0
@@ -3094,7 +3094,7 @@ T
 #55251
 doe hide gloves~
 &+Wa pair of &+Ydoe-hide &+Wgloves&n~
-&+Wa pair of &+Ywarm &+Wgloves lie on the floor.&n~
+&+WA pair of &+Ywarm &+Wgloves lie on the floor.&n~
 ~
 9 12 3 0 11 0 8192 129 0 0 0
 0 0 0 0 0 0 0 0
@@ -3136,7 +3136,7 @@ T
 #55254
 soft eyepatch squirrel hide~
 &+Wa &+Ysoft &+Weyepatch made of &+ysquirrel hide&n~
-&+Wa lovely eyepatch has been tossed away.&n~
+&+WA lovely eyepatch has been tossed away.&n~
 ~
 9 12 3 0 11 0 8192 131073 0 0 0
 0 0 0 0 0 0 0 0
@@ -3346,7 +3346,7 @@ T
 #55269
 memory _noquest_ hall knighthood~
 &+La m&+Yemo&+Lry of &+YThe Hall of Knighthood&n~
-&+La m&+Yemo&+Lry of &+YThe Hall of Knighthood &+Lfloats here.&n~
+&+LA m&+Yemo&+Lry of &+YThe Hall of Knighthood &+Lfloats here.&n~
 ~
 13 11 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3519,7 +3519,7 @@ T
 #55281
 decaying femur euronymous _noquest_~
 &+wthe &+Ldecaying &+wfemur of &+rEuronymous&n~
-&+wthe &+Ldecaying &+wfemur of &+rEuronymous &+wlies here.&n~
+&+wThe &+Ldecaying &+wfemur of &+rEuronymous &+wlies here.&n~
 ~
 13 10 2 0 7 0 8 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3539,7 +3539,7 @@ T
 #55283
 strange glowing weapon hilt _noquest_~
 &+La strange &+mglowing &+Lweapon hilt&n~
-&+La strange &+mglowing &+Lweapon hilt lies here.&n~
+&+LA strange &+mglowing &+Lweapon hilt lies here.&n~
 ~
 13 19 2 0 15 0 8 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3549,7 +3549,7 @@ T
 #55284
 strange glowing flint armor _noquest_~
 &+La strange &+Mglowing &+Lflint of armor&n~
-&+La strange &+mglowing &+Lflint of armor lies here.&n~
+&+LA strange &+mglowing &+Lflint of armor lies here.&n~
 ~
 13 19 2 0 15 0 8 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3559,7 +3559,7 @@ T
 #55285
 memory _noquest_ venan'trut~
 &+La memory of &+YVenan'Trut~
-&+La memory of &+YVenan'Trut&n~
+&+LA memory of &+YVenan'Trut &+Lis lying here.&n~
 ~
 13 10 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3569,7 +3569,7 @@ T
 #55286
 memory _noquest_ rogue plains~
 &+La memory of &+wRogue Plains&n~
-&+La memory of &+wRogue Plains&n~
+&+LA memory of &+wRogue Plains &+Lis lying here.~
 ~
 13 10 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3579,7 +3579,7 @@ T
 #55287
 inspiring visage dragon _noquest_~
 &+Wan &+Cinspiring &+Wvisage of a &+LDragon&n~
-&+Wan &+Cinspiring &+Wvisage of a &+LDragon&n~
+&+WAn &+Cinspiring &+Wvisage of a &+WDragon has been tossed aside here.&n~
 ~
 3 1 2 0 15 0 8 1 64 0 0
 44 2 2 283 0 0 0 0
@@ -3591,7 +3591,7 @@ T
 #55288
 key winterhaven prison prisons~
 &+Lthe &+rkey &+Lto the &+WWinterhaven &+LPrisons~
-&+La prison &+rkey &+Llies here.~
+&+LA prison &+rkey &+Llies here.~
 ~
 18 10 2 0 7 0 8388616 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3609,7 +3609,7 @@ gnomish device _noquest_~
 #55290
 badge passage~
 &+La badge of passage&n~
-&+La badge of passage&n~
+&+LA badge of passage was discarded here.&n~
 ~
 13 23 2 0 7 0 2 2097152 0 0 0
 0 0 0 0 0 0 0 0
@@ -3705,7 +3705,7 @@ table card large~
 #55299
 set rusty lockpicks picks~
 &+La set of &+rrusty &+Llockpicks&n~
-&+La &+rrusty &+Lset of lockpicks lies here.&n~
+&+LA &+rrusty &+Lset of lockpicks lies here.&n~
 ~
 31 15 2 0 7 0 8200 16385 0 0 0
 25 25 0 0 0 0 0 0
@@ -3721,7 +3721,7 @@ bottle poison~
 #55301
 bastard sword demon slayer _noquest_~
 &+Lth&+we ba&+Lst&+ward &+Lsw&+word &+Lof &+wthe &+rD&+Re&+rm&+Ro&+rn &+MSl&+ma&+My&+me&+Mr&n~
-&+La m&+wyst&+Ler&+wiou&+Ls l&+wook&+Lin&+wg sw&+Lor&+wd li&+Les &+wher&+Le.&n~
+&+LA m&+wyst&+Ler&+wiou&+Ls l&+wook&+Lin&+wg sw&+Lor&+wd li&+Les &+wher&+Le.&n~
 ~
 5 19 2 0 14 0 4202561 8193 64 0 0
 13 4 5 0 0 0 0 0
@@ -3803,7 +3803,7 @@ A
 #55308
 captured egos immortals _noquest_~
 &+Lthe captured &+Me&+mg&+Mo&+ms &+Lof the &+mim&+Mmo&+mrt&+Mal&+ms&n~
-&+Lthe &+Me&+mg&+Mo&+ms &+Lof the &+mim&+Mmo&+mrt&+Mal&+ms &+Lfloats here.&n~
+&+LThe &+Me&+mg&+Mo&+ms &+Lof the &+mim&+Mmo&+mrt&+Mal&+ms &+Lfloats here.&n~
 ~
 13 1 2 0 7 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3964,7 +3964,7 @@ T
 #55321
 essence indomitable snowman _noquest_~
 &+Lt&+rh&+Le &+Le&+rs&+Rs&+Le&+Rn&+rc&+Le &+Lo&+rf &+Lt&+rh&+Le &+LIn&+rdo&+Rm&+Li&+Rt&+rab&+Lle &+LS&+rno&+Rw&+rma&+Ln&n~
-&+Lt&+rh&+Le &+Le&+rs&+Rs&+Le&+Rn&+rc&+Le &+Lo&+rf &+La &+LS&+rno&+Rw&+rma&+Ln &+Ll&+rie&+Ls &+Lh&+rer&+Le.&n~
+&+LT&+rh&+Le &+Le&+rs&+Rs&+Le&+Rn&+rc&+Le &+Lo&+rf &+La &+LS&+rno&+Rw&+rma&+Ln &+Ll&+rie&+Ls &+Lh&+rer&+Le.&n~
 ~
 13 1 2 0 7 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -3992,7 +3992,7 @@ T
 #55323
 aura saint gauce _noquest_~
 &+Lthe &+Wa&+wu&+Lr&+wa &+Lof &+YSaint &+WGauce&n~
-&+Lthe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
+&+LThe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
 ~
 13 1 2 0 7 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -4002,7 +4002,7 @@ T
 #55324
 aura saint macavor _noquest_~
 &+Lthe &+Wa&+wu&+Lr&+wa &+Lof &+YSaint &+WMacavor~
-&+Lthe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
+&+LThe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
 ~
 13 1 2 0 7 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -4012,7 +4012,7 @@ T
 #55325
 aura saint verdonnaly _noquest_~
 &+Lthe &+Wa&+wu&+Lr&+wa &+Lof &+WSaint Verdonnaly&n~
-&+Lthe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
+&+LThe &+Wa&+wu&+Lr&+wa &+Lof a &+Yholy &+Wsaint &+Llies here.&n~
 ~
 13 1 2 0 7 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -4128,7 +4128,7 @@ dark blue vial thunder~
 #55336
 decaying femur jubilex~
 &+wthe &+Ldecaying &+wfemur of &+rJubilex&n~
-&+wthe &+Ldecaying &+wfemur of &+rJubilex &+wlies here.&n~
+&+wThe &+Ldecaying &+wfemur of &+rJubilex &+wlies here.&n~
 ~
 13 10 3 0 7 0 8 1 64 0 0
 0 0 0 0 0 0 0 0
@@ -4515,7 +4515,7 @@ jade charm empowerment~
 0 0 100
 #55373
 large steel grate~
-&+LA large &+wsteel &+Lgrate.&n~
+&+La large &+wsteel &+Lgrate.&n~
 &+LA large &+wsteel &+Lgrate lies here.&n~
 ~
 25 28 3 0 7 0 0 0 0 0 0
@@ -4551,7 +4551,7 @@ A
 19 3
 #55377
 gladius backstabber _noquest_~
-a &+Lgladius &+Wcalled '&+LBac&+wks&+Wta&+Rbb&+rer&+W'&n~
+&+Wa &+Lgladius &+Wcalled '&+LBac&+wks&+Wta&+Rbb&+rer&+W'&n~
 &+LA peculiar gladius has been left behind here.&n~
 ~
 5 16 2 0 7 0 9217 8193 72 126976 0
@@ -4564,7 +4564,7 @@ A
 #55378
 virulent herpes simplex _noquest_~
 &+La &+Rvirulent &+Lcase of &+cherpes &+Csimplex&n~
-&+La &+Rserious &+Lcase of &+cherpes &+Llies here.&n~
+&+LA &+Rserious &+Lcase of &+cherpes &+Llies here.&n~
 ~
 9 16 2 0 7 0 8192 262273 0 0 0
 0 0 0 0 0 0 0 0
