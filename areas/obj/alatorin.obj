@@ -5378,7 +5378,7 @@ spiked torque dwarven kind~
 ~
 9 18 3 0 14 0 0 5 64 0 0
 5 0 0 0 0 0 0 0
-0 22333 100 536870912 64 0 0
+3 322333 100 536870912 64 0 0
 E
 spiked torque dwarven kind~
    &+LThis perfect mithril spiked dwarven torque is a thick neckpiece
@@ -5386,9 +5386,9 @@ spiked torque dwarven kind~
 &+Lthe neck and upper nest area, pointed to screw-tips.
 ~
 A
-13 20
+13 10
 A
-31 5
+31 3
 #83440
 spiked bracelet dwarven kind~
 &+La &N&+rs&+Lp&N&+ri&+Lk&N&+re&+Ld &N&+cbracelet&+L of &N&+ydwarven kind&N~
@@ -5396,7 +5396,7 @@ spiked bracelet dwarven kind~
 ~
 9 18 3 0 7 0 0 4097 0 0 0
 5 0 0 0 0 0 0 0
-0 44332 100 536870912 64 0 0
+3 344332 100 536870912 64 0 0
 E
 spiked bracelet dwarven kind~
    &+LThis spiked bracelet contains the inner power of the ancient dwarven
@@ -5404,9 +5404,9 @@ spiked bracelet dwarven kind~
 &+Lby several massive mithril spikes with screw tips.
 ~
 A
-13 20
+13 10
 A
-31 5
+31 3
 #83441
 smooth torque dwarven kind~
 &N&+ma &+Csmooth &N&+ctorque &N&+mof &+ydwarven kind&N~
@@ -5414,7 +5414,7 @@ smooth torque dwarven kind~
 ~
 9 18 3 0 14 0 0 5 66 0 0
 5 0 0 0 0 0 0 0
-0 33333 100 536870912 64 0 0
+3 433239 100 536870912 64 0 0
 E
 smooth torque dwarven kind~
 &+mThis beautiful, polished mithril &+ctorque &+mis polished and &+Wsmooth&+L.
@@ -5422,9 +5422,9 @@ smooth torque dwarven kind~
 &+mages.
 ~
 A
-13 20
+13 10
 A
-35 5
+35 3
 #83442
 smooth bracelet dwarven kind~
 &N&+ma &+Csmooth &N&+cbracelet&+m of &N&+ydwarven kind&N~
@@ -5432,7 +5432,7 @@ smooth bracelet dwarven kind~
 ~
 9 18 3 0 14 0 0 4097 66 0 0
 5 0 0 0 0 0 0 0
-0 33333 100 536870912 64 0 0
+3 433239 100 536870912 64 0 0
 E
 smooth bracelet dwarven kind~
 &+mThis fine, pure mithril bracelet has been polished to an incredible
@@ -5440,9 +5440,9 @@ smooth bracelet dwarven kind~
 &+mvarious dwarven forgers.
 ~
 A
-13 20
+13 10
 A
-35 5
+35 3
 #83443
 huge golden key~
 &na huge &+Ygolden key&N~

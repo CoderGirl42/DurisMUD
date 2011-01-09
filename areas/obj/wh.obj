@@ -2981,7 +2981,7 @@ timeless quiver dragons _noquest_~
 &+Lthe &+mti&+Mme&+mle&+Mss &+Lquiver of the &+gdr&+Gago&+gns&n~
 &+LA pile of &+mti&+Mme&+mle&+Mss &+gdr&+Gago&+gn &+Lskin lies here.~
 ~
-30 2 3 0 15 0 0 1048577 0 0 0
+30 2 3 0 15 0 64 1048577 0 0 0
 250 5 1 0 0 0 0 0
 0 0 100 16 2 0 0
 A
@@ -3001,13 +3001,13 @@ earring dragon lords _noquest_~
 &+Lthe &+mea&+Mrr&+min&+Mg &+Lof the &+gDr&+Gago&+gn &+rL&+Ror&+rds&n~
 &+LAn amazing &+mea&+Mrr&+min&+Mg &+Llies here.&n~
 ~
-9 26 3 0 7 0 0 524289 0 0 0
+9 26 3 0 12 0 64 524289 0 0 0
 0 0 0 0 0 0 0 0
-1 0 100 268435460 0 0 0
+1 0 100
 A
-23 -5
+57 -1
 A
-35 3
+58 -1
 #55242
 locket glacier _noquest_~
 &+Lthe locket of the &+wgl&+ca&+Cc&+ci&+wer&n~
@@ -3507,9 +3507,9 @@ gauntlets living legend _noquest_~
 &+Lth&+we g&+Lau&+wnt&+Lle&+wts &+Lof &+wa &+rLi&+Rvi&+rng &+mL&+Meg&+men&+Md&n~
 &+LWhy on &+rea&+Rr&+rth &+Lare these &+wg&+Lau&+wnt&+Lle&+wts &+Llying here?&n~
 ~
-9 20 2 0 14 0 8201 129 64 0 0
+9 18 2 0 15 0 8265 129 64 0 0
 0 0 0 0 1 0 0 0
-0 0 100 524288 0 0 0
+4 0 100 524288 0 0 0
 A
 13 25
 A
@@ -3723,13 +3723,13 @@ bastard sword demon slayer _noquest_~
 &+Lth&+we ba&+Lst&+ward &+Lsw&+word &+Lof &+wthe &+rD&+Re&+rm&+Ro&+rn &+MSl&+ma&+My&+me&+Mr&n~
 &+LA m&+wyst&+Ler&+wiou&+Ls l&+wook&+Lin&+wg sw&+Lor&+wd li&+Les &+wher&+Le.&n~
 ~
-5 19 2 0 14 0 4202561 8193 64 0 0
-13 4 5 0 0 0 0 0
-0 0 100 0 32768 0 0
+5 19 2 0 15 0 4202561 8193 64 0 0
+13 6 5 0 0 0 0 0
+7 0 100 0 32768 0 0
 A
 36 5
 A
-37 15
+37 5
 T
 2 0 0 0
 #55302
@@ -3757,11 +3757,11 @@ electrum misty shortsword blur _noquest_~
 &+Lthe &+Bm&+Ci&+Bs&+Ct&+By &+celectrum &+Lshortsword named '&+BB&+Cl&+Bu&+Cr&+L'&n~
 &+LA strange &+Bm&+Ci&+Bs&+Ct&+By &+Lshortsword lies here.&n~
 ~
-5 1 2 0 14 0 9224 8193 66 87085083 0
-9 3 7 0 0 0 0 0
-0 0 100 20 0 0 16777216
+5 1 2 0 14 0 9288 8193 66 87085083 0
+9 3 6 0 0 0 0 0
+4 0 100 20 0 0 16777216
 A
-36 10
+36 5
 A
 18 7
 T
@@ -3771,7 +3771,7 @@ living essence haze volo traveler _noquest_~
 &+ct&+Lhe &+cl&+Living &+ce&+Lssence &+co&+Lf &+cV&+Lo&+cl&+Lo &+ct&+Lhe &+cT&+Lraveler&n~
 &+cA s&+Ltrange &+ch&+Laze &+cf&+Lloats &+ct&+Lthrough &+ct&+Lthe &+cr&+Loom.&n~
 ~
-13 1 2 0 7 0 8200 1 64 0 0
+13 1 2 0 15 0 8200 1 64 0 0
 0 0 0 0 0 0 0 0
 0 0 100
 T
@@ -3785,7 +3785,7 @@ mystical longsword volo traveler _noquest_~
 5 5 5 0 0 0 0 0
 6 0 100 32 0 16777216 0
 A
-55 8
+55 7
 A
 19 5
 #55307
@@ -3793,13 +3793,13 @@ infamous platemail fame _noquest_~
 &+Lthe &+min&+Mfa&+mmo&+Mus &+Lplatemail named '&+mF&+Ma&+mm&+Me&+L'&n~
 &+LA really &+Mki&+mck&+Mas&+ms &+Lset of &+Mp&+Llate&+mm&+Lail lies here.&n~
 ~
-9 35 3 0 14 0 9224 9 66 83902489 0
+9 35 3 0 15 0 9288 9 66 83902489 0
 0 0 0 5 1 0 0 0
-20 0 100 16 0 0 0
+15 0 100 16 2048 0 0
 A
 17 -75
 A
-36 4
+36 5
 #55308
 captured egos immortals _noquest_~
 &+Lthe captured &+Me&+mg&+Mo&+ms &+Lof the &+mim&+Mmo&+mrt&+Mal&+ms&n~
@@ -3928,13 +3928,13 @@ armplates cosmos _noquest_~
 &+Yt&+yhe &+Ya&+yrm&+Yp&+ylates &+Yo&+yf &+Yt&+yhe &+YC&+yo&+Wsm&+yo&+Ys&n~
 &+YA p&+yair &+Yo&+yf &+Ya&+yarm&+Yp&+ylates &+Yl&+yie &+Yh&+yere.&n~
 ~
-9 1 2 0 14 0 8200 257 64 0 0
+9 1 2 0 14 0 8264 257 64 0 0
 0 0 0 0 0 0 0 0
-0 0 100 32 0 0 8192
+1 0 100 32 0 0 8192
 A
 17 -75
 A
-10 -500
+34 5
 T
 2 0 0 0
 #55319
@@ -4554,11 +4554,11 @@ gladius backstabber _noquest_~
 &+Wa &+Lgladius &+Wcalled '&+LBac&+wks&+Wta&+Rbb&+rer&+W'&n~
 &+LA peculiar gladius has been left behind here.&n~
 ~
-5 16 2 0 7 0 9217 8193 72 126976 0
-2 2 8 0 0 0 0 0
-0 0 100 16 0 0 0
+5 16 2 0 15 0 9281 8193 72 126976 0
+2 3 8 0 0 0 0 0
+5 0 100 16 0 0 0
 A
-18 4
+18 5
 A
 32 5
 #55378

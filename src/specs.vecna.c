@@ -360,7 +360,7 @@ int vecna_stonemist(P_obj obj, P_char ch, int cmd, char *arg)
 	
 	if (affected_by_spell(target, SPELL_STONE_SKIN))
         {
-          send_to_char("&+WA gh&+wostly mi&+Lt flows aro&+wund your &+Wlimbs, a&+ws it dis&+Lsapates you f&+weel more vu&+Wlnerable.&n\r\n", target);
+          send_to_char("&+WA gh&+wostly mi&+Lt flows aro&+wund your &+Wlimbs, a&+ws it dis&+Lsipates you f&+weel more vu&+Wlnerable.&n\r\n", target);
 	  af = get_spell_from_char(target, SPELL_STONE_SKIN);
 	  if (af)
 	  {
@@ -370,7 +370,7 @@ int vecna_stonemist(P_obj obj, P_char ch, int cmd, char *arg)
         }
 	else
 	{
-	  send_to_char("&+WA gh&+wostly mis&+Lt flows int&+wo the are&+Wa and qui&+wckly dis&+Lsapates...&n\r\n", target);
+	  send_to_char("&+WA gh&+wostly mis&+Lt flows int&+wo the are&+Wa and qui&+wckly dis&+Lsipates...&n\r\n", target);
 	}
       }
     }
@@ -380,7 +380,7 @@ int vecna_stonemist(P_obj obj, P_char ch, int cmd, char *arg)
       {
         if (affected_by_spell(target, SPELL_VITALITY))
         {
-          send_to_char("&+WA gh&+wostly mi&+Lt flows aro&+wund your &+Wlimbs, a&+ws it dis&+Lsapates you f&+weel your sp&+Wirit weaken.&n\r\n", target);
+          send_to_char("&+WA gh&+wostly mi&+Lt flows aro&+wund your &+Wlimbs, a&+ws it dis&+Lsipates you f&+weel your sp&+Wirit weaken.&n\r\n", target);
 	  af = get_spell_from_char(target, SPELL_VITALITY);
 	  if (af)
 	  {
@@ -390,7 +390,7 @@ int vecna_stonemist(P_obj obj, P_char ch, int cmd, char *arg)
         }
 	else
 	{
-	  send_to_char("&+WA gh&+wostly mis&+Lt flows int&+wo the are&+Wa and qui&+wckly dis&+Lsapates...&n\r\n", target);
+	  send_to_char("&+WA gh&+wostly mis&+Lt flows int&+wo the are&+Wa and qui&+wckly dis&+Lsipates...&n\r\n", target);
 	}
       }
     }
