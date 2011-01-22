@@ -1938,7 +1938,7 @@ int demon_slayer(P_obj obj, P_char ch, int cmd, char *arg)
 
             act("&+rThe Prince of Demons &+Llooks at $n and laughs, &+W'&+rD&+Re&+ra&+Rt&+rh&+W? &+mU&+Mn&+md&+Me&+ma&+Mt&+mh&+L!'&n", TRUE, ch, obj, vict, TO_ROOM);
             act("&+rEuronymous suddenly leaps forward and sinks his fangs into the neck of $n, sending blood flying.&n", TRUE, ch, obj, vict, TO_ROOM);
-            act("$n &+Lbegins to look rather &+wpale &+Las the the last drops of &+Rblood &+Ldrip to the floor.&n", TRUE, ch, obj, vict, TO_ROOM);
+            act("$n &+Lbegins to look rather &+wpale &+Las the last drops of &+Rblood &+Ldrip to the floor.&n", TRUE, ch, obj, vict, TO_ROOM);
 
             spell_vampire(56, ch, 0, SPELL_TYPE_SPELL, ch, 0);
 

@@ -1803,7 +1803,7 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
    *
    *
    * This block was previously commented out...  I believe feeblemind was deemed
-   * too detrimental to a caster... let's change that and read the ability to
+   * too detrimental to a caster... let's change that and re-add the ability to
    * fuxor a caster royally once more - Jexni 11/25/08
    */
 
@@ -5176,29 +5176,6 @@ void BreathWeapon(P_char ch, int dir)
         return;
       }
     }
-      
-      // for (tchar1 = world[room].people; tchar1; tchar1 = tchar2)
-      // {
-        // tchar2 = tchar1->next_in_room;
-
-        // if((get_linking_char(ch, LNK_RIDING) == tchar1) || (ch == tchar1) ||
-            // grouped(ch, tchar1) ||
-            // (ch->specials.z_cord != tchar1->specials.z_cord))
-          // continue;
-
-        // /* charmed breathers following PCs will target NPCs, but otherwise NPCs will not hit other NPCs */
-
-        // if(!IS_PC_PET(ch) && IS_NPC(tchar1) && !IS_PC_PET(tchar1))
-          // continue;
-        
-
-
-        // /* make sure we can continue down this path
-         // * and assign a new room to check if so
-         // */
-
-    
-  
   }
 
   if(!waited)
@@ -6537,8 +6514,8 @@ void GhostFearEffect(P_char ch)
    * don't save, and they are pcs, _and_ not clerics (>10lvl) the fellow
    * gets screwed 'a bit'. :-)
    * over-all, meaning of this is triple-fold; first, it creates market
-   * for potions. second, undead get nasty imago. third, it makes people
-   * consider once or twice before intentionally charing a ghost.
+   * for potions. second, undead get nasty image. third, it makes people
+   * consider once or twice before intentionally attacking a ghost.
    */
 
   if(isname("_nofear_", GET_NAME(ch)))

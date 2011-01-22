@@ -2481,7 +2481,7 @@ void event_awaken_forest(P_char ch, P_char victim, P_obj obj, void *data)
   if (awd->iter == 0)
   {
     send_to_room
-      ("The creeking of &+ytree trunks&n shifting and a low groaning sound can be heard throughout the &+Gforest&n.\r\n", ch->in_room);
+      ("The creaking of &+ytree trunks&n shifting and a low groaning sound can be heard throughout the &+Gforest&n.\r\n", ch->in_room);
     awd->iter++;
 
     duration = WAIT_SEC * (5 + dice(3, 2));
@@ -2497,7 +2497,7 @@ void event_awaken_forest(P_char ch, P_char victim, P_obj obj, void *data)
 
   if (awd->iter == 1)
   {
-    send_to_room("The &+Gtrees&n stretch their old gnarly &+ybranches&n and you feel the their roots slowly moving beneth the ground.\r\n",
+    send_to_room("The &+Gtrees&n stretch their old gnarly &+ybranches&n and you feel their roots slowly moving beneath the ground.\r\n",
                  awd->room);
 
     awd->iter++;

@@ -11146,7 +11146,7 @@ void spell_grow_spike(int level, P_char ch, char *arg, int type, P_char victim,
     break;
   case 1:
     messages.attacker =
-      "&+yYou cause the the earth to form into a &+yspike&n and rise up!";
+      "&+yYou cause the earth to form into a &+yspike&n and rise up!";
     messages.victim = messages.room =
       "$n causes the earth to form into a &+yspike&n and rise up!!";
     break;

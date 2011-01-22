@@ -883,7 +883,7 @@ bool Mob_Furious(P_char ch, P_char victim, int chance)
 
 bool DragonCombat(P_char ch, int awe)
 {
-  int      i, breath_chance = 2, attacktype = 0;
+  int      i, breath_chance, attacktype = 0;
   P_char   tchar1 = NULL, tchar2 = NULL, vict, next_ch;
   void     (*funct) (int, P_char, char *, int, P_char, P_obj);
   bool     bIsPet = false;
@@ -909,9 +909,12 @@ bool DragonCombat(P_char ch, int awe)
   {
     return FALSE;
   }
-  
-  if (!IS_DRAGON(ch) && !IS_TITAN(ch) && !IS_AVATAR(ch) &&
-      CAN_BREATHE(ch))
+
+  // Dragons breathing = cool.  Other mobs breathing = ok... but not every round - Jexni 1/20/11
+  breath_chance = (int) (IS_DRAGON(ch) ? (GET_LEVEL(ch) / 30) : (GET_LEVEL(ch) / 60));
+  breath_chance = (IS_ELITE(ch) ? breath_chance - 1 : breath_chance);
+
+  if (!IS_DRAGON(ch) && !IS_TITAN(ch) && !IS_AVATAR(ch) && CAN_BREATHE(ch))
   {
     if (number(0, breath_chance))
     {
@@ -926,7 +929,7 @@ bool DragonCombat(P_char ch, int awe)
      set_fighting() and assumes just that */
 
   if(awe &&
-     number(0, 2))
+     number(0, breath_chance))
   {
     /*
      * means we were called from start_fighting, dragons get a
@@ -1057,7 +1060,7 @@ bool DragonCombat(P_char ch, int awe)
    * every round.
    */
 
-  if(!number(0, 2))
+  if(!number(0, 3))
   {
     if (!isname("br_f", GET_NAME(ch)) && !isname("br_c", GET_NAME(ch)) &&
         !isname("br_g", GET_NAME(ch)) && !isname("br_a", GET_NAME(ch)) &&
@@ -1072,17 +1075,10 @@ bool DragonCombat(P_char ch, int awe)
     }
   }
 
-  if (number(0, breath_chance))
-  {
-    return FALSE;
-  }
-
   if (bIsPet)
   {
     return FALSE;
   }
-  
-  BreathWeapon(ch, -1);
   return TRUE;
 }
 
