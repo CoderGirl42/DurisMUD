@@ -3049,7 +3049,7 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
  *  the full riposte skill
  */
   if(GET_SPEC(ch, CLASS_RANGER, SPEC_BLADEMASTER))
-    skl *= 1.10;
+    skl *= 1.05;
 
 /*  Hey, lets do the same for Swashbucklers */
   if(GET_SPEC(ch, CLASS_WARRIOR, SPEC_SWASHBUCKLER))
@@ -3076,6 +3076,9 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
 // Much harder to riposte something you are not fighting.
   if(ch->specials.fighting != victim)
     skl *= 0.20;
+
+  if(IS_AFFECTED5(ch, AFF5_DAZZLEE))
+    skl *= 0.90;
 
 // Expert riposte.
   if(expertriposte)
@@ -7222,7 +7225,6 @@ void set_fighting(P_char ch, P_char vict)
 
   if(IS_NPC(ch) &&
     (IS_DRAGON(ch) ||
-     IS_TITAN(ch) ||
      IS_AVATAR(ch)) &&
     !IS_MORPH(ch) &&
     !IS_PC_PET(ch))
@@ -7374,7 +7376,7 @@ int leapSucceed(P_char victim, P_char attacker)
   chance = (GET_C_AGI(victim) / 7);
   chance -= load_modifier(victim) / 100;
   chance += (GET_LEVEL(victim) - GET_LEVEL(attacker)) / 2;
-  chance = BOUNDED(1, chance, 25);
+  chance = BOUNDED(1, chance, 20);
 
   if(number(1, 100) > chance)
     return false;
@@ -7462,10 +7464,6 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
   learned = (int) ((GET_CHAR_SKILL(char_dodger, SKILL_DODGE)) * 1.25) -
                   (WeaponSkill(attacker, wpn));
 
-
-  if(IS_THRIKREEN(char_dodger))
-    learned -= (int) (learned * 0.50);
-
   // Everybody receives these values.
   learned +=  (int) (((STAT_INDEX(GET_C_AGI(char_dodger))) -
                     (STAT_INDEX(GET_C_DEX(attacker)))) / 2);
@@ -7535,7 +7533,7 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
   {
     if(number(0, 1))
     {
-      act("You easily lean out of $n's vicious attack.", FALSE, attacker, 0,
+      act("You easily lean out of range of $n's vicious attack.", FALSE, attacker, 0,
         char_dodger, TO_VICT | ACT_NOTTERSE);
       act("$N nimbly swivels out of the path of your attack.", FALSE,
         attacker, 0, char_dodger, TO_CHAR | ACT_NOTTERSE);
@@ -7544,7 +7542,7 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
     }
     else
     {
-      act("You whirl around, just missing $n's vicious attack.", FALSE,
+      act("You whirl around, just avoiding $n's vicious attack.", FALSE,
         attacker, 0, char_dodger, TO_VICT | ACT_NOTTERSE);
       act("$N gracefully whirls around your attack.", FALSE, attacker, 0,
         char_dodger, TO_CHAR | ACT_NOTTERSE);
@@ -7739,12 +7737,12 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
         return 0;
         
   if(IS_ELITE(victim))
-    skl = (int)(skl * 1.25);
+    skl = (int)(skl * 1.1);
   
   percent = (int)(skl / 2) - (int)(WeaponSkill(attacker, wpn) / 3);
 
-  percent += dex_app[STAT_INDEX(GET_C_DEX(victim))].reaction * 8;
-  percent += str_app[STAT_INDEX(GET_C_STR(victim))].tohit * 3;
+  percent += dex_app[STAT_INDEX(GET_C_DEX(victim))].reaction * 4;
+  percent += str_app[STAT_INDEX(GET_C_STR(victim))].tohit * 1.5;
   percent -= (str_app[STAT_INDEX(GET_C_STR(attacker))].tohit +
               str_app[STAT_INDEX(GET_C_STR(attacker))].todam);
 
@@ -7753,6 +7751,10 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
   
   // This allows monks a chance to regain their feet based on agil and 
   // martial arts skill. Aug09 -Lucrot
+
+  // All this does is set someone up to be repeatedly bashed and lagged,
+  // utterly and insanely stupid. -- Jexni 1/21/11
+/*
     if(GET_C_AGI(victim) > number(1, 1000) &&
        GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS) > number(1, 100))
     {
@@ -7767,17 +7769,16 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
       update_pos(victim);
       return false;
     }
-    
+  */  
     percent = 5;
   }
   
   if(!MIN_POS(attacker, POS_STANDING + STAT_NORMAL))
-    percent *= 2;
+    percent *= 1.1;
 
-  percent = BOUNDED(learned / 25, percent, 30);
+  percent = BOUNDED(learned / 25, percent, 15);
 
-  if(IS_GREATER_RACE(attacker) &&
-    !(IS_DRACOLICH(attacker) || IS_TITAN(attacker)))
+  if(IS_GREATER_RACE(attacker) || IS_ELITE(attacker))
       percent /= 2;
 
   if(number(1, 150) > percent)
@@ -7810,6 +7811,7 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
 {
   int learnedvictim = GET_CHAR_SKILL(victim, SKILL_PARRY);
   int learnedattacker;
+  int blindfightskl = GET_CHAR_SKILL(victim, SKILL_BLINDFIGHTING);
   bool npcepicparry = false;
   int expertparry = 0;
 
@@ -7892,8 +7894,9 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
   if(affected_by_spell(victim, SKILL_GAZE))
     learnedvictim = (int) (learnedvictim * 0.80);
     
+  // adding blindfighting check - Jexni 1/21/11
   if(IS_BLIND(victim))
-    learnedvictim = (int) (learnedvictim * 0.33);
+    learnedvictim = (int) (blindfightskl > 0 ? (learnedvictim * (blindfightskl / 200)) : (learnedvictim * 0.05));
 
   if(IS_STUNNED(victim))
     learnedvictim = (int) (learnedvictim * 0.90);
@@ -7922,12 +7925,12 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
   //  Blademasters and swashbucklers have a better chance.
   if(GET_SPEC(victim, CLASS_RANGER, SPEC_BLADEMASTER) ||
      GET_SPEC(victim, CLASS_WARRIOR, SPEC_SWASHBUCKLER))
-    learnedvictim = (int) (learnedvictim * 1.20);
+    learnedvictim = (int) (learnedvictim * 1.10);
   
   //  Better chance for ap's
   if((GET_CLASS(victim, CLASS_ANTIPALADIN) || GET_CLASS(victim, CLASS_PALADIN)) &&
      is_wielding_paladin_sword(victim))
-    learnedvictim = (int) (learnedvictim * 1.10);
+    learnedvictim = (int) (learnedvictim * 1.15);
 
   // Harder to parry a swashbuckler.
   if(GET_SPEC(attacker, CLASS_WARRIOR, SPEC_SWASHBUCKLER))
@@ -7938,8 +7941,7 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
     learnedvictim = (int) (learnedvictim * 1.05);
   
   // Dragons are more difficult to parry, but not impossible.
-  if(IS_GREATER_RACE(attacker) &&
-    !(IS_DRACOLICH(attacker) || IS_TITAN(attacker)))
+  if(IS_GREATER_RACE(attacker))
       learnedattacker += GET_LEVEL(attacker);
   
 // Much harder to parry with fireweapons like a bow, but not impossible.
@@ -7955,7 +7957,7 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
   if(IS_PC(victim) &&
     victim->specials.fighting != attacker)
   {
-    learnedvictim = (int) (learnedvictim * 0.80);
+    learnedvictim = (int) (learnedvictim * 0.90);
   }
   
   // Generate attacker and victim ranges.    
@@ -8192,7 +8194,7 @@ int calculate_attacks(P_char ch, int attacks[])
     }
 
     if (IS_AFFECTED2(ch, AFF2_SLOW) && num_atts > 1)
-      num_atts--;
+      num_atts /= 2;
 
     while (num_atts--)
       ADD_ATTACK(PRIMARY_WEAPON);
@@ -8331,14 +8333,10 @@ int calculate_attacks(P_char ch, int attacks[])
       ADD_ATTACK(SECONDARY_WEAPON);
   }
 
-  // Gona try removing this for a while.
-  //if (IS_AFFECTED2(ch, AFF2_FLURRY) && number_attacks > 4)
-  //{
-  //  number_attacks = 4;
-  //  if (!number(0,3))
-  //    send_to_char
-  //      ("Strike faster and you will drop dead from a heart attack.\n", ch);
-  //}
+  if (IS_AFFECTED2(ch, AFF2_FLURRY) && number_attacks > 4)
+  {
+    number_attacks = 4;
+  }
 
   if (IS_AFFECTED3(ch, AFF3_BLUR))
   {
@@ -8489,8 +8487,6 @@ void perform_violence(void)
 
     number_attacks = calculate_attacks(ch, attacks);
 
-// Monks ignore inertial barrier and armlocks. May2010 -Lucrot
-// Removing monks ignore per Kitsero. Aug2010
     if(IS_AFFECTED3(opponent, AFF3_INERTIAL_BARRIER) ||
       (!GET_CLASS(ch, CLASS_PSIONICIST) &&
       IS_AFFECTED3(ch, AFF3_INERTIAL_BARRIER) ) ||
@@ -8520,7 +8516,6 @@ void perform_violence(void)
           FALSE, opponent, 0, 0, TO_NOTVICT);
         
         set_short_affected_by(opponent, SKILL_BATTLE_SENSES, 1);
-        //debug("Battle senses applied to (%s)", GET_NAME(opponent));
       }
     }
     
@@ -8542,7 +8537,7 @@ void perform_violence(void)
         if(!IS_BLIND(opponent))
           act("$n &+wblinks out of existence ... then reappears &+ybehind you!&n",
             FALSE, ch, 0, opponent, TO_VICT);
-        set_short_affected_by(ch, SKILL_SHADOW_MOVEMENT, 1);
+        set_short_affected_by(ch, SKILL_SHADOW_MOVEMENT, 4);
       }
     }
     
@@ -8744,6 +8739,7 @@ int pv_common(P_char ch, P_char opponent, const P_obj wpn)
   
   /* weapon skill notch, check for automatic defensive skills */
   if(!((wpn_skill = required_weapon_skill(wpn)) &&
+      ((wpn_skill != SKILL_1H_FLAYING) || (wpn_skill != SKILL_2H_FLAYING)) &&
       notch_skill(ch, wpn_skill, get_property("skill.notch.offensive.auto", 100))) &&
       GET_STAT(opponent) == STAT_NORMAL &&
       !IS_IMMOBILE(ch) &&
@@ -8753,7 +8749,6 @@ int pv_common(P_char ch, P_char opponent, const P_obj wpn)
   {  
     if(affected_by_spell(ch, SKILL_SHADOW_MOVEMENT))
     {
- //     debug("Shadow movement active on (%s).", GET_NAME(ch));
     }
     else
     {
@@ -9063,7 +9058,6 @@ bool critical_attack(P_char ch, P_char victim, int msg)
     return false;
   }
   
-  // Removing buggy switch. Dec08 -Lucrot
   random = number(0, 3);
   
   if(random == 0)
@@ -9089,30 +9083,29 @@ bool critical_attack(P_char ch, P_char victim, int msg)
           (int) (victim->points.vitality * 0.75);
       }
       
-      return true;
+      return TRUE;
     }
   }
-  if(random == 1)
+  if(random == 1 && !number(0, 2))
   {
-
-    sprintf(attacker_msg, "Your devastating attack causes $N to take notice!&N",
+    sprintf(room_msg, "$n's mighty %s knocks $N's weapon from $S grasp!&n",
+              attack_hit_text[msg].singular);
+    sprintf(attacker_msg, "Your mighty %s knocks $N's weapon from $S grasp!&n",
             attack_hit_text[msg].singular);
-    sprintf(victim_msg, "Hey! That hurt! Time to deal with this menace!&N",
+    sprintf(victim_msg, "$n's mighty %s knocks your weapon from your grasp!&n",
             attack_hit_text[msg].plural);
-    act(victim_msg, TRUE, ch, NULL, victim, TO_VICT);
-    sprintf(room_msg, "$n's painful %s causes $N to recoil in pain!&N",
-            attack_hit_text[msg].plural);
-    act(room_msg, TRUE, ch, NULL, victim, TO_NOTVICT);
-
-    if(!IS_FIGHTING(victim) &&
-      GET_OPPONENT(ch) == victim)
-    { }
+    if(!critical_disarm(ch, victim))
+    {
+      act(attacker_msg, TRUE, ch, NULL, victim, TO_CHAR);
+      act(victim_msg, TRUE, ch, NULL, victim, TO_VICT);
+      act(room_msg, TRUE, ch, NULL, victim, TO_NOTVICT);
+    }
     else
     {
-      attack(victim, ch);
+      return FALSE;
     }
     
-    return true;
+    return TRUE;
   }
   if(random == 2)
   {
@@ -9165,7 +9158,7 @@ bool critical_attack(P_char ch, P_char victim, int msg)
       affect_from_char(victim, SPELL_SHADOW_SHIELD);
     }
     
-    return true;
+    return TRUE;
   }
 
   if(random == 3)
@@ -9182,16 +9175,9 @@ bool critical_attack(P_char ch, P_char victim, int msg)
             attack_hit_text[msg].singular);
     hit(ch, victim, ch->equipment[SECONDARY_WEAPON]);
     
-    return true;
-  }
+    return TRUE;
 
-    /*
-    case 3:
-      sprintf(room_msg, "$n's mighty %s knocks $N's weapon from $S grasp!&n",
-              attack_hit_text[msg].singular);
-      if( !critical_disarm(ch, victim) ) show_message = FALSE;
-      break;
-    */
+  }
 }
 
 bool critical_disarm(P_char ch, P_char victim)

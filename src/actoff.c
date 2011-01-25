@@ -3766,7 +3766,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   {
     act("$n attempted to headbutt you.", FALSE, ch, 0, victim, TO_VICT);
     act("Headbutt requires you to be able to reach his head!", FALSE, ch, 0, 0, TO_CHAR);
-    CharWait(ch, (int) (PULSE_VIOLENCE * 1.5));
+    CharWait(ch, (int) (1 * WAIT_SEC));
     
     return;
   }
@@ -5060,6 +5060,8 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
            (GET_POS(victim) != POS_STANDING) ? 0.20 :
            1));
 
+  percent_chance = (int) (percent_chance * (1 + ((GET_C_DEX(ch) - GET_C_AGI(victim)) / 200)));
+
   /*
    * if they are fighting something and try to bash something else
    */
@@ -5135,7 +5137,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     //debug("Bash - elemental pet: (%d) chance versus (%s) numfol (%d).",percent_chance, GET_NAME(ch), NumFol);
   }
 
-  percent_chance = BOUNDED(1, percent_chance, 95);
+  percent_chance = BOUNDED(1, percent_chance, 99);
   
   /*
    * final check to smarten mobs up a little, if odds are too low don't
@@ -6295,7 +6297,7 @@ void maul(P_char ch, P_char victim)
     
     if(!number(0, 3))
     {
-      act("$n &+ygrowls&n on impact, and slams $e head into $N before falling to $e knees!",
+      act("$n &+ygrowls&n on impact, and slams $s head into $N before falling to $s knees!",
           FALSE, ch, 0, victim, TO_NOTVICT);
       act("But $e slams his head into you anyways, before falling to $s knees!",
          FALSE, ch, 0, victim, TO_VICT);
@@ -6355,8 +6357,8 @@ void maul(P_char ch, P_char victim)
     if(GET_SPEC(ch, CLASS_BERSERKER, SPEC_MAULER) ||
        IS_ELITE(ch))
     { 
-      CharWait(victim, (int) (PULSE_VIOLENCE * 1.500));
-      CharWait(ch, (int) (PULSE_VIOLENCE * 1.700));
+      CharWait(victim, (int) (PULSE_VIOLENCE * 1.300));
+      CharWait(ch, (int) (PULSE_VIOLENCE * 1.800));
       set_short_affected_by(ch, SKILL_BASH, (int) (PULSE_VIOLENCE * 
         get_property("skill.maul.IsMauler.ShieldBashlag", 1.000)));
     }
@@ -6440,7 +6442,7 @@ void shieldpunch(P_char ch, P_char victim)
   appear(ch);
   
   CharWait(ch, (int) (PULSE_VIOLENCE *
-    get_property("skill.shieldpunch.lag", 2.000)));
+    get_property("skill.shieldpunch.lag", 1.000)));
 
   victim = guard_check(ch, victim);
 
@@ -6565,7 +6567,7 @@ void shieldpunch(P_char ch, P_char victim)
       IS_ALIVE(ch))
     {
       engage(ch, victim); // Simplified initiate combat code from above.
-      CharWait(victim, (int) get_property("skill.shieldpunch.targetlag", 1.000));
+      CharWait(victim, (int) get_property("skill.shieldpunch.targetlag", 0.500));
     }
     else
     {
@@ -6756,9 +6758,9 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
     percent_chance = (int) (percent_chance * 1.25);
   }
 
-  percent_chance = // He or she who has the most agility shall benefit.
+  percent_chance = // Attacker checks dex, defender checks agi
       (int) (percent_chance *
-         ((double) (BOUNDED(6, 10 + (GET_C_AGI(ch) - GET_C_AGI(victim)) / 5, 15)) / 10));
+         ((double) (BOUNDED(6, 10 + (GET_C_DEX(ch) - GET_C_AGI(victim)) / 5, 15)) / 10));
 
 /*
  * if they are fighting something and try to sweeping thrust something else
@@ -6776,17 +6778,11 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
   percent_chance = // Level difference check with bonus going to the higher level.
     (int) (percent_chance * ((double) BOUNDED(6, 10 + (levelc - levelvict), 15)) / 10);
 
-  if(IS_AFFECTED(victim, AFF_AWARE))
-  {
-    percent_chance = (int) (percent_chance * 0.93);
-  }
-
   percent_chance = BOUNDED(5, percent_chance, 95);
 
   if(GET_POS(victim) != POS_STANDING && // Don't want the players to notch skill here.
     number(0, 99) < percent_chance)
   {
-    // debug("Victim not standing", percent_chance);
     act("You cleanly perform a &+csweeping attack&n on $N!", FALSE, ch,
         0, victim, TO_CHAR);
     act("$n beats on you while you are down with a &+cwide arcing attack!&n", FALSE, ch, 0,
@@ -7007,9 +7003,6 @@ void do_rearkick(P_char ch, char *argument, int cmd)
     takedown_chance == TAKEDOWN_PENALTY)
       return;
       
-  debug("REARKICK: (%s) has (%d) chance to takedown (%s).",
-    J_NAME(ch), takedown_chance, J_NAME(victim));
-
   if(takedown_chance > number(0, 100))
   {
     door = number(0, 9);
@@ -7296,7 +7289,7 @@ void do_trample(P_char ch, char *argument, int cmd)
     }
     else
     {
-      send_to_char("Your mount has an ailment! What is wrong???\n\r", ch);
+      send_to_char("Your mount is afflicted and cannot heed your commands.\n\r", ch);
       return;
     }
   }
@@ -7324,7 +7317,7 @@ void do_trample(P_char ch, char *argument, int cmd)
 
   if(IS_AFFECTED(victim, AFF_AWARE))
   {
-    knockdown_chance = (int) (knockdown_chance * 0.80);
+    knockdown_chance = (int) (knockdown_chance * 0.90);
   }
 
   vict_size = get_takedown_size(victim);
@@ -7377,7 +7370,7 @@ void do_trample(P_char ch, char *argument, int cmd)
 
   if(knockdown_chance == TAKEDOWN_CANCELLED)
   {
-    send_to_char("&+yThe trample attempt fails horribly.\r\n", ch);
+    send_to_char("&+yYour trample attempt fails horribly.\r\n", ch);
     return;
   }
   else if(knockdown_chance == TAKEDOWN_PENALTY)

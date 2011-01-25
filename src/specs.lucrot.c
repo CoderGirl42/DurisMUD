@@ -60,7 +60,7 @@ int lucrot_mindstone(P_obj obj, P_char ch, int cmd, char *arg)
         return false;
       }
       
-      if(obj->timer[0] + 1200 <= curr_time)
+      if(obj->timer[0] + 1800 <= curr_time)
       {
         int to_room = real_room0(GET_HOME(ch));
 	if (to_room <= 0)
@@ -85,7 +85,7 @@ int lucrot_mindstone(P_obj obj, P_char ch, int cmd, char *arg)
         char_from_room(ch);
         char_to_room(ch, to_room, 0);
 
-        act("$n materializes...", 0, ch, 0, 0, TO_ROOM);
+        act("$n materializes suddenly...", 0, ch, 0, 0, TO_ROOM);
         CharWait(ch, PULSE_VIOLENCE * 4);
           
         obj->timer[0] = curr_time;
