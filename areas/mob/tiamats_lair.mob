@@ -1,14 +1,14 @@
 #135201
-mob unnamed~
+ancient white dragon patrol~
 &+Wan an&+wcien&+Wt white dr&+wagon&n~
-An unnamed mob stands here, looking lonely and forelorn.
+&+WAn an&+wcien&+Wt white dr&+wagon &+Wpatrols the &+cf&+Cr&+ci&+Cg&+ci&+Cd &+Wl&+wai&+Wr.&n
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+1342208584 1 0 0 0 0 0 -1000 S
+D 0 513 -1
+55 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135202
 mob unnamed~
 &+Lan an&+wcien&+Lt black d&+wra&+Lgon&n~
@@ -59,55 +59,55 @@ ephelemon ancient red dragon consort _no_move_~
 &+rA &+RHUGE &+rred dragon stands here, towering above the rest of his kind.&n
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+268458090 1 0 402653336 4194305 1048704 262144 -1000 S
+D 0 2561 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135207
 xasormalathin ancient green dragon consort _no_move_~
 &+gXa&+Gsormalath&+gin&+L, the ancient &+gg&+Gr&+ge&+Ge&+gn &+Ldragon consort&n~
 An unnamed mob stands here, looking lonely and forelorn.
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+268459082 1 0 939524248 2176 1048704 33555456 -1000 S
+D 0 2099200 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135208
 kalanakanitan ancient black dragon consort _no_move_~
 &+LKa&+wlanakanit&+Lan, the ancient b&+wlac&+Lk dragon consort&n~
 An unnamed mob stands here, looking lonely and forelorn.
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+268438602 1 0 939524248 2048 1048704 33554432 -1000 S
+D 0 33554689 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135209
-zenalithiananthisa ancient white dragon consort _no_move_~
+zenalithiananthisa ancient white dragon consort _no_move_ _spec3_~
 &+WZenalithianathisa&+L, the ancient &+Wwhite &+Ldragon consort&n~
 An unnamed mob stands here, looking lonely and forelorn.
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+268458506 1 0 402727096 34880 128 4195328 -1000 S
+D 0 33554689 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135210
 tenanizeothian ancient blue dragon consort _no_move_~
 &+bTe&+Bnanizeothi&+ban&+L, the ancient &+bb&+Bl&+bu&+Be &+Ldragon consort&n~
 An unnamed mob stands here, looking lonely and forelorn.
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+268458250 1 0 402653336 128 0 0 -1000 S
+D 0 39845888 -1
+60 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135211
 mob unnamed~
 &+La dragon-&+mknight &+Lprotector&n~
@@ -142,16 +142,16 @@ PH 0 0 -1
 0.0.0.0 0
 8 8 0
 #135214
-mob unnamed~
+dragon dragonkin kin seer _no_move_~
 &+La &+Gd&+grago&+Gn&+Lkin &+rs&+Ree&+rr&n~
 &+LA &+Gd&+grago&+Gn&+Lkin &+rs&+Ree&+rr &+Lstands here, guarding the &+Cpool &+Lof &+cscrying&+L.&n
 ~
 ~
-8 0 0 0 0 0 0 0 S
-PH 0 0 -1
-1 0 0 1d1+1 1d1+1
+10 1 0 134217872 32768 128 4096 -1000 S
+DK 0 416 -1
+56 0 0 1d1+1 1d1+1
 0.0.0.0 0
-8 8 0
+8 8 1
 #135215
 mob unnamed~
 &+LMordukhavar &+wthe &+mreaver&n~
