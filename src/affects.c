@@ -362,6 +362,9 @@ int calculate_hitpoints(P_char ch)
   }
   // Casters get hitpoint bonus with con_max eq. Dec08 -Lucrot
 
+  // Never liked this and it grew from making hitters far too powerful
+  // downing this and finding a better solution - Jexni 2/6/11
+
   if(ch &&
     IS_MAX_CON_BONUS_CLASS(ch) &&
     !IS_MULTICLASS_PC(ch))
@@ -410,7 +413,7 @@ int calculate_hitpoints(P_char ch)
     {
       sprintf(buf, "stats.con.%s", race_names_table[GET_RACE(ch)].no_spaces);
       mod = (int) get_property(buf, 100.);
-      hps += (int) (hitpoint_bonus * get_property("hitpoints.spellcaster.maxConBonus", 5.0) * mod / 100);
+      hps += (int) (hitpoint_bonus * get_property("hitpoints.spellcaster.maxConBonus", 2.5) * mod / 100);
     }
   }
 
@@ -481,7 +484,7 @@ void apply_affs(P_char ch, int mode)
   float max_con_bonus;
   char  buf1[256];
 
-  if(!(ch)) // Crash and burn. Dec08 -Lucrot
+  if(!ch)
   {
     return;
   }  
@@ -1342,19 +1345,11 @@ void all_affects(P_char ch, int mode)
     affect_modify(APPLY_AC, -(apply_ac(ch, i)), NULL, FALSE);
   }
 
-
   /* HERE is the place to go into TmpAffs and tone things down */
-  TmpAffs.Hits = BOUNDED(0, TmpAffs.Hits, GET_LEVEL(ch) * 4);
-
-  /*
-   * special dealing with hit/dam limits.  Basically, pure warriors have no
-   * limits at all.  Non-warriors have a low limit, and semi-warriors have a
-   * middle ground limit. This numbers do NOT count racial mods, and spell-type
-   * affects
-   */
+  TmpAffs.Hits = BOUNDED(0, TmpAffs.Hits, GET_LEVEL(ch) * 3);
 
   /* better +dam handling */
-  TmpAffs.Dam = MIN(5 + GET_LEVEL(ch), TmpAffs.Dam);
+  TmpAffs.Dam = MIN(GET_LEVEL(ch) + 35, TmpAffs.Dam);
 
   for (af = ch->affected; af; af = af->next)
   {

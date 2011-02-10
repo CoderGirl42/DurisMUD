@@ -378,12 +378,14 @@ void do_reboot_restore(P_char ch, P_char victim)
     REMOVE_BIT(victim->specials.affected_by4, AFF4_CARRY_PLAGUE);
 
   if(affected_by_spell(victim, SPELL_DISEASE) ||
-      affected_by_spell(victim, SPELL_PLAGUE))
+     affected_by_spell(victim, SPELL_PLAGUE) ||
+     affected_by_spell(victim, SPELL_BMANTLE))
   {
     affect_from_char(victim, SPELL_DISEASE);
     affect_from_char(victim, SPELL_PLAGUE);
+    affect_from_char(victim, SPELL_BMANTLE);
   }
-  
+   
   if(affected_by_spell(victim, TAG_ARMLOCK))
     affect_from_char(victim, TAG_ARMLOCK);
         

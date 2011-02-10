@@ -552,6 +552,12 @@ void initialize_skills()
   SPELL_ADD(CLASS_NECROMANCER, 11);
   SPELL_ADD(CLASS_THEURGIST, 11);
 
+  SPELL_CREATE_MSG("blackmantle", SPELL_BMANTLE, PULSE_SPELLCAST * 4,
+                TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO,
+                spell_blackmantle, "&+LThe &+bnegative energy droplets &+Ldissipate harmlessly.");
+  SPELL_ADD(CLASS_NECROMANCER, 10);
+  SPELL_ADD(CLASS_THEURGIST, 10);
+
   SPELL_CREATE("negative concussion blast", SPELL_NEGATIVE_CONCUSSION_BLAST, PULSE_SPELLCAST * 3 / 2,
                 TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO,
                 spell_negative_concussion_blast);
@@ -2030,8 +2036,8 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 TAR_IGNORE | TAR_NOCOMBAT, cast_prismatic_cube);
   SPELL_ADD(CLASS_CONJURER, 11);
 
-  SPELL_CREATE_MSG("miners sight", SPELL_MINER, PULSE_SPELLCAST,
-               TAR_SELF_ONLY | TAR_NOCOMBAT, spell_miners_sight,
+  SPELL_CREATE_MSG("lodestone vision", SPELL_LODESTONE, PULSE_SPELLCAST,
+               TAR_SELF_ONLY | TAR_NOCOMBAT, spell_lodestone_vision,
 	       "The glimmer in your eyes fades as your vision returns to normal.");
 
   SPELL_CREATE_MSG("haste", SPELL_HASTE, (PULSE_SPELLCAST * 3) / 2,

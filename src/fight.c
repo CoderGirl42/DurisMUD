@@ -302,7 +302,7 @@ void update_dam_factors()
   dam_factor[DF_SWASHBUCKLER_OFFENSE] = get_property("damage.increase.swashbuckler", 1.25);
   dam_factor[DF_SANC] = get_property("damage.reduction.sanctuary", 0.8);
   dam_factor[DF_TROLLSKIN] = get_property("damage.reduction.trollskin", 0.8);
-  dam_factor[DF_BARKSKIN] = get_property("damage.reduction.barkskin", 0.95);
+  dam_factor[DF_BARKSKIN] = get_property("damage.reduction.barkskin", 0.90);
   dam_factor[DF_BERSERKMELEE] = get_property("damage.reduction.berserk", 0.10);
   dam_factor[DF_SOULMELEE] =
     get_property("damage.reduction.soulshield.melee", 0.8);
@@ -311,13 +311,13 @@ void update_dam_factors()
   dam_factor[DF_NEG_SHIELD_SPELL] =
     get_property("damage.reduction.negshield.spell", 0.8);
   dam_factor[DF_PROTLIVING] =
-    get_property("damage.reduction.protLiving", 0.8);
+    get_property("damage.reduction.protLiving", 0.95);
   dam_factor[DF_PROTANIMAL] =
     get_property("damage.reduction.protAnimal", 0.8);
   dam_factor[DF_PROTECTION] =
     get_property("damage.reduction.protElement", 0.75);
   dam_factor[DF_PROTECTION_TROLL] =
-    get_property("damage.reduction.protFire.Troll", 0.95);
+    get_property("damage.reduction.protFire.Troll", 0.90);
   dam_factor[DF_ELSHIELDRED_TROLL] =
     get_property("damage.reduction.fireColdShield.Troll", 0.80);
   dam_factor[DF_ELSHIELDRED] =
@@ -338,11 +338,11 @@ void update_dam_factors()
   dam_factor[DF_ELSHIELDDAM] = get_property("damage.shield.fireCold", 0.5);
   dam_factor[DF_NEGSHIELD] = get_property("damage.shield.neg", 0.25);
   dam_factor[DF_SOULSHIELDDAM] = get_property("damage.shield.soul", 0.2);
-  dam_factor[DF_MONKVAMP] = get_property("vamping.vampiricTouch.monks", 0.08);
+  dam_factor[DF_MONKVAMP] = get_property("vamping.vampiricTouch.monks", 0.05);
   dam_factor[DF_TOUCHVAMP] = get_property("vamping.vampiricTouch", 0.4);
   dam_factor[DF_TRANCEVAMP] = get_property("vamping.vampiricTrance", 0.2);
   dam_factor[DF_HFIREVAMP] = get_property("vamping.hellfire", 0.14);
-  dam_factor[DF_UNDEADVAMP] = get_property("vamping.innateUndead", 0.04);
+  dam_factor[DF_UNDEADVAMP] = get_property("vamping.innateUndead", 0.03);
   dam_factor[DF_NPCVAMP] = get_property("vamping.undeadNpc", 0.1);
   dam_factor[DF_NPCTOPC] = get_property("damage.modifier.npcToPc", 1.0);
   dam_factor[DF_WEAPON_DICE] = get_property("damage.modifier.weaponDice", 1.0);
@@ -446,7 +446,7 @@ int vamp(P_char ch, double fhits, double fcap)
     raise(SIGSEGV);
   }
 
-  if( affected_by_spell(ch, TAG_BUILDING) )
+  if(affected_by_spell(ch, TAG_BUILDING))
     return 0;
 
   if(hits <= 0)
@@ -474,10 +474,24 @@ int vamp(P_char ch, double fhits, double fcap)
     blocked = (int) (hits * (((float)number(50, 60)) / 100));
     hits -= blocked;
   }
+  else if(af = get_spell_from_char(ch, SPELL_BMANTLE))
+  {
+    blocked = (int) (MIN(hits * (GET_LEVEL(ch) / 100), af->modifier));
+    hits -=blocked;
+    if(af->modifier <= blocked)
+    {
+      affect_remove(ch, af);
+      wear_off_message(ch, af);
+    }
+    else
+    {
+      af->modifier -= blocked;
+    }
+  }
 
   if(IS_PC(ch) &&
-    IS_AFFECTED3( ch, AFF3_PALADIN_AURA ) &&
-    has_aura(ch, AURA_HEALING ) )
+    IS_AFFECTED3(ch, AFF3_PALADIN_AURA) &&
+    has_aura(ch, AURA_HEALING))
   { // This stops the massive healing when used with the following: Nov08 -Lucrot
     if(!IS_SET(ch->specials.affected_by4, AFF4_REGENERATION) &&
       !affected_by_spell(ch, SPELL_ACCEL_HEALING) &&
@@ -529,6 +543,10 @@ void heal(P_char ch, P_char healer, int hits, int cap)
     hits = (int) (hits * 1.20);
   }
   
+  if(get_spell_from_char(ch, SPELL_BMANTLE))
+  {
+    hits = (int) (hits * get_property("blackmantle.healing.mod", .75));
+  }
   if(IS_AFFECTED3(healer, AFF3_ENHANCE_HEALING))
   {
     hits = (int) (hits * get_property("enhancement.healing.mod", 1.2));
@@ -571,7 +589,7 @@ bool soul_trap(P_char ch, P_char victim)
       return false;
   }
 
-  vamp(ch, hps, (int)(GET_MAX_HIT(ch)* 1.15));
+  vamp(ch, hps, (int)(GET_MAX_HIT(ch) * 1.3));
 
   if (himself)
   {
@@ -618,9 +636,7 @@ void appear(P_char ch)
     raise(SIGSEGV);
   }
   if(ch)
-  { // I don not know why this is doubled, but leaving it alone.
-    if (IS_AFFECTED(ch, AFF_HIDE)) 
-      REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
+  {
     if (IS_AFFECTED(ch, AFF_HIDE))
       REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
 
@@ -1399,7 +1415,7 @@ P_obj make_corpse(P_char ch, int loss)
       break;
     case RACE_F_ELEMENTAL:
     case RACE_EFREET:
-      act("$n disappears into a burst of fire.", TRUE, ch, 0, 0, TO_ROOM);
+      act("$n disappears in a burst of fire.", TRUE, ch, 0, 0, TO_ROOM);
       break;
     case RACE_W_ELEMENTAL:
       act("$n sinks into the ground.", TRUE, ch, 0, 0, TO_ROOM);
@@ -1446,7 +1462,7 @@ P_obj make_corpse(P_char ch, int loss)
     case RACE_GHAELE:
     case RACE_BRALANI:
     case RACE_ELADRIN:
-      act("$n &+Wglows white&n &+wbefore &+Ldissapearing...&n", TRUE, ch, 0, 0, TO_ROOM);
+      act("$n &+Wglows white&n &+wbefore &+Ldisappearing...&n", TRUE, ch, 0, 0, TO_ROOM);
       break;
     }
 
@@ -1747,22 +1763,16 @@ void change_alignment(P_char ch, P_char victim)
   if (IS_EVIL(ch) && (change > 1)) {
     change = BOUNDED(1, change - (GET_LEVEL(ch) / 15), change);
   }
-  if (IS_GOOD(ch) && (change < 0)) {     /*
-                                         * Just to piss those high level *
-                                         good weenies off who kill all * good
-
-                                         mobs daily
-                                         */
-    change -= (GET_LEVEL(ch) / 10);
+  if (IS_GOOD(ch) && (change < 0)) 
+  {
+     change -= (GET_LEVEL(ch) / 10);
   }
 
-  if (EVIL_RACE(ch) && GOOD_RACE(victim)){ /* Lets try to keep evil race folks
-                                           * from having a free ride when they
-                       * obtain good alignment
-                       */
-                       
-  change += (-number(50, 500));
-  }
+  if (EVIL_RACE(ch) && GOOD_RACE(victim))
+  {                                        // Lets try to keep evil race folks
+     change += (-number(50, 500));         // from having a free ride when they
+  }                                        // obtain good alignment
+
   /*
    * The Druid balance will flux a lot.  However, it will balance itself
    * as druids commune in forests.
@@ -1815,8 +1825,7 @@ void death_cry(P_char ch)
   act  ("&+rThe unmistakable scent of fresh blood can be smelled as&N $n &N&+rdies in agony.&n", FALSE, ch, 0, 0, TO_ROOM);
   break;
   case 5:
-  act    ("&+rA look of horror and a silent scream are&n $n&N&+r's last actions in this world.&n", FALSE, ch, 
-0, 0, TO_ROOM);
+  act    ("&+rA look of horror and a silent scream are&n $n&N&+r's last actions in this world.&n", FALSE, ch, 0, 0, TO_ROOM);
   break;
   }
   was_in = ch->in_room;
@@ -3075,10 +3084,10 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
     
 // Much harder to riposte something you are not fighting.
   if(ch->specials.fighting != victim)
-    skl *= 0.20;
+    skl *= 0.50;
 
   if(IS_AFFECTED5(ch, AFF5_DAZZLEE))
-    skl *= 0.90;
+    skl *= 0.95;
 
 // Expert riposte.
   if(expertriposte)
@@ -3484,7 +3493,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       FALSE, ch, 0, victim, TO_VICT);
     act("$N&+R absorbs&n $n's&+R spell!",
       FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim,  dam / 3, GET_MAX_HIT(victim));
+    vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.3);
     
     // Solving issue of fire elementals not unmorting after vamping from fire spell
     update_pos(victim);
@@ -3504,7 +3513,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       FALSE, ch, 0, victim, TO_VICT);
     act("$N&+C absorbs&n $n's &+Cspell!",
       FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim, dam / 3, GET_MAX_HIT(victim)); 
+    vamp(victim, dam / 4, GET_MAX_HIT(victim) * 1.3); 
 
     update_pos(victim);
     if (IS_NPC(victim))
@@ -3534,7 +3543,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       FALSE, ch, 0, victim, TO_VICT);
     act("$N&+L grins wickedly as $e absorbs&n $n&+L's spell!&n",
       FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.15);
+    vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.3);
     return DAM_NONEDEAD;
   }
 
@@ -3559,7 +3568,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       FALSE, ch, 0, victim, TO_VICT);
     act("$N&+W grins wickedly as $e absorbs&n $n&+L's spell!&n",
       FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.15);
+    vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.3);
     return DAM_NONEDEAD;
   }
   */
@@ -3886,8 +3895,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
         FALSE, ch, 0, victim, TO_VICT);
       act("$n's&+L spell is absorbed by&n $N's &+Rhellfire!",
         FALSE, ch, 0, victim, TO_NOTVICT);
-      vamp(victim, dam * get_property("vamping.hellfire.absorb", 0.16),
-           (int)(GET_MAX_HIT(victim) * 1.25));
+      vamp(victim, dam * get_property("vamping.hellfire.absorb", 0.14),
+           (int)(GET_MAX_HIT(victim) * 1.3));
       return DAM_NONEDEAD;
     }
 
@@ -4082,8 +4091,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 	dam *= dam_factor[DF_TIGERPALM];
       break;
     case SPLDAM_NEGATIVE:
-      //if (victim && IS_ANGEL(victim))
-        //dam *= get_property("damage.neg.increase.modifierVsAngel", 1.300);
+      if (victim && IS_ANGEL(victim))
+        dam *= get_property("damage.neg.increase.modifierVsAngel", 1.300);
       if (IS_AFFECTED2(victim, AFF2_SOULSHIELD))
         dam *= dam_factor[DF_SLSHIELDINCREASE];
       if (IS_AFFECTED4(victim, AFF4_NEG_SHIELD))
@@ -4148,7 +4157,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
         act("$n &+Mceases to move... frozen in place, still and lifeless.&n",
           FALSE, victim, 0, 0, TO_ROOM);
         send_to_char
-          ("&+LYour body becomes like stone as the &+Cparalyzation &+Ltakes effect.&n\n",
+          ("&+LYour body becomes like stone as &+Cparalysis &+Lsets in.&n\n",
            victim);
 
         bzero(&af, sizeof(af));
@@ -4703,7 +4712,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
   
 // Earth elementals ignore earth aura.
   if(IS_AFFECTED2(victim, AFF2_EARTH_AURA) &&
-    !number(0, 4) &&
+    !number(0, 5) &&
     GET_RACE(ch) != RACE_E_ELEMENTAL)
   {
     dam = 0;
@@ -4759,23 +4768,6 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
   }
   else
     skin = 0;
-
-
-// Ogre balance tweak. Ogres do more damage versus smaller opponents. The greater the difference the greater the damage. This back-end damage bonus is tacked on after all the shield/skin checks for extra lethalness.
-  if (ch &&
-		  victim &&
-      GET_RACE(ch) == RACE_OGRE &&
-      GET_POS(ch) == POS_STANDING)
-  {
-     int chsize = GET_SIZE(ch);
-     int victsize = GET_SIZE(victim);
-    
-     if(chsize > victsize)
-     {
-       dam = dam + MIN((chsize - victsize), 5);
-     }
-  }
-
   
   //-------------------------------
   // ranged stuff, moved from range.c
@@ -4803,7 +4795,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
       !(flags & PHSDAM_NOREDUCE))
           dam -= dam * reduction;
 
-          /* for mobs flagged with a skin spell that aren't pets, 1% chance to break it.  pets are more likely to have it broken (5%) */
+          // for mobs flagged with a skin spell that aren't pets, 1% chance to break it.  pets are more likely to have it broken (5%)
     decrease_skin_counter(victim, skin);
   }
 
@@ -4897,7 +4889,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) &&
     dam >= 4)
   {
-    vamped = vamp(ch, dam * 0.050, GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+    vamped = vamp(ch, dam * 0.050, GET_MAX_HIT(ch) * 1.3);
   }
 
 // Physical type actions that vamp
@@ -4912,48 +4904,40 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
    // The class order makes a difference to multiclass chars.
     if(GET_CLASS(ch, CLASS_ANTIPALADIN))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.antipaladins", 0.700),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.antipaladins", 0.700), GET_MAX_HIT(ch) * 1.5);
     }
     
     else if(GET_CLASS(ch, CLASS_MONK))
     {
-      vamped = vamp(ch, dam * dam_factor[DF_MONKVAMP],
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * dam_factor[DF_MONKVAMP], GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_MERCENARY))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.mercs", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.mercs", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_WARRIOR))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.warriors", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.warriors", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_BERSERKER))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.berserkers", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.berserkers", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_ROGUE))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.rogues", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.rogues", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_PALADIN))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.paladins", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.paladins", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else if(GET_CLASS(ch, CLASS_RANGER))
     {
-      vamped = vamp(ch,  dam * get_property("vamping.vampiricTouch.rangers", 0.100),
-        GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch,  dam * get_property("vamping.vampiricTouch.rangers", 0.100), GET_MAX_HIT(ch) * 1.3);
     }
     else
     {
-      vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) + GET_LEVEL(ch) * 10);
+      vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * 1.3);
     }
   }
 
@@ -4964,20 +4948,15 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     IS_NPC(ch) &&
     !IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM))
   {
-    vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) + GET_LEVEL(ch) * 4);
+    vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * 1.3);
   }
-  // end Vamp via touch.
+  // end TOUCHVAMP
 
   // Battle X section:
   // btx vamp(also short_vamp) - Jexni
-
-  // temp_dam is used in battle x to randomize the vamp amount.
-  // Battle x is hard to balance, since the benefit in large groups is
-  // tremendous but quite low in small groups. Jan08 -Lucrot
   
   // This is battle x vamp from your own attacks:
 
-  /* Removing vamping from ones own attacks because they get hellfire
   if(!vamped &&
     ch != victim &&
     !IS_AFFECTED4(victim, AFF4_HOLY_SACRIFICE) &&
@@ -4992,17 +4971,15 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
        GET_LEVEL(ch) >= 46)
     {
       temp_dam = dam * get_property("vamping.self.battleEcstasy", 0.150);
-      vamp(ch, temp_dam, GET_MAX_HIT(ch) + 700);
+      vamp(ch, temp_dam, GET_MAX_HIT(ch) * get_property("vamping.BTX.self.HP.PC", 1.50));
     }
     
     if(IS_NPC(ch))
     {
       temp_dam = dam * get_property("vamping.self.NPCbattleEcstasy", 0.050);
-      vamp(ch, temp_dam, GET_MAX_HIT(ch) + GET_LEVEL(ch) * 1.5);
+      vamp(ch, temp_dam, GET_MAX_HIT(ch) * 1.3);
     }
   }
-  */
-// get_property("vamping.BTX.self.HP.PC", 1.500)
 
 // This is battle x vamp for PC group hits and damage spells.
 
@@ -5012,9 +4989,6 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     if(IS_PC(ch) ||
        IS_PC_PET(ch))
     {
-      temp_dam = 0;
-      temp_dam = dam * get_property("vamping.battleEcstasy", 0.050);
-      temp_dam = number((int)(temp_dam/2), (int)(temp_dam));
       for(group = ch->group; group; group = group->next)
       {
         tch = group->ch;
@@ -5023,7 +4997,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
            tch->in_room == ch->in_room &&
            tch != ch)
         {
-          vamp(tch, temp_dam, GET_MAX_HIT(ch) + 700);
+          vamp(tch, dam * get_property("vamping.battleEcstasy", .140), GET_MAX_HIT(ch) * 1.3);
         }
       }
     }
@@ -5032,8 +5006,6 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     if(IS_NPC(ch) &&
        !IS_PC_PET(ch))
     {
-      temp_dam = 0;
-      temp_dam = dam * get_property("vamping.battleEcstasy", 0.050);
       temp_dam = number(1, (int) (temp_dam));
     
       for(tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
@@ -5044,9 +5016,8 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
           IS_SET((tch)->specials.affected_by4, AFF4_BATTLE_ECSTASY) &&
           tch->in_room == ch->in_room &&
           tch != ch)
-        { // NPC get a straight multiplier since adding 200, 400 etc hitpoints
-          // to a 10,000 hitpoint mob is moot. Jan08 -Lucrot
-          vamp(tch, temp_dam, GET_MAX_HIT(ch) + GET_LEVEL(ch) * 1.5);
+        {
+          vamp(tch, temp_dam, GET_MAX_HIT(ch) * 1.3);
         }
       }
     }
@@ -5057,7 +5028,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     (flags & RAWDAM_TRANCEVAMP) &&
     (IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM)))
   {
-    vamped = vamp(ch, dam * dam_factor[DF_TRANCEVAMP], GET_MAX_HIT(ch) + GET_LEVEL(ch) * 4);
+    vamped = vamp(ch, dam * dam_factor[DF_TRANCEVAMP], GET_MAX_HIT(ch) * 1.3);
   }
   
   // hellfire vamp
@@ -5079,10 +5050,10 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     }
     if(wdam)
     {
-      vamped = vamp(ch, wdam * dam_factor[DF_HFIREVAMP], GET_MAX_HIT(ch) + GET_LEVEL(ch) * 4);
+      vamped = vamp(ch, wdam * dam_factor[DF_HFIREVAMP], GET_MAX_HIT(ch) * 1.3);
     }
   }
-  
+
   // BATTLETIDE VAMP
   if(!vamped &&
     (flags & PHSDAM_BATTLETIDE) && 
@@ -5107,29 +5078,26 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   {
     if(IS_NPC(ch))
     {
-      fhits = dam * dam_factor[DF_NPCVAMP];    
-//    fcap = GET_MAX_HIT(ch) * get_property("vamping.maxHP.NPC_undead", 1.250);
-   
-      vamped = vamp(ch, fhits, GET_MAX_HIT(ch) + GET_LEVEL(ch) * 4);
+      fhits = dam * dam_factor[DF_NPCVAMP];
+      vamped = vamp(ch, fhits, GET_MAX_HIT(ch) * 1.3);
     }
     else if(dam >= 25 &&
             IS_PC(ch))
     {
       fhits = dam * dam_factor[DF_UNDEADVAMP];
       fcap = GET_MAX_HIT(ch);
-      
       vamped = vamp(ch, fhits, fcap);
     }
   }
   
   // Illesarus vamp through weapon, but only if they haven't vamped previous to this - Jexni 12/20/08
-  // #define HOA_ILLESARUS_VNUM 77738
-  // if(!vamped && 
-    // ch->equipment[WIELD] &&
-    // (obj_index[ch->equipment[WIELD]->R_num].virtual_number == HOA_ILLESARUS_VNUM) )
-  // {
-    // vamped = vamp(ch, MIN(dam, number(2, 7)), (int)(GET_MAX_HIT(ch) * 1.2));
- // }
+#define HOA_ILLESARUS_VNUM 77738
+  if(!vamped && 
+     ch->equipment[WIELD] &&
+     (obj_index[ch->equipment[WIELD]->R_num].virtual_number == HOA_ILLESARUS_VNUM))
+  {
+     vamped = vamp(ch, MIN(dam, number(2, 7)), (GET_MAX_HIT(ch) * 1.3));
+  }
   
   if((dam >= 2 &&
     !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) &&
@@ -5139,17 +5107,18 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     ((GOOD_RACE(victim) && !GOOD_RACE(ch)) ||
      (EVIL_RACE(victim) && !EVIL_RACE(ch))))
   {
-    sac_gain = dam * get_property("vamping.holySacrifice", 0.050);
+    sac_gain = dam * get_property("vamping.holySacrifice", 0.035);
 
     for (group = victim->group; group; group = group->next)
     {
       tch = group->ch;
       
-      if(tch->in_room == victim->in_room &&
-         tch != victim &&
+      if(tch->in_room == victim->in_room && tch != victim &&
          !IS_AFFECTED4(tch, AFF4_HOLY_SACRIFICE) &&
          !affected_by_spell(tch, SPELL_PLAGUE))
+      {
             vamp(tch, sac_gain, GET_MAX_HIT(tch)); // Holy Sac only vamps to max hp - Jexni 12/9/10
+      }
     }
   }
 }
@@ -7228,11 +7197,8 @@ void set_fighting(P_char ch, P_char vict)
      IS_AVATAR(ch)) &&
     !IS_MORPH(ch) &&
     !IS_PC_PET(ch))
-  {
-    // Higher level dragons more often start combat with a roar. Jan08 -Lucrot
-    int random_roar = BOUNDED(1, 60 - GET_LEVEL(ch), 9);
-    
-    if(!number(0, random_roar)) // Attack and roar.
+  { 
+    if(!number(0, 2)) // Attack and roar.
     {
       DragonCombat(ch, TRUE);
     }

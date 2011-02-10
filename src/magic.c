@@ -9127,7 +9127,20 @@ void spell_plague(int level, P_char ch, char *arg, int type, P_char victim,
     return;
   }
   
-  if(!NewSaves(victim, SAVING_SPELL, -1))
+  if(IS_NPC(victim) && !NewSaves(victim, SAVING_SPELL, 5))
+  {  
+    act("$n's skin &+cpales&n and sweat drips down $s body.",
+      TRUE, victim, 0, 0, TO_ROOM);
+    act("Upon $n's touch you suddenly feel sick.",
+      TRUE, ch, 0, victim, TO_VICT);
+
+    bzero(&af, sizeof(af));
+    af.type = SPELL_PLAGUE;
+    af.duration = level / 12;
+    af.modifier = 3500;
+    affect_to_char(victim, &af);
+  }
+  else if(IS_PC(victim) && !NewSaves(victim, SAVING_SPELL, 1))
   {  
     act("$n's skin &+cpales&n and sweat drips down $s body.",
       TRUE, victim, 0, 0, TO_ROOM);
@@ -9139,6 +9152,10 @@ void spell_plague(int level, P_char ch, char *arg, int type, P_char victim,
     af.duration = (int)get_property("spell.plague.duration", 2);
     af.modifier = 500;
     affect_to_char(victim, &af);
+  }
+  else
+  {
+    act("&+LYour plague fails to afflict $N", FALSE, ch, 0, victim, TO_CHAR);
   }
 
   //timer = (int)get_property("spell.plague.spread.time", 60);
@@ -13055,7 +13072,7 @@ void spell_blackmantle(int level, P_char ch, char *arg, int type, P_char victim,
     return;
   }
   
-  if(!NewSaves(victim, SAVING_SPELL, 0))
+  if(IS_NPC(ch) && !NewSaves(victim, SAVING_SPELL, 5))
   {  
     act("&+LA blanketing shroud of &+bnegative energy &+Lcoalesces around $N&+L...", FALSE, ch, 0, victim, TO_CHAR);
     act("&+LA blanketing shroud of &+bnegative energy &+Lcoalesces around $N&+L...", FALSE, ch, 0, victim, TO_NOTVICT);
@@ -13063,8 +13080,20 @@ void spell_blackmantle(int level, P_char ch, char *arg, int type, P_char victim,
 
     bzero(&af, sizeof(af));
     af.type = SPELL_BMANTLE;
-    af.duration = level / 9;
-    af.modifier = 800;
+    af.duration = level / 12;
+    af.modifier = 4000;
+    affect_to_char(victim, &af);
+  }
+  else if(IS_PC(ch) && !NewSaves(victim, SAVING_SPELL, -2))
+  {  
+    act("&+LA blanketing shroud of &+bnegative energy &+Lcoalesces around $N&+L...", FALSE, ch, 0, victim, TO_CHAR);
+    act("&+LA blanketing shroud of &+bnegative energy &+Lcoalesces around $N&+L...", FALSE, ch, 0, victim, TO_NOTVICT);
+    act("&+LA cloud of &+bnegative energy &+Ldroplets cloak you, slowly draining the &+wlife &+Lfrom your body...", FALSE, ch, 0, victim, TO_VICT);
+
+    bzero(&af, sizeof(af));
+    af.type = SPELL_BMANTLE;
+    af.duration = level * WAIT_SEC;
+    af.modifier = 300;
     affect_to_char(victim, &af);
   }
   else
