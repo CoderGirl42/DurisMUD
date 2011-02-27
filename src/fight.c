@@ -6056,6 +6056,8 @@ bool tainted_blade(P_char ch, P_char victim)
   struct damage_messages *messages =
     GET_CLASS(ch, CLASS_AVENGER) ? &holy_messages : &tainted_messages;
 
+  if(IS_CONSTRUCT(victim))
+    return FALSE;
   if (!ch->equipment[WIELD])
     return false;
 
