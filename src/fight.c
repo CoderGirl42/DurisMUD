@@ -6729,7 +6729,7 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
   // Weapon skill check, used to be offense.
   if(sic != -1)
   {
-    dam = (int) (dam * (wpn_skill / 100)); // maxes at .95 mod
+    dam = (int) (dam * number(3, 10) / 10);
   }
   
   if (has_divine_force(ch))
