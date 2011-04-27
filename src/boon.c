@@ -953,7 +953,7 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
     argument = one_argument(argument, arg);
     if (!*arg || !atoi(arg))
     {
-      send_to_char_f(ch, "&+W'%s' is not a valid duration.  Please enter a number or 0 for no duration.&n\r\n", arg);
+      send_to_char_f(ch, "&+W'%s' is not a valid duration.  Please enter a number or -1 for no duration.&n\r\n", arg);
       return FALSE;
     }
     bdata->duration = atoi(arg);
@@ -1386,10 +1386,10 @@ int boon_display(P_char ch, char *argument)
   }
 
   if (IS_TRUSTED(ch))
-    send_to_char_f(ch, "&+C%-6s  %-10s %-8s %-7s %-6s %-9s %9s %9s %10s %7s %-10s&n\r\n",
+    send_to_char_f(ch, "&+C%-6s   %-10s %-8s %-7s %-6s %-9s %9s %9s %10s %7s %-10s&n\r\n",
       "ID", "Random", "Duration", "Racewar", "Type", "Option", "Criteria", "Criteria2", "Bonus", "Bonus2", "Assigned");
   else
-    send_to_char_f(ch, "&+C%-6s  %-8s %-7s %s&n\r\n",
+    send_to_char_f(ch, "&+C%-6s   %-8s %-7s %s&n\r\n",
 	"ID", "Duration", "Racewar", "Description");
 
   MYSQL_ROW row;
@@ -1420,7 +1420,7 @@ int boon_display(P_char ch, char *argument)
     count++;
 
     // interpret and display results
-    sprintf(buff, "%-6d%s", id, (repeat ? "R" : ""));
+    sprintf(buff, "%-6d %s ", id, (repeat ? "R" : " "));
     
     if (IS_TRUSTED(ch))
       sprintf(buff + strlen(buff), "%-10s ", random ? "Yes" : author);
@@ -1432,7 +1432,7 @@ int boon_display(P_char ch, char *argument)
       sprintf(cdtime, "%2d:%02d:%02d", timer.day * 24 + timer.hour, timer.minute, timer.second);
     }
     else
-      sprintf(cdtime, "%-8s", "Forever!");
+      sprintf(cdtime, "%-8s", "Forever");
     sprintf(buff + strlen(buff), "%-8s ", cdtime);
     
     if (racewar == 0)
