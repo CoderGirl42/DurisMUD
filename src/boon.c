@@ -3,6 +3,9 @@
 // Created April 2011 - Venthix
 
 // TODO:
+// make giving plat goto bank instead of player, or redeemed by boon shop instead.
+// make the zone criteria able to accept either or the zone->filename or the real zone number.
+// make a check to make sure a zone is an epic zone when accepting the zone criteria
 // in addition to the debug's setup some real logging incase someone completes a boon
 //   and gets an error message to contact an imm because the db wouldn't update or
 //   create.
@@ -10,6 +13,7 @@
 // make automatic random boon engine
 // finish boon command random controller
 // the boon shop
+// Add live boon listings to the website.
 
 // To add new boon types or options:
 // Add the define to boon.h
@@ -56,6 +60,7 @@ extern const flagDef affected2_bits[];
 extern const flagDef affected3_bits[];
 extern const flagDef affected4_bits[];
 extern const flagDef affected5_bits[];
+extern int new_exp_table[];
 
 struct boon_types_struct boon_types[] = {
   {"none",	"No bonus exists"}, 
@@ -374,7 +379,7 @@ bool get_boon_shop_data(int pid, BoonShop *bshop)
   if (!bshop)
     return FALSE;
 
-  if (!qry("SELECT id, pid, points, stats WHERE pid = '%d'", bshop->pid))
+  if (!qry("SELECT id, pid, points, stats, cash WHERE pid = '%d'", bshop->pid))
   {
     debug("get_boon_shop_data(): cant read from db");
     return FALSE;
@@ -395,6 +400,7 @@ bool get_boon_shop_data(int pid, BoonShop *bshop)
   bshop->pid = atoi(row[1]);
   bshop->points = atoi(row[2]);
   bshop->stats = atoi(row[3]);
+  bshop-cash = atoi(row[4]);
 
   mysql_free_result(res);
   
@@ -537,7 +543,7 @@ int validate_boon_data(BoonData *bdata, int flag)
 	    }
 	  case BOPT_FRAGS:
 	    {
-	      if (bdata->criteria <= 0 || bdata->criteria)
+	      if (bdata->criteria <= 0)
 		return 1;
 	      break;
 	    }
@@ -783,6 +789,23 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
     }
     else if (!bdata->bonus)
       bdata->bonus = atof(arg);
+
+    if (bdata->type == BTYPE_LEVEL && *arg)
+    {
+      if (is_abbrev(arg, "yes"))
+	bdata->bonus2 = 1;
+      else if (is_abbrev(arg, "no"))
+	bdata->bonus2 = 0;
+      else if (atof(arg) == 0)
+	bdata->bonus2 = 0;
+      else if (atof(arg) == 1)
+	bdata->bonus2 = 1;
+      else
+      {
+	send_to_char("Invalid secondary bonus, please indicate whether or not to bypass epics (1 or yes, 0 or no).\r\n", ch);
+	return FALSE;
+      }
+    }
     
     if ((retval = validate_boon_data(bdata, BARG_BONUS)))
     {
@@ -1499,6 +1522,8 @@ int boon_display(P_char ch, char *argument)
       case BTYPE_LEVEL:
 	{
 	  sprintf(bufftype, boon_types[type].desc, (int)bonus);
+	  if (bonus2)
+	    sprintf(bufftype + strlen(bufftype), " and bypass epics");
 	  break;
 	}
       case BTYPE_EXP:
@@ -1757,8 +1782,8 @@ int create_boon_shop_entry(BoonShop *bshop)
     return FALSE;
   }
 
-  if (!qry("INSERT into boon_shops (pid, points, stats) VALUES (%d, %d, %d)",
-	bshop->pid, bshop->points, bshop->stats))
+  if (!qry("INSERT into boon_shops (pid, points, stats, cash) VALUES (%d, %d, %d, %d)",
+	bshop->pid, bshop->points, bshop->stats, bshop->cash))
   {
     return FALSE;
   }
@@ -2250,9 +2275,17 @@ void check_boon_completion(P_char ch, P_char victim, double data, int option)
 	  if ((GET_LEVEL(ch)+1) > (int)bdata.bonus)
 	  {
 	    send_to_char("&+WWell done, unfortionately you've already surpassed the max level this boon will grant.&n\r\n", ch);
-	    break;
+	    continue;
 	  }
-	  advance_level(ch);
+	  if ((int)bdata.bonus2)
+	  {
+	    //bypass epics
+	    GET_EXP(ch) -= new_exp_table[GET_LEVEL(ch) + 1];
+	    advance_level(ch);
+	  }
+	  else
+	    // We'll give them a free level, so long as they have the epics for it.
+	    epic_free_level(ch);
 	  break;
 	}
       case BTYPE_POWER:
@@ -2411,6 +2444,9 @@ void check_boon_completion(P_char ch, P_char victim, double data, int option)
       default:
 	break;
     }
+
+    if (bdata.type != BTYPE_EXPM)
+      debug("%s has completed boon # %d.", GET_NAME(ch), bdata.id);
 
     // Check and expire boon's if they are player targeted and not repeatable..
     // all though boon_progress wont let them continue if its not repeatable,
