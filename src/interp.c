@@ -1042,9 +1042,10 @@ const char *command[] = {
   "battlerager", // For the battlerager proc room
   "petition_block",
   "area",
-  "whitelist",
+  "whitelist",            /* 800 */
   "epicreset",
   "focus",
+  "garrote",
   "\n"                          /* MAX_CMD_LIST is now 1000 */
 };
 
@@ -2560,7 +2561,8 @@ void assign_command_pointers(void)
   CMD_N(CMD_OUTPOST, STAT_RESTING + POS_PRONE, do_outpost, 0);
   CMD_Y(CMD_OFFENSIVE, STAT_RESTING + POS_PRONE, do_offensive, 0);
   CMD_Y(CMD_FOCUS, STAT_RESTING + POS_KNEELING, do_assimilate, 0);
- 
+  CMD_Y(CMD_GARROTE, STAT_NORMAL + POS_STANDING, do_garrote, 0);
+
   /*
    * 'commands' which exist only to trigger specials
    */

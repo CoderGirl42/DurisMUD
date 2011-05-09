@@ -1120,7 +1120,6 @@ int exist_in_equipment(P_char ch, int bitflag)
 
 int ac_can_see(P_char sub, P_char obj, bool check_z)
 {
-  /* minor detail, sleeping chars can't see squat! */
   int      globe, flame;
   P_char   tmp_char;
 
@@ -1151,6 +1150,8 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
 
   if (!AWAKE(sub))
     return 0;
+  if(IS_BLIND(sub))
+    return 0;
 
   if (WIZ_INVIS(sub, obj))
     return 0;
@@ -1180,21 +1181,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
       !(IS_NPC(obj) && (obj->following == sub) &&
       IS_AFFECTED4(sub, AFF4_SENSE_FOLLOWER)))
         return 0;
-
-/* NPCs can't be non-detected?  why? */
-
-/*
-    if ((!IS_AFFECTED(sub, AFF_DETECT_INVISIBLE)) ||
-        (!IS_NPC(sub) &&
-          IS_AFFECTED (sub, AFF_DETECT_INVISIBLE)
-          && IS_AFFECTED3(obj, AFF3_NON_DETECTION)))
-          return 0;
-*/
-  }                             /* end sub invis */
-
-  /* Subject is blinded */
-  if(IS_BLIND(sub))
-    return 0;
+  }
   
   if(IS_AFFECTED(obj, AFF_HIDE))// && (obj != sub))
     return 0;
@@ -1213,13 +1200,6 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
    * Determine visibility by "vis" command
    */
 
-  /* uhh, this is already done above */
-
-/*
-  if (WIZ_INVIS (sub, obj))
-    return 0;
-*/
-
   /*
    * as wraithform is kind of kludge, semi-godsight.
    */
@@ -1233,18 +1213,10 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   if(IS_AFFECTED(obj, AFF_WRAITHFORM))
     return 0;
 
-  /*if (RACE_EVIL(sub))
-    return 1;*/
-
-  /*if ((GET_RACE(sub) == RACE_ORC) || IS_THRIKREEN(sub) ||
-      IS_MINOTAUR(sub) || IS_UNDEAD(sub) || (GET_RACE(sub) == RACE_ILLITHID))
-    return 1;*/
-
   if(IS_SURFACE_MAP(obj->in_room) ||
     IS_UD_MAP(obj->in_room))
       return 1;
 
-  // if (IS_UNDERWORLD(obj->in_room) && IS_AFFECTED(sub, AFF_UD_VISION))
   if(IS_UNDERWORLD(obj->in_room))
       return 1;
 
@@ -1309,29 +1281,33 @@ int ac_can_see_obj(P_char sub, P_obj obj)
   P_char   tmp_char;
   int      vis_mode;
 
+  // As mobs don't directly act upon what they "see", I'm removing them entirely
+  // from this particular check - Jexni 5/7/11
+  if(IS_NPC(sub))
+    return 0;
+
   /* wraiths can't see any objects */
   if (IS_AFFECTED(sub, AFF_WRAITHFORM))
     return 0;
 
   /* sub is flying, obj isn't */
-  if (OBJ_ROOM(obj) && sub->specials.z_cord != obj->z_cord)
+  if (OBJ_ROOM(obj))
   {
-    if (obj_index[obj->R_num].func.obj != ship_obj_proc) // ships show above/below
-      return 0;
-  }
+    if (sub->specials.z_cord != obj->z_cord)
+    {
+      if (obj_index[obj->R_num].func.obj != ship_obj_proc) // ships show above/below
+        return 0;
+    }
+  } 
   
-/*
-  if (OBJ_NOWHERE(obj)) {
-    debug("OBJ_NOWHERE\r\n");
-    return 0;
-  }
-*/
   /* Immortal can see anything */
   if (IS_TRUSTED(sub) && GET_LEVEL(sub) >= IMMORTAL)      // level 58 and higher
     return 1;
 
-  /* minor detail, sleeping chars can't see squat! */
   if (!AWAKE(sub))
+    return 0;
+
+  if (IS_BLIND(sub))
     return 0;
 
   if (IS_NOSHOW(obj))
@@ -1340,10 +1316,6 @@ int ac_can_see_obj(P_char sub, P_obj obj)
   /* Check to see if object is invis */
   if (IS_SET(obj->extra_flags, ITEM_INVISIBLE) &&
       !IS_AFFECTED(sub, AFF_DETECT_INVISIBLE))
-    return 0;
-
-  /* Check if subject is blind */
-  if (IS_BLIND(sub))
     return 0;
 
   if (IS_SET((obj)->extra_flags, ITEM_SECRET))

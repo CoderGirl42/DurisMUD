@@ -216,8 +216,6 @@ O 0 89 9999 1234 100 0 0 0         * a holy bulletin board
 O 0 1211 99 1255 100 0 0 0         * a book of Duris ANSI codes
 O 0 89 9999 1255 100 0 0 0         * a holy bulletin board
 *
-M 0 37 1 15 100 0 0 0              * Ooklahsha
-E 1 176 1 24 100 0 0 0             *   a badge spun of twilight
 M 0 38 1 15 100 0 0 0              * Ooyalasha
 E 1 175 1 3 100 0 0 0              *   a precious diamond collar
 M 0 60 1 16 100 0 0 0              * an orc sailor

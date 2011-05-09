@@ -933,8 +933,8 @@
 #define SKILL_RAGE_REORIENT          1262 // Added to handle reorient on rage skill
 #define SKILL_TIGER_PALM             1263
 #define SKILL_DIAMOND_SOUL           1264
-
-#define LAST_SKILL                   SKILL_DIAMOND_SOUL
+#define SKILL_GARROTE                1265
+#define LAST_SKILL                   SKILL_GARROTE
 
 #define FIRST_SECONDARY_SKILL        1501
 

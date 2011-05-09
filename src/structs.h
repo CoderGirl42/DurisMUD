@@ -1536,7 +1536,7 @@ struct damage_messages {
         char *death_victim;
         char *death_room;
         int type;
-  P_obj obj;
+        P_obj obj;
 };
 
 struct msg_type {

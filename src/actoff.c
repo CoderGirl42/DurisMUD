@@ -776,6 +776,303 @@ void do_murde(P_char ch, char *argument, int cmd)
                ch);
 }
 
+struct garrote_data {
+	int atk_str;
+	int vic_str;
+	P_obj wire;
+	int pulses;
+};
+
+void do_garrote(P_char ch, char *argument, int cmd)
+{
+  P_char victim;
+  struct affected_type af;
+  struct garrote_data data;
+  int percent, duration, type, gclvl;
+
+  if (!GET_CHAR_SKILL(ch, SKILL_GARROTE))
+  {
+    send_to_char("You don't have a clue how to do that properly, leave this to a real master.", ch);
+    return;
+  }
+  
+  if (affected_by_spell(ch, SKILL_GARROTE))
+  {
+    send_to_char("You haven't quite reoriented yourself for another attempt.\n", ch);
+    return;
+  }
+
+  victim = ParseTarget(ch, argument);
+
+  if (!victim)
+  {
+    send_to_char("garrote who?\r\n", ch);
+    set_short_affected_by(ch, SKILL_GARROTE, PULSE_VIOLENCE);
+    return;
+  }
+
+  if (victim == ch)
+  {
+    send_to_char("Michael Hutchence and David Carridine do not approve.", ch);
+    return;
+  }
+  
+  if (!CAN_SEE(ch, victim))
+  {
+    send_to_char("You can't see anything, let alone someone to garrote!\r\n", ch);
+    return;
+  }
+
+  if(!ch->equipment[WIELD])
+  {
+    send_to_char("With what exactly?  Nothing?", ch);
+    return;
+  }
+
+  if (ch->equipment[WIELD] && isname(ch->equipment[WIELD]->name, "_garrote_"))
+  {   
+    send_to_char("You need to be wielding a wire to do that!", ch);
+    return;
+  }
+
+  data.wire = ch->equipment[PRIMARY_WEAPON];
+
+  if (victim)
+  {
+    if (IS_TRUSTED(victim))
+    {
+      send_to_char("You're no match for a God!\r\n", ch);
+      return;
+    }
+
+    if (IS_GRAPPLED(victim))
+    {
+      act("Doesn't look like you could get to them to try.", TRUE, ch, 0, victim, TO_CHAR);
+      return;
+    }
+
+    if (IS_AFFECTED(victim, AFF_WRAITHFORM))
+    {
+      act("There's nothing corporeal enough there to choke.", TRUE, ch, 0, victim, TO_CHAR);
+      return;
+    }
+    
+	if (IS_RIDING(victim))
+	{
+	  act("That would take a greater feat than you're capable of.", TRUE, ch, 0, victim, TO_CHAR);
+	  return;
+	}
+
+    if (GET_POS(victim) != POS_STANDING)
+    {
+      act("$E doesn't seem to be in a good position for that.", TRUE, ch, 0, victim, TO_CHAR);
+      return;
+    }
+
+    if (GET_ALT_SIZE(ch) > GET_ALT_SIZE(victim) + 2 && IS_PC(victim))
+    {
+      send_to_char("They are too small of a target to try that on.\r\n", ch);
+      return;
+    }
+    if (GET_ALT_SIZE(ch) < GET_ALT_SIZE(victim) - 2 && IS_PC(victim))
+    {
+      send_to_char("You aren't wearing your mountain climbing boots...\r\n", ch);
+      return;
+    }
+
+    if (!IS_HUMANOID(victim))
+    {
+      send_to_char("You're not really sure how to choke that...\r\n", ch);
+      return;
+    }
+
+    percent = BOUNDED(0, GET_CHAR_SKILL(ch, SKILL_GARROTE), 100);
+    percent += (GET_C_DEX(ch) - GET_C_AGI(victim)) / 2;
+    percent += GET_LEVEL(ch) - GET_LEVEL(victim);
+    percent -= GET_C_LUCK(victim) / 12;
+
+    if (!IS_GARROTE(victim) && (percent > number(1, 101) || notch_skill(ch, SKILL_GARROTE, 10)))
+    {
+      act("$n &+Lthrows $p &+Labout your neck from behind and begins to &+Rchoke &+Lyou!", FALSE, ch, data.wire, victim, TO_VICT);
+      act("&+LYou throw $p &+Labout $N&+L's neck from behind and begin to &+Rchoke $M&+L!", FALSE, ch, data.wire, victim, TO_CHAR);
+      act("$n &+Lthrows $p &+Labout $N&+L's neck from behind and begins to &+Rchoke &+Lyou!", FALSE, ch, data.wire, victim, TO_NOTVICT);
+    }
+    data.atk_str = GET_C_STR(ch);
+    data.vic_str = GET_C_STR(victim);
+    data.pulses = 0;
+    
+    memset(&af, 0, sizeof(af));  
+    af.type = SKILL_GARROTE;
+    af.duration = (int)(PULSE_VIOLENCE * 5);
+    af.flags = AFFTYPE_SHORT | AFFTYPE_NOSHOW | AFFTYPE_NODISPEL;
+    linked_affect_to_char(victim, &af, ch, LNK_GRAPPLED);
+    
+    af.type = SKILL_GARROTE;
+    af.duration = (int)(PULSE_VIOLENCE * 5);
+    af.flags = AFFTYPE_SHORT | AFFTYPE_NOSHOW | AFFTYPE_NODISPEL;
+    affect_to_char(ch, &af);
+   
+    add_event(event_garrote, PULSE_VIOLENCE / 2, ch, victim, 0, 0, &data, sizeof(data));
+    
+    if (IS_FIGHTING(ch))
+    {
+      stop_fighting(ch);
+    }
+    if (IS_FIGHTING(victim))
+    {
+      stop_fighting(victim);
+    }
+    CharWait(ch, (int)(PULSE_VIOLENCE * 2));
+    CharWait(victim, (int)(PULSE_VIOLENCE * 1.5));
+  }
+  else
+  {
+    act("You try to garrote $N, but $E slips away.", TRUE, ch, 0, victim, TO_CHAR);
+    act("$n tries to garrote you, but you manage to slip away.", TRUE, ch, 0, victim, TO_VICT);
+    act("$n tries to garrote $N, but $E manages to slip away.", TRUE, ch, 0, victim, TO_NOTVICT);
+    CharWait(ch, (int)(PULSE_VIOLENCE * 1.25));
+   
+    if (!IS_FIGHTING(ch))
+    {
+      set_fighting(ch, victim);
+    }
+    if (!IS_FIGHTING(victim))
+    {
+      set_fighting(victim, ch);
+    }
+  }
+}
+
+void event_garrote(P_char ch, P_char victim, P_obj obj, void *data)
+{
+  struct affected_type af;
+  struct garrote_data *thisdata = (struct garrote_data*)data;
+  struct damage_messages messages = {
+      "&+LYour &+rvictim &+Lstruggles and chokes as you &+Rtighten &+Lyour $q&+L!",
+      "&+LYou struggle to breathe as $n&+L's $q &+Lstifles your breathing!",
+      "$N &+Lstruggles to breathe as $n&+L's $q &+Lstifles $S breathing!",
+      "&+LWith a final wrenching jerk, you &-L&+Rdecapitate&n $N&+L!",
+      "&+LYour vision blurs as your &+rhead &+Lis &-L&+Rtorn &+Lfrom your body!",
+      "&+LWith a final wrenching jerk, $n &-L&+Rdecapitates&n $N&+L!",
+      NULL,
+      thisdata->wire
+  };
+      
+  if (!victim || !IS_ALIVE(victim) || !ch || !IS_ALIVE(ch))
+  {
+    return;
+  }
+
+  if (thisdata->atk_str - thisdata->vic_str <= 0 || !ch->equipment[WIELD])
+  {	
+    if (IS_GARROTE(victim))
+    {
+      affect_from_char(victim, SKILL_GARROTE);
+    }
+  }
+
+  if(GET_STAT(victim) < STAT_NORMAL)
+  {
+    send_to_char("Your enemy's limp body spoils your effort to remove the head!\r\n", ch);
+    return;
+  }
+ 
+  if (!IS_GARROTE(victim) ||
+     (GET_POS(ch) != POS_STANDING) ||
+     (GET_POS(victim) != POS_STANDING) ||
+     (GET_STAT(ch) != STAT_NORMAL) ||
+     (ch->in_room != victim->in_room))
+  {
+     act("&+rYour struggles finally free you from $p&+r, allowing you to breathe once more.", FALSE, ch, thisdata->wire, victim, TO_VICT);
+     act("&+rYour grip upon $p &+rslips and frees your opponent from your grasp!", FALSE, ch, thisdata->wire, victim, TO_CHAR);
+     act("$N&+r's struggles finally free $M from $p&+r, allowing $M to breathe once more.", FALSE, ch, thisdata->wire, victim, TO_NOTVICT);
+    
+     unlink_char(ch, victim, LNK_GRAPPLED);
+      
+     if (IS_GARROTE(ch))
+     {
+       affect_from_char(ch, SKILL_GARROTE);
+     }
+   
+     if(ch->in_room == victim->in_room && IS_ALIVE(ch) && IS_ALIVE(victim))
+       set_fighting(victim, ch);
+
+     return;
+  }
+  else
+  {
+     thisdata->atk_str -= (3 * thisdata->pulses);
+     thisdata->pulses += 1;
+     int dam = (int) GET_LEVEL(ch) + (3 * (int)(GET_C_STR(ch) - GET_C_STR(victim)));
+     if(melee_damage(ch, victim, dam, PHSDAM_TOUCH | PHSDAM_NOREDUCE, &messages) != DAM_VICTDEAD)
+     {
+       add_event(event_garrote, PULSE_VIOLENCE / 2, ch, victim, 0, 0, thisdata, sizeof(struct garrote_data));
+       
+       if (IS_FIGHTING(ch))
+       {
+         stop_fighting(ch);
+       }
+       if (IS_FIGHTING(victim))
+       {
+         stop_fighting(victim);
+       }
+       return;
+     }
+     else
+     {     
+        garrote_decap(ch, victim);
+     }
+  }
+}
+
+void garrote_decap(P_char ch, P_char victim)
+{
+  struct obj_data *corpse, *skull;
+  char     cname[MAX_STRING_LENGTH];
+  char     buf[MAX_STRING_LENGTH];
+  char    *dscp;
+
+  corpse = get_obj_in_list_vis(ch, GET_NAME(victim), world[ch->in_room].contents);
+  if(!corpse)
+  {
+    logit(LOG_DEBUG, "Garrote_decap: no corpse returned from room... aborting");
+    raise(SIGSEGV);
+  }
+
+  corpse->value[1] |= MISSING_SKULL;
+  skull = read_object(8, VIRTUAL);
+  if (!skull)
+  {
+    logit(LOG_OBJ, "Garrote_decap: Failed to load prototype 8.");
+    return;
+  }
+  skull->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2 | STRUNG_DESC3);
+
+  sprintf(buf, "%s %s", "skull", GET_NAME(victim));
+  skull->name = str_dup(buf);
+  if(IS_NPC(victim))
+  {
+    dscp = victim->player.short_descr;
+    sprintf(buf, "The %s %s is lying here, in a pool of blood.", "skull of", dscp);
+    skull->description = str_dup(buf);
+    sprintf(buf, "the %s %s", "skull of", dscp);
+    skull->short_description = str_dup(buf);
+  }
+  else
+  {
+    sprintf(buf, "The %s %s is lying here, in a pool of blood.", "skull of", victim->player.name);
+    skull->description = str_dup(buf);
+    sprintf(buf, "the %s %s", "skull of", victim->player.name);
+    skull->short_description = str_dup(buf);
+  }
+  
+  SET_BIT(skull->wear_flags, ITEM_ATTACH_BELT);
+  skull->material = MAT_BONE;
+  send_to_room("&+rThe &+Rbloody &+rskull &+Lrolls upon the floor for a moment before becoming &+wstill&+L.\r\n", ch->in_room);
+  obj_to_room(skull, ch->in_room);
+}
+
+
 void do_murder(P_char ch, char *argument, int cmd)
 {
   /*

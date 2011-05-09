@@ -216,6 +216,8 @@ SECS_PER_MUD_DAY)
 
 #define IS_SHIP_ROOM(r) (world[r].number >= 60000 && world[r].number <= 64999)
 
+#define IS_GARROTE(ch) (affected_by_spell(ch, SKILL_GARROTE))
+
 #define IS_OCEAN_ROOM(r) ( world[r].sector_type == SECT_OCEAN )
 #define IS_FOREST_ROOM(r) ( world[r].sector_type == SECT_FOREST )
 #define IS_SWAMP_ROOM(r) ( world[r].sector_type == SECT_SWAMP )
