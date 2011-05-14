@@ -7041,7 +7041,7 @@ D3
 0 0 37407
 S
 #37409
-&+BA Slow Flowing River&n~
+&+BA Shallow River &+yApproaching a Thin Trail&n~
    This slow flowing river ambles across a rocky bottom.  Fueled
 by the melting snow in the mountains, its leisurely pace is only
 matched by the calmness of the fish it contains.  Through its
@@ -7053,7 +7053,7 @@ be seen, used by the villagers to water their fields.
 D1
 ~
 ~
-0 0 550889
+0 0 28900
 D3
    A slow flowing river.
 ~
@@ -7213,7 +7213,7 @@ base of the mountains to the north.
 D2
 ~
 ~
-0 0 551288
+0 0 227377
 D3
    A little used dirt road.
 ~
@@ -7446,7 +7446,11 @@ erected to keep water flow from the ruts formed by carts.
 D0
 ~
 ~
-0 0 550488
+0 0 226179
+D1
+~
+~
+0 0 226480
 D2
    Chiltern way.
 ~
