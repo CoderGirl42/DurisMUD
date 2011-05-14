@@ -1326,7 +1326,10 @@ P_obj make_corpse(P_char ch, int loss)
     corpse->weight = IS_CARRYING_W(ch) * 2;
     corpse->value[CORPSE_WEIGHT] = IS_CARRYING_W(ch);
     corpse->value[CORPSE_FLAGS] = NPC_CORPSE;
-    corpse->value[CORPSE_VNUM] = mob_index[GET_RNUM(ch)].virtual_number;
+    if (ch->only.npc)
+      corpse->value[CORPSE_VNUM] = mob_index[GET_RNUM(ch)].virtual_number;
+    else
+      corpse->value[CORPSE_VNUM] = 0;
     corpse->value[CORPSE_RACEWAR] = 0;
   }
   else
