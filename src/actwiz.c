@@ -4746,10 +4746,12 @@ void roll_basic_abilities(P_char ch, int flag)
 #endif
   if(IS_NPC(ch))
   {
-    if(GET_LEVEL(ch) < 40)
-      flag = 0;
-    else
+    if(GET_LEVEL(ch) > 40)
       flag = 1;
+    else if(GET_LEVEL(ch) < 10)
+      flag = 2;
+    else
+      flag = 0;
   }
   else
    flag = -1;
@@ -4778,7 +4780,7 @@ void roll_basic_abilities(P_char ch, int flag)
     ch->base_stats.Wis = ch->curr_stats.Wis = stat_base + number(1, GET_LEVEL(ch));
     ch->base_stats.Cha = ch->curr_stats.Cha = stat_base + number(1, GET_LEVEL(ch));
     ch->base_stats.Karma = ch->curr_stats.Karma = number(50, 100);
-    ch->base_stats.Luck = ch->curr_stats.Luck = number(80, 120);
+    ch->base_stats.Luck = ch->curr_stats.Luck = number(60, 120);
   }
   else if(flag == 1)
   {
@@ -4792,6 +4794,19 @@ void roll_basic_abilities(P_char ch, int flag)
     ch->base_stats.Cha = ch->curr_stats.Cha = stat_base + number(20, GET_LEVEL(ch) + 10);
     ch->base_stats.Karma = ch->curr_stats.Karma = number(50, 100);
     ch->base_stats.Luck = ch->curr_stats.Luck = number(90, 110);
+  }
+  else if(flag == 2)
+  {
+    ch->base_stats.Str = ch->curr_stats.Str = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Dex = ch->curr_stats.Dex = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Agi = ch->curr_stats.Agi = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Con = ch->curr_stats.Con = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Pow = ch->curr_stats.Pow = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Int = ch->curr_stats.Int = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Wis = ch->curr_stats.Wis = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Cha = ch->curr_stats.Cha = stat_base + number(-10, GET_LEVEL(ch));
+    ch->base_stats.Karma = ch->curr_stats.Karma = number(50, 70);
+    ch->base_stats.Luck = ch->curr_stats.Luck = number(30, 70);
   }
  
 /*}

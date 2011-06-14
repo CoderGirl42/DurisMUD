@@ -749,8 +749,7 @@ void apply_affs(P_char ch, int mode)
 
   if (GET_C_DEX(ch) > stat_factor[(int) GET_RACE(ch)].Dex)
   {
-    ch->points.hitroll +=
-      (int) (GET_C_DEX(ch) - stat_factor[(int) GET_RACE(ch)].Dex) / 2;
+    ch->points.hitroll += (int) (GET_C_DEX(ch) - stat_factor[(int) GET_RACE(ch)].Dex) / 2;
   }
 
   if ( ( GET_CLASS(ch, CLASS_PALADIN) || GET_CLASS(ch, CLASS_ANTIPALADIN) ) &&
