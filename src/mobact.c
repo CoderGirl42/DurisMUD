@@ -7845,11 +7845,12 @@ PROFILE_END(mundane_wakeup);
 
 
 PROFILE_START(mundane_justice);
-  if(JusticeGuardAct(ch))  // Justice hook.
-  {// 0%
+  if(IS_SET(ch->specials.act, ACT_PROTECTOR))
+    if(JusticeGuardAct(ch))  // Justice hook.
+    {// 0%
 PROFILE_END(mundane_justice);
-    goto normal;
-  }
+      goto normal;
+    }
 PROFILE_END(mundane_justice);
 
 PROFILE_START(mundane_commune);
@@ -9332,7 +9333,7 @@ bool InitNewMobHunt(P_char ch)
   if(!ch)
   {
     logit(LOG_EXIT, "InitNewMobHunt called with null ch");
-    raise(SIGSEGV);;
+    raise(SIGSEGV);
   }
   if(IS_PC(ch))
     return FALSE;
@@ -9393,8 +9394,6 @@ bool InitNewMobHunt(P_char ch)
         data.hunt_type = HUNT_HUNTER;
         data.targ.victim = tmpch;
         add_event(mob_hunt_event, PULSE_MOB_HUNT, ch, NULL, NULL, 0, &data, sizeof(hunt_data));
-        
-        //AddEvent(EVENT_MOB_HUNT, PULSE_MOB_HUNT, TRUE, ch, data);
         return TRUE;
       }
     }
@@ -9408,7 +9407,7 @@ bool InitNewMobHunt(P_char ch)
 }
 
 /*
- * NewMobHunt.  This will only be called from an event. InitNewMobHunt
+ * mob_hunt_event.  This will only be called from an event. InitNewMobHunt
  * will setup the first EVENT_MOB_HUNT, and this code will deal with the
  * events (which should occur at PULSE_MOB_HUNT). Basically, just move the
  * mob one step closer to  the victim.  If Dimdoor is available, use it.
@@ -9418,7 +9417,6 @@ bool InitNewMobHunt(P_char ch)
  * TRUE if I did something, otherwise, FALSE
  */
 void mob_hunt_event(P_char ch, P_char victim, P_obj obj, void *d)
-//bool NewMobHunt(void)
 {
   char     buf[MAX_STRING_LENGTH];
   byte     next_step;

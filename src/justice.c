@@ -473,7 +473,7 @@ void justice_dispatch_guard(int town, char *attacker, char *victim, int crime)
 
 
 /* this function is only called as a replacement for do_move() in
-   NewMobHunt for any HUNT_JUSTICE_SPEC* hunt type.  Unless the guard
+   mob_hunt_event for any HUNT_JUSTICE_SPEC* hunt type.  Unless the guard
    is dragging or something, this need only call do_move(); */
 
 void JusticeGuardMove(P_char ch, char *argument, int cmd)
@@ -516,12 +516,8 @@ int JusticeGuardAct(P_char ch)
   hunt_data data;
   P_char   tch, nextch;
 
-#if 1
-return FALSE;
-#endif
-
   /* being all mobs check here anyway, its a good place townies to
-     check for invaders */
+     check for invaders
 
   if(int ht = CHAR_IN_TOWN(ch))
   {
@@ -531,20 +527,17 @@ return FALSE;
       if(tch != ch && IS_TOWN_INVADER(tch, ht) && !IS_AFFECTED(tch, AFF_BOUND))
         justice_action_invader(tch);
     }
-  }
+  } */
 
-  if(IS_PC(ch) || (!IS_SET(ch->only.npc->spec[2], MOB_SPEC_JUSTICE)))
-    return FALSE;
+  /* small hook here to get more guards, if more guards are needed...
 
-  /* small hook here to get more guards, if more guards are needed... */
-
-  for (tch = world[ch->in_room].people; tch; tch = nextch)
+  for(tch = world[ch->in_room].people; tch; tch = nextch)
   {
     nextch = tch->next_in_room;
 
     if(IS_INVADER(tch) || IS_OUTCAST(tch))
       justice_action_invader(tch);
-  }
+  }*/
 
   if(IS_FIGHTING(ch))
     return FALSE;
@@ -554,6 +547,7 @@ return FALSE;
 
   if(IS_SET(ch->only.npc->spec[2], MOB_SPEC_J_OUTCAST))
   {
+    wizlog(56, "spec correctly set for %s", GET_NAME(ch));
     if(!ch->specials.arrest_by)
     {                           /* wtf? */
       REMOVE_BIT(ch->only.npc->spec[2], MOB_SPEC_J_OUTCAST);
@@ -578,6 +572,7 @@ return FALSE;
          fighting... fix it */
       data.hunt_type = HUNT_JUSTICE_INVADER;
       data.targ.victim = ch->specials.arrest_by;
+      wizlog(56, "adding hunt event to %s", GET_NAME(ch));
       add_event(mob_hunt_event, PULSE_MOB_HUNT, ch, NULL, NULL, 0, &data, sizeof(hunt_data));
       return TRUE;
     }
@@ -618,7 +613,7 @@ return FALSE;
   return TRUE;
 }
 
-/* called by NewMobHunt whenever a HUNT_JUSTICE_SPEC* hunt type
+/* called by mob_hunt_event whenever a HUNT_JUSTICE_SPEC* hunt type
    reaches its target room/victim */
 
 void JusticeGuardHunt(P_char ch)
@@ -1129,7 +1124,29 @@ int justice_send_guards(int to_rroom, P_char victim, int type, int response_leve
 void set_justice_guard_parms(P_char guard, bool army)
 {
    int randomize = number(1, 9);
-
+   int align = RACE_GOOD(guard) ? 1 : 2; // set good or evil
+   switch(randomize)
+   {
+      case 1:
+      case 4:
+      case 8:
+        guard->player.m_class = CLASS_WARRIOR;
+        break;
+      case 2:
+      case 5:
+      case 9:
+        guard->player.m_class = (align == 1) ? CLASS_PALADIN : CLASS_ANTIPALADIN;
+        break;
+      case 3:
+      case 6:
+      case 7:
+        guard->player.m_class = (align == 1) ? CLASS_RANGER : CLASS_REAVER;
+        break;
+      default:
+        guard->player.m_class = CLASS_WARRIOR;
+        break;
+   }
+      
    if(!army)
    {
       guard->points.vitality = guard->points.base_vitality =
@@ -1140,20 +1157,18 @@ void set_justice_guard_parms(P_char guard, bool army)
       MonkSetSpecialDie(guard);
       guard->points.base_hitroll = guard->points.hitroll = (int) (0.75 * GET_LEVEL(guard));
       guard->points.base_damroll = guard->points.damroll = (int) (0.75 * GET_LEVEL(guard));
-      guard->player.m_class = randomize;
    }
 
    if(army)
    {
       guard->points.vitality = guard->points.base_vitality =
-      guard->points.max_vitality = MAX(90, guard->base_stats.Agi) + (guard->base_stats.Str + guard->base_stats.Con) / 2;
-      guard->points.base_armor = 0 - GET_LEVEL(guard) * 2;
-      guard->specials.affected_by = AFF_FLY + AFF_DETECT_INVISIBLE;
-      GET_HIT(guard) = GET_MAX_HIT(guard) = guard->points.base_hit = (int) GET_C_CON(guard) * .5 * GET_LEVEL(guard);
+      guard->points.max_vitality = MAX(160, guard->base_stats.Agi) + (guard->base_stats.Str + guard->base_stats.Con);
+      guard->points.base_armor = 0 - GET_LEVEL(guard) * 3;
+      guard->specials.affected_by = AFF_FLY + AFF_DETECT_INVISIBLE + AFF_HASTE;
+      GET_HIT(guard) = GET_MAX_HIT(guard) = guard->points.base_hit = (int) GET_C_CON(guard) * GET_LEVEL(guard);
       MonkSetSpecialDie(guard);
-      guard->points.base_hitroll = guard->points.hitroll = (int) (0.75 * GET_LEVEL(guard));
-      guard->points.base_damroll = guard->points.damroll = (int) (0.75 * GET_LEVEL(guard));
-      guard->player.m_class = randomize;
+      guard->points.base_hitroll = guard->points.hitroll = GET_LEVEL(guard) / 2;
+      guard->points.base_damroll = guard->points.damroll = GET_LEVEL(guard);
    }
 }
 
@@ -1171,8 +1186,6 @@ P_char justice_make_guard(int rroom)
 
   if(!ch)
     return NULL;
-
-  ch->player.level = number(56, 60);
 
   /* make DAMN sure the birthplace is set... I need this to get back
      home when I'm done with my duty */
@@ -1195,12 +1208,13 @@ P_char justice_make_guard(int rroom)
       equip_char(ch, obj, HOLD, 0);
   }
 
+  // duh...
+  if(!IS_SET(ch->specials.act, ACT_PROTECTOR))
+    SET_BIT(ch->specials.act, ACT_PROTECTOR);
+
   if(!IS_AGGROFLAG(ch, AGGR_OUTCASTS))
     SET_BIT(ch->only.npc->aggro_flags, AGGR_OUTCASTS);
 
-  /* however, don't rely on the "standard" protector code for these
-     special guards... if I want them to do something similar, I'll
-     code it in JusticeGuardAct() */
   if(IS_SET(ch->specials.act, ACT_PROTECTOR))
     REMOVE_BIT(ch->specials.act, ACT_PROTECTOR);
 
@@ -1346,9 +1360,8 @@ void justice_hunt_cancel(P_char ch)
       /* we are doing exactly what we are supposed to! */
       return;
 
-
   /* if for some reason a guard going after a PK'er stops hunting,
-     then just just outcast the PK'er and let'em suffer */
+     then just outcast the PK'er and let'em suffer */
   if(IS_SET(ch->only.npc->spec[2], MOB_SPEC_J_PK))
   {
     justice_set_outcast(GET_PLYR(ch->specials.arrest_by), CHAR_IN_TOWN(ch));
@@ -1357,8 +1370,6 @@ void justice_hunt_cancel(P_char ch)
   /* Insert here other conditions why I might NOT want to cancel the
      justice action!  For example, what happens if a mob is dragging
      someone to jail, and stops to kill something? */
-
-
 
   /* okay.. If I'm this far, I'm SURE I want to cancel the justice
      action (perhaps its finished?... or the victim died?) */
@@ -1760,17 +1771,17 @@ void justice_witness(P_char attacker, P_char victim, int crime)
 }
 
 const char *justice_descriptor_first[] = {
-    "&+WA fearsome",
-    "&+WA menacing",
-    "&+WA hulking",
-    "&+WA battle-scarred",
-    "&+WA veteran",
-    "&+WA disfigured",
-    "&+WA brash, young",
-    "&+WA weary, old",
-    "&+WA ferocious",
-    "&+WA gruff",
-    "&+WA lordly"
+    "fearsome",
+    "menacing",
+    "hulking",
+    "battle-scarred",
+    "veteran",
+    "disfigured",
+    "brash, young",
+    "weary, old",
+    "ferocious",
+    "gruff",
+    "lordly"
 };
 
 const char *g_justice_descriptor[] = {
@@ -1804,6 +1815,26 @@ const char *e_justice_descriptor[] = {
     "&+GGoblin",
     "&+LOrc",
     "&+GGith&+Wyanki"
+};
+
+int good_races[] = {
+    RACE_BARBARIAN,
+    RACE_MOUNTAIN,
+    RACE_GREY,
+    RACE_GNOME,
+    RACE_HALFLING,
+    RACE_GITHZERAI,
+    RACE_HUMAN
+};
+
+int evil_races[] = {
+    RACE_OGRE,
+    RACE_TROLL,
+    RACE_DROW,
+    RACE_DUERGAR,
+    RACE_GOBLIN,
+    RACE_ORC,
+    RACE_GITHYANKI
 };
 
 void justice_action_invader(P_char ch)
@@ -1960,7 +1991,7 @@ void call_out_the_army(P_char ch)
         break;
    }
 
-   for(j = allies + 4;j > 0;j--)
+   for(j = allies + (1 + allies / 4);j > 0;j--)
    { 
      wizlog(56, "calling out the army: making a guard");
      tch = justice_make_guard(guard_start);
@@ -1975,11 +2006,13 @@ void call_out_the_army(P_char ch)
      second = number(0, 6);
      third = number(0, 9);
      tch->only.npc->str_mask |= STRUNG_DESC1;
-     sprintf(buf, "%s %s %s &+Wstands here impassively.&n", justice_descriptor_first[first],
-              (RW == 2) ? g_justice_descriptor[second] : e_justice_descriptor[second], justice_descriptor_last[third]);
+     sprintf(buf, "%s %s %s %s %sstands here judging you.&n", (RW == 2) ? "&+WA":"&+LA", justice_descriptor_first[first],
+              (RW == 2) ? g_justice_descriptor[second] : e_justice_descriptor[second], justice_descriptor_last[third],
+              (RW == 2) ? "&+W":"&+L");
      tch->player.long_descr = str_dup(buf);
      tch->only.npc->str_mask |= STRUNG_DESC2;
-     sprintf(buf, "%s %s %s", justice_descriptor_first[first], (RW == 2) ? g_justice_descriptor[second] : e_justice_descriptor[second],
+     sprintf(buf, "%s %s %s %s", (RW == 2) ? "&+Wa":"&+La",  justice_descriptor_first[first], 
+               (RW == 2) ? g_justice_descriptor[second] : e_justice_descriptor[second],
                justice_descriptor_last[third]);
      tch->player.short_descr = str_dup(buf);
      tch->only.npc->str_mask |= STRUNG_KEYS;
@@ -1987,15 +2020,23 @@ void call_out_the_army(P_char ch)
                (RW == 2) ? strip_ansi(g_justice_descriptor[second]).c_str(): strip_ansi(e_justice_descriptor[second]).c_str(), 
                strip_ansi(justice_descriptor_last[third]).c_str());
      tch->player.name = str_dup(buf);
-     wizlog(56, "creating: %s with RW = %d", tch->player.long_descr, RW);
+     wizlog(56, "creating: %s", tch->player.long_descr, RW);
      SET_BIT(tch->only.npc->spec[2], MOB_SPEC_J_OUTCAST);
+     if(RACE_GOOD(tch))
+     {
+        tch->player.race = good_races[second];
+     }
+     else
+     {
+        tch->player.race = evil_races[second];
+     }
      set_justice_guard_parms(tch, TRUE);
      data.hunt_type = HUNT_JUSTICE_INVADER;
      data.targ.victim = tch->specials.arrest_by = ch;
      data.huntFlags = BFS_CAN_FLY | BFS_BREAK_WALLS;
      if(npc_has_spell_slot(tch, SPELL_DISPEL_MAGIC))
        data.huntFlags |= BFS_CAN_DISPEL;
-    
+     SET_BIT(tch->specials.act, ACT_PROTECTOR);    
      add_event(mob_hunt_event, PULSE_MOB_HUNT, tch, NULL, NULL, 0, &data, sizeof(hunt_data));
   }
 
@@ -2480,21 +2521,6 @@ int shout_and_hunt(P_char ch,
   {
     return FALSE;
   }
-  /*
-   * how do I keep from shouting every round?
-   */
-
-  /*
-   * I am gonna use the justice scheme here.  This assumes, of course,
-   * that this proc will NOT be used on mobs subject to justice. Because
-   * of this, I'll core dump if it happens. (Note that it would be
-   * better to just remove the proc - however then the "bug" might go on
-   * unnoticed forever.  Doing a core dump will get attention ).
-   */
-  /*
-   * However, guards need to be vicious. Let's allow them to have as
-   * many abilities, procs, etc as we need to get the job done right.
-   */
 
   if(NPC_IS_CITIZEN(ch) &&
     !IS_GUARD(ch))
@@ -2516,7 +2542,7 @@ int shout_and_hunt(P_char ch,
    */
   /*
    * first shout for help.  Note that I'm going to shout even if I'm
-   * bashed.  Just because I'm sitting on my butt doesn't mean I can
+   * bashed.  Just because I'm sitting on my butt doesn't mean I can't
    * scream for help
    */
   sprintf(buffer, "%s shouts '", ch->player.short_descr);
@@ -2545,8 +2571,8 @@ int shout_and_hunt(P_char ch,
     (RMFR_FLAGS) (RMFR_RADIATE_ALL_DIRS | RMFR_PASS_WALL), 0);
 
   /*
-   * need to find all the mobs which 'locator proc' as their special
-   * procedure.  Unfortunatly, there is only 1 way to do this: going
+   * need to find all the mobs with 'locator proc' as their special
+   * procedure.  Unfortunately, there is only 1 way to do this: going
    * through the entire character_list.  For all mobs which have the
    * proper proc, if they aren't already hunting, have them start :)
    */
