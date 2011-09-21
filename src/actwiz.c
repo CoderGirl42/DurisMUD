@@ -8045,8 +8045,11 @@ void do_which(P_char ch, char *args, int cmd)
   P_char   t_ch = NULL;
   P_obj    t_obj = NULL;
   char     arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
+  char     arg3[MAX_INPUT_LENGTH], arg4[MAX_INPUT_LENGTH];
+  int      sc_min, sc_max = 0;
   char     o_buf[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH];
-  int      i, j, room_nr, zone_nr, o_len, which, found;
+  int      i, j, t, room_nr, zone_nr, o_len, which, found;
+  bool     stat_check = FALSE;
   whichObjFlagsEnum whichObjFlags;
   uint     w_bit = 0;
 
@@ -8054,6 +8057,13 @@ void do_which(P_char ch, char *args, int cmd)
                                                    but allows 'two word'
                                                    args  */
   args = setbit_parseArgument(args, arg2);
+  args = one_argument(args, arg3);
+  one_argument(args, arg4);
+  sc_min = atoi(arg3);
+  sc_max = atoi(arg4);
+
+  if(sc_min)
+    stat_check = TRUE;
 
   if (!*arg1 || !*arg2)
   {
@@ -8199,6 +8209,9 @@ void do_which(P_char ch, char *args, int cmd)
     {
       found = 0;
 
+      if(IS_NOSHOW(t_obj))
+        continue;
+
       switch (whichObjFlags)
       {
       case wear:
@@ -8253,7 +8266,7 @@ void do_which(P_char ch, char *args, int cmd)
         found = FALSE;          // shrug
       }
 
-      if (found)
+      if(found && !stat_check)
       {
         sprintf(buf1, "[%5d] %-30s - %s\n",
                 obj_index[t_obj->R_num].virtual_number,
@@ -8268,6 +8281,38 @@ void do_which(P_char ch, char *args, int cmd)
         else
         {
           strcat(o_buf, buf1);
+        }
+      }
+      else if(found && stat_check)
+      {
+        if(sc_min <= t_obj->affected[j].modifier && sc_max >= t_obj->affected[j].modifier)
+        {
+          char temp[MAX_STRING_LENGTH];
+          char temp2[MAX_STRING_LENGTH];
+          for(t = 0; t < MAX_OBJ_AFFECT; t++)
+          {            
+            if(t_obj->affected[t].location != APPLY_NONE)
+            {
+               sprinttype(t_obj->affected[t].location, apply_types, temp2);
+               sprintf(temp + strlen(temp), "   &+YAffects: &+c%s&+Y By &+c%d\n",
+                  temp2, t_obj->affected[t].modifier);
+            }
+          }
+          sprintf(buf1, "[%5d] %-30s - %s\n%s\n",
+                  obj_index[t_obj->R_num].virtual_number,
+                  t_obj->short_description, where_obj(t_obj, FALSE), temp);
+
+          sprintf(temp, "");
+          o_len += strlen(buf1);
+          if (o_len > MAX_STRING_LENGTH)
+          {
+            strcat(o_buf, "And so on, and so forth...\n");
+            break;
+          }
+          else
+          {
+            strcat(o_buf, buf1);
+          }
         }
       }
     }
