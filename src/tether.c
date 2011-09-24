@@ -113,6 +113,7 @@ void tetherheal( P_char ch, int damageamount )
 
    if( victim )
    {
+      vamp( victim, damageamount * get_property( "innate.cabalist.healing_mod", 0.700), GET_MAX_HIT(ch) );
       act( "You are tethering $N.", FALSE, ch, NULL, victim, TO_CHAR );
       //single_tether_heal( ch, damageamount );
    }
