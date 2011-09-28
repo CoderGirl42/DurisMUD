@@ -3914,8 +3914,8 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   else
   {
     // success!
-    dam = (int) ((GET_LEVEL(ch) / 51) * (number(-5, 25) + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT)));
-    
+    dam = ((GET_LEVEL(ch) * (number(-5, 25))/51 + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT)));
+
     if (GET_RACE(ch) == RACE_MINOTAUR)
     {
       dam = (int) (dam * get_property("damage.headbutt.damBonusMinotaur", 1.500));
