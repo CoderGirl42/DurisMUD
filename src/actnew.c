@@ -2308,7 +2308,7 @@ void do_shapechange(P_char ch, char *arg, int cmd)
   if (!has_innate(ch, INNATE_SHAPECHANGE) && !IS_TRUSTED(ch) && !IS_MORPH(ch))
   {
     send_to_char("You don't know how to change your form!\r\n", ch);
-    return FALSE;
+    return;
   }
 
   rest = one_argument(arg, mobname);
