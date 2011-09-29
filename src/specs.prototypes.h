@@ -533,6 +533,8 @@ int ioun_sustenance(P_obj, P_char, int, char *);
 int ioun_testicle(P_obj, P_char, int, char *);
 int ioun_warp(P_obj, P_char, int, char *);
 
+/* specs.lohrr.c */
+int leviathan(P_char, P_char, int, char *);
 
 
 /* specs.object.c */
@@ -629,6 +631,7 @@ int demo_scimitar(P_obj, P_char, int, char *);
 int dranum_mask(P_obj, P_char, int, char *);
 int artifact_hide(P_obj, P_char, int, char *);
 int pathfinder(P_obj, P_char, int, char *);
+int miners_helmet(P_obj, P_char, int, char *);
 int guild_chest(P_obj, P_char, int, char *);
 int illithid_sack(P_obj, P_char, int, char *);
 int artifact_invisible(P_obj, P_char, int, char *);

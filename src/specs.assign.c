@@ -273,6 +273,7 @@ void assign_mobiles(void)
   mob_index[real_mobile0(6816)].func.mob = dragonnia_heart;
   mob_index[real_mobile0(29025)].func.mob = lanella_heart;
   mob_index[real_mobile0(22024)].func.mob = cerberus_load;
+  mob_index[real_mobile0(55264)].func.mob = leviathan;
 
   /* Aravne */
   mob_index[real_mobile0(21673)].func.mob = wh_corpse_to_object;
@@ -1303,6 +1304,8 @@ bogentok
 void assign_objects(void)
 {
   obj_index[real_object0(354)].func.obj = artifact_monolith;
+
+  obj_index[real_object0(83457)].func.obj = miners_helmet;
 
   /* outposts */
   //obj_index[real_object0(97800)].func.obj = outpost_rubble; 
