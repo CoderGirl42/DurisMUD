@@ -2610,11 +2610,16 @@ void do_lore(P_char ch, char *arg, int cmd)
 
   percent = number(1, 101);
 
+<<<<<<< HEAD
   if( obj )
   {
     sprintf( Gbuf1, "This item is from the zone: %s.\n", get_str_zone(obj) );
     send_to_char( Gbuf1, ch );
   }
+=======
+  //sprintf( Gbuf1, "This item is from the zone: %s.\n", get_str_zone(obj) );
+  //send_to_char( Gbuf1, ch );
+>>>>>>> 21ece5ea84d050d841096ff0def3eea1caad008f
 
   if (percent > skl_lvl)
   {
