@@ -10043,6 +10043,11 @@ void do_givepet(P_char ch, char *arg, int cmd)
     {
       msg[0] = '\0';
       mob = read_mobile(atoi(pet), VIRTUAL);
+      if( !mob )
+      {
+         send_to_char( "Let's try something real!\n", ch );
+         return;
+      }
       wizlog(56, "%s has loaded pet %s(Level: %d) for %s.", GET_NAME(ch), mob->player.short_descr, GET_LEVEL(mob), GET_NAME(victim));
       logit(LOG_WIZ, "(%s) has loaded pet (%s)(Level: %d) for (%s).",
         GET_NAME(ch), mob->player.short_descr, GET_LEVEL(mob), GET_NAME(victim));
