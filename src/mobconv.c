@@ -630,10 +630,7 @@ int GetFormType(P_char ch)
   case RACE_PDKNIGHT:
   case RACE_VAMPIRE:
   case RACE_GHOST:
-  case RACE_AQUATIC_ANIMAL:
-  case RACE_FLYING_ANIMAL:
   case RACE_HUMANOID:
-  case RACE_HERBIVORE:
     return MSG_HIT;
     break;
   case RACE_ILLITHID:
@@ -680,6 +677,9 @@ int GetFormType(P_char ch)
   case RACE_ANIMAL:
   case RACE_BEHOLDER:
   case RACE_PWORM:
+  case RACE_AQUATIC_ANIMAL:
+  case RACE_FLYING_ANIMAL:
+  case RACE_HERBIVORE:
     return MSG_BITE;
     break;
   case RACE_INSECT:
