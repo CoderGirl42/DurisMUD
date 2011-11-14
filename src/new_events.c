@@ -445,12 +445,12 @@ void zone_purge(int zone_number)
    P_obj obj, next_o;
    struct zone_data to_purge = zone_table[zone_number];
    int k;   
+
    for(k = to_purge.real_bottom;k != NOWHERE && k <= to_purge.real_top;k++)
    {
      for (vict = world[k].people; vict; vict = next_v)
      {
         next_v = vict->next_in_room;
-        wizlog(56, "%s next to be purged", GET_NAME(vict));
         if(IS_NPC(vict) && !IS_MORPH(vict))
         {
           extract_char(vict);

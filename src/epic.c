@@ -997,7 +997,7 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
     zone_number = obj->value[2];
 
     /* the (magic) flag determines if the stone has been touched or not */
-    if(!OBJ_MAGIC(obj))
+    if(!OBJ_MAGIC(obj) || epic_zone_done_now(zone_number))
     {
       act("$p seems to be powerless.", FALSE, ch, obj, 0, TO_CHAR);
       return TRUE;
@@ -1082,8 +1082,8 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
       //  Allow !reset zones to possibly reset somewhere down the line...  - Jexni 11/7/11
       if(!zone_table[zone_number].reset_mode)
       {
-        wizlog(56, "zone number %d, being passed to event", zone_number);
-        add_event(event_reset_zone, 1, 0, 0, 0, 0, &zone_number, sizeof(zone_number));
+        int x = real_zone(zone_number);
+        add_event(event_reset_zone, 1, 0, 0, 0, 0, &x, sizeof(x));
         db_query("UPDATE zones SET reset_perc = 1 WHERE number = '%d'", zone_number);
       }
     }
@@ -2126,6 +2126,19 @@ void do_epic(P_char ch, char *arg, int cmd)
     send_to_char(top_evil_players[i].c_str(), ch);
     send_to_char("\n", ch);
   }
+}
+
+void epic_zone_erase_touch(int zone_number)
+{
+   for(vector<epic_zone_completion>::iterator it = epic_zone_completions.begin();
+             it != epic_zone_completions.end();
+             it++)
+   {
+      if((it->number == zone_number))
+      {
+       // epic_zone_completions.erase(it);
+      }
+   }
 }
 
 bool epic_zone_done_now(int zone_number)

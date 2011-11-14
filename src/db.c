@@ -17,6 +17,7 @@
 #include "comm.h"
 #include "db.h"
 #include "events.h"
+#include "epic.h"
 #include "interp.h"
 #include "prototypes.h"
 #include "specs.prototypes.h"
@@ -3008,14 +3009,12 @@ P_obj read_object(int nr, int type)
  */
 void no_reset_zone_reset(int zone_number)
 {
-  struct zone_data *zone = &zone_table[zone_number];
-
-  if(!qry("SELECT reset_perc FROM zones WHERE number = '%d'", zone_number))
+  if(!qry("SELECT reset_perc FROM zones WHERE id = '%d'", zone_number))
   {
-    logit(LOG_DEBUG, "no_reset_zone_reset: could not find zone information for zone %d", zone_number);
+    logit(LOG_DEBUG, "no_reset_zone_reset: could not find zone information for zone id %d", zone_number);
     return;
   }
-  
+
   MYSQL_RES *res = mysql_store_result(DB);
 
   if(mysql_num_rows(res) < 1)
@@ -3024,20 +3023,20 @@ void no_reset_zone_reset(int zone_number)
     mysql_free_result(res);
     return;
   }
-  
+
   MYSQL_ROW row = mysql_fetch_row(res);
 
   if(atoi(row[0]) > number(0, 99))
   {
-    zone_purge(real_zone0(zone_number));
-    wizlog(56, "Resetting no_reset zone %d", zone_number); 
-    reset_zone(real_zone0(zone_number), TRUE);
-    db_query("UPDATE zones SET reset_perc = '%d' WHERE number = '%d'", 0, zone_number);
+    zone_purge(zone_number);
+    reset_zone(zone_number, TRUE);
+    db_query("UPDATE zones SET reset_perc = '%d' WHERE id = '%d'", 0, zone_number);
+    epic_zone_erase_touch(zone_table[zone_number].number);
   }
   else
   {
     add_event(event_reset_zone, 1, 0, 0, 0, 0, &zone_number, sizeof(zone_number));
-    db_query("UPDATE zones SET reset_perc = '%d' WHERE number = '%d'", atoi(row[0]) + 1, zone_number);
+    db_query("UPDATE zones SET reset_perc = '%d' WHERE id = '%d'", atoi(row[0]) + 1, zone_number);
   }
 }
 
