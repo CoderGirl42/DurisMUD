@@ -203,7 +203,7 @@ int calc_frag_gain(P_ship ship)
     return SHIP_HULL_WEIGHT(ship);
 }
 
-frags /= 5;int calc_bounty(P_ship target)
+int calc_bounty(P_ship target)
 {
     return (int) ( target->frags * 10000 / get_property("ship.sinking.rewardDivider", 7.0) );
 }
