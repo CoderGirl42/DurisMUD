@@ -127,8 +127,8 @@ void convertMob(P_char ch)
     }
   }  
   
-  /* for guild golem and mob that should not move set cover
-     so they don't get attack by range */
+  /* for guild golem and mobs that should not move set cover
+     so they don't get attacked by range */
 
   if(strstr(ch->player.name, "assoc"))
     SET_BIT(ch->specials.affected_by3, AFF3_COVER);
@@ -225,7 +225,7 @@ void convertMob(P_char ch)
   /* handle special situations for special races in regards to money */
   if(IS_GREATER_RACE(ch) ||
      IS_ELITE(ch))
-      GET_PLATINUM(ch) *= number(3, 6);
+      GET_PLATINUM(ch) *= number(16, 25);
 
   /* make sure they get at least 1 coin... */
   if(!GET_MONEY(ch))
@@ -265,7 +265,7 @@ void convertMob(P_char ch)
       GET_LEVEL(ch) * 10;
 
   /* hitroll */
-  if(IS_MELEE_CLASS(ch) || IS_DRAGON(ch) || IS_DEMON(ch) || IS_GIANT(ch))
+  if(IS_MELEE_CLASS(ch) || IS_DRAGON(ch) || IS_DEMON(ch) || IS_UNDEADRACE(ch))
     ch->points.base_hitroll = BOUNDED(2, (GET_LEVEL(ch) / 2), 35);
   else
     ch->points.base_hitroll = BOUNDED(0, (GET_LEVEL(ch) / 3), 25);
@@ -324,8 +324,8 @@ void convertMob(P_char ch)
 
   if(IS_ELITE(ch))
   {
-    damN = 9;
-    damS = 9;
+    damN = 7;
+    damS = 7;
     damA = 45;
   }
   else if(level <= 5)
@@ -343,69 +343,76 @@ void convertMob(P_char ch)
   else if(level <= 15)
   {
     damN = 2;
-    damS = 5;
+    damS = 3;
     damA = 5;
   }
   else if(level <= 20)
   {
     damN = 3;
-    damS = 4;
+    damS = 3;
     damA = 10;
   }
   else if(level <= 25)
   {
-    damN = 4;
-    damS = 5;
+    damN = 3;
+    damS = 4;
     damA = 10;
   }
   else if(level <= 30)
   {
-    damN = 5;
-    damS = 5;
+    damN = 4;
+    damS = 4;
     damA = 15;
   }
   else if(level <= 35)
   {
-    damN = 6;
-    damS = 6;
+    damN = 5;
+    damS = 4;
     damA = 20;
   }
   else if(level <= 40)
   {
-    damN = 6;
-    damS = 6;
+    damN = 5;
+    damS = 5;
     damA = 25;
   }
   else if(level <= 45)
   {
     damN = 6;
-    damS = 7;
+    damS = 5;
     damA = 30;
   }
   else if(level <= 50)
   {
-    damN = 7;
-    damS = 7;
+    damN = 6;
+    damS = 6;
     damA = 35;
   }
   else if(level <= 55)
   {
-    damN = 8;
-    damS = 9;
+    damN = 7;
+    damS = 6;
     damA = 40;
   }
   else
   {
-    damN = 9;
-    damS = 9;
+    damN = 7;
+    damS = 7;
     damA = 45;
   }
 
-  if(IS_MELEE_CLASS(ch))
+  if(strstr(ch->player.name, "guard") ||
+     strstr(ch->player.name, "militia") ||
+     strstr(ch->player.name, "sentinel") ||
+     strstr(ch->player.name, "lieutenant") ||
+     strstr(ch->player.name, "captain") ||
+     strstr(ch->player.name, "warrior") ||
+     strstr(ch->player.name, "champion"))
   {
-    damN += GET_LEVEL(ch) / 15;
+     damN += 1;
+     damS += 1;
   }
-
+  
   ch->points.base_damroll = ch->points.damroll = damA;
   ch->points.damnodice = damN;
   ch->points.damsizedice = damS;
@@ -440,18 +447,22 @@ void convertMob(P_char ch)
   ch->points.base_vitality = dice(5, 10) + 80;
   ch->points.vitality = ch->points.base_vitality = ch->points.max_vitality;
 
-  damA += damN * (1 + damS) / 2;
+//  damA += damN * (1 + damS) / 2;
 
-  damN = MIN(damA, 70);
+//  damN = MIN(damA, 70);
 
-  if(damA > damN)
-  {
-    damA = damN;
-    ch->points.base_damroll = ch->points.damroll = damA / 3;
-    damA -= ch->points.base_damroll;
-    ch->points.damsizedice = 7;
-    ch->points.damnodice = MAX(1, damA / 4);
-  }
+//  if(damA > damN)
+//  {
+//    damA = damN;
+//    ch->points.base_damroll = ch->points.damroll = damA / 3;
+//    damA -= ch->points.base_damroll;
+//    ch->points.damsizedice = 7;
+//    ch->points.damnodice = MAX(1, damA / 4);
+//  }
+// wipe2011
+  ch->points.damsizedice = damS;
+  ch->points.damnodice = damN;
+  ch->points.damroll = damA;
 
   ch->curr_stats = ch->base_stats;
 
@@ -525,7 +536,7 @@ void convertMob(P_char ch)
     REMOVE_BIT(ch->specials.affected_by, AFF_STONE_SKIN);
 
   /* earth elems get perm stoneskin */
-  if(GET_RACE(ch) == RACE_E_ELEMENTAL)
+  if(GET_RACE(ch) == RACE_E_ELEMENTAL || isname("gargoyle", GET_NAME(ch)))
     SET_BIT(ch->specials.affected_by, AFF_STONE_SKIN);
 
   /* remove ALL affects that don't belong! */
