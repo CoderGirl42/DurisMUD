@@ -228,11 +228,11 @@ int hit_regen(P_char ch)
 
   if (IS_NPC(ch))
   {
-    gain = 14;
+    gain = GET_LEVEL(ch) / 4;
   }
   else
   {
-      gain = 15; // wipe2011, fuck age!
+      gain = 75 - GET_LEVEL(ch); // wipe2011, fuck age!
    // gain = graf(ch, age(ch).year, 16, 15, 14, 13, 11, 9, 6);
   }
 
@@ -275,7 +275,7 @@ int hit_regen(P_char ch)
     gain >> 1;
 
   if (CHAR_IN_HEAL_ROOM(ch) && (GET_STAT(ch) >= STAT_SLEEPING))
-    gain *= 2;
+    gain << 1;
 
   gain += ch->points.hit_reg;
 
@@ -295,15 +295,18 @@ int hit_regen(P_char ch)
   if (gain == 0 && GET_STAT(ch) < STAT_SLEEPING)
     gain = -1;
 
-  if (IS_FIGHTING(ch))
+  if(IS_FIGHTING(ch))
   {
     for (af = ch->affected; af; af = af->next)
       if (af->bitvector4 & AFF4_REGENERATION)
         break;
     if (af)
       ;
-    else if (IS_AFFECTED4(ch, AFF4_REGENERATION))
-      gain >> 1;
+    else if(IS_AFFECTED4(ch, AFF4_REGENERATION))
+      if(GET_RACE(ch) == RACE_TROLL)
+        gain += 10;
+      else
+        gain >> 1;
     else
       gain = 0;
   }
