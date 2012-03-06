@@ -4537,7 +4537,7 @@ int neg_orb(P_obj obj, P_char ch, int cmd, char *arg)
     return (FALSE);
 
   messages.obj = obj;
-  spell_damage(ch, victim, 75 * 4, SPLDAM_GENERIC,
+  spell_damage(ch, victim, 75, SPLDAM_GENERIC,
                SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
   return (TRUE);
 }
@@ -8799,7 +8799,7 @@ int transparent_blade(P_obj obj, P_char ch, int cmd, char *arg)
   victim = (P_char) arg;
   if (!victim || number(0, 30))
     return (FALSE);
-  spell_damage(ch, victim, 75 * 4, SPLDAM_SPIRIT,
+  spell_damage(ch, victim, 75, SPLDAM_SPIRIT,
                SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
   return (TRUE);
 }

@@ -95,7 +95,7 @@ int DamageOneItem(P_char ch, int dam_type, P_obj obj, bool destroy)
 {
   int      num;
   char     buf[MAX_STRING_LENGTH];
-  int      objtype;
+  int      objtype = GET_ITEM_TYPE(obj);
   bool     force_destroy = destroy;
 
   if((objtype == ITEM_TOTEM) ||
@@ -132,8 +132,6 @@ int DamageOneItem(P_char ch, int dam_type, P_obj obj, bool destroy)
   {
     destroy = TRUE;
   }
-  
-  objtype = GET_ITEM_TYPE(obj);
 
   sprintf(buf, "Your $q %s",
           item_damage_messages[dam_type - 1][destroy ? 1 : 0]);

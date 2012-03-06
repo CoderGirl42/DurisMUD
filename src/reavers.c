@@ -12,8 +12,7 @@
 #include "prototypes.h"
 #include "objmisc.h"
 
-void spell_baladors_protection(int level, P_char ch, char *arg, int type,
-                               P_char victim, P_obj obj)
+void spell_baladors_protection(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
@@ -24,7 +23,7 @@ void spell_baladors_protection(int level, P_char ch, char *arg, int type,
     for (af1 = victim->affected; af1; af1 = af1->next)
       if (af1->type == SPELL_BALADORS_PROTECTION)
       {
-        af1->duration = 32;
+        af1->duration = level / 2;
       }
    
     return;
@@ -34,7 +33,7 @@ void spell_baladors_protection(int level, P_char ch, char *arg, int type,
   if (GET_LEVEL(ch) > 25)
   {
     af.type = SPELL_BALADORS_PROTECTION;
-    af.duration = 32;
+    af.duration = level / 2;
     af.bitvector = AFF_PROTECT_GOOD;
     affect_to_char(victim, &af);
 
@@ -44,35 +43,34 @@ void spell_baladors_protection(int level, P_char ch, char *arg, int type,
 
 
   if (GET_LEVEL(ch) > 45)
-
   {
     af.type = SPELL_BALADORS_PROTECTION;
-    af.duration = 32;
+    af.duration = level / 2;
     af.location = APPLY_SAVING_SPELL;
-    af.modifier = -3;
+    af.modifier = -2;
     affect_to_char(victim, &af);
 
     af.location = APPLY_SAVING_PARA;
-    af.modifier = -3;
+    af.modifier = -2;
     affect_to_char(victim, &af);
 
     af.location = APPLY_SAVING_ROD;
-    af.modifier = -3;
+    af.modifier = -2;
     affect_to_char(victim, &af);
 
     af.location = APPLY_SAVING_FEAR;
-    af.modifier = -3;
+    af.modifier = -2;
     affect_to_char(victim, &af);
 
     af.location = APPLY_SAVING_BREATH;
-    af.modifier = -3;
+    af.modifier = -2;
     affect_to_char(victim, &af);
   }
 
   if (GET_LEVEL(ch) > 4)
   {
     af.type = SPELL_BALADORS_PROTECTION;
-    af.duration = 32;
+    af.duration = level / 2;
     af.modifier = -15;
     af.location = APPLY_AC;
     affect_to_char(victim, &af);
@@ -96,19 +94,18 @@ void spell_ferrix_precision(int level, P_char ch, char *arg, int type,
       {
         af1->duration = 32;
       }
-    
     return;
   }
   bzero(&af, sizeof(af));
 
   af.type = SPELL_FERRIX_PRECISION;
   af.duration = 32;
-  af.modifier = ((int) (level / 9)) + 2;
+  af.modifier = ((int) (level / 12)) + 2;
   af.location = APPLY_DEX_MAX;
   affect_to_char(victim, &af);
 
   af.duration =  32;
-  af.modifier = ((int) (level / 9)) + 2;
+  af.modifier = ((int) (level / 12)) + 2;
   af.location = APPLY_HITROLL;
   affect_to_char(victim, &af);
 
@@ -122,7 +119,7 @@ void spell_eshabalas_vitality(int level, P_char ch, char *arg, int type,
 {
   struct affected_type af;
   bool message = false;
-  int      healpoints = (2 * level) + number(40, 90);
+  int healpoints = level + number(20, 40);
   
   if(affected_by_spell(ch, SPELL_MIELIKKI_VITALITY))
   {
@@ -170,15 +167,12 @@ void spell_kanchelsis_fury(int level, P_char ch, char *arg, int type,
 
   if (!affected_by_spell(victim, SPELL_KANCHELSIS_FURY))
   {
-    send_to_char
-    ("&+mYou feel your heart start to burn as the fury of Kanchelsis takes hold!\n",
-     victim);
-    act("$n &+mlooks stronger and starts to move with uncanny speed!", TRUE,
-        victim, 0, 0, TO_ROOM);
+    send_to_char("&+mYou feel your heart start to burn as the fury of Kanchelsis takes hold!\n", victim);
+    act("$n &+mlooks stronger and starts to move with uncanny speed!", FALSE, victim, 0, 0, TO_ROOM);
     bzero(&af, sizeof(af));
     af.type = SPELL_KANCHELSIS_FURY;
     af.duration = 10;
-    af.modifier = number(3, 9);
+    af.modifier = number(3, 5);
     af.location = APPLY_STR_MAX;
     affect_to_char(victim, &af);
     if (level >= 56)
@@ -241,11 +235,13 @@ void check_blood_alliance(P_char ch, int dam)
   if (!linked)
     linked = get_linked_char(ch, LNK_BLOOD_ALLIANCE);
 
-  if (linked) {
+  if (linked) 
+  {
     afp = get_spell_from_char(ch, SPELL_BLOOD_ALLIANCE);
     if (afp)
       afp->modifier += dam;
-    else {
+    else 
+    {
       memset(&af, 0, sizeof(af));
       af.type = SPELL_BLOOD_ALLIANCE;
       af.flags = AFFTYPE_NOSHOW | AFFTYPE_NODISPEL | AFFTYPE_NOAPPLY;
@@ -277,13 +273,13 @@ void event_blood_alliance(P_char ch, P_char victim, P_obj obj, void *data)
   if (!(af = get_spell_from_char(ch, SPELL_BLOOD_ALLIANCE)))
     return;
 
-  sdam = (int)(get_property("damage.reduction.bloodAlliance", 0.4) *
-               af->modifier);
+  sdam = (int)(get_property("damage.reduction.bloodAlliance", 0.4) * af->modifier);
   sdam = MIN(sdam, GET_HIT(linked) - 5);
 
   GET_HIT(linked) -= sdam;
   vamp(ch, sdam, GET_MAX_HIT(ch));
-  if (sdam > number(0,40)) {
+  if (sdam > number(0, 40)) 
+  {
     act("You share some of your blood with $N.", FALSE, linked, 0, ch, TO_CHAR);
     if (linked->desc)
       linked->desc->prompt_mode = 1;
@@ -380,7 +376,7 @@ bool ilienze_sword(P_char ch, P_char victim, P_obj wpn)
 
   if(IS_AFFECTED2(ch, AFF2_FIRESHIELD))
   {
-    dam += number(2, 8);
+    dam += number(1, 3);
   }
 
   if(IS_AFFECTED2(victim, AFF2_FIRESHIELD))
@@ -408,7 +404,7 @@ bool ilienze_sword(P_char ch, P_char victim, P_obj wpn)
       afp = affect_to_char(ch, &af);
       send_to_char("&+rYou start to gather the &+Rf&+Yl&+Ra&+rmes&n &+raround your blade..&n\n", ch);
     }
-    else if (afp->modifier > number(4,40))
+    else if (afp->modifier > number(4, 40))
     {
       if (afp->modifier < 8)
       {
@@ -427,10 +423,10 @@ bool ilienze_sword(P_char ch, P_char victim, P_obj wpn)
         ilienze_sword_proc_messages(&proc_messages, "&+Rf&+Yi&+Rr&+Re&+Rb&+Ra&+rll&n");
       }
 
-      dam = dice(afp->modifier, 12);
+      dam = dice(afp->modifier, 3);
       afp->modifier = 0;
 
-      return( spell_damage(ch, victim, dam, SPLDAM_FIRE, 0, &proc_messages) != DAM_NONEDEAD );
+      return(spell_damage(ch, victim, dam, SPLDAM_FIRE, 0, &proc_messages) != DAM_NONEDEAD );
     }
     else
     {
@@ -577,39 +573,41 @@ bool cegilune_blade(P_char ch, P_char victim, P_obj wpn)
     return FALSE;
 
   /* chance for upgrading tier of damage */
-  if (!number(0,4)) {
+  if (!number(0, 4)) 
+  {
     /* modifier holds tier of damage */
-    switch(afp->modifier) {
+    switch(afp->modifier) 
+    {
       case(0):
-        if (spell_damage(ch, victim, number(8,16), SPLDAM_FIRE,
+        if (spell_damage(ch, victim, number(2, 4), SPLDAM_FIRE,
                          SPLDAM_NODEFLECT, &tiers_messages[afp->modifier]) != DAM_NONEDEAD) {
           afp->modifier = 0;
           return TRUE;
         }
         break;
       case(1):
-        if (spell_damage(ch, victim, number(16,32), SPLDAM_FIRE,
+        if (spell_damage(ch, victim, number(4, 8), SPLDAM_FIRE,
                          SPLDAM_NODEFLECT, &tiers_messages[afp->modifier]) != DAM_NONEDEAD) {
           afp->modifier = 0;
           return TRUE;
         }
         break;
       case(2):
-        if (spell_damage(ch, victim, number(32,40), SPLDAM_FIRE,
+        if (spell_damage(ch, victim, number(6, 12), SPLDAM_FIRE,
                          SPLDAM_NODEFLECT, &tiers_messages[afp->modifier]) != DAM_NONEDEAD) {
           afp->modifier = 0;
           return TRUE;
         }
         break;
       case(3):
-        if (spell_damage(ch, victim, number(40,56), SPLDAM_FIRE,
+        if (spell_damage(ch, victim, number(10, 20), SPLDAM_FIRE,
                          SPLDAM_NODEFLECT, &tiers_messages[afp->modifier]) != DAM_NONEDEAD) {
           afp->modifier = 0;
           return TRUE;
         }
         break;
       case(4):
-        if (spell_damage(ch, victim, number(56,64), SPLDAM_FIRE,
+        if (spell_damage(ch, victim, number(15, 30), SPLDAM_FIRE,
                          SPLDAM_NODEFLECT, &tiers_messages[afp->modifier]) != DAM_NONEDEAD) {
           afp->modifier = 0;
           return TRUE;
@@ -628,8 +626,10 @@ bool cegilune_blade(P_char ch, P_char victim, P_obj wpn)
   }
 
   // if we are on 3th tier or higher there is chance for immolate like attack
-  if (afp->modifier >= 3) {
-    if (!number(0,5)) {
+  if (afp->modifier >= 3) 
+  {
+    if (!number(0, 5)) 
+    {
       act("&+LYour $q&+L suddenly ig&+rni&+Rte&+rs &+Linto &+rf&+Rl&+ra&+Rm&+re&+Rs &+Las it strikes $N!&n",
           FALSE, ch, wpn, victim, TO_CHAR);
       act("&+L$n's $q&+L ignites into a raging &+ri&+Rn&+rf&+Re&+rr&+Rn&+ro &+Las it bites deep into your &+rflesh&+L.&n",
@@ -777,11 +777,11 @@ bool thryms_icerazor(P_char ch, P_char victim, P_obj wpn)
 
   dam = number(1, (GET_LEVEL(ch) / 4));
 
-  if(IS_AFFECTED2(ch, AFF3_COLDSHIELD) )
-    dam += number(1,8);
+  if(IS_AFFECTED2(ch, AFF3_COLDSHIELD))
+    dam += number(1, 3);
 
-   if(IS_AFFECTED2(ch, AFF2_FIRESHIELD) )
-    dam -= number(1,8);
+   if(IS_AFFECTED2(ch, AFF2_FIRESHIELD))
+    dam -= number(1, 3);
 
   dam = MAX(1, dam);
 
@@ -789,9 +789,9 @@ bool thryms_icerazor(P_char ch, P_char victim, P_obj wpn)
      number(1, 100) <= 5)
   {
     // additional slowness messages
-    act("&+CThe &+Bchilling&+C ice surrounding $n's &+Cweapon suddenly begin to vibrate as they strike $N!&n", FALSE, ch, 0, victim, TO_ROOM);
-    act("&+CThe &+Bchilling&+C ice surrounding your weapon suddenly begins to vibrate as it strikes $N!&n", FALSE, ch, 0, victim, TO_CHAR);
-    act("&+CThe &+Bchilling&+C ice surrounding $n's $q &+Csuddenly begins to vibrate as it strikes you!&n", FALSE, ch, 0, victim, TO_VICT);
+    act("&+CThe &+Bchilling&+C ice surrounding $n's &+Cweapon suddenly begin to vibrate as they strike $N!", FALSE, ch, 0, victim, TO_ROOM);
+    act("&+CThe &+Bchilling&+C ice surrounding your weapon suddenly begins to vibrate as it strikes $N!", FALSE, ch, 0, victim, TO_CHAR);
+    act("&+CThe &+Bchilling&+C ice surrounding $n's $q &+Csuddenly begins to vibrate as it strikes you!", FALSE, ch, 0, victim, TO_VICT);
 
 
   // apply slowness
@@ -1005,23 +1005,23 @@ bool umberlees_fury(P_char ch, P_char victim, P_obj wpn)
   else
   {
     // buildup
-    if(!number(0,1) )
+    if(!number(0, 1))
     {
       afp->modifier++;
 
-      if(afp->modifier == 6 )
+      if(afp->modifier == 6)
       {
         act("&+BSparks begin to &+Yarc &+Band &+Ljump &+Bacross your weapon&+B.&n", FALSE, ch, wpn, victim, TO_CHAR);
         act("&+BSparks begin to &+Yarc &+Band &+Ljump &+Bacross $n's weapon&+B.&n", FALSE, ch, wpn, victim, TO_VICT);
         act("&+BSparks begin to &+Yarc &+Band &+Ljump &+Bacross $n's weapon&+B.&n", FALSE, ch, wpn, victim, TO_NOTVICT);
       }
-      else if(afp->modifier == 12 )
+      else if(afp->modifier == 12)
       {
         act("&+BThe &+Yelectrical&+B aura around your weapon &+Bintensifies, and begins to &+Wcrackle &+Bloudly!&n", FALSE, ch, wpn, victim, TO_CHAR);
         act("&+BThe &+Yelectrical&+B aura around $n's &+Bweapon &+Bintensifies, and begins to &+Wcrackle &+Bloudly!&n", FALSE, ch, wpn, victim, TO_VICT);
         act("&+BThe &+Yelectrical&+B aura around $n's &+Bweapon &+Bintensifies, and begins to &+Wcrackle &+Bloudly!&n", FALSE, ch, wpn, victim, TO_NOTVICT);
       }
-      else if(afp->modifier > number(14,16) )
+      else if(afp->modifier > number(14, 16))
       {
         afp->modifier = 0;
 
@@ -1029,7 +1029,7 @@ bool umberlees_fury(P_char ch, P_char victim, P_obj wpn)
         act("&+BSuddenly, the &+Yenergy&+B surrounding $n's &+Bweapon &+Bleaps into their body, causing them to strike out in a flurry of movement!&n", FALSE, ch, wpn, victim, TO_VICT);
         act("&+BSuddenly, the &+Yenergy&+B surrounding $n's &+Bweapon &+Bleaps into their body, causing them to strike out in a flurry of movement!&n", FALSE, ch, wpn, victim, TO_NOTVICT);
 
-        int num_hits = number(3,6);
+        int num_hits = number(3, 6);
 
         for( int i = 0; i < num_hits && IS_ALIVE(victim); i++ )
           hit(ch, victim, wpn);
@@ -1039,7 +1039,6 @@ bool umberlees_fury(P_char ch, P_char victim, P_obj wpn)
         if(!IS_ALIVE(victim) )
           return TRUE;
       }
-
     }
 
     remove_counter(victim, TAG_UMBERLEES_FURY_TARGET, pid);
@@ -1102,7 +1101,7 @@ void spell_kostchtchies_implosion(int level, P_char ch, char *arg, int type, P_c
 
   affect_to_char(victim, &af);
 
-  send_to_char("You become implosive with the power of the flair!\n", ch);
+  send_to_char("Your resolve hardens like ice in your veins...\n", ch);
 }
 
 bool kostchtchies_implosion(P_char ch, P_char victim, P_obj wpn)
@@ -1153,7 +1152,7 @@ bool kostchtchies_implosion(P_char ch, P_char victim, P_obj wpn)
   else
   {
     // buildup
-    if(!number(0,1) )
+    if(!number(0, 1))
     {
       afp->modifier++;
 
@@ -1169,7 +1168,7 @@ bool kostchtchies_implosion(P_char ch, P_char victim, P_obj wpn)
         act("&+CThe &+Bice &+Cbegins to become heavy on $n's weapon&+C, and their determination fiercely intensifies!&n", FALSE, ch, wpn, victim, TO_VICT);
         act("&+CThe &+Bice &+Cbegins to become heavy on $n's weapon&+C, and their determination fiercely intensifies!&n", FALSE, ch, wpn, victim, TO_NOTVICT);
       }
-      else if(afp->modifier > number(14,16) )
+      else if(afp->modifier > number(14, 16))
       {
         afp->modifier = 0;
         struct damage_messages messages = {
@@ -1182,12 +1181,11 @@ bool kostchtchies_implosion(P_char ch, P_char victim, P_obj wpn)
           DAMMSG_TERSE
         };
 
-        int dam = 450 + dice(10,10);
+        int dam = 45 + dice(10, 10);
 
         if (spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, &messages) != DAM_NONEDEAD)
           return TRUE;
       }
-
     }
 
     remove_counter(victim, TAG_CHILLING_IMPLOSION_TARGET, pid);

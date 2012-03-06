@@ -2732,7 +2732,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     i2 = calculate_thac_zero(k, 100); // Assumes 100 weapon skill.
 
     sprintf(buf, "&+Y thAC0: &N%d &+Y  +Hit: &N%d", i2,
-            GET_HITROLL(k) + str_app[STAT_INDEX(GET_C_STR(k))].tohit);
+            GET_HITROLL(k));// + str_app[STAT_INDEX(GET_C_STR(k))].tohit); wipe2011, str does not apply to hitroll
     if(IS_NPC(k) ||
         (GET_CLASS(k, CLASS_MONK) &&
         !k->equipment[WIELD] &&
@@ -2742,12 +2742,12 @@ void do_stat(P_char ch, char *argument, int cmd)
     {
       sprintf(buf, "%s   &+YUnarmed damage: &N%d&+Yd&N%d  &+Y+Dam: &N%d\n",
               buf, k->points.damnodice, k->points.damsizedice,
-              GET_DAMROLL(k) + str_app[STAT_INDEX(GET_C_STR(k))].todam);
+              GET_DAMROLL(k)); // + str_app[STAT_INDEX(GET_C_STR(k))].todam); wipe2011, apply is already done in affects.c
     }
     else
     {
-      sprintf(buf, "%s  &+Y+Dam: &N%d\n", buf,
-              GET_DAMROLL(k) + str_app[STAT_INDEX(GET_C_STR(k))].todam);
+      sprintf(buf, "%s  &+Y+dam: &N%d\n", buf,
+              GET_DAMROLL(k));// + str_app[STAT_INDEX(GET_C_STR(k))].todam); wipe2011 see above
     }
     strcat(o_buf, buf);
 

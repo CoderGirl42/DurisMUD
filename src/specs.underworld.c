@@ -862,7 +862,7 @@ int doombringer(P_obj obj, P_char ch, int cmd, char *arg)
     act("&+LFoul black &=LBLIGHTNING&+L surges forth from $q&+L...",
        FALSE, ch, obj, vict, TO_ROOM);
     
-    if(spell_damage(ch, vict, number(100, 200), SPLDAM_LIGHTNING,
+    if(spell_damage(ch, vict, number(75, 100), SPLDAM_LIGHTNING,
          SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, 0) != DAM_NONEDEAD)
     {
       return false;
@@ -872,7 +872,7 @@ int doombringer(P_obj obj, P_char ch, int cmd, char *arg)
        FALSE, ch, obj, vict, TO_CHAR);
     act("&+LThe blade of $q &+Lcontinues to grow with a putrid power, and unleashes &=LRFIRE&+L...",
        FALSE, ch, obj, vict, TO_ROOM);
-    if(spell_damage(ch, vict, number(100, 200), SPLDAM_FIRE,
+    if(spell_damage(ch, vict, number(75, 100), SPLDAM_FIRE,
         SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, 0) != DAM_NONEDEAD)
     {
       return false;
@@ -883,7 +883,7 @@ int doombringer(P_obj obj, P_char ch, int cmd, char *arg)
     act("&+LSuddenly, the air surrounding $q&+L grows eerily cold, and &=LCICE&+L pours forth!",
        FALSE, ch, obj, vict, TO_ROOM);
     
-    if(spell_damage(ch, vict, number(100, 200), SPLDAM_COLD,
+    if(spell_damage(ch, vict, number(75, 100), SPLDAM_COLD,
       SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, 0) != DAM_NONEDEAD)
     {
       return false;
@@ -935,7 +935,7 @@ int unholy_avenger_bloodlust(P_obj obj, P_char ch, int cmd, char *arg)
         obj, vict, TO_NOTVICT);
     act("$n's $q turns &+rblood red as it slashes into you!", FALSE, ch,
         obj, vict, TO_VICT);
-    spell_damage(ch, vict, 300, SPLDAM_NEGATIVE,
+    spell_damage(ch, vict, dam, SPLDAM_NEGATIVE,
         SPLDAM_NODEFLECT | SPLDAM_NOSHRUG | RAWDAM_NOKILL, &messages);
 
     vamp(ch, dam / 2, (int) (GET_MAX_HIT(ch) * 1.3));
@@ -1038,7 +1038,7 @@ int mace(P_obj obj, P_char ch, int cmd, char *arg)
       if (is_char_in_room(vict, ch->in_room))
       {
         if(GET_RACE(vict) != RACE_E_ELEMENTAL) 
-          spell_damage(ch, vict, number(500, 600), SPLDAM_GENERIC,
+          spell_damage(ch, vict, number(75, 100), SPLDAM_GENERIC,
                        SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
         else
         {
@@ -1170,7 +1170,7 @@ int flamberge(P_obj obj, P_char ch, int cmd, char *arg)
         act
           ("&+rA &+Rse&+Yari&+Rng &+Yburst &+rleaps from $n's $q&+r and hits $N &+Rdead on!",
            FALSE, obj->loc.wearing, obj, vict, TO_NOTVICT);
-        damage(ch, vict, 350, SPELL_IMMOLATE);
+        spell_damage(ch, vict, 50, SPLDAM_FIRE, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
 
 
       }
@@ -1303,7 +1303,7 @@ int avernus(P_obj obj, P_char ch, int cmd, char *arg)
 
     vamp(ch, dam / 2, (int) (GET_MAX_HIT(ch) * 1.3));
 
-    spell_damage(ch, vict, (BOUNDED(0, (GET_HIT(vict) + 9), 150) * 4),
+    spell_damage(ch, vict, (BOUNDED(0, (GET_HIT(vict) + 9), 150)),
            SPLDAM_NEGATIVE, SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, 0);
     return TRUE;
   }

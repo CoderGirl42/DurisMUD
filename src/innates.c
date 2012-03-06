@@ -1578,7 +1578,7 @@ void bite(P_char ch, P_char victim)
       act
         ("&+L$n&+L lunges to bite $N&+L... &+Rand sinks $s teeth into $S flesh!.&n",
          FALSE, ch, 0, victim, TO_NOTVICT);
-      dead = damage(ch, victim, GET_LEVEL(ch) * 4, TYPE_UNDEFINED);
+      dead = damage(ch, victim, GET_LEVEL(ch), TYPE_UNDEFINED);
       GET_HIT(ch) += GET_LEVEL(ch) * 2;
       if (!dead && IS_NPC(victim) && GET_LEVEL(victim) <= GET_LEVEL(ch) - 20
           && !StatSave(victim, APPLY_POW, POW_DIFF(ch, victim)))
