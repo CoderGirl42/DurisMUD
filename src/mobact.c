@@ -6048,7 +6048,7 @@ bool MobWarrior(P_char ch)
         are_together(tch, ch->specials.fighting)) &&
         CAN_SEE(ch, tch))
       {
-        t_tend = GET_HIT(tch) /*+ (100 - GET_AC(tch)) */ ;
+        t_tend = GET_HIT(tch);
 
         if(IS_CASTER(tch))
           t_tend += GET_LEVEL(ch);
@@ -7024,10 +7024,12 @@ void MobStartFight(P_char ch, P_char vict)
      get_takedown_size(ch) >= get_takedown_size(vict) - 2 && 
      !IS_BACKRANKED(vict) &&
      !number(0, 3) && 
-     HAS_FOOTING(ch)) {
+     HAS_FOOTING(ch)) 
+  {
     bodyslam(ch, vict);
     return;
   }
+
   if(ch &&
     vict &&
     !fudge_flag &&

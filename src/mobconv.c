@@ -53,6 +53,8 @@ void convertMob(P_char ch)
     return;
 
   set_npc_multi(ch);
+ 
+  level = GET_LEVEL(ch);
 
   /* default pos of sleeping = bad */
 
@@ -116,7 +118,7 @@ void convertMob(P_char ch)
       ch->player.spec = 4;
     }    
     else if(!isname("_nospec_", GET_NAME(ch)) &&
-             GET_LEVEL(ch) > number(29,50))
+             level > number(29,50))
     {
       int i = number(0,MAX_SPEC-1);
       if(*GET_SPEC_NAME(ch->player.m_class, i) &&
@@ -150,22 +152,22 @@ void convertMob(P_char ch)
     return;
   }
    
-  if((ch->player.m_class == 0) && (GET_LEVEL(ch) >= 15))
+  if((ch->player.m_class == 0) && (level >= 15))
   {
     ch->player.m_class = CLASS_WARRIOR;
   }
 
   /* minimum mob level */
-  if(!GET_LEVEL(ch))
+  if(!level)
     ch->player.level = 1;
 
-  if(GET_LEVEL(ch) > MAXLVL)
+  if(level > MAXLVL)
     ch->player.level = MAXLVL;
 
   xp = copp = silv = gold = plat = 0;
 
   /* find multipliers for mob xp/money */
-  if(GET_LEVEL(ch) > 50)
+  if(level > 50)
   {
     xp = 2000;
     copp = 0;
@@ -173,7 +175,7 @@ void convertMob(P_char ch)
     gold = .9292;
     plat = .5950;
   }
-  else if(GET_LEVEL(ch) > 40)
+  else if(level > 40)
   {
     xp = 1000;
     copp = 0;
@@ -181,7 +183,7 @@ void convertMob(P_char ch)
     gold = .6637;
     plat = .1267;
   }
-  else if(GET_LEVEL(ch) > 30)
+  else if(level > 30)
   {
     xp = 525;
     copp = 0;
@@ -189,7 +191,7 @@ void convertMob(P_char ch)
     gold = .4857;
     plat = .0800;
   }
-  else if(GET_LEVEL(ch) > 20)
+  else if(level > 20)
   {
     xp = 275;
     copp = .6667;
@@ -197,7 +199,7 @@ void convertMob(P_char ch)
     gold = .2223;
     plat = .0400;
   }
-  else if(GET_LEVEL(ch) > 10)
+  else if(level > 10)
   {
     xp = 100;
     copp = .5000;
@@ -214,11 +216,11 @@ void convertMob(P_char ch)
     plat = 0.0;
   }
   /* apply multipliers */
-  GET_EXP(ch) = (int) (GET_LEVEL(ch) * xp);
-  GET_PLATINUM(ch) = (int) (GET_LEVEL(ch) * plat * number(75, 125) / 100);
-  GET_GOLD(ch) = (int) (GET_LEVEL(ch) * gold * number(75, 125) / 100);
-  GET_SILVER(ch) = (int) (GET_LEVEL(ch) * silv * number(75, 125) / 100);
-  GET_COPPER(ch) = (int) (GET_LEVEL(ch) * copp * number(75, 125) / 100);
+  GET_EXP(ch) = (int) (level * xp);
+  GET_PLATINUM(ch) = (int) (level * plat * number(75, 125) / 100);
+  GET_GOLD(ch) = (int) (level * gold * number(75, 125) / 100);
+  GET_SILVER(ch) = (int) (level * silv * number(75, 125) / 100);
+  GET_COPPER(ch) = (int) (level * copp * number(75, 125) / 100);
   
   // EXP modifiers are found in limits.c in gain_exp().
   
@@ -259,28 +261,28 @@ void convertMob(P_char ch)
   /* adjust for mana */
   if(GET_CLASS(ch, CLASS_PSIONICIST))
     ch->points.mana = ch->points.base_mana = ch->points.max_mana =
-      GET_LEVEL(ch) * 15;
+      level * 15;
   else
     ch->points.mana = ch->points.base_mana = ch->points.max_mana =
-      GET_LEVEL(ch) * 10;
+      level * 10;
 
   /* hitroll */
   if(IS_MELEE_CLASS(ch) || IS_DRAGON(ch) || IS_DEMON(ch) || IS_UNDEADRACE(ch))
-    ch->points.base_hitroll = BOUNDED(2, (GET_LEVEL(ch) / 2), 35);
+    ch->points.base_hitroll = BOUNDED(2, (level / 2), 35);
   else
-    ch->points.base_hitroll = BOUNDED(0, (GET_LEVEL(ch) / 3), 25);
+    ch->points.base_hitroll = BOUNDED(0, (level / 3), 25);
 
   ch->points.hitroll = ch->points.base_hitroll;
 
-  /* AC computations... first base AC */
-  ch->points.base_armor = 250 - (int) (GET_LEVEL(ch) * number(2, 4));
+  /* AC computations... first base armor AC */
+  ch->points.base_armor = -1 * level * 4;
 
   /* then additions based on level... */
-  if(GET_LEVEL(ch) > 57)
-    ch->points.base_armor -= 150;
-  else if(GET_LEVEL(ch) > 49)
+  if(level > 57)
     ch->points.base_armor -= 100;
-  else if(GET_LEVEL(ch) > 40)
+  else if(level > 49)
+    ch->points.base_armor -= 75;
+  else if(level > 40)
     ch->points.base_armor -= 50;
 
   /* racial conditions to AC */
@@ -292,7 +294,7 @@ void convertMob(P_char ch)
   case RACE_QUADRUPED:
   case RACE_FLYING_ANIMAL:
   case RACE_HERBIVORE:
-    ch->points.base_armor = + 150; //  these species don't have natural armor
+    ch->points.base_armor += 50; //  these species don't have natural armor
     break;
   case RACE_F_ELEMENTAL:
   case RACE_W_ELEMENTAL:
@@ -301,26 +303,40 @@ void convertMob(P_char ch)
   case RACE_V_ELEMENTAL:
   case RACE_GHOST:
   case RACE_DRAGONKIN:
+  case RACE_GOLEM:
     ch->points.base_armor -= 50;
-    break;
-  case RACE_GIANT:
-    ch->points.base_armor += 10;
     break;
   case RACE_DEMON:
   case RACE_DEVIL:
-    ch->points.base_armor -= 100;
+    ch->points.base_armor -= 75;
     break;
   case RACE_DRAGON:
   case RACE_I_ELEMENTAL:
-    ch->points.base_armor -= 150;
+    ch->points.base_armor -= 100;
     break;
   }
+
+  switch(GET_SIZE(ch))
+  {
+  case SIZE_GARGANTUAN:
+    ch->points.base_armor -= level;
+  case SIZE_GIANT:
+    ch->points.base_armor -= level / 2;
+  case SIZE_HUGE:
+    ch->points.base_armor -= level / 4;
+  case SIZE_LARGE:
+  case SIZE_MEDIUM:
+  case SIZE_SMALL:
+    ch->points.base_armor += 50 - level;
+  case SIZE_TINY:
+    ch->points.base_armor += 100 - level;
+  }
+     
   ch->points.base_armor = BOUNDED(-250, ch->points.base_armor, 250);
 
   /* hitpoints, and damage dice */
 
   damN = damS = damA = 0;
-  level = GET_LEVEL(ch);
 
   if(IS_ELITE(ch))
   {
@@ -410,8 +426,26 @@ void convertMob(P_char ch)
      strstr(ch->player.name, "champion"))
   {
      damN += 1;
-     damS += 1;
+     if(!number(0, 1))
+       damS += 1;
   }
+
+  if(strstr(ch->player.name, "mage") ||
+     strstr(ch->player.name, "wizard") ||
+     strstr(ch->player.name, "illithid") ||
+     strstr(ch->player.name, "conjurer") ||
+     strstr(ch->player.name, "sorcerer"))
+  {
+     damN -= 1;
+     if(!number(0, 1))
+       damS -= 1;
+  }
+
+  if(damN < 1)
+    damN = 1;
+
+  if(damS < 1)
+    damS = 1;
   
   ch->points.base_damroll = ch->points.damroll = damA;
   ch->points.damnodice = damN;
@@ -444,7 +478,7 @@ void convertMob(P_char ch)
   ch->points.base_hit = hits;
   ch->points.hit = ch->points.max_hit = ch->points.base_hit;
   ch->only.npc->lowest_hit = INT_MAX;
-  ch->points.base_vitality = dice(5, 10) + 80;
+  ch->points.base_vitality = GET_C_LUCK(ch) + number(10, 15);
   ch->points.vitality = ch->points.base_vitality = ch->points.max_vitality;
 
 //  damA += damN * (1 + damS) / 2;
@@ -500,7 +534,7 @@ void convertMob(P_char ch)
      (GET_RACE(ch) != RACE_UNDEAD) &&
      !IS_SET(ch->specials.act, ACT_MOUNT) &&
      !IS_SET(ch->only.npc->aggro_flags, AGGR_ALL) &&
-     GET_LEVEL(ch) < 26)
+     level < 26)
        SET_BIT(ch->specials.act, ACT_MOUNT);
 
   if(IS_SET(ch->specials.act, ACT_MOUNT))
@@ -528,7 +562,7 @@ void convertMob(P_char ch)
      being cast, need to make sure area builders didn't use it
      improperly... so... */
   if(IS_AFFECTED(ch, AFF_STONE_SKIN) &&
-      !((GET_LEVEL(ch) > 39) &&
+      !((level > 39) &&
        ((GET_RACE(ch) == RACE_GOLEM) ||
        (GET_RACE(ch) == RACE_CONSTRUCT) ||
        isname("iron", GET_NAME(ch)) ||
