@@ -3819,7 +3819,6 @@ void do_attributes(P_char ch, char *argument, int cmd)
     if(IS_TRUSTED(ch) || GET_LEVEL(ch) >= 20)
     {
       /* this is ugly, because of new racial stat mods.  JAB */
-#if 0
       if(GET_C_STR(ch) > stat_factor[(int) GET_RACE(ch)].Str)
         sprintf(buf, "&+cSTR: &+Y***&n");
       else
@@ -3891,7 +3890,6 @@ void do_attributes(P_char ch, char *argument, int cmd)
                 MAX(1,
                     (int) ((GET_C_CHA(ch) * 100 /
                             stat_factor[(int) GET_RACE(ch)].Cha) + .55)));
-#endif
 
       sprintf(buf, "&+cSTR: &+Y%3d&n",
               MAX(1,
@@ -3964,8 +3962,7 @@ void do_attributes(P_char ch, char *argument, int cmd)
                                 stat_factor[(int) GET_RACE(ch)].Cha) + .55)),
               stat_to_string2((int)
                               ((GET_C_LUCK(ch) * 100 /
-                                stat_factor[(int) GET_RACE(ch)].Luck) +
-                               .55)));
+                                stat_factor[(int) GET_RACE(ch)].Luck) + .55)));
     }
   }
   else
@@ -4007,9 +4004,9 @@ void do_attributes(P_char ch, char *argument, int cmd)
 
   t_val = calculate_ac(ch, TRUE);
   if(t_val >= 0)
-    sprintf(buf, "&+cArmor Points: &+Y%d&+c  Increases melee damage taken by &+Y%.1f&+y%%&n\n", t_val, (double)(t_val * 0.10));
+    sprintf(buf, "&+cArmor Points: &+Y%d&+c  Increases melee damage taken by &+Y%.1f&+y%%\n", t_val, (double)(t_val * 0.10));
   else
-    sprintf(buf, "&+cArmor Points: &+Y%d&+c  Reduces melee damage taken by &+Y%.1f&n&+y%%&n \n", t_val, (double)(t_val * -0.10));
+    sprintf(buf, "&+cArmor Points: &+Y%d&+c  Reduces melee damage taken by &+Y%.1f&n&+y%%\n", t_val, (double)(t_val * -0.10));
 
   send_to_char(buf, ch, LOG_NONE);
 
@@ -4022,9 +4019,9 @@ void do_attributes(P_char ch, char *argument, int cmd)
 
   if(IS_TRUSTED(ch) || GET_LEVEL(ch) >= 25)
   {
-    sprintf(buf, "&+cHitroll: &+Y%d   &n&+cDamroll: &+Y%d",
-            GET_HITROLL(ch) + str_app[STAT_INDEX(GET_C_STR(ch))].tohit,
-            GET_DAMROLL(ch) + str_app[STAT_INDEX(GET_C_STR(ch))].todam);
+    sprintf(buf, "&+cHitroll: &+Y%d   &+cDamroll: &+Y%d",
+            GET_HITROLL(ch),   // + str_app[STAT_INDEX(GET_C_STR(ch))].tohit,
+            GET_DAMROLL(ch));  // + str_app[STAT_INDEX(GET_C_STR(ch))].todam);  wipe2011
     if(IS_NPC(ch) || GET_CLASS(ch, CLASS_MONK))
       sprintf(buf + strlen(buf), "   Barehand Damage: %dd%d",
               ch->points.damnodice, ch->points.damsizedice);

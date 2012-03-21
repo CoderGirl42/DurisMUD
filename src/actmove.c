@@ -1431,17 +1431,20 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
   
   if(affected_by_spell(ch, TAG_PVPDELAY))
   {
-    send_to_char("The &+Radrenaline&n is pumping through you like mad, this sure is exhausting...&n\n", ch);
+    send_to_char("The &+Radrenaline&n is pumping through you like mad, this sure is exhausting...\n", ch);
     
     if(IS_PC(ch) && 
        IS_THIEF(ch) && 
        (ch->only.pc->pc_timer[1] + 5 > time(NULL)))
-      send_to_char("...but as the master of close combat, you take no notice!!&n\n", ch);
+    {
+      send_to_char("...but as the master of close combat, you take little notice!!\n", ch);
+      need_movement += number(2, 3);
+    }
     else
-      need_movement += number(1, 2);
+      need_movement << 1;
   }
 
-  /* pc_timer[1] gets set on successful flee */
+  /* pc_timer[1] gets set on successful flee 
   if(IS_PC(ch) && (ch->only.pc->pc_timer[1] + (IS_THIEF(ch) ? 5 : 10) > time(NULL)))
   {
     if (need_movement < 4)
@@ -1451,7 +1454,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
 
     send_to_char
       ("Panicking, you don't exactly take the most efficient route..\n", ch);
-  }
+  }*/
 
   if (mount)
   {

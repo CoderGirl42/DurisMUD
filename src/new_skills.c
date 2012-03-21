@@ -307,14 +307,14 @@ void do_awareness(P_char ch, char *argument, int cmd)
 
 int wornweight(P_char ch)
 {
-  int      enc;
-  int      i;
+  int encumberance;
+  int i;
 
-  enc = 0;
+  encumberance = 0;
   for (i = 0; i < MAX_WEAR; i++)
     if (ch->equipment[i])
-      enc += (GET_OBJ_WEIGHT(ch->equipment[i]));
-  return enc;
+      encumberance += (GET_OBJ_WEIGHT(ch->equipment[i]));
+  return encumberance;
 }
 
 int MonkAcBonus(P_char ch)
@@ -358,14 +358,14 @@ void MonkSetSpecialDie(P_char ch)
     case 2:
     case 3:
       ch->points.damnodice = 2;
-      ch->points.damsizedice = 5;
+      ch->points.damsizedice = 3;
       break;
     case 4:
     case 5:
     case 6:
     case 7:
-      ch->points.damnodice = 2;
-      ch->points.damsizedice = 6;
+      ch->points.damnodice = 3;
+      ch->points.damsizedice = 3;
       break;
     case 8:
     case 9:
@@ -374,8 +374,8 @@ void MonkSetSpecialDie(P_char ch)
     case 12:
     case 13:
     case 14:
-      ch->points.damnodice = 2;
-      ch->points.damsizedice = 8;
+      ch->points.damnodice = 3;
+      ch->points.damsizedice = 5;
       break;
     case 15:
     case 16:
@@ -385,7 +385,7 @@ void MonkSetSpecialDie(P_char ch)
     case 20:
     case 21:
       ch->points.damnodice = 4;
-      ch->points.damsizedice = 5;
+      ch->points.damsizedice = 3;
       break;
     case 22:
     case 23:
@@ -395,8 +395,8 @@ void MonkSetSpecialDie(P_char ch)
     case 27:
     case 28:
     case 29:
-      ch->points.damnodice = 5;
-      ch->points.damsizedice = 5;
+      ch->points.damnodice = 4;
+      ch->points.damsizedice = 4;
       break;
     case 30:
     case 31:
@@ -404,14 +404,14 @@ void MonkSetSpecialDie(P_char ch)
     case 33:
     case 34:
       ch->points.damnodice = 5;
-      ch->points.damsizedice = 6;
+      ch->points.damsizedice = 4;
       break;
     case 35:
     case 36:
     case 37:
     case 38:
       ch->points.damnodice = 5;
-      ch->points.damsizedice = 7;
+      ch->points.damsizedice = 5;
       break;
     case 39:
     case 40:
@@ -420,7 +420,7 @@ void MonkSetSpecialDie(P_char ch)
     case 43:
     case 44:
       ch->points.damnodice = 6;
-      ch->points.damsizedice = 6;
+      ch->points.damsizedice = 5;
       break;
     case 45:
     case 46:
@@ -428,7 +428,7 @@ void MonkSetSpecialDie(P_char ch)
     case 48:
     case 49:
       ch->points.damnodice = 6;
-      ch->points.damsizedice = 7;
+      ch->points.damsizedice = 6;
       break;
     case 50:
     case 51:
@@ -437,7 +437,7 @@ void MonkSetSpecialDie(P_char ch)
     case 54:
     case 55:
       ch->points.damnodice = 7;
-      ch->points.damsizedice = 7;
+      ch->points.damsizedice = 6;
       break;
     case 56:
     case 57:
@@ -446,12 +446,12 @@ void MonkSetSpecialDie(P_char ch)
     case 60:
     case 61:
     case 62:
-      ch->points.damnodice = 8;
-      ch->points.damsizedice = 8;
+      ch->points.damnodice = 7;
+      ch->points.damsizedice = 7;
       break;
     default:
       ch->points.damnodice = 1;
-      ch->points.damsizedice = 4;
+      ch->points.damsizedice = 3;
       break;
   }
 }
@@ -463,13 +463,13 @@ int MonkDamage(P_char ch)
 
   if (IS_PC(ch))
     skl_lvl = GET_CHAR_SKILL(ch, SKILL_MARTIAL_ARTS);
+  else
+    skl_lvl = GET_LEVEL(ch) * 1.5;
 
   MonkSetSpecialDie(ch);
   dam = dice(ch->points.damnodice, ch->points.damsizedice);
-  dam = dam * (skl_lvl / 10);
-
-  if (GET_CLASS(ch, CLASS_MONK))
-    dam = BOUNDED(1, dam - (wornweight(ch) + 56 - GET_LEVEL(ch)), dam); 
+  dam = dam * (skl_lvl / 90);
+  dam = BOUNDED(1, dam - (wornweight(ch) + 56 - GET_LEVEL(ch)), dam); 
   return dam;
 }
 
@@ -491,10 +491,10 @@ int MonkNumberOfAttacks(P_char ch)
   if (IS_PC(ch))
   {
     skl_lvl = GET_CHAR_SKILL(ch, SKILL_MARTIAL_ARTS);
-    notch_skill(ch, SKILL_MARTIAL_ARTS, 100);
+    notch_skill(ch, SKILL_MARTIAL_ARTS, 1000);
   }
   else
-    skl_lvl = BOUNDED(5, GET_LEVEL(ch) * 2, 100);
+    skl_lvl = BOUNDED(5, GET_LEVEL(ch) * 1.5, 100);
 
 
   for (a = 0, l = ((4 * GET_LEVEL(ch)) / number(25, 38));
@@ -599,10 +599,8 @@ void do_first_aid(P_char ch, char *arg, int cmd)
   if (IS_NPC(ch))
     return;
 
-send_to_char
-      ("Try using the bandage instead.",
-       ch);
-return;
+  send_to_char("Try using the bandage instead.", ch);
+  return;
 
   if (has_innate(ch, INNATE_BATTLEAID))
   {
@@ -864,9 +862,7 @@ void chant_buddha_palm(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if (!affect_timer(ch,
-        WAIT_SEC * get_property("timer.secs.monkBuddha", 30),
-        SKILL_BUDDHA_PALM))
+  if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkBuddha", 90), SKILL_BUDDHA_PALM))
   {
     send_to_char("You are not in the proper mood for that right now!\r\n", ch);
     return;
@@ -886,30 +882,22 @@ void chant_buddha_palm(P_char ch, char *argument, int cmd)
   }
   if (CHAR_IN_SAFE_ZONE(ch))
   {
-    send_to_char
-      ("You feel ashamed to try to disrupt the tranquility of this place.\r\n",
-       ch);
+    send_to_char("You feel ashamed to try to disrupt the tranquility of this place.\r\n", ch);
     return;
   }
   if (EVIL_RACE(ch) || IS_EVIL(ch))
   {
-    send_to_char
-      ("A glowing globe of red light springs from your outstretched palms.\r\n",
-       ch);
-    act("A glowing globe of red light springs from $n's outstretched palms.",
-        TRUE, ch, 0, 0, TO_ROOM);
+    send_to_char("A glowing globe of red light springs from your outstretched palms.\r\n", ch);
+    act("A glowing globe of red light springs from $n's outstretched palms.", FALSE, ch, 0, 0, TO_ROOM);
   }
   else
   {
-    send_to_char
-      ("A glowing globe of light springs from your outstretched palms.\r\n",
-       ch);
-    act("A glowing globe of light springs from $n's outstretched palms.",
-        TRUE, ch, 0, 0, TO_ROOM);
+    send_to_char("A glowing globe of light springs from your outstretched palms.\r\n", ch);
+    act("A glowing globe of light springs from $n's outstretched palms.", FALSE, ch, 0, 0, TO_ROOM);
   }
-
-  num_tar = GET_LEVEL(ch) / 10;
-  dam = dice(GET_LEVEL(ch) / 2, 6);
+  int level = GET_LEVEL(ch);
+  num_tar = level / 10;
+  dam = number(level / 2, level);
   for (vict = world[ch->in_room].people; vict; vict = hold)
   {
     hold = vict->next_in_room;
@@ -918,25 +906,18 @@ void chant_buddha_palm(P_char ch, char *argument, int cmd)
       num_tar--;
       if (EVIL_RACE(ch) || IS_EVIL(ch))
       {
-        act("You burn $N with your reddish light.",
-            FALSE, ch, 0, vict, TO_CHAR);
-        act("$n burns $N with $s reddish light.",
-            FALSE, ch, 0, vict, TO_NOTVICT);
-        act("$n burns you with $s reddish light.",
-            FALSE, ch, 0, vict, TO_VICT);
+        act("You burn $N with your reddish light.", FALSE, ch, 0, vict, TO_CHAR);
+        act("$n burns $N with $s reddish light.", FALSE, ch, 0, vict, TO_NOTVICT);
+        act("$n burns you with $s reddish light.", FALSE, ch, 0, vict, TO_VICT);
       }
       else
       {
-        act("You burn $N with your heavenly starlight.",
-            FALSE, ch, 0, vict, TO_CHAR);
-        act("$n burns $N with $s heavenly starlight.",
-            FALSE, ch, 0, vict, TO_NOTVICT);
-        act("$n burns you with $s heavenly starlight.",
-            FALSE, ch, 0, vict, TO_VICT);
+        act("You burn $N with your heavenly starlight.", FALSE, ch, 0, vict, TO_CHAR);
+        act("$n burns $N with $s heavenly starlight.", FALSE, ch, 0, vict, TO_NOTVICT);
+        act("$n burns you with $s heavenly starlight.", FALSE, ch, 0, vict, TO_VICT);
       }
 
-      spell_damage(ch, vict, dam, SPLDAM_HOLY,
-                   SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
+      spell_damage(ch, vict, dam, SPLDAM_HOLY, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
       if (num_tar <= 0)
         break;
     }
@@ -988,18 +969,14 @@ void chant_quivering_palm(P_char ch, char *argument, int cmd)
     send_to_char("You hum to yourself.\r\n", ch);
     return;
   }
-  if (!affect_timer(ch,
-        WAIT_SEC * get_property("timer.secs.monkQuivering", 30),
-        SKILL_QUIVERING_PALM))
+  if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkQuivering", 60), SKILL_QUIVERING_PALM))
   {
     send_to_char("You are not in the proper mood for that right now!\r\n", ch);
     return;
   }
   if (CHAR_IN_SAFE_ZONE(ch))
   {
-    send_to_char
-      ("You feel ashamed to try to disrupt the tranquility of this place.\r\n",
-       ch);
+    send_to_char("You feel ashamed to try to disrupt the tranquility of this place.\r\n", ch);
     return;
   }
   if ((IS_SET(world[ch->in_room].room_flags, SINGLE_FILE)) &&
@@ -1015,10 +992,9 @@ void chant_quivering_palm(P_char ch, char *argument, int cmd)
     CharWait(ch, 2 * PULSE_VIOLENCE);
     return;
   }
-  dam = BOUNDED(20, GET_LEVEL(ch) + IS_PC(ch) ? GET_CHAR_SKILL(ch, SKILL_QUIVERING_PALM) : skl_lvl, 110);
+  dam = BOUNDED(20, GET_LEVEL(ch) + IS_PC(ch) ? GET_CHAR_SKILL(ch, SKILL_QUIVERING_PALM) : skl_lvl, 110) / 4;
 
-  if (GET_CHAR_SKILL(ch, SKILL_ANATOMY) &&
-      5 + GET_CHAR_SKILL(ch, SKILL_ANATOMY) / 10 > number(0, 100)) {
+  if (GET_CHAR_SKILL(ch, SKILL_ANATOMY) && 5 + GET_CHAR_SKILL(ch, SKILL_ANATOMY) / 10 > number(0, 100)) {
     dam = (int) (dam * 1.5);
   }
 
@@ -1050,7 +1026,7 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
         IS_PC_PET(ch))
       skl_lvl = GET_CHAR_SKILL(ch, SKILL_JIN_TOUCH);
     else
-      skl_lvl = GET_LEVEL(ch) + number(5, GET_LEVEL(ch));
+      skl_lvl = BOUNDED(10, GET_LEVEL(ch) + number(5, GET_LEVEL(ch)), 100);
   }
 
   if(IS_FIGHTING(ch))
@@ -1088,9 +1064,7 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
   
   CharWait(ch, 2 * PULSE_VIOLENCE);
   
-  if (!affect_timer(ch,
-        WAIT_SEC * get_property("timer.secs.monkJintouch", 30),
-        SKILL_JIN_TOUCH))
+  if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkJintouch", 30), SKILL_JIN_TOUCH))
   {
     send_to_char("&+GYour inner force has not realigned...\r\n", ch);
     return;
@@ -1122,26 +1096,16 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
       MobStartFight(vict, ch);
   }
   
-  dam = (int)(dice(GET_C_DEX(ch), 3) +
-              dice(GET_C_AGI(ch), 3) +
-              dice(GET_C_WIS(ch), 3)) / 4;
+  dam = (int)(dice(GET_C_DEX(ch), 3) + dice(GET_C_AGI(ch), 3) + dice(GET_C_WIS(ch), 3)) / 8;
+  dam = dam * ((float)skl_lvl / 100);  
   
-  if(skl_lvl <= 80)
-    dam = (int) (0.4 * dam);
-  else if(skl_lvl <= 90)
-    dam = (int) (0.6 * dam);
-    
-  act("&+CYou harness your full Jin, and deliver a powerful strike to&n $N!&n",
-    FALSE, ch, 0, vict, TO_CHAR);
-  act("$n&+C chants a mantra, then touches&n $N&+C who reels in pain!&n",
-    FALSE, ch, 0, vict, TO_NOTVICT);
-  act("$n&+C's chants a mantra as $e touches you - pain courses throughout your body!&n",
-    FALSE, ch, 0, vict, TO_VICT);
+  act("&+CYou harness your full Jin, and deliver a powerful strike to&n $N!", FALSE, ch, 0, vict, TO_CHAR);
+  act("$n&+C chants a mantra, then touches&n $N&+C who reels in pain!", FALSE, ch, 0, vict, TO_NOTVICT);
+  act("$n&+C's chants a mantra as $e touches you - pain courses throughout your body!", FALSE, ch, 0, vict, TO_VICT);
     
   //debug("(%s) Jin Touch: damage upon (%s) for (%d).", GET_NAME(ch), GET_NAME(vict), dam);
 
-  if(melee_damage(ch, vict, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION |
-      PHSDAM_TOUCH, 0) != DAM_NONEDEAD)
+  if(melee_damage(ch, vict, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION | PHSDAM_TOUCH, 0) != DAM_NONEDEAD)
         return;
 
   if (!char_in_list(ch))
@@ -1193,7 +1157,7 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
   if (IS_PC(ch))
     skl_lvl = GET_CHAR_SKILL(ch, SKILL_KI_STRIKE);
   else
-    skl_lvl = MAX(100, GET_LEVEL(ch) * 2);
+    skl_lvl = BOUNDED(10, GET_LEVEL(ch) * 1.5, 100);
 
   if (argument)
     one_argument(argument, name);
@@ -1213,18 +1177,14 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
     send_to_char("You hum to yourself.\r\n", ch);
     return;
   }
-  if (!affect_timer(ch,
-        WAIT_SEC * get_property("timer.secs.monkKistrike", 45),
-        SKILL_KI_STRIKE))
+  if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkKistrike", 90), SKILL_KI_STRIKE))
   {
-    send_to_char("Yer not in proper mood for that right now!\r\n", ch);
+    send_to_char("You're not in proper mood for that right now!\r\n", ch);
     return;
   }
   if (CHAR_IN_SAFE_ZONE(ch))
   {
-    send_to_char
-      ("You feel ashamed to try to disrupt the tranquility of this place.\r\n",
-       ch);
+    send_to_char("You feel ashamed to try to disrupt the tranquility of this place.\r\n", ch);
     return;
   }
   if ((IS_SET(world[ch->in_room].room_flags, SINGLE_FILE)) &&
@@ -1252,12 +1212,9 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
       set_fighting(ch, vict);
   {
     appear(ch);
-    act("&+BYou swiftly strike at $N&+B, delivering a quick, decisive blow to a pressure point!&n",
-      FALSE, ch, 0, vict, TO_CHAR);
-    act("&+B$n&+B lunges at $N&+B striking $S chest, leaving $M slightly dazed!&n",
-      FALSE, ch, 0, vict, TO_NOTVICT);
-    act("&+B$n&+B lunges at you, and before you can react, you feel somewhat dazed!&n",
-       FALSE, ch, 0, vict, TO_VICT);
+    act("&+BYou swiftly strike at $N&+B, delivering a quick blow to a pressure point!", FALSE, ch, 0, vict, TO_CHAR);
+    act("&+B$n&+B lunges at $N&+B striking $S chest, leaving $M dazed!", FALSE, ch, 0, vict, TO_NOTVICT);
+    act("&+B$n&+B lunges at you, and before you can react, you feel somewhat dazed!", FALSE, ch, 0, vict, TO_VICT);
     CharWait(vict, (int) (1.5 * PULSE_VIOLENCE));
     if (!char_in_list(ch))
       return;
@@ -1276,16 +1233,13 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
     !IS_GREATER_RACE(vict) &&
     !IS_ELITE(vict))
   {
-      act("&+bYour attack on $N&+b's pressure point is particularly devastating!&n",
-        FALSE, ch, 0, vict, TO_CHAR);
-      act("&+b$n&+b's attack strikes hard, and you feel yourself slloooowwwww down!&n",
-        FALSE, ch, 0, vict, TO_VICT);
-      act("&+b$N&+b begins to move MUCH more sluggishly!&n",
-        FALSE, ch, 0, vict, TO_NOTVICT);
+      act("&+bYour attack on $N&+b's pressure point is particularly devastating!", FALSE, ch, 0, vict, TO_CHAR);
+      act("&+b$n&+b's attack strikes hard, and you feel yourself slloooowwwww down!", FALSE, ch, 0, vict, TO_VICT);
+      act("&+b$N&+b begins to move MUCH more sluggishly!", FALSE, ch, 0, vict, TO_NOTVICT);
       struct affected_type af;
       memset(&af, 0, sizeof(af));
       af.type = SKILL_KI_STRIKE;
-      af.duration =  1;
+      af.duration = 1;
       af.bitvector2 = AFF2_SLOW;
       affect_to_char(vict, &af);
 
@@ -1300,9 +1254,7 @@ void chant_regenerate(P_char ch, char *argument, int cmd)
 
   if (!GET_CHAR_SKILL(ch, SKILL_REGENERATE))
   {
-    send_to_char
-      ("Your control over the body is not sufficient to attempt such sophisticated technique.\r\n",
-       ch);
+    send_to_char("Your control over the body is not sufficient to attempt such sophisticated technique.\r\n", ch);
     return;
   }
 
@@ -1312,11 +1264,9 @@ void chant_regenerate(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if (!affect_timer(ch,
-        WAIT_SEC * get_property("timer.secs.monkRegenerate", 120),
-        SKILL_REGENERATE))
+  if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkRegenerate", 180), SKILL_REGENERATE))
   {
-    send_to_char("Yer not in proper mood for that right now!\r\n", ch);
+    send_to_char("You're not in proper mood for that right now!\r\n", ch);
     return;
   }
 
@@ -1339,9 +1289,9 @@ void chant_regenerate(P_char ch, char *argument, int cmd)
   send_to_char("You feel your body healing faster.\r\n", ch);
   bzero(&af, sizeof(af));
   af.type = SPELL_REGENERATION;
-  af.duration = GET_LEVEL(ch) / 2;
+  af.duration = 4;
   af.location = APPLY_HIT_REG;
-  af.modifier = GET_CHAR_SKILL(ch, SKILL_REGENERATE);
+  af.modifier = GET_CHAR_SKILL(ch, SKILL_REGENERATE) / 4; // 7/notch, 3+ at full skill - Jexni 3/19/12
   affect_to_char(ch, &af);
 
   CharWait(ch, PULSE_VIOLENCE);
@@ -1357,11 +1307,9 @@ void chant_tiger_palm(P_char ch, char *arg, int cmd)
     return;
   }
 
- if (!affect_timer(ch,
-       WAIT_SEC * get_property("timer.secs.monkTigerPalm", 30),
-       SKILL_FIST_OF_DRAGON))
+ if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkTigerPalm", 90), SKILL_FIST_OF_DRAGON))
   {
-    send_to_char("Yer not in proper mood for that right now!\r\n", ch);
+    send_to_char("You're not in proper mood for that right now!\r\n", ch);
     return;
   }
 
@@ -1373,10 +1321,8 @@ void chant_tiger_palm(P_char ch, char *arg, int cmd)
   }
 
   set_short_affected_by(ch, SKILL_TIGER_PALM, WAIT_SEC * (BOUNDED(4, (GET_CHAR_SKILL(ch, SKILL_TIGER_PALM) / 2), 55)));
-  send_to_char
-     ("&+rYou invoke the power of the tiger palm concentration.\r\n"
-     , ch);
-  act("&+r$n&+r's concentration grows as $e summons $s inner chi-powers.&n", FALSE, ch, 0, 0, TO_ROOM);
+  send_to_char("&+rYou invoke the power of the tiger palm concentration.\r\n", ch);
+  act("&+r$n&+r's concentration grows as $e summons $s inner chi-powers.", FALSE, ch, 0, 0, TO_ROOM);
 }
 
 void chant_fist_of_dragon(P_char ch, char *arg, int cmd)
@@ -1389,11 +1335,9 @@ void chant_fist_of_dragon(P_char ch, char *arg, int cmd)
     return;
   }
 
- if (!affect_timer(ch,
-       WAIT_SEC * get_property("timer.secs.monkFistOfDragon", 30),
-       SKILL_FIST_OF_DRAGON))
+ if (!affect_timer(ch, WAIT_SEC * get_property("timer.secs.monkFistOfDragon", 90), SKILL_FIST_OF_DRAGON))
   {
-    send_to_char("Yer not in proper mood for that right now!\r\n", ch);
+    send_to_char("You're not in proper mood for that right now!\r\n", ch);
     return;
   }
 
@@ -1405,10 +1349,8 @@ void chant_fist_of_dragon(P_char ch, char *arg, int cmd)
   }
 
   set_short_affected_by(ch, SKILL_FIST_OF_DRAGON, WAIT_SEC * (BOUNDED(4, (GET_CHAR_SKILL(ch, SKILL_FIST_OF_DRAGON) / 2), 55)));
-  send_to_char
-     ("&+rThe strength of the &+Rred dragon &+rflows strong in your veins.\r\n"
-     , ch);
-  act("&+r$n&+r's hands harden as $e summons $s inner chi-powers.&n", FALSE, ch, 0, 0, TO_ROOM);
+  send_to_char("&+rThe strength of the &+Rred dragon &+rflows strong in your veins.\r\n", ch);
+  act("&+r$n&+r's hands harden as $e summons $s inner chi-powers.", FALSE, ch, 0, 0, TO_ROOM);
 }
 
 
@@ -1589,7 +1531,6 @@ int GetConditionModifier(P_char victim)
   return 0;
 }
 
-
 void do_dragon_punch(P_char ch, char *argument, int cmd)
 {
   P_char   vict = NULL;
@@ -1618,6 +1559,7 @@ void do_dragon_punch(P_char ch, char *argument, int cmd)
       send_to_char("A true martial artist would know his opponent for certain before striking.\r\n", ch);
       return;
   }
+
   if (!CanDoFightMove(ch, vict))
     return;
 
@@ -1628,21 +1570,21 @@ void do_dragon_punch(P_char ch, char *argument, int cmd)
     return;
   }
 
+  if(IS_NPC(ch))
+    skl_lvl = BOUNDED(10, GET_LEVEL(ch) * 1.5, 100);
+
   skl_lvl = BOUNDED(0, skl_lvl + GetConditionModifier(vict), 100);
 
   dam = dice(GET_LEVEL(ch), 2);
-  dam = dam * MAX(30, skl_lvl) / 100;
+  dam = dam * MAX(10, skl_lvl) / 100;
 
-  notch_skill(ch, SKILL_DRAGON_PUNCH, get_property("skill.notch.offensive", 20));
+  bool dragon_notch = notch_skill(ch, SKILL_DRAGON_PUNCH, get_property("skill.notch.offensive", 20));
 
-  if (!notch_skill(ch, SKILL_DRAGON_PUNCH, get_property("skill.notch.offensive", 20)) &&
-      number(1, 101) > skl_lvl)
+  if (!dragon_notch && number(1, 101) > skl_lvl)
   {
     act("You miss $N with your haymaker!", FALSE, ch, 0, vict, TO_CHAR);
-    act("$n throws a haymaker at you which whistles by your ear!", FALSE, ch,
-        0, vict, TO_VICT);
-    act("$n just misses $N with a strong punch!", FALSE, ch, 0, vict,
-        TO_NOTVICT);
+    act("$n throws a haymaker at you which whistles by your ear!", FALSE, ch, 0, vict, TO_VICT);
+    act("$n just misses $N with a strong punch!", FALSE, ch, 0, vict, TO_NOTVICT);
   }
   else
     melee_damage(ch, vict, dam, PHSDAM_TOUCH, &messages);
@@ -1953,7 +1895,7 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
   
   if(GET_RACE(ch) == RACE_GOBLIN)
   {
-    mount = read_mobile( 39 , VIRTUAL);
+    mount = read_mobile(39, VIRTUAL);
   }
   
   else if(IS_EVIL(ch) &&
@@ -1983,8 +1925,7 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
     char_to_room(mount, ch->in_room, -2);
 
     act("$N answers your summons!", TRUE, ch, 0, mount, TO_CHAR);
-    act("$N walks in, seemingly from nowhere, and nuzzles $n's face.", TRUE, ch,
-        0, mount, TO_ROOM);
+    act("$N walks in, seemingly from nowhere, and nuzzles $n's face.", FALSE, ch, 0, mount, TO_ROOM);
     setup_pet(mount, ch, -1, PET_NOCASH);
     add_follower(mount, ch);
     if(GET_LEVEL(ch) > 50 ||
@@ -1994,10 +1935,9 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
       SET_BIT(mount->specials.affected_by, AFF_FLY);
     }
 
-    // Made all ap and paladin mounts more resistant. Nov08 -Lucrot
     if(GET_CLASS(ch, CLASS_ANTIPALADIN | CLASS_PALADIN))
-    { // Tweaked AC from level * 3 to level * 6 Nov08 -Lucrot
-      mount->points.base_armor = 0 - GET_LEVEL(ch) * 5; 
+    { 
+      mount->points.base_armor = calculate_ac(mount, FALSE) + GET_LEVEL(ch); 
       if(GET_LEVEL(ch) > 45)
       {
         SET_BIT(mount->specials.affected_by, AFF_PROT_FIRE);
@@ -2016,69 +1956,46 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
       }
     }
 
-    if(GET_LEVEL(ch) > 50 && 
-      GET_SPEC(ch, CLASS_PALADIN, SPEC_CAVALIER))
-    { // Holy sacrifice affect does not help much. Nov08 -Lucrot
-      SET_BIT(mount->specials.affected_by4, AFF4_HOLY_SACRIFICE);
-      // Added. Nov08 -Lucrot
-      SET_BIT(mount->specials.affected_by4, AFF4_REGENERATION);
-      
-      if(GET_LEVEL(ch) > 53)
-      { // Added. Nov08 -Lucrot
-        SET_BIT(mount->specials.affected_by, AFF_HASTE);
+    if(GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_DEMONIC) ||
+       GET_SPEC(ch, CLASS_PALADIN, SPEC_CAVALIER))
+    {
+      if(GET_LEVEL(ch) > 50)
+      {
+        SET_BIT(mount->specials.affected_by4, AFF4_BATTLE_ECSTASY);
       }
-    }
-
-    if(GET_LEVEL(ch) > 50 &&
-      GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_DEMONIC))
-    { // Battle X is excellent. Nov08 -Lucrot
-      SET_BIT(mount->specials.affected_by4, AFF4_BATTLE_ECSTASY);
+      if(GET_LEVEL(ch) > 55)
+      {
+        SET_BIT(mount->specials.affected_by4, AFF4_REGENERATION);
+      }
     }
 
     if(GET_LEVEL(ch) > 50 &&  // For all paladin and ap mounts. Nov08 -Lucrot
       GET_CLASS(ch, CLASS_ANTIPALADIN | CLASS_PALADIN))
-    {// Added. Nov08 -Lucrot
+    {
       SET_BIT(mount->specials.affected_by4, AFF4_NOFEAR);
      
       if(GET_LEVEL(ch) > 51)
-      {// Added. Nov08 -Lucrot
+      {
         SET_BIT(mount->specials.affected_by5, AFF5_NOBLIND);
       }
       
       if(GET_LEVEL(ch) > 52)
-      {// Added. Nov08 -Lucrot
+      {
         SET_BIT(mount->specials.act, ACT_IMMUNE_TO_PARA);
       }
     }
-
-    /*
-       now we modify the base mount, based on paladin's level and alignment
-     */
-
-    /*
-       factor ranges from 0 to 25 (unlucky 351 align level 15 to lucky 1000 align
-       level 50)
-     */
-  // Alignment adjusted only affect paladins. Making these modifiers
-  // standard for both classes. Nov08 -Lucrot
-  // align = GET_ALIGNMENT(ch) / 200;
-  // if (IS_EVIL(ch))
-    // align = -align;
  
     // Level 30 mount factor average = 22.5 based on 0.750 mod.
     // Level 56 mount factor average = 42 based on 0.750 mod. Nov08 -Lucrot
-    factor = (int) (GET_LEVEL(ch) * get_property("mount.summoned.FactorMod", 0.750) +
-      number(-5, 5));
-    mount->base_stats.Str = BOUNDED(75, mount->base_stats.Str, 75 + factor);
-    mount->base_stats.Agi = BOUNDED(75, mount->base_stats.Agi, 75 + factor);
-    mount->base_stats.Con = BOUNDED(75, mount->base_stats.Con, 75 + factor);
-    mount->base_stats.Cha = 100;
-    mount->player.level = 10 + factor;
-    mount->points.base_hit = (factor * 50);
-    GET_HIT(mount) = (factor * 50);
-    GET_MAX_HIT(mount) = (factor * 50);
+    factor = (int) (GET_LEVEL(ch) * get_property("mount.summoned.FactorMod", 0.750));
+    mount->base_stats.Str = number(75, 75 + factor);
+    mount->base_stats.Agi = number(75, 75 + factor);
+    mount->base_stats.Con = number(75, 75 + factor);
+    mount->base_stats.Cha = number(75, 75 + factor);
+    mount->player.level = GET_LEVEL(ch);
+    mount->points.base_hit = GET_HIT(mount) = GET_MAX_HIT(mount) = number(factor * 50, factor * 75);
+    mount->points.base_vitality = GET_VITALITY(mount) = GET_MAX_VITALITY(mount) = number(GET_LEVEL(ch) * 2, GET_LEVEL(ch) * 4); 
     mount->player.m_class = CLASS_NONE;
-    MonkSetSpecialDie(mount);
     SET_BIT(mount->specials.act, ACT_MOUNT);
     
     if(IS_SET(mount->specials.act, ACT_MEMORY))
@@ -2091,7 +2008,6 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
   }
   send_to_char("A mount didn't load. Please report this with the bug command.\r\n", ch);
   return;
-
 }
 
 void do_summon_mount(P_char ch, char *arg, int cmd)
@@ -2103,7 +2019,6 @@ void do_summon_mount(P_char ch, char *arg, int cmd)
      !IS_ALIVE(ch))
         return;
         
-
   for (fol = ch->followers; fol; fol = fol->next)
     if (IS_NPC(fol->follower) &&
         IS_SET(fol->follower->specials.act, ACT_MOUNT))
@@ -3721,7 +3636,7 @@ void chant_chi_purge(int level, P_char ch, char *arg, int type,
         WAIT_SEC * get_property("timer.secs.monkChipurge", 25),
         SKILL_CHI_PURGE))
   {
-    send_to_char("Yer not in proper mood for that right now!\r\n", ch);
+    send_to_char("You're not in proper mood for that right now!\r\n", ch);
     return;
   }
 

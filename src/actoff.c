@@ -2458,8 +2458,8 @@ void do_flee(P_char ch, char *argument, int cmd)
   char     amsg[512];
   int      available_exits, stun_chance_flee;
   int      chance_when_engaged, succeded;
-  int      percent_chance, minflee = MIN_FLEE_CHANCE;
-  int      tmp_mv, maxflee = MAX_FLEE_CHANCE;
+  int      percent_chance, minflee;
+  int      tmp_mv, maxflee;
   bool expeditious = false;
   P_char   rider = get_linking_char(ch, LNK_RIDING);
   P_char   mount = get_linked_char(ch, LNK_RIDING);
@@ -2498,17 +2498,13 @@ void do_flee(P_char ch, char *argument, int cmd)
       FALSE, ch, 0, 0, TO_CHAR);
     
     if(IS_HUMANOID(ch))
-      act("$n &+yseems to be trying to shake off $s woozy feeling.&n", FALSE, ch, 0, 0, TO_ROOM);
+      act("$n &+yseems to be trying to shake off $s woozy feeling.", FALSE, ch, 0, 0, TO_ROOM);
     else if(GET_RACE(ch) == RACE_QUADRUPED)
-      act("$n &+ysnorts and kicks&n at the ground for balance.&n", FALSE, ch, 0, 0, TO_ROOM);
+      act("$n &+ysnorts and kicks&n at the ground for balance.", FALSE, ch, 0, 0, TO_ROOM);
     else
-      act("$n appears &+Gunbalanced&n and unable to react quickly!&n", FALSE, ch, 0, 0, TO_ROOM);
-        
-    stun_chance_flee = 0;
+      act("$n appears &+Gunbalanced&n and unable to react quickly!", FALSE, ch, 0, 0, TO_ROOM);
     
-    stun_chance_flee += (int) (GET_C_WIS(ch) / 10); // 100 wis 10%
-
-    stun_chance_flee += (int) (GET_LEVEL(ch) / 4); // level 50 12%
+    stun_chance_flee = (GET_LEVEL(ch) / 4) + (GET_C_LUCK(ch) / 12);
     
     if(number(1, 100) > stun_chance_flee)
       return;
@@ -2627,8 +2623,9 @@ void do_flee(P_char ch, char *argument, int cmd)
   was_fighting = ch->specials.fighting;
   atts = NumAttackers(ch);
 
-  chance_when_engaged = minflee + MIN(3, available_exits - 1) * (maxflee - minflee) / 3;
-
+  minflee = get_property("flee.minimum.chance.single.exit", 40);
+  maxflee = get_property("flee.maximum.chance.four.exit", 85);
+  chance_when_engaged = minflee + (available_exits * get_property("flee.chance.step", 15)) - (atts * 5);
   succeded = attempted_dir >= 0 && (!was_fighting || (number(0, 100) < chance_when_engaged));
 
   if(IS_AFFECTED(ch, AFF_SNEAK))
@@ -3364,10 +3361,7 @@ bool kick(P_char ch, P_char victim)
       return false;
     }
     
-    dam = GET_LEVEL(ch) + (IS_NPC(ch) ? GET_LEVEL(ch) / 3 : GET_CHAR_SKILL(ch, SKILL_KICK));
-
-    // Randomize damage a bit. Jan08 -Lucrot
-    dam = number( (int) (dam/2), dam );
+    dam = BOUNDED(10, (GET_LEVEL(ch) + number(5, 10)) * (GET_CHAR_SKILL(ch, SKILL_KICK) / 100), 75);
 
     CharWait(ch, PULSE_VIOLENCE * 2);
 
@@ -3415,13 +3409,6 @@ bool kick(P_char ch, P_char victim)
     {
       return true;
     }
-    
-    if(IS_NPC(ch) &&
-      !GET_MASTER(ch))
-    {
-      takedown_chance = (int) (takedown_chance * 1.2);
-    }
-
     takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK,
                                      APPLY_ALL ^ AGI_CHECK ^ FOOTING);
 
@@ -3632,19 +3619,9 @@ int chance_roundkick(P_char ch, P_char victim)
     return 0;
   }
 
-  percent_chance = (int) (1 * GET_CHAR_SKILL(ch, SKILL_ROUNDKICK));
-
-  percent_chance =
-    (int) (percent_chance *
-           ((double)
-            BOUNDED(6, 10 + (GET_LEVEL(ch) - GET_LEVEL(victim)) / 10,
-                    15)) / 10);
-
-  /* agility is the prime stat of the monk */
-  percent_chance =
-   (int) (percent_chance *
-   ((double)
-   BOUNDED(20, 100 + (int) (1.5 * (GET_C_DEX(ch) - GET_C_AGI(victim))), 150)) / 100);
+  percent_chance = GET_CHAR_SKILL(ch, SKILL_ROUNDKICK) / 2;
+  percent_chance += GET_LEVEL(ch) - GET_LEVEL(victim);
+  percent_chance += GET_C_DEX(ch) - GET_C_AGI(victim);
 
   if(GET_C_LUCK(ch) / 10 > number(0, 10))
   {
@@ -3662,11 +3639,9 @@ int chance_roundkick(P_char ch, P_char victim)
     percent_chance = (int) (percent_chance * 0.75);
   }
   
-  percent_chance =
-    takedown_check(ch, victim, percent_chance, SKILL_ROUNDKICK, APPLY_ALL);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_ROUNDKICK, APPLY_ALL);
 
   return (int) percent_chance;
-
 }
 
 bool roundkick(P_char ch, P_char victim)
@@ -3714,9 +3689,7 @@ bool roundkick(P_char ch, P_char victim)
     return FALSE;
   }
   
-  dam = GET_C_DEX(ch) +
-         GET_CHAR_SKILL(ch, SKILL_ROUNDKICK) -
-         GET_C_AGI(victim);
+  dam = (GET_LEVEL(ch) + number(10, 20)) * (GET_CHAR_SKILL(ch, SKILL_ROUNDKICK) / 100);
 
   if(!notch_skill(ch, SKILL_ROUNDKICK,
       get_property("skill.notch.offensive", 25)) &&
@@ -4139,10 +4112,10 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     affect_to_char(ch, &af);
     CharWait(ch, PULSE_VIOLENCE * 2);
 
-    if(melee_damage(victim, ch, dam, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, 0) != DAM_NONEDEAD)
+    if(melee_damage(victim, ch, dam / 4, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, 0) != DAM_NONEDEAD)
       return;
 
-    if(melee_damage(ch, victim, dam / 3, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, &fail_messages) != DAM_NONEDEAD)
+    if(melee_damage(ch, victim, dam / 12, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, &fail_messages) != DAM_NONEDEAD)
       return;
     
     if(!number(0, 20 - GET_LEVEL(ch)))
@@ -4160,16 +4133,16 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     affect_to_char(ch, &af);
     CharWait(ch, PULSE_VIOLENCE * 1.5);
 
-    if(melee_damage(victim, ch, dam / 2, PHSDAM_NOPOSITION, 0) != DAM_NONEDEAD)
+    if(melee_damage(victim, ch, dam / 8, PHSDAM_NOPOSITION, 0) != DAM_NONEDEAD)
       return;
 
-    if(melee_damage(ch, victim, dam / 2, PHSDAM_NOPOSITION, &fail_messages) != DAM_NONEDEAD)
+    if(melee_damage(ch, victim, dam / 8, PHSDAM_NOPOSITION, &fail_messages) != DAM_NONEDEAD)
       return;
   }
   else
   {
     // success!
-    dam = ((GET_LEVEL(ch) * (number(-5, 25))/51 + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT)));
+    dam = ((GET_LEVEL(ch) * (number(-5, 25))/51 + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT))) / 4;
 
     if (GET_RACE(ch) == RACE_MINOTAUR)
     {
@@ -4257,7 +4230,6 @@ void event_sneaky_strike(P_char ch, P_char victim, P_obj obj, void *data)
     "Before you can react $n suddenly leaps at you, getting past all your defenses.",
     "$n finishes $N off with a sudden surprise attack!", 0, 0
   };
-
 
   affect_from_char(ch, SKILL_SNEAKY_STRIKE);
 
@@ -4389,8 +4361,9 @@ void do_sneaky_strike(P_char ch, char *argument, int cmd)
    they end up in different rooms */
 bool single_stab(P_char ch, P_char victim, P_obj weapon)
 {
-  int room = ch->in_room, skill, dice_mult, dam = 0;
-  float dice_mod, level_mult, final_mult, damroll_mult, strdex_mod, spinal_tap, critical_stab, critical_stab_mult;
+  int room = ch->in_room, skill, lvl = GET_LEVEL(ch);
+  float dam = 0, critical_stab, critical_stab_mult;
+  float dice_mod, final_mult, damroll_mult, strdex_mod, spinal_tap;
   bool spinal = FALSE;
   struct damage_messages messages = {
     "$N makes a strange sound as you place $p in $S back.",
@@ -4408,36 +4381,31 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
   dice_mod = get_property("backstab.diceMultiplier", 1.000);
   final_mult = get_property("backstab.finalMultiplier", 1.000);
   damroll_mult = get_property("backstab.DamrollMultiplier", 0.500); 
-  strdex_mod = get_property("backstab.StrDexMultiplier", 0.500); 
+  strdex_mod = get_property("backstab.StrDexMultiplier", 0.500);
 
-  dam = (int) GET_DAMROLL(ch) * damroll_mult;
-  dam += (GET_C_DEX(ch) + GET_C_STR(ch)) * strdex_mod; 
-  dam = (int) dam * (skill / 100);
-  dice_mult = (int) (weapon->value[1] + (weapon->value[2] / 2)) / 2;
-  dice_mult += weapon->value[1] + (weapon->value[1] / 2);
-  level_mult = (float) GET_LEVEL(ch) / 56;
-  dam = (int) dam * (dice_mult * dice_mod);
-  dam = (int) dam * level_mult;
-  dam = (int) dam * final_mult;
+  dam = dice(weapon->value[1], weapon->value[2]) * (float)dice_mod;
+  dam += GET_DAMROLL(ch) * (float) damroll_mult;
+  dam += (GET_C_STR(ch) + GET_C_DEX(ch)) * (float)strdex_mod;
+  dam = dam * (float) (GET_LEVEL(ch) / 50);
+  dam = dam * (float) final_mult;
 
   if(IS_IMMOBILE(victim) ||
      GET_STAT(victim) <= STAT_SLEEPING)
-      dam = MAX(80, dam);
+      dam = MAX(lvl * 2, dam);
   
-  spinal_tap = get_property("backstab.SpinalTap", 0.150);
-  critical_stab = get_property("backstab.CriticalStab", 0.200);
+  spinal_tap = get_property("backstab.SpinalTap.chance", 0.150);
+  critical_stab = get_property("backstab.CriticalStab.chance", 0.200);
   critical_stab_mult = get_property("backstab.CriticalStab.Multiplier", 1.000);
  
-  if(GET_STAT(victim) <= STAT_INCAP ||
+  if(GET_STAT(victim) <= STAT_INCAP &&
      GET_STAT(victim) >= STAT_DYING)
-     dam = MAX(200, dam);
+     dam = MAX(20, dam);
  
   if(GET_CHAR_SKILL(ch, SKILL_SPINAL_TAP) &&
     (notch_skill(ch, SKILL_SPINAL_TAP, get_property("skill.notch.offensive", 20)) ||
-    (spinal_tap * GET_CHAR_SKILL(ch, SKILL_SPINAL_TAP)) > number(1, 100)))
+    ((float)spinal_tap * GET_CHAR_SKILL(ch, SKILL_SPINAL_TAP)) > number(1, 100)))
   {
-    if(melee_damage
-      (ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages) ||
+    if(melee_damage(ch, victim, dam * 0.8, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages) ||
       !is_char_in_room(ch, room))
           return TRUE;
     
@@ -4447,19 +4415,15 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
          (notch_skill(ch, SKILL_CRITICAL_STAB, get_property("skill.notch.offensive", 25)) ||
          (critical_stab * GET_CHAR_SKILL(ch, SKILL_CRITICAL_STAB)) > number(1, 100)))
   {
-    dam = dam + (dam * critical_stab_mult);
+    dam = dam + (dam * (float)critical_stab_mult);
     
-    if(melee_damage
-      (ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages) ||
+    if(melee_damage(ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages) ||
       !is_char_in_room(ch, room))
           return TRUE;
     
-    act("You twist the blade and watch as a $N writhes in agony.",
-      FALSE, ch, 0, victim, TO_CHAR);
-    act("$n twists the blade lodged in your back causing you to writhe in agony.",
-       FALSE, ch, 0, victim, TO_VICT);
-    act("$n twists the blade causing $N to writhe in agony,",
-      FALSE, ch, 0, victim, TO_NOTVICTROOM);
+    act("You twist the blade and watch as a $N writhes in agony.", FALSE, ch, 0, victim, TO_CHAR);
+    act("$n twists the blade lodged in your back causing you to writhe in agony.", FALSE, ch, 0, victim, TO_VICT);
+    act("$n twists the blade causing $N to writhe in agony,", FALSE, ch, 0, victim, TO_NOTVICTROOM);
   }
   else if(melee_damage(ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages) || 
           !is_char_in_room(ch, room))
@@ -4467,15 +4431,14 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
 
   if(spinal)
   {
-    act("With a swift tug you wrench the weapon free, ramming it into $N's spine!.",
-       FALSE, ch, 0, victim, TO_CHAR);
-    act("With a swift tug $n wrenches the weapon free, ramming it into you again.",
-       FALSE, ch, 0, victim, TO_VICT);
-    act("With a swift tug $n wrenches the weapon free, ramming it into $N's spine!",
-       FALSE, ch, 0, victim, TO_NOTVICTROOM);
+    act("With a swift tug you wrench $p free...\n"
+        "...and then ram it back into $N's spine!.", FALSE, ch, 0, victim, TO_CHAR);
+    act("With a swift tug $n wrenches the $p free...\n"
+        "...and rams it into your spine once more!", FALSE, ch, 0, victim, TO_VICT);
+    act("With a swift tug $n wrenches $p free...\n"
+        "...and rams it into $N's spine again!", FALSE, ch, 0, victim, TO_NOTVICTROOM);
     
-    if(melee_damage
-        (ch, victim, number(-12, 12) + GET_LEVEL(ch), PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages)
+    if(melee_damage(ch, victim, number(-12, 12) + lvl, PHSDAM_NOREDUCE | PHSDAM_NOPOSITION, &messages)
         || !char_in_list(ch))
       return TRUE;
     
@@ -4488,9 +4451,9 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
   if(weapon->value[4])
   {
     if(IS_POISON(weapon->value[4]))
-      (skills[weapon->value[4]].spell_pointer) (10, ch, 0, 0, victim, 0);
+      (skills[weapon->value[4]].spell_pointer) (lvl, ch, 0, 0, victim, 0);
     else
-      poison_lifeleak(10, ch, 0, 0, victim, 0);
+      poison_lifeleak(lvl, ch, 0, 0, victim, 0);
     
     weapon->value[4] = 0;       /* remove on success */
   }
@@ -5048,8 +5011,7 @@ void bash(P_char ch, P_char victim)
   
   if(affected_by_spell(ch, SKILL_BASH))
   {
-    send_to_char
-      ("You haven't reoriented yourself yet enough for another bash!\n", ch);
+    send_to_char("You haven't reoriented yourself yet enough for another bash!\n", ch);
     return;
   }
 
@@ -5086,36 +5048,41 @@ void bash(P_char ch, P_char victim)
     return;
   }
   
+  if(IS_AFFECTED(victim, AFF_WRAITHFORM))
+  {
+    send_to_char("You have no mass to bash with!", ch);
+    return;
+  }
+
   appear(ch);
   
   victim = guard_check(ch, victim);
-
   vict_size = get_takedown_size(victim);
   ch_size = get_takedown_size(ch);
 
-/* lets make it a bit trickier to bash an ogre unless you're bigger
-   Lets comment this out for the wipe since they're huge again -Zion 12/24/07
-if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
-{
-  if(number(0, 20) && (GET_POS(victim) == POS_STANDING))
+
+  if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
   {
-     act("$n makes an attempt to bash $N, but merely knocks $E slightly off balance...", FALSE, ch, 0, victim, TO_NOTVICT);
-     act("$n makes an attempt to bash you, but merely causes you to momentarily to lose footing...", FALSE, ch, 0, victim, TO_VICT);
-     act("You attempt to bash $N, but you merely knock them off balance...", FALSE, ch, 0, victim, TO_CHAR);
-  SET_POS(victim, POS_SITTING + GET_STAT(victim));
-  set_short_affected_by(ch, SKILL_BASH, (int) (2.8 * PULSE_VIOLENCE));
-  engage(ch, victim);
-  return;
+    if(number(0, 10) && (GET_POS(victim) == POS_STANDING))
+    {
+       act("$n makes an attempt to bash $N, but merely knocks $E slightly off balance...", FALSE, ch, 0, victim, TO_NOTVICT);
+       act("$n makes an attempt to bash you, but merely causes you to momentarily to lose footing...", FALSE, ch, 0, victim, TO_VICT);
+       act("You attempt to bash $N, but you merely knock them off balance...", FALSE, ch, 0, victim, TO_CHAR);
+       SET_POS(victim, POS_SITTING + GET_STAT(victim));
+       set_short_affected_by(ch, SKILL_BASH, (int) (2.8 * PULSE_VIOLENCE));
+       engage(ch, victim);
+       return;
+    }
+    else if(GET_POS(victim) == POS_STANDING)
+    {
+       act("$n makes a futile attempt to bash $N, but $E is simply immovable.", FALSE, ch, 0, victim, TO_NOTVICT);
+       act("$n makes a futile attempt to bash you, but you are simply immovable.", FALSE, ch, 0, victim, TO_VICT);
+       act("You attempt to bash $N, but $E is simply too huge for you to move!", FALSE, ch, 0, victim, TO_CHAR);
+       SET_POS(ch, POS_SITTING + GET_STAT(ch));
+       return;
+    }
   }
-  else if(GET_POS(victim) == POS_STANDING)
-  {
-    act("$n makes a futile attempt to bash $N, but $E is simply immovable.", FALSE, ch, 0, victim, TO_NOTVICT);
-    act("$n makes a futile attempt to bash you, but you are simply immovable.", FALSE, ch, 0, victim, TO_VICT);
-    act("You attempt to bash $N, but $E is simply too huge for you to move!", FALSE, ch, 0, victim, TO_CHAR);
-  SET_POS(ch, POS_SITTING + GET_STAT(ch));
-  return;
-  }
-}*/
+
   /* you must be size more than size down or same size of centaur/drider to try bashing */
   if(ch_size < vict_size - 1 ||
      ((has_innate(victim, INNATE_HORSE_BODY) ||
@@ -5223,11 +5190,8 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     return;
   }
 
-  percent_chance =
-    (int) (percent_chance *
-           ((GET_POS(victim) == POS_PRONE) ? 0.10 :
-           (GET_POS(victim) != POS_STANDING) ? 0.20 :
-           1));
+  percent_chance = 
+     (int) (percent_chance * ((GET_POS(victim) == POS_PRONE) ? 0.10 : (GET_POS(victim) != POS_STANDING) ? 0.20 : 1));
   
   if(!IS_PC_PET(ch))
   {
@@ -5235,7 +5199,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
   }
   else
   {
-    percent_chance -= 10;
+    percent_chance -= 20;
   }
 
   /*
@@ -5249,15 +5213,11 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     percent_chance = (int) (percent_chance * 0.7);
   }
 
-  percent_chance =
-    (int) (percent_chance *
-           ((double)
-            BOUNDED(8, 10 + (GET_LEVEL(ch) - GET_LEVEL(victim)) / 10,
-                    11)) / 10);
+  percent_chance += GET_LEVEL(ch) - GET_LEVEL(victim);
 
   if(IS_THRIKREEN(ch))
   {
-    percent_chance = (int) (percent_chance * 0.70);
+    percent_chance = (int) (percent_chance * 0.80);
   }
 
   bool bigger_victim = false;
@@ -5272,7 +5232,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
 
   if(bigger_victim)
   {
-    percent_chance = (int) (percent_chance * 0.70);
+    percent_chance = (int) (percent_chance * 0.80);
   }
 
   if(IS_AFFECTED(victim, AFF_AWARE))
@@ -5280,9 +5240,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     percent_chance = (int) (percent_chance * 0.93);
   }
 
-  percent_chance =
-    takedown_check(ch, victim, percent_chance, SKILL_BASH,
-                   APPLY_ALL ^ VICTIM_BACK_RANK);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_BASH, APPLY_ALL ^ VICTIM_BACK_RANK);
 
   if(percent_chance == TAKEDOWN_CANCELLED)
   {
@@ -5384,23 +5342,18 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     
     if(melee_damage(ch, victim, MAX(1, dmg), PHSDAM_TOUCH, 0) == DAM_NONEDEAD)
     {
-      act("Your bash knocks $N to the ground!",
-        FALSE, ch, 0, victim, TO_CHAR);
+      act("Your bash knocks $N to the ground!", FALSE, ch, 0, victim, TO_CHAR);
       
       if(!LEGLESS(ch))
       {
-        act("You are knocked to the ground by $n's mighty bash!",
-          FALSE, ch, 0, victim, TO_VICT);
-        act("$N is knocked to the ground by $n's mighty bash!",
-          FALSE, ch, 0, victim, TO_NOTVICT);
+        act("You are knocked to the ground by $n's mighty bash!", FALSE, ch, 0, victim, TO_VICT);
+        act("$N is knocked to the ground by $n's mighty bash!", FALSE, ch, 0, victim, TO_NOTVICT);
         set_short_affected_by(ch, SKILL_BASH, (int) (2.8 * PULSE_VIOLENCE));
       }
       else
       {
-        act("$n's mass &+rslams&n into you, knocking you to the &+yground!&n",
-          FALSE, ch, 0, victim, TO_VICT);
-        act("$n's mass &+rslams&n into $N, knocking $M to the &+yground!&n",
-          FALSE, ch, 0, victim, TO_NOTVICT);
+        act("$n's mass &+rslams&n into you, knocking you to the &+yground!&n", FALSE, ch, 0, victim, TO_VICT);
+        act("$n's mass &+rslams&n into $N, knocking $M to the &+yground!&n", FALSE, ch, 0, victim, TO_NOTVICT);
         set_short_affected_by(ch, SKILL_BASH, (int) (1.5 * PULSE_VIOLENCE));
       }
       
@@ -7117,10 +7070,7 @@ void do_rearkick(P_char ch, char *argument, int cmd)
   // dam = GET_CHAR_SKILL(ch, SKILL_KICK) +
     // (int) (1.6 * number(1, GET_CHAR_SKILL(ch, SKILL_KICK)));
     
-  dam = (int)(MAX((int) (GET_C_STR(ch) / 2),
-              GET_CHAR_SKILL(ch, SKILL_KICK)) *
-              get_property("skill.rearkick.dam", 2) *
-              GET_LEVEL(ch) / 56);
+  dam = GET_LEVEL(ch) + number(5, 10);
 
   if(vict_size > ch_size + 1)
     dam = dam * 3 / 4;
@@ -7369,7 +7319,7 @@ void do_trample(P_char ch, char *argument, int cmd)
   int      knockdown_chance;
   int      percent_chance;
   int      dam, vict_lag;
-  int      ch_size, vict_size;
+  int      ch_size, vict_size, level;
   bool     is_knight;
   char     buf[512];
   char     name[MAX_INPUT_LENGTH];
@@ -7471,7 +7421,7 @@ void do_trample(P_char ch, char *argument, int cmd)
   }
   
   victim = guard_check(ch, victim);
-
+  level = GET_LEVEL(ch);
   is_knight = has_innate(ch, INNATE_KNIGHT);
 
   percent_chance =
@@ -7499,7 +7449,7 @@ void do_trample(P_char ch, char *argument, int cmd)
   vict_size = get_takedown_size(victim);
   ch_size = get_takedown_size(ch);
 
-  dam = 30 + number(1, GET_LEVEL(ch));
+  dam = number(level / 2, level);
 
   if(is_knight)
   {
@@ -8418,16 +8368,13 @@ int flank(P_char ch, P_char victim)
 
   if(affected_by_spell(ch, SKILL_FLANK))
   {
-    send_to_char("You haven't reoriented yet enough for another attempt!\n",
-                 ch);
+    send_to_char("You haven't reoriented yet enough for another attempt!\n", ch);
     return 0;
   }
 
   if(ch == victim)
   {
-    send_to_char
-      ("You turn around a few times chasing your own buttocks and give up eventually.\n",
-       ch);
+    send_to_char("You turn around a few times chasing your own buttocks and give up eventually.\n", ch);
     return FALSE;
   }
 
@@ -8437,9 +8384,8 @@ int flank(P_char ch, P_char victim)
 
   CharWait(ch, PULSE_VIOLENCE * 1);
 
-  if(!notch_skill(ch, SKILL_FLANK,
-                   get_property("skill.notch.offensive", 20)) &&
-      GET_CHAR_SKILL(ch, SKILL_FLANK) < number(0, 100))
+  if(!notch_skill(ch, SKILL_FLANK, get_property("skill.notch.offensive", 20)) &&
+     GET_CHAR_SKILL(ch, SKILL_FLANK) < number(0, 100))
   {
     act("You fail to properly maneuver yourself to attack $N's flank.",
         FALSE, ch, 0, victim, TO_CHAR);
