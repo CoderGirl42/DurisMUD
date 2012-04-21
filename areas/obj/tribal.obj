@@ -5,7 +5,7 @@ staff feathers red~
 ~
 4 50 3 0 7 100 8192 16385 66 0 0
 46 3 3 78 0 0 0 0
-1 12345 100 100
+1 12345 100 0
 E
 staff feathers red~
 &+b  This staff is made from &+Bblue&+b feathers of unknown origin, bound together by
@@ -23,7 +23,7 @@ A piece of &+csmelly&+W white&n meat lies here unregarded.~
 ~
 19 48 3 0 7 0 8916992 16385 0 0 0
 21 0 0 4 0 0 0 0
-1 10 100 100
+1 10 100 0
 E
 worm white piece~
   This smelly piece of white meat comes from one of those big and blind
@@ -38,7 +38,7 @@ A small piece of &+csmelly&+W white&n meat lies here unregarded.~
 ~
 19 48 3 0 7 0 8916992 16385 0 0 0
 10 0 0 1 0 0 0 0
-1 10 100 100
+1 10 100 0
 E
 worm white piece~
   This small smelly piece of white meat comes from one of those big and blind
@@ -71,7 +71,7 @@ A small pile of &+bblue&n feathers lies here, shaped like a nest.~
 ~
 15 50 3 0 7 0 8192 8404993 64 0 0
 75 5 -1 75 0 0 0 0
-1 10000 100 100
+1 10000 100 0
 E
 nest blue feathered~
   &+wThis is a small nest of a &+bbluebird&+w. It is feathered with soft blue feathers.
@@ -85,7 +85,7 @@ acorn potion glowing~
 ~
 10 5 3 0 7 0 594048 16385 0 0 0
 46 1 3 4 0 0 0 0
-0 1000 100 100
+0 1000 100 0
 E
 acorn glowing potion~
 &+G   This is a small &+ggreen&+G acorn, similar to zilions others you've seen in
@@ -102,7 +102,7 @@ coins platinum pile~
 ~
 20 25 3 0 7 0 0 1 0 0 0
 0 0 0 25 0 0 0 0
-50 87000 100 100
+50 87000 100 0
 E
 coins platinum pile~
 A small pile of platinum coins. This pile is small, but for the coins from it
@@ -115,7 +115,7 @@ coins gold pile~
 ~
 20 24 3 0 7 0 0 1 0 0 0
 0 0 100 0 0 0 0 0
-60 43700 100 100
+60 43700 100 0
 E
 coins gold pile~
 This pile of gold coins contains enough gold to buy small army.
@@ -129,7 +129,7 @@ coins silver pile~
 ~
 20 22 3 0 7 0 0 1 0 0 0
 0 500 0 0 0 0 0 0
-70 12710 100 100
+70 12710 100 0
 E
 coins silver pile~
 This glimmering pile of silver coins it's something worthy to have, indeed.
@@ -141,7 +141,7 @@ coins copper pile~
 ~
 20 21 3 0 7 0 0 1 0 0 0
 500 0 0 0 0 0 0 0
-100 3100 100 100
+100 3100 100 0
 E
 coins copper pile~
 This huge pile of copper coins is propably too heavy to carry.
@@ -153,7 +153,7 @@ key yellow bone~
 ~
 18 10 3 0 7 0 8388608 16385 0 0 0
 0 100 0 0 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 key yellow bone~
 A small bone key, dyed yellow by age.
@@ -165,7 +165,7 @@ wand platinum~
 ~
 3 25 3 0 9 0 0 16385 64 4189978625 0
 41 3 3 254 0 0 0 0
-1 231000 100 100
+1 231000 100 0
 E
 wand platinum~
 &+WThis two feet long rod made of pure platinum has has got a single rune carved on
@@ -184,7 +184,7 @@ An old bone covered with some magical runes sits here, humming.~
 ~
 3 10 3 0 3 0 12288 16385 64 4227727361 0
 50 1 1 93 0 0 0 0
-5 5 50 100
+5 5 50 0
 E
 bone old~
    This old bone is so old and damaged that you cannot determine what creature
@@ -203,7 +203,7 @@ pile bones~
 ~
 15 10 3 0 7 0 2 0 0 0 0
 200 0 0 200 0 0 0 0
-500 1 100 100
+500 1 100 0
 E
 pile bones~
    A pile of shattered bones lies here against the southern cave wall.
@@ -218,7 +218,7 @@ a half-eaten remains of a tribesman~
 ~
 15 2 3 0 7 0 0 0 0 0 0
 200 0 0 200 0 0 0 0
-150 0 100 100
+150 0 100 0
 E
 remains half-eaten~
 &+y   This is what has left from once one of the best hunters of the forest tribe.
@@ -233,7 +233,7 @@ belt linen smooth~
 ~
 11 3 3 0 8 0 0 2049 0 0 0
 0 0 0 0 0 0 0 0
-1 2000 100 100
+1 2000 100 0
 E
 belt linen smooth~
    This belt is made from thick weaved linen of finest quality.
@@ -250,7 +250,7 @@ coat fur furs~
 ~
 9 13 3 0 7 0 0 1033 0 0 0
 9 0 0 4 0 0 0 0
-7 2000 100 100
+7 2000 100 0
 E
 coat furs fur~
    This coat is made from loosely fitting animal furs.
@@ -264,7 +264,7 @@ jacket hide bear~
 ~
 9 13 3 0 7 0 0 9 0 0 655552
 12 0 0 4 0 0 0 0
-5 2000 100 100
+5 2000 100 0
 E
 jacket hide bear~
    This jacket is made from thick bearhide, sewn with a linen thread.
@@ -278,7 +278,7 @@ jacket bear hide~
 ~
 9 13 3 0 7 0 0 9 0 0 0
 14 0 0 4 0 0 0 0
-5 6000 100 100
+5 6000 100 0
 E
 jacket bear hide~
   This jacket is made from finest quality bearhide, sewn with a triple linen
@@ -297,7 +297,7 @@ shoes deerskin~
 ~
 9 14 3 0 8 0 0 65 0 0 0
 5 0 0 2 0 0 0 0
-1 1000 100 100
+1 1000 100 0
 E
 deerskin shoes~
    A pair of deerskin shoes, finely crafted to serve well and protect wearers
@@ -314,7 +314,7 @@ skirt deerskin~
 ~
 9 13 3 0 7 0 0 33 0 0 0
 5 0 0 3 0 0 0 0
-2 1200 100 100
+2 1200 100 0
 E
 deerskin skirt~
    A long deerskin skirt, nothing more, nothing less.
@@ -329,7 +329,7 @@ a twisted bone~
 ~
 5 10 3 0 7 0 0 24577 0 0 0
 10 1 2 7 0 0 0 0
-2 1 100 100
+2 1 100 0
 E
 bone twisted~
    Not a long time ago, this bone belonged to some tribal warrior, who
@@ -347,7 +347,7 @@ key blue bluish iron~
 ~
 18 15 3 0 7 0 8388608 16385 0 0 0
 0 50 0 0 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 key blue blueish iron~
 &+B   This small key is made of blueish iron. This one is small enough it could
@@ -392,7 +392,7 @@ robe long linen~
 ~
 11 3 3 0 7 0 0 1033 2 0 0
 0 0 0 0 0 0 0 0
-2 1000 100 100
+2 1000 100 0
 E
 robe long linen~
    This is a straight long robe made from thick linen. It provides good
@@ -410,7 +410,7 @@ amulet hell nine hells~
 ~
 9 18 3 0 7 0 139393 16389 64 0 0
 5 0 0 5 0 0 0 0
-1 1234 100 100
+1 1234 100 0
 E
 amulet hell hells nine~
 &+R   This&+L piece of&+R pitch bl&+Lack metal&+R is forme&+Ld in a &+Rshape of &+La winged &+Rbeast with
@@ -430,7 +430,7 @@ crystal magnifying~
 ~
 9 8 3 0 7 0 524288 147457 0 0 0
 3 0 0 3 0 0 0 0
-1 15000 100 100
+1 15000 100 0
 E
 crystal magnifying~
 &+W   This clear piece of a crystal has been very carefully cut and polished.
@@ -448,7 +448,7 @@ tree large spiked~
 ~
 5 6 3 10 7 0 4194304 8193 0 0 0
 11 4 7 7 0 0 0 0
-27 8020 100 100
+27 8020 100 0
 E
 tree spiked large~
 &+G   This tree has been young, some tribal hunter spiked it with sharp obsidian
@@ -463,7 +463,7 @@ totem ethereal substance~
 ~
 34 5 3 0 7 0 9216 16385 64 256 0
 15 0 0 0 0 0 0 0
-0 1234 100 100
+0 1234 100 0
 E
 totem ethereal~
 &+C   This is a half visible piece of ethereal substance, formed in the shape of
@@ -481,7 +481,7 @@ mace black ironwood~
 ~
 5 6 3 0 7 0 16777472 8193 64 0 0
 6 3 4 6 0 0 0 0
-4 1234 100 100
+4 1234 100 0
 E
 mace black~
 &+L   This black mace made of black ironwood seems to be magically enchanted.
@@ -499,7 +499,7 @@ horn siege instrument~
 ~
 32 10 3 0 7 0 1024 16385 2 42106912 0
 189 50 1 1 0 0 0 0
-2 5000 100 100
+2 5000 100 0
 E
 horn siege~
 &+y This horn is ment to be used during sieges, to help the attackers or defenders
@@ -516,7 +516,7 @@ scroll earthmother earth~
 ~
 2 29 3 0 7 0 65568 16385 64 0 0
 56 23 23 23 0 0 0 0
-2 400000 100 100
+2 400000 100 0
 E
 scroll soil earth earthmother~
 &+gThis scroll is said to be the famous scroll written by Mother Earth herself
@@ -534,7 +534,7 @@ key burning red~
 ~
 18 31 3 0 7 0 8401024 16385 64 0 0
 0 30 0 0 0 0 0 0
-1 1000 100 100
+1 1000 100 0
 E
 key burning flame~
 &+r   This key is made from dancing fire, shaped into a key-form by some unknown&n
@@ -549,7 +549,7 @@ a pentagram traced with blood~
 ~
 25 1 3 0 7 0 1 0 0 0 0
 42297 7 -1 0 0 0 0 0
-1 666 100 100
+1 666 100 0
 E
 pentagram~
 &+r   A five feet in diameter, this blood-traced pentagram is big enough for one&n
@@ -562,7 +562,7 @@ orb amethyst crystal~
 ~
 12 8 3 0 7 0 1024 0 0 0 0
 0 0 0 0 0 0 0 0
-300 666 100 100
+300 666 100 0
 E
 orb amethyst~
 &+M   This amethyst orb is really, really large. It's four feet in diameter, and&n
@@ -577,7 +577,7 @@ A fishing rod has been stuck in the ground here.~
 ~
 12 41 3 0 7 0 0 16385 0 0 0
 0 0 0 0 0 0 0 0
-2 1000 100 100
+2 1000 100 0
 E
 rod fishing~
    This is nothing more but a plain fishing rod used by tribal fishermen.
@@ -593,7 +593,7 @@ A sharpened length of &+rredwood&n lies here.~
 ~
 5 6 3 0 7 0 16777232 8193 0 0 0
 16 1 5 11 0 0 0 0
-3 888 100 100
+3 888 100 0
 E
 spear red redwood~
    A short redwood spear, precisely precisely at its tip.
@@ -608,7 +608,7 @@ A length or &+rredwood&n floats here two feet over the ground level.~
 ~
 5 6 3 0 7 0 16777488 8193 2 0 0
 16 3 4 11 0 0 0 0
-4 12600 100 100
+4 12600 100 0
 E
 spear red redwood enchanted~
 This sharp redwood spear has been magically enchanted to always return to its
@@ -625,7 +625,7 @@ A large spatula lies here, spreading smell of a beef soup.~
 ~
 3 6 3 0 7 0 0 16385 64 0 0
 50 100 100 12 0 0 0 0
-1 40200 100 100
+1 40200 100 0
 E
 spatula large~
    Justifying from its look and smell, this large spatula has been used to cook
@@ -639,7 +639,7 @@ a fallen oak tree~
 ~
 15 6 3 0 7 0 1024 0 0 0 0
 1000 0 0 0 0 0 0 0
-1000 400 1 100
+1000 400 1 0
 E
 tree oak fallen giant~
 &+yThis oak tree has toppled down some time ago, creating place for younger trees
@@ -652,7 +652,7 @@ A beautiful wooden comb has been tossed aside here.~
 ~
 11 5 3 0 7 0 36864 16401 0 0 0
 0 0 0 0 0 0 0 0
-1 39 100 100
+1 39 100 0
 E
 comb wooden~
    A beautiful wooden comb, crafted with great skill from the root of cherry
@@ -670,7 +670,7 @@ blanket wool~
 ~
 11 3 3 0 7 0 0 16794625 0 0 0
 0 0 0 0 0 0 0 0
-4 1500 95 100
+4 1500 95 0
 E
 blanket wool~
 A wool blanket, very warm and very comfortable.
@@ -686,7 +686,7 @@ pike long wooden~
 ~
 5 6 3 0 7 0 20972544 8193 0 96071707 0
 16 2 8 11 0 0 0 0
-10 910 100 100
+10 910 100 0
 E
 pike long wooden~
 This long wooden pike is too heavy to be wield single handed. It's not a very
@@ -701,7 +701,7 @@ deerskin piece green spotted skin~
 ~
 12 13 3 0 7 0 4096 1 0 0 0
 0 0 0 0 0 0 0 0
-1 50 100 100
+1 50 100 0
 E
 deerskin piece green spotted~
    This piece of deerskin looks exactly like thousands others you seen in your
@@ -734,7 +734,7 @@ parchment yellow piece~
 ~
 2 29 3 0 7 0 9216 16385 64 37883812 0
 46 59 59 -1 0 0 0 0
-1 100000 100 100
+1 100000 100 0
 E
 parchment yellow piece~
    This parchment seems to be of ancient origin. Noone know what is really
@@ -748,7 +748,7 @@ scroll ward warding~
 ~
 2 29 3 0 7 0 8192 16385 64 0 0
 46 97 220 227 0 0 0 0
-1 33100 100 100
+1 33100 100 0
 E
 scroll ward warding~
 This thick scroll has three warding runes drawn on it.
@@ -761,7 +761,7 @@ potion red boiling vial~
 ~
 10 15 3 0 7 0 0 16385 64 0 0
 46 96 108 41 0 0 0 0
-1 35010 100 100
+1 35010 100 0
 E
 potion red boiling vial~
    This glass vial looks quite usual. What is strange here are its contents.
@@ -775,7 +775,7 @@ badge spider cloth~
 ~
 11 3 3 0 7 0 0 2097153 2 0 0
 0 0 0 0 0 0 0 0
-0 6000 100 100
+0 6000 100 0
 E
 badge spider~
    This badge serves as an insignia of tribal chieftains, and does so since
@@ -792,7 +792,7 @@ a small well~
 ~
 25 5 3 0 7 0 0 0 0 0 0
 42370 7 -1 0 0 0 0 0
-2000 1000 100 100
+2000 1000 100 0
 E
 well small~
 &+c   This small well has been put here to serve all the village dwellers.
@@ -813,7 +813,7 @@ A small hoe lies here unnoticed.~
 ~
 5 15 3 0 7 0 16777216 8193 0 0 0
 18 1 3 11 0 0 0 0
-2 79 100 100
+2 79 100 0
 E
 hoe small~
    A plain hoe of small size. Used to dig the ground.
@@ -844,7 +844,7 @@ rift black~
 ~
 25 1 3 0 7 0 0 0 0 0 0
 42295 7 -1 0 0 0 0 0
-0 0 100 100
+0 0 100 0
 E
 rift black~
 This must be one of those legendary wormholes, that illithids are capable
@@ -875,7 +875,7 @@ Some iron rations are tossed aside here.~
 ~
 19 48 3 0 7 0 4096 1 0 0 0
 24 0 0 0 0 0 0 0
-1 50 100 100
+1 50 100 0
 E
 iron rations~
 A usual portion of iron rations. Can feed you up for at least twenty four
@@ -888,7 +888,7 @@ Someone has left a cod here.~
 ~
 19 48 3 0 7 0 0 1 0 0 0
 20 0 0 0 0 0 0 0
-1 50 100 100
+1 50 100 0
 E
 cod fish~
 A cod fish. Good to eat if nothing else is around.
@@ -900,7 +900,7 @@ A small edible root lies here on the ground.~
 ~
 19 48 3 0 7 0 0 1 0 0 0
 16 0 0 0 0 0 0 0
-1 50 100 100
+1 50 100 0
 E
 root~
 An edible root. Eat it if you haven't got anything else to eat.
@@ -912,7 +912,7 @@ belt bearhide hide~
 ~
 9 14 3 0 7 0 0 2049 0 0 0
 8 0 0 4 0 0 0 0
-4 2000 100 100
+4 2000 100 0
 E
 belt bearhide hide~
    This thick belt is made from well cured thick bearhide.
@@ -931,7 +931,7 @@ A crude wooden comb has been forgotten here.~
 ~
 13 5 3 0 7 0 0 16385 0 0 0
 0 0 0 0 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 comb crude simple~
 &+y   A crude wooden comb. Even most desperate woman will touch such thing only
@@ -945,7 +945,7 @@ brooch emerald golden~
 ~
 8 24 3 0 11 0 8192 10485761 64 0 0
 0 0 0 0 0 0 0 0
-1 1234 100 100
+1 1234 100 0
 E
 brooch emerald golden~
 &+Y   This piece of gold had been skillfully crafted into a large blossoming rose&n
@@ -963,7 +963,7 @@ A shelf is filled with strange scrolls and writings.~
 ~
 15 5 3 10 7 0 2 0 0 0 0
 100 0 0 100 0 0 0 0
-10 10 100 100
+10 10 100 0
 E
 shelves~
    Some shelves, entirely filled with strange writings and assorted junk.
@@ -993,7 +993,7 @@ horn devils small~
 ~
 5 10 3 1 7 0 0 8193 0 0 0
 2 1 6 11 0 0 0 0
-1 10000 100 100
+1 10000 100 0
 E
 horn devils small~
 &+cA small horn, obviously of devilish nature. Made from red bone, it could be
@@ -1006,7 +1006,7 @@ mirror silver small~
 ~
 25 22 3 10 7 0 2 0 64 0 0
 42281 139 -1 0 0 0 0 0
-10 666 100 100
+10 666 100 0
 E
 mirror silver~
 &+C   This small silver mirror is obviously of magical sort. This can be said not
@@ -1021,7 +1021,7 @@ oat handful grain grains~
 ~
 19 48 3 1 7 0 0 1 0 0 0
 1 0 0 0 0 0 0 0
-1 10 100 100
+1 10 100 0
 E
 oat handful grain grains~
 &+yA handful of oat grain, possible quite tasty if you are a bird or a horse.&n
@@ -1033,7 +1033,7 @@ shield oakwood spiked oak~
 ~
 37 6 3 15 7 0 0 513 0 4160749568 655552
 1 3 4 177 1 0 0 0
-15 5100 100 100
+15 5100 100 0
 E
 shield oaken oak wooden hardwood hardened~
 &+yA thick shield made from hardened oakwood. Suitable for defensive purposes.
@@ -1051,7 +1051,7 @@ root ancient~
 ~
 12 5 1 1 7 0 65536 8388609 64 0 0
 0 0 0 0 0 0 0 0
-1 40100 100 100
+1 40100 100 0
 E
 root ancient~
 &+gAn ancient piece of tree root, wrinkled but still stiff and juicy, it spreads
@@ -1068,7 +1068,7 @@ skirt deerskin~
 ~
 9 13 3 0 7 0 0 33 0 0 0
 5 0 0 3 0 0 0 0
-2 12000 100 100
+2 12000 100 0
 E
 deerskin skirt~
 &+y   A long skirt, made from first-class cured deerskin, sewn together with linen
@@ -1084,7 +1084,7 @@ feather soft blue~
 ~
 11 50 3 0 7 0 67108896 524289 64 0 0
 0 0 0 0 0 0 0 0
-1 1500 100 100
+1 1500 100 0
 E
 feather soft blue~
 &+B  Sometimes, when an item is exposed to strong magical fields for too long time,
@@ -1101,7 +1101,7 @@ claws blue set~
 ~
 9 10 3 1 7 0 8224 129 64 0 0
 4 0 0 3 1 0 0 0
-1 2100 100 100
+1 2100 100 0
 E
 claws blue set~
 &+B   A set of razor sharp blue claws attached to pieces of blue leather, this
@@ -1118,7 +1118,7 @@ vegetation~
 ~
 29 42 3 1000 7 0 2 0 0 0 0
 270 42239 3 1 0 0 0 0
-100 1 100 100
+100 1 100 0
 E
 vegetation~
 &+gA dense vegetation covers everything here and blocks way in all directions.
@@ -1130,7 +1130,7 @@ skeleton humanoid bones~
 ~
 13 10 3 80 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0
-80 1 100 100
+80 1 100 0
 E
 skeleton humanoid~
 &+W   This remains are leftover after one unwary tribal hunter who accidently
@@ -1145,7 +1145,7 @@ pile bones~
 ~
 13 10 3 2000 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0
-1000 1 100 100
+1000 1 100 0
 E
 pile bones~
 &+W   A huge heap of bones of various animals and humanoids, all killed by deadly
@@ -1159,7 +1159,7 @@ skeletons two embraced~
 ~
 13 10 3 120 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0
-120 1 100 100
+120 1 100 0
 E
 skeletons two embraced~
 &+W   These two skeletons must be fairly new to this place, as there are still
@@ -1176,7 +1176,7 @@ blood~
 ~
 17 40 3 50 7 0 4098 0 0 0 0
 50 50 27 10 0 0 0 0
-50 1 100 100
+50 1 100 0
 E
 blood~
 &+rLooks like blood allright.&n
@@ -1279,7 +1279,7 @@ a spider web~
 ~
 25 15 3 0 7 0 2 0 0 0 0
 42315 7 -1 0 0 0 0 0
-0 0 100 100
+0 0 100 0
 E
 web tent webs cocoon~
 &+LA black spider web surrounds this vile place, and forms a huge cocoon in the
@@ -1293,7 +1293,7 @@ A thick layer of spider web covers the floor.~
 ~
 29 1 3 100 7 0 2 0 0 0 0
 282 42315 5 1 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 floor~
 &+L   The floor of this place is covered with a thick layer of sticky spider webs.
@@ -1308,7 +1308,7 @@ leaves~
 ~
 29 30 3 10 7 0 2 0 0 0 0
 270 42285 0 1 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 leaves~
 &+g   A dense wall of leaves blocks the sight to the north.
@@ -1320,7 +1320,7 @@ leaves~
 ~
 29 30 3 10 7 0 2 0 0 0 0
 270 42322 9 1 0 0 0 0
-1 1 100 100
+1 1 100 0
 E
 leaves~
 &+g   A dense wall of leaves blocks the sight to the north.
@@ -1332,7 +1332,7 @@ bow longbow redwood~
 ~
 6 6 3 10 10 0 0 24577 0 0 0
 105 90 0 1 0 0 0 0
-5 8866 100 100
+5 8866 100 0
 E
 bow longbow redwood~
 &+y   This bow is almost two yards long, placing it in the middle of longbows
@@ -1350,7 +1350,7 @@ arrow blue feathered~
 ~
 7 6 3 1 7 0 4096 16385 64 0 0
 4 4 4 1 0 0 0 0
-1 1020 100 100
+1 1020 100 0
 E
 arrow blue feathered~
 &+c   Arrow-head of this redwood arrow has been made from worked iron and its
@@ -1369,7 +1369,7 @@ a huge boulder~
 ~
 29 37 3 1000 7 0 2 0 0 0 0
 270 42342 2 1 0 0 0 0
-500 1 100 100
+500 1 100 0
 E
 boulder~
 &+LThis huge boulder completely blocks any further passage.&n
@@ -1381,7 +1381,7 @@ dirk adamantium~
 ~
 5 19 3 2 13 0 16785680 8193 2 0 0
 2 2 6 11 1 186 40 30
-4 21000 100 100
+4 21000 100 0
 E
 dirk adamantium~
    &+mA finest dirk made from single piece of Lloth-blesses adamantium. The whole
@@ -1398,7 +1398,7 @@ scimitar steel~
 ~
 5 16 3 5 7 0 0 8193 0 4198895204 0
 5 3 3 3 0 0 0 0
-7 3100 100 100
+7 3100 100 0
 E
 scimitar steel~
 &+c  A fine scimitar made from hardened steel. Both light and sharp, it can prove
@@ -1415,7 +1415,7 @@ ring destruction evil~
 ~
 3 44 10 0 13 0 69271552 3 64 0 0
 26 3 3 319 0 0 0 0
-0 110000 100 100
+0 110000 100 0
 E
 ring destruction evil~
 &+r   This bizzare ring is made from some tar black steel-like substance.
@@ -1436,7 +1436,7 @@ quiver deerskin~
 ~
 30 12 3 4 7 0 0 1048577 0 0 0
 50 0 1 0 0 0 0 0
-1 1001 100 100
+1 1001 100 0
 E
 quiver deerskin~
 &+gAn elegant quiver made from cured deerskin, this will look good on any ranger.
@@ -1452,7 +1452,7 @@ corner~
 ~
 15 11 3 1000 7 0 2 0 0 0 0
 1000 0 0 1000 0 0 0 0
-0 1 100 100
+0 1 100 0
 E
 corner~
 &+L  A dark corner of the cave. It is possible it hides some secrets within the
@@ -1465,7 +1465,7 @@ leg severed left~
 ~
 13 2 3 5 7 0 69632 1 0 0 0
 0 0 0 0 0 0 0 0
-10 1 100 100
+10 1 100 0
 E
 leg severed left~
 &+LA dark skinned left leg, severed above knee.
@@ -1477,7 +1477,7 @@ hand severed left~
 ~
 13 2 3 6 7 0 69632 1 0 0 0
 0 0 0 0 0 0 0 0
-7 1 100 100
+7 1 100 0
 E
 hand severed left~
 &+LA dark skinned left hand, severed in the middle of the arm.
@@ -1489,7 +1489,7 @@ hand severed right~
 ~
 13 2 3 6 7 0 69632 1 0 0 0
 0 0 0 0 0 0 0 0
-7 1 100 100
+7 1 100 0
 E
 hand severed right~
 &+LA dark skinned right hand, severed in the middle of the arm.
@@ -1501,7 +1501,7 @@ leg severed right~
 ~
 13 2 3 5 7 0 69632 1 0 0 0
 0 0 0 0 0 0 0 0
-10 1 100 100
+10 1 100 0
 E
 leg severed right~
 &+LA dark skinned right leg, severed above knee.
@@ -1513,7 +1513,7 @@ head drow~
 ~
 8 2 3 4 7 0 69632 16385 64 0 0
 0 0 0 0 0 0 0 0
-4 1000 100 100
+4 1000 100 0
 E
 head drow~
 &+L   A head of a drow elven magician, severed from the rest of the corpse by one
@@ -1532,7 +1532,7 @@ remains corpse carcass bloody hunter~
 ~
 15 2 3 100 7 0 4096 0 0 0 0
 100 0 0 100 0 0 0 0
-100 1 100 100
+100 1 100 0
 E
 remains corpse carcass bloody hunter~
 &+r   The chest of this poor tribesman has been opened by some savage animals and
@@ -1546,7 +1546,7 @@ knife skinning~
 ~
 5 15 3 1 7 0 4096 8193 0 0 0
 2 2 4 11 0 0 0 0
-1 400 100 100
+1 400 100 0
 E
 knife skinning~
 &+c   A small iron knife with blade shaped in a very special way that comes
@@ -1581,7 +1581,7 @@ ring obsidian ancient~
 ~
 9 36 3 1 7 0 69632 67108867 64 0 0
 3 0 0 2 1 0 0 0
-1 15000 100 100
+1 15000 100 0
 E
 ring obsidian ancient~
 &+L   A circular obsidian band, covered with ancient magical runes.
@@ -1597,7 +1597,7 @@ egg soft white~
 ~
 13 45 3 1 7 0 4096 8388609 0 0 0
 0 0 0 0 0 0 0 0
-1 1000 100 100
+1 1000 100 0
 E
 egg soft white~
 &+W   This peculiar looking egg seems to be really strange. It is very soft, and
