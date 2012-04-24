@@ -92,13 +92,25 @@ int      CheckFor_remember(P_char ch, P_char victim);
 int get_vis_mode(P_char ch, int room)
 {
   P_char   tch;
-  int      flame;
+  int      flame, globe, illum;
+
+  flame = globe = illum = 0;
 
   for (tch = world[room].people; tch; tch = tch->next_in_room)
   {
     if (IS_AFFECTED4(tch, AFF4_MAGE_FLAME))
     {
       flame = 1;
+    }
+
+    if (IS_AFFECTED4(tch, AFF4_GLOBE_OF_DARKNESS))
+    {
+      globe = 1;
+    }
+
+    if(tch->light > 0)
+    {
+      illum = 1;
     }
   }
 
@@ -114,7 +126,9 @@ int get_vis_mode(P_char ch, int room)
     return 2;
   else if (IS_TWILIGHT_ROOM(room))
     return 2;
-  else if (IS_AFFECTED2(ch, AFF2_ULTRAVISION))
+  else if (IS_AFFECTED2(ch, AFF2_ULTRAVISION) || globe)
+    return 2;
+  else if (illum)
     return 2;
   else if (IS_AFFECTED(ch, AFF_INFRAVISION))
 // TODO: want to rework farsee scan, till then 
@@ -1127,7 +1141,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   int      globe, flame, illum;
   P_char   tmp_char;
 
-  globe = flame = 0;
+  globe = flame = illum = 0;
 
   if(!(sub))
   {
@@ -1169,7 +1183,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   if(WIZ_INVIS(sub, obj))
     return 0;
 
-  if(GET_LEVEL(sub) > MAXLVLMORTAL)
+  if(IS_TRUSTED(sub))
     return 1;
 
   /* Flyers */
@@ -1204,8 +1218,6 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   {
     if(tmp_char->light > 0)
       illum = 1;
-    else
-      illum = -1;
 
     if (IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME))
     {
@@ -1217,7 +1229,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     }
   }
 
-  if(globe && flame)
+  if(globe && (flame || illum))
     return 1;
 
   /*
@@ -1227,7 +1239,8 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     IS_PC(sub) &&
     !IS_AFFECTED2(sub, AFF2_ULTRAVISION) &&
     !IS_TWILIGHT_ROOM(obj->in_room) &&
-    !flame)
+    !flame && 
+    !illum)
   {
      return 0;
   }
@@ -1273,10 +1286,11 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     }
     return 1;
   }
-  else if(IS_LIGHT(obj->in_room) || illum == 1)
+  else if(IS_LIGHT(obj->in_room) || illum)
   {
     return 1;
   }
+
   /*
    * room is dark - do infra checks
    */
@@ -1296,8 +1310,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     else
     {
       return -1;             //  will see 'red shape'
-    }
-                                 
+    }                              
   }
   return 0;
 }
@@ -1310,7 +1323,9 @@ int ac_can_see_obj(P_char sub, P_obj obj)
 {
   int      rroom;
   P_char   tmp_char;
-  int      vis_mode;
+  int      vis_mode, globe, flame, illum;
+
+  globe = flame = illum = 0;
 
   if(!obj || !sub)
   {
@@ -1370,18 +1385,43 @@ int ac_can_see_obj(P_char sub, P_obj obj)
   else
     return IS_TRUSTED(sub) ? 1 : 0;
 
+  for (tmp_char = world[rroom].people; tmp_char; tmp_char = tmp_char->next_in_room)
+  {
+    if(tmp_char->light > 0)
+      illum = 1;
+
+    if (IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME))
+    {
+      flame = 1;
+    }
+    if (IS_AFFECTED4(tmp_char, AFF4_GLOBE_OF_DARKNESS))
+    {
+      globe = 1;
+    }
+  }
+
   // Room is magically dark
-  if ((IS_SET(world[rroom].room_flags, MAGIC_DARK) || !IS_LIGHT(rroom)) && 
+  if (IS_SET(world[rroom].room_flags, MAGIC_DARK) && 
       !IS_AFFECTED2(sub, AFF2_ULTRAVISION) &&
       !IS_TWILIGHT_ROOM(rroom))
      return 0;
+
+  if(IS_SET(world[rroom].room_flags, MAGIC_LIGHT) && IS_AFFECTED2(sub, AFF2_ULTRAVISION))
+  {
+    if(globe)
+      return 1;
+    else
+      return 0;
+  }
+
+  if(illum || flame)
+    return 1;
 
   vis_mode = get_vis_mode(sub, rroom);
   return (vis_mode == 1 || vis_mode == 2);
 }
 
 #endif
-
 
 bool can_char_multi_to_class(P_char ch,  int m_class)
 {
@@ -2504,11 +2544,28 @@ char    *PERS(P_char ch, P_char vict, int short_d)
 
 char    *PERS(P_char ch, P_char vict, int short_d, bool noansi)
 {
+  P_char tch;
+  int flame, globe, illum;
+
+  flame = globe = illum = 0;
+
+  for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
+  {
+    if (IS_AFFECTED4(tch, AFF4_MAGE_FLAME))
+    {
+      flame = 1;
+    }
+    if(tch->light > 0)
+    {
+      illum = 1;
+    }
+  }
+
   if (!CAN_SEE_Z_CORD(vict, ch) ||
       ((abs(ch->specials.z_cord - vict->specials.z_cord) > 2) &&
        !IS_AFFECTED4(vict, AFF4_HAWKVISION) && !IS_TRUSTED(vict)))
   {
-    strcpy(GS_buf1, "someone");
+    strcpy(GS_buf1, "Someone");
     return GS_buf1;
   }
 
@@ -2552,10 +2609,10 @@ char    *PERS(P_char ch, P_char vict, int short_d, bool noansi)
     }
     return GS_buf1;
   }
-  if (IS_DARK(ch->in_room) && !IS_TWILIGHT_ROOM(ch->in_room))
+  if(IS_DARK(ch->in_room) && !IS_TWILIGHT_ROOM(ch->in_room))
   {
     if (IS_TRUSTED(vict) || IS_AFFECTED2(vict, AFF2_ULTRAVISION) ||
-        IS_AFFECTED(vict, AFF_WRAITHFORM))
+        IS_AFFECTED(vict, AFF_WRAITHFORM) || illum || flame)
     {
       if (IS_NPC(ch))
         return (ch->player.short_descr);

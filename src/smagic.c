@@ -1491,7 +1491,7 @@ void spell_spirit_armor(int level, P_char ch, char *arg, int type, P_char victim
 
     af.type = SPELL_SPIRIT_ARMOR;
     af.duration = duration * WAIT_MIN;
-    if(!affected_by_spell(victim, SPELL_ARMOR))
+    if(!ARMORED(victim))
     {
       af.location = APPLY_AC;
       af.modifier = -(duration);
