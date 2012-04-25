@@ -4143,17 +4143,6 @@ int GET_CHAR_SKILL_P(P_char ch, int skl)
      af = af->next;
        } */
 
-  // MASTERY INNATES grant 100 in weapon skill
-  if ((has_innate(ch, INNATE_HAMMER_MASTER) &&
-	(skl == SKILL_1H_BLUDGEON ||
-	 skl == SKILL_2H_BLUDGEON)) ||
-      (has_innate(ch, INNATE_AXE_MASTER) &&
-       (skl == SKILL_1H_SLASHING ||
-	skl == SKILL_2H_SLASHING)) ||
-      (has_innate(ch, INNATE_LONGSWORD_MASTER) &&
-       skl == SKILL_1H_SLASHING))
-    skllvl = BOUNDED(0, skllvl + 50, 100);
-  
 #ifdef STANCES_ALLOWED
   if(skllvl > 0 && IS_PC(ch) && (ch->only.pc->frags > 0))
    mod = (int) (ch->only.pc->frags / 500);
