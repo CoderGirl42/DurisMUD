@@ -1981,7 +1981,7 @@ bool CastReaverSpell(P_char ch, P_char victim, int helping)
   }
 
   if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-      room_has_valid_exit(ch->in_room) && !number(0, 5) && !fear_check(ch) )
+      room_has_valid_exit(ch->in_room) && !number(0, 5) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -2238,7 +2238,7 @@ bool CastRangerSpell(P_char ch, P_char victim, int helping)
   }
 
   if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-      room_has_valid_exit(ch->in_room) && !number(0, 4) && !fear_check(ch) )
+      room_has_valid_exit(ch->in_room) && !number(0, 4) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -2604,7 +2604,7 @@ bool CastDruidSpell(P_char ch, P_char victim, int helping)
       spl = SPELL_NATURES_TOUCH;
   }
   else if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-           room_has_valid_exit(ch->in_room) && !fear_check(ch) )
+           room_has_valid_exit(ch->in_room) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -2924,7 +2924,7 @@ bool CastShamanSpell(P_char ch, P_char victim, int helping)
       }
     }
 
-    if(!spl && !IS_AFFECTED2(target, SPELL_SPIRIT_ARMOR) &&
+    if(!spl && (!ARMORED(target) && !affected_by_spell(target, SPELL_SPIRIT_ARMOR)) &&
         npc_has_spell_slot(ch, SPELL_SPIRIT_ARMOR))
       spl = SPELL_SPIRIT_ARMOR;
 
@@ -3401,7 +3401,7 @@ bool CastEtherSpell(P_char ch, P_char victim, int helping)
     spl = SPELL_PURIFY_SPIRIT;
   }
   else if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-           room_has_valid_exit(ch->in_room) && !fear_check(ch) )
+           room_has_valid_exit(ch->in_room) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -3699,7 +3699,7 @@ bool CastClericSpell(P_char ch, P_char victim, int helping)
            (!IS_FIGHTING(ch) || !number(0, 2)))
     spl = SPELL_HEAL;
   else if(!spl && IS_AFFECTED(ch, AFF_BLIND) &&
-           room_has_valid_exit(ch->in_room) && !fear_check(ch) )
+           room_has_valid_exit(ch->in_room) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;
@@ -4158,7 +4158,7 @@ bool CastPaladinSpell(P_char ch, P_char victim, int helping)
       spl = SPELL_HEAL;
   }
   else if(!spl && IS_AFFECTED(ch, AFF_BLIND) && IS_FIGHTING(ch) &&
-           room_has_valid_exit(ch->in_room) && !fear_check(ch) )
+           room_has_valid_exit(ch->in_room) && !fear_check(ch))
   {
     do_flee(ch, 0, 0);
     return FALSE;

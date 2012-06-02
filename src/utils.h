@@ -397,6 +397,16 @@ int race_size(int race);
 #define GET_C_KARMA(ch)   ((ch)->curr_stats.Karma)
 #define GET_C_LUCK(ch)    ((ch)->curr_stats.Luck)
 
+#define STRENGTH_SPELL(ch) (affected_by_spell(ch, SPELL_STRENGTH) || \
+                            affected_by_spell(ch, SPELL_ENHANCED_STR) || \
+                            affected_by_spell(ch, SPELL_ELEPHANTSTRENGTH))
+
+#define AGILITY_SPELL(ch) (affected_by_spell(ch, SPELL_AGILITY) || \
+                           affected_by_spell(ch, SPELL_ENHANCED_AGI))
+
+#define DEXTERITY_SPELL(ch) (affected_by_spell(ch, SPELL_DEXTERITY) || \
+                             affected_by_spell(ch, SPELL_ENHANCED_DEX))
+
 #define GET_WIMPY(ch)   ((ch)->only.pc->wimpy)
 
 #define GET_AC(ch)      ((ch)->points.curr_armor)

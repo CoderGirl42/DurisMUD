@@ -3382,6 +3382,7 @@ int race_portal_check(P_char ch, P_char vict)
   return TRUE;
 }
 
+// this function is used only for NPCs
 int room_has_valid_exit(const int rnum)
 {
   int      i;
@@ -3400,7 +3401,18 @@ int room_has_valid_exit(const int rnum)
         !(world[rnum].dir_option[i]->exit_info & EX_BLOCKED) &&
         !(world[rnum].dir_option[i]->exit_info & EX_WALLED) &&
         (world[rnum].dir_option[i]->to_room >= 0))
-      return TRUE;
+    {
+      // adding this check to prevent mobs from falling on their own 
+      // ignoring flyers etc. for simplification, can add later if necessary - Jexni 5/24/12
+      // note: this doesn't appear to have fixed all instances, but I can't
+      // find what's being missed - 6/2/12
+      if(world[world[rnum].dir_option[i]->to_room].chance_fall > 0)
+      {
+        continue;
+      }
+      else
+        return TRUE;
+    }
   }
 
   return FALSE;
