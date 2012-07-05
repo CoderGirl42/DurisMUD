@@ -101,6 +101,7 @@ long unsigned int ip2ul(const char *ip);
 unsigned int game_locked = 0;       /* 0x00000001;  no creation */
 struct mm_ds *dead_pconly_pool = NULL;
 long int highestPCidNumb;
+bool opposite_racewar(P_char ch, P_char victim);
 
 int getNewPCidNumb(void)
 {
@@ -1418,6 +1419,7 @@ void enter_game(P_desc d)
   int      mana_g;
   char     Gbuf1[MAX_STRING_LENGTH];
   P_char   ch = d->character;
+  P_desc   i;
   
   if(GET_LEVEL(ch))
   {
@@ -1686,8 +1688,30 @@ void enter_game(P_desc d)
   if(IS_NEWBIE(ch))
   {
      statuslog(ch->player.level, "&+GNEWBIE %s HAS ENTERED THE GAME! Help him out :) ", GET_NAME(ch));
+     // Message to guides.
+    sprintf( Gbuf1, "&+GNEWBIE %s HAS ENTERED THE GAME! Help him out :)\n", 
+      GET_NAME(ch));
+
+    for (i = descriptor_list; i; i = i->next)
+    {
+      if(i->connected)
+        continue;
+
+      if( opposite_racewar( ch, i->character ) )
+        continue;
+      if(!IS_SET(i->character->specials.act2, PLR2_NCHAT))
+        continue;
+      if(!IS_SET(PLR2_FLAGS(i->character), PLR2_NEWBIE_GUIDE))
+        continue;
+      if(IS_DISGUISE_PC(i->character) ||
+        IS_DISGUISE_ILLUSION(i->character) ||
+        IS_DISGUISE_SHAPE(i->character))
+        continue;
+
+      send_to_char(Gbuf1, i->character, LOG_PRIVATE);
+    }
   }
-  
+
   if(!GET_LEVEL(ch))
   {
     do_start(ch, 0);
