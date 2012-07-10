@@ -2422,8 +2422,7 @@ void do_scribe(P_char ch, char *arg, int cmd)
   // Added the scribe all option
   if( !str_cmp(arg, "all") )
   {
-// PENIS
-send_to_char( "Scribing all spells:\n", ch );
+    send_to_char( "Scribing all spells:\n", ch );
     // This requires a check for the book in the room of knowledge.
     prac_all_spells(ch);
     return;
