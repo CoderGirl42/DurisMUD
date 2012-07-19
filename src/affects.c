@@ -279,7 +279,7 @@ int calculate_mana(P_char ch)
   int mana;
 
   mana = (int) (((float) GET_LEVEL(ch)) / 50 *
-                GET_C_POW(ch) * GET_C_POW(ch) *
+                GET_C_POW(ch) * GET_C_INT(ch) *
                 get_property("mana.powMultiplier", 0.025));
 
   if (IS_PC(ch) && (GET_AGE(ch) <= racial_data[GET_RACE(ch)].max_age))

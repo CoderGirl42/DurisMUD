@@ -1514,8 +1514,9 @@ bool parse_spell(P_char ch, char *argument,
   if (IS_TRUSTED(ch))
   {
   }
-  /*
-  else if (USES_MANA(ch))
+  
+  //else if (USES_MANA(ch))
+else if (GET_CLASS(ch, CLASS_PSIONICIST) || GET_CLASS(ch, CLASS_MINDFLAYER))
   {
     if (GET_MANA(ch) < 1 && circle != -1)
     {
@@ -1524,7 +1525,7 @@ bool parse_spell(P_char ch, char *argument,
       return FALSE;
     }
   }
-  */
+  
   else if (USES_SPELL_SLOTS(ch))
   {
     if (circle != -1 && !ch->specials.undead_spell_slots[circle])
@@ -1532,10 +1533,12 @@ bool parse_spell(P_char ch, char *argument,
       if (GET_CLASS(ch, CLASS_DRUID))
         send_to_char("&+gYou must commune with nature more before "
                      "invoking its power.\n", ch);
+/*
       else if (GET_CLASS(ch, CLASS_PSIONICIST) || GET_CLASS(ch, CLASS_MINDFLAYER))
       {
         send_to_char("&+mYour thoughts have not collected enough to cast THAT spell.&n\n", ch);
       }
+*/
       else if (IS_ANGEL(ch))
       {
 	send_to_char("&+WYour illumination is not sufficient enough to cast that spell.&n\n", ch);
