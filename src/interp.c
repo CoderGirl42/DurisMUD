@@ -1053,6 +1053,7 @@ const char *command[] = {
   "tether",
   "questwhere",
   "newbsa",
+  "salvage",
   "\n"                          /* MAX_CMD_LIST is now 1000 */
 };
 
@@ -2358,6 +2359,7 @@ void assign_command_pointers(void)
   CMD_N(CMD_REST, STAT_RESTING + POS_PRONE, do_rest, 0);
   CMD_N(CMD_RIDE, STAT_NORMAL + POS_STANDING, do_mount, 0);
   CMD_N(CMD_RULES, STAT_RESTING + POS_PRONE, do_rules, 0);
+  CMD_N(CMD_SALVAGE, STAT_NORMAL + POS_STANDING, do_salvage, 0);
   CMD_N(CMD_SCAN, STAT_RESTING + POS_STANDING, do_scan, 0);
   CMD_N(CMD_SCRIBE, STAT_RESTING + POS_SITTING, do_scribe, 0);
   CMD_N(CMD_SE, STAT_NORMAL + POS_PRONE, do_move, 0);

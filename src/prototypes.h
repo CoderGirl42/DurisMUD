@@ -310,6 +310,7 @@ void do_junk(P_char, char *, int);
 void do_pour(P_char, char *, int);
 void do_put(P_char, char *, int);
 void do_remove(P_char, char *, int);
+void do_salvage(P_char, char *, int);
 void do_search(P_char, char *, int);
 void do_sip(P_char, char *, int);
 void do_taste(P_char, char *, int);

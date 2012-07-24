@@ -832,6 +832,7 @@ extern unsigned int game_locked;
 #define CMD_TETHER	805
 #define CMD_QUESTWHERE  806
 #define CMD_NEWBSA      807
+#define CMD_SALVAGE     808
 
 /* cmds below are not real commands, they are
                 used in item special procedures to identify

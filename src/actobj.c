@@ -5222,6 +5222,145 @@ bool find_chance(P_char ch)
   return FALSE;
 }
 
+void do_salvage(P_char ch, char *argument, int cmd)
+{
+  P_obj    temp;
+  char     Gbuf4[MAX_STRING_LENGTH];
+
+  one_argument(argument, Gbuf4);
+
+  //if (GET_RACE(ch) == RACE_ILLITHID && GET_LEVEL(ch) < AVATAR)
+  if (!IS_TRUSTED(ch))
+  {
+    send_to_char
+      ("You arent privileged enough to break down items... yet.\r\n",
+       ch);
+    return;
+  }
+  if (!(temp = get_obj_in_list_vis(ch, Gbuf4, ch->carrying)))
+  {
+    act("What would you like to salvage?", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+//codemod remove check for food
+//  if (temp->type = ITEM_FOOD))
+ // {
+    /*
+     * if (GET_ITEM_TYPE(temp) == ITEM_CONTAINER && temp->value[3]) {
+     * send_to_char("Mmm, tastes just like very rare steak!\r\n", ch);
+     * act("$n savagely devours the corpse.", FALSE, ch, 0, 0,
+     * TO_ROOM); return; } else {
+     */
+ //   act("That's not very edible, I'm afraid.", FALSE, ch, 0, 0, TO_CHAR);
+ //   return;
+    /*
+     * }
+     */
+ // }
+
+  /*
+     if ((GET_COND(ch, FULL) > 20) && !IS_AFFECTED3(ch, AFF3_FAMINE))
+     {
+     act("No thanks, I'm absolutely stuffed, couldn't eat another bite.",
+     FALSE, ch, 0, 0, TO_CHAR);
+     return;
+     }
+   */
+ /* if (affected_by_spell(ch, TAG_EATING) && !IS_TRUSTED(ch))
+  {
+    act("You feel sated already.", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+*/
+  if(temp->value[1] < 0 || (temp->timer[0] && (time(NULL) - temp->timer[0] > 1 * 60 * 10)) )
+  {
+    act("That stinks, find some fresh food instead.", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  act("$n starts to delicate break $p into core components...", TRUE, ch, temp, 0, TO_ROOM);
+  act("You begin breaking down $q into its raw materials...", FALSE, ch, temp, 0, TO_CHAR);
+
+  if (temp->type == ITEM_FOOD)
+  {
+     //New code to grant reg from food 
+   struct affected_type af;
+    if (!affected_by_spell(ch, TAG_EATING)) 
+    {
+      bzero(&af, sizeof(af));
+      af.type = TAG_EATING;
+      af.flags = AFFTYPE_NOSHOW;
+      af.duration = 1 + (1 * temp->value[0]);
+
+      int hit_reg;
+      int mov_reg;
+      if (temp->value[3] > 0) // TODO: apply poison
+      {
+          act("&+GYou feel sick.", FALSE, ch, 0, 0, TO_CHAR);
+          hit_reg = -temp->value[3];
+          mov_reg = 0;
+      }
+      else
+      {
+          hit_reg = 1;
+          if (temp->value[1] != 0)
+            hit_reg = temp->value[1];
+          mov_reg = hit_reg;
+          if (temp->value[2] != 0)
+            mov_reg = temp->value[2];
+      }
+
+      af.location = APPLY_HIT_REG;
+      af.modifier = 15 * hit_reg;
+      affect_to_char(ch, &af);
+      
+      af.location = APPLY_MOVE_REG;
+      af.modifier = mov_reg;
+      affect_to_char(ch, &af);
+
+      af.location = APPLY_STR;
+      af.modifier = temp->value[4];
+      affect_to_char(ch, &af);
+      af.location = APPLY_CON;
+      af.modifier = temp->value[4];
+      affect_to_char(ch, &af);
+
+      af.location = APPLY_AGI;
+      af.modifier = temp->value[5];
+      affect_to_char(ch, &af);
+      af.location = APPLY_DEX;
+      af.modifier = temp->value[5];
+      affect_to_char(ch, &af);
+
+      af.location = APPLY_INT;
+      af.modifier = temp->value[6];
+      affect_to_char(ch, &af);
+      af.location = APPLY_WIS;
+      af.modifier = temp->value[6];
+      affect_to_char(ch, &af);
+
+      af.location = APPLY_DAMROLL;
+      af.modifier = temp->value[7];
+      affect_to_char(ch, &af);
+      af.location = APPLY_HITROLL;
+      af.modifier = temp->value[7];
+      affect_to_char(ch, &af);
+    } 
+    else 
+    {
+      act("You feel sated already.", FALSE, ch, 0, 0, TO_CHAR);
+      return;
+    }
+  }
+  extract_obj(temp, !IS_TRUSTED(ch));
+  /*
+   * added by DTS 5/18/95 to solve light bug
+   */
+  char_light(ch);
+  room_light(ch->in_room, REAL);
+}
+
+
 void do_search(P_char ch, char *argument, int cmd)
 {
   P_char   dummy;
