@@ -1318,3 +1318,43 @@ A
 34 4
 A
 31 5
+#67283
+ruby dust~
+&+rsome &+Rruby &+wdust&n~
+&+rSomeone has dropped some sparkly dust on the ground here.~
+~
+8 31 1 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 10000 100
+#67284
+ruby shards reclaimed~
+&+rsome &+Rrec&+rlaim&+Red ruby &+rshards&n~
+&+rSomeone has dropped some sparkly shards here on the ground.&n~
+~
+8 31 1 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 50000 100
+#67285
+ruby small sparkling~
+&+ra small s&+Rp&+ra&+Rr&+rk&+Rl&+ri&+Rn&+rg &+Rruby&n~
+&+rSomeone has dropped a sparkling ruby here on the ground.&n~
+~
+8 31 1 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 100000 100
+#67286
+glowing star ruby~
+&+ra &+Mglowing &+rst&+Rar sh&+rap&+Red &+rruby&n~
+&+rSomeone has dropped a glowing ruby here on the ground.&n~
+~
+8 31 1 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 250000 100
+#67287
+unearthly raw ruby~
+&+ran &+yu&+Yn&+yearth&+Yly &+rraw &+Rruby&n~
+&+rSomeone has dropped an unearthly raw ruby here on the ground.&n~
+~
+8 31 1 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 450000 100

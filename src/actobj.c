@@ -5226,10 +5226,11 @@ void do_salvage(P_char ch, char *argument, int cmd)
 {
   P_obj    temp;
   char     Gbuf4[MAX_STRING_LENGTH];
+  int	rolled;
 
   one_argument(argument, Gbuf4);
 
-  //if (GET_RACE(ch) == RACE_ILLITHID && GET_LEVEL(ch) < AVATAR)
+  /*
   if (!IS_TRUSTED(ch))
   {
     send_to_char
@@ -5237,127 +5238,102 @@ void do_salvage(P_char ch, char *argument, int cmd)
        ch);
     return;
   }
+  */
+  if(GET_CHAR_SKILL(ch, SKILL_CRAFT) < 1)
+  {
+    send_to_char("Only &+ycrafters&n have the necessary &+yskill&n to break down &+Witems&n.\n", ch);
+    return;
+  }
+
   if (!(temp = get_obj_in_list_vis(ch, Gbuf4, ch->carrying)))
   {
     act("What would you like to salvage?", FALSE, ch, 0, 0, TO_CHAR);
     return;
   }
-//codemod remove check for food
-//  if (temp->type = ITEM_FOOD))
- // {
-    /*
-     * if (GET_ITEM_TYPE(temp) == ITEM_CONTAINER && temp->value[3]) {
-     * send_to_char("Mmm, tastes just like very rare steak!\r\n", ch);
-     * act("$n savagely devours the corpse.", FALSE, ch, 0, 0,
-     * TO_ROOM); return; } else {
-     */
- //   act("That's not very edible, I'm afraid.", FALSE, ch, 0, 0, TO_CHAR);
- //   return;
-    /*
-     * }
-     */
- // }
-
-  /*
-     if ((GET_COND(ch, FULL) > 20) && !IS_AFFECTED3(ch, AFF3_FAMINE))
-     {
-     act("No thanks, I'm absolutely stuffed, couldn't eat another bite.",
-     FALSE, ch, 0, 0, TO_CHAR);
-     return;
-     }
-   */
- /* if (affected_by_spell(ch, TAG_EATING) && !IS_TRUSTED(ch))
-  {
-    act("You feel sated already.", FALSE, ch, 0, 0, TO_CHAR);
+//make sure its not food or container
+  if ((temp->type == ITEM_CONTAINER ||
+       temp->type == ITEM_STORAGE) && temp->contains)
+   {
+    act("You may want to empty that container before you try to &+ysalvage &nit.", FALSE, ch, 0, 0, TO_CHAR);
     return;
-  }
-*/
-  if(temp->value[1] < 0 || (temp->timer[0] && (time(NULL) - temp->timer[0] > 1 * 60 * 10)) )
-  {
-    act("That stinks, find some fresh food instead.", FALSE, ch, 0, 0, TO_CHAR);
-    return;
-  }
-
-  act("$n starts to delicate break $p into core components...", TRUE, ch, temp, 0, TO_ROOM);
-  act("You begin breaking down $q into its raw materials...", FALSE, ch, temp, 0, TO_CHAR);
-
+   }
   if (temp->type == ITEM_FOOD)
+   {
+    act("Why would you want to salvage anything from your &+Ydinner&n?", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+   }
+  if (temp->type == ITEM_TREASURE)
+   {
+    act("That's probably more valuable than what you could break it down into... lets not.", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+   }
+  rolled = number(1, 100);
+  if  (GET_CHAR_SKILL(ch, SKILL_CRAFT) < rolled)
+   {
+    act("&+LYou attempt to break down your $q, but end up &+Rbreaking &+Lit in the process.", FALSE, ch, 0, 0, TO_CHAR);
+    act("$n attempts to salvage their $p, but clumsily destroys it.", TRUE, ch, temp, 0, TO_ROOM);
+    extract_obj(temp, !IS_TRUSTED(ch));
+    return;
+   }
+
+  else
   {
-     //New code to grant reg from food 
-   struct affected_type af;
-    if (!affected_by_spell(ch, TAG_EATING)) 
-    {
-      bzero(&af, sizeof(af));
-      af.type = TAG_EATING;
-      af.flags = AFFTYPE_NOSHOW;
-      af.duration = 1 + (1 * temp->value[0]);
-
-      int hit_reg;
-      int mov_reg;
-      if (temp->value[3] > 0) // TODO: apply poison
-      {
-          act("&+GYou feel sick.", FALSE, ch, 0, 0, TO_CHAR);
-          hit_reg = -temp->value[3];
-          mov_reg = 0;
-      }
-      else
-      {
-          hit_reg = 1;
-          if (temp->value[1] != 0)
-            hit_reg = temp->value[1];
-          mov_reg = hit_reg;
-          if (temp->value[2] != 0)
-            mov_reg = temp->value[2];
-      }
-
-      af.location = APPLY_HIT_REG;
-      af.modifier = 15 * hit_reg;
-      affect_to_char(ch, &af);
-      
-      af.location = APPLY_MOVE_REG;
-      af.modifier = mov_reg;
-      affect_to_char(ch, &af);
-
-      af.location = APPLY_STR;
-      af.modifier = temp->value[4];
-      affect_to_char(ch, &af);
-      af.location = APPLY_CON;
-      af.modifier = temp->value[4];
-      affect_to_char(ch, &af);
-
-      af.location = APPLY_AGI;
-      af.modifier = temp->value[5];
-      affect_to_char(ch, &af);
-      af.location = APPLY_DEX;
-      af.modifier = temp->value[5];
-      affect_to_char(ch, &af);
-
-      af.location = APPLY_INT;
-      af.modifier = temp->value[6];
-      affect_to_char(ch, &af);
-      af.location = APPLY_WIS;
-      af.modifier = temp->value[6];
-      affect_to_char(ch, &af);
-
-      af.location = APPLY_DAMROLL;
-      af.modifier = temp->value[7];
-      affect_to_char(ch, &af);
-      af.location = APPLY_HITROLL;
-      af.modifier = temp->value[7];
-      affect_to_char(ch, &af);
-    } 
-    else 
-    {
-      act("You feel sated already.", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-  }
+    act("$n begins to tear down their $p into its core components...", TRUE, ch, temp, 0, TO_ROOM);
+    act("You begin breaking down your $p into its &+yraw &+Ymaterials&n...", FALSE, ch, temp, 0, TO_CHAR); 
+	char buf[250];
+	byte objmat = temp->material;
+	byte objcft = temp->craftsmanship; //0-16 value
+       int rand1 = number(1, 16);
+	int objchance = (objcft * 7 /2 + GET_CHAR_SKILL(ch, SKILL_CRAFT) / 2 - rand1); //better skill and better quality yields better chance for good material
+	 
+	switch (objmat)
+        {
+     	  case MAT_RUBY:
+	    act("&+RThe item was made of ruby.", FALSE, ch, 0, 0, TO_CHAR);
+          
+	    sprintf( buf, "roll: %d \r\n", objchance );
+	    send_to_char( buf, ch);
+      	
+	    if (objchance <= 20) // Grant Rewards based on objchance roll
+      	      {
+              act("&+wYou were able to salvage a rather &+rpoor&n material from your $p.", FALSE, ch, 0, 0, TO_CHAR);
+		obj_to_char(read_object(number(67283, 67283), VIRTUAL), ch); 
+             }
+	    else if ((objchance <= 40) && (objchance >= 21)) 
+      	      {
+              act("&+wYour focused efforts allow you to salvage a &+ycommon&n material from your $p.", FALSE, ch, 0, 0, TO_CHAR);
+		//obj_to_char(read_object(number(67284, 67284), VIRTUAL), ch);
+		obj_to_char(read_object(67284, VIRTUAL), ch);
+             }
+	    else if ((objchance <= 60) && (objchance >= 41)) 
+      	      {
+              act("&+wYou study your $p as you break it down, and come away with a rather &+Yuncommon &nmaterial.", FALSE, ch, 0, 0, TO_CHAR);
+		obj_to_char(read_object(number(67285, 67285), VIRTUAL), ch);
+             }
+	    else if ((objchance <= 80) && (objchance >= 61)) 
+      	      {
+              act("&+wYou make quick work of your $p, salvaging a precious &+crare &nmaterial from it.", FALSE, ch, 0, 0, TO_CHAR);
+		obj_to_char(read_object(number(67286, 67286), VIRTUAL), ch);
+             }
+           else // craftsmanship >= 81
+	      {
+	       act("&+LUsing your ma&+wst&+Wer&+wfu&+Ll &+Wskill&+L, you delicately break apart your $p, salvaging a quite &+Munique &+Lmaterial from it.", FALSE, ch, 0, 0, TO_CHAR);
+		//to load multiple objects over a range randomly: obj_to_char(read_object(number(97924, 97929), VIRTUAL), ch);
+		obj_to_char(read_object(number(67289, 67289), VIRTUAL), ch);
+		
+	      }
+	  break;
+        default:
+	  act("Salvaged item type not defined yet, not destroying item.", FALSE, ch, 0, 0, TO_CHAR);
+	  return;
+         break;
+       }
+  } 
+ 
   extract_obj(temp, !IS_TRUSTED(ch));
-  /*
-   * added by DTS 5/18/95 to solve light bug
-   */
   char_light(ch);
   room_light(ch->in_room, REAL);
+  //end do_salvage
 }
 
 
