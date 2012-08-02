@@ -7862,10 +7862,10 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
 
   // Attackers are easier to parry when they are not standing.
   if(!MIN_POS(attacker, POS_STANDING + STAT_NORMAL))
-    learnedattacker = (int) (learnedattacker * 0.75);
+    learnedattacker = (int) (learnedattacker * 0.65); //old 0.75
 
   if(IS_AFFECTED5(victim, AFF5_DAZZLEE))
-    learnedvictim = (int) (learnedvictim * 0.90);
+    learnedvictim = (int) (learnedvictim * 0.80);
 
   if(affected_by_spell(victim, SKILL_GAZE))
     learnedvictim = (int) (learnedvictim * 0.80);

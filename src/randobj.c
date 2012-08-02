@@ -575,6 +575,13 @@ P_obj createRandomItem(P_char pc, P_char mob, int moblvl, int zoneDiff,
   if (!pc || !moblvl)
     return NULL;
 
+  if (moblvl > 30) //no randoms from lvl 20+ mobs
+	return NULL;
+  
+  if (GET_LEVEL(pc) > 20)//no randoms from lvl 20+ characters
+	return NULL;
+  
+
   // 40% chance to get something
 
   if (!createItem && (number(1, 10) > 4))
