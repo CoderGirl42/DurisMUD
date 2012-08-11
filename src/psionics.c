@@ -1025,7 +1025,8 @@ void spell_psychic_crush(int level, P_char ch, char *arg, int type, P_char victi
   if(ch &&
      victim)
   {
-    dam = dice((int) (MIN(level, 50) * 2), 10);
+    dam = dice((int) (MIN(level, 50) * 3), 10); //105 saved 210 unsaved
+    
   }
   if(victim &&
     !affected_by_spell(victim, SPELL_PSYCHIC_CRUSH))
