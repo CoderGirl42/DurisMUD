@@ -406,8 +406,7 @@ P_char misfire_check(P_char ch, P_char victim, int flag)
 
     if(chance > number(0,100))
     { // Misfire!
-      //new_target = get_random_char_in_room(ch->in_room, ch, DISALLOW_SELF); oldmisfire
-      chance = chance;
+      new_target = get_random_char_in_room(ch->in_room, ch, DISALLOW_SELF); oldmisfire
     }
   }
 // And a message.

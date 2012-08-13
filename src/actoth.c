@@ -2294,7 +2294,8 @@ void do_steal(P_char ch, char *argument, int cmd)
     return;
   }
   
-  if((IS_AFFECTED(ch, AFF_INVISIBLE) ||
+/* 
+ if((IS_AFFECTED(ch, AFF_INVISIBLE) ||
       IS_AFFECTED2(ch, AFF2_MINOR_INVIS)) &&
       !IS_AFFECTED(ch, AFF_DETECT_INVISIBLE))
   {
@@ -2303,6 +2304,7 @@ void do_steal(P_char ch, char *argument, int cmd)
        ch);
     return;
   }
+*/
   
   if (!GET_CHAR_SKILL(ch, SKILL_STEAL) &&
       !IS_TRUSTED(ch))
@@ -2334,6 +2336,7 @@ void do_steal(P_char ch, char *argument, int cmd)
     return;
   }
 
+  /*
   if (affected_by_spell(ch, TAG_PVPDELAY))
   {
     send_to_char
@@ -2341,6 +2344,7 @@ void do_steal(P_char ch, char *argument, int cmd)
        ch);
     return;
   }
+  */
 
 
   if (CHAR_IN_SAFE_ZONE(ch) &&
@@ -2440,7 +2444,7 @@ void do_steal(P_char ch, char *argument, int cmd)
 	if (!CAN_SEE(victim, ch))
     percent += 40;
   // cutpurses get an additional bonus...
-  if (GET_SPEC(ch, CLASS_THIEF, SPEC_CUTPURSE))
+  if (GET_SPEC(ch, CLASS_ROGUE, SPEC_THIEF))
     percent += 25;
 
   if (IS_TRUSTED(ch) ||
@@ -2503,12 +2507,14 @@ void do_steal(P_char ch, char *argument, int cmd)
 
   CharWait(ch, PULSE_VIOLENCE * 2);
   
-  if (obj && IS_ARTIFACT(obj) && 
+/* 
+ if (obj && IS_ARTIFACT(obj) && 
       !IS_TRUSTED(ch))
   {
     send_to_char("Dont even bother....better run.\r\n", ch);
     return;
   }
+*/
 
   switch (type)
   {
@@ -2548,7 +2554,7 @@ void do_steal(P_char ch, char *argument, int cmd)
       /*
        * success, but heavy stuff increases chance of getting caught
        */
-      percent -= GET_OBJ_WEIGHT(obj);
+      //percent -= GET_OBJ_WEIGHT(obj);
       if (IS_PC(victim))
       {
       	wizlog(MINLVLIMMORTAL, "%s &=LMjust stole &n%s (%d) from %s (%d) with percent (%d)\n",
@@ -2580,7 +2586,7 @@ void do_steal(P_char ch, char *argument, int cmd)
   case 2:
     /* snitching something from target's inven */
     /* heavy items increase difficulty */
-    percent -= GET_OBJ_WEIGHT(obj);
+    //percent -= GET_OBJ_WEIGHT(obj);
 
     if (roll > MIN(percent, 99))
       failed = TRUE;
@@ -2712,7 +2718,7 @@ void do_steal(P_char ch, char *argument, int cmd)
 
   /* slap this delay on them to stop the incredibly annoying snatch and
    * run */
-  if (GET_SPEC(ch, CLASS_THIEF, SPEC_CUTPURSE))
+  if (GET_SPEC(ch, CLASS_ROGUE, SPEC_THIEF))
     CharWait(ch, 18);
   else
     CharWait(ch, 24);

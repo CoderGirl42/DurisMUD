@@ -554,7 +554,8 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   {
     hits = (int) (hits * get_property("enhancement.healing.mod", 1.2));
   }
-  if(affected_by_spell(ch, TAG_NOMISFIRE)) //misfire code - drannak
+  /*
+if(affected_by_spell(ch, TAG_NOMISFIRE)) //misfire code - drannak
       {
 	hits = hits;
 	//send_to_char("damage output normal\r\n", ch);
@@ -564,6 +565,7 @@ void heal(P_char ch, P_char healer, int hits, int cap)
 	hits = (hits * .5);
 	//send_to_char("&+Rdamage output halved\r\n", ch);
 	}
+*/
   hits = vamp(ch, hits, cap);
 
 // debug("Hitting heal function in fight with (%d) hits.", hits);
@@ -4107,8 +4109,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       break;
     }
     // end of apply damage modifiers
-
-    //misfire damage reduction code for spells - drannak 8-12-2012
+/*
+    //misfire damage reduction code for spells - drannak 8-12-2012 disabling to tweak
     if(affected_by_spell(ch, TAG_NOMISFIRE))
       {
 	dam = dam;
@@ -4119,6 +4121,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 	dam = (dam * .5);
 	//send_to_char("&+Rdamage output halved\r\n", ch);
 	}
+*/
 
     if((af = get_spell_from_char(victim, SPELL_ELEM_AFFINITY)) &&
        ELEMENTAL_DAM(type))
@@ -4673,7 +4676,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
 
     if(has_innate(victim, INNATE_TROLL_SKIN))
       dam *= dam_factor[DF_TROLLSKIN];
-    
+  /*  
     if(affected_by_spell(ch, TAG_NOMISFIRE)) //new misfire code - drannak 8-12-2012
       {
 	dam = dam;
@@ -4684,6 +4687,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
 	dam = (dam * .5);
 	//send_to_char("&+Rdamage output halved\r\n", ch);
 	}
+*/
 
     if(has_innate(victim, INNATE_GUARDIANS_BULWARK) &&
 	victim->equipment[WEAR_SHIELD])
