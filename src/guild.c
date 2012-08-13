@@ -880,7 +880,7 @@ void prac_all_spells(P_char ch)
 
   for (spl = 0; spl < nSpellCnt; spl++)
     if (!SpellInSpellBook(ch, spell_list[spl].spell,
-        SBOOK_MODE_IN_INV + SBOOK_MODE_AT_HAND + SBOOK_MODE_ON_BELT))
+        SBOOK_MODE_IN_INV + SBOOK_MODE_AT_HAND + SBOOK_MODE_ON_BELT ))
     {
       // yes!  found a spell to scribe!
       char buf[MAX_STRING_LENGTH];
@@ -1013,14 +1013,20 @@ void do_practice(P_char ch, char *arg, int cmd)
     {
       sprintf(buf,
               "Well, sure, I know that one, but my conscience prevents me from teaching it to someone so unskilled as yourself.");
-      mobsay(teacher, buf);
+      if( teacher )
+        mobsay(teacher, buf);
+      else
+        send_to_char("That's too high of a circle for you.\n", ch);
       return;
     }
 
     if( !SKILL_DATA_ALL(ch, skl).rlevel[ch->player.spec] || SKILL_DATA_ALL(ch, skl).rlevel[ch->player.spec] > GET_LEVEL(ch) )
     {
-      mobsay(teacher,
+      if( teacher )
+        mobsay(teacher,
              "Hmm, I don't think you'd understand a damn thing if I *did* try to teach you.");
+      else
+        send_to_char("You wouldn't understand.\n", ch);
       return;      
     }
 
