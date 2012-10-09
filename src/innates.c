@@ -3746,7 +3746,7 @@ int get_innate_resistance(P_char ch)
     } 
   //  debug("after: %d", res);
   }
-  
+  debug("resistance: %d", res);
   return (res >= 100) ? 100 : res;
 }
 
@@ -3754,6 +3754,7 @@ int resists_spell(P_char caster, P_char victim)
 {
   int skill = GET_CHAR_SKILL(caster, SKILL_SPELL_PENETRATION);
   int in_room;
+  
 
   if(!caster ||
     !victim)
@@ -3780,11 +3781,13 @@ int resists_spell(P_char caster, P_char victim)
   
   if (has_innate(victim, INNATE_MAGIC_RESISTANCE))
   {
-    if(number(1, 101) > get_innate_resistance(victim)/10)
+	//if(number(1, 101) > get_innate_resistance(victim)) old check - drannak
+	int shrugroll = number(1, 101);
+	//debug("shrug check roll: %d", shrugroll);
+	if(shrugroll > get_innate_resistance(victim))
     {
-      return FALSE;
+	return FALSE;
     }
-    
     if(GET_RACE(victim) == RACE_BEHOLDER)
     {
       act("&+W$n&+W's central eye glows brightly as it negates your spell!",
