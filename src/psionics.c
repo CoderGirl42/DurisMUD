@@ -3027,7 +3027,7 @@ void spell_ether_warp(int level, P_char ch, char *arg, int type,
   char_from_room(ch);
   ch->specials.z_cord = victim->specials.z_cord;
   char_to_room(ch, to_room, -1);
-  send_to_char("Your body reforms from the light.\r\n", ch);
+  send_to_char("&+LYour body reforms from the light.\r\n", ch);
 
   for (tmp = world[ch->in_room].people; tmp; tmp = tmp_next)
   {
@@ -3038,8 +3038,15 @@ void spell_ether_warp(int level, P_char ch, char *arg, int type,
         FALSE, ch, 0, tmp, TO_VICT);
   }
 
-  if (!damage(ch, ch, dam, TYPE_UNDEFINED))
-    CharWait(ch, 20);
+  //if (!damage(ch, ch, dam, TYPE_UNDEFINED))
+  if(GET_SPEC(ch, CLASS_PSIONICIST, SPEC_PSYCHEPORTER))
+	{
+	  send_to_char("&+LBeing a &+Bmaster &+Lof &+gmol&+Gecu&+glar &+Ltravel, your &+Gbody &+Lquickly recovers from your &+mjour&+Mney&+L.&n\r\n", ch);
+	}
+	else
+	{
+	  CharWait(ch, 40);
+	}
 }
 
 void spell_thought_beacon(int level, P_char ch, char *arg, int type,
