@@ -649,15 +649,15 @@ int sql_world_quest_can_do_another(P_char ch)
 
   int returning_value = 0;
   if(GET_LEVEL(ch) <= 30)
-    returning_value = get_property("world.quest.max.level.30.andUnder", 4.000);
+    returning_value = get_property("world.quest.max.level.30.andUnder", 6.000);
   else if(GET_LEVEL(ch) <= 40)
-    returning_value = get_property("world.quest.max.level.40.andUnder", 5.000);
+    returning_value = get_property("world.quest.max.level.40.andUnder", 6.000);
   else if(GET_LEVEL(ch) <= 50) 
     returning_value = get_property("world.quest.max.level.50.andUnder", 6.000);
   else if(GET_LEVEL(ch) <= 55) 
     returning_value = get_property("world.quest.max.level.55.andUnder", 6.000);
   else 
-    returning_value = get_property("world.quest.max.level.other", 5.000);
+    returning_value = get_property("world.quest.max.level.other", 6.000);
 
   if (db)
   {
