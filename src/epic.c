@@ -194,7 +194,7 @@ struct epic_teacher_skill {
   {67103, SKILL_ADVANCED_MEDITATION, 0, 100, 0, 0, 0},
   {96013, SKILL_SUMMON_BLIZZARD, 0, 100, 0, 0, 0},
   {19141, SKILL_ANATOMY, 0, 100, 0, 0, 0},
-  {75500, SKILL_CHANT_MASTERY, 0, 100, 0, 0, 0},
+  //{75500, SKILL_CHANT_MASTERY, 0, 100, 0, 0, 0},
   {34446, SKILL_SUMMON_FAMILIAR, 0, 100, 0, 0, 0},
   {41327, SKILL_DEVOTION, 0, 100, 0, 0, 0},
   {36720, SKILL_SCRIBE_MASTERY, 0, 100, 0, 0, 0},
@@ -218,14 +218,14 @@ struct epic_teacher_skill {
   {22436, SKILL_FIX, 0, 100, 0, 0, 0}, //smith in stormport
   {9454,  SKILL_CRAFT, 0, 100, 0, 0, 0}, //Rjinal in Samirz
   {40760, SKILL_ENCRUST, 0, 100, SKILL_CRAFT, 0, 100}, //Snent in Divine Home
-  {78006, SKILL_ENCHANT, 0, 100, 0, SKILL_SPELLBIND, 0}, //Bargor in Oasis
-  {94017, SKILL_SPELLBIND, 0, 100, 0, SKILL_ENCHANT, 0}, //Kalroh in Maze of Undead Army
+  //{78006, SKILL_ENCHANT, 0, 100, 0, SKILL_SPELLBIND, 0}, //Bargor in Oasis
+  //{94017, SKILL_SPELLBIND, 0, 100, 0, SKILL_ENCHANT, 0}, //Kalroh in Maze of Undead Army
   {37145, SKILL_SMELT, 0, 100, 0, 0, 0}, //Carmotee in Dumaathe
   {21618, SKILL_FORGE, 0, 100, 0, 0, 0}, //Tenkuss in Aravne
   {49162, SKILL_TOTEMIC_MASTERY, 0, 100, 0, 0, 0},
   {76008, SKILL_INFUSE_MAGICAL_DEVICE, 0, 100, 0, 0, 0},  //Deathium in Ultarium
   {28975, SKILL_INDOMITABLE_RAGE, 0, 100, 0, 0, 0},
-  {70806, SKILL_NATURES_SANCTITY, 0, 100, 0, 0, 0},
+  //{70806, SKILL_NATURES_SANCTITY, 0, 100, 0, 0, 0},
   {6013,  SKILL_EXPERT_PARRY, 0, 100, 0, 0, 0}, //Bemon in Clavikord Swamp
   {75615, SKILL_EXPERT_RIPOSTE, 0, 100, 0, 0, 0}, //Rolart in Obsidian Citadel
   {98534, SKILL_EPIC_STRENGTH, 0, 100, 0, 0, 0}, //Olat in Bandit Canyon
