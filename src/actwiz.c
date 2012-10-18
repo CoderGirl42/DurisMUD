@@ -4841,14 +4841,14 @@ int rolls[8];
   ch->base_stats.Wis = ch->curr_stats.Wis = rolls[6];
   ch->base_stats.Cha = ch->curr_stats.Cha = rolls[7];
 */
-  ch->base_stats.Str = ch->curr_stats.Str = 85;
-  ch->base_stats.Dex = ch->curr_stats.Dex = 85;
-  ch->base_stats.Agi = ch->curr_stats.Agi = 85;
-  ch->base_stats.Con = ch->curr_stats.Con = 85;
-  ch->base_stats.Pow = ch->curr_stats.Pow = 85;
-  ch->base_stats.Int = ch->curr_stats.Int = 85;
-  ch->base_stats.Wis = ch->curr_stats.Wis = 85;
-  ch->base_stats.Cha = ch->curr_stats.Cha = 85;
+  ch->base_stats.Str = ch->curr_stats.Str = 80;
+  ch->base_stats.Dex = ch->curr_stats.Dex = 80;
+  ch->base_stats.Agi = ch->curr_stats.Agi = 80;
+  ch->base_stats.Con = ch->curr_stats.Con = 80;
+  ch->base_stats.Pow = ch->curr_stats.Pow = 80;
+  ch->base_stats.Int = ch->curr_stats.Int = 80;
+  ch->base_stats.Wis = ch->curr_stats.Wis = 80;
+  ch->base_stats.Cha = ch->curr_stats.Cha = 80;
 
   //drannak working
   ch->base_stats.Karma = ch->curr_stats.Karma = number(50, 110); //  These two rolls are invisible
