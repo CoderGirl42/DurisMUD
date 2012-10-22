@@ -1074,7 +1074,7 @@ bool DragonCombat(P_char ch, int awe)
                 return (CastMageSpell(ch, tchar1));
           }
         }
-      } else
+      } elsetell
 #endif
 #if 0
       {
@@ -1087,12 +1087,13 @@ bool DragonCombat(P_char ch, int awe)
        * fail casting check?  Ok, let's add a sweep with the tail 1
        * in 6
        */
+      
       if(!number(0, 3))
   	{
     	 if (!isname("br_f", GET_NAME(ch)) && !isname("br_c", GET_NAME(ch)) &&
         !isname("br_g", GET_NAME(ch)) && !isname("br_a", GET_NAME(ch)) &&
         !isname("br_l", GET_NAME(ch)) && !isname("br_s", GET_NAME(ch)) &&
-        !isname("br_b", GET_NAME(ch)))
+        !isname("br_b", GET_NAME(ch)) && IS_DRAGON(ch))
     	  {
           if (IS_TITAN(ch) || IS_AVATAR(ch))
 	   StompAttack(ch);

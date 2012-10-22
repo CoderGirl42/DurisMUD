@@ -3520,6 +3520,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
   }
 #endif
   /* let's check for artis here */
+/*
 #if 0
   if (IS_ARTIFACT(obj_object) &&
       !CAN_WEAR(obj_object, WEAR_IOUN) &&
@@ -3539,7 +3540,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, int showit)
     send_to_char("You cannot wear any more items of such power!\r\n", ch);
     return FALSE;
   }
-
+*/
   free_hands = get_numb_free_hands(ch);
 
   switch (keyword)

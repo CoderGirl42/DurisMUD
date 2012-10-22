@@ -2620,7 +2620,7 @@ void event_dragonlord_check(P_char ch, P_char victim, P_obj obj, void *data)
   // }
 }
 
-int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
+int dragonlord_plate_old(P_obj obj, P_char ch, int cmd, char *arg)
 {
   P_obj temp_obj;
   P_char temp_ch;
@@ -2689,7 +2689,7 @@ int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
   return FALSE;
 }
 
-int dragonlord_plate_old(P_obj obj, P_char ch, int cmd, char *arg)
+int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
 {
   int curr_time;
   P_char temp_ch;
