@@ -2697,6 +2697,38 @@ int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
   /*
      check for periodic event calls
    */
+  if (cmd == -10)
+    return TRUE;
+ 
+ if (!cmd){
+    if(OBJ_WORN(obj)) {
+      temp_ch = obj->loc.wearing;
+      curr_time = time(NULL);
+      if (obj->timer[1] + 1800 <= curr_time && 
+	 !IS_AFFECTED4(temp_ch, AFF4_STORNOGS_SPHERES)) {
+        spell_stornogs_spheres(53, temp_ch, 0, SPELL_TYPE_SPELL, temp_ch, 0);
+        obj->timer[1] = curr_time;
+        return TRUE;
+      }
+      if (obj->timer[0] + 30 <= curr_time && !affected_by_spell(temp_ch, SPELL_STONE_SKIN)) {
+        spell_stone_skin(45, temp_ch, 0, SPELL_TYPE_SPELL, temp_ch, 0);
+        obj->timer[0] = curr_time;
+        return TRUE;
+      }
+    }
+  }
+  return(FALSE);
+}
+
+
+int dragonlord_plate_oldold(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  int curr_time;
+  P_char temp_ch;
+
+  /*
+     check for periodic event calls
+   */
   if (cmd == CMD_SET_PERIODIC)
     return TRUE;
 
