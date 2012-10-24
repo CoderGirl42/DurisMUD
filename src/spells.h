@@ -934,9 +934,10 @@
 #define SKILL_RAGE_REORIENT          1262 // Added to handle reorient on rage skill
 #define SKILL_TIGER_PALM             1263
 #define SKILL_DIAMOND_SOUL           1264
+#define SKILL_RESTRAIN               1293
 
 #ifndef SKILLPOINTS
-  #define LAST_SKILL                   SKILL_DIAMOND_SOUL
+  #define LAST_SKILL                   SKILL_RESTRAIN
 #endif
 
 // New skills for skill points.
@@ -968,7 +969,6 @@
 #define SKILL_NATURESPROTECTIONS     1290
 #define SKILL_PROTECT_FROM_EVIL      1291
 #define SKILL_NATURESSENSES          1292
-#define SKILL_RESTRAIN		  1293
 
 #ifdef SKILLPOINTS
 #define WHITE_SKILL                  -1
