@@ -10,8 +10,8 @@ bird huge blue shimmering~
 &+bas a fearsome and &+rfierce&+b fighter.
 &+bThe bird seems to be &+mhungry&+b now.
 ~
-1107691724 0 0 404332600 2242 2097152 0 1000 S
-B 0 1 4
+1107691724 0 0 0 404332600 2242 2097152 0 1000 S
+B 0 1 0 4
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -26,8 +26,8 @@ the white oblong worm~
 &+y one seems to be able to defend itself from most attackers.&n
 &+yFurthermore, &+Wwhiteworms&+y are well known for their &+Rextreme endurance.&n
 ~
-1073744076 0 0 320340144 128 0 1048576 0 S
-AP 0 1 3
+1073744076 0 0 0 320340144 128 0 1048576 0 S
+AP 0 1 0 3
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -41,8 +41,8 @@ A white oblong shape is here, moving slowly in the soil.&n
 &+yIf this worm were be a little smaller, it would serve as good food for birds.
 &+yUnfortunately, this one is not, and seems to be able to defend itself well.
 ~
-76 0 0 320340128 128 0 0 0 S
-AP 0 1 -1
+76 0 0 0 320340128 128 0 0 0 S
+AP 0 1 0 -1
 30 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -55,8 +55,8 @@ bird blue bluebird medium~
 &+banything nor anyone except itself. Its soft blue feathers seem to &+Bshimmer&n
 &+bsoftly while it moves.&n
 ~
-33685580 0 0 134774816 2 0 0 200 S
-B 0 1 -1
+33685580 0 0 0 134774816 2 0 0 200 S
+B 0 1 0 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -71,8 +71,8 @@ scorpion black slim shape~
 &+Rdozen humans. It moves so fast that is se&+Lems almost impossible to avoid being
 &+Rhit by the deadly sting. You realize this &+Lmay be your last battle...
 ~
-1107296330 1 0 301990168 0 0 0 -1000 S
-I 0 257 2
+1107296330 1 0 0 301990168 0 0 0 -1000 S
+I 0 257 0 2
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -94,8 +94,8 @@ dracolizard dragon lizard draco br_a~
 &+cand small wings protruding from its back. Although it can breath acid slightly
 &+cweaker than its father, its fangs are sharp enough to cut through any armor.
 ~
-281674 0 0 537395352 12354 0 0 -1000 S
-D 0 1 6
+281674 0 0 0 537395352 12354 0 0 -1000 S
+D 0 1 0 6
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -108,8 +108,8 @@ lizard tiny forest~
 &+gMeasuring marely two inches from head to tail, this puny animal fears everything
 &+gthat moves, and for good reason. As even any bigger snail can feel more secure.
 ~
-136 0 0 301989888 0 0 0 0 S
-R 0 1 1
+136 0 0 0 301989888 0 0 0 0 S
+R 0 1 0 1
 10 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -125,8 +125,8 @@ forager tribal tribesman man~
 &+ywith gathering wild mushrooms and roots for food for his tribe. At his side
 &+yhangs a small wicker basket almost full with already found food.
 ~
-264204 0 0 32768 0 0 0 -350 S
-PB 0 1 -1
+264204 0 0 0 32768 0 0 0 -350 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -143,8 +143,8 @@ hunter tribal tribesman man~
 &+ycarries a spare one. He's not a skilled hunter, so he still hasn't scored
 &+y anything bigger than a rabbit today.
 ~
-1074006088 0 0 557088 0 0 0 -350 S
-PB 0 2 -1
+1074006088 0 0 0 557088 0 0 0 -350 S
+PB 0 2 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -161,8 +161,8 @@ hunter master tribal tribesman man~
 &+Geye on every tribe member in the forest. He's responsible for the safety of the
 &+Gwhole tribe. And he must teach all young hunters their ways in the forest, too.
 ~
-1174702094 0 0 302022688 30 0 0 -500 S
-PB 0 2 -1
+1174702094 0 0 0 302022688 30 0 0 -500 S
+PB 0 2 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -175,8 +175,8 @@ vine thorny~
 &+Gthorny vine. The strange thing about this particular vine is that is seems to
 &+Gmove and shiver slightly, even though no wind blows down here.
 ~
-14 1 0 32768 2 0 0 -400 S
-VT 0 1 2
+14 1 0 0 32768 2 0 0 -400 S
+VT 0 1 0 2
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -191,8 +191,8 @@ vine young small~
 &+gIt is still young, and will probably loose in the competition for living
 &+gplace with nearby older vine plants.
 ~
-10 0 0 32768 2 0 0 0 S
-VT 0 1 2
+10 0 0 0 32768 2 0 0 0 S
+VT 0 1 0 2
 22 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -206,8 +206,8 @@ ivy poisonous~
 &+gdeadly poison. All around there are scattered &+rfresh corpses&+g and &+Lold&+W skeletons&n
 &+gof various animals, small and large alike. There are some humanoid ones, too.&n
 ~
-10 1 0 32768 2 0 0 -400 S
-VT 0 1 3
+10 1 0 0 32768 2 0 0 -400 S
+VT 0 1 0 3
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -221,8 +221,8 @@ ivy small poisonous~
 &+gBigger ones can poison to death a whole team of tribesmen before they can even
 &+gnotice the awaiting danger.
 ~
-10 0 0 32768 2 0 0 0 S
-VT 0 1 2
+10 0 0 0 32768 2 0 0 0 S
+VT 0 1 0 2
 18 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -235,8 +235,8 @@ spider brown~
 &+yNothing impressive, but still an opponent that could cause some harm in fight.
 &+yIt eyes you carefully, looking for a right moment to strike.
 ~
-137 0 0 34111488 0 0 0 0 S
-AS 0 1 -1
+137 0 0 0 34111488 0 0 0 0 S
+AS 0 1 0 -1
 25 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -250,8 +250,8 @@ deer large~
 &+yThe one noticeable thing about this one particular deer is that it has a spot&n
 &+yof &+Ggreen&+y fur just under its throat, which is rather unusual.&n
 ~
-33818761 0 0 32 0 0 0 0 S
-AE 0 1 4
+33818761 0 0 0 32 0 0 0 0 S
+AE 0 1 0 4
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -265,8 +265,8 @@ bear black stout~
 &+ysomething big. Judging from the bones and strips of clothing lying before the
 &+ybear, it was a young tribesman.
 ~
-264330 1 0 33554688 64 0 8192 0 S
-A 0 1 4
+264330 1 0 0 33554688 64 0 8192 0 S
+A 0 1 0 4
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 4 4 1
@@ -279,8 +279,8 @@ spider huge female~
 &+Lit is. Its sleek and slightly oblong body moves with incredible speed.
 &+LDrops of poison drip down its fangs. It seems to be hungry, very hungry.
 ~
-1275332810 1 0 35127568 8222 0 8192 -1000 S
-AS 0 8192 4
+1275332810 1 0 0 35127568 8222 0 8192 -1000 S
+AS 0 8192 0 4
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -296,8 +296,8 @@ chieftain tribesman man boss tribal~
 &+c Everything, just not now.&n
 &+cNow he is &+Whungry&+c, awaiting for his wife to prepare dinner.&n
 ~
-67373070 0 0 33619984 0 0 0 -1000 S
-PB 0 1 -1
+67373070 0 0 0 33619984 0 0 0 -1000 S
+PB 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 6 1
@@ -314,8 +314,8 @@ wife chieftess woman~
 &+cher prison. She's wearing a pair of heavy iron shackles on her ankles.
 &+cThe shackles give her only as much freedom as it is needed to cook and clean.
 ~
-138 0 0 50331648 0 0 0 -450 S
-PB 0 1 -1
+138 0 0 0 50331648 0 0 0 -450 S
+PB 0 1 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -329,8 +329,8 @@ deer large~
 &+yfur, large watery eyes, and seem to have never met any hunter in its life.
 &+yThe lack of awarness will probably cause its end, sooner or later.
 ~
-264328 0 0 32 0 0 0 0 S
-AE 0 1 4
+264328 0 0 0 32 0 0 0 0 S
+AE 0 1 0 4
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -345,8 +345,8 @@ guard tribal tribesman warrior~
 &+yis dressed just like every other tribal warrior. Except that he's wearing
 &+ya thick bearhide belt, an insignia of guard on duty.
 ~
-67373134 0 0 33619968 0 0 0 -500 S
-PB 0 1 -1
+67373134 0 0 0 33619968 0 0 0 -500 S
+PB 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -360,8 +360,8 @@ guard tribal tribesman warrior~
 &+yHe is wielding a long wooden pike, and is wearing a thick bearhide belt,
 &+yan insignia of guard on duty.
 ~
-67373132 0 0 302063616 0 0 0 -500 S
-PB 0 1 -1
+67373132 0 0 0 302063616 0 0 0 -500 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -376,8 +376,8 @@ warrior tribal tired sleeping~
 &+ycontinue his duties. He would definitely not be happy if anyone disturbed his
 &+y sleep.
 ~
-264200 0 0 33554432 0 0 0 -500 S
-PB 0 1 -1
+264200 0 0 0 33554432 0 0 0 -500 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 4 5 1
@@ -392,8 +392,8 @@ nurse tribal woman~
 &+cit also lets rest of the women work more for tribe's sake. Unlike other women
 &+cin the tribe, she's wearing an ankle long linen robe.
 ~
-67373070 0 0 33554448 0 0 0 -450 S
-PB 0 32768 -1
+67373070 0 0 0 33554448 0 0 0 -450 S
+PB 0 32768 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 1
@@ -407,8 +407,8 @@ woman tribal naked~
 &+yhow hard punishment is being used against such deeds. She is lying there on the
 &+yblanket entirely naked, her young beautiful body visible in all its details.
 ~
-264330 0 0 33554432 0 0 0 -350 S
-PB 0 1 -1
+264330 0 0 0 33554432 0 0 0 -350 S
+PB 0 1 0 -1
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 2
@@ -422,8 +422,8 @@ man tribal naked~
 &+yhe knows that such a deed is punishable with death. He placed himself on the
 &+yblanket, his young muscular and entirely naked body pulsing with desire.
 ~
-1141115018 0 0 33554432 0 0 0 -350 S
-PB 0 1 -1
+1141115018 0 0 0 33554432 0 0 0 -350 S
+PB 0 1 0 -1
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 1
@@ -436,8 +436,8 @@ boy young tribal child~
 &+cto the nursery to be reared. From the sad look in his eyes you can guess he
 &+cstill misses his momma. He can't be older than eight.
 ~
-2186 0 0 0 0 0 0 -350 S
-PB 0 1 -1
+2186 0 0 0 0 0 0 0 -350 S
+PB 0 1 0 -1
 26 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -450,8 +450,8 @@ girl young tribal~
 &+cto the nursery to be reared. From the sad look in her eyes you can guess she
 &+cis still missing her mother. She can't be more than seven years old.
 ~
-2186 0 0 0 0 0 0 -350 S
-PB 0 1 -1
+2186 0 0 0 0 0 0 0 -350 S
+PB 0 1 0 -1
 25 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -465,8 +465,8 @@ woman tribal working~
 &+cforest, doing lots of small but important things. She is wearing a deerskin
 &+ckilt, and nothing more.
 ~
-264268 0 0 0 0 0 0 -500 S
-PB 0 1 -1
+264268 0 0 0 0 0 0 0 -500 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -482,8 +482,8 @@ woman tribal young~
 &+cwife. Untill then she can make love to any still unmarried man in the village.
 &+cIt is called "material probing".
 ~
-264334 0 0 4 0 0 0 -500 S
-PB 0 1 -1
+264334 0 0 0 4 0 0 0 -500 S
+PB 0 1 0 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -497,8 +497,8 @@ lookout tribal boy young~
 &+yas from his youngest days he was known for having awesome and farseeing sight.
 &+yHe was able to see an ant from the distance of twenty paces or even more.
 ~
-264202 0 0 33554476 156 0 0 -450 S
-PB 0 1 -1
+264202 0 0 0 33554476 156 0 0 -450 S
+PB 0 1 0 -1
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 6 8 1
@@ -513,8 +513,8 @@ devil fiend br_f~
 &+rlong fangs protrude from his upper jaw. A small horn seems to grow in the
 &+rmiddle of his forehead
 ~
-1074137130 0 0 671121448 4098 0 0 -1000 S
-Y 0 1 -1
+1074137130 0 0 0 671121448 4098 0 0 -1000 S
+Y 0 1 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -527,8 +527,8 @@ demon fiend br_f~
 &+rHis body is covered with black demon scale, and he floats two feet above the
 &+rground. Powerful and dangerous must be the magic that summoned him, indeed.
 ~
-1074137134 0 0 671121448 4098 0 0 -1000 S
-X 0 1 -1
+1074137134 0 0 0 671121448 4098 0 0 -1000 S
+X 0 1 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -544,8 +544,8 @@ shaman tribal tribesman evil~
 &+y   He is wearing a bright c&+Rynober robe and hold&+ys a black'n'white totem in his
 &+yright hand. On his neck, a piec&+Re of &+rhellfire&+R is dangling&+y on a silver chain.
 ~
-1141246030 0 0 65720 2 0 0 -1000 S
-PB 0 256 5
+1141246030 0 0 0 65720 2 0 0 -1000 S
+PB 0 256 0 5
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -560,8 +560,8 @@ apprentice shaman young tribal tribesman~
 &+yand how to use animals for his own goals. He enjoys being a shaman apprentice,
 &+yeven when he must run his masters shop.
 ~
-16394 0 0 0 0 0 0 -500 S
-PB 0 256 -1
+16394 0 0 0 0 0 0 0 -500 S
+PB 0 256 0 -1
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -575,8 +575,8 @@ tree ancient huge~
 &+gparts of them are above ground. The enormous grey trunk is covered with green
 &+gmoss. The tree seems to be able to move on its own.
 ~
-1174427722 0 0 50405768 2050 0 0 0 S
-VT 0 1 6
+1174427722 0 0 0 50405768 2050 0 0 0 S
+VT 0 1 0 6
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -590,8 +590,8 @@ tree ancient~
 &+gwas assuming shapes of trees and animals and was walking the face of Duris.
 &+gThis tree is huge, really huge. It seems to be protecting its father.
 ~
-33577034 0 0 16851168 0 0 0 0 S
-VT 0 1 6
+33577034 0 0 0 16851168 0 0 0 0 S
+VT 0 1 0 6
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -603,8 +603,8 @@ trout small~
 &+B   A small fish, swimming in the water. When it grows up, it will be hunted for
 &+Bby tribal fisherman. But right now it enjoys swimming in the pond.
 ~
-262154 0 0 0 0 0 0 0 S
-F 0 0 1
+262154 0 0 0 0 0 0 0 0 S
+F 0 0 0 1
 4 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -616,8 +616,8 @@ trout large~
 &+B   This trout is large for its kind. It could serve as a piece of food, and it
 &+Bwill. It's only a matter of time until tribal fisherman catches it.
 ~
-262154 0 0 268435456 0 0 0 0 S
-F 0 1 2
+262154 0 0 0 268435456 0 0 0 0 S
+F 0 1 0 2
 20 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -633,8 +633,8 @@ here, and uses his sense of touch and smell rather than his eyes. He's
 holding a fishing rod in his right hand, and he's heading toward the forest
 pool.
 ~
-264206 0 0 32768 0 0 0 -350 S
-PB 0 1 -1
+264206 0 0 0 32768 0 0 0 -350 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -649,8 +649,8 @@ forager tribal tribesman~
 &+yhis sense of touch and smell rather than his eyes. He carries a hoe in his
 &+yright hand. He's occupied with digging out various roots.
 ~
-264204 0 0 32768 0 0 0 -350 S
-PB 0 1 -1
+264204 0 0 0 32768 0 0 0 -350 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -667,8 +667,8 @@ alveanerle illithid wanderer elder~
 &+Lvarious daemon species. Astral Plane is not a safe place even for such
 &+Lpowerfull beings, so he's carrying a magically enchanted whip with him.
 ~
-18510 1 0 301990184 0 2097152 0 -1000 S
-MF 0 516 -1
+18510 1 0 0 301990184 0 2097152 0 -1000 S
+MF 0 516 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -681,8 +681,8 @@ bird blue bluebird large~
 &+banything nor anyone except itself. Its soft blue feathers seem to &+Bshimmer&n
 &+bsoftly while it moves.&n
 ~
-33685580 0 0 134774880 0 0 0 200 S
-B 0 1 3
+33685580 0 0 0 134774880 0 0 0 200 S
+B 0 1 0 3
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -695,8 +695,8 @@ bird blue bluebird small~
 &+banything nor anyone except itself. Its soft blue feathers seem to &+Bshimmer&n
 &+bsoftly while it moves.&n
 ~
-33947724 0 0 134774880 0 0 0 200 S
-B 0 1 -1
+33947724 0 0 0 134774880 0 0 0 200 S
+B 0 1 0 -1
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -710,8 +710,8 @@ guard tribal tribesman warrior~
 &+yplants and hunters hunt for animals. He is wielding a long wooden pike, and is
 &+ywearing a thick bearhide belt, an insignia of guard on duty.
 ~
-67373132 0 0 302063616 0 0 0 -500 S
-PB 0 1 -1
+67373132 0 0 0 302063616 0 0 0 -500 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -724,8 +724,8 @@ spider brown~
 &+yNothing impressive, but still an opponent that could cause some harm in fight.
 &+yIt eyes you carefully, looking for a right moment to strike.
 ~
-136 0 0 34111488 0 0 0 0 S
-AS 0 8192 -1
+136 0 0 0 34111488 0 0 0 0 S
+AS 0 8192 0 -1
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -741,8 +741,8 @@ guard tribal tribesman warrior~
 &+ywarrior. Except that he's wearing a thick bearhide belt, an insignia of guard
 &+yon duty.
 ~
-1141114958 0 0 33619968 0 0 0 -500 S
-PB 0 1 -1
+1141114958 0 0 0 33619968 0 0 0 -500 S
+PB 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -758,8 +758,8 @@ ivy poisonous huge~
 &+gconsciousness to this usually rather dull plant. On the other hand, such things
 &+ghappen only in fairy tales.
 ~
-22606 1 0 269590840 66 0 0 -800 S
-VT 0 1 4
+22606 1 0 0 269590840 66 0 0 -800 S
+VT 0 1 0 4
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -773,8 +773,8 @@ ivy poisonous~
 &+gdeadly poison. It seems you will have to cut your way right through it if you
 &+gwant to get out of this passage.
 ~
-20490 1 0 1081352 2 0 0 -400 S
-VT 0 1 2
+20490 1 0 0 1081352 2 0 0 -400 S
+VT 0 1 0 2
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -788,8 +788,8 @@ ivy poisonous~
 &+gdeadly poison, although in rather sleepy and slowish manner. Who said a plant,
 &+geven such poisonous as this one, can't take a short nap?
 ~
-20490 1 0 1081344 2 0 0 -400 S
-VT 0 1 2
+20490 1 0 0 1081344 2 0 0 -400 S
+VT 0 1 0 2
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 4 8 0
@@ -805,8 +805,8 @@ hellwing daemon demon hellwing skeletal~
 &+ropponent. How this abomination got here, apprears to be yet one more question
 &+rthat will never get answered.
 ~
-1141262476 1 0 436832512 2051 0 0 -1000 S
-X 0 16777216 6
+1141262476 1 0 0 436832512 2051 0 0 -1000 S
+X 0 16777216 0 6
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -819,8 +819,8 @@ bird red redbird bird medium~
 &+Ranything nor anyone except itself.&+R Its fiery red feathers seem to &+Yshimmer&n
 &+rviolently&+R while it moves.&n
 ~
-33685580 0 0 134250528 3 0 0 200 S
-B 0 1 -1
+33685580 0 0 0 134250528 3 0 0 200 S
+B 0 1 0 -1
 37 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -833,8 +833,8 @@ bird red redbird large~
 &+Ranything nor anyone except itself.&+R Its fiery red feathers seem to &+Yshimmer&n
 &+rviolently&+R while it moves.&n
 ~
-33685580 0 0 134250592 3 0 0 200 S
-B 0 1 3
+33685580 0 0 0 134250592 3 0 0 200 S
+B 0 1 0 3
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -847,8 +847,8 @@ bird red redbird small~
 &+Ranything nor anyone except itself.&+R Its fiery red feathers seem to &+Yshimmer&n
 &+rviolently&+R while it moves.&n
 ~
-33947724 0 0 134250592 3 0 0 200 S
-B 0 1 -1
+33947724 0 0 0 134250592 3 0 0 200 S
+B 0 1 0 -1
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -862,8 +862,8 @@ vampire enslaved undead~
 &+Lillithid elder. Only his masters death would free him, but he himself is unable
 &+Lto cause harm to him.
 ~
-18510 1 0 301990200 0 2097152 0 -1000 S
-UV 0 1 4
+18510 1 0 0 301990200 0 2097152 0 -1000 S
+UV 0 1 0 4
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -879,8 +879,8 @@ drow hunter xazapath~
 &+Lunderworld, and the most hated race on the surface. How this particular drow
 &+Lfound his way up to this place, is still a secret.
 ~
-1074165916 131072 0 68681736 0 0 0 -1000 S
-PL 3 8194 -1
+1074165916 131072 0 0 68681736 0 0 0 -1000 S
+PL 3 8194 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -893,8 +893,8 @@ spider hairy huge male~
 &+Loblongue body is covered with long black hair. His eight legs move with great
 &+Lspeed while he speeds towards any living being he can sense.
 ~
-1074006088 1 0 33628160 66 0 0 -1000 S
-AS 0 1 3
+1074006088 1 0 0 33628160 66 0 0 -1000 S
+AS 0 1 0 3
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -908,8 +908,8 @@ spider hairy huge female~
 &+LHer whole oblongue body is covered with long black hair that flows gently while
 &+Lshe rushes to attack.
 ~
-262216 1 0 33628168 66 0 0 -1000 S
-AS 0 1 2
+262216 1 0 0 33628168 66 0 0 -1000 S
+AS 0 1 0 2
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -923,8 +923,8 @@ queen spider huge female~
 &+Ltheir offspring. She is slightly bigger than other spiders here, and her jaw
 &+Lseems to be even nastier.
 ~
-67389512 0 8388608 33628168 66 0 0 -1000 S
-AS 0 33 2
+67389512 0 8388608 0 33628168 66 0 0 -1000 S
+AS 0 33 0 2
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -938,8 +938,8 @@ wolf fierce~
 &+ythan a deer. And seeing how huge and well fed it is, it's obvious that this
 &+ytactic is working fine for him.
 ~
-1073744072 1 0 33587200 66 0 0 -500 S
-AC 0 1 3
+1073744072 1 0 0 33587200 66 0 0 -500 S
+AC 0 1 0 3
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -954,8 +954,8 @@ wolf savage~
 &+ytactic is working fine for him. There are still some strips of his last victims
 &+yflesh hanging from his jaws.
 ~
-1073744072 1 0 33587200 66 0 0 -500 S
-AC 0 1 3
+1073744072 1 0 0 33587200 66 0 0 -500 S
+AC 0 1 0 3
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -970,8 +970,8 @@ wolf savage~
 &+ytactic is working fine for her. There are still some strips of her last victims
 &+yflesh hanging from her jaws.
 ~
-1073744072 1 0 33587200 66 0 0 -500 S
-AC 0 1 3
+1073744072 1 0 0 33587200 66 0 0 -500 S
+AC 0 1 0 3
 48 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -988,8 +988,8 @@ wolf grey alpha male~
 &+Ltrying to detect the if anything in his surrounding might endanger the safety
 &+Lof him or his pups.
 ~
-1208223756 1 0 20 0 0 0 0 S
-ac 0 1 4
+1208223756 1 0 0 20 0 0 0 0 S
+ac 0 1 0 4
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1003,8 +1003,8 @@ wolf female alpha grey~
 &+Llegs, and a general impression of agility and vitality that she spreads
 &+Laround herself. Definitely not an opponent to be taken lightly.
 ~
-264206 0 0 0 0 0 0 0 S
-ac 0 1 4
+264206 0 0 0 0 0 0 0 0 S
+ac 0 1 0 4
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -1018,8 +1018,8 @@ wolf pup~
 &+Lnatural hunter of surrounding forests. For now, it's just a cute
 &+Lfurry animal.
 ~
-2058 0 0 0 0 0 0 0 S
-ac 0 1 2
+2058 0 0 0 0 0 0 0 0 S
+ac 0 1 0 2
 30 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -1033,8 +1033,8 @@ wolf young grey~
 &+Lto watch it in its run, unless of course one happens to be the intended
 &+Ltarget of the chase.
 ~
-1208223756 0 0 301989924 64 0 0 0 S
-ac 0 1 3
+1208223756 0 0 0 301989924 64 0 0 0 S
+ac 0 1 0 3
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
