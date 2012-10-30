@@ -977,6 +977,7 @@ flagDef  affected5_bits[] = {
   {"STANCE DEFENSIVE", "Stance defensive", 0, 0},
   {"OBSCURING MIST", "Obscuring mist", 1, 0},
   {"NOT OFFENSIVE", "Non-offensive", 0, 0},
+  {"DECAYING FLESH", "Decaying Flesh", 1, 0},
   {0}
 };
 

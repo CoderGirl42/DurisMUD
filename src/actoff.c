@@ -2698,7 +2698,7 @@ void do_combination(P_char ch, char *argument, int cmd)
   }
   if(!affect_timer(ch,
         get_property("timer.secs.monkCombination", 30) * WAIT_SEC,
-        SKILL_BLADE_BARRAGE))
+        SKILL_COMBINATION))
   {
     send_to_char("You're still recovering from your last move.\n", ch);
     return;
@@ -2843,12 +2843,73 @@ void event_barrage(P_char ch, P_char victim, P_obj obj, void *data)
   CharWait(ch, 2 * PULSE_VIOLENCE);
 }
 
+
+
+void do_consume(P_char ch, char *argument, int cmd)	
+{
+	 P_char   victim = NULL;   
+       struct affected_type *af;
+	victim = ParseTarget(ch, argument); 
+
+    if(!ch)
+    return;
+    
+    if(!GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_VIOLATOR))
+    {
+     send_to_char("Consuming &+rflesh&n is too &+Ldark &nan art for you.&n\n", ch);
+     return;
+    }
+
+    if(!victim)
+   {
+    send_to_char("Who's &+gflesh &nwould you like to consume?&n\n", ch);
+    return;
+   }
+
+  if(!IS_AFFECTED5(victim, AFF5_DECAYING_FLESH))
+  {
+    send_to_char("Your victim does not appear to be affected by &+gdecaying &+Gflesh&n.\n", ch);
+    return;
+  }
+  else
+  {
+     int spell;
+      act("&+L$n &nmakes a gesture, and chunks of &+R$N&n's &+grotten &+yflesh&n fall to the ground with a dull &+Lthud&n...&n", FALSE, ch, 0, victim, TO_NOTVICT);
+      act("&+L$n &nmakes a gesture, and chunks of your &+grotten &+yflesh&n fall to the ground with a dull &+Lthud&n...&n", FALSE, ch, 0, victim, TO_VICT);
+      act("You &nmake a gesture, and chunks of &+R$N&n's &+grotten &+yflesh&n fall to the ground with a dull &+Lthud&n...&n", FALSE, ch, 0, victim, TO_CHAR);
+      af = get_spell_from_char(victim, SPELL_DECAYING_FLESH);
+      while(--af->modifier > 0)
+     {
+	act("...another chunk of &+R$N&n's &+grotten &+yflesh&n falls to the ground...&n", FALSE, ch, 0, victim, TO_NOTVICT);
+       act("...another chunk of your &+grotten &+yflesh&n falls to the ground...&n", FALSE, ch, 0, victim, TO_VICT);
+       act("...another chunk of &+R$N&n's &+grotten &+yflesh&n falls to the ground, and you feel your &+gprayer &nflow back into your mind...&n", FALSE, ch, 0, victim, TO_CHAR);
+            spell == memorize_last_spell(ch);
+     char buf[256];
+       send_to_char(buf, ch);
+     }
+     spell == memorize_last_spell(ch);
+     char buf[256];
+/*
+     sprintf( buf, "%s's essence &+Cempowers you&n and you are rewarded with &+G%s!\n",
+                 get_god_name(ch), skills[spell].name );
+*/
+     send_to_char(buf, ch); 
+     REMOVE_BIT(victim->specials.affected_by5, AFF5_DECAYING_FLESH);
+     act("...with a final gesture, &+L$n&n tears the last bit of &+gr&+Go&+gt&+Gt&+gi&+Gn&+gg&+r flesh&n from $N&n's &+gco&+Lrrod&+ged&n body.&n\r\n", FALSE, ch, 0, victim, TO_NOTVICT);
+     act("...with a final gesture, &+L$n&n tears the last bit of &+gr&+Go&+gt&+Gt&+gi&+Gn&+gg&+r flesh&n from your&n &+gco&+Lrrod&+ged&n body.&n\r\n", FALSE, ch, 0, victim, TO_VICT);
+     act("...with a final gesture, &+Lyou&n tear the last bit of &+gr&+Go&+gt&+Gt&+gi&+Gn&+gg&+r flesh&n from $N&n's &+gco&+Lrrod&+ged&n body.&n\r", FALSE, ch, 0, victim, TO_CHAR);
+     act("The mass of &+gflesh&n is quickly absorbed by you, leaving your body &+rstrengthened&n and your &+Lprayers &nrefreshed.&n\n", FALSE, ch, 0, victim, TO_CHAR);
+  }  
+	attack_back(ch, victim, FALSE);
+}
+
 void do_barrage(P_char ch, char *argument, int cmd)
 {
   struct affected_type af;
 
   if(!ch)
     return;
+
 
   if(!GET_CHAR_SKILL(ch, SKILL_BLADE_BARRAGE) || !GET_CLASS(ch, CLASS_RANGER))
   {

@@ -4011,6 +4011,73 @@ void spell_full_harm(int level, P_char ch, char *arg, int type, P_char victim,
   spell_damage(ch, victim, dam, SPLDAM_HOLY, RAWDAM_NOKILL, &messages);
 }
 
+void spell_decaying_flesh(int level, P_char ch, char *arg, int type,
+                            P_char victim, P_obj obj)
+{
+  struct affected_type af;
+
+  if(ch == victim)
+   {
+	send_to_char("You decide that would not be the best use of your dark arts.&n\n", ch);
+       return;
+   }
+  
+  if(!IS_ALIVE(ch) ||
+    !IS_ALIVE(victim))
+  {
+    return;
+  }
+  if(IS_AFFECTED5(victim, AFF5_DECAYING_FLESH))
+  {
+    af.type = SPELL_DECAYING_FLESH;
+	if (af.modifier == 5)
+      {
+        //affect_from_char(victim, SPELL_DECAYING_FLESH);
+        //REMOVE_BIT(victim->specials.affected_by4, AFF4_STORNOGS_SPHERES);
+        send_to_char("&+WMAX NUMBER OF DECAY.\r\n",
+                     victim);
+		return;
+      }
+    
+  }
+
+  memset(&af, 0, sizeof(af));
+  af.type = SPELL_DECAYING_FLESH;
+  af.bitvector5 = AFF5_DECAYING_FLESH;
+  af.duration = 100;
+  af.flags = AFFTYPE_SHORT;;
+
+  if(!IS_AFFECTED5(victim, AFF5_DECAYING_FLESH))
+  {
+    act("&+R$n &nraises their hand and points directly at &+L$N\n"
+	     "&+L$N &nsuddenly turns &+ggreen &nas their &+Rflesh &nbegins to &+Lwither&n and &+rrot&n.", FALSE, ch, 0, victim, TO_NOTVICT);
+    act("You &nraise your hand and point directly at &+L$N\n"
+	     "&+L$N &nsuddenly turns &+ggreen &nas their &+Rflesh &nbegins to &+Lwither&n and &+rrot&n.", FALSE, ch, 0, victim, TO_CHAR);
+   act("&+R$n &nraises their hand and points directly at &+LYOU&n!\n"
+	          "Your &+Rskin&n suddenly turns &+ggreen &nand starts &+Lwithering &nand &+rrotting &nright before your eyes!", FALSE, ch, 0, victim, TO_VICT);
+    af.modifier = 1;
+    affect_to_char(victim, &af);
+	
+  }
+  else
+  {
+    act("&+R$n &nagain points at &+L$N &ncausing the existing &+gdecay&n to worsen&n.", FALSE, ch, 0, victim, TO_ROOM);
+    act("&+RYou &nagain point at &+L$N &ncausing the existing &+gdecay&n to worsen&n.", FALSE, ch, 0, victim, TO_CHAR);
+    //af.modifier += 1;
+   // af->modifier ++;
+  
+     struct affected_type *af1;
+
+    for (af1 = victim->affected; af1; af1 = af1->next)
+      if(af1->type == SPELL_DECAYING_FLESH)
+      {
+        
+        af1->modifier = af1->modifier++;
+        af1->duration = af1->duration + 100;
+      }
+  }  
+}
+
 
 /*
  * spells2.c - Not directly offensive spells

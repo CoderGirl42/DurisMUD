@@ -2048,6 +2048,10 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 spell_stornogs_spheres);
   SPELL_ADD(CLASS_CONJURER, 11);
 
+  SPELL_CREATE_MSG("decaying flesh", SPELL_DECAYING_FLESH, PULSE_SPELLCAST * 1,
+		TAR_CHAR_ROOM, spell_decaying_flesh, "The &+gdecay&n finally leaves your body.");
+  SPEC_SPELL_ADD(CLASS_ANTIPALADIN, 7, SPEC_VIOLATOR);
+
   SPELL_CREATE("group stornogs spheres", SPELL_STORNOGS_GREATER_SPHERES, PULSE_SPELLCAST * 7,
                 TAR_SELF_ONLY, spell_group_stornog);
   SPELL_ADD(CLASS_CONJURER, 12);
