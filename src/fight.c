@@ -8278,6 +8278,11 @@ int calculate_attacks(P_char ch, int attacks[])
 	    send_to_char("&nYou move swiftly and execute an extra attack against your foe!&n\n\r", ch);
 	  }
 	}
+    
+    if(GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_VIOLATOR))
+	{
+	  ADD_ATTACK(PRIMARY_WEAPON);
+	}
 
     if(GET_CLASS(ch, CLASS_PSIONICIST) &&
       affected_by_spell(ch, SPELL_COMBAT_MIND))
