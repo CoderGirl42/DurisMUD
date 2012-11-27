@@ -42,7 +42,7 @@
 #define CLS(ch) (IS_ANSI_TERM(ch) ? "\033[H\033[J" : "")
 
 //#ifndef MEMCHK
-//
+//#
 //#define CREATE(result, type, number, tag)
 //  if (!((result) = (type *) calloc ((number), sizeof(type))))
 //    { perror("calloc failure"); raise(SIGSEGV); }
