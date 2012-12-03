@@ -120,6 +120,7 @@ struct allowed_race_spec_struct {
 	//{RACE_HALFLING, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER},
         {RACE_HALFLING, CLASS_SHAMAN,      SPEC_ALL},
 	{RACE_HALFLING, CLASS_RANGER,      SPEC_ALL},
+       {RACE_HALFLING, CLASS_MERCENARY,	SPEC_ALL},
 	/* End Halfling Options */
 
 	/* Start Gnome Options */
@@ -185,6 +186,7 @@ struct allowed_race_spec_struct {
         {RACE_ORC, CLASS_REAVER,        SPEC_FLAME_REAVER},
 	{RACE_ORC, CLASS_ETHERMANCER,   SPEC_ALL},
 	{RACE_ORC, CLASS_NECROMANCER,   SPEC_ALL},
+       {RACE_ORC, CLASS_MONK, 	    SPEC_ALL},
 	/* End Orc Options */
 
 	/* Start Thri-Kreen Options */
@@ -245,6 +247,7 @@ struct allowed_race_spec_struct {
 	{RACE_GITHZERAI, CLASS_SORCERER,    SPEC_ALL},
 	{RACE_GITHZERAI, CLASS_CONJURER,    SPEC_ALL},
 	{RACE_GITHZERAI, CLASS_ETHERMANCER, SPEC_ALL},
+       {RACE_GITHZERAI, CLASS_PSIONICIST,	 SPEC_ALL},  
 	/* End Githzerai Options */
 
 	/* Start Drider Options */
