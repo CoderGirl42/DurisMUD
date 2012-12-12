@@ -7494,17 +7494,21 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
   }
   
   //Notching dodge fails dodge check.
+/* -Changing dodge to an innate skill, with c_agility as basis for check - Drannak 12/12/2012
   if(notch_skill
     (char_dodger, SKILL_DODGE, get_property("skill.notch.defensive", 100)))
   {
     return 0;
   }
-
+*/
   //Generating base dodge value.
+/*
   learned = (int) ((GET_CHAR_SKILL(char_dodger, SKILL_DODGE)) * 1.25) -
                   (WeaponSkill(attacker, wpn));
+*/
+  learned = (int) ((GET_C_AGI(char_dodger)) * 1.25) - (WeaponSkill(attacker, wpn));
 
-  // Everybody receives these values.
+  // Everybody receives these values. -maybe change this? Drannak
   learned +=  (int) (((STAT_INDEX(GET_C_AGI(char_dodger))) -
                     (STAT_INDEX(GET_C_DEX(attacker)))) / 2);
   
@@ -7512,15 +7516,19 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
   learned += (int) (GET_LEVEL(char_dodger) - GET_LEVEL(attacker));
 
   // NPCs receive a dodge bonus.
+ /* Nah - Drannak
   if(IS_NPC(char_dodger))
   {
     learned += (int) (GET_LEVEL(char_dodger) / 2);
   }
-  
+  */
   // Minimum dodge is 1/10th of the skill.
+/*
   minimum = (int) (GET_CHAR_SKILL(char_dodger, SKILL_DODGE) / 10);
+*/
+  minimum = (int) (GET_C_AGI(char_dodger) / 10);
   
-  percent = BOUNDED( minimum, learned, 30);
+  percent = BOUNDED( minimum, learned, 50);
   
   // Modifiers
 
@@ -7534,12 +7542,10 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
   if(IS_AFFECTED5(char_dodger, AFF5_DAZZLEE) ||
     IS_STUNNED(char_dodger))
   {
-    percent = (int) (percent * 0.80);
+    percent =  0;
   }
 
-  //agility check - Drannak
-  percent = (int) (percent * (GET_C_AGI(char_dodger) / 95));
- 
+
   if(GET_CLASS(char_dodger, CLASS_MONK))
    {
     percent = (int) (percent * 1.20);
@@ -8452,7 +8458,7 @@ int calculate_attacks(P_char ch, int attacks[])
     }
   else if(GET_C_DEX(ch) >=120)
     {
-     send_to_char("&nYour heightened &+gdexterity&n allows you to swiftly brandish your weapon!&n\n\r", ch);
+     send_to_char("&nYour heightened &+gdexterity&n allows you to swiftly attack your enemy!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
     }
 

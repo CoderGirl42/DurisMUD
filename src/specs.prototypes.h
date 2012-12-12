@@ -1022,6 +1022,9 @@ int llyren(P_char, P_char, int, char *);
 // sevenoaks stuff
 int sevenoaks_longsword(P_obj, P_char, int, char*);
 
+//airp2
+int dagger_of_wind(P_obj, P_char, int, char*);
+
 //newbie zone stuf
 int life_of_stream(P_obj obj, P_char ch, int cmd, char *arg);
 int newbie_sign1(P_obj obj, P_char ch, int cmd, char *arg);

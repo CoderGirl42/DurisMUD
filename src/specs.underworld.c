@@ -4150,6 +4150,58 @@ int sevenoaks_longsword(P_obj obj, P_char ch, int cmd, char *arg)
   return FALSE;
 }
 
+int dagger_of_wind(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  P_char   vict;
+  int i, room;
+  struct damage_messages messages = {
+    "Your $q &+ccalls forth the &+Cessen&+Wce of the Wind &+cas you strike at $N...",
+    "$n's $q &+ccalls forth the &+Cessen&+Wce of the Wind &+cas they strike at you...",
+    "$n's $q &+ccalls forth the &+Cessen&+Wce of the Wind &+cas they strike at $N...",
+    "", "", "", 0, obj};
+    
+  if(cmd != CMD_MELEE_HIT || !(ch))
+  {
+    return (FALSE);
+  }
+  
+  vict = (P_char) arg;
+  room = ch->in_room;
+  
+  if(!(vict) ||
+     !(room))
+  {
+    return false;
+  }
+
+  /* if(CheckMultiProcTiming(ch) && */
+  if(!number(0, 24))
+  {
+        if(IS_FIGHTING(ch))
+    {
+      stop_fighting(ch);
+    }
+    for (vict = world[ch->in_room].people; vict; vict = vict->next_in_room)
+    {
+      if(vict->specials.fighting == ch)
+      {
+        act("&+C...suddenly, $n &+Cis engulfed in a sw&+cwi&+Wrl&+cin&+Cg &+Ltornado &+Cof &+Wwind... sweeping them from &+rbattle&+c!", FALSE, ch,
+          0, vict, TO_ROOM);
+        stop_fighting(vict);
+       }
+      else if(ch != vict)
+      {
+        act("&+C...suddenly, $n &+Cis engulfed in a sw&+cwi&+Wrl&+cin&+Cg &+Ltornado &+Cof &+Wwind... sweeping them from &+rbattle&+c!", FALSE, ch,
+            0, vict, TO_VICT);
+      }
+    }
+    
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
 int sevenoaks_mace(P_obj obj, P_char ch, int cmd, char *arg)
 {
   int      dam = cmd / 1000;

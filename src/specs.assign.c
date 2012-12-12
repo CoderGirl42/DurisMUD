@@ -1986,7 +1986,7 @@ void assign_objects(void)
   /*
     Plane of Air Two
   */
-  obj_index[real_object0(131616)].func.obj = sevenoaks_longsword;
+  obj_index[real_object0(131616)].func.obj = dagger_of_wind;
 
   /*
      Plane of Water

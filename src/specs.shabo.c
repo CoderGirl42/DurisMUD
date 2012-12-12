@@ -899,6 +899,22 @@ void event_shabo_racechange(P_char ch, P_char victim, P_obj obj, void *data)
     send_to_char
       ("&+LYou feel greatly relieved as the magic twisting your body finally fades away...&n\r\n",
        ch);
+    //Remove all equipment so no one can cheese thri-kreen arms - Drannak 12/12/12
+    int k = 0;
+    P_obj temp_obj;
+    for (k = 0; k < MAX_WEAR; k++)
+    {
+      temp_obj = ch->equipment[k];
+      if(temp_obj)
+      {
+        if (obj_index[temp_obj->R_num].func.obj != NULL)
+          (*obj_index[temp_obj->R_num].func.obj) (temp_obj, ch, CMD_REMOVE, (char *) "all");
+        obj_to_char(unequip_char(ch, k), ch);
+      }
+    }
+    send_to_char
+      ("...Brr, you suddenly feel very naked.\r\n",
+       ch);
     return;
   }
 }

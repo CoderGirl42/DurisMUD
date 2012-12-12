@@ -4031,7 +4031,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   if (!victim)
   {
     send_to_char("Headbutt whom?\n", ch);
-    CharWait(ch, 1 * WAIT_SEC);
+    //CharWait(ch, 1 * WAIT_SEC);
     return;
   }
   
@@ -4048,22 +4048,22 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     act("$N is clearly too quick and clever for such a brutish attack.", FALSE, ch, 0, victim, TO_CHAR);
     return;
   }
-  
+  /*
   if (!HAS_FOOTING(ch))
   {
     send_to_char("You have no footing here!\n", ch);
     return;
   }
- 
+ */
   if (!CanDoFightMove(ch, victim))
     return;
 
   if(GET_POS(victim) !=  POS_STANDING)
   {
-    if(get_takedown_size(victim) + 1 == get_takedown_size(ch) && GET_POS(victim) == POS_KNEELING)
+    if(get_takedown_size(victim) + 2 == get_takedown_size(ch) && GET_POS(victim) == POS_KNEELING)
     {
     }
-    else if(get_takedown_size(victim) + 2 == get_takedown_size(ch) && GET_POS(victim) == POS_SITTING)
+    else if(get_takedown_size(victim) + 3 == get_takedown_size(ch) && GET_POS(victim) == POS_SITTING)
     {
     }
     else
@@ -4084,7 +4084,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   
   if (IS_PC(ch) && IS_PC(victim))
   {
-    if (get_takedown_size(victim) > get_takedown_size(ch) + 1 &&
+    if (get_takedown_size(victim) > get_takedown_size(ch) + 2 &&
         GET_POS(victim) > POS_KNEELING)
     {
       act("You'd have to grow considerably to do that!", FALSE, ch, 0, 0,
@@ -4093,7 +4093,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     }
   }
 
-  if (GET_POS(victim) == POS_STANDING && get_takedown_size(victim) < get_takedown_size(ch) - 1)
+  if (GET_POS(victim) == POS_STANDING && get_takedown_size(victim) < get_takedown_size(ch) - 2)
   {
     act("It is far too small.  You're better off squashing it.",
         FALSE, ch, 0, 0, TO_CHAR);
@@ -4111,7 +4111,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     
     return;
   }
-
+  
   if(IS_ELITE(victim) ||
     IS_GREATER_RACE(victim))
   {
@@ -4121,7 +4121,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     return;
   }
   
-  if( !IS_HUMANOID(victim) || get_takedown_size(victim) > get_takedown_size(ch) + 1)
+  if( !IS_HUMANOID(victim) || get_takedown_size(victim) > get_takedown_size(ch) + 2)
   {
     messages = &messages_other;
   }
@@ -4137,6 +4137,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   success = (GET_CHAR_SKILL(ch, SKILL_HEADBUTT) + attlevel) / 2;
   success += BOUNDED(-20, attlevel - deflevel, 20);
 
+/* dont care for the penalty for larger mobs - Drannak
   if (get_takedown_size(victim) > get_takedown_size(ch)) 
   {
     for( int j = 0; j < ( get_takedown_size(victim) - get_takedown_size(ch) ); j++ )
@@ -4144,6 +4145,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
       success = (int) success * 0.90;
     }
   }
+*/
 
   // anatomy check
   if (GET_CHAR_SKILL(ch, SKILL_ANATOMY) &&
@@ -4153,13 +4155,14 @@ void do_headbutt(P_char ch, char *argument, int cmd)
 
   /*  maybe the attacker or victim are lucky */
 
-  if ((GET_C_LUCK(ch) / 2) > number(0, 90)) {
+  if ((GET_C_LUCK(ch) / 2) > number(0, 80)) {
      success = (int) (success * 1.1);
   }
-
+/*
   if ((GET_C_LUCK(victim) / 2) > number(0, 80)) {
      success = (int) (success * 0.9);
   }
+*/
   
   if (IS_TRUSTED(ch) || !AWAKE(victim))
   {
@@ -4194,7 +4197,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
 
     knock_out(ch, PULSE_VIOLENCE * number(2,3));
   }
-  else if (tmp_num <= 20)
+  else if (tmp_num <= 15)
   {
     // merely failed
     dam = number(0, 25);
@@ -4213,8 +4216,8 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   else
   {
     // success!
-    dam = ((GET_LEVEL(ch) * (number(-5, 25))/51 + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT)));
-
+    dam = ((56 * (number(1, 25))/51 + GET_C_STR(ch) + GET_CHAR_SKILL(ch, SKILL_HEADBUTT)));
+    dam = (dam * 1.2);
     if (GET_RACE(ch) == RACE_MINOTAUR)
     {
       dam = (int) (dam * get_property("damage.headbutt.damBonusMinotaur", 1.500));
@@ -4252,17 +4255,17 @@ void do_headbutt(P_char ch, char *argument, int cmd)
 
     tmp_num = number(1, 100 - (success / 2));
 
-    if (tmp_num < 3 && !IS_AFFECTED(victim, AFF_KNOCKED_OUT)) // 4% chance at 100% success - Jexni 2/15/11
+    if (tmp_num < 10 && !IS_AFFECTED(victim, AFF_KNOCKED_OUT)) // 10% chance at 100% success - Jexni 2/15/11
     {
       knock_out(victim, PULSE_VIOLENCE * number(2,3));
     }
-    else if (tmp_num < 7)
+    else if (tmp_num < 13)
     {
       send_to_char("Wow!  Look at all those stars!!\n", victim);
       CharWait(victim, (int) (PULSE_VIOLENCE * 1));
       Stun(victim, ch, (int) (PULSE_VIOLENCE * 1.5), FALSE);
     }
-    else if (tmp_num < 11)
+    else if (tmp_num < 15)
     {
       send_to_char("Wow!  Look at all those stars!\n", victim);
 

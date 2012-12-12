@@ -134,9 +134,27 @@ void do_mount(P_char ch, char *argument, int cmd)
   }
   else if (!IS_SET(mount->specials.act, ACT_MOUNT))
   {
-    act("It's too difficult to ride on $N.", FALSE, ch, 0, mount, TO_CHAR);
-    return;
-  }
+    if(GET_RACE(mount) == (RACE_ANIMAL ||
+	RACE_AQUATIC_ANIMAL || 
+	RACE_QUADRUPED ||
+	RACE_PRIMATE  ||
+	RACE_HERBIVORE  ||
+       RACE_CARNIVORE))
+	{
+	 int mounttry = (GET_CHAR_SKILL(ch, SKILL_MOUNT) + GET_LEVEL(ch));
+        int mountdef = (GET_LEVEL(mount) * 2);
+	 if (mountdef > mounttry)
+	  {
+          act("You attempt to mount $N, but find you are not yet skilled enough to ride that creature.", FALSE, ch, 0, mount, TO_CHAR);
+	   return;
+	  }
+	}
+    	else
+    	{
+    	act("It's too difficult to ride on $N.", FALSE, ch, 0, mount, TO_CHAR);
+    	return;
+   	 }
+     }
   if (GET_MASTER(mount) &&
      GET_MASTER(mount) != ch &&
      !is_linked_to(ch, GET_MASTER(mount), LNK_CONSENT))
