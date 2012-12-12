@@ -134,12 +134,12 @@ void do_mount(P_char ch, char *argument, int cmd)
   }
   else if (!IS_SET(mount->specials.act, ACT_MOUNT))
   {
-    if(GET_RACE(mount) == (RACE_ANIMAL ||
-	RACE_AQUATIC_ANIMAL || 
-	RACE_QUADRUPED ||
-	RACE_PRIMATE  ||
-	RACE_HERBIVORE  ||
-       RACE_CARNIVORE))
+    if((GET_RACE(mount) == RACE_ANIMAL) ||
+	(GET_RACE(mount) == RACE_AQUATIC_ANIMAL) || 
+	(GET_RACE(mount) == RACE_QUADRUPED) ||
+	(GET_RACE(mount) == RACE_PRIMATE)  ||
+	(GET_RACE(mount) == RACE_HERBIVORE)  ||
+       (GET_RACE(mount) == RACE_CARNIVORE))
 	{
 	 int mounttry = (GET_CHAR_SKILL(ch, SKILL_MOUNT) + GET_LEVEL(ch));
         int mountdef = (GET_LEVEL(mount) * 2);
@@ -151,9 +151,9 @@ void do_mount(P_char ch, char *argument, int cmd)
 	}
     	else
     	{
-    	act("It's too difficult to ride on $N.", FALSE, ch, 0, mount, TO_CHAR);
-    	return;
-   	 }
+    	  act("It's too difficult to ride on $N.", FALSE, ch, 0, mount, TO_CHAR);
+    	  return;
+   	}
      }
   if (GET_MASTER(mount) &&
      GET_MASTER(mount) != ch &&

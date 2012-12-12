@@ -4135,7 +4135,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
   }
 
   success = (GET_CHAR_SKILL(ch, SKILL_HEADBUTT) + attlevel) / 2;
-  success += BOUNDED(-20, attlevel - deflevel, 20);
+  //success += BOUNDED(-20, attlevel - deflevel, 20);
 
 /* dont care for the penalty for larger mobs - Drannak
   if (get_takedown_size(victim) > get_takedown_size(ch)) 
@@ -4197,7 +4197,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
 
     knock_out(ch, PULSE_VIOLENCE * number(2,3));
   }
-  else if (tmp_num <= 15)
+  else if (tmp_num <= 5)
   {
     // merely failed
     dam = number(0, 25);

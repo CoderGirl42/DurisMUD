@@ -7949,7 +7949,7 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
     learnedattacker = (int) (learnedattacker * 0.65); //old 0.75
 
   if(IS_AFFECTED5(victim, AFF5_DAZZLEE))
-    learnedvictim = (int) (learnedvictim * 0.80);
+    learnedvictim = (int) (learnedvictim * 0.00);
 
   if(affected_by_spell(victim, SKILL_GAZE))
     learnedvictim = (int) (learnedvictim * 0.80);
