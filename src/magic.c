@@ -2255,13 +2255,10 @@ bool can_conjure_greater_elem(P_char ch, int level)
   for (k = ch->followers, j = 0; k; k = k->next)
   {
     victim = k->follower;
-    
-    if(IS_GREATER_ELEMENTAL(victim))
-    {
       j++;
-    }
+    
   }
-
+/*
   if(GET_LEVEL(ch) >= 56)
     j--;
     
@@ -2273,6 +2270,8 @@ bool can_conjure_greater_elem(P_char ch, int level)
     send_to_char("Your ability to inspire is amazing.\r\n", ch);
     j--;
   }
+
+
   if(GET_SPEC(ch, CLASS_CONJURER, SPEC_AIR) &&
      has_air_staff_arti(ch) &&
      j <= 2)
@@ -2290,6 +2289,20 @@ bool can_conjure_greater_elem(P_char ch, int level)
     return FALSE;
   }
   
+  return TRUE;
+*/
+  if(j >= 3)
+    return FALSE;
+
+  if(GET_LEVEL(ch) >= 41 && j >= 3)
+    return FALSE;
+  if((GET_LEVEL(ch) >= 31) && (GET_LEVEL(ch) < 41) && j >= 2)
+    return FALSE;
+  if((GET_LEVEL(ch) >= 21) && (GET_LEVEL(ch) < 31) && j >= 1)
+    return FALSE;
+  if(GET_LEVEL(ch) < 21)
+    return FALSE;
+
   return TRUE;
 }
 
