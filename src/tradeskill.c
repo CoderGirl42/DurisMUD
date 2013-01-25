@@ -400,9 +400,11 @@ void do_forge(P_char ch, char *argument, int cmd)
 	//stores the actual vnum written in file into rbuf 
 	page_string(ch->desc, buffer, 1);
     send_to_char("----------------------------------------------------------------------------\n", ch);
+      extract_obj(tobj, FALSE);
    	}
      fclose(recipelist);
   /***ENDDISPLAYRECIPES***/
+
   return;
   }
 
@@ -419,7 +421,7 @@ void do_forge(P_char ch, char *argument, int cmd)
        if(recnum == choice2)
 	send_to_char("The one below here is selected.\r\n", ch);
 	*/
-	tobj = read_object(recnum, VIRTUAL);
+	//tobj = read_object(recnum, VIRTUAL);
  	sprintf(rbuf, "%d\n", recnum);
 	}
   fclose(recipelist);
@@ -457,7 +459,7 @@ void do_forge(P_char ch, char *argument, int cmd)
    tobj = read_object(selected, VIRTUAL);
    //First - See if there's a magical affect that we need a component for.
 
-  //Second - See what material it is.
+  //Second - See what material it is. make a method called: find_material(obj)
    send_to_char("RECIPE CRAP IN THIS\r\n", ch);
    return;
   }
