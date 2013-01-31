@@ -59,7 +59,7 @@ vein-covered vein covered organs~
 &+rsome &+mv&+re&+mi&+rn-c&+mo&+rv&+me&+rre&+md &+mo&+rr&+Mg&Na&+mns&N~
 &+mSome &+rvein-covered &+mor&+Gg&na&+mns &+rlay here in a bloody heap.~
 ~
-8 2 1 0 11 0 0 0 0 0 0
+8 2 1 0 11 0 0 16385 0 0 0
 0 0 0 0 0 0 0 0
 0 102 100
 #400008
@@ -1611,7 +1611,7 @@ small green dragon scale dragonscale~
 0 0 0 0 0 0 0 0
 0 50 100
 #400201
-object unnamed~
+blue dragonscale~
 &+Ba blue &+bdragon&+Lscale&N~
 blue dragon scale dragonscale~
 ~
@@ -1688,5 +1688,13 @@ vellum recipe scroll~
 &+yA &+Lcrafting&+y recipe lies here collecting dust.&n~
 ~
 8 29 2 0 7 0 0 16385 0 0 0
+0 0 0 0 0 0 0 0
+0 0 100
+#400211
+magic essence magical~
+&+ma &+Mm&+Ya&+Mg&+Yi&+Mc&+Ya&+Ml &+messence&n~
+&+mA magical essence floats here.&n~
+~
+8 15 2 0 15 0 270337 8404993 0 0 0
 0 0 0 0 0 0 0 0
 0 0 100

@@ -5774,7 +5774,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
 		obj_to_char(read_object(matvnum, VIRTUAL), ch);
 		}
       
-       notch_skill(ch, SKILL_SALVAGE, 20);
+       notch_skill(ch, SKILL_SALVAGE, 25);
        
       if((reciperoll < playerroll))
       {

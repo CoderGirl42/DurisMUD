@@ -1589,7 +1589,8 @@ int learn_recipe(P_obj obj, P_char ch, int cmd, char *arg)
   char     Gbuf1[MAX_STRING_LENGTH], *c;
   FILE    *f;
   FILE    *recipelist;
-  int recipenumber = obj->value[6];
+  long recipenumber = obj->value[6];
+  long recnum;
 
   P_char temp_ch;
 
@@ -1610,9 +1611,9 @@ int learn_recipe(P_obj obj, P_char ch, int cmd, char *arg)
     if (recipenumber == 0)
   {
    send_to_char("This item is useless!\r\n", ch);
-   return FALSE;
+   return TRUE;
   }
-
+  
   //Create buffers for name
   strcpy(buf, GET_NAME(ch));
   buff = buf;
@@ -1632,8 +1633,19 @@ int learn_recipe(P_obj obj, P_char ch, int cmd, char *arg)
     send_to_char("As you examine the recipe, small &+mm&+Mag&+Wi&+Mca&+ml &+Wmists&+w begin to form...\r\n", ch);
     send_to_char("...without warning, a &+Ltome &+yof &+Ycraf&+ytsman&+Lship&n appears in your hands.\r\n", ch);
     create_recipes_name(GET_NAME(ch));
+    recipelist = fopen(Gbuf1, "rt");
   }
-
+   /* Check to see if recipe exists */
+  while((fscanf(recipelist, "%i", &recnum)) != EOF )
+	{  
+       if(recnum == recipenumber)
+         {
+          send_to_char("You already know how to create that item!&n\r\n", ch);
+          return TRUE;
+         }
+       
+	}
+  fclose(recipelist);
   recipefile = fopen(Gbuf1, "a");
   fprintf(recipefile, "%d\n", recipenumber);
   act("$n opens their &+Ltome &+yof &+Ycraf&+ytsman&+Lship&n and begins scribing the &+yrecipe&n...\n"

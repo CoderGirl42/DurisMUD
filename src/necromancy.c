@@ -1331,7 +1331,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
   GET_SIZE(mob) = SIZE_GIANT;
   GET_RACE(mob) = RACE_DRACOLICH;
   SET_BIT(mob->specials.act, ACT_MOUNT);
-  GET_HIT(mob) = GET_MAX_HIT(mob) = mob->points.base_hit = dice(125, 15) + (life * 3);
+  GET_HIT(mob) = GET_MAX_HIT(mob) = mob->points.base_hit = dice(125, 15) + (life * 4);
   mob->specials.act |= ACT_SPEC_DIE;
   //REMOVE_BIT(mob->only.npc->aggro_flags, AGGR_ALL);
   SET_BIT(mob->only.npc->aggro_flags, AGGR_ALL);
@@ -1355,7 +1355,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
     {
       REMOVE_BIT(mob->specials.act, ACT_GUILD_GOLEM);
     }
-    if(GET_LEVEL(ch) >= 54)
+    if(GET_LEVEL(ch) >= 50)
     {
       mob->points.damnodice = 10;
       mob->points.base_hitroll = mob->points.hitroll = (GET_LEVEL(ch));
