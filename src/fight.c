@@ -2316,7 +2316,7 @@ void die(P_char ch, P_char killer)
      obj_to_char(tempobj, ch);
   }
 
-  //Random object code - Normal kills.  Kvark
+  // object code - Normal kills.  Kvark
   if((IS_PC(killer) ||
       IS_PC_PET(killer)) &&
       IS_NPC(ch) &&
@@ -2335,7 +2335,8 @@ void die(P_char ch, P_char killer)
       else
       {
         //if(GET_LEVEL(ch) < 30 || GET_LEVEL(killer) < 20) //removing level restriction, adding racewar check goods only - drannak
-       if(GET_RACEWAR(killer) == RACEWAR_GOOD || GET_RACEWAR(killer) == RACEWAR_EVIL) //allowing evils to get randoms 1/26/13 drannak
+       //if(GET_RACEWAR(killer) == RACEWAR_GOOD || GET_RACEWAR(killer) == RACEWAR_EVIL) //allowing evils to get randoms 1/26/13 drannak
+	if(GET_LEVEL(killer) > 0)
 	{
         tempobj = create_random_eq_new(killer, ch, -1, -1);
         send_to_char("It appears you were able to salvage a piece of equipment from your enemy.\n", killer);

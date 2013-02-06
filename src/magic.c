@@ -5520,6 +5520,7 @@ void spell_control_weather(int level, P_char ch, P_char victim, P_obj obj)
 
 void spell_minor_creation(int level, P_char ch, P_char victim, P_obj obj)
 {
+  SET_BIT(obj->extra2_flags, ITEM2_STOREITEM);
   obj_to_room(obj, ch->in_room);
   obj->z_cord = ch->specials.z_cord;
   act("$p &+Wsuddenly appears.", TRUE, ch, obj, 0, TO_ROOM);

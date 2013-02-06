@@ -4961,7 +4961,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
    }
   if (IS_OBJ_STAT2(temp, ITEM2_STOREITEM))
    {
-    act("This appears to be from a store... try to find something a bit harder to acquire.", FALSE, ch, 0, 0, TO_CHAR);
+    act("This appears to be from a store or minor created... no dice.", FALSE, ch, 0, 0, TO_CHAR);
     return;
    }
   if (IS_SET(temp->extra_flags, ITEM_ARTIFACT))
