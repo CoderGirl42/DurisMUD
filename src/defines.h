@@ -221,6 +221,7 @@ typedef unsigned int uint;
 #define ITEM2_NOTIMER      BIT_10
 #define ITEM2_NOLOOT       BIT_11
 #define ITEM2_CRUMBLELOOT  BIT_12
+#define ITEM2_STOREITEM    BIT_13  /* Item Bought From a Shop */
 /* Bitvector for 'anti_flags' */
 /*
 #define ITEM_ALLOW_ALL         BIT_1

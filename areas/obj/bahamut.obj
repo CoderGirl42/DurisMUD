@@ -179,7 +179,7 @@ dagger bloodfeast granite unique~
 &+Lthe granite dagger '&+RBl&+roo&+RdFe&+ra&+Rst&+L'&n~
 &+LA granite dagger sits here.... waiting~
 ~
-5 37 2 0 15 75 285222160 8193 64 10612736 0
+5 37 2 0 15 75 285222160 8193 64 48365479 0
 2 4 4 11 0 0 0 0
 10 100000 100 268435472 0 0 0
 E
@@ -190,7 +190,7 @@ recently dried blood of its victims.
 A
 18 5
 A
-19 5
+32 5
 #25711
 flaming whip mrinlor~
 &+rthe flaming whip of &+RMrinlor&n~
@@ -731,12 +731,12 @@ A
 A
 19 3
 #25745
-sunlash whip injustice pain barbed unique~
-&+YSunlash&+W, &+Lthe barbed whip of &+rInjustice &+Land &+rPain&n~
+sunblade longsword sword justice~
+&+YSunblade&+W, longsword of &+YJustice&n~
 &+yA glowing cat-o-nine-tails whip lies here &+Ypulsating.&n~
 ~
-5 43 4 0 15 100 271720456 8193 64 0 0
-14 6 4 3 0 0 0 0
+5 18 4 0 15 100 271720456 8193 64 0 0
+5 5 4 3 0 0 0 0
 20 1000000 100 536870912 0 0 0
 E
 sunlash whip injustice pain barbed~
@@ -751,9 +751,9 @@ ensued in the realm of Ravenloft, and in the midst of the horrific struggle
 between the forces of good and evil, a Vistani agent stole the whip...
 ~
 A
-18 9
+18 6
 A
-19 3
+19 5
 #25746
 key mist~
 &+ca small key of mist&n~

@@ -265,6 +265,7 @@ void make_remains(P_char);
 /* specs.mobile.c */
 
 int bahamut(P_char, P_char, int, char *);
+int goodie_guardian(P_char, P_char, int, char *);
 int claw_cavern_drow_mage(P_char, P_char, int, char *);
 int rentacleric(P_char, P_char, int, char *);
 int agthrodos(P_char, P_char, int, char *);
@@ -557,6 +558,7 @@ int thrusted_eq_proc(P_obj, P_char, int, char *);
 
 int thrusted_eq_proc(P_obj, P_char, int, char *);
 int parchment_forge(P_obj, P_char, int, char *);
+int learn_recipe(P_obj, P_char, int, char *);
 
 // 51 potion chest
 int treasure_chest(P_obj, P_char, int, char *);
@@ -837,6 +839,7 @@ int tendrils(P_obj, P_char, int, char *);
 int elvenkind_cloak(P_obj, P_char, int, char*);
 int deflect_ioun(P_obj, P_char, int, char*);
 int epic_teacher(P_char, P_char, int, char *);
+int learn_tradeskill(P_char, P_char, int, char *);
 int epic_familiar(P_char, P_char, int, char *);
 int smith(P_char, P_char, int, char *);
 

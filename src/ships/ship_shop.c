@@ -451,6 +451,10 @@ int sell_cargo_slot(P_char ch, P_ship ship, int slot, int rroom)
         int crates = ship->slot[slot].val0;
         int cost = crates * cargo_buy_price(rroom, type);
         int profit = 100;
+	if(has_eq_diplomat(ship))
+	{
+	  int profit = profit - 10;
+	}
         if (ship->slot[slot].val1 != 0)
             profit = (int)(( ((float)cost / (float)ship->slot[slot].val1) - 1.00 ) * 100.0);
         ship->slot[slot].clear();
@@ -524,6 +528,8 @@ int sell_cargo(P_char ch, P_ship ship, int slot)
     {
         total_cost = check_nexus_bonus(ch, total_cost, NEXUS_BONUS_CARGO);
         send_to_char_f(ch, "You receive %s&n.\r\n", coin_stringv(total_cost));
+	if(has_eq_diplomat(ship))
+	 send_to_char("Your &+bdip&+Blo&+bmat &nstatus costs you a &+W10&n percent cut on your profits.\r\n", ch);
         send_to_char("Thanks for your business!\r\n", ch);        
         ADD_MONEY(ch, total_cost);
 
@@ -671,7 +677,15 @@ int sell_slot (P_char ch, P_ship ship, int slot)
         return TRUE;
     } 
     else if (ship->slot[slot].type == SLOT_EQUIPMENT) 
-    {
+	 for (int i = 0; i < MAXSLOTS; i++)
+        if ((ship->slot[i].type == SLOT_CONTRABAND) || (ship->slot[i].type == SLOT_CARGO))
+		{
+		 if(has_eq_diplomat(ship))
+		 send_to_char("You cannot sell your diplomat flag with cargo onboard. Sell the cargo first!\r\n", ch);
+		 return TRUE;
+		}
+	else
+     {
         int cost = equipment_data[ship->slot[slot].index].cost;
         if (ship->slot[slot].index == E_RAM) cost = eq_ram_cost(ship);
         cost = cost * 0.9;

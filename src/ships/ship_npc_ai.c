@@ -504,7 +504,7 @@ bool NPCShipAI::find_new_target()
     {
         for (i = 0; i < contacts_count; i++) 
         {
-            if (is_valid_target(contacts[i].ship))
+            if (is_valid_target(contacts[i].ship) && !has_eq_diplomat(contacts[i].ship))
                 goto found;
         }
     }

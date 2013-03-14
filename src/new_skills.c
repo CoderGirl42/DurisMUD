@@ -1150,6 +1150,8 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
     dam = (int) (0.4 * dam);
   else if(skl_lvl <= 90)
     dam = (int) (0.6 * dam);
+
+   dam = dam * 2;
     
   act("&+CYou harness your full Jin, and deliver a powerful strike to&n $N!&n",
     FALSE, ch, 0, vict, TO_CHAR);

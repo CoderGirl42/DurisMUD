@@ -102,8 +102,14 @@ void initialize_tradeskills();
 bool load_one_mine(int map);
 void load_mines(bool set_event, bool load_all, int map);
 int mine(P_obj obj, P_char ch, int cmd, char *arg);
+int itemvalue(P_char ch, P_obj obj);
 void event_mine_check(P_char ch, P_char victim, P_obj, void *data);
 void event_load_mines(P_char ch, P_char victim, P_obj, void *data);
 bool invalid_mine_room(int rroom_id);
+
+
+bool player_recipes_exists(char *charname);
+void create_recipes_file(const char *dir, char *name);
+void create_recipes_name(char *name);
 
 #endif // _TRADESKILL_H_

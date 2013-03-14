@@ -216,12 +216,12 @@ struct epic_teacher_skill {
   {20242, SKILL_IMPROVED_TRACK, 0, 100, SKILL_TRACK, 0, 95},
   {99548, SKILL_EMPOWER_SONG, 0, 100, 0, 0},
   {22436, SKILL_FIX, 0, 100, 0, 0, 0}, //smith in stormport
-  {9454,  SKILL_CRAFT, 0, 100, 0, 0, 0}, //Rjinal in Samirz
+  //{9454,  SKILL_CRAFT, 0, 100, 0, 0, 0}, //Rjinal in Samirz
   {40760, SKILL_ENCRUST, 0, 100, SKILL_CRAFT, 0, 100}, //Snent in Divine Home
   //{78006, SKILL_ENCHANT, 0, 100, 0, SKILL_SPELLBIND, 0}, //Bargor in Oasis
   //{94017, SKILL_SPELLBIND, 0, 100, 0, SKILL_ENCHANT, 0}, //Kalroh in Maze of Undead Army
   {37145, SKILL_SMELT, 0, 100, 0, 0, 0}, //Carmotee in Dumaathe
-  {21618, SKILL_FORGE, 0, 100, 0, 0, 0}, //Tenkuss in Aravne
+  //{21618, SKILL_FORGE, 0, 100, 0, 0, 0}, //Tenkuss in Aravne
   {49162, SKILL_TOTEMIC_MASTERY, 0, 100, 0, 0, 0},
   {76008, SKILL_INFUSE_MAGICAL_DEVICE, 0, 100, 0, 0, 0},  //Deathium in Ultarium
   {28975, SKILL_INDOMITABLE_RAGE, 0, 100, 0, 0, 0},
@@ -2753,12 +2753,16 @@ void do_epic_skills(P_char ch, char *arg, int cmd)
       {
         sprintf(buff, "&+W%-25s &n(&+W%-5d&n) %s\n", skills[skill].name, epic_teachers[t].vnum, teacher->player.short_descr);
         extract_char(teacher);
-      } else {
+      } else 
+	{
         logit(LOG_DEBUG, "do_epic_skills(): epic_teachers[%d].vnum does not exist for epic skill %s", t, skills[skill].name);
         sprintf(buff, "&+W%-25s &n(&+W%-5d&n) Teacher does not exist.\n", skills[skill].name, epic_teachers[t].vnum);
       }
-    } else {
-      sprintf(buff, "&+W%s\n", skills[skill].name);
+    } else 
+	if(teacher = read_mobile(epic_teachers[t].vnum, VIRTUAL))
+	{
+      sprintf(buff, "&+W%-25s &n&+yTeacher&+Y: &n %s\n", skills[skill].name,teacher->player.short_descr, teacher->player.short_descr);
+	extract_char(teacher);
     }
     send_to_char(buff, ch);
   }
@@ -2806,6 +2810,12 @@ void do_infuse(P_char ch, char *arg, int cmd)
        (skill < 40))
   {
     send_to_char("You're not proficient enough to infuse a staff yet.\r\n", ch);
+    return;
+  }
+
+  if(isname("wicked", device->name))
+  {
+    send_to_char("You do not possess the extreme power to infuse this particular item.\r\n", ch);
     return;
   }
 

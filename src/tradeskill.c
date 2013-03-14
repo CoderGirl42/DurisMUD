@@ -14,6 +14,7 @@
 #include <string.h>
 #include <math.h>
 
+
 #include "comm.h"
 #include "db.h"
 #include "events.h"
@@ -335,11 +336,148 @@ void do_forge(P_char ch, char *argument, int cmd)
   char     first[MAX_INPUT_LENGTH];
   char     second[MAX_INPUT_LENGTH];
   char     rest[MAX_INPUT_LENGTH];
- 
   int i = 0;  
-  int      choice = 0;  
+  int choice = 0;  
   P_obj hammer, foundry;
 
+ if (!GET_CHAR_SKILL(ch, SKILL_FORGE))
+  {
+    act("You do not know how to &+Lforge&n.",
+        FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+
+/***DISPLAYRECIPES STUFF***/
+ 
+  char     buf[256], *buff, buf2[256], rbuf[MAX_STRING_LENGTH];
+  char     Gbuf1[MAX_STRING_LENGTH], selectedrecipe[MAX_STRING_LENGTH];
+  char buffer[256];
+  FILE    *f;
+  FILE    *recipelist;
+  int line, recfind;
+  unsigned long	linenum = 0;
+  long recnum, choice2;
+  long selected = 0;
+  P_obj tobj;
+ 
+	
+  //Create buffers for name
+  strcpy(buf, GET_NAME(ch));
+  buff = buf;
+  for (; *buff; buff++)
+  *buff = LOWER(*buff);
+  //buf[0] snags first character of name
+  sprintf(Gbuf1, "Players/Tradeskills/%c/%s.crafting", buf[0], buf);
+  recipelist = fopen(Gbuf1, "r");
+    if (!recipelist)
+  {
+    send_to_char("You dont know any recipes yet.\r\n", ch);
+    return;
+  }
+       half_chop(argument, first, rest);
+       half_chop(rest, second, rest);
+       choice2 = atoi(second);
+
+ 
+ if (!*argument)
+  {
+  send_to_char("&+wForge Syntax:\n&n", ch);
+  send_to_char("&+w(forge info <number> - list required materials to forge the item.)\n&n", ch);
+  send_to_char("&+w(forge stat <number> - display properties of the item.)\n&n", ch);
+  send_to_char("&+w(forge make <number> - create the item.)\n&n", ch);
+  send_to_char("&+yYou know the following recipes:\n&n", ch);
+  send_to_char("----------------------------------------------------------------------------\n", ch);
+  send_to_char("&+BRecipe Number		              &+MItem&n\n\r", ch);
+      while((fscanf(recipelist, "%i", &recnum)) != EOF )
+	{  
+       /* debug
+       char bufbug[MAX_STRING_LENGTH];
+       */
+       if(recnum == choice2)
+       selected = choice2;
+       /* debug
+       sprintf(bufbug, "choice is: %d\r\n", selected);
+       send_to_char(bufbug, ch);
+       if(recnum == choice2)
+	send_to_char("The one below here is selected.\r\n", ch);
+	*/
+	tobj = read_object(recnum, VIRTUAL);
+ 	sprintf(rbuf, "%d\n", recnum);
+    sprintf(buffer, "   &+W%-22d&n%s&n\n", recnum, tobj->short_description);
+	//stores the actual vnum written in file into rbuf 
+	page_string(ch->desc, buffer, 1);
+    send_to_char("----------------------------------------------------------------------------\n", ch);
+      extract_obj(tobj, FALSE);
+   	}
+     fclose(recipelist);
+  /***ENDDISPLAYRECIPES***/
+
+  return;
+  }
+
+  while((fscanf(recipelist, "%i", &recnum)) != EOF )
+	{  
+       /* debug
+       char bufbug[MAX_STRING_LENGTH];
+       */
+       if(recnum == choice2)
+       selected = choice2;
+       /* debug
+       sprintf(bufbug, "choice is: %d\r\n", selected);
+       send_to_char(bufbug, ch);
+       if(recnum == choice2)
+	send_to_char("The one below here is selected.\r\n", ch);
+	*/
+	//tobj = read_object(recnum, VIRTUAL);
+ 	sprintf(rbuf, "%d\n", recnum);
+	}
+  fclose(recipelist);
+ 
+
+  if (is_abbrev(first, "stat"))
+  {
+    if(choice2 == 0)
+     {
+      send_to_char("What &+Wrecipe&n would you like &+ystatistics&n about?\n", ch);
+      return;
+     }
+    if(selected == 0)
+     {
+      send_to_char("You dont appear to have that &+Wrecipe&n in your list.&n\n", ch);
+      return;
+     }
+    tobj = read_object(selected, VIRTUAL);
+    send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
+    spell_identify(GET_LEVEL(ch), ch, 0, 0, 0, tobj);
+     extract_obj(tobj, FALSE);
+    return;
+  }
+  else if(is_abbrev(first, "info"))
+  {
+    if(choice2 == 0)
+     {
+      send_to_char("What &+Wrecipe&n would you like &+yinformation&n about?\n", ch);
+      return;
+     }
+    if(selected == 0)
+     {
+      send_to_char("You dont appear to have that &+Wrecipe&n in your list.&n\n", ch);
+      return;
+     }
+   tobj = read_object(selected, VIRTUAL);
+   //First - See if there's a magical affect that we need a component for.
+
+  //Second - See what material it is. make a method called: find_material(obj)
+   send_to_char("RECIPE CRAP IN THIS\r\n", ch);
+   itemvalue(ch, tobj);
+    extract_obj(tobj, FALSE);
+   return;
+  }
+
+
+
+/*
   if (GET_CHAR_SKILL(ch, SKILL_FORGE) == 0){
     send_to_char("&+LYou dont know how to forge.\r\n", ch);
     return;
@@ -347,10 +485,11 @@ void do_forge(P_char ch, char *argument, int cmd)
 
   foundry = check_foundry(ch);
 
-  if (!foundry) { // No furnace/foundry/forge in room
+  if (!foundry) 
+   { // No furnace/foundry/forge in room
 	act("&+LYou need to be by your foundry to forge...&n", FALSE, ch, 0, 0, TO_CHAR);
 	return;
-  }
+   }
 
   *buf1 = '\0';
   if (!*argument){
@@ -484,6 +623,7 @@ void do_forge(P_char ch, char *argument, int cmd)
     }
     return;
   }
+ */
 }
 
 bool mine_friendly(int to_room) {
@@ -1198,6 +1338,10 @@ void do_mine(P_char ch, char *arg, int cmd)
   // If you don't get the idea, give me a hollar.
   // From hearing Torgal's responses to it as well as knowing nobody ever uses
   // this command, i'm going to go ahead and get the engine in game. -Venthix
+  if (GET_CHAR_SKILL(ch, SKILL_MINE) <= 1){
+    send_to_char("&+LYou dont know how to mine.\r\n", ch);
+    return;
+  }
 
  
   int i;
@@ -1424,4 +1568,302 @@ void do_bandage(P_char ch, char *arg, int cmd)
 
   CharWait(ch, 2 * PULSE_VIOLENCE);
   return;
+}
+
+
+//Drannak Stuff
+static FILE *recipefile;
+
+void create_recipes_file(const char *dir, char *name)
+{
+  char     buf[256], *buff;
+  char     Gbuf1[MAX_STRING_LENGTH];
+  FILE    *f;
+
+  strcpy(buf, name);
+  buff = buf;
+  for (; *buff; buff++)
+    *buff = LOWER(*buff);
+  sprintf(Gbuf1, "%s/%c/%s.crafting", dir, buf[0], buf);
+  f = fopen(Gbuf1, "w");
+  fclose(f);
+}
+
+void create_recipes_name(char *name)
+{
+  create_recipes_file("Players/Tradeskills", name);
+}
+
+int learn_recipe(P_obj obj, P_char ch, int cmd, char *arg)
+{
+
+  P_obj tobj;
+  char     buf[256], *buff;
+  char     Gbuf1[MAX_STRING_LENGTH], *c;
+  FILE    *f;
+  FILE    *recipelist;
+  long recipenumber = obj->value[6];
+  long recnum;
+
+  P_char temp_ch;
+
+  if(!ch)
+    return FALSE;
+
+  if(cmd != CMD_RECITE)
+    return FALSE;
+
+  temp_ch = obj->loc.wearing;
+
+  if(!temp_ch)
+    return FALSE;
+
+  if(ch != temp_ch)
+    return FALSE;
+
+    if (recipenumber == 0)
+  {
+   send_to_char("This item is useless!\r\n", ch);
+   return TRUE;
+  }
+
+  tobj = read_object(recipenumber, VIRTUAL);
+ 	
+  if((IS_SET(tobj->wear_flags, ITEM_WEAR_HEAD) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_BODY) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_ARMS) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_FEET) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_SHIELD) ||
+	IS_SET(tobj->wear_flags, ITEM_WIELD) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_LEGS) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_HANDS))
+       && (GET_CHAR_SKILL(ch, SKILL_FORGE) < 1))
+	{
+	  send_to_char("This recipe can only be used by someone with the &+LForge&n skill.\r\n", ch);
+	  return TRUE;
+	}
+ if((IS_SET(tobj->wear_flags, ITEM_WEAR_ABOUT) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_WAIST) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_EARRING) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_NECK) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_WRIST) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_FINGER) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_EYES) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_QUIVER) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_TAIL) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_NOSE) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_HORN) ||
+	IS_SET(tobj->wear_flags, ITEM_WEAR_FACE)) && 
+	(GET_CHAR_SKILL(ch, SKILL_CRAFT) < 1))
+	{
+	  send_to_char("This recipe can only be used by someone with the &+rCraft&n skill.\r\n", ch);
+	  return TRUE;
+	}  
+ extract_obj(tobj, FALSE);
+
+  //Create buffers for name
+  strcpy(buf, GET_NAME(ch));
+  buff = buf;
+  for (; *buff; buff++)
+    *buff = LOWER(*buff);
+  //buf[0] snags first character of name
+  sprintf(Gbuf1, "Players/Tradeskills/%c/%s.crafting", buf[0], buf);
+
+  /*just a debug test
+  send_to_char(Gbuf1, ch);*/
+
+  //check if tradeskill file exists for player
+  recipelist = fopen(Gbuf1, "rt");
+
+  if (!recipelist)
+  {
+    send_to_char("As you examine the recipe, small &+mm&+Mag&+Wi&+Mca&+ml &+Wmists&+w begin to form...\r\n", ch);
+    send_to_char("...without warning, a &+Ltome &+yof &+Ycraf&+ytsman&+Lship&n appears in your hands.\r\n", ch);
+    create_recipes_name(GET_NAME(ch));
+    recipelist = fopen(Gbuf1, "rt");
+  }
+   /* Check to see if recipe exists */
+  while((fscanf(recipelist, "%i", &recnum)) != EOF )
+	{  
+       if(recnum == recipenumber)
+         {
+          send_to_char("You already know how to create that item!&n\r\n", ch);
+          return TRUE;
+         }
+       
+	}
+  fclose(recipelist);
+  recipefile = fopen(Gbuf1, "a");
+  fprintf(recipefile, "%d\n", recipenumber);
+  act("$n opens their &+Ltome &+yof &+Ycraf&+ytsman&+Lship&n and begins scribing the &+yrecipe&n...\n"
+  "As they finish the last entry of the &+yrecipe&n, a &+Mbri&+mgh&+Wt &nflash of &+Clight&n appears,\n"
+  "quickly consuming $p, which vanishes from sight.\r\n", FALSE, ch, obj, 0, TO_ROOM);
+  act("You open your &+Ltome &+yof &+Ycraf&+ytsman&+Lship&n and begin scribing the recipe...\n"
+  "As you finish the last entry of the &+yrecipe&n, a &+Mbri&+mgh&+Wt &nflash of &+Clight&n appears,\n"
+  "quickly consuming $p, which vanishes from sight.\r\n", FALSE, ch, obj, 0, TO_CHAR);   
+  fclose(recipefile);
+  extract_obj(obj, !IS_TRUSTED(ch));
+  if(GET_CHAR_SKILL(ch, SKILL_FORGE) > 1)
+  notch_skill(ch, SKILL_FORGE, 100);
+  if(GET_CHAR_SKILL(ch, SKILL_CRAFT) > 1)
+  notch_skill(ch, SKILL_CRAFT, 100);
+  return TRUE;
+}
+
+int learn_tradeskill(P_char ch, P_char pl, int cmd, char *arg)
+{
+  char buffer[MAX_STRING_LENGTH];
+
+  if(cmd == CMD_PRACTICE)
+  {
+    
+       
+        if(!arg || !*arg)
+    {
+      // practice called with no arguments
+      sprintf(buffer,
+              "'Greetings Adventurer!'\n"
+              "'The choice of a &+Wtradeskill&n is an important one, as only &+Yone&n can be made.'\n"
+		"'Of the abilities which I can train you are &+Lm&+wi&+Wn&+wi&+Lng&n, &+Lforging&n, or &+rcrafting&n.'\n"
+		"'&+LM&+wi&+Wn&+wi&+Lng&n&n will allow you to gather raw &+mvaluable&n &+Lore&n from &+ymines&n scattered throughout the realm.'\n"
+		"'&+LForging&n allows one to create amazing &+Larmor&n and &+Wweapons&n from &+yrecipes&n found through the &+ysalvage&n skill.'\n"
+		"'&+rCrafting&n is the meticulous skill allowing one to craft &+Mjewelry&n, &+maccessories&n, and &+ccloak&n items from &+ysalvaged&n recipes.'\n"
+              "'Please think long and hard about your decision, and then &+RPractice &neither &+Lforge&n, &+Lmine&n, or &+Lcraft&n.\n\n");
+      send_to_char(buffer, pl);
+
+
+         if(GET_CHAR_SKILL(pl, SKILL_FORGE) >= 1 || GET_CHAR_SKILL(pl, SKILL_MINE) >= 1 || GET_CHAR_SKILL(pl, SKILL_CRAFT) >= 1 )
+      {
+        send_to_char("'Unfortunately, I cannot teach you anything more, as you have already learned a tradeskill!'\n", pl);
+        return TRUE;
+      }
+      
+      return TRUE;
+    }
+    else if(strstr(arg, "forge"))
+    {
+      // called with skill name
+        if(GET_CHAR_SKILL(pl, SKILL_FORGE) >= 1 || GET_CHAR_SKILL(pl, SKILL_MINE) >= 1 || GET_CHAR_SKILL(pl, SKILL_CRAFT) >= 1 )
+      {
+        send_to_char("Unfortunately, I cannot teach you anything more, as you have already learned a tradeskill!\n", pl);
+        return TRUE;
+      }
+      sprintf(buffer, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
+                      "&+cYou feel your skill in %s improving.&n\n",
+              skills[SKILL_FORGE].name, skills[SKILL_FORGE].name);
+      act(buffer, FALSE, ch, 0, pl, TO_VICT);
+      pl->only.pc->skills[SKILL_FORGE].taught = 100;
+        pl->only.pc->skills[SKILL_FORGE].learned = 10;
+        //MIN(100, pl->only.pc->skills[SKILL_FORGE].learned + 10);
+      do_save_silent(pl, 1); // tradeskills require a save.
+      CharWait(pl, PULSE_VIOLENCE);
+      return TRUE;
+    }
+	else if(strstr(arg, skills[SKILL_MINE].name))
+    {
+      // called with skill name
+        if(GET_CHAR_SKILL(pl, SKILL_FORGE) >= 1 || GET_CHAR_SKILL(pl, SKILL_MINE) >= 1 || GET_CHAR_SKILL(pl, SKILL_CRAFT) >= 1 )
+      {
+        send_to_char("Unfortunately, I cannot teach you anything more, you have already learned a tradeskill!\n", pl);
+        return TRUE;
+      }
+      sprintf(buffer, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
+                      "&+cYou feel your skill in %s improving.&n\n",
+              skills[SKILL_MINE].name, skills[SKILL_MINE].name);
+      act(buffer, FALSE, ch, 0, pl, TO_VICT);
+      pl->only.pc->skills[SKILL_MINE].taught = 100;
+        pl->only.pc->skills[SKILL_MINE].learned = 10;
+        //MIN(100, pl->only.pc->skills[SKILL_MINE].learned + 10);
+      do_save_silent(pl, 1); // tradeskills require a save.
+      CharWait(pl, PULSE_VIOLENCE);
+      return TRUE;
+    }
+	else if(strstr(arg, skills[SKILL_CRAFT].name))
+    {
+      // called with skill name
+        if(GET_CHAR_SKILL(pl, SKILL_FORGE) >= 1 || GET_CHAR_SKILL(pl, SKILL_MINE) >= 1 || GET_CHAR_SKILL(pl, SKILL_CRAFT) >= 1 )
+      {
+        send_to_char("Unfortunately, I cannot teach you anything more, you have already learned a tradeskill!\n", pl);
+        return TRUE;
+      }
+      sprintf(buffer, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
+                      "&+cYou feel your skill in %s improving.&n\n",
+              skills[SKILL_CRAFT].name, skills[SKILL_CRAFT].name);
+      act(buffer, FALSE, ch, 0, pl, TO_VICT);
+      pl->only.pc->skills[SKILL_CRAFT].taught = 100;
+        pl->only.pc->skills[SKILL_CRAFT].learned = 10;
+       // MIN(100, pl->only.pc->skills[SKILL_CRAFT].learned + 10);
+      do_save_silent(pl, 1); // tradeskills require a save.
+      CharWait(pl, PULSE_VIOLENCE);
+      return TRUE;
+    }
+	
+  }
+  return FALSE;
+}
+
+int itemvalue(P_char ch, P_obj obj)
+{
+ long workingvalue = 0;
+ 
+ if (IS_SET(obj->bitvector, AFF_STONE_SKIN)) 
+	{
+	 send_to_char("Item has stone skin.", ch);
+	}
+    if (IS_SET(obj->bitvector, AFF_HIDE)) 
+			{
+	 send_to_char("Item has hide.", ch);
+	}
+    if (IS_SET(obj->bitvector, AFF_SNEAK)) 
+			{
+	 send_to_char("Item has sneak.", ch);
+	}
+    if (IS_SET(obj->bitvector, AFF_FLY)) 
+			{
+	 send_to_char("Item has fly.", ch);
+	}
+    if (IS_SET(obj->bitvector, AFF4_NOFEAR)) 
+			{
+	 send_to_char("Item has nofear.", ch);
+	}
+    if (IS_SET(obj->bitvector2, AFF2_AIR_AURA)) 
+			{
+	 send_to_char("Item has aura aura.", ch);
+	}
+    if (IS_SET(obj->bitvector2, AFF2_EARTH_AURA)) 
+			{
+	 send_to_char("Item has earth aura.", ch);
+	}
+    if (IS_SET(obj->bitvector3, AFF3_INERTIAL_BARRIER)) 
+			{
+	 send_to_char("Item has inert barrier.", ch);
+	}
+    if (IS_SET(obj->bitvector3, AFF3_REDUCE)) 
+			{
+	 send_to_char("Item has reduce.", ch);
+	}
+    if (IS_SET(obj->bitvector2, AFF2_GLOBE)) 
+			{
+	 send_to_char("Item has globe.", ch);
+	}
+    if (IS_SET(obj->bitvector, AFF_HASTE)) 
+			{
+	 send_to_char("Item has haste.", ch);
+	}
+     if (IS_SET(obj->bitvector, AFF_DETECT_INVISIBLE)) 
+	{
+	 send_to_char("Item has det invis.", ch);
+	}         
+    if (IS_SET(obj->bitvector4, AFF4_DETECT_ILLUSION))
+	{
+	 send_to_char("Item has det illus.", ch);
+	}
+
+ if (obj->affected[1].location == APPLY_DAMROLL)
+  {
+   send_to_char("Item has damroll.", ch);
+   }
+   
+   return workingvalue;
+
 }

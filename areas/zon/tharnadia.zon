@@ -1,6 +1,6 @@
 #1325
 &+WTharnadia &+L- City of &+CHumans&N~
-133070 2 4 15 25 1
+133071 2 4 15 25 1
 *
 * Zone edited with durisEdit v2.99de
 *
@@ -1815,5 +1815,6 @@ M 0 132521 20 133066 100 0 0 0     * an elite guard
 M 0 132614 4 133066 100 0 0 0      * A tharnadian illusionist
 M 0 132575 3 133066 100 0 0 0      * a controller
 M 0 132521 20 133066 100 0 0 0     * an elite guard
+M 0 132674 1 133071 100 0 0 0      * Jodnan
 *
 S

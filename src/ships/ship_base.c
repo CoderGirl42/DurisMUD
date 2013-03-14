@@ -1759,9 +1759,18 @@ void ship_activity()
                 autopilot_activity(ship);
             if (ship->npc_ai)
                 ship->npc_ai->activity();
-
-            if (ship->target == 0 && ship->speed > 0 && number(0, get_property("ships.pirate.load.chance", 7200)) == 0)
+	     
+            if (has_eq_diplomat(ship))
+		{
+		 if (ship->target == 0 && ship->speed > 0 && number(0, get_property("ships.pirate.diplomat.load.chance", 30000)) == 0)
                 try_load_pirate_ship(ship);
+		}
+	     else
+		{
+		  if (ship->target == 0 && ship->speed > 0 && number(0, get_property("ships.pirate.load.chance", 7200)) == 0)
+                try_load_pirate_ship(ship);
+		}
+
         }
     }
 }

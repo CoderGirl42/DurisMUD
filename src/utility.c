@@ -4088,6 +4088,12 @@ int GET_CHAR_SKILL_P(P_char ch, int skl)
     return 0;
   }
   
+  //Centaurs get innate 2h slashing
+  if((GET_RACE(ch) == RACE_CENTAUR) && (skl == SKILL_2H_SLASHING))
+  {
+  return 100;
+  }
+
   if(skl <= 0)
   {
     return 0;

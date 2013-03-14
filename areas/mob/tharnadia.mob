@@ -2646,3 +2646,17 @@ PE 0 2 0 -1
 18 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#132674
+jodnan blacksmith~
+&+cJodnan&n~
+&+cJodnan&n, the &+Lblacksmith&n stands here working his &+Lm&+re&+Rt&+Ya&+Rl&+rs&n.
+~
+Standing a good 6'5 with an extremely muscular build, Jodnan the blacksmith
+is one of the more experienced craftsmen of the world. As look at him he
+turns to examine you, wondering if you might be here looking to &+Rpractice&n a tradeskill.
+~
+33976394 128 0 0 973078712 35008 0 0 0 S
+PH 0 11 0 5
+60 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1

@@ -1901,6 +1901,10 @@ S
 &+wto one edge of the fountain here with some lines of text printed on it.&n
 ~
 1325 142639168 1 0
+D0
+~
+~
+0 0 133071
 D1
    The Tharnadian-Keats intersection is east of here.
 ~
@@ -12670,8 +12674,6 @@ A small hallway lies below you.
 ~
 ~
 0 0 133012
-F
-5
 S
 #133014
 &+WOn a &+LSpiral&+W Staircase Up the &+YConjurer's &+LTower~
@@ -12693,8 +12695,6 @@ The stairwell continues.
 ~
 ~
 0 0 133013
-F
-5
 S
 #133015
 &+WThe &+LTop&+W of Some Stairs~
@@ -14097,4 +14097,17 @@ D2
 ~
 ~
 0 0 133069
+S
+#133071
+&+yThe &+L'&+yMi&+Ygh&+yty &+LAn&+wv&+Lil'&n~
+As you enter this room, you are immediately overwhelmed with the smell
+of &+rm&+Re&+Ylt&+Rin&+rg &+Rmetals&n, &+Lsmoke&n, and &+Csweat&n. &+RSp&+Yar&+Rks&n fly throughout the room as
+a towering &+chuman&n hefts a large &+Lblacksmithing&n mallet down upon
+an &+Lanvil&n. Various &+Wweapons&n and &+Larmor&n rest upon &+yshelves&n scattered throught the room.
+~
+1325 180387852 0 0
+D2
+~
+~
+0 0 132573
 S

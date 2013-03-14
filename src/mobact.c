@@ -5144,7 +5144,8 @@ void BreathWeapon(P_char ch, int dir)
     if(IS_FIGHTING(ch))
         victim = ch->specials.fighting;
         
-    cast_as_damage_area(ch, funct, GET_LEVEL(ch), victim,
+   /* cast_as_damage_area(ch, funct, GET_LEVEL(ch), victim,*/
+	cast_as_damage_area(ch, funct, BOUNDED(1, GET_LEVEL(ch), 20), victim,
         get_property("dragon.Breath.area.minChance", 60),
         get_property("dragon.Breath.area.chanceStep", 20));
     
@@ -9697,7 +9698,7 @@ void mob_hunt_event(P_char ch, P_char victim, P_obj obj, void *d)
       justice_hunt_cancel(ch);
       return;
     }
-    if(CAN_SEE(ch, vict))
+    if(CAN_SEE(ch, vict) && !IS_AFFECTED(vict, AFF_HIDE))
     {
       MobStartFight(ch, vict);
       if(!char_in_list(ch))

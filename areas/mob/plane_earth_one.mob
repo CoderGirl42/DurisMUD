@@ -5,8 +5,8 @@ stone golem _spec1_~
 ~
 This huge living statue will crush anything that gets in the way of its duty.
 ~
-1074138116 1 0 570425496 268468226 0 0 0 S
-EE 0 1 -1
+1074138116 1 0 0 570425496 268468226 0 0 0 S
+EE 0 1 0 -1
 55 -5 -121 55d131+4675 8d10+50
 0.0.0.0 222750
 8 8 0
@@ -18,8 +18,8 @@ earth elemental~
 &+yThis being, composed of pure earth, and seems to be a bit upset at your
 &+yintrusion in its homeland.
 ~
-1074006016 1 0 570425352 32770 0 0 0 S
-EE 0 1 -1
+1074006016 1 0 0 570425352 32770 0 0 0 S
+EE 0 1 0 -1
 45 -1 -79 45d107+2025 6d6+12
 0.0.0.0 109350
 8 8 0
@@ -31,8 +31,8 @@ large earth elemental~
 &+yThis huge elemental, some twenty feet high seems to move out from the rock
 &+yitself swinging with its mighty fist.
 ~
-1074006016 1 0 536870912 32768 0 0 0 S
-EE 0 0 -1
+1074006016 1 0 0 536870912 32768 0 0 0 S
+EE 0 0 0 -1
 55 -5 -121 55d110+4565 7d6+30
 0.0.0.0 222750
 8 8 0
@@ -44,8 +44,8 @@ dao noble _spec1_~
 &+yThis powerful genie kind, hates those who invade his homeland,
 &+yand moves to attack you at once!
 ~
-1342572544 1 0 570425496 14466 0 0 0 S
-EE 0 512 -1
+1342572544 1 0 0 570425496 14466 0 0 0 S
+EE 0 512 0 -1
 58 -7 -135 58d96+5974 7d6+35
 0.0.0.0 234900
 8 8 1
@@ -56,8 +56,8 @@ xorn _spec4_~
 ~
 &+yThis large 3 armed and 3 legged creature is always on the lookout for gems.
 ~
-1074141252 1 0 973078680 32770 0 0 0 S
-EE 0 2048 -1
+1074141252 1 0 0 973078680 32770 0 0 0 S
+EE 0 2048 0 -1
 51 -3 -105 50d80+2650 6d6+25
 0.0.0.0 121500
 8 8 1
@@ -70,8 +70,8 @@ ogremoch _nobutt_ _nosneak_ _spec1_~
 &+ygreat fists can cause earthquakes when they strike the ground around him.
 &+yStanding over 50' tall he is the largest of the 4 elemental princes
 ~
-1191648408 1 0 976953790 268744896 0 0 0 S
-EE 0 256 7
+1191648408 1 0 0 976953790 268744896 0 0 0 S
+EE 0 256 0 7
 61 -10 -142 6d6+29910 10d7+70
 0.0.0.0 243000
 8 8 1
@@ -83,8 +83,8 @@ earth treant _nosneak_ _spec2_~
 &+LThis huge treant is made of pure granite rock, and often uses its body to
 &+Lwrap its foes in living rock and simply absorbs them.
 ~
-1074006016 1 0 536870912 32768 0 0 0 S
-EE 0 256 -1
+1074006016 1 0 0 536870912 32768 0 0 0 S
+EE 0 256 0 -1
 60 -10 -142 60d132+6240 7d6+35
 0.0.0.0 243000
 8 8 0
@@ -98,8 +98,8 @@ entemoch _nobutt_ _nosneak_ _spec1_ _ignore_~
 &+Las he pounds it futilely, his endless search for his twin bringing
 &+Lhim back to this plane periodically despite his continued frustration.
 ~
-1191648408 1 0 974725566 268482752 67371136 1060864 0 S
-EE 0 256 7
+1191648408 1 0 0 974725566 268482752 67371136 1060864 0 S
+EE 0 256 0 7
 61 -10 0 6d6+29910 10d7+70
 0.0.0.0 243000
 8 8 1

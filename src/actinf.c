@@ -5140,15 +5140,24 @@ void do_score(P_char ch, char *argument, int cmd)
                                  * affects with 2 structs
                                  */
           strcat(buf, skills[aff->type].name);
-          
-          if(!IS_AFFECTED2(ch, AFF2_DETECT_MAGIC) ||
-             (aff->duration > 2))
+	  if(aff->duration < 0)
           {
-            strcat(buf, "\n");
+	    char buf1[MAX_STRING_LENGTH];
+            //strcat(buf, "\n");
+	     sprintf(buf1, " (&+Bno expiration timer&n)\n");
+            strcat(buf, buf1);
+          }
+          else if(aff->duration > 1) //(!IS_AFFECTED2(ch, AFF2_DETECT_MAGIC) ||
+             
+          {
+	    char buf1[MAX_STRING_LENGTH];
+            //strcat(buf, "\n");
+	     sprintf(buf1, " (&+W%d &+Yminutes&n)\n", aff->duration);
+            strcat(buf, buf1);
           }
           else if (aff->duration <= 1)
           {
-            strcat(buf, " (fading rapidly)\n");
+            strcat(buf, " (&+Rless than a minute remaining&n)\n");
           }
           else if (aff->duration == 2)
           {

@@ -380,6 +380,17 @@ bool rapier_dirk(P_char victim, P_char attacker)
     victim->specials.fighting == attacker)
   {
     if(number(0, 1))
+     {
+      if(GET_CLASS(victim, CLASS_BARD))
+    {
+      act("$n's $q &=LCflashes&n into the path of $N's attack, then $n delivers a graceful counter-attack!",
+        TRUE, victim, wep1, attacker, TO_NOTVICT);
+      act("With &=LWunbelievable speed&n, $n's $q intercepts your attack, and then $n steps wide to deliver a graceful counter-attack!",
+        TRUE, victim, wep1, attacker, TO_VICT);
+      act("With superb grace and ease, you intercept $N's attack with $q and counter-attack!",
+        TRUE, victim, wep1, attacker, TO_CHAR);
+    }
+    else
     {
       act("$n's $q &=LCflashes&n into the path of $N's attack, then $n delivers a graceful counter-attack!",
         TRUE, victim, wep2, attacker, TO_NOTVICT);
@@ -388,6 +399,7 @@ bool rapier_dirk(P_char victim, P_char attacker)
       act("With superb grace and ease, you intercept $N's attack with $q and counter-attack!",
         TRUE, victim, wep2, attacker, TO_CHAR);
     }
+     }
     else
     {
       act("$n's intercepts $N's attack with $q with eloquent ease.",
@@ -421,7 +433,7 @@ bool rapier_dirk(P_char victim, P_char attacker)
     }
     else
     {
-      hit(victim, attacker, wep2);
+      hit(victim, attacker, wep1);
     }
     
     return true;
@@ -2304,7 +2316,7 @@ void die(P_char ch, P_char killer)
      obj_to_char(tempobj, ch);
   }
 
-  //Random object code - Normal kills.  Kvark
+  // object code - Normal kills.  Kvark
   if((IS_PC(killer) ||
       IS_PC_PET(killer)) &&
       IS_NPC(ch) &&
@@ -2323,7 +2335,8 @@ void die(P_char ch, P_char killer)
       else
       {
         //if(GET_LEVEL(ch) < 30 || GET_LEVEL(killer) < 20) //removing level restriction, adding racewar check goods only - drannak
-       if(GET_RACEWAR(killer) == RACEWAR_GOOD)
+       //if(GET_RACEWAR(killer) == RACEWAR_GOOD || GET_RACEWAR(killer) == RACEWAR_EVIL) //allowing evils to get randoms 1/26/13 drannak
+	if(GET_LEVEL(killer) > 0)
 	{
         tempobj = create_random_eq_new(killer, ch, -1, -1);
         send_to_char("It appears you were able to salvage a piece of equipment from your enemy.\n", killer);
@@ -2772,7 +2785,8 @@ void kill_gain(P_char ch, P_char victim)
 
   // exp gain drops slower than group size increases 
   // to avoid people being unable to get in groups  -Odorf
-  float exp_divider = ((float)group_size + 2.0) / 3.0; 
+ // float exp_divider = ((float)group_size + 2.0) / 3.0; 
+  float exp_divider = 1.0; //Doing away with this as I want groups to be more beneficial. Not concerned with too much exp gain - drannak
 
   for (gl = ch->group; gl; gl = gl->next)
   {
@@ -2781,8 +2795,9 @@ void kill_gain(P_char ch, P_char victim)
         (gl->ch->in_room == ch->in_room))
     {
       XP = (int) (((float)GET_LEVEL(gl->ch) / (float)highest_level) * ((float)gain / exp_divider));
-
+      
       /* power leveler stopgap measure */
+      /* Disabling this for now - Drannak 3/10/13
       if ((GET_LEVEL(gl->ch) + 40) < highest_level)
         XP /= 10000;
       else if ((GET_LEVEL(gl->ch) + 30) < highest_level)
@@ -2791,15 +2806,16 @@ void kill_gain(P_char ch, P_char victim)
         XP /= 1000;
       else if ((GET_LEVEL(gl->ch) + 15) < highest_level)
         XP /= 200;
+      */
 
       if (XP && IS_PC(gl->ch))
       {
         logit(LOG_EXP, "%s: %d, group kill of: %s [%d]", GET_NAME(gl->ch), XP,
               GET_NAME(victim), ( IS_NPC(victim) ? GET_VNUM(victim) : 0));        
       }
-
+      
       send_to_char("You receive your share of experience.\r\n", gl->ch);
-      gain_exp(gl->ch, victim, XP, EXP_KILL);
+      gain_exp(gl->ch, victim, (XP + (XP*(group_size*.25))), EXP_KILL);
       change_alignment(gl->ch, victim);
     }
   }
@@ -3900,12 +3916,14 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       attack_back(ch, victim, FALSE);
       return DAM_NONEDEAD;
     }
-    // Shrug now works as MR
+   /* Commenting this out for now - vision was never fully implemented - Drannak 1/8/13
+	 // Shrug now works as MR
     if( !(flags & SPLDAM_NOSHRUG) && has_innate(victim, INNATE_MAGIC_RESISTANCE) )
     {
       dam *= (100 - number(0, get_innate_resistance(victim) ) );
       dam /= 100;
     }
+	*/
     if(!(flags & SPLDAM_NODEFLECT) &&
       IS_AFFECTED4(victim, AFF4_HELLFIRE) &&
       !number(0, 5))
@@ -4028,6 +4046,9 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
         dam *= dam_factor[DF_ELSHIELDRED];
       else if (IS_AFFECTED2(victim, AFF2_PROT_COLD))
         dam *= dam_factor[DF_PROTECTION];
+
+	if(GET_RACE(victim) == RACE_BARBARIAN)
+	  dam *= .6;
       
       if(IS_AFFECTED2(victim, AFF2_FIRESHIELD))
       {
@@ -5033,8 +5054,9 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     temp_dam = 0;
     temp_dam = number(1, (int) (temp_dam));
     
-    if(IS_PC(ch) &&
-       GET_LEVEL(ch) >= 46)
+    if(IS_PC(ch))
+	// &&
+       //GET_LEVEL(ch) >= 46)
     {
       temp_dam = dam * get_property("vamping.self.battleEcstasy", 0.150);
       //vamp(ch, temp_dam, GET_MAX_HIT(ch) * get_property("vamping.BTX.self.HP.PC", 1.10));
@@ -7014,6 +7036,9 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
   if (affected_by_spell(ch, SPELL_DREAD_BLADE) && dread_blade_proc(ch, victim))
     return true;
 
+  if (GET_CLASS(ch, CLASS_PALADIN) && holy_weapon_proc(ch, victim))
+    return true;
+
   blade_skill = GET_CLASS(ch, CLASS_AVENGER) ? SKILL_HOLY_BLADE : SKILL_TAINTED_BLADE;
   if (notch_skill(ch, blade_skill, get_property("skill.notch.offensive.auto", 100)) ||
       (GET_CHAR_SKILL(ch, blade_skill) > number(1, 100) &&
@@ -7937,8 +7962,8 @@ int parrySucceed(P_char victim, P_char attacker, P_obj wpn)
   
   // If attacker is significantly stronger than the defender, parry is reduced.
   // This will benefit giants, dragons, etc... which is logical.
-  /*if(GET_C_STR(attacker) > GET_C_STR(victim) + 100)
-    learnedattacker += GET_C_STR(attacker) - 100 - GET_C_STR(victim);Removing this for now - Drannak*/ 
+  if(GET_C_STR(attacker) > GET_C_STR(victim) + 65)
+    learnedattacker += GET_C_STR(attacker) - 65 - GET_C_STR(victim); 
   
   // Harder to parry incoming attacks when not standing.
   if(!MIN_POS(victim, POS_STANDING + STAT_NORMAL))
@@ -8443,20 +8468,20 @@ int calculate_attacks(P_char ch, int attacks[])
   }
 
   //dex and dex max now grants extra attacks.
-  if(GET_C_DEX(ch) >= 150)
+  if(GET_C_DEX(ch) >= 155)
     {
      send_to_char("&nYour &+gsuper&+Gbly dext&+gerous movements allow you to throttle your enemy with attacks!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
      ADD_ATTACK(PRIMARY_WEAPON);
      ADD_ATTACK(PRIMARY_WEAPON);
     }
-  else if(GET_C_DEX(ch) >=135)
+  else if(GET_C_DEX(ch) >=140)
     {
      send_to_char("&nYour &+Gimproved &+gdexterity&n allows you to easily attack your enemy!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
      ADD_ATTACK(PRIMARY_WEAPON);
     }
-  else if(GET_C_DEX(ch) >=120)
+  else if(GET_C_DEX(ch) >=125)
     {
      send_to_char("&nYour heightened &+gdexterity&n allows you to swiftly attack your enemy!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
@@ -8520,7 +8545,8 @@ int calculate_attacks(P_char ch, int attacks[])
 
   if (IS_AFFECTED2(ch, AFF2_FLURRY) && number_attacks > 4)
   {
-    number_attacks = 4;
+    int maxattacks = number_attacks;
+    number_attacks = number(4, maxattacks);
   }
 
   if (IS_AFFECTED3(ch, AFF3_BLUR))

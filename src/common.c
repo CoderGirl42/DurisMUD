@@ -635,7 +635,7 @@ flagDef  extra_bits[] = {
   {"WHOLEBODY", "Whole body", 1, 0},
   {"WHOLEHEAD", "Whole head", 1, 0},
   {"ENCRUSTED", "Was encrusted", 0, 0},
-  {0}
+   {0}
 };
 
 flagDef  extra2_bits[] = {
@@ -651,6 +651,7 @@ flagDef  extra2_bits[] = {
   {"NOTIMER", "Ignore timer proc", 0, 0},
   {"NOLOOT", "Not lootable", 1, 0},
   {"CRUMBLELOOT", "Crumble when looted", 1, 0},
+  {"STOREITEM", "Bought from shop", 0, 0},
   {0}
 };
 

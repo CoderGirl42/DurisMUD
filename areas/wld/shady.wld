@@ -3726,6 +3726,10 @@ The small pathway continues to the east.
 ~
 ~
 0 0 97665
+D2
+~
+~
+0 0 97691
 D4
 The Bar of the Eleventh Hour is above this alley.
 ~
@@ -4326,6 +4330,20 @@ D2
 ~
 ~
 0 0 97699
+S
+#97691
+&+GGixnif's &+Lhouse of &+gGreed&n~
+&+yBuilt from &+Ldirt&+y and rubble from the &+Walley&+y, this room is nothing more than
+&+ya makeshift burrow carved from the &+Learth&+y. &+wRats&+y and other vermin dart throughout
+&+ythe &+Lsh&+wad&+Lows&+y fighting for whatever scraps of &+rfood&+y they can find. In the
+&+yfar back of the room sits a &+Lshifty-eyed&+y, &+gfat &+Ggoblin&+y, picking its teeth with
+&+ya &+Ymuddy&+y &+Lpick axe&+y.
+~
+975 176193544 0
+D0
+~
+~
+0 0 97664
 S
 #97692
 &+WThe Path of the Damned&N~

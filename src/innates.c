@@ -379,6 +379,8 @@ const struct innate_data
   {"woodland renewal", 0},
   {"natural movement", 0},
   {"magic vulnerability", 0},
+  {"two-handed sword mastery", 0},
+  {"holy combat", 0},
 };
 
 string list_innates(int race, int cls, int spec)
@@ -497,6 +499,7 @@ void assign_innates()
   ADD_RACIAL_INNATE(INNATE_HORSE_BODY, RACE_CENTAUR, 1);
   ADD_RACIAL_INNATE(INNATE_DOORKICK, RACE_CENTAUR, 1);
   ADD_RACIAL_INNATE(INNATE_STAMPEDE, RACE_CENTAUR, 21);
+  ADD_RACIAL_INNATE(TWO_HANDED_SWORD_MASTERY, RACE_CENTAUR, 31);
   /* List of Mountain Dwarf Innates */
   ADD_RACIAL_INNATE(INNATE_STRENGTH, RACE_MOUNTAIN, 1);
   ADD_RACIAL_INNATE(INNATE_INFRAVISION, RACE_MOUNTAIN, 1);
@@ -596,7 +599,7 @@ void assign_innates()
   ADD_RACIAL_INNATE(INNATE_ULTRAVISION, RACE_KOBOLD, 1);
   ADD_RACIAL_INNATE(INNATE_DAYVISION, RACE_KOBOLD, 1);
   ADD_RACIAL_INNATE(INNATE_MINER, RACE_KOBOLD, 51);
-  //ADD_RACIAL_INNATE(INNATE_CALMING, RACE_KOBOLD, 1);
+  ADD_RACIAL_INNATE(INNATE_CALMING, RACE_KOBOLD, 1);
   ADD_RACIAL_INNATE(INNATE_UD_SNEAK, RACE_KOBOLD, 1);
   /* List of Kuo Toa Innates         */
   ADD_RACIAL_INNATE(INNATE_ULTRAVISION, RACE_KUOTOA, 1);
@@ -906,6 +909,8 @@ void assign_innates()
   ADD_CLASS_INNATE(INNATE_WILDMAGIC, CLASS_SORCERER, 41, SPEC_WILDMAGE);
   ADD_CLASS_INNATE(INNATE_SUMMON_BOOK, CLASS_SORCERER, 30, SPEC_WIZARD);
 
+  ADD_CLASS_INNATE(HOLY_COMBAT, CLASS_PALADIN, 21, 0);
+
   ADD_CLASS_INNATE(INNATE_SUMMON_MOUNT, CLASS_PALADIN, 8, 0);
   ADD_CLASS_INNATE(INNATE_ANTI_EVIL, CLASS_PALADIN, 1, 0);
   ADD_CLASS_INNATE(INNATE_LAY_HANDS, CLASS_PALADIN, 1, 0);
@@ -1105,7 +1110,7 @@ bool check_reincarnate(P_char ch)
   // innate resurrect! shaman spec
   if (has_innate(ch, INNATE_RESURRECTION))
   {
-    if (!number(0, 5))          // this may be tweeked later
+    if (!number(0, 8))          // this may be tweeked later
     {
       P_char   t, t_next;
 
@@ -1145,7 +1150,7 @@ bool check_reincarnate(P_char ch)
         }
       }
 
-      GET_HIT(ch) = GET_MAX_HIT(ch);
+      GET_HIT(ch) = BOUNDED(10, GET_MAX_HIT(ch), 100);
       CharWait(ch, dice(2, 2) * 4);
       update_pos(ch);
 
@@ -4282,9 +4287,9 @@ bool rapier_dirk_check(P_char ch)
 {
   P_obj weapon;
 
-  if(has_innate(ch, INNATE_RAPIER_DIRK) &&
+  if((has_innate(ch, INNATE_RAPIER_DIRK) &&
     (weapon = ch->equipment[PRIMARY_WEAPON]) && IS_SWORD(weapon) &&
-    (weapon = ch->equipment[SECONDARY_WEAPON]) && IS_DIRK(weapon))
+    (weapon = ch->equipment[SECONDARY_WEAPON]) && IS_DIRK(weapon) ) || (GET_CLASS(ch, CLASS_BARD)))
   {
     return true;
   }

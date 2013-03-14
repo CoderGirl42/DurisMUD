@@ -1664,7 +1664,7 @@ bool can_conjure_lesser_elem(P_char ch, int level)
   for (k = ch->followers, i = 0, j = 0; k; k = k->next)
   {
     victim = k->follower;
-    
+/*    
     if(IS_ELEMENTAL(victim))
     {
       if(!IS_GREATER_ELEMENTAL(victim))
@@ -1675,9 +1675,11 @@ bool can_conjure_lesser_elem(P_char ch, int level)
       {
         j++;
       }
-    }
+    }*/
+    if(IS_ELEMENTAL(victim) || IS_GREATER_ELEMENTAL(victim))
+    i++;
   }
-
+/*
   if(GET_LEVEL(ch) >= 56)
   {
     j--;
@@ -1698,6 +1700,9 @@ bool can_conjure_lesser_elem(P_char ch, int level)
   }
 
   if(j && i >= 2)
+    return FALSE;
+*/
+  if(i >= 3)
     return FALSE;
 
   if(GET_LEVEL(ch) >= 41 && i >= 3)
@@ -2250,13 +2255,11 @@ bool can_conjure_greater_elem(P_char ch, int level)
   for (k = ch->followers, j = 0; k; k = k->next)
   {
     victim = k->follower;
-    
-    if(IS_GREATER_ELEMENTAL(victim))
-    {
+      if(IS_ELEMENTAL(victim) || IS_GREATER_ELEMENTAL(victim))
       j++;
-    }
+    
   }
-
+/*
   if(GET_LEVEL(ch) >= 56)
     j--;
     
@@ -2268,6 +2271,8 @@ bool can_conjure_greater_elem(P_char ch, int level)
     send_to_char("Your ability to inspire is amazing.\r\n", ch);
     j--;
   }
+
+
   if(GET_SPEC(ch, CLASS_CONJURER, SPEC_AIR) &&
      has_air_staff_arti(ch) &&
      j <= 2)
@@ -2285,6 +2290,20 @@ bool can_conjure_greater_elem(P_char ch, int level)
     return FALSE;
   }
   
+  return TRUE;
+*/
+  if(j >= 3)
+    return FALSE;
+
+  if(GET_LEVEL(ch) >= 41 && j >= 3)
+    return FALSE;
+  if((GET_LEVEL(ch) >= 31) && (GET_LEVEL(ch) < 41) && j >= 2)
+    return FALSE;
+  if((GET_LEVEL(ch) >= 21) && (GET_LEVEL(ch) < 31) && j >= 1)
+    return FALSE;
+  if(GET_LEVEL(ch) < 21)
+    return FALSE;
+
   return TRUE;
 }
 
@@ -2429,30 +2448,56 @@ void conjure_specialized(P_char ch, int level)
   } pets[] = // If you add or remove mobs, make sure to adjust 
               // IS_GREATER_ELEMENTAL define in utils.h -Lucrot
   {
-    {
+  /*  {
     1130, 500, 20},
     {
     1131, 400, 20},
     {
-    1132, 600, 20},             /* AIR */
+    1132, 600, 20},             // AIR 
     {
     1140, 600, 25},
     {
     1141, 600, 20},
     {
-    1142, 600, 20},             /* WATER */
+    1142, 600, 20},             // WATER 
     {
     1110, 600, 20},
     {
     1111, 700, 25},
     {
-    1112, 550, 20},             /* FIRE */
+    1112, 550, 20},             // FIRE 
     {
     1120, 600, 20},
     {
     1121, 800, 30},
     {
-    1122, 700, 25},             /* EARTH */
+    1122, 700, 25},             // EARTH 
+*/
+    {
+    43, 500, 20},
+    {
+    43, 400, 20},
+    {
+    43, 600, 20},             /* AIR */
+    {
+    44, 600, 25},
+    {
+    44, 600, 20},
+    {
+    44, 600, 20},             /* WATER */
+    {
+    41, 600, 20},
+    {
+    41, 700, 25},
+    {
+    41, 650, 20},             /* FIRE */
+    {
+    42, 600, 20},
+    {
+    42, 800, 30},
+    {
+    42, 700, 25},             /* EARTH */
+
   };
 
   summoned = 3 * (ch->player.spec - 1) + number(0, 2);
@@ -2660,23 +2705,23 @@ void spell_conjour_greater_elemental(int level, P_char ch, char *arg,
 
   mob->player.level = number(49, 53);
   if(mob->player.level == 49)
-    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 550 + number(0,50) + (life * 3) + charisma;
+    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 450 + number(0,50) + (life * 3) + charisma;
   else if(mob->player.level == 50)
-    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 600 + number(0,50) + (life * 3) + charisma;
+    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 500 + number(0,50) + (life * 3) + charisma;
   else if(mob->player.level == 51)
-    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 650 + number(0,50) + (life * 3) + charisma;
+    GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit = 550 + number(0,50) + (life * 3) + charisma;
   else if(mob->player.level == 52)
     GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
-      700 + number(0,50) + (life * 3) + charisma;
+      600 + number(0,50) + (life * 3) + charisma;
   else
           //big bonus for highest level pet, since it's rare
     GET_MAX_HIT(mob) = GET_HIT(mob) = mob->points.base_hit =
-      800 + number(0,50) + (life * 3) + charisma;
+      700 + number(0,50) + (life * 3) + charisma;
 
   SET_BIT(mob->specials.affected_by, AFF_INFRAVISION);
 
   mob->points.base_hitroll = mob->points.hitroll = GET_LEVEL(mob) / 3;
-  mob->points.base_damroll = mob->points.damroll = GET_LEVEL(mob) / 3;
+  mob->points.base_damroll = mob->points.damroll = GET_LEVEL(mob) / 4;
 
   MonkSetSpecialDie(mob);       /* 2d6 to 4d5 */
   mob->points.damsizedice = (int)(0.8 * mob->points.damsizedice);
@@ -5475,6 +5520,7 @@ void spell_control_weather(int level, P_char ch, P_char victim, P_obj obj)
 
 void spell_minor_creation(int level, P_char ch, P_char victim, P_obj obj)
 {
+  SET_BIT(obj->extra2_flags, ITEM2_STOREITEM);
   obj_to_room(obj, ch->in_room);
   obj->z_cord = ch->specials.z_cord;
   act("$p &+Wsuddenly appears.", TRUE, ch, obj, 0, TO_ROOM);
@@ -10291,6 +10337,8 @@ void spell_shadow_breath_1(int level, P_char ch, char *arg, int type,
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
 
+  dam = BOUNDED(1, dam, 80);
+
   if(spell_damage(ch, victim, dam, SPLDAM_NEGATIVE, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages)!=
     DAM_NONEDEAD);
       return;
@@ -10317,6 +10365,8 @@ void spell_shadow_breath_2(int level, P_char ch, char *arg, int type,
 
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+
+  dam = BOUNDED(1, dam, 80);
 
   if(!NewSaves(victim, SAVING_SPELL, save))
   {
@@ -10353,6 +10403,7 @@ void spell_fire_breath(int level, P_char ch, char *arg, int type,
 
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+  dam = BOUNDED(1, dam, 80);
 
   if(spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) !=
     DAM_NONEDEAD)
@@ -10409,6 +10460,7 @@ void spell_frost_breath(int level, P_char ch, char *arg, int type,
     dam /= 2;
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+  dam = BOUNDED(1, dam, 80);
 
   if(spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) !=
     DAM_NONEDEAD);
@@ -10463,6 +10515,8 @@ void spell_acid_breath(int level, P_char ch, char *arg, int type,
     dam /= 2;
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+
+  dam = BOUNDED(1, dam, 80);
 
   if(IS_AFFECTED2(victim, AFF2_PROT_ACID) &&
     number(0, 4))
@@ -10523,6 +10577,7 @@ void spell_gas_breath(int level, P_char ch, char *arg, int type,
     dam /= 2;
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+  dam = BOUNDED(1, dam, 80);
 
   if(spell_damage(ch, victim, dam, SPLDAM_GAS, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) ==
       DAM_NONEDEAD)
@@ -10559,6 +10614,8 @@ void spell_lightning_breath(int level, P_char ch, char *arg, int type,
     number(0, 4))
       return;
 
+  dam = BOUNDED(1, dam, 80);
+
   spell_damage(ch, victim, dam, SPLDAM_LIGHTNING, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages);
 }
 
@@ -10584,6 +10641,8 @@ void spell_blinding_breath(int level, P_char ch, char *arg, int type,
     dam /= 2;
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));;
+
+  dam = BOUNDED(1, dam, 80);
 
   if(spell_damage(ch, victim, dam, SPLDAM_GAS, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) !=
       DAM_NONEDEAD)
@@ -10632,6 +10691,8 @@ void spell_basalt_light(int level, P_char ch, char *arg, int type,
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
 
+  dam = BOUNDED(1, dam, 80);
+
   if(IS_AFFECTED2(victim, AFF2_PROT_ACID) &&
     number(0, 4))
       return;
@@ -10673,6 +10734,8 @@ void spell_jasper_light(int level, P_char ch, char *arg, int type,
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
 
+  dam = BOUNDED(1, dam, 80);
+
   if(spell_damage(ch, victim, dam, SPLDAM_GAS, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) ==
       DAM_NONEDEAD)
   {
@@ -10713,6 +10776,8 @@ void spell_azure_light(int level, P_char ch, char *arg, int type,
     dam /= 2;
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+
+  dam = BOUNDED(1, dam, 80);
 
   if(IS_AFFECTED2(victim, AFF2_PROT_LIGHTNING) &&
     number(0, 4))
@@ -10756,6 +10821,8 @@ void spell_crimson_light(int level, P_char ch, char *arg, int type,
 
   if(NewSaves(victim, SAVING_BREATH, save))
     dam = (int) (dam / get_property("dragon.Breath.savedDamage", 2));
+
+  dam = BOUNDED(1, dam, 80);
 
   if(spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) !=
     DAM_NONEDEAD)
@@ -20175,7 +20242,8 @@ void spell_moonwell(int level, P_char ch, char *arg, int type, P_char victim,
     set.decay_timer = (set.decay_timer / 2) * 3;
   }
   //--------------------------------
-  set.throughput = MAX(0, (int)( (ch->player.level-46)/2 )) + number( 2, maxToPass + specBonus);
+  //set.throughput = MAX(0, (int)( (ch->player.level-46)/2 )) + number( 2, maxToPass + specBonus);
+  set.throughput = 20;
 
   if(    !can_do_general_portal(level, ch, victim, &set, &msg)
       //                || (!IS_TRUSTED(ch)     && (GET_MASTER(ch) && IS_PC(victim)) )

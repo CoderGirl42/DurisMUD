@@ -115,12 +115,14 @@ const WeaponData weapon_data[MAXWEAPON] = {
 
 #define EQFLAGS01  0        // Ram
 #define EQFLAGS02  CAPITOL  // Levistone
+#define EQFLAGS03  DIPLOMAT	// Pirate Suppression Flag
                                                             
 const EquipmentData equipment_data[MAXEQUIPMENT] = {
 // Name                         Cost  Frags Weight  Flags
 //
- { "Bronze Plated Ram",            0,    0,    0,  EQFLAGS01, },
+ { "&+yBronze&+L Plated Ram",            0,    0,    0,  EQFLAGS01, },
  { "Zentharium Levistone",   5000000, 1600,    0,  EQFLAGS02, },
+ { "&+W A &+bDi&+Bploma&+bt's &+WFlag&n",    0,	    0,    0,  EQFLAGS03,  },
 };
 
                                                                                                
@@ -187,20 +189,20 @@ const int ship_allowed_weapons [MAXSHIPCLASS][MAXWEAPON] = {
 extern const int ship_allowed_equipment [MAXSHIPCLASS][MAXEQUIPMENT];
 const int ship_allowed_equipment [MAXSHIPCLASS][MAXEQUIPMENT] = {
 
-//   Ram  LvStn
-  {   0,    0,  }, // Sloop
-  {   0,    0,  }, // Yacht
-  {   1,    1,  }, // Clipper
-  {   1,    1,  }, // Ketch
-  {   1,    1,  }, // Caravel
-  {   1,    1,  }, // Carrack
-  {   1,    1,  }, // Galleon
+//   Ram  LvStn  Diplomat
+  {   0,    0,    1,  }, // Sloop
+  {   0,    0,    1,  }, // Yacht
+  {   1,    1,    1,  }, // Clipper
+  {   1,    1,    1,  }, // Ketch
+  {   1,    1,    1,  }, // Caravel
+  {   1,    1,    1,  }, // Carrack
+  {   1,    1,    1,  }, // Galleon
               
-  {   1,    1,  }, // Corvette
-  {   1,    1,  }, // Destroyer
-  {   1,    1,  }, // Cruiser
-  {   1,    1,  }, // Frigate
-  {   1,    1,  }, // Dreadnought
+  {   1,    1,    1,  }, // Corvette
+  {   1,    1,    1,  }, // Destroyer
+  {   1,    1,    1,  }, // Cruiser
+  {   1,    1,    1,  }, // Frigate
+  {   1,    1,    1,  }, // Dreadnought
 };
 
 

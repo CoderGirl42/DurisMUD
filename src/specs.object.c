@@ -7407,20 +7407,43 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
 
     // let them walk through the wall 25% of the time
 
-    if (!number(0, 3) && (IS_PC(ch) || IS_PC_PET(ch)))
+    if (!number(0, 3) && IS_PC(ch))
     {
+      act("$p fades to shards of magic, and blows away...&n", TRUE, ch, obj, NULL, TO_ROOM);
+      send_to_char("The prismatic creation fades into nothing.\n", ch);
+      spell_dispel_magic(60, ch, NULL, SPELL_TYPE_SPELL, 0, obj);
       act("You walk through the wall.", TRUE, ch, obj, NULL, TO_CHAR);
       act("$n steps through the wall.", TRUE, ch, obj, NULL, TO_ROOM);
       do_simple_move_skipping_procs(ch, dircmd, 0);
       act("$n steps through the wall.", TRUE, ch, obj, NULL, TO_ROOM);
       GET_HIT(ch) = MAX(1, GET_HIT(ch) - 100);
-      return TRUE;
+
+
+     return TRUE;
     }
     else
     {
       act("Oof! You bump into $p...", TRUE, ch, obj, 0, TO_CHAR);
       act("Oof! $n bumps into $p...", TRUE, ch, obj, 0, TO_NOTVICT);
     }
+
+     if (!number(0, 3) && IS_PC_PET(ch))
+    {
+     
+      act("You walk through the wall.", TRUE, ch, obj, NULL, TO_CHAR);
+      act("$n steps through the wall.", TRUE, ch, obj, NULL, TO_ROOM);
+      do_simple_move_skipping_procs(ch, dircmd, 0);
+      act("$n steps through the wall.", TRUE, ch, obj, NULL, TO_ROOM);
+      GET_HIT(ch) = MAX(1, GET_HIT(ch) - 100);
+
+     return TRUE;
+    }
+    else
+    {
+      act("Oof! You bump into $p...", TRUE, ch, obj, 0, TO_CHAR);
+      act("Oof! $n bumps into $p...", TRUE, ch, obj, 0, TO_NOTVICT);
+    }
+
 
     dam = 0;
     spl = 0;
@@ -7549,8 +7572,9 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
 
   case WALL_OF_FORCE:
-    if ((IS_PC(ch) && GET_PID(ch) == obj->value[5]) ||
-        (IS_NPC(ch) && GET_RNUM(ch) == obj->value[5]))
+    /*if ((IS_PC(ch) && GET_PID(ch) == obj->value[5]) ||
+        (IS_NPC(ch) && GET_RNUM(ch) == obj->value[5])) */
+    if(IS_PC(ch))
     {
       act("&+L$n&+L passes right through $p&+L.", TRUE, ch, obj, 0, TO_ROOM);
       act("&+LYou pass right through $p&+L.", TRUE, ch, obj, 0, TO_CHAR);
@@ -13495,7 +13519,7 @@ struct set_data {
 
 int set_proc(P_obj obj, P_char ch, int cmd, char *arg)
 {
-return FALSE;
+//return FALSE; -muhahaha drannak
   P_obj tobj, included[MAX_WEAR], cobj = obj;
   int s, i, j, count = 0;
   unsigned int flag = cmd ? ITEM2_NOPROC : ITEM2_NOTIMER;

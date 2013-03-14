@@ -115,11 +115,13 @@
 #define MINDBLAST        BIT_6
 #define RANGEDAM         BIT_7
 #define BALLISTIC        BIT_8
+#define DIPLOMAT	    BIT_9
 
 // Equipment
 #define E_RAM            0
 #define E_LEVISTONE      1
-#define MAXEQUIPMENT     2
+#define E_DIPLOMAT	    2
+#define MAXEQUIPMENT     3
 
 #define LEVISTONE_TIME     60
 #define LEVISTONE_RECHARGE 600
@@ -777,6 +779,10 @@ int eq_ram_cost(const ShipData* ship);
 bool has_eq_levistone(const ShipData* ship);
 int eq_levistone_slot(const ShipData* ship);
 int eq_levistone_weight(const ShipData* ship);
+
+bool has_eq_diplomat(const ShipData* ship);
+int eq_diplomat_slot(const ShipData* ship);
+int eq_diplomat_weight(const ShipData* ship);
 
 bool ocean_pvp_state();
 

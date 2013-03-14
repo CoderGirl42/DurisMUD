@@ -6,8 +6,8 @@ slimy maggot~
 A scavenger who hasn't been fed can be really aggressive like this little
 creature of destruction.
 ~
-1140852744 1 0 10 3 0 0 -1000 S
-I 0 0 -1
+1140852744 1 0 0 10 3 0 0 -1000 S
+I 0 0 0 -1
 15 15 51 15d23+60 2d5+2
 0.0.0.0 7290
 8 8 0
@@ -24,8 +24,8 @@ pitch black scales which provide her superb protection from any vile attacks
 upon her. Her spine-chilling yellow eyes are a solemn reminder that she is
 not to be reckoned with.
 ~
-100665550 64 0 33554456 12482 0 0 -1000 S
-D 0 512 -1
+100665550 64 0 0 33554456 12482 0 0 -1000 S
+D 0 512 0 -1
 45 -1 -89 45d72+2385 6d6+12
 5.9.0.14 218700
 8 8 2
@@ -39,8 +39,8 @@ as you approach her.  She has long flowing brown hair and wears
 a rosary about her neck. Simple sandals cover her feet. Her eyes
 seem to twinkle in the light of the candles in the room.
 ~
-33556554 0 0 36 3 0 0 -1000 S
-HO 0 32 -1
+33556554 0 0 0 36 3 0 0 -1000 S
+HO 0 32 0 -1
 40 2 -28 40d88+880 4d7+10
 3.3.3.3 51840
 8 8 2
@@ -55,8 +55,8 @@ guiding hand.  Muiral is an medium aged orcish woman with long
 black hair wrapped in a silver hair piece. She exchanges glances
 with you upon your enterance into her laboratory.
 ~
-33589450 64 0 360 274624 0 0 -1000 S
-HO 0 1024 -1
+33589450 64 0 0 360 274624 0 0 -1000 S
+HO 0 1024 0 -1
 35 -3 -95 50d80+2650 6d6+25
 0.3.1.5 121500
 8 8 2
@@ -69,8 +69,8 @@ An &+Yorcish altar boy&N is here cleaning the church.
 this church can be seen through his eyes.  He holds a piece of cloth
 in one hand and looks relatively tired.
 ~
-33556684 64 0 40 12480 0 0 -750 S
-HO 0 32 -1
+33556684 64 0 0 40 12480 0 0 -750 S
+HO 0 32 0 -1
 20 13 35 20d33+120 3d4+2
 0.9.3.0 9720
 8 8 1
@@ -85,8 +85,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-1140852746 64 0 72 3 0 0 -1000 S
-HO 0 1024 -1
+1140852746 64 0 0 72 3 0 0 -1000 S
+HO 0 1024 0 -1
 30 8 3 30d44+330 3d6+4
 0.5.7.1 26730
 8 8 1
@@ -98,8 +98,8 @@ orcish street sweeper~
 Simply dressed, this man serves the citizens of the Grove
 well by keeping the streets free of debris.
 ~
-67109004 64 0 64 0 0 0 -250 S
-HO 0 1 -1
+67109004 64 0 0 64 0 0 0 -250 S
+HO 0 1 0 -1
 5 20 83 5d17+27 1d5+0
 3.1.0.0 648
 8 8 1
@@ -113,8 +113,8 @@ His emaciated body shows signs of this animal's
 hunger. Carefully sniffing the surroundings, this
 hound is in search of food.
 ~
-1073744008 1 0 0 0 0 0 0 S
-A 0 0 -1
+1073744008 1 0 0 0 0 0 0 0 S
+A 0 0 0 -1
 8 18 74 8d18+28 2d3+1
 0.0.0.0 1036
 8 8 1
@@ -127,8 +127,8 @@ Small, furry, and very cute describe this yound cat. She seems
 lost in such a evil city. Her eyes seem to have an erie green
 glow to them.
 ~
-33554572 64 0 0 0 0 0 -350 S
-A 0 0 -1
+33554572 64 0 0 0 0 0 0 -350 S
+A 0 0 0 -1
 6 18 80 6d18+21 2d3+1
 0.0.0.0 777
 11 8 2
@@ -139,8 +139,8 @@ a black skunk~
 ~
 A small and helpless creature of the forest, this squirrel is small, black, and furry with a small white stripe running down its back.
 ~
-1073744012 64 0 0 0 0 0 0 S
-A 0 0 -1
+1073744012 64 0 0 0 0 0 0 0 S
+A 0 0 0 -1
 7 18 77 7d18+24 2d3+1
 0.0.0.0 907
 8 8 2
@@ -156,8 +156,8 @@ candles of the altar.  His composure is always kempt because he knows the
 eyes of Death God were always watching his every action. A strange dark aura
 surrounds this priest of death.
 ~
-34894 72 0 33554508 12480 0 0 -1000 S
-HO 0 256 -1
+34894 72 0 0 33554508 12480 0 0 -1000 S
+HO 0 256 0 -1
 51 -1 -69 45d99+1980 6d6+12
 5.9.8.4 109350
 8 8 1
@@ -173,8 +173,8 @@ like daggers of diamonds in the light.  Poisonous drool oozes on to
 the ground from his mouth. A sturdy chain keeps him clasped here
 and stuck in the Cavern of the Brave.
 ~
-33556686 1 0 33554520 12480 0 0 -1000 S
-A 0 512 -1
+33556686 1 0 0 33554520 12480 0 0 -1000 S
+A 0 512 0 -1
 51 -5 -98 51d88+4233 7d6+30
 0.0.0.0 206550
 6 8 1
@@ -188,8 +188,8 @@ It seems quite upset over something in particular. It is quite apparent it
 does not like being disturbed as it frantically circles the room looking to
 let of steam. It has a glowing ruby pendant about its neck.
 ~
-100794574 64 0 134217936 0 0 0 -1000 S
-X 0 1024 -1
+100794574 64 0 0 134217936 0 0 0 -1000 S
+X 0 1024 0 -1
 52 -5 -116 52d88+4680 7d6+30
 7.9.7.8 315900
 11 11 1
@@ -202,8 +202,8 @@ fiendish spectre~
 tarnished gauntlets on its hands and is dressed in simple garments which
 appear to pulse with light.
 ~
-1107429582 1 0 146 1 0 0 -1000 S
-X 0 1 -1
+1107429582 1 0 0 146 1 0 0 -1000 S
+X 0 1 0 -1
 45 -3 -96 49d119+3038 6d6+25
 9.2.7.6 178605
 8 8 1
@@ -216,8 +216,8 @@ A &+Rwandering orcish soul&N, flying about here, is searching for a new victim.
 which he never found.  Dressed in clothes from another era, he has a very
 sad look in his face. His eyes glow red matching is the pink aura about him.
 ~
-1107427340 2048 0 134217804 0 0 0 -500 S
-ug 0 16 -1
+1107427340 2048 0 0 134217804 0 0 0 -500 S
+ug 0 16 0 -1
 46 13 35 20d33+120 3d4+2
 0.9.3.0 9720
 11 11 1
@@ -231,8 +231,8 @@ brown mustache. He wears brown orcish clothing and has a funny looking
 pendant about his neck.  His experience in his practice is marked by his age
 at present. As he waits for his next patient, he is organizing his room.
 ~
-33720334 64 0 134217792 2 0 0 -1000 S
-HO 0 256 -1
+33720334 64 0 0 134217792 2 0 0 -1000 S
+HO 0 256 0 -1
 35 2 -28 40d88+880 4d7+10
 3.3.3.3 51840
 8 8 1
@@ -245,8 +245,8 @@ wounded warrior orc~
 from all the wrongs of the realms. He is waiting here patiently to be seen
 by the witch-doctor.
 ~
-33556684 64 0 0 3 0 0 -1000 S
-HO 0 1 -1
+33556684 64 0 0 0 3 0 0 -1000 S
+HO 0 1 0 -1
 41 8 3 30d65+390 3d6+4
 0.5.7.1 26730
 5 8 1
@@ -260,8 +260,8 @@ his body were belongings appear to have been collected. He holds a shovel
 in one hand and wears a lightsource about his neck.  His face show signs
 of exhaustion.
 ~
-2060 64 0 524292 0 0 0 -1000 S
-HO 0 8192 -1
+2060 64 0 0 524292 0 0 0 -1000 S
+HO 0 8192 0 -1
 20 13 35 20d30+100 3d4+2
 0.9.3.0 9720
 8 8 1
@@ -276,8 +276,8 @@ serves his post well.  His face is marked with a scar across his right
 cheek. He wears the insignia of his guardian guild with pride.  Standing
 over six feet, this guardian is well built and not to be reckoned with.
 ~
-33556686 72 0 33554684 12480 0 0 -1000 S
-HO 0 256 -1
+33556686 72 0 0 33554684 12480 0 0 -1000 S
+HO 0 256 0 -1
 45 -1 -69 45d99+1980 6d6+12
 5.9.8.4 109350
 8 8 1
@@ -293,8 +293,8 @@ of their new way of life.  Many young shamans have tried and failed at his
 shaman tests. He has assisted many and patiently awaits his next apprentice
 of the Grove.
 ~
-33589454 64 0 536873024 0 0 0 -1000 S
-HO 0 256 -1
+33589454 64 0 0 536873024 0 0 0 -1000 S
+HO 0 256 0 -1
 55 -5 -111 55d121+4620 7d6+30
 0.2.7.6 222750
 8 8 1
@@ -307,8 +307,8 @@ An &+Worcish warrior&N is here preparing for the next invasion.
 warrior skills. He moves quickly and is very agile on his feet.  He wears
 standard citizen clothing and exchanges glances with you as you approach.
 ~
-2252 2112 0 40 0 0 0 -1000 S
-HO 0 1 -1
+2252 2112 0 0 40 0 0 0 -1000 S
+HO 0 1 0 -1
 41 8 3 30d65+390 3d6+4
 0.5.7.1 26730
 8 8 1
@@ -323,8 +323,8 @@ a rosary about his neck. His red eyes complement his long pointy
 nose.  Simple sandals cover his feet. His eyes seem to twinkle in
 the light of the candles in the room.
 ~
-2250 64 0 36 3 0 0 -1000 S
-HO 0 256 -1
+2250 64 0 0 36 3 0 0 -1000 S
+HO 0 256 0 -1
 46 8 3 30d60+360 3d6+4
 0.5.7.1 26730
 8 8 1
@@ -337,8 +337,8 @@ Zehla Malen, a woman marked by age and experience, runs the sole armory of
 the Grove.  She has long black hair fixed in an upward style.  Her eyes
 sparkle in the light of her glowing pendant she wears about her neck.
 ~
-67111118 64 0 536871020 0 0 0 -1000 S
-HO 0 1024 -1
+67111118 64 0 0 536871020 0 0 0 -1000 S
+HO 0 1024 0 -1
 59 -7 -128 59d96+6077 7d6+35
 4.5.9.6 238950
 8 8 2
@@ -353,8 +353,8 @@ this laboratory.  He wears robes of the finest purple silk. His sleeves
 are the latest in flaring fashion.  His noticeable unswept collar cut in
 the style of the city lords is lined with vibrant sapphires.
 ~
-67274954 64 0 396 262146 0 0 -1000 S
-G 0 2048 -1
+67274954 64 0 0 396 262146 0 0 -1000 S
+G 0 2048 0 -1
 51 -5 -101 55d88+4840 7d6+30
 0.2.7.6 222750
 8 8 1
@@ -367,8 +367,8 @@ He is covered in a light brown, almost gray fure coat.  This young cat
 of the region appears to be strong and with quite a build.  He drools
 with hunger as he notices his next meal.
 ~
-1073743884 1 0 40 0 0 0 0 S
-A 0 0 -1
+1073743884 1 0 0 40 0 0 0 0 S
+A 0 0 0 -1
 17 13 45 17d30+85 3d4+2
 0.0.0.0 8262
 8 8 1
@@ -383,8 +383,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33619976 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33619976 10 0 0 -1000 S
+HO 0 1 0 -1
 55 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -396,8 +396,8 @@ orc crazed old~
 &+LClearly crazed, this orc babbles about nothing comprehensible, while
 &+Lglancing about furtively.  He looks like he could be hostile..
 ~
-1107298440 1 0 1572864 0 0 0 -874 S
-HO 13 4096 -1
+1107298440 1 0 0 1572864 0 0 0 -874 S
+HO 13 4096 0 -1
 26 15 51 15d23+60 2d5+2
 7.6.2.0 7290
 8 8 1
@@ -410,8 +410,8 @@ He is simply dressed in purple robe and a silver medallion. He appears
 to be very busy at his work. He holds a small quill and spellbook in his
 hands.
 ~
-33687626 64 0 200 0 0 0 -999 S
-HO 0 2048 -1
+33687626 64 0 0 200 0 0 0 -999 S
+HO 0 2048 0 -1
 31 11 19 25d32+200 3d5+3
 6.2.6.1 22275
 5 5 1
@@ -423,8 +423,8 @@ An &+Borcish street sweeper&N is here cleaning the city from rubbish.
 Simply dressed, this man serves the citizens of the Grove
 well by keeping the streets free of debris.
 ~
-2188 64 0 12 0 0 0 -500 S
-HO 0 1 -1
+2188 64 0 0 12 0 0 0 -500 S
+HO 0 1 0 -1
 5 20 83 5d17+27 1d5+0
 3.1.0.0 648
 8 8 1
@@ -436,8 +436,8 @@ A stray dog runs around searching for someone to play with.
 This dog is well-nourished and has a coat of brown fur.
 He looks bored and in great need of some amusement.
 ~
-2184 1 0 0 0 0 0 0 S
-A 0 0 -1
+2184 1 0 0 0 0 0 0 0 S
+A 0 0 0 -1
 7 18 77 7d18+24 2d3+1
 0.0.0.0 907
 8 8 1
@@ -452,8 +452,8 @@ a frail orc of emaciated structure.  He wears robes of black
 satin lined with gold. Auld continues his studies as you enter
 his sanctum.
 ~
-67143882 64 0 508 14528 0 0 -1000 S
-HO 0 512 -1
+67143882 64 0 0 508 14528 0 0 -1000 S
+HO 0 512 0 -1
 51 -7 -128 59d96+6077 7d6+35
 4.5.9.6 238950
 8 8 1
@@ -464,8 +464,8 @@ a black skunk~
 ~
 A small and helpless creature of the forest, this squirrel is small, black, and furry with a small white stripe running down its back.
 ~
-2188 0 0 0 0 0 0 0 S
-A 0 0 -1
+2188 0 0 0 0 0 0 0 0 S
+A 0 0 0 -1
 7 18 77 7d18+24 2d3+1
 0.0.0.0 907
 8 8 2
@@ -479,8 +479,8 @@ bite for the day.  He has short brown hair and stands just under six feet
 tall.  By the size of his catch, he appears to have been working for a long
 time.
 ~
-2250 0 0 40 0 0 0 -750 S
-HO 0 0 -1
+2250 0 0 0 40 0 0 0 -750 S
+HO 0 0 0 -1
 1 20 96 1d15+4 1d5+0
 1.0.0.0 129
 8 8 1
@@ -492,8 +492,8 @@ dancing elven girl~
    Lightly dressed, this girl dances through the bar. She dances up to
 you hoping for a small tip as she continues along her way.
 ~
-33556622 64 0 0 0 0 0 -1000 S
-PL 0 256 -1
+33556622 64 0 0 0 0 0 0 -1000 S
+PL 0 256 0 -1
 7 18 77 7d19+31 2d3+1
 3.2.0.0 907
 8 8 2
@@ -507,8 +507,8 @@ the baker and preparer of many goods.  He has a round belly and
 chubby face.  His hands are marked with flour. He greets you with
 a smile as you enter his establishment.
 ~
-2122 64 0 8 3 0 0 -1000 S
-HO 0 256 -1
+2122 64 0 0 8 3 0 0 -1000 S
+HO 0 256 0 -1
 59 -7 -128 59d132+6136 7d6+35
 4.5.9.6 238950
 8 8 1
@@ -522,8 +522,8 @@ barrelling industry of the Grove. He stand a little over five feet high and
 has a long pointed nose. Rorst wears standard clothing like most citizens of
 the Grove.  He keeps his store in top shape.
 ~
-2250 64 0 72 0 0 0 -750 S
-HO 0 1 -1
+2250 64 0 0 72 0 0 0 -750 S
+HO 0 1 0 -1
 59 -7 -128 59d143+6195 7d6+35
 4.5.9.6 238950
 8 8 1
@@ -537,8 +537,8 @@ grave.  She wears clothes from another era which has long passed. She appears
 to be contemplating something action. Her facial expressions show deep
 thought and anger.
 ~
-2058 8 0 134219820 0 0 0 -1000 S
-HO 0 256 -1
+2058 8 0 0 134219820 0 0 0 -1000 S
+HO 0 256 0 -1
 30 8 3 30d60+360 3d6+4
 0.5.7.1 26730
 11 11 2
@@ -550,8 +550,8 @@ An &+Yold orcish woman&N cries over the loss of her spouse.
   Dressed in black, this old woman cries countless tears over her lost
 spouse.  Her face details great sorrowful mood she is in.
 ~
-33556686 72 0 0 0 0 0 -1000 S
-HO 0 256 -1
+33556686 72 0 0 0 0 0 0 -1000 S
+HO 0 256 0 -1
 10 18 67 10d19+45 2d3+1
 5.3.0.0 1296
 8 8 2
@@ -565,8 +565,8 @@ shaman carries a prayer book as he practices the skils taught to him by
 his master. He glances back at you and continues his job.  He stands under
 6 feet and has a slender build.
 ~
-2056 64 0 4 0 0 0 -750 S
-HO 0 256 -1
+2056 64 0 0 4 0 0 0 -750 S
+HO 0 256 0 -1
 35 6 -12 35d77+560 4d6+7
 9.9.1.2 45360
 8 8 1
@@ -582,8 +582,8 @@ His eyes sparkle in the light of the room with an almost magical glow.
 This old mage, your shopkeeper, patiently waits to help you with your
 purchase.
 ~
-131082 72 0 33554496 3 0 0 -1000 S
-HO 0 2048 -1
+131082 72 0 0 33554496 3 0 0 -1000 S
+HO 0 2048 0 -1
 59 -7 -128 59d96+6077 7d6+35
 4.5.9.6 238950
 8 8 1
@@ -597,8 +597,8 @@ to serve those in need of her services.  Ixie wears worn out leather
 clothing of a very out dates style. She has a long pointed nose and erie
 green eyes. She has a silvery pendant about her neck.
 ~
-67143754 0 0 402718840 276480 0 67108864 -1000 S
-HO 0 1280 -1
+67143754 0 0 0 402718840 276480 0 67108864 -1000 S
+HO 0 1280 0 -1
 50 -3 -95 50d80+2650 6d6+25
 0.3.1.5 121500
 8 8 2
@@ -612,8 +612,8 @@ another unsuspecting victim.  She has long black hair and a very thin
 figure. Dressed in dark satin robes, she also has wears a glowing vial
 about her neck. She continues her actions not annoyed by your presence.
 ~
-33556686 72 0 44 12480 0 0 -1000 S
-HO 0 1024 -1
+33556686 72 0 0 44 12480 0 0 -1000 S
+HO 0 1024 0 -1
 30 8 3 30d44+330 3d6+4
 0.5.7.1 26730
 8 8 2
@@ -626,8 +626,8 @@ drunken orc~
 had too much to drink. With a bottle in one hand, he appears dazed and
 confused about the area around him.
 ~
-2248 1 0 0 0 0 0 -500 S
-HO 0 1 -1
+2248 1 0 0 0 0 0 0 -500 S
+HO 0 1 0 -1
 8 18 74 8d21+44 2d3+1
 4.2.0.0 1036
 8 8 1
@@ -641,8 +641,8 @@ after a long day's work of patrolling the streets of the city.  He appears
 agitated in his sleep as he tosses and turns on his cot.  This orcish
 guard seems to be mumbling something incoherent.
 ~
-33556682 72 0 40 0 0 0 -500 S
-HO 0 1 -1
+33556682 72 0 0 40 0 0 0 -500 S
+HO 0 1 0 -1
 35 15 51 15d27+90 2d5+2
 7.6.2.0 7290
 4 4 1
@@ -656,8 +656,8 @@ Order of Orcs, is here training the young and the old in proper skill and
 form. He stands just under six feet and has a large scar on his right
 cheek. His erie green eyes keep a constant watch on his pupils.
 ~
-100698126 72 0 65656 12480 0 0 -1000 S
-HO 0 1 -1
+100698126 72 0 0 65656 12480 0 0 -1000 S
+HO 0 1 0 -1
 35 -3 -95 50d119+2750 6d6+25
 0.3.1.5 121500
 8 8 1
@@ -671,8 +671,8 @@ rags and is busy trying to break the ties that bind him.  Showing no
 emotional signs, he awaits his turn for execution as he tries to figure
 out an escape.
 ~
-1107296266 8 0 112 12480 0 0 -1000 S
-PT 0 1 -1
+1107296266 8 0 0 112 12480 0 0 -1000 S
+PT 0 1 0 -1
 30 8 3 30d65+390 3d6+4
 0.5.7.1 26730
 8 8 1
@@ -686,8 +686,8 @@ her master, Ghak, awaiting his command. Urla is always found about her
 master following his every word. She is a short plump orc with long
 black hair.  She wields a dagger.
 ~
-2122 2376 0 108 192 0 0 -750 S
-HO 0 512 -1
+2122 2376 0 0 108 192 0 0 -750 S
+HO 0 512 0 -1
 36 8 3 30d44+330 3d6+4
 0.5.7.1 26730
 8 8 2
@@ -701,8 +701,8 @@ strong hefty orc is dressed in battle uniform.  He has a large scar
 running horizontally on his fore head.  Ghak has seen many battles and
 is one of the most experienced warriors of the city.
 ~
-100663434 2120 0 44 0 0 0 -1000 S
-HO 0 1 -1
+100663434 2120 0 0 44 0 0 0 -1000 S
+HO 0 1 0 -1
 51 8 3 30d65+390 3d6+4
 0.5.7.1 26730
 8 8 1
@@ -717,8 +717,8 @@ is in deep thought over something. Lyren is pacing the room in a back and
 forth motion. She has long brown hair and wears a ruby pendant about her
 neck.
 ~
-100665550 72 0 40 0 0 0 -1000 S
-HO 0 32 -1
+100665550 72 0 0 40 0 0 0 -1000 S
+HO 0 32 0 -1
 52 -1 -69 45d99+1980 6d6+12
 5.9.8.4 109350
 8 8 2
@@ -732,8 +732,8 @@ in search of his mother.  Constantly whining, this baby's voice
 pierces the eardrums everyone around him. He is rather puny in size
 and drools all over his body.
 ~
-12 0 0 0 0 0 0 0 S
-HO 0 0 -1
+12 0 0 0 0 0 0 0 0 S
+HO 0 0 0 -1
 2 20 93 2d15+7 1d5+0
 1.0.0.0 259
 8 8 1
@@ -747,8 +747,8 @@ member of the Shady Grove works quickly on his task at hand.  By the
 erie glow of a candle, this orc continues his work as you approach
 him. He appears dressed in standard clothing.
 ~
-33554442 0 0 44 0 0 0 -500 S
-HO 0 1 -1
+33554442 0 0 0 44 0 0 0 -500 S
+HO 0 1 0 -1
 5 20 83 5d17+27 1d5+0
 3.1.0.0 648
 8 8 1
@@ -759,8 +759,8 @@ A &+Wrabid orc&N leaps at you with its mouth wide open.&N
 ~
   This orc is frothing at the mouth to kill you.
 ~
-1073744076 1 0 56 0 0 0 -750 S
-HO 0 1 -1
+1073744076 1 0 0 56 0 0 0 -750 S
+HO 0 1 0 -1
 15 15 51 15d27+90 2d5+2
 7.6.2.0 7290
 8 8 1
@@ -773,8 +773,8 @@ The &+Worcish&N jailkeeper paces the room, looking for trouble.
 watch and control over the jail cell. He is well built and is constantly
 on watch for trouble.
 ~
-100665422 64 0 56 0 0 0 -1000 S
-HO 0 1 -1
+100665422 64 0 0 56 0 0 0 -1000 S
+HO 0 1 0 -1
 45 -1 -69 45d107+2025 6d6+12
 5.9.8.4 109350
 8 8 0
@@ -787,8 +787,8 @@ orcish judge~
 all crimes on behalf of the Council of the Elders.  The judge is an
 experienced man and has seen many criminals pass under his ruling arm.
 ~
-100665422 0 0 0 0 0 0 -1000 S
-HO 0 1 -1
+100665422 0 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 50 -1 -69 45d107+2025 6d6+12
 5.9.8.4 109350
 8 8 1
@@ -802,8 +802,8 @@ his new skills on these grounds.  He moves with agility and grace as he
 tries each new skill on his shadow.  He continues to practice with all
 the action around him.
 ~
-100663502 64 0 0 0 0 0 -1000 S
-HO 0 1 -1
+100663502 64 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 25 18 67 10d21+55 2d3+1
 5.3.0.0 1296
 8 8 1
@@ -816,8 +816,8 @@ Running about town, this &+Wfemale orc&N is restocking her low supplies.
 buying up on missing supplies.  She moves quickly with determination
 and poise. She exchanges glances with you as you approach her.
 ~
-33556684 2112 0 0 0 0 0 -500 S
-HO 0 512 -1
+33556684 2112 0 0 0 0 0 0 -500 S
+HO 0 512 0 -1
 7 18 77 7d14+24 2d3+1
 3.2.0.0 907
 8 8 2
@@ -831,8 +831,8 @@ watches over the young orc kids night and day.  She is a women marked
 with great age and experience.  She is lightly dressed and is always on
 the lookout for danger.
 ~
-33554574 72 0 40 0 0 0 -400 S
-HO 0 512 -1
+33554574 72 0 0 40 0 0 0 -400 S
+HO 0 512 0 -1
 25 13 35 20d24+100 3d4+2
 0.9.3.0 9720
 8 8 2
@@ -845,8 +845,8 @@ A young &+Worcish toddler&N sits here playing with his toy.
 for nothing of the world around him except his small figurine which
 he holds in his hands.  He is simply dressed in standard infant clothing.
 ~
-33554638 0 0 0 0 0 0 0 S
-HO 0 0 -1
+33554638 0 0 0 0 0 0 0 0 S
+HO 0 0 0 -1
 2 20 93 2d15+7 1d5+0
 1.0.0.0 259
 6 6 1
@@ -860,8 +860,8 @@ Khazar, the jeweler, sells many gems and other items of value in the city.
 He is dressed in a dark leather outfit and wears a ruby pendant about his
 next.
 ~
-33556682 64 0 284 32960 0 0 -1000 S
-HO 0 16 -1
+33556682 64 0 0 284 32960 0 0 -1000 S
+HO 0 16 0 -1
 55 -3 -95 50d119+2750 6d6+25
 0.3.1.5 121500
 8 8 1
@@ -876,8 +876,8 @@ tries to understand the old rune. She is a large plump orc who is very
 experienced for her age.  Her hair and age demonstrate that she is an old
 woman.  She wears a dark robe lined in gold.
 ~
-33556622 64 0 56 0 0 0 0 S
-HO 0 256 -1
+33556622 64 0 0 56 0 0 0 0 S
+HO 0 256 0 -1
 24 15 51 15d25+75 2d5+2
 7.6.2.0 7290
 8 8 2
@@ -890,8 +890,8 @@ An &+Worc guard&N of the &+LBlack Order&N is here watching your every action.
 He watches everyone and keeps an eye out for danger.  He glances at you
 and continues with his work.
 ~
-1107298440 2112 0 33554468 0 0 67108864 -1000 S
-HO 0 1 -1
+1107298440 2112 0 0 33554468 0 0 67108864 -1000 S
+HO 0 1 0 -1
 45 8 16 26d65+338 3d6+4
 7.2.6.1 23166
 8 8 1
@@ -905,8 +905,8 @@ build. This large warhorse carries the most elite of the &+LBlack Order&N
 in the Shady Grove.  This horse is draped in battle armor and his
 constantly under the command of his ride.
 ~
-134219976 0 0 0 0 0 0 0 S
-AE 0 1 -1
+134219976 0 0 0 0 0 0 0 0 S
+AE 0 1 0 -1
 20 13 35 20d35+140 3d4+2
 0.0.0.0 9720
 8 8 1
@@ -920,8 +920,8 @@ any signs of troubles that he might encounter here in the Shady Grove.
 This orc has a well developed build and wears a tattoo over his face.
 He is a warrior by nature and his cold eyes stare deep into your soul.
 ~
-1107298504 2112 0 33554476 12480 0 0 -1000 S
-HO 0 1 -1
+1107298504 2112 0 0 33554476 12480 0 0 -1000 S
+HO 0 1 0 -1
 56 -1 -69 45d107+2025 6d6+12
 5.9.8.4 109350
 8 8 1
@@ -934,8 +934,8 @@ A &+ydraft horse&N stands here nibbling on your sleeve.
 bored. From time to time, she stops to nibble on a favorite item.  She has
 a brown coat and a long mane.
 ~
-167774220 0 0 0 0 0 0 -500 S
-AE 0 1 -1
+167774220 0 0 0 0 0 0 0 -500 S
+AE 0 1 0 -1
 20 13 35 20d35+140 3d4+2
 0.0.0.0 9720
 8 8 2
@@ -948,8 +948,8 @@ An &+Worcish merchant&N is standing here completing his next transaction.
 at work. He runs from one side of town to the next collecting needed
 items and customers. He is dressed in standard standard equipment.
 ~
-1107298508 64 0 0 0 0 0 -1000 S
-HO 0 16384 -1
+1107298508 64 0 0 0 0 0 0 -1000 S
+HO 0 16384 0 -1
 10 18 67 10d21+55 2d3+1
 5.3.0.0 1296
 8 8 1
@@ -961,8 +961,8 @@ stone golem large~
 This frightening creature has a rigid form and watches the surrounding
 area closely. It moans and cries out oftenly.
 ~
-33556686 32 0 172 12480 0 0 -1000 S
-OG 0 2048 -1
+33556686 32 0 0 172 12480 0 0 -1000 S
+OG 0 2048 0 -1
 45 -1 -69 45d72+1935 6d6+12
 5.9.8.4 109350
 8 8 0
@@ -975,8 +975,8 @@ devil~
 visitor. This creature peers through the area and continues on his way.
 It exchanges glances with you examining your features.
 ~
-33556686 0 0 1048622 274626 0 0 -1000 S
-Y 0 1 -1
+33556686 0 0 0 1048622 274626 0 0 -1000 S
+Y 0 1 0 -1
 25 11 4 25d47+425 3d5+3
 6.2.1.2 22275
 8 8 0
@@ -989,8 +989,8 @@ strange green plant~
 humid area here.  It has a dark green stalk and many leaves.  The plant
 appears to be blooming its strange yellow flowers.
 ~
-2122 0 0 0 0 0 0 -300 S
-VT 0 0 -1
+2122 0 0 0 0 0 0 0 -300 S
+VT 0 0 0 -1
 17 13 45 17d30+255 3d4+2
 0.0.0.0 8262
 8 8 0
@@ -1003,8 +1003,8 @@ small red rose bush~
  not many signs of weakness in this plant.  The rose bush shows strong
  healthy plant vitals.
 ~
-74 0 0 40 0 0 0 -1000 S
-VT 0 1 -1
+74 0 0 0 40 0 0 0 -1000 S
+VT 0 1 0 -1
 15 15 51 15d27+240 2d5+2
 0.0.0.0 7290
 8 8 0
@@ -1017,8 +1017,8 @@ praying orc~
 quietly to his god.  He silently mumbles prayers taught to him by his
 elders.
 ~
-2250 0 0 44 0 0 0 0 S
-HO 0 16384 -1
+2250 0 0 0 44 0 0 0 0 S
+HO 0 16384 0 -1
 25 11 19 25d47+250 3d5+3
 6.2.6.1 22275
 8 8 1
@@ -1030,8 +1030,8 @@ small spider~
 This small black spider is hard at work weaving its web
 to make a catch. It patiently waits almost unnoticed.
 ~
-2254 1 0 0 0 0 0 -1000 S
-AS 0 0 -1
+2254 1 0 0 0 0 0 0 -1000 S
+AS 0 0 0 -1
 2 20 93 2d15+7 1d5+0
 0.0.0.0 259
 8 8 0
@@ -1045,8 +1045,8 @@ next victim with interest. He hides in the shadows preparing for his
 strike. With blade in hand, he makes note of your presence and continues
 his stalk.
 ~
-1107298508 64 0 524332 12480 0 0 -1000 S
-HO 0 4096 -1
+1107298508 64 0 0 524332 12480 0 0 -1000 S
+HO 0 4096 0 -1
 15 15 51 15d23+60 2d5+2
 7.6.2.0 7290
 8 8 1
@@ -1059,8 +1059,8 @@ An &+Borcish assassin&N prowls the area hunting his new prey.&N
 hides in the shadows of buildings waiting.  This sly orc exchanges glances
 with you as you approach. He bears his bloodstained dagger in preparation.
 ~
-33556620 64 0 0 0 0 0 0 S
-HO 0 8192 -1
+33556620 64 0 0 0 0 0 0 0 S
+HO 0 8192 0 -1
 15 15 51 15d23+60 2d5+2
 7.6.2.0 7290
 8 8 1
@@ -1072,8 +1072,8 @@ A &+Rcowardly orcish girl&N tries to hide herself in protection.
    This poor child is trying to conceal herself from danger. This
 little orc is frightened and is taking measures to escape death.
 ~
-2184 0 0 0 0 0 0 -1000 S
-HO 0 4 -1
+2184 0 0 0 0 0 0 0 -1000 S
+HO 0 4 0 -1
 18 13 42 18d33+108 3d4+2
 9.7.3.0 8748
 8 8 2
@@ -1087,8 +1087,8 @@ teach all his young initiates the ways of their new life.  He stands
 firm and has a powerful build.  He wears a suit of dragon scales and
 wields his dagger.
 ~
-33589390 72 0 268960124 14528 0 0 -1000 S
-HO 0 8192 -1
+33589390 72 0 0 268960124 14528 0 0 -1000 S
+HO 0 8192 0 -1
 56 -7 -128 59d120+6077 7d6+35
 4.5.9.6 238950
 8 8 1
@@ -1099,8 +1099,8 @@ akhbar haseesh shopkeeper~
 ~
 Akhbar looks happy to be selling food, and his stomach shows it.
 ~
-2250 72 0 536871020 0 0 0 -1000 S
-HO 0 1 -1
+2250 72 0 0 536871020 0 0 0 -1000 S
+HO 0 1 0 -1
 59 -7 -128 59d143+6195 7d6+35
 4.5.9.6 238950
 8 8 2
@@ -1115,8 +1115,8 @@ Xixermo is a medium aged orc with a large build.  Having served
 as an elite guard many years ago, Xixermo is well experienced in
 this field.
 ~
-33556682 64 0 492 8256 0 0 -1000 S
-HO 0 1 -1
+33556682 64 0 0 492 8256 0 0 -1000 S
+HO 0 1 0 -1
 50 -3 -95 50d119+2750 6d6+25
 0.3.1.5 121500
 8 8 1
@@ -1131,8 +1131,8 @@ upon the Shady Grove.  The orcs captured this giant and have imprisoned
 him until further notice.  King Mmemzar mumbles to himself as he stares
 almost lifeless outside the locked gate.
 ~
-1140984012 128 0 134742524 276690 0 0 -1000 S
-G 0 512 -1
+1140984012 128 0 0 134742524 276690 0 0 -1000 S
+G 0 512 0 -1
 54 -5 -97 54d88+4752 7d6+30
 9.1.7.6 218700
 6 6 1
@@ -1145,8 +1145,8 @@ A &+Ldark&N orcish priest rests here praying.
 his god is here praying to a greater authority.  This orc has build
 and a long pointy nose.
 ~
-33556618 72 0 380 14528 0 0 -1000 S
-HO 0 32 -1
+33556618 72 0 0 380 14528 0 0 -1000 S
+HO 0 32 0 -1
 34 6 -8 34d77+544 4d6+7
 8.9.0.2 44064
 5 5 1
@@ -1160,8 +1160,8 @@ travels through the streets of the Grove watching and teaching
 his students.  Ghizyon smiles as he notices improvement in one
 of his student's skill and continues along his way.
 ~
-33589452 72 0 268509672 14528 0 0 -1000 S
-HO 0 16 -1
+33589452 72 0 0 268509672 14528 0 0 -1000 S
+HO 0 16 0 -1
 35 -5 -111 55d131+4675 7d6+30
 0.2.7.6 222750
 8 8 1
@@ -1175,8 +1175,8 @@ of the Grove looking for &+Yintruders&n. A strange tattoo of an eye is
 clearly visible on front of his eyelids. Undoubtedly, the runes bestow
 some special magical ability.
 ~
-2122 33554504 0 268435512 37068 0 67113472 -1000 S
-HO 0 272 -1
+2122 33554504 0 0 268435512 37068 0 67113472 -1000 S
+HO 0 272 0 -1
 51 2 -15 36d95+828 4d7+10
 0.1.2.2 46656
 8 8 1
@@ -1186,8 +1186,8 @@ orc hooded~
 &+La black hooded orc stands here in the shadow.&N
 ~
 ~
-33556552 0 0 264 0 0 0 -800 S
-HO 13 8192 -1
+33556552 0 0 0 264 0 0 0 -800 S
+HO 13 8192 0 -1
 40 2 -28 40d80+840 4d7+10
 3.3.3.3 51840
 8 8 1
@@ -1201,8 +1201,8 @@ Typical guard duty is usually being careful not to offend those
 in power and to go around beating anyone lesser than they. In
 other words a perfect job for an orc.
 ~
-67110986 64 0 302055480 2 0 67121664 -500 S
-HO 0 1 -1
+67110986 64 0 0 302055480 2 0 67121664 -500 S
+HO 0 1 0 -1
 51 -5 -400 51d131+4335 10d8+50
 6.9.4.6 206550
 8 8 1
@@ -1213,8 +1213,8 @@ mailman orc short~
 ~
 &+LBoy, he sure is bored.
 ~
-33556554 0 0 0 0 0 0 -1000 S
-HO 13 1 -1
+33556554 0 0 0 0 0 0 0 -1000 S
+HO 13 1 0 -1
 30 0 0 1d1+1 1d1+1
 0.0.0.0 0
 6 6 1
@@ -1228,8 +1228,8 @@ any signs of troubles that he might encounter here in the Shady Grove.
 This orc has a well developed build and wears a tattoo over his face.
 He is a warrior by nature and his cold eyes stare deep into your soul.
 ~
-1107298378 64 0 33554492 12480 0 0 -1000 S
-HO 0 1 -1
+1107298378 64 0 0 33554492 12480 0 0 -1000 S
+HO 0 1 0 -1
 55 -1 -69 45d107+2025 6d6+12
 5.9.8.4 109350
 8 8 1
@@ -1244,8 +1244,8 @@ the window in this laboratory.  He wears robes of the finest purple silk.
 His sleeves are the latest in flaring fashion.  His noticeable unswept collar
 cut in the style of the city lords is lined with vibrant sapphires.
 ~
-2214758602 64 0 396 262146 0 0 -1000 S
-G 0 4194304 -1
+2214758602 64 0 0 396 262146 0 0 -1000 S
+G 0 4194304 0 -1
 56 -5 -101 55d88+4840 7d6+30
 0.2.7.6 222750
 8 8 1
@@ -1260,8 +1260,8 @@ the window in this laboratory.  He wears robes of the finest purple silk.
 His sleeves are the latest in flaring fashion.  His noticeable unswept collar
 cut in the style of the city lords is lined with vibrant sapphires.
 ~
-67274954 64 0 396 262146 0 0 -1000 S
-G 0 2097152 -1
+67274954 64 0 0 396 262146 0 0 -1000 S
+G 0 2097152 0 -1
 50 -5 -101 55d88+4840 7d6+30
 0.2.7.6 222750
 8 8 1
@@ -1272,8 +1272,8 @@ shady alchemist~
 ~
 'What would you like, worm?'
 ~
-10 64 0 8 0 0 0 -1000 S
-HO 0 1 -1
+10 64 0 0 8 0 0 0 -1000 S
+HO 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1288,8 +1288,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33620184 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33620184 10 0 0 -1000 S
+HO 0 1 0 -1
 51 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1306,8 +1306,8 @@ powerful arms and legs are all armed with claws.  Four round eyes are
 postioned evenly across the forehead of the creature, each one centered
 on its prey.
 ~
-1073743946 64 0 316 28 0 67108864 -1000 S
-og 13 1 5
+1073743946 64 0 0 316 28 0 67108864 -1000 S
+og 13 1 0 5
 61 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1323,8 +1323,8 @@ grul theg grultheg orc auctioneer~
 &+Lhas seen his share of combat, living to tell about it.  His deep, mighty
 &+Lvoice echos through the auction lot.
 ~
-2058 0 0 268435608 2049 0 0 -1000 S
-HO 13 1 -1
+2058 0 0 0 268435608 2049 0 0 -1000 S
+HO 13 1 0 -1
 61 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1338,8 +1338,8 @@ orc warrior strong respected~
 &+Lto him.  He scans the merchandise available, ready to upgrade his
 &+Larsenal to more better serve him no the battle field.
 ~
-2058 0 0 0 0 0 0 -1000 S
-HO 0 1 -1
+2058 0 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 35 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1353,8 +1353,8 @@ orc orcish merchant greedy~
 &+Lhis hastey and obsessive actions towards the merchandise suggests that
 &+Lhe has been overcome with greed to continue to do so.
 ~
-2058 0 0 0 0 0 0 -1000 S
-HO 0 1 -1
+2058 0 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1364,8 +1364,8 @@ ugly kobold slave~
 &+gAn ugly kobold slave stands here.&n
 ~
 ~
-8 0 0 0 0 0 0 -1000 S
-H 0 1 -1
+8 0 0 0 0 0 0 0 -1000 S
+H 0 1 0 -1
 10 0 0 1d1+1 1d1+1
 0.0.0.0 500
 8 8 1
@@ -1375,8 +1375,8 @@ wood golem~
 &+yA large wood golem has been bought here.&n
 ~
 ~
-8 0 0 16777344 0 0 0 -1000 S
-OG 0 1 -1
+8 0 0 0 16777344 0 0 0 -1000 S
+OG 0 1 0 -1
 20 0 0 1d1+1 1d1+1
 0.0.0.0 2000
 8 8 0
@@ -1386,8 +1386,8 @@ deep gnome slave~
 &+LA deep &+Rgnome&+L slave has been purchased.&n
 ~
 ~
-8 0 0 24 1 0 0 -1000 S
-PG 0 1 -1
+8 0 0 0 24 1 0 0 -1000 S
+PG 0 1 0 -1
 30 0 0 1d1+1 1d1+1
 0.0.0.0 5000
 8 8 1
@@ -1397,8 +1397,8 @@ slave rakshasa~
 &+LA snarling &+Rrak&+Yshasa&+L slave follows its owner.&n
 ~
 ~
-8 0 0 402653200 0 0 0 -1000 S
-RA 0 4096 -1
+8 0 0 0 402653200 0 0 0 -1000 S
+RA 0 4096 0 -1
 40 0 0 1d1+1 1d1+1
 0.0.0.0 30000
 8 8 1
@@ -1408,8 +1408,8 @@ ettin warrior~
 &+yA powerful ettin warrior has been bought.&n
 ~
 ~
-8 0 0 2147483664 0 128 0 -1000 S
-G 0 1 -1
+8 0 0 0 2147483664 0 128 0 -1000 S
+G 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 60000
 8 8 1
@@ -1421,8 +1421,8 @@ slave handler~
 &+LWith a sort of growl and snort the slave handler offers you his wares.
 &+W	"Take a looksee at whats I gots for sale today."
 ~
-2058 0 0 0 0 0 0 -1000 S
-HO 0 1 -1
+2058 0 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1432,8 +1432,8 @@ town crier~
 &+LThe town crier of Shady &+gGrove &+Lstands here, shouting.&n
 ~
 ~
-2058 0 0 0 0 0 0 -1000 S
-HO 0 1 -1
+2058 0 0 0 0 0 0 0 -1000 S
+HO 0 1 0 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1448,8 +1448,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33619976 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33619976 10 0 0 -1000 S
+HO 0 1 0 -1
 35 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1464,8 +1464,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33620184 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33620184 10 0 0 -1000 S
+HO 0 1 0 -1
 53 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1480,8 +1480,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33619976 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33619976 10 0 0 -1000 S
+HO 0 1 0 -1
 45 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1496,8 +1496,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33619976 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33619976 10 0 0 -1000 S
+HO 0 1 0 -1
 35 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1512,8 +1512,8 @@ and training. With a sword in one hand, his duty appears quite
 simple. His eyes glare icly to you as he warns, "STAY out of
 UNLAWFUL activity!"
 ~
-67110986 64 0 33620184 10 0 0 -1000 S
-HO 0 1 -1
+67110986 64 0 0 33620184 10 0 0 -1000 S
+HO 0 1 0 -1
 51 -5 -101 52d131+4420 7d6+30
 7.9.5.6 210600
 8 8 1
@@ -1527,8 +1527,22 @@ any signs of troubles that he might encounter here in the Shady Grove.
 This orc has a well developed build and wears a tattoo over his face.
 He is a warrior by nature and his cold eyes stare deep into your soul.
 ~
-100669514 2112 0 838860860 12480 0 67112960 -1000 S
-HO 0 1 -1
+100669514 2112 0 0 838860860 12480 0 67112960 -1000 S
+HO 0 1 0 -1
 51 -1 -300 45d107+2025 6d6+12
 5.9.8.4 109350
+8 8 1
+#97606
+gixnif goblin miner~
+&+GGixnif&n~
+&+GGixnif&n, the &+Ggoblin&n miner stands here sneering at you.
+~
+This rather fat goblin is a filthy one. He is covered from head to toe in dirt, likely
+a result of practicing his craft &+Lmining&n. He stares at you with a toothy grin, wondering
+if you might be here to &+Rpractice&n a tradeskill.
+~
+33978442 64 0 0 940116156 0 0 0 0 S
+HG 0 529 0 1
+60 0 0 1d1+1 1d1+1
+0.0.0.0 0
 8 8 1
