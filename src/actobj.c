@@ -5874,7 +5874,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
       		  salvaged->cost = newcost;
 		obj_to_char(salvaged, ch);
 		}
-      
+        
        notch_skill(ch, SKILL_SALVAGE, 25);
        
       if((reciperoll < playerroll))
