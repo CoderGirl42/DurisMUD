@@ -868,8 +868,12 @@ int sql_shop_trophy(P_obj obj)
 if(!obj)
  return 0;
 
-
+//mined ore doesnt devaule
 if(strstr(obj->name, "_ore_"))
+return 0;
+
+int objvir = GET_OBJ_VNUM(obj);
+if((objvir >= 400000) && (objvir < 400202))
 return 0;
 
 
