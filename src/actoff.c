@@ -4236,7 +4236,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
 
     if(GET_CHAR_SKILL(ch, SKILL_DOUBLE_HEADBUTT) > number(0,300))
     {
-      for( int j = 1; j < 4 && !number(0,j); j++ )
+      for( int j = 1; j < 2 && !number(0,j); j++ ) //max 2 headbutts
       {
         act("You deftly pull back your head and ram it into $N again!", FALSE, ch, 0, victim, TO_CHAR);
         act("With a quick move, $n pulls back $s head and rams it into you again!", FALSE, ch, 0, victim, TO_VICT);
