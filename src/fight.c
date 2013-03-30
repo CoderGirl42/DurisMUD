@@ -2747,6 +2747,7 @@ void kill_gain(P_char ch, P_char victim)
   {
     send_to_char("You receive your share of experience.\r\n", ch);
     gain_exp(ch, victim, gain, EXP_KILL);
+	//drannak - add random chance to gain epic points.
     change_alignment(ch, victim);
     return;
   }

@@ -4093,7 +4093,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     }
   }
 
-  if (GET_POS(victim) == POS_STANDING && get_takedown_size(victim) < get_takedown_size(ch) - 2)
+  if (GET_POS(victim) == POS_STANDING && get_takedown_size(victim) < get_takedown_size(ch) - 1)
   {
     act("It is far too small.  You're better off squashing it.",
         FALSE, ch, 0, 0, TO_CHAR);
@@ -4121,7 +4121,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     return;
   }
   
-  if( !IS_HUMANOID(victim) || get_takedown_size(victim) > get_takedown_size(ch) + 2)
+  if( !IS_HUMANOID(victim) || get_takedown_size(victim) > get_takedown_size(ch) + 1)
   {
     messages = &messages_other;
   }
