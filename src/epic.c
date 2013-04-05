@@ -883,7 +883,10 @@ void epic_stone_level_char(P_obj obj, P_char ch)
 	wizlog(56, "%s has attained epic level &+W%d&n!",
            GET_NAME(ch),
            GET_LEVEL(ch));
+    if(GET_LEVEL(ch) > 50)
+    {
     ch->only.pc->epics -= ch->only.pc->epics;
+    }
   }
   
 }
