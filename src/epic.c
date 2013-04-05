@@ -849,6 +849,7 @@ void epic_free_level(P_char ch)
 		 wizlog(56, "%s has attained epic level &+W%d&n!",
                 GET_NAME(ch),
                 GET_LEVEL(ch));
+	ch->only.pc->epics = 0;
      }
 
 }
@@ -882,7 +883,9 @@ void epic_stone_level_char(P_obj obj, P_char ch)
 	wizlog(56, "%s has attained epic level &+W%d&n!",
            GET_NAME(ch),
            GET_LEVEL(ch));
+    ch->only.pc->epics -= ch->only.pc->epics;
   }
+  
 }
 
 void epic_stone_one_touch(P_obj obj, P_char ch, int epic_value)
@@ -927,11 +930,11 @@ void epic_stone_one_touch(P_obj obj, P_char ch, int epic_value)
 
   //Characters can now level up to 55 by epics and exp alone - 11/13/12 Drannak
   if((GET_LEVEL(ch) == (obj->value[3] - 1)) ||
-    (curr_epics > 500 && GET_LEVEL(ch) == 50) ||
-    (curr_epics > 1000 && GET_LEVEL(ch) == 51) ||
-    (curr_epics > 2000 && GET_LEVEL(ch) == 52) ||
-    (curr_epics > 4000 && GET_LEVEL(ch) == 53) ||
-    (curr_epics > 8000 && GET_LEVEL(ch) == 54))
+    (curr_epics > 125 && GET_LEVEL(ch) == 50) ||
+    (curr_epics > 250 && GET_LEVEL(ch) == 51) ||
+    (curr_epics > 500 && GET_LEVEL(ch) == 52) ||
+    (curr_epics > 1000 && GET_LEVEL(ch) == 53) ||
+    (curr_epics > 2000 && GET_LEVEL(ch) == 54))
   {
     epic_stone_level_char(obj, ch);
   }
