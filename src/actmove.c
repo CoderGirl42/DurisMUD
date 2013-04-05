@@ -1433,7 +1433,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
     notch_skill(ch, SKILL_SNEAK, 20);
   }
   
-
+/*
   if (affected_by_spell(ch, TAG_PVPDELAY) ){
     send_to_char
           ("The &+Radrenaline&n is pumping through you like mad, this sure is exhausting...&n\n", ch);
@@ -1444,7 +1444,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
     else
       need_movement += number(1,2);
   }
-//drannak movement loss
+*/
 
   /* pc_timer[1] gets set on successful flee */
  /*
