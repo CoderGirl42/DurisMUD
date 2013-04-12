@@ -1776,9 +1776,9 @@ robe netheril battle mage~
 &+Ya r&+ro&+Yb&+re &+Yof a &+mN&+We&+Mt&+Wh&+me&+Wr&+Mi&+Wl &+rBa&+Ytt&+rle&+Y M&+rag&+Ye&n~
 &+YA golden cloak of immense &+mpower &+Yfloats here on the ground.&n~
 ~
-9 1 4 0 15 0 33562632 9 64 0 0
+9 1 4 0 15 0 33562632 9 64 28405851 0
 -40 0 0 0 0 0 0 0
-0 0 100 16 0 0 0
+0 0 100
 E
 robe netheril battle mage~
 &+rHeld together by uknown &+Ymagic&+r, this cloak &+Yradiates&+r power
@@ -1786,9 +1786,7 @@ robe netheril battle mage~
 &+rever seen outside the hands of the &+mN&+We&+Mt&+mh&+We&+Mr&+mi&+Wl &+rBattle Mages.&n
 ~
 A
-31 5
-A
-18 6
+41 9
 #400219
 key skeleton~
 &+La s&+wk&+Welet&+wo&+Ln &+Ykey&n~

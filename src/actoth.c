@@ -2293,6 +2293,9 @@ void do_steal(P_char ch, char *argument, int cmd)
   if (IS_NPC(ch))
     return;
 
+  send_to_char("The babies have won for now... disabled until further work.\r\n", ch);
+  return;
+
   if (GET_LEVEL(ch) < 10)
   {
     send_to_char("You're too inexperienced.. get some levels.\r\n", ch);
