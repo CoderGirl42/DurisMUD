@@ -2832,7 +2832,7 @@ void do_refine(P_char ch, char *arg, int cmd)
       obj = get_obj_in_list(gbuf1, ch->carrying);
        if(!obj)
       {
-       send_to_char("&+rYou must have the item you wish to &+yre&+Yfi&+yne &nin your inventory.&n\r\n", ch);
+       send_to_char("&nYou must have the item you wish to &+yre&+Yfi&+yne &nin your inventory.&n\r\n", ch);
        return;
       }
       
@@ -2846,14 +2846,75 @@ void do_refine(P_char ch, char *arg, int cmd)
        send_to_char("That item is either not a &+ysalvaged &nitem, or it is already the &+Bhighest&n quality of &+bmaterial&n for that type!\r\n", ch);
        return;
       }
-   
+  P_obj t_obj, nextobj;
+  int i = 0;
+  int o = 0;
+  for (t_obj = ch->carrying; t_obj; t_obj = nextobj)
+  {
+    nextobj = t_obj->next_content;
+
+    if(GET_OBJ_VNUM(t_obj) == GET_OBJ_VNUM(obj))
+    {
+      i++;
+    }
+    if((GET_OBJ_VNUM(t_obj) > 193) && (GET_OBJ_VNUM(t_obj) < 234))
+    {
+     o++;
+    }
+  }
+  if(i < 2)
+  {
+    send_to_char("You need at least &+Y2 &nof the &+ymaterials&n in your inventory in order to &+yre&+Yfi&+yne&n it.\r\n", ch);
+    return;
+  }
+  if(o != 1)
+  {
+    send_to_char("You must have &+Wexactly &+Rone&n &+Lm&+yi&+Ln&+ye&+Ld ore &nin your inventory in order to &+yre&+Yfi&+yne&n it.\r\n", ch);
+    return;
+  }
+  i = 2;
+  int orechance;
+  for (t_obj = ch->carrying; t_obj; t_obj = nextobj)
+     {
+    nextobj = t_obj->next_content;
+
+	if((GET_OBJ_VNUM(t_obj) == GET_OBJ_VNUM(obj)) && i > 0 )
+         {
+	   obj_from_char(t_obj, TRUE);
+          send_to_char("You take the item and gently pour the melted ore over the item...\n", ch);
+          i--;
+         }
+       if((GET_OBJ_VNUM(t_obj) > 193) && (GET_OBJ_VNUM(t_obj) < 234))
+        {
+         obj_from_char(t_obj, TRUE);
+         orechance = (GET_OBJ_VNUM(t_obj) - 194);
+        }
+      }
+  int success = 61;
+  success += orechance;
+  if(success < number(1, 100))
+  {
   act
-    ("&+W$n &+rbegins to chant loudly, calling forth the &+Bblood &+rof their enemies. &+W$n's &+rhands begin to &+Rg&+rl&+Ro&+rw &+Rbrightly &+ras drops of blood begin to form.\r\n"
-     "&+W$n &+rgently takes the &+Rblood&+r and begins to spread it about their $p&+r, which starts to glow with an &+Lun&+rho&+Lly &+Rlight.&N",
+    ("&+W$n &+Ltakes their &+yore&+L and begins to &+rh&+Rea&+Yt &+Lit in the &+yforge&+L.\r\n"
+     "&+W$n &+Lgently removes the &+rm&+Ro&+Ylt&+Re&+rn &+yore &+Land starts to spread it about their $ps&+L, which &-L&+Rshatters&n &+Lfrom the intense &+rheat&+L!&N",
      TRUE, ch, obj, 0, TO_ROOM);
   act
-    ("&+rYou begin to chant loudly, calling forth the &+Bblood &+rof your enemies. Your &+rhands begin to &+Rg&+rl&+Ro&+rw &+Rbrightly &+ras drops of blood begin to form.\r\n"
-      "&+rYou &+rgently take the &+Rblood&+r and begin to spread it about your $p&+r, which starts to glow with an &+Lun&+rho&+Lly &+Rlight.&N",
+    ("&+LYou &+Ltake your &+yore&+L and &+rh&+Rea&+Yt &+Lit in the &+yforge&+L.\r\n"
+     "&+LYou &+Lgently remove the &+rm&+Ro&+Ylt&+Re&+rn &+yore &+Land start to spread it about your $ps&+L, which &-L&+Rshatters&n &+Lfrom the intense &+rheat&+L!&N",
+     FALSE, ch, obj, 0, TO_CHAR);
+   return;
+  }
+
+  //success!
+  int newobj = GET_OBJ_VNUM(obj) + 1;
+  obj_to_char(read_object(newobj, VIRTUAL), ch);
+  act
+    ("&+W$n &+Ltakes their &+yore&+L and begins to &+rh&+Rea&+Yt &+Lit in the &+yforge&+L.\r\n"
+     "&+W$n &+Lgently removes the &+rm&+Ro&+Ylt&+Re&+rn &+yore &+Land starts to spread it about their $ps&+L, which &+ycrack &+Land &+yreform&+L under the intense &+rheat&+L.&N",
+     TRUE, ch, obj, 0, TO_ROOM);
+  act
+    ("&+LYou &+Ltake your &+yore&+L and &+rh&+Rea&+Yt &+Lit in the &+yforge&+L.\r\n"
+     "&+LYou &+Lgently remove the &+rm&+Ro&+Ylt&+Re&+rn &+yore &+Land start to spread it about your $ps&+L, which &+ycrack &+Land &+yreform&+L under the intense &+rheat&+L.&N",
      FALSE, ch, obj, 0, TO_CHAR);
     }
 

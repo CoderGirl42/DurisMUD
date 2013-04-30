@@ -74,6 +74,7 @@ extern const flagDef affected3_bits[];
 extern const flagDef affected4_bits[];
 extern const flagDef affected5_bits[];
 extern int top_of_zone_table;
+extern int itemvalue(P_char ch, P_obj obj);
 
 void yank_make_item(P_char, P_obj);
 void lore_item( P_char ch, P_obj obj );
@@ -3760,11 +3761,51 @@ void do_craft(P_char ch, char *argument, int cmd)
       return;
      }
    tobj = read_object(selected, VIRTUAL);
-   //First - See if there's a magical affect that we need a component for.
 
-  //Second - See what material it is. make a method called: find_material(obj)
-   send_to_char("RECIPE CRAP IN THIS\r\n", ch);
+   float tobjvalue = itemvalue(ch, tobj);
+
+   int startmat = get_matstart(tobj);
+
+   tobjvalue = (float)tobjvalue / (float)5;
+
+   int fullcount = tobjvalue;
+
+    float difference = tobjvalue - fullcount;
+    difference = (int)(((float)difference * (float)10.0) / 2);
+
+    P_obj material;
+    P_obj material2;
+    material = read_object(startmat + 4, VIRTUAL);
+    material2 = read_object(startmat + ((int)difference - 1), VIRTUAL);
+    char matbuf[MAX_STRING_LENGTH];
+   //display startmat + difference;
+   if(fullcount != 0)
+   {
+    if(difference == 0)
+    {
+    send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
+     sprintf(matbuf, "To forge this item, you will need %d of %s.\r\n&n", fullcount, material->short_description);
+	page_string(ch->desc, matbuf, 1);
+    }
+    else
+    {
+    send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
+    sprintf(matbuf, "To forge this item, you will need %d of %s and 1 of %s.\r\n&n", fullcount, material->short_description, material2->short_description);
+    page_string(ch->desc, matbuf, 1);
+    }
+
+   }
+   else
+    {
+    send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
+    sprintf(matbuf, "To forge this item, you will need 1 of %s.\r\n&n", material2->short_description);
+    page_string(ch->desc, matbuf, 1);
+     }
+    if(has_affect(tobj))
+    send_to_char("...as well as &+W1 &nof &+ma &+Mm&+Ya&+Mg&+Yi&+Mc&+Ya&+Ml &+messence&n due to the &+mmagical &nproperties this item possesses.\r\n", ch);
     extract_obj(tobj, FALSE);
+    extract_obj(material2, FALSE);
+    extract_obj(material, FALSE);
    return;
   }
 
