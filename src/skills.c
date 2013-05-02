@@ -1171,6 +1171,7 @@ void initialize_skills()
                 TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO,
                 spell_solbeeps_missile_barrage);
 	SPELL_ADD(CLASS_SORCERER, 11);
+       SPEC_SPELL_ADD(CLASS_SORCERER, 0, SPEC_WIZARD);
 
   SPELL_CREATE("anti-magic ray", SPELL_ANTI_MAGIC_RAY, PULSE_SPELLCAST * 2,
                 TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO, spell_anti_magic_ray);
@@ -4353,11 +4354,8 @@ SPELL_ADD(CLASS_NONE, 1);
   SKILL_CREATE("rescue", SKILL_RESCUE, TAR_PHYS);
   SKILL_ADD(CLASS_WARRIOR, 1, 100);
   SKILL_ADD(CLASS_PALADIN, 1, 100);
-  SKILL_ADD(CLASS_RANGER, 1, 75);
-  SKILL_ADD(CLASS_MERCENARY, 1, 75);
   SKILL_ADD(CLASS_ANTIPALADIN, 31, 100);
-  SKILL_ADD(CLASS_BARD, 31, 50);
-  SPEC_SKILL_ADD(CLASS_ANTIPALADIN, 0, 0, SPEC_VIOLATOR);
+   SPEC_SKILL_ADD(CLASS_ANTIPALADIN, 0, 0, SPEC_VIOLATOR);
 
 
   SKILL_CREATE("trap", SKILL_TRAP, TAR_PHYS);
@@ -5339,6 +5337,12 @@ void update_racial_skills(P_char ch)
 {
 	  int currrace;
          currrace = GET_RACE(ch);
+         if(GET_SPEC(ch, CLASS_SORCERER, SPEC_WIZARD))
+          {
+		ch->only.pc->skills[SKILL_SPELL_PENETRATION].taught = BOUNDED(10, GET_LEVEL(ch) *2, 100);
+		ch->only.pc->skills[SKILL_SPELL_PENETRATION].learned = BOUNDED(10, GET_LEVEL(ch) *2, 100);
+		do_save_silent(ch, 1); // racial skills require a save.
+           }
 	  switch (currrace)
 		 {
 			case RACE_GNOME:

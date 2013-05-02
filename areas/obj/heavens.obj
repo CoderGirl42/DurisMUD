@@ -1552,7 +1552,7 @@ totem pinewood raven~
 &+ya small pinewood raven totem&n~
 &+yA small raven totem lies here.&n~
 ~
-34 6 2 2 7 0 1024 16385 64 37883812 0
+34 6 2 2 7 0 1032 16385 64 37883812 0
 1 0 0 0 0 0 0 0
 2 392 100
 #106
@@ -1560,7 +1560,7 @@ totem limestone stone~
 &+ga small limestone totem&n~
 &+gA small limestone totem lies here.&n~
 ~
-34 39 2 2 7 0 1024 16385 64 37883812 0
+34 39 2 2 7 0 1032 16385 64 37883812 0
 4 0 0 0 0 0 0 0
 3 493 100
 #107
@@ -1568,7 +1568,7 @@ totem ivory~
 &+Wa small ivory totem&n~
 &+WA small ivory totem lies here.&n~
 ~
-34 34 2 2 7 0 1024 16385 64 37883812 0
+34 34 2 2 7 0 1032 16385 64 37883812 0
 16 0 0 0 0 0 0 0
 2 594 100
 #108
@@ -3034,7 +3034,7 @@ sword bastard steel~
 &+La steel bastard sword&N~
 &+LA steel bastard sword lies discarded here.&N~
 ~
-5 16 3 10 7 0 1024 8193 0 87572571 0
+5 16 3 10 7 0 1032 8193 0 87572571 0
 5 1 8 3 0 0 0 0
 10 2500 100
 #281
@@ -3042,7 +3042,7 @@ sword broad steel~
 &+La steel broad sword&N~
 &+LA steel broad sword has been tossed aside here.&N~
 ~
-5 16 3 10 7 0 0 8193 0 4198895524 0
+5 16 3 10 7 0 8 8193 0 4198895524 0
 5 1 8 3 0 0 0 0
 4 1000 100
 #282
@@ -3050,7 +3050,7 @@ sword khopesh steel curved~
 &+wa khopesh sword&N~
 &+wA steel sword with an unusual curved blade lies here.&N~
 ~
-5 16 3 10 7 0 1024 8193 0 87572571 0
+5 16 3 10 7 0 1032 8193 0 87572571 0
 5 1 8 3 0 0 0 0
 7 1000 100
 #283
@@ -3058,7 +3058,7 @@ sword long steel~
 &+wa steel long sword&N~
 &+wA steel long sword has been left here.&N~
 ~
-5 16 3 10 7 0 8192 8193 0 4198895524 0
+5 16 3 10 7 0 8200 8193 0 4198895524 0
 5 1 8 3 0 0 0 0
 4 1500 100
 #284
@@ -3074,7 +3074,7 @@ sword steel short~
 &+wa steel short sword&N~
 &+wA steel short sword lies discarded here.&n~
 ~
-5 16 2 10 7 0 0 8193 0 4198895524 0
+5 16 2 10 7 0 8 8193 0 4198895524 0
 9 1 6 11 0 0 0 0
 3 1000 100
 #286
@@ -3082,7 +3082,7 @@ sword two-handed steel two handed~
 &+La two-handed sword&N~
 &+LA two-handed sword, nearly six feet in length, lies here.&N~
 ~
-5 16 4 15 7 0 4195328 8193 0 87572571 0
+5 16 4 15 7 0 4195336 8193 0 87572571 0
 13 2 8 3 0 0 0 0
 15 5000 100
 #287
@@ -3098,7 +3098,7 @@ warhammer hammer steel~
 &+La steel warhammer&n~
 &+LA warhammer with a sturdy-looking steel head lies here.&N~
 ~
-5 16 3 8 7 0 0 8193 0 4173708804 0
+5 16 3 8 7 0 8 8193 0 4173708804 0
 4 1 6 6 0 0 0 0
 6 200 100
 #289
@@ -4167,7 +4167,7 @@ torch wooden~
 &+Ya large wooden torch&N~
 &+YA large wooden torch has been discarded here.&N~
 ~
-1 6 3 8 7 0 0 16385 0 0 0
+1 6 3 8 7 0 8 16385 0 0 0
 0 0 12 0 0 0 0 0
 1 1 100
 #399
@@ -5655,7 +5655,7 @@ bag rabbit skin~
 &+Wa small bag made from rabbit skin&N~
 &+WA small bag made from rabbit skin lies crumpled here.&n~
 ~
-15 12 3 3 7 0 0 16385 0 0 0
+15 12 3 3 7 0 8 16385 0 0 0
 30 1 0 50 0 0 0 0
 2 0 100
 #604
@@ -5735,7 +5735,7 @@ bag snakeskin skin snake~
 &+ga large snakeskin bag&N~
 &+gA large bag made from snakeskin lies here.&N~
 ~
-15 12 3 8 7 0 0 16385 0 0 0
+15 12 3 8 7 0 8 16385 0 0 0
 50 1 0 120 0 0 0 0
 2 0 100
 #614
@@ -6117,7 +6117,7 @@ hammer warhammer stone~
 &+La stone warhammer&N~
 &+LA sturdy warhammer with a head of greyish stone lies here.&N~
 ~
-5 11 3 8 7 0 0 8193 0 4169510912 0
+5 11 3 8 7 0 8 8193 0 4169510912 0
 4 1 6 6 0 0 0 0
 12 50 100
 #677
@@ -6125,7 +6125,7 @@ mace wooden gnoby wood~
 &+ya small wooden mace&N~
 &+yA gnoby piece of wood, perhaps a small mace, lies here.&N~
 ~
-5 6 3 8 7 0 8192 8193 0 0 0
+5 6 3 8 7 0 8200 8193 0 0 0
 6 1 6 7 0 0 0 0
 2 0 100
 #678
@@ -6365,7 +6365,7 @@ jerkin alligator skin skins shabby~
 &+ga shabby alligator skin jerkin&N~
 &+gA shabby looking jerkin of alligator skins has been discarded here.&N~
 ~
-9 12 3 8 7 0 8192 9 0 0 0
+9 12 3 8 7 0 8200 9 0 0 0
 4 3 1 3 0 0 0 0
 5 100 100
 #707
@@ -6565,7 +6565,7 @@ scarf blue woolen thick~
 &+Ba light blue scarf&N~
 &+BA thick blue woolen scarf has been tossed aside here.&N~
 ~
-11 3 3 3 7 0 0 5 0 0 0
+11 3 3 3 7 0 8 5 0 0 0
 0 0 0 4 0 0 0 0
 1 80 100
 #732
@@ -6597,7 +6597,7 @@ rod amber amber-colored metallic~
 &+yan amber-colored rod&N~
 &+yAn amber-colored metallic rod lies here.&N~
 ~
-5 15 3 4 7 0 0 8193 0 0 0
+5 15 3 4 7 0 8 8193 0 0 0
 10 1 6 7 0 0 0 0
 2 300 100
 #750
