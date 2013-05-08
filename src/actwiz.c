@@ -3745,7 +3745,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
       
     if(IS_TRUSTED(i->character))
     {
-      sprintf(Gbuf1, "&+W%s&n&+m racewar-chats (%s&+w): '&+Y%s&n&+w'\n",
+      sprintf(Gbuf1, "&+W%s&n&+m racewar-chats &+w(%s&+w): '&+Y%s&n&+w'\n",
               PERS(ch, i->character, FALSE), Gbuf2, language_CRYPT(ch,
                                                                    i->
                                                                    character,
@@ -3753,7 +3753,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
     }
     else
     {
-      sprintf(Gbuf1, "&+W%s&n&+m tells your racewar: '&+w%s&n&+w'\n",
+      sprintf(Gbuf1, "&+W%s&n&+m tells your racewar: &+w'&+w%s&n&+w'\n",
               PERS(ch, i->character, FALSE), language_CRYPT(ch, i->character,
                                                             argument));
     }

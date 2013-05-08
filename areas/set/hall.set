@@ -1,5 +1,5 @@
 set MainZoneName hall
 set ObjAffect true
-set LastCommand edit o 77746
+set LastCommand edit o 77734
 set StartRoom 77908
 limit mob 77705 50

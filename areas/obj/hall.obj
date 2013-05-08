@@ -589,7 +589,7 @@ aan sacred stone claws~
 &+cthe &+Csacred &+Ls&nt&+Wo&nn&+Le &+Cclaws&+c of &+WAan~
 &+cA pair of giant &+Cglowing &+cclaws lie upon the ground here.&n~
 ~
-9 11 3 0 7 0 65568 129 66 0 0
+9 11 3 0 7 0 65536 129 66 0 0
 6 0 0 5 0 0 0 0
 5 20000 100 128 0 0 0
 E
@@ -602,7 +602,7 @@ claws giant sacred~
 &+Lfrom the wristbrace and come about the hands-  quite impressively crafted.&n
 ~
 A
-17 100
+17 -50
 A
 13 50
 #77735

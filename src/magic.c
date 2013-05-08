@@ -11662,7 +11662,8 @@ if( (!(IS_NPC(victim)) && (world[ch->in_room].sector_type == SECT_FOREST)  && (C
   else
   {
     af.type = SPELL_ENTANGLE;
-    af.duration = 0;
+    af.duration = GET_LEVEL(ch);
+    af.flags = AFFTYPE_SHORT | AFFTYPE_NOSHOW;
     af.bitvector2 = AFF2_SLOW;
     send_to_char
       ("&+gVegetation &+Gbursts&+g from the ground, impeding your progress.&N\n",

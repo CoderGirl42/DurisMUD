@@ -3172,7 +3172,7 @@ int assoc_founder(P_char ch, P_char victim, int cmd, char *arg)
               "&+y|&+WTo found the guild, type the following command and have the coins on your character:&+y\n"
               "&+y|&+Wbuy <name of guild>&+y\n"
               "&+y|&+y\n"
-              "&+y|&+Wexample: buy &+Lthe &+MNetheril &+mMages&n&+y\n"
+              "&+y|&+Wexample: buy '&+Lthe &+MNetheril &+mMages&n'&+y\n"
               "&+y|&nSee help &+cansi &nand help &+ctestcolor&n for help in creatnig your guild colors.&+y\n"
               "&+y|&+WBe warned! Once you create the guild, there is no way to rename it, for now.&+y\n"
               "&+y=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"
