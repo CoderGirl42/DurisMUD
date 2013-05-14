@@ -887,7 +887,7 @@ void do_get(P_char ch, char *argument, int cmd)
           return;
         }
 
-        if (IS_FIGHTING(ch) && !GET_CLASS(ch, CLASS_ALCHEMIST) && (GET_ITEM_TYPE(s_obj) == ITEM_CORPSE))
+        if (IS_FIGHTING(ch) && !GET_CLASS(ch, CLASS_ALCHEMIST) && (GET_ITEM_TYPE(s_obj) == ITEM_CONTAINER))
         {
           send_to_char
             ("You're too busy fighting to be pulling things out of bags!\r\n",

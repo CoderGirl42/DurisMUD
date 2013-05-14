@@ -980,6 +980,8 @@ flagDef  affected5_bits[] = {
   {"OBSCURING MIST", "Obscuring mist", 1, 0},
   {"NOT OFFENSIVE", "Non-offensive", 0, 0},
   {"DECAYING_FLESH", "Decaying Flesh", 1, 0},
+  {"DREADNAUGHT", "Dreadnaught", 1, 0},
+  {"FOREST_SIGHT", "Forest Sight", 1, 0},
   {0}
 };
 

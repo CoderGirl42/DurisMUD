@@ -9946,6 +9946,7 @@ void do_dreadnaught(P_char ch, char *, int)
 								 
 	set_short_affected_by(ch, TAG_DREADNAUGHT, 50);
     notch_skill(ch, SKILL_DREADNAUGHT, 15);
+    return;
     }
     act("&nYou attempt to assume a &+ydefensive &nposition, but fail horribly!&n", FALSE, ch, 0, 0, TO_CHAR);
     act("$n &+yattempts to assume a &+Ydefensive&+y position, but fails horribly!&n", FALSE, ch, 0, 0, TO_ROOM);
