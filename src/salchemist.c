@@ -1070,7 +1070,6 @@ void do_fix(P_char ch, char *argument, int cmd)
   if (i < 1)
    {
     sprintf(gbuf1, "You must have %s in your inventory to repair that item.\r\n", needed->short_description);
-    extract_obj(needed, TRUE);
     send_to_char(gbuf1, ch);
     return;
    }
@@ -1092,7 +1091,6 @@ void do_fix(P_char ch, char *argument, int cmd)
     {
       act("$N fiddles with $p, but fails, destroying it!", TRUE, ch, item, ch, TO_ROOM);
       act("You fiddle with $p, but you fail, destroying it!", TRUE, ch, item, 0, TO_CHAR);
-      extract_obj(item, TRUE);
       item = NULL;
     }
     else
