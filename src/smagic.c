@@ -1356,6 +1356,7 @@ void earthen_grasp(int level, P_char ch, P_char victim,
   }
   int attdiff = ((GET_C_STR(ch) - GET_C_STR(victim)) / 2);
   attdiff = number(0, attdiff);
+  attdiff = BOUNDED(1, attdiff, 100);
 
   if(IS_NPC(victim) && IS_SET(victim->specials.act, ACT_IMMUNE_TO_PARA))
   {
@@ -1388,7 +1389,7 @@ void earthen_grasp(int level, P_char ch, P_char victim,
       act("$n&n&+y struggles valiantly, making a tighter grasp impossible.&N",
           FALSE, victim, 0, 0, TO_ROOM);
       af.flags = AFFTYPE_SHORT;
-      af.duration = 1;
+      af.duration = attdiff;
     }
     else
     {
@@ -1398,7 +1399,8 @@ void earthen_grasp(int level, P_char ch, P_char victim,
       act
         ("&+yAn earthen fist bursts from the ground, grasping &n$n&n&+y tightly!&N",
          FALSE, victim, 0, 0, TO_ROOM);
-      af.duration = 2;
+      af.flags = AFFTYPE_SHORT;
+      af.duration = attdiff + 10;
     }
     
     if(GET_SPEC(ch, CLASS_SHAMAN, SPEC_ELEMENTALIST))
