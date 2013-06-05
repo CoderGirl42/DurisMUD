@@ -4196,7 +4196,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 
     if(IS_NPC(victim))
     {
-     if(GET_VNUM(victim) >= 48000 && GET_VNUM(victim) <= 48002)
+     if((GET_VNUM(victim) >= 48000) && (GET_VNUM(victim) <= 48002))
      {
      dam *= 0;
      send_to_char("Your victim is &+Rimmune&n to your attacks!\r\n", ch);
@@ -4948,15 +4948,6 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
         dam *= .4;
 
   dam = MAX(1, dam);
-
-     if(!IS_PC(victim))
-    {
-     if((GET_VNUM(victim) >= 48000) && (GET_VNUM(victim) <= 48002))
-     {
-     dam *= 0;
-     send_to_char("Your victim is &+Rimmune&n to your attacks!\r\n", ch);
-     }
-    }
 
   messages->type |= 1 << 24;
   result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT | flags, messages);
