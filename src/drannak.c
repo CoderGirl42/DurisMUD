@@ -628,3 +628,67 @@ void create_alias_name(char *name)
 {
   create_alias_file("Players", name);
 }
+
+void newbie_reincarnate(P_char ch)
+{
+  // checks to see if the character is much lower than the killer
+
+      P_char   t, t_next;
+
+
+      	  wizlog(MINLVLIMMORTAL, "%s returned to the birthplace.", GET_NAME(ch));
+      		char_from_room(ch);
+      		char_to_room(ch, real_room(GET_BIRTHPLACE(ch)), -1);
+     
+
+      if (CAN_SPEAK(ch))
+      {
+         death_cry(ch);
+      }
+
+      if (ch->specials.fighting)
+        stop_fighting(ch);
+
+      for (t = world[ch->in_room].people; t; t = t_next)
+      {
+        t_next = t->next_in_room;
+        if (t->specials.fighting == ch)
+        {
+          stop_fighting(t);
+          clearMemory(t);
+        }
+      }
+
+      GET_HIT(ch) = BOUNDED(10, GET_MAX_HIT(ch), 100);
+      CharWait(ch, dice(2, 2) * 4);
+      update_pos(ch);
+
+      act
+        ("&+CAs $n's body succumbs to the overwhelming &+rpain&+C, &+M$n &+Cis quickly &+cwhisked &+Caway by a &+Ldark, sh&+wad&+Wowy &+Lfigure&+C!&N",
+         TRUE, ch, 0, 0, TO_ROOM);
+      act
+        ("&+cAs your &+Cbody&+c succumbs to the overwhelming &+rpain&+c, a &+Ldark, sh&+wad&+Wowy &+Lfigure&+c appears from no where and quickly whisks you from the &+rviolence&+c. After opening your eyes you discover that the worst of your wounds are &+Whealed&+c, and you are once again in &+Cfamiliar &+clands!&N",
+         FALSE, ch, 0, 0, TO_CHAR);
+		 send_to_char("&+cA voice whispers to you: &+L'Beware, this time you have been spared death due to the supreme &+rpowers&+L of your adversary, but the battle lines draw ever closer each day...'&n", ch);
+
+}
+
+
+int equipped_value(P_char ch)
+{
+  P_obj    obj_object, temp_obj;
+  int      total, k, ret_type;
+  bool     was_invis, naked;
+  char     Gbuf1[MAX_STRING_LENGTH];
+  struct affected_type af;
+  
+    total = 0;
+
+      for (k = 0; k < MAX_WEAR; k++)
+      {
+        temp_obj = ch->equipment[k];
+          if(temp_obj)
+		total += itemvalue(ch, temp_obj);
+	  }
+	  return total;
+}

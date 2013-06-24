@@ -410,7 +410,7 @@ int order_speed(P_char ch, P_ship ship, char* arg)
     int realspeed = ship->get_maxspeed();
     
     if(has_innate(ch, INNATE_SEADOG))
-    realspeed += 5;
+    realspeed += 2;
 
     if (!is_valid_sailing_location(ship, ship->location)) 
     {

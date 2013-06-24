@@ -4689,6 +4689,3 @@ bool has_divine_force(P_char ch)
     return false;
   }
 }
-
-
-

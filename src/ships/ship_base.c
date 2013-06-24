@@ -1295,6 +1295,8 @@ void ship_activity()
         if (!SHIP_LOADED(ship)) 
             continue;
 
+
+
         if (ship->timer[T_RAM_WEAPONS] == 1)
         {
             act_to_all_in_ship(ship, "Your gun crew has recovered from ram impact.&N");
@@ -1546,10 +1548,19 @@ void ship_activity()
         {
             if (IS_WATER_ROOM(ship->location) || IS_SET(world [ship->location].room_flags, DOCKABLE) || SHIP_FLYING(ship))
             {
-                // Setspeed to Speed
-                if (ship->setspeed > ship->get_maxspeed()) 
+                // Setspeed to Speed DRANNAK
+               // if (ship->setspeed > ship->get_maxspeed()) 
+    P_char ch = captain_is_aboard(ship);
+    int realspeed = ship->get_maxspeed();
+    
+    if(ch){
+    if(has_innate(ch, INNATE_SEADOG))
+    realspeed += 2;
+    }
+
+		 if (ship->setspeed > realspeed)
                 {
-                    ship->setspeed = ship->get_maxspeed();
+                    ship->setspeed = realspeed;
                 }
                 if (ship->setspeed != ship->speed && ship->timer[T_MINDBLAST] == 0) 
                 {

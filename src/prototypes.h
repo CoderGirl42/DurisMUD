@@ -791,6 +791,8 @@ bool lightbringer_weapon_proc(P_char, P_char);
 char get_alias(P_char ch, char *argument);
 void create_alias_file(const char *dir, char *name);
 void create_alias_name(char *name);
+int equipped_value(P_char ch);
+void newbie_reincarnate(P_char ch);
 
 
 /* editor.c */
