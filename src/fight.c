@@ -2189,6 +2189,7 @@ void die(P_char ch, P_char killer)
   }
 
   if(  (IS_PC(ch)) &&
+        !IS_HARDCORE(ch) &&
 	((GET_LEVEL(killer) - GET_LEVEL(ch)) > 15) && 
 	(IS_PC(killer) || (IS_NPC(killer) && IS_PC_PET(killer))) &&
 	(equipped_value(ch) < 250)
@@ -2979,8 +2980,8 @@ void dam_message(double fdam, P_char ch, P_char victim,
     sprintf(buf_vict, messages->victim, weapon_damage[w_loop]);
     sprintf(buf_notvict, messages->room, weapon_damage[w_loop]);
   }
-  if (IS_PC(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) )
-  strcat(buf_char, showdam);
+ /* if (IS_PC(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) )
+  strcat(buf_char, showdam);*/
 
 #if ENABLE_TERSE
   act(buf_notvict, FALSE, ch, messages->obj, victim,
@@ -5570,16 +5571,24 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
       GET_LOWEST_HIT(victim) = GET_HIT(victim);
     }
 
-    sprintf(buffer, "Damage: %d\n", (int) dam);
+    sprintf(buffer, "&+w[Damage: %2d ] &n", (int) dam);
+
+      if(IS_PC(ch) && !IS_TRUSTED(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) )
+      send_to_char(buffer, ch);
 
     for (tch = world[victim->in_room].people; tch; tch = tch->next_in_room)
+	{
       if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_DAMAGE) )
         send_to_char(buffer, tch);
+	}//drannak
 
     if (messages->type & DAMMSG_TERSE)
       act_flag = ACT_NOTTERSE;
     else
       act_flag = 0;
+
+  char showdam[MAX_STRING_LENGTH];
+    sprintf(showdam, " [&+wDamage: %d&n] ", dam);
 
     new_stat = calculate_ch_state(victim);
     
@@ -5612,10 +5621,12 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
     else if (messages->
              type & (DAMMSG_EFFECT_HIT | DAMMSG_EFFECT | DAMMSG_HIT_EFFECT))
     {
+
       dam_message(dam, ch, victim, messages);
     }
     else
     {
+
       act(messages->attacker, FALSE, ch, messages->obj, victim,
           TO_CHAR | act_flag);
       act(messages->victim, FALSE, ch, messages->obj, victim,
@@ -5672,6 +5683,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
                      victim);
       }
     }
+
 
     /* make mirror images disappear */
     if(victim &&

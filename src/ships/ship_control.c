@@ -1275,7 +1275,7 @@ int look_ship(P_char ch, P_ship ship)
     sprintf(name_format, "%%-%ds", strlen(ship->name) + (20 - strlen(strip_ansi(ship->name).c_str())));
     int realspeed = ship->get_maxspeed();
     if(has_innate(ch, INNATE_SEADOG))
-    realspeed += 5;
+    realspeed += 2;
 
     char target_str[100];
     P_ship target = ship->target;

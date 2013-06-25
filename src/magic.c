@@ -7810,8 +7810,25 @@ void spell_stone_skin(int level, P_char ch, char *arg, int type,
       act("&+LLiving stone sprouts up and covers your flesh.",
         TRUE, victim, 0, 0, TO_CHAR);
     }
+   else if(GET_CLASS(ch, CLASS_CONJURER))
+    {
+      absorb = (int) (absorb * 1.2);
+      act("&+L$n's flesh melds with conjured rocks, turning it to stone.",
+        TRUE, victim, 0, 0, TO_ROOM);
+      act("&+LYour flesh melds with conjured rocks, turning it to stone.",
+        TRUE, victim, 0, 0, TO_CHAR);
+    }
+   else if(GET_CLASS(ch, CLASS_SORCERER))
+    {
+      absorb = (int) (absorb * 1.0);
+      act("&+L$n's flesh magically hardens, turning to stone.",
+        TRUE, victim, 0, 0, TO_ROOM);
+      act("&+LYour flesh magically hardens, turning to stone.",
+        TRUE, victim, 0, 0, TO_CHAR);
+    }
     else
     {
+      absorb = (int) (absorb * .8);
       act("&+L$n&+L's skin seems to turn to stone.",
         TRUE, victim, 0, 0, TO_ROOM);
       act("&+LYou feel your skin harden to stone.",
@@ -7838,7 +7855,7 @@ void spell_ironwood(int level, P_char ch, char *arg, int type,
                       P_char victim, P_obj obj)
 {
   struct affected_type af;
-  int      absorb = (level / 4) + number(1, 4);
+  int      absorb = (level / 5) + number(1, 4);
 
 
   if(!affected_by_spell(victim, SPELL_BARKSKIN))
@@ -7849,7 +7866,7 @@ void spell_ironwood(int level, P_char ch, char *arg, int type,
   if(!has_skin_spell(victim))
   {
 
-      absorb = (int) (absorb * 2);
+     // absorb = (int) (absorb * 2);
       act("&+y$n's &+ybarkskin seems to take on the texture of &+Liron.",
         TRUE, victim, 0, 0, TO_ROOM);
       act("&+yYou feel your barkskin harden to &+Liron.",
