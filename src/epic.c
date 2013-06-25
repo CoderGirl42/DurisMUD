@@ -709,6 +709,9 @@ void epic_feed_artifacts(P_char ch, int epics, int epic_type)
   if(num_artis > 0)
     feed_seconds = (int) (feed_seconds / num_artis);
 
+  if(affected_by_spell(ch, TAG_PLR_RECENT_FRAG))
+    feed_seconds *= 3;
+
   for (int i = 0; i < MAX_WEAR; i++)
   {
     P_obj obj = ch->equipment[i];

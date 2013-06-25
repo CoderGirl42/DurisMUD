@@ -795,13 +795,7 @@ void AddFrags(P_char ch, P_char victim)
       
         send_to_char(buffer, tch);
       
-        if(real_gain + recfrag >= get_property("epic.frag.threshold", 0.10)*100 )
-        {
-		   frag_gain = (int) ((real_gain/100.00) * (float)
-		   (get_property("epic.frag.amount", 20.000)));
-        
-		   epic_frag(tch, GET_PID(victim), frag_gain);
-        }
+
 
         if(!affected_by_spell(tch, TAG_PLR_RECENT_FRAG))
         {
@@ -824,6 +818,14 @@ void AddFrags(P_char ch, P_char victim)
               af1->duration = get_property("epic.frag.thrill.duration", 45) * WAIT_SEC;;
             }
           }
+        }
+
+        if(real_gain + recfrag >= get_property("epic.frag.threshold", 0.10)*100 )
+        {
+		   frag_gain = (int) ((real_gain/100.00) * (float)
+		   (get_property("epic.frag.amount", 20.000)));
+        
+		   epic_frag(tch, GET_PID(victim), frag_gain);
         }
 
         if (GET_RACE(ch) == RACE_HALFLING)
