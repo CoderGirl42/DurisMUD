@@ -2332,6 +2332,7 @@ void die(P_char ch, P_char killer)
      obj_to_char(tempobj, ch);
   }
 
+    if(IS_PC(killer))
     random_recipe(killer, ch); //possibility to find a recipe for the items in the zone.
 
   // object code - Normal kills.  Kvark

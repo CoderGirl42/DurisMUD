@@ -772,6 +772,13 @@ void random_recipe(P_char ch, P_char victim)
  if(result < chance)
  {
   P_obj reward = quest_item_reward(ch);
+         if(obj_index[reward->R_num].virtual_number == 1252 ||
+          obj_index[reward->R_num].virtual_number == 1253 ||
+          obj_index[reward->R_num].virtual_number == 1254 )
+	{
+         extract_obj(reward, !IS_TRUSTED(ch));
+	  return;
+	}
   create_recipe(victim, reward);
   extract_obj(reward, TRUE); 
  }
