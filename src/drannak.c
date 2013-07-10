@@ -1109,8 +1109,11 @@ bool new_summon_check(P_char ch, P_char selected)
   {
     victim = k->follower;
 
+    if(!IS_PC(victim))
+    {
     i += GET_LEVEL(victim);
     count++;
+    }
   }
   i += desired;
 
@@ -1152,10 +1155,8 @@ void learn_conjure_recipe(P_char ch, P_char victim)
 
   if(IS_PC_PET(victim))
   return;
-	
- int recipenumber = GET_VNUM(victim);
- 	
-  if(GET_SPEC(ch, CLASS_CONJURER, SPEC_AIR) && !IS_HUMANOID(victim))
+
+ if(GET_SPEC(ch, CLASS_CONJURER, SPEC_AIR) && !IS_HUMANOID(victim))
     {
      send_to_char("You cannot learn to summon a being outside of your area of expertise.\r\n", ch);
     extract_char(victim);
@@ -1175,6 +1176,10 @@ void learn_conjure_recipe(P_char ch, P_char victim)
     extract_char(victim);
      return;
     }
+	
+ int recipenumber = GET_VNUM(victim);
+ 	
+ 
 
 
 
@@ -1221,7 +1226,7 @@ void learn_conjure_recipe(P_char ch, P_char victim)
   act("$n &+gsuddenly &+Greaches &+gout and makes a &+Mmagical &+mgesture &+gabout &n$N&+g...\n"
   "&+gsh&+Gar&+Wds&+g of &+mcry&+Mstallized &+Wmagic&+g begin to form a square dome around &n$N&+g.\n"
   "&+gWith a &+Gfinal&+g &+mgesture&+g, &n$n &+gpoints at &n$N &+gwho is &+Gconsumed&+g by the &+mmagical &+Mdome&+g, and disappears from sight.\r\n", FALSE, ch, 0, victim, TO_ROOM);
-  act("&+gYou &+gsuddenly &+Greache &+gout and makes a &+Mmagical &+mgesture &+gabout &n$N&+g...\n"
+  act("&+gYou &+gsuddenly &+Greach &+gout and make a &+Mmagical &+mgesture &+gabout &n$N&+g...\n"
   "&+gsh&+Gar&+Wds&+g of &+mcry&+Mstallized &+Wmagic&+g begin to form a square dome around &n$N&+g.\n"
   "&+gWith a &+Gfinal&+g &+mgesture&+g, you &+gpoint at &n$N &+gwho is &+Gconsumed&+g by the &+mmagical &+Mdome&+g, and disappears from sight.\r\n", FALSE, ch, 0, victim, TO_CHAR);   
   fclose(recipelist);

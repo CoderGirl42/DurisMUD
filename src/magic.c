@@ -13399,7 +13399,7 @@ void spell_faerie_fire(int level, P_char ch, char *arg, int type,
     SET_BIT(victim->specials.affected_by2, AFF2_MINOR_INVIS);
   bzero(&af, sizeof(af));
   af.type = SPELL_FAERIE_FIRE;
-  af.duration =  3;
+  af.duration =  5;
   af.modifier = 20;
   af.location = APPLY_ARMOR;
 

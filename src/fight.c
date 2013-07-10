@@ -2900,15 +2900,6 @@ void kill_gain(P_char ch, P_char victim)
    chance -= GET_LEVEL(victim);
    debug("affected by contain being\r\n");
 
-   if((GET_SPEC(gl->ch, CLASS_CONJURER, SPEC_AIR) && !IS_HUMANOID(victim)) ||
-	(GET_SPEC(gl->ch, CLASS_CONJURER, SPEC_WATER) && !IS_ELEMENTAL(victim)) ||
-	    (GET_SPEC(gl->ch, CLASS_CONJURER, SPEC_EARTH) && !IS_ANIMAL(victim)) 
-     )
-    {
-     send_to_char("You cannot learn to summon a being outside of your area of expertise.\r\n", gl->ch);
-     return;
-    }
-    else
      if((number(1, GET_C_INT(gl->ch)) < chance) && (GET_VNUM(victim) != 1255))
      learn_conjure_recipe(gl->ch, victim);
    
