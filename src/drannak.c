@@ -294,6 +294,7 @@ void vnum_from_inv(P_char ch, int item, int count)
 	if((GET_OBJ_VNUM(t_obj) == item) && (i > 0) )
          {
 	   obj_from_char(t_obj, TRUE);
+          extract_obj(t_obj, TRUE);
           i--;
          }
       
