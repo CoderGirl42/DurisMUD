@@ -1934,6 +1934,10 @@ void spell_create_greater_dracolich(int level, P_char ch, char *arg, int type,
     send_to_char("But you can barely move!\r\n", ch);
     return;
   }
+
+  if(IS_NPC(ch) && affected_by_spell(ch, TAG_CONJURED_PET))
+  return;
+
   if(CHAR_IN_SAFE_ZONE(ch))
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
