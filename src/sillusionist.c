@@ -770,6 +770,9 @@ void spell_mask(int level, P_char ch, char *arg, int type, P_char victim,
   P_char   t_ch, target = NULL;
   char     tbuf[MAX_STRING_LENGTH];
 
+  if(IS_NPC(ch))
+  return;
+
   target = (struct char_data *) mm_get(dead_mob_pool);
   target->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
@@ -1483,6 +1486,9 @@ void spell_clone_form(int level, P_char ch, char *arg, int type,
     logit(LOG_EXIT, "assert: bogus parms");
     raise(SIGSEGV);
   }
+
+  if(IS_NPC(ch))
+  return;
 
   if (!IS_ALIVE(ch))
     return;
