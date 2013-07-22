@@ -794,6 +794,9 @@ void do_conjure(P_char ch, char *argument, int cmd)
   int i = 0, room = ch->in_room; 
   int choice = 0;  
 
+  if(!ch)
+  return;
+
 
  if (!GET_SPEC(ch, CLASS_CONJURER, SPEC_WATER) && !GET_SPEC(ch, CLASS_CONJURER, SPEC_AIR) && !GET_SPEC(ch, CLASS_CONJURER, SPEC_EARTH))
   {
@@ -812,6 +815,12 @@ void do_conjure(P_char ch, char *argument, int cmd)
   {
    send_to_char("You are not high enough level to conjure beings...\r\n", ch);
    return;
+  }
+
+  if(CHAR_IN_SAFE_ZONE(ch))
+  {
+    send_to_char("A mysterious force blocks your conjuring!\n", ch);
+    return;
   }
 
 
