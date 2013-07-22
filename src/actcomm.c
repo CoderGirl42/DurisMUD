@@ -534,13 +534,13 @@ void do_gcc(P_char ch, char *argument, int cmd)
         logit(LOG_CHAT, "%s gcc's '%s'", GET_NAME(ch), argument);
     }
     for (i = descriptor_list; i; i = i->next)
-      if (IS_TRUSTED(i->character) || ((i->character != ch) && !i->connected &&
+      if ((i->character != ch) && !i->connected &&
           !is_silent(i->character, FALSE) &&
           IS_SET(i->character->specials.act, PLR_GCC) &&
           IS_MEMBER(GET_A_BITS(i->character)) &&
           (GET_A_NUM(i->character) == GET_A_NUM(ch)) &&
           (!(IS_AFFECTED4(i->character, AFF4_DEAF))) &&
-          (GT_PAROLE(GET_A_BITS(i->character)))))
+          (GT_PAROLE(GET_A_BITS(i->character))))
       {
         sprintf(Gbuf1, "&+c%s&n&+c tells your guild '&+C%s&n&+c'\r\n",
                 PERS(ch, i->character, FALSE),
