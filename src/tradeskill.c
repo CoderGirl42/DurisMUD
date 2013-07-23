@@ -1098,7 +1098,7 @@ void event_fish_check(P_char ch, P_char victim, P_obj, void *data)
       
       int dist = calculate_map_distance(ch->in_room, i->character->in_room);
 
-  if(dist <= 550 && (number(1, 6) < 3))
+  if(dist <= 550 && (number(1, 12) < 3))
   {
   zone_spellmessage(ch->in_room,
     "&+cThe &+Csoft &+csound of &+Cwater&+c splashing can be heard in the distance...&n\r\n",
@@ -1306,7 +1306,7 @@ void event_mine_check(P_char ch, P_char victim, P_obj, void *data)
       
       int dist = calculate_map_distance(ch->in_room, i->character->in_room);
 
-  if(dist <= 550 && (number(1, 6) < 3))
+  if(dist <= 550 && (number(1, 12) < 3))
   {
   zone_spellmessage(ch->in_room,
     "&+yThe sound of &+wmetal &+yhewing &+Lrock&+y can be heard in the distance...&n\r\n",

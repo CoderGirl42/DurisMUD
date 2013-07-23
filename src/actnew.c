@@ -4138,9 +4138,9 @@ bool throw_potion(P_char ch, P_obj scroll, P_char victim, P_obj obj)
 
   
 
-    if(!isname(GET_NAME(ch), scroll->short_description))
+    if(!isname(GET_NAME(ch), scroll->short_description) && !IS_TRUSTED(ch))
     {
-     send_to_char("&+YThrowing potions of unknown origin might be hazardous to your health... better not!&n\r\n", ch);
+     send_to_char("&nThrowing potions of unknown origin might be hazardous to your health... better not!&n\r\n", ch);
      return FALSE;
     }
 
