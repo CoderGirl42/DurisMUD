@@ -4732,7 +4732,7 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
   dam = (int) dam * level_mult;
   dam = (int) dam * final_mult;
 
- if(IS_AFFECTED(victim, AFF_AWARE) && IS_PC(victim) && !(GET_RACE(ch) == (RACE_MOUNTAIN || RACE_DUERGAR)))
+ if(IS_AFFECTED(victim, AFF_AWARE) && IS_PC(victim) && ((GET_RACE(ch) != RACE_MOUNTAIN) && (GET_RACE(ch) != RACE_DUERGAR)))
   {
    int chance = GET_C_INT(victim);
    int opportunity = number(1, (GET_C_AGI(ch) + GET_CHAR_SKILL(ch, SKILL_BACKSTAB)));

@@ -10,8 +10,8 @@ parigar high priest~
 &+yall outsiders, he now stands guard against the onslought of fortune-seekers
 &+ytrying to locate the bloodrune.&n
 ~
-67135562 0 0 152 2048 0 0 750 S
-P2 0 2049 -1
+67135562 0 0 0 152 2048 0 0 750 S
+P2 0 2049 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -23,8 +23,8 @@ duergar guard~
 &+rWearing a suit of mithril chainmail fastened by a jeweled belt, this duergar
 &+rguard stands here defiantly.&n
 ~
-67110986 64 0 524296 2 0 0 -1000 S
-PD 0 1 -1
+67110986 64 0 0 524296 2 0 0 -1000 S
+PD 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -37,8 +37,8 @@ gromdishar general duergar~
 &+cmoves about the small cave impassionately. He often stops to curse at those
 &+ctroops within earshot before moving on to other things.&n
 ~
-14410 0 0 285212856 2 0 0 -1000 S
-PD 0 1 -1
+14410 0 0 0 285212856 2 0 0 -1000 S
+PD 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -51,8 +51,8 @@ duergar priestess~
 &+Lunder her protection have the necessary blessings and spells to accomplish
 &+Ltheir task.&n
 ~
-67123274 0 0 268509336 2 0 0 -1000 S
-PD 0 32 -1
+67123274 0 0 0 268509336 2 0 0 -1000 S
+PD 0 32 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -67,8 +67,8 @@ lithibar grand protector~
 &+ydesk by tracing his fingers over the runed symbols. He frequently rubs his
 &+yhands on his forehead as though something is troubling him.&n
 ~
-28746 0 0 134217904 0 0 0 1000 S
-PG 0 512 -1
+28746 0 0 0 134217904 0 0 0 1000 S
+PG 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -82,8 +82,8 @@ shade vicious~
 &+rsinister curtain of lack shadows. The grin on its face indicaing that its
 &+ractions are being cooly calculated.&n
 ~
-1140881482 1 0 135791002 2 0 0 0 S
-UG 0 1 -1
+1140881482 1 0 0 135791002 2 0 0 0 S
+UG 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -98,8 +98,8 @@ vicious hydra ixilitchinesst _nosneak_ _ignore_~
 &+cvenomous acid dripping to the cavern floor creating a sizzling sound as the
 &+crock is liquified.&n
 ~
-1151368780 1 0 2584248764 268437634 89915520 67121152 0 S
-D 0 5 -1
+1151368780 1 0 0 2584248764 268437634 89915520 67121152 0 S
+D 0 5 0 -1
 60 0 0 100d10+25000 10d20+60
 0.0.0.0 0
 8 8 1
@@ -112,8 +112,8 @@ golem stone guardian~
 &+yguarding the entrance to the temple of the earth. Its body appears to be
 &+ymade entirely of stone. Small round &+rrubies &+yare inset into the eyes.&n
 ~
-67270730 1 0 152 0 0 0 1000 S
-OG 0 1 -1
+67270730 1 0 0 152 0 0 0 1000 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -126,8 +126,8 @@ guardian elite~
 &+Lthe wound was received recently. He stands defiantly as though eager to seek
 &+Lbloodhed.&n
 ~
-1140856906 0 0 437780632 0 67108864 0 1000 S
-PE 0 2 -1
+1140856906 0 0 0 437780632 0 67108864 0 1000 S
+PE 0 2 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -142,8 +142,8 @@ paladin captain~
 &+wshaved. A look of worry covers his face as he hastily flips maps and
 &+wparchments back and forth across the table.&n
 ~
-67117130 0 0 24 0 0 0 1000 S
-PH 0 8 -1
+67117130 0 0 0 24 0 0 0 1000 S
+PH 0 8 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -158,8 +158,8 @@ paladin scout~
 &+Lcrossing his chest are frayed and worn from the constant battles in which he
 &+Lhas carried his broadsword.&n
 ~
-67108938 33554432 0 0 0 0 0 1000 S
-PH 0 8 -1
+67108938 33554432 0 0 0 0 0 0 1000 S
+PH 0 8 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -172,8 +172,8 @@ acolyte wide~
 &+yscreams in fury at those who have trespassed into his temple. Foaming saliva
 &+ycan be seen spewing from his mouth as he utters both curses and taunts.&n
 ~
-1140861000 1 0 24 0 0 0 0 S
-PH 0 96 -1
+1140861000 1 0 0 24 0 0 0 0 S
+PH 0 96 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -186,8 +186,8 @@ golem stone~
 &+Lby a sort of fleshy mortar. As the golem bends and moves the plates alter
 &+Lthemselves so as not to prohibit the beasts movement.&n
 ~
-1140877388 1 0 24 0 0 0 1000 S
-OG 0 1 -1
+1140877388 1 0 0 24 0 0 0 1000 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -201,8 +201,8 @@ crazed priest~
 &+ysleeves of his robe pulled back revealing a long bony finger. He continuosly
 &+yscreams, "Release Bariloth"!&n
 ~
-1140850696 1 0 24 0 0 0 1000 S
-PH 0 32 -1
+1140850696 1 0 0 24 0 0 0 1000 S
+PH 0 32 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -214,8 +214,8 @@ golem granite~
 &+LSeemingly formed from a single piece of granite, this large golem lumbers
 &+Lhere protectively.&n
 ~
-1140879434 1 0 1048728 0 0 0 500 S
-OG 0 1 -1
+1140879434 1 0 0 1048728 0 0 0 500 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -229,8 +229,8 @@ elite protector~
 &+rcavern with a determined purpose. His light step indicating that he is a
 &+rmaster swordsman.&n
 ~
-1140852812 1 0 24 0 0 0 600 S
-P2 0 2 -1
+1140852812 1 0 0 24 0 0 0 600 S
+P2 0 2 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -242,8 +242,8 @@ cleric guardian~
 &+rWearing a robe that fits loosely over her chainmail armor, this grey elf
 &+raccompanies the roving patrols as they wander the temple.&n
 ~
-67119178 1 0 33554456 32796 0 0 500 S
-PE 0 32 -1
+67119178 1 0 0 33554456 32796 0 0 500 S
+PE 0 32 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -255,8 +255,8 @@ golem~
 &+yThis large golem appers to be made entirely of stone. Large jagged plates of
 &+yrock line its center torso and provide a natural armor.&n
 ~
-1140881482 1 0 152 0 0 0 0 S
-OG 0 1 -1
+1140881482 1 0 0 152 0 0 0 0 S
+OG 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -269,8 +269,8 @@ assassin sleek~
 &+ya professional step. Its movements silent as he attempts to slip behind you
 &+yto deliver the fatal blow.&n
 ~
-1140852938 1 0 320340408 2 0 0 -1000 S
-PL 0 8192 -1
+1140852938 1 0 0 320340408 2 0 0 -1000 S
+PL 0 8192 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -285,8 +285,8 @@ sly thief~
 &+Lunexpected entrance has not only startled him, but has sent him running to the
 &+Lshadows.&n
 ~
-1140852810 1 0 24 2 0 0 0 S
-PL 0 65536 -1
+1140852810 1 0 0 24 2 0 0 0 S
+PL 0 65536 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -300,8 +300,8 @@ guardian golem~
 &+yof the chamber give way to an intelligence unmatched by normal incantations.
 &+yThe golem raised forth to protect any of the priests within the chamber.&n
 ~
-1141010504 1 0 134217880 0 0 0 0 S
-OG 0 1 -1
+1141010504 1 0 0 134217880 0 0 0 0 S
+OG 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -314,8 +314,8 @@ lasitar high priest~
 &+yincantation after incantation. As his hands move through the air, swirls of
 &+ydust and debris suddenly appear cloaking him in a brown mist.&n
 ~
-1149253832 1 0 24 1 0 0 750 S
-P2 0 96 -1
+1149253832 1 0 0 24 1 0 0 750 S
+P2 0 96 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -327,8 +327,8 @@ acolyte young~
 &+yWearing a thick brown robe covered in dirt, this acolyte is a member of the
 &+ypriesthood that guards the temple.&n
 ~
-1140852810 1 0 269484088 32768 0 0 0 S
-PE 0 96 -1
+1140852810 1 0 0 269484088 32768 0 0 0 S
+PE 0 96 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -341,8 +341,8 @@ priest crazed~
 &+LHis red eyes glow with fury from beneath the shadows created by the hood. Long
 &+Lbony fingers can be seen each time he raises his arms while weaving a spell.&n
 ~
-1140852808 0 0 144 0 0 0 500 S
-PE 0 32 -1
+1140852808 0 0 0 144 0 0 0 500 S
+PE 0 32 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -355,8 +355,8 @@ spiked golem~
 &+ypointed and positioned in a manner so as were the golem to be locked in mortal
 &+ycombat, the spikes would aid in impaling its foe.&n
 ~
-1140852808 1 0 152 0 0 0 0 S
-OG 0 1 -1
+1140852808 1 0 0 152 0 0 0 0 S
+OG 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -369,8 +369,8 @@ dust demon~
 &+ythe movement slows does one gain a glimpse of a dust devil in the center of
 &+ythe mass.&n
 ~
-75526216 1 0 134217752 1 536870912 0 0 S
-X 0 1 -1
+75526216 1 0 0 134217752 1 536870912 0 0 S
+X 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -383,8 +383,8 @@ grollian runemaster~
 &+Rof the bloodrune. His piercing eyes glaze from beneath a shadowy visage, his
 &+Rfeatures obscurred by a large hood that hangs to the tip of his nose.&n
 ~
-1142949960 1 0 30 0 0 0 500 S
-PE 0 512 -1
+1142949960 1 0 0 30 0 0 0 500 S
+PE 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -400,8 +400,8 @@ litharian elven elf~
 &+ycovering, the blood on his lips indicating that he has deoured a few of the
 &+ycorpses that litter his lair.&n
 ~
-67119690 1 0 134217880 262144 0 0 -500 S
-ul 0 131072 -1
+67119690 1 0 0 134217880 262144 0 0 -500 S
+ul 0 131072 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -415,8 +415,8 @@ vapor poisonous~
 &+Gthe ground, a violent hiss fills the area. The scorched rock indicating that
 &+Gthe liquid is some form of acid.&n
 ~
-1073901640 1 0 135790876 0 0 0 0 S
-UG 0 1 -1
+1073901640 1 0 0 135790876 0 0 0 0 S
+UG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -429,8 +429,8 @@ ghoul elven~
 &+gconcentration of dried blood around his mouth and neck indicate that he has
 &+gspent some time devouring the brains of those slain in his domain.&n
 ~
-67108942 1 0 152 0 0 0 -500 S
-UV 0 1024 -1
+67108942 1 0 0 152 0 0 0 -500 S
+UV 0 1024 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -442,8 +442,8 @@ knight skeletal~
 &+rWearing a suit of bonemail, this skeletal knight stands guard. Red orbs peer
 &+rout from behind black, hollow, eye sockets.&n
 ~
-1140861002 1 0 68157624 0 2097152 0 -500 S
-UK 0 16 -1
+1140861002 1 0 0 68157624 0 2097152 0 -500 S
+UK 0 16 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -456,8 +456,8 @@ wolf knight~
 &+yremaining paladins. His mouth open wide snarling as he carefully sniffs the
 &+yair. Having just fought an advanced party, his soul hungers for more blood.&n
 ~
-1157769292 1 0 270082458 32769 0 0 -100 S
-US 0 16 -1
+1157769292 1 0 0 270082458 32769 0 0 -100 S
+US 0 16 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -471,8 +471,8 @@ guard elven~
 &+Lthe hilt, ready to slay any of the evil beings that should cross the perimeter
 &+Lof this small fortification.&n
 ~
-67250250 33554816 0 408 0 0 0 1000 S
-PE 0 2 -1
+67250250 33554816 0 0 408 0 0 0 1000 S
+PE 0 2 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -485,8 +485,8 @@ elven mage~
 &+cand now rests against the back of his neck. A large jeweled ring on his right
 &+chand indicates he is of noble birth.&n
 ~
-67266634 33554816 0 152 0 0 0 1000 S
-PE 0 512 -1
+67266634 33554816 0 0 152 0 0 0 1000 S
+PE 0 512 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -499,8 +499,8 @@ duergar warrior~
 &+rwarrior stands guard on this remote outpost. His keen vision scans the
 &+rsurrounding abyss looking for any danger that may approach his brethren.&n
 ~
-67248202 33554496 0 26 0 0 0 -1000 S
-PD 0 1 -1
+67248202 33554496 0 0 26 0 0 0 -1000 S
+PD 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -513,8 +513,8 @@ cleric duergar~
 &+Lan incantation protecting himself and his brethren from any intruders that
 &+Lshould stumble upon this small rocky outpost.&n
 ~
-8 64 0 402653338 28 0 0 -1000 S
-PD 0 32 -1
+8 64 0 0 402653338 28 0 0 -1000 S
+PD 0 32 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -526,8 +526,8 @@ granite golem _nosneak_ _ignore_~
 &+LFormed from a solid slab of granite, this large golem peers into the darkness
 &+Lsearching for any intruders.&n
 ~
-67139658 1 0 805339288 269498370 67371136 0 -1000 S
-OG 0 1 -1
+67139658 1 0 0 805339288 269498370 67371136 0 -1000 S
+OG 0 1 0 -1
 55 0 0 10d10+10000 20d10+70
 0.0.0.0 0
 8 8 0
@@ -545,8 +545,8 @@ sage earth~
 &+yindicate the sage is of elven descent. The sound emanating from the sage, as
 &+ysoft as a gentle breeze, concerns the primordial rune of the earth.&n
 ~
-67119180 1 0 16777370 28 0 0 1000 S
-PE 0 512 -1
+67119180 1 0 0 16777370 28 0 0 1000 S
+PE 0 512 0 -1
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -558,8 +558,8 @@ protector temple~
 &+LSworn to protect the secrets of the temple of the earth, this elven ranger
 &+Lreadies his word at the intrusion.&n
 ~
-1140992076 1 0 152 0 0 0 1000 S
-PE 0 2 -1
+1140992076 1 0 0 152 0 0 0 1000 S
+PE 0 2 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -572,8 +572,8 @@ elemental guardian guard~
 &+yshifting plates of solid stone. It lumbers about, dragging a large club at
 &+yits side.&n
 ~
-1073743880 1 0 24 0 0 0 500 S
-EE 0 1 -1
+1073743880 1 0 0 24 0 0 0 500 S
+EE 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -587,8 +587,8 @@ magma elemental~
 &+Ltunnel the flames brighten and grow, dancing about casting a dim amount of
 &+Llight through the cavern.&n
 ~
-1073760362 1 0 268435480 29 0 0 650 S
-EF 0 1 -1
+1073760362 1 0 0 268435480 29 0 0 650 S
+EF 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -601,8 +601,8 @@ granite elemental~
 &+yplates of one of the hardest stones on Duris...granite. Small veins of
 &+ymithril can be seen running through the stone adding to its strength.&n
 ~
-1140861002 1 0 152 1048578 0 0 500 S
-EE 0 1 -1
+1140861002 1 0 0 152 1048578 0 0 500 S
+EE 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -615,8 +615,8 @@ pech~
 &+yboulders. Dark black orbs peer out from behind a large flat rock that sits
 &+yatop its large shoulders.&n
 ~
-67250376 1 0 134217886 0 0 0 500 S
-EE 0 1 -1
+67250376 1 0 0 134217886 0 0 0 500 S
+EE 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -630,8 +630,8 @@ hydra young~
 &+Lpair of clawed wings sit neatly at its back. The beasts six heads swirl about
 &+Llike a basket of snakes just released onto the ground.&n
 ~
-1140853610 1 0 0 12510 0 0 0 S
-DK 0 1 -1
+1140853610 1 0 0 0 12510 0 0 0 S
+DK 0 1 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -646,8 +646,8 @@ young hydra~
 &+LThick talons extend from the edge of the wings. Pieces of gore and flesh can
 &+Lbe seen dangling from the tips of each talon.&n
 ~
-1800 1 0 0 0 0 0 0 S
-D 0 1 -1
+1800 1 0 0 0 0 0 0 0 S
+D 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 4 8 1
@@ -660,8 +660,8 @@ male hydra~
 &+Lpath. Its ten heads all acting independent of each other as they snap and
 &+Lstrike with their poisoned fangs.&n
 ~
-1149402986 1 0 268435484 0 0 1024 0 S
-D 0 1 -1
+1149402986 1 0 0 268435484 0 0 1024 0 S
+D 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -676,8 +676,8 @@ young hydra~
 &+Lwings span out to a width of fifteen feet. Sharp talons scrape and claw as the
 &+Lwings expand.&n
 ~
-1149398984 1 0 24 12291 0 0 0 S
-D 0 528 -1
+1149398984 1 0 0 24 12291 0 0 0 S
+D 0 528 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -689,8 +689,8 @@ duergar scout~
 &+rDressed in a light suit of ringmail, this duergar scout patrols the caverns to
 &+rensure any threats to Gloomhaven are reported quickly.&n
 ~
-1140861004 64 0 270008344 2 0 0 -500 S
-PD 0 8192 -1
+1140861004 64 0 0 270008344 2 0 0 -500 S
+PD 0 8192 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -703,8 +703,8 @@ acolyte~
 &+Lwanders the cavern with an earthen elemental. His task is to ensure that no
 &+Lfurther patrols make their way into the temple.&n
 ~
-67119180 1 0 152 0 0 0 -500 S
-HO 0 2049 -1
+67119180 1 0 0 152 0 0 0 -500 S
+HO 0 2049 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -716,8 +716,8 @@ earth elemental~
 &+LCovered in sand and dirt, this earth elemental wanders the cavern looking for
 &+Lany intruders.&n
 ~
-67651658 1 0 24 0 0 0 0 S
-EE 0 1 -1
+67651658 1 0 0 24 0 0 0 0 S
+EE 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -729,8 +729,8 @@ elemental lava fiery molten~
 &+rMolten lava oozes about this elementals body. Small flames flicker as the red
 &+rbeast moves about.&n
 ~
-67250280 1 0 156 0 0 0 0 S
-EF 0 17 -1
+67250280 1 0 0 156 0 0 0 0 S
+EF 0 17 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -743,8 +743,8 @@ elemental two headed~
 &+ythrough the temple. The result of a backfired spell, the elemental seeks
 &+yrevenge on any mortal soul that wanders into this section of the cavern.&n
 ~
-1082148936 1 0 0 0 0 0 0 S
-OG 0 1 -1
+1082148936 1 0 0 0 0 0 0 0 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -758,8 +758,8 @@ mist vaporous~
 &+Lits mouth to strike, a noxious green mist flows out engulfing the room in the
 &+Wstench of death.&n
 ~
-1140992072 1 0 402653210 2 0 0 0 S
-BH 0 4 -1
+1140992072 1 0 0 402653210 2 0 0 0 S
+BH 0 4 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -773,8 +773,8 @@ vapor beast~
 &+Wform of gas, red piercing eyes gazing into the depths of ones soul,followed
 &+Lby an unnerving laugh that echoes through the cavern.&n
 ~
-67127368 1 0 8 0 0 0 0 S
-UG 0 4 -1
+67127368 1 0 0 8 0 0 0 0 S
+UG 0 4 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -789,8 +789,8 @@ lava molten elemental~
 &+rstares. Small flames randomly ignite as the elemental moves about. The
 &+rflames quickly dies out as the elemental absorbs their heat.&n
 ~
-75516010 1 0 1048604 3 0 0 0 S
-EF 0 1 -1
+75516010 1 0 0 1048604 3 0 0 0 S
+EF 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -806,8 +806,8 @@ belikar priest~
 &+yeach finger give indication that the priest has delved in the forbidden
 &+ymagics.&n
 ~
-67119178 0 0 524306 0 0 0 0 S
-P2 0 1048608 -1
+67119178 0 0 0 524306 0 0 0 0 S
+P2 0 1048608 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -822,8 +822,8 @@ guardian~
 &+Yis aware of the beasts, and their destructive power, that lurk here in the
 &+Ydarkness of the cavern.&n
 ~
-8390856 1 0 50921530 0 0 0 0 S
-PE 0 512 -1
+8390856 1 0 0 50921530 0 0 0 0 S
+PE 0 512 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -838,8 +838,8 @@ mage crazed~
 &+Lto release the blood elementals should he receive a report of any intruders
 &+Lwithin the temple.&n
 ~
-1149249610 1 0 24 0 0 0 500 S
-PH 0 512 -1
+1149249610 1 0 0 24 0 0 0 500 S
+PH 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -852,8 +852,8 @@ shadow warrior~
 &+Wshadows. His body shimmers and fades as he fights to maintain his hold on this
 &+Ldimension.&n
 ~
-1140983882 1 0 152 0 0 0 -500 S
-BH 0 1 -1
+1140983882 1 0 0 152 0 0 0 -500 S
+BH 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -867,8 +867,8 @@ monstrous elemental _nosneak_ _ignore_~
 &+ythis lair, he is often released to hunt down any who have ventured into the
 &+ytemple of the earth uninvited.&n
 ~
-1149241418 1 0 402653246 0 262272 100663296 0 S
-OG 0 36 -1
+1149241418 1 0 0 402653246 0 262272 100663296 0 S
+OG 0 36 0 -1
 52 0 0 10d10+10000 10d10+70
 0.0.0.0 0
 8 8 0
@@ -882,8 +882,8 @@ gargiloth emmissary elemental~
 &+ylair. He is covered by a thick stone shaped suit of armor that shifts slightly
 &+yfrom granite to stone.&n
 ~
-75528266 1 0 156 3 0 0 0 S
-OG 0 528 -1
+75528266 1 0 0 156 3 0 0 0 S
+OG 0 528 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -895,8 +895,8 @@ earth elemental~
 &+yCreated by various stones this large elemental lumbers about the cavern. Its
 &+ymassive body a formidable guard for gargiloth, the elemental emmisary.&n
 ~
-1140881480 1 0 1048604 1048576 0 0 0 S
-EE 0 1 -1
+1140881480 1 0 0 1048604 1048576 0 0 0 S
+EE 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -910,8 +910,8 @@ pech bloodied~
 &+yangered at being summoned from the earthen abyss stands ready to kill and
 &+ydevour any humanoid that comes within its grasp.&n
 ~
-67242058 1 0 28 0 0 0 0 S
-EE 0 17 -1
+67242058 1 0 0 28 0 0 0 0 S
+EE 0 17 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -925,8 +925,8 @@ elemental bloody~
 &+Lcavern by one of the high priests, this elemental hunts any trespassers that
 &+Lhave gained access to the temples interior.&n
 ~
-1073772616 1 0 154 0 0 0 0 S
-OG 0 1 -1
+1073772616 1 0 0 154 0 0 0 0 S
+OG 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -938,8 +938,8 @@ young elementalist~
 &+yWearing nothing more than a thick brown robe, this young mage prays before
 &+ythe altar of Graniloth, lord of the elemental abyss.&n
 ~
-67250378 1 0 28 0 0 0 0 S
-HO 0 2048 -1
+67250378 1 0 0 28 0 0 0 0 S
+HO 0 2048 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 9 8 1
@@ -952,8 +952,8 @@ enchantress~
 &+LThe silk veil is purple in color and completely transulcent. As the light
 &+Lshifts toward here one has a clear view of her nakedness.&n
 ~
-1140861004 1 0 14 0 0 0 1000 S
-PE 0 512 -1
+1140861004 1 0 0 14 0 0 0 1000 S
+PE 0 512 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -967,8 +967,8 @@ small rock~
 &+Lstand about a foot high. The strange rock moves a few paces into the chasm of
 &+Lillusions then sits back down.&n
 ~
-4300 0 0 270008714 0 0 0 1000 S
-EE 0 1 0
+4300 0 0 0 270008714 0 0 0 1000 S
+EE 0 1 0 0
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -982,8 +982,8 @@ magma elemental~
 &+Rlarge clubs ready to slay whomever should attempt to enter the abandoned
 &+Rtemple.&n
 ~
-10346 1 0 536871064 1 0 0 0 S
-EF 0 1 -1
+10346 1 0 0 536871064 1 0 0 0 S
+EF 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -997,8 +997,8 @@ gore elemental~
 &+yis not of those often summoned by elementalists, but rather this elemental is
 &+yfrom the earthen abyss.&n
 ~
-67651658 1 0 152 2 0 0 0 S
-EE 0 1 -1
+67651658 1 0 0 152 2 0 0 0 S
+EE 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1011,8 +1011,8 @@ elemental negative plane material~
 &+Wthe energy in the room. All light is absorbed by the being and as each ray
 &+Lenters its body, the being becomes physically stronger.&n
 ~
-68159560 1 0 28 0 0 0 0 S
-OG 0 3 -1
+68159560 1 0 0 28 0 0 0 0 S
+OG 0 3 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1025,8 +1025,8 @@ servant elemental~
 &+Lhere ready to obey its masters wish. Large black orbs glow from the head of
 &+Lthe beast as it surveys the surroundings.&n
 ~
-67119178 1 0 26 0 0 0 0 S
-EE 0 512 -1
+67119178 1 0 0 26 0 0 0 0 S
+EE 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1039,8 +1039,8 @@ charinth mad~
 &+Lhaggard appearance would indicate that it has been some time since he last
 &+Lslept. His black robe tattered and torn from years of wear.&n
 ~
-8399050 1 0 156 1 0 0 500 S
-PE 0 512 -1
+8399050 1 0 0 156 1 0 0 500 S
+PE 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1052,8 +1052,8 @@ dust sirl cloud swirling~
 &+yComprised of nothing more than small pebbles and clouds of dust, this dust
 &+yelemental, partial air and earth ravages the area.&n
 ~
-75524184 1 0 134217752 0 0 0 0 S
-EE 0 513 -1
+75524184 1 0 0 134217752 0 0 0 0 S
+EE 0 513 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1066,8 +1066,8 @@ paladin young warrior~
 &+gpaladin of Torm the True moves quickly about. His gear would lead one to
 &+gbelieve that he is about to embark on a quest.&n
 ~
-67119180 33554432 0 24 0 0 0 1000 S
-PH 0 67108864 -1
+67119180 33554432 0 0 24 0 0 0 1000 S
+PH 0 67108864 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1081,8 +1081,8 @@ adult hydra~
 &+Lnumerous heads that snap and jab. The beast appears to actually be a series
 &+Lof hideous heads attached to a single dragon body.&n
 ~
-1082281834 1 0 28 0 0 0 0 S
-D 0 1 -1
+1082281834 1 0 0 28 0 0 0 0 S
+D 0 1 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1095,8 +1095,8 @@ gold golden golem~
 &+Lorbs peer out from beneath a shadowy haze. The orbs scanning all that enter
 &+Lits domain.&n
 ~
-67135562 1 0 28 0 0 0 0 S
-OG 0 1 -1
+67135562 1 0 0 28 0 0 0 0 S
+OG 0 1 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1112,8 +1112,8 @@ eligoth lord _nosneak_ _ignore_~
 &+Yis no wonder how this beast came to power in the treachrous abyss, its three
 &+Lheads and four arms able to easily crush any opposition it should receive.&n
 ~
-95451210 1 0 156 0 67371136 0 -1000 S
-X 0 545 -1
+95451210 1 0 0 156 0 67371136 0 -1000 S
+X 0 545 0 -1
 61 0 0 10d10+15000 20d10+80
 0.0.0.0 0
 8 8 1
@@ -1127,8 +1127,8 @@ earthen warrior _nosneak_ _ignore_~
 &+Lquenched by the numerous raids on the temple of the earth, this warrior seeks
 &+Lto feed on any being that dwells near the surface of Duris.&n
 ~
-1140881484 1 0 939524248 0 262144 68161536 -500 S
-OG 0 1 -1
+1140881484 1 0 0 939524248 0 262144 68161536 -500 S
+OG 0 1 0 -1
 55 0 -500 10d10+7500 10d10+70
 0.0.0.0 0
 8 8 1
@@ -1141,8 +1141,8 @@ slaad molten lava~
 &+rhot molten lava. With each step that it takes, hot chunks fall from his body
 &+rand ignite as they hit the ground.&n
 ~
-1142974540 1 0 524316 3 0 0 -500 S
-EF 0 1 -1
+1142974540 1 0 0 524316 3 0 0 -500 S
+EF 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1154,8 +1154,8 @@ scitters rocky creature~
 &+yResembling a small flat rock, this small creature hurridly runs from any
 &+ypossible interaction which could lead to its death.&n
 ~
-28877 1 0 1048730 2 0 0 0 S
-EE 0 0 -1
+28877 1 0 0 1048730 2 0 0 0 S
+EE 0 0 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1169,8 +1169,8 @@ shadow elemental~
 &+Lsummoned from the shadow plane by mistake, wanders the cavern looking for the
 &+Lportal home, or its summoners.&n
 ~
-1140852812 1 0 134217758 2 0 0 0 S
-sw 0 1 -1
+1140852812 1 0 0 134217758 2 0 0 0 S
+sw 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1184,8 +1184,8 @@ phanton stalker~
 &+Ladapts to its surroundings so that the stalker is almost guaranteed the
 &+Lelement of suprise&n
 ~
-1140861132 1 0 1572890 0 0 0 -500 S
-BH 0 1 -1
+1140861132 1 0 0 1572890 0 0 0 -500 S
+BH 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1199,8 +1199,8 @@ bal'goran bal goran guardian~
 &+Lbloodrune, and opening the portal to the earthen abyss, he screams in fury at
 &+Lthe intrusion.&n
 ~
-75507786 1 0 134217752 0 0 0 -500 S
-HO 0 1024 -1
+75507786 1 0 0 134217752 0 0 0 -500 S
+HO 0 1024 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1213,8 +1213,8 @@ orc orcish warrior~
 &+Lthe bloodrune against any intrusions. He stands defiantly in the center of the
 &+Lroom, both swords drawn into position.&n
 ~
-1140850762 1 0 124 0 0 0 -500 S
-HO 0 16 -1
+1140850762 1 0 0 124 0 0 0 -500 S
+HO 0 16 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1227,8 +1227,8 @@ paladin warrior~
 &+wcomrades. He often scans the environment for the Elven warriors that
 &+waccompanied his battalion into the abyss.&n
 ~
-67250250 33554816 0 28 0 0 0 1000 S
-PH 0 8 -1
+67250250 33554816 0 0 28 0 0 0 1000 S
+PH 0 8 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1241,8 +1241,8 @@ duergar scout guard~
 &+rand ready to slay any who should enter the encampment. His eager hand rests
 &+rlightly on the hilt of the sword that is tucked into this belt.&n
 ~
-1140983882 33554496 0 403177628 2 0 0 -500 S
-PD 0 1 -1
+1140983882 33554496 0 0 403177628 2 0 0 -500 S
+PD 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1255,8 +1255,8 @@ elemental fiend~
 &+yveins of metal can be seen coursing through its body. Its large mouth opened
 &+ywide to reveal a series of sharp stony spikes.&n
 ~
-1140852808 1 0 537919514 0 0 0 -500 S
-EE 0 1 -1
+1140852808 1 0 0 537919514 0 0 0 -500 S
+EE 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1270,8 +1270,8 @@ gorich centaur warrior~
 &+gacross his back, his hand ready to grasp it from its sheath should the call
 &+gto arms be made.&n
 ~
-83896392 1 0 124 0 0 0 -100 S
-CT 0 1 -1
+83896392 1 0 0 124 0 0 0 -100 S
+CT 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1284,8 +1284,8 @@ tarlimar war wizard~
 &+mfrom the purple dragons wanders the abyss. He scans the surroundings often
 &+mbefore continuing on as if he is on an errand.&n
 ~
-69347400 1 0 524442 0 0 0 1000 S
-PE 0 513 -1
+69347400 1 0 0 524442 0 0 0 1000 S
+PE 0 513 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1298,8 +1298,8 @@ githyanki crazed~
 &+Lshifted into the abyss. His eyes dart back and forth as he begins the
 &+Lmental manipulations to bring forth a wormhole.&n
 ~
-85993548 1 0 410 2 0 0 0 S
-GI 0 4 -1
+85993548 1 0 0 410 2 0 0 0 S
+GI 0 4 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1313,8 +1313,8 @@ glabrezu demon~
 &+Lrealm. The large black horns atop its head drip with blood and gore as a
 &+Lsliver of man flesh still dangles from their tip.&n
 ~
-100794572 1 0 135790746 3 0 0 -500 S
-X 0 513 -1
+100794572 1 0 0 135790746 3 0 0 -500 S
+X 0 513 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1326,8 +1326,8 @@ flind death knight~
 &+LDressed in a suit of bonemail, this unholy warrior scouts the abyss looking
 &+Lfor any patrols of paladin warriors.&n
 ~
-141384 1 0 410 262174 0 0 -1000 S
-UL 0 1040 -1
+141384 1 0 0 410 262174 0 0 -1000 S
+UL 0 1040 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1341,8 +1341,8 @@ minotaur mercenary~
 &+ystrong hands covered in blood, the sight obviouslt driving his primal
 &+yinstincts into a bloodrage.&n
 ~
-1090529356 1 0 1572924 2 0 0 -500 S
-MT 0 16384 -1
+1090529356 1 0 0 1572924 2 0 0 -500 S
+MT 0 16384 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1356,8 +1356,8 @@ gnome sorcerer~
 &+Lgoing. Ever so often he stops to gauge his current location then continues
 &+Lon with his preplanned course.&n
 ~
-1140983884 1 0 158 2 0 0 1000 S
-PG 0 512 -1
+1140983884 1 0 0 158 2 0 0 1000 S
+PG 0 512 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1370,8 +1370,8 @@ shaman barbarian~
 &+Bafter traversing planar travel. His speech is slightly slurred as he attempts
 &+Bto weave another spell.&n
 ~
-1140861004 1 0 28 0 0 0 1000 S
-PB 0 256 -1
+1140861004 1 0 0 28 0 0 0 1000 S
+PB 0 256 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 9 8 1
@@ -1386,8 +1386,8 @@ elven mage~
 &+Lworn around his neck is a single &+BHydra scale&+L. The item only visible as the
 &+Lmage swings his hands through the air drawing on the magic of the weave.&n
 ~
-67119304 33554432 0 402653212 3 0 0 1000 S
-PE 0 512 -1
+67119304 33554432 0 0 402653212 3 0 0 1000 S
+PE 0 512 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1402,8 +1402,8 @@ elder shaman barbarian~
 &+Land the once great beasts teeth are bared. The shaman utters arcane phrases
 &+Las he walks on his quest, his spirit quest.&n
 ~
-1157638156 1 0 134217880 2 128 0 1000 S
-PB 0 256 -1
+1157638156 1 0 0 134217880 2 128 0 1000 S
+PB 0 256 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1416,8 +1416,8 @@ karthimar damned~
 &+Ltemple. Having been one of the early founders, and now consumed with hatred
 &+Lhe seeks the souls of any mortals that happen to enter the temple.&n
 ~
-1140881480 1 0 134217918 262147 0 0 -500 S
-PE 0 1025 -1
+1140881480 1 0 0 134217918 262147 0 0 -500 S
+PE 0 1025 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1430,8 +1430,8 @@ stone beast~
 &+Lstalking the area. Its nose is turned toward the ground as though it is
 &+Lbusily tracking an escaped prey.&n
 ~
-8 1 0 941097278 0 0 0 0 S
-EE 0 1 -1
+8 1 0 0 941097278 0 0 0 0 S
+EE 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1444,8 +1444,8 @@ misty form~
 &+Lshape. Its piercing red eyes appear to gaze upon you with hate, its maw
 &+Lopening to reveal daggered teeth as it stalks its prey.&n
 ~
-1140992072 1 0 1573150 2 0 0 0 S
-UG 0 512 -1
+1140992072 1 0 0 1573150 2 0 0 0 S
+UG 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1456,8 +1456,8 @@ lion mountain~
 ~
 &+LThis large feline crouches low to the ground as it starts to spring forth.&n
 ~
-1073764426 0 0 0 0 0 0 0 S
-AC 0 1 -1
+1073764426 0 0 0 0 0 0 0 0 S
+AC 0 1 0 -1
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1468,8 +1468,8 @@ whirlwind swirling dust _nosneak_ _spec1_~
 ~
 &+ySwirling in a blinding storm are small pebbles and dust.&n
 ~
-1140852808 1 0 35127614 0 0 0 0 S
-EE 0 1 -1
+1140852808 1 0 0 35127614 0 0 0 0 S
+EE 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1483,8 +1483,8 @@ lich~
 &+mskeletal frame. His hollow eyesockets appearing as though his eyes were gouged
 &+mout, and in their place small pieces of coal were set.&n
 ~
-1140861004 1 0 158 262144 0 0 -500 S
-UL 0 1024 -1
+1140861004 1 0 0 158 262144 0 0 -500 S
+UL 0 1024 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1499,8 +1499,8 @@ white dracolich draco~
 &+Land as one gazes into its face, they quickly realize that death is but a few
 &+Lshort moments away.&n
 ~
-1141925962 1 0 144 0 0 0 -1000 S
-UD 0 4 -1
+1141925962 1 0 0 144 0 0 0 -1000 S
+UD 0 4 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1514,8 +1514,8 @@ beholder _nosneak_ _nobash_~
 &+Lits mouth to strike, a noxious green mist flows out engulfing the room in the
 &+Wstench of death.&n
 ~
-1141012552 1 0 3087007770 14338 0 12288 0 S
-BH 0 4 -1
+1141012552 1 0 0 3087007770 14338 0 12288 0 S
+BH 0 4 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0

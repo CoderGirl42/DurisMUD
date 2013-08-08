@@ -462,6 +462,7 @@ O 0 139132 1 139252 100 0 0 0      * a fountain of flames
 O 0 139020 1 139313 100 0 0 0      * a pile of platinum coins
 O 0 60 1 139313 100 0 0 0          * (object type not in this .obj file)
 O 0 360 1 139313 100 0 0 0         * an unnamed object
+O 0 25105 1 139313 100 0 0 0       * (object type not in this .obj file)
 O 0 139019 1 139335 60 0 0 0       * a shield of dancing flames
 O 0 139134 1 139335 100 0 0 0      * chief of the guard's armoire
 P 1 67244 1 139134 100 0 0 0       *   (object type not in this .obj file)
