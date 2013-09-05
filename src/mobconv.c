@@ -408,6 +408,8 @@ void convertMob(P_char ch)
                   stat_factor[GET_RACE(ch)].Con * hp_mob_con_factor +
                   100 * 100 * (1 - hp_mob_con_factor)) * level * level +
                  2) * level * hp_mob_npc_pc_ratio);
+
+  hits *= 1.3;
   hits -=
     (int) (0.5 * hits *
            (1.0 - class_hitpoints[flag2idx(ch->player.m_class)]));
