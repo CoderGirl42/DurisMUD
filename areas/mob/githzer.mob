@@ -8,8 +8,8 @@ githzerai hooded gate keeper~
 &+Lunwanted entry into the fortress.  Muscular pale arms and legs erect out of
 &+Lthe black cloak covering the trunk of his body, posing a willing fight.
 ~
-67110922 0 0 24 0 0 0 -900 S
-GZ 0 1 -1
+67110922 0 0 0 24 0 0 0 -900 S
+GZ 0 1 0 -1
 42 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -22,8 +22,8 @@ githzerai warden~
 &+Lmore deadlier enemies then most of the other githzerai. A tattoo sits on
 &+Lhis pale forehead demonstrating his higher stature outwardly.
 ~
-67110922 0 0 24 0 0 0 -900 S
-GZ 0 512 -1
+67110922 0 0 0 24 0 0 0 -900 S
+GZ 0 512 0 -1
 43 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -37,8 +37,8 @@ githzerai patrol sergeant~
 &+Lentire forehead has a tattoo of githzerai rank - this creature is
 &+Lobviously of high position in the stronghold guard.
 ~
-1140852744 0 0 8 0 0 0 -950 S
-GZ 0 1 -1
+1140852744 0 0 0 8 0 0 0 -950 S
+GZ 0 1 0 -1
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -52,8 +52,8 @@ githzerai member patrol~
 &+Lthe patrol leader, due to the size comparisons of their swords. But,
 &+Lhowever, he works with honor and courage to follow and obey.
 ~
-1140852746 0 0 8 0 0 0 -950 S
-GZ 0 1 -1
+1140852746 0 0 0 8 0 0 0 -950 S
+GZ 0 1 0 -1
 43 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -68,8 +68,8 @@ githzerai rogue~
 &+Lof his pale skin as he maneuvers his daggers skillfully in his hands and
 &+Lbetween his fingers.
 ~
-1073743880 1 0 8 0 0 0 -1000 S
-GZ 0 4096 -1
+1073743880 1 0 0 8 0 0 0 -1000 S
+GZ 0 4096 0 -1
 44 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -86,8 +86,8 @@ githzerai rogue master~
 &+Lstronghold, only a longer, thicker beard rests below his chin. He also
 &+Lseems to never not occupy the shadows.
 ~
-1073743882 1 0 1572872 0 0 0 -1000 S
-GZ 0 4096 -1
+1073743882 1 0 0 1572872 0 0 0 -1000 S
+GZ 0 4096 0 -1
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -102,8 +102,8 @@ githzerai rogue~
 &+Lof his pale skin as he maneuvers his daggers skillfully in his hands and
 &+Lbetween his fingers.
 ~
-1073743880 1 0 8 0 0 0 -1000 S
-GZ 0 4096 -1
+1073743880 1 0 0 8 0 0 0 -1000 S
+GZ 0 4096 0 -1
 42 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -118,8 +118,8 @@ githzerai knight~
 &+Lstronghold.  He seems stronger and hardier then other githzerai, but less
 &+Lstealthy and dexterous.
 ~
-1073743880 1 0 8 0 0 0 -1000 S
-GZ 0 16 -1
+1073743880 1 0 0 8 0 0 0 -1000 S
+GZ 0 16 0 -1
 44 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -134,8 +134,8 @@ githzerai knight~
 &+Lstronghold.  He seems stronger and hardier then other githzerai, but less
 &+Lstealthy and dexterous.
 ~
-1073743880 1 0 8 0 0 0 -1000 S
-GZ 0 16 -1
+1073743880 1 0 0 8 0 0 0 -1000 S
+GZ 0 16 0 -1
 42 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -152,8 +152,8 @@ githzerai knight master~
 &+Ldisciples. He also wears much less battle armor then them, yet still
 &+Lseems to dodge blows more effectively then them.
 ~
-1073743880 1 0 8 0 0 0 -1000 S
-GZ 0 16 -1
+1073743880 1 0 0 8 0 0 0 -1000 S
+GZ 0 16 0 -1
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -167,8 +167,8 @@ githzerai warlock~
 &+Lmuch more frail then almost every githzerai, but holds the deepest powers
 &+Lof magic in all the world.
 ~
-67108872 1 0 0 0 0 0 -1000 S
-GZ 0 131072 -1
+67108872 1 0 0 0 0 0 0 -1000 S
+GZ 0 131072 0 -1
 44 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -182,8 +182,8 @@ githzerai warlock~
 &+Lmuch more frail then almost every githzerai, but holds the deepest powers
 &+Lof magic in all the world.
 ~
-67108872 1 0 0 0 0 0 -1000 S
-GZ 0 131072 -1
+67108872 1 0 0 0 0 0 0 -1000 S
+GZ 0 131072 0 -1
 42 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -197,8 +197,8 @@ githzerai warlock master~
 &+Lmuch more frail then almost every githzerai, but holds the deepest powers
 &+Lof magic in all the world.
 ~
-67108874 1 0 0 0 0 0 -1000 S
-GZ 0 131072 -1
+67108874 1 0 0 0 0 0 0 -1000 S
+GZ 0 131072 0 -1
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -213,8 +213,8 @@ adamantite golem~
 &+Leyes would assumed to sit.  This animated creature of adamantite guards
 &+Lwhatever is beyond the door with its life.
 ~
-67110922 0 0 136 0 0 0 0 S
-OG 0 1 -1
+67110922 0 0 0 136 0 0 0 0 S
+OG 0 1 0 -1
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -231,8 +231,8 @@ githzerai strategist~
 &+Lhigh rank and trusted; he carries out his life working towards the defeat
 &+Lof his blood-enemy, the githyanki.
 ~
-67110922 0 0 24 0 0 0 -900 S
-GZ 0 512 -1
+67110922 0 0 0 24 0 0 0 -900 S
+GZ 0 512 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -248,8 +248,8 @@ githzerai tactical sergeant armored~
 &+Lof the other githzerai, he wears two black gauntlets on his hands, while
 &+Lothers keep their hands bare.
 ~
-1140852746 0 0 0 0 0 0 -1000 S
-GZ 0 1 -1
+1140852746 0 0 0 0 0 0 0 -1000 S
+GZ 0 1 0 -1
 43 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -264,8 +264,8 @@ githzerai officer troop placement~
 &+Lparticular officer directs the troops by company and places them before
 &+Lbattle.
 ~
-1140852746 0 0 0 0 0 0 -1000 S
-GZ 0 1 -1
+1140852746 0 0 0 0 0 0 0 -1000 S
+GZ 0 1 0 -1
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -281,8 +281,8 @@ githzerai high priest~
 &+Lare the ones he needs to move and support himself with, but he is trained
 &+Lin the ancient art of religion, thus harnesses the strength of his deity.
 ~
-67110922 0 0 24 0 0 0 -900 S
-GZ 0 32 -1
+67110922 0 0 0 24 0 0 0 -900 S
+GZ 0 32 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -297,8 +297,8 @@ commander githzerai militia~
 &+Lparticular officer directs the troops by company and places them before
 &+Lbattle.
 ~
-1140852746 0 0 0 0 0 0 -1000 S
-GZ 0 1 -1
+1140852746 0 0 0 0 0 0 0 -1000 S
+GZ 0 1 0 -1
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -313,8 +313,8 @@ githzerai battle philosopher younger~
 &+Lof the githzerai in war games and tactical positions, but his insight
 &+Lto combat is brilliant.
 ~
-1140852746 0 0 0 0 0 0 -1000 S
-GZ 0 1 -1
+1140852746 0 0 0 0 0 0 0 -1000 S
+GZ 0 1 0 -1
 43 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -330,8 +330,8 @@ vicious githyanki assassin~
 &+Leach tipped with a point.  She spies on the githzerai and takes any
 &+Lavailable opportunity to kill them.
 ~
-1073744008 1 0 270008344 0 0 0 -1000 S
-GI 0 8192 -1
+1073744008 1 0 0 270008344 0 0 0 -1000 S
+GI 0 8192 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
@@ -345,8 +345,8 @@ githzerai tired~
 &+Ldesignated sleeping chamber.  A small greyish-white beard rests under
 &+Lhis chin.  He tries desperately to get some rest before his next shift.
 ~
-1140852746 0 0 0 0 0 0 -1000 S
-GZ 0 0 -1
+1140852746 0 0 0 0 0 0 0 -1000 S
+GZ 0 0 0 -1
 44 0 0 1d1+1 1d1+1
 0.0.0.0 0
 4 4 1
@@ -363,8 +363,8 @@ zangzk githzerai captain~
 &+Lyears, and spends his time waiting for news from his messangers at the
 &+Lmoment.
 ~
-1140852810 0 0 128 262144 0 0 -1000 S
-GZ 0 64 -1
+1140852810 0 0 0 128 262144 0 0 -1000 S
+GZ 0 64 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -378,8 +378,8 @@ githzerai sentinel~
 &+Lunwanted entry into the one room.  Muscular pale arms and legs erect out of
 &+Lthe black cloak covering the trunk of his body, posing a willing fight.
 ~
-1140852746 0 0 8 0 0 0 -900 S
-GZ 0 1 -1
+1140852746 0 0 0 8 0 0 0 -900 S
+GZ 0 1 0 -1
 44 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -395,8 +395,8 @@ zerth githzerai~
 &+Lunconcious to her surroundings.  This githzerai appears to be completely
 &+Lentranced, looking into the eyes of this statue.
 ~
-2058 0 0 24 0 0 0 -1000 S
-GZ 0 4 -1
+2058 0 0 0 24 0 0 0 -1000 S
+GZ 0 4 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 2
@@ -411,8 +411,8 @@ elite githyanki spy~
 &+Labout his body, exposing his pale skinned bony arms and legs while
 &+Lhe stealthily leaps about.
 ~
-1073744008 1 0 8 0 0 0 -1000 S
-GI 0 16 -1
+1073744008 1 0 0 8 0 0 0 -1000 S
+GI 0 16 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -426,8 +426,8 @@ githyanki recon escort~
 &+Lstaying undetected by the githzerai, protecting the other githyanki he is
 &+Lwith.
 ~
-2060 1 0 24 0 0 0 -1000 S
-GI 0 1 -1
+2060 1 0 0 24 0 0 0 -1000 S
+GI 0 1 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -441,8 +441,8 @@ space argos amoeba br_g~
 &+Lat once with a very tiny iris. A large, drooling mouth filled with
 &+Ltranslucent teeth opens as it senses life.
 ~
-1073743880 1 0 134217912 0 0 0 -1000 S
-BH 0 256 -1
+1073743880 1 0 0 134217912 0 0 0 -1000 S
+BH 0 256 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -456,8 +456,8 @@ insane githzerai~
 &+Land acidic scars covering his body.  Trying to communicate or reason
 &+Lwith such an uncivil creature would be impossible.
 ~
-1073744008 1 0 134217784 0 0 0 -1000 S
-GZ 0 1 -1
+1073744008 1 0 0 134217784 0 0 0 -1000 S
+GZ 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -476,8 +476,8 @@ rzazk githzerai traveller~
 &+Lenergy into reality.  His actual body frame is strong, but for his
 &+Lpurposes that is not needed.
 ~
-1073743880 0 0 402653240 0 0 0 0 S
-GZ 0 4 -1
+1073743880 0 0 0 402653240 0 0 0 0 S
+GZ 0 4 0 -1
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -492,8 +492,8 @@ red green slaad~
 &+Lhead of a red slaad.  Its hands are both matte black.  This creature
 &+Ldrools heavily as it opens its mouth to attack..
 ~
-1073743882 1 0 134217784 0 0 0 -1000 S
-X 0 1 -1
+1073743882 1 0 0 134217784 0 0 0 -1000 S
+X 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -508,8 +508,8 @@ prazyz hunter githzerai~
 &+bopening.  He has lived many years, and spends his undying breath in hunt
 &+bof trophy slaadi in the chaotic plane of limbo.
 ~
-1073743884 0 0 403177656 0 0 0 -200 S
-GZ 0 2 -1
+1073743884 0 0 0 403177656 0 0 0 -200 S
+GZ 0 2 0 -1
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -522,8 +522,8 @@ red slaad~
 &+Rteeth, this abomination rushes towards life through limbo, continuously
 &+Rstalking anything not of its own kind.
 ~
-1073743880 1 0 134217784 0 0 0 -1000 S
-H 0 1 6
+1073743880 1 0 0 134217784 0 0 0 -1000 S
+H 0 1 0 6
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -536,8 +536,8 @@ green slaad~
 &+Gteeth, this abomination rushes towards life through limbo, continuously
 &+Gstalking anything not of its own kind.
 ~
-1073743880 1 0 134217784 0 0 0 -1000 S
-H 0 1 6
+1073743880 1 0 0 134217784 0 0 0 -1000 S
+H 0 1 0 6
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -549,8 +549,8 @@ shadow monster~
    &+LThis black apparition is basically a levitating black mist, with
 &+Lseveral arm-like appengages lashing forward to attack..
 ~
-1073743882 1 0 134217784 0 0 0 -200 S
-TK 0 1 -1
+1073743882 1 0 0 134217784 0 0 0 -200 S
+TK 0 1 0 -1
 50 0 0 750d3+200 1d1+1
 0.0.0.0 0
 8 8 0
@@ -562,8 +562,8 @@ shadow monster large~
    &+LThis black apparition is basically a levitating black mist, with
 &+Lseveral arm-like appengages lashing forward to attack..
 ~
-1073743882 1 0 134217784 0 67633152 0 -200 S
-TK 0 1 -1
+1073743882 1 0 0 134217784 0 67633152 0 -200 S
+TK 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -575,8 +575,8 @@ shadow monster huge~
    &+LThis black apparition is basically a levitating black mist, with
 &+Lseveral arm-like appengages lashing forward to attack..
 ~
-1075841034 1 0 135266488 262208 2883584 1024 -200 S
-UV 0 16777217 6
+1075841034 1 0 0 135266488 262208 2883584 1024 -200 S
+UV 0 16777217 0 6
 56 0 0 1500d2+600 1d1+1
 0.0.0.0 0
 8 8 0
@@ -591,8 +591,8 @@ spirit zerthimon br_l~
 &+clooks that of a twisting gray cloud, headed with a very stern, narrow
 &+cgithzerai head, with eyes of fire staring down.
 ~
-2056 0 0 135790744 0 0 0 -1000 S
-D 0 33 -1
+2056 0 0 0 135790744 0 0 0 -1000 S
+D 0 33 0 -1
 58 0 0 75000d2+500 1d1+1
 0.0.0.0 0
 8 8 1
@@ -606,8 +606,8 @@ githzerai fortress watcher~
 &+Lunwanted entry into the fortress.  Muscular pale arms and legs erect out of
 &+Lthe black cloak covering the trunk of his body, posing a willing fight.
 ~
-67110922 1 0 24 0 0 0 -900 S
-GZ 0 1 -1
+67110922 1 0 0 24 0 0 0 -900 S
+GZ 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -620,8 +620,8 @@ watch fortress leader githzerai~
 &+Lmore deadlier enemies then most of the other githzerai. A tattoo sits on
 &+Lhis pale forehead demonstrating his higher stature outwardly.
 ~
-67110922 1 0 24 0 0 0 -900 S
-GZ 0 256 -1
+67110922 1 0 0 24 0 0 0 -900 S
+GZ 0 256 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -632,8 +632,8 @@ shadow mephit~
 ~
    &+LTwo black eyes stare forward, as its arms reach out..
 ~
-1073744008 1 0 404226232 0 0 0 -1000 S
-UG 0 16785408 -1
+1073744008 1 0 0 404226232 0 0 0 -1000 S
+UG 0 16785408 0 -1
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -648,8 +648,8 @@ adamantite golem~
 &+LThis creature born of adamantite, living only to serve, protects the
 &+Lfortress until it is slain.
 ~
-2058 1 0 268435640 0 0 0 0 S
-OG 0 1 -1
+2058 1 0 0 268435640 0 0 0 0 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -661,8 +661,8 @@ githzerai foyer guard~
    &+LDressed in long black robes and a tight headband, this githzerai waits
 &+Lpatiently for an attack so he can sweep death upon his enemies.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 1 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 1 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -675,8 +675,8 @@ savant githzerai~
 &+Linstructions.  Tattoos and symbols are scetched about his body depicting
 &+Lunholy rituals and black magick.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 512 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 512 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -690,8 +690,8 @@ blood elemental~
 &+rthe ceiling.  Its body constantly drips and reforms into itself as it
 &+rwaits for intruders to battle.
 ~
-2058 1 0 268435480 0 0 0 -1000 S
-EW 0 2048 -1
+2058 1 0 0 268435480 0 0 0 -1000 S
+EW 0 2048 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -704,8 +704,8 @@ githzerai warlock dark~
 &+Lis here, wanting to destroy you.  This githzerai holds his skull-headed
 &+Lstaff up high, shouting dark echoing commands to its demon.
 ~
-2058 1 0 0 0 0 0 -1000 S
-GZ 0 131072 -1
+2058 1 0 0 0 0 0 0 -1000 S
+GZ 0 131072 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -718,8 +718,8 @@ white githzerai acolyte~
 &+Lis wearing white robes and emanates a holy aura.  It walks through the
 &+Lchapel, head bowed.
 ~
-1140852744 1 0 134217880 0 0 0 1000 S
-GZ 0 32 -1
+1140852744 1 0 0 134217880 0 0 0 1000 S
+GZ 0 32 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -732,8 +732,8 @@ githzerai scribe~
 &+Lis here, wanting to destroy you. Unlike the other githzerai mages, this
 &+Lone seems much deadlier..
 ~
-2058 1 0 0 0 0 0 -1000 S
-GZ 0 512 -1
+2058 1 0 0 0 0 0 0 -1000 S
+GZ 0 512 0 -1
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -747,8 +747,8 @@ wise githzerai zealot~
 &+Lthen any of the other priests to protec the chapel and give praise to
 &+Lhis Rrakkma ancestors.
 ~
-1073743882 1 0 24 0 0 0 -1000 S
-GZ 0 131073 -1
+1073743882 1 0 0 24 0 0 0 -1000 S
+GZ 0 131073 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -761,8 +761,8 @@ magenta beholder guardian~
 &+Mwith uncanny speed.  A large eye in the very center stare's with
 &+Mhatred, as its gaping mouth drools with acid.
 ~
-3082 1 0 268435480 0 0 0 -1000 S
-BH 0 32 -1
+3082 1 0 0 268435480 0 0 0 -1000 S
+BH 0 32 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -779,8 +779,8 @@ soul rrakkma spell master~
 &+LPiercing white eyes seem to blaze with an unimaginable fury as this
 &+Lbeing is formed of pure energy.
 ~
-2314 1 0 152 1 0 131072 -1000 S
-UG 0 4194592 3
+2314 1 0 0 152 1 0 131072 -1000 S
+UG 0 4194592 0 3
 58 0 0 1275d2+950 1d1+1
 0.0.0.0 0
 8 8 0
@@ -793,8 +793,8 @@ githzerai soldier~
 &+Lis definately very high in rank due to his job of guarding the lead
 &+Lcombat hallway of all the githzerai in the universe.
 ~
-67110920 1 0 24 0 0 0 -1000 S
-GZ 0 1 -1
+67110920 1 0 0 24 0 0 0 -1000 S
+GZ 0 1 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -807,8 +807,8 @@ githzerai templar~
 &+Lis definately very high in rank due to his job of guarding the lead
 &+Lcombat hallway of all the githzerai in the universe.
 ~
-2058 1 0 24 0 0 512 -1000 S
-GZ 0 1 -1
+2058 1 0 0 24 0 0 512 -1000 S
+GZ 0 1 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -823,8 +823,8 @@ vicious githzerai blood warrior~
 &+Lhis mouth.  His teeth are clenched and his muscles flexed as he
 &+Lpaces back and forth in this area, waiting for the next battle.
 ~
-1140852744 1 0 402653336 262145 0 0 -1000 S
-GZ 0 1048576 -1
+1140852744 1 0 0 402653336 262145 0 0 -1000 S
+GZ 0 1048576 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -838,8 +838,8 @@ raylen xarvyn death knight~
 &+Lby the agility in his movements.  Ralen has a stern look on his face
 &+Land fights for the unholy empowerment of his githzerai ancestors.
 ~
-1073743882 1 0 268435480 2049 67108864 262144 -1000 S
-UV 0 17 6
+1073743882 1 0 0 268435480 2049 67108864 262144 -1000 S
+UV 0 17 0 6
 60 0 0 1500d2+500 1d1+1
 0.0.0.0 0
 8 8 1
@@ -853,8 +853,8 @@ kraange xarvyn githzerai blood warrior~
 &+Lnothingless, reflecting the shades of Limbo.  This insane battle-thirsty
 &+Lcombatent poses a vicious fight to the end.
 ~
-1073743884 1 0 268435480 2049 0 0 -1000 S
-Y 0 17825792 4
+1073743884 1 0 0 268435480 2049 0 0 -1000 S
+Y 0 17825792 0 4
 60 0 0 1450d2+300 1d1+1
 0.0.0.0 0
 8 8 1
@@ -873,8 +873,8 @@ soul rrakkma war master~
 &+Lstrength and &+chonor&+L.  The body of this apparition &+Yblazes&+L with light,
 &+Lnearly bright enough to cause the strongest of eyes to look away.
 ~
-2058 1 0 268435608 2048 0 1024 -1000 S
-UG 0 65 -1
+2058 1 0 0 268435608 2048 0 1024 -1000 S
+UG 0 65 0 -1
 62 0 0 1300d2+600 1d1+1
 0.0.0.0 0
 8 8 1
@@ -887,8 +887,8 @@ beholder guardian blue~
 &+Mwith uncanny speed.  A large eye in the very center stare's with
 &+Mhatred, as its gaping mouth snorts &+Rfi&+rr&+Ye&+M.
 ~
-2090 1 0 268435480 0 0 0 -1000 S
-BH 0 512 -1
+2090 1 0 0 268435480 0 0 0 -1000 S
+BH 0 512 0 -1
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -904,8 +904,8 @@ spirit king githzerai~
 &+LThe deathly magic this spirit wields reflects the sorcery he
 &+Lhad mastered as King, during another life.
 ~
-1076889610 1 0 268435640 2 0 0 -1000 S
-UV 0 16777216 -1
+1076889610 1 0 0 268435640 2 0 0 -1000 S
+UV 0 16777216 0 -1
 59 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -921,8 +921,8 @@ huge flaming vortex demon~
 &+LThis towering demon rests at the center of this vortex, basking in the
 &+Lpowerful aura of the chaotic energy.
 ~
-2090 1 0 268435640 1 67108864 0 -1000 S
-UV 0 1 6
+2090 1 0 0 268435640 1 67108864 0 -1000 S
+UV 0 1 0 6
 56 0 0 1250d2+150 1d1+1
 0.0.0.0 0
 8 8 1
@@ -945,8 +945,8 @@ soul rrakkma rogue master githzerai~
 &+La parchment.  Ten bodies would hit the floor at once, as this &+mRra&+rk&+mk&+rma
 &+Lwas a master of both stealth and &+rassassination&+L.
 ~
-1073744010 1 0 270008506 2049 0 0 -1000 S
-UG 0 8193 -1
+1073744010 1 0 0 270008506 2049 0 0 -1000 S
+UG 0 8193 0 -1
 62 0 0 1250d2+250 1d1+1
 0.0.0.0 0
 8 8 1
@@ -961,8 +961,8 @@ githzerai king tayr tayr-dryn~
 &+Lsociety is based on honor for its king to be hiding under his fortress,
 &+Lbauling his eyes out. For a moment he mutters something about the savior..
 ~
-1073743882 0 0 402653340 2049 0 0 -1000 S
-GZ 0 512 -1
+1073743882 0 0 0 402653340 2049 0 0 -1000 S
+GZ 0 512 0 -1
 59 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 1
@@ -978,8 +978,8 @@ arcane wizard tayr tayr-dryn~
 &+Leach of their powers into his own.  A beast of pure magic and powerful
 &+Lknow how plots his control of the planes within the shadows.
 ~
-1090521098 1 0 268435642 264193 67633152 9216 -1000 S
-X 0 1536 -1
+1090521098 1 0 0 268435642 264193 67633152 9216 -1000 S
+X 0 1536 0 -1
 62 0 0 2500d3+400 1d1+1
 0.0.0.1000 0
 8 8 0
@@ -994,8 +994,8 @@ soul~
 &+Cvengeance curses the soul's face, bringing unhuman fear into its
 &+Copponents.
 ~
-2186 1 0 0 0 0 0 1000 S
-UG 0 64 -1
+2186 1 0 0 0 0 0 0 1000 S
+UG 0 64 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1011,8 +1011,8 @@ evernight two-headed shadow dragon br_s~
 &+Llarger then the first, is blue, in which electrical power curls through
 &+Lthe dark air from its nostrils.
 ~
-2058 0 0 32 0 0 0 0 S
-D 0 1 -1
+2058 0 0 0 32 0 0 0 0 S
+D 0 1 0 -1
 57 0 0 2000d1+50 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1029,8 +1029,8 @@ Outpost from the main fortress.  He probably does not have the intent to
 stay long, because he is here only on business.  A stern glare fills his
 red eyes as he inspects the area, dressed for battle.
 ~
-1140852744 0 0 65560 0 67633152 0 -1000 S
-GZ 0 4 -1
+1140852744 0 0 0 65560 0 67633152 0 -1000 S
+GZ 0 4 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1044,8 +1044,8 @@ shadow golem~
 &+Llife and form with incredible aggression.  Its entire body is
 &+Lmade of some sort of black rock.
 ~
-1074792458 1 0 40 0 0 0 -1000 S
-OG 0 1 -1
+1074792458 1 0 0 40 0 0 0 -1000 S
+OG 0 1 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1060,8 +1060,8 @@ faceless damned soul~
 &+Lout of reality.  One of the greater githzerai gods must have
 &+Lbrutally punished this nonbeliever into this personal hell.
 ~
-1073743880 1 0 134217736 0 0 0 -1000 S
-UG 0 4 -1
+1073743880 1 0 0 134217736 0 0 0 -1000 S
+UG 0 4 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1076,8 +1076,8 @@ faceless damned soul~
 &+Lout of reality.  One of the greater githzerai gods must have
 &+Lbrutally punished this nonbeliever into this personal hell.
 ~
-1073743882 1 0 134217736 0 0 0 -1000 S
-UG 0 4 -1
+1073743882 1 0 0 134217736 0 0 0 -1000 S
+UG 0 4 0 -1
 48 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1094,8 +1094,8 @@ verzwyz chosen one githzerai~
 &+Lsacred stairs, as he would instantly leap into battle and defend
 &+Lhis people to the death.
 ~
-2058 1 0 16 0 262144 0 -1000 S
-UG 0 131076 -1
+2058 1 0 0 16 0 262144 0 -1000 S
+UG 0 131076 0 -1
 56 0 0 1150d2+800 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1111,8 +1111,8 @@ shadow dragon~
 &+Lmassive, one headed dragon, &+Rroars&+L with a deep and unhuman
 &+Lgrowl, and blackness spews from its mouth.
 ~
-1074792458 1 0 40 0 0 0 -1000 S
-D 0 1 -1
+1074792458 1 0 0 40 0 0 0 -1000 S
+D 0 1 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1127,8 +1127,8 @@ fiendish red imp~
 &+rmust have been formed here from the chaotic natures of the
 &+rstairs of Pandemonium.
 ~
-1073743882 1 0 24 0 0 0 -1000 S
-Y 0 1 2
+1073743882 1 0 0 24 0 0 0 -1000 S
+Y 0 1 0 2
 42 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1144,8 +1144,8 @@ towering guardian demon guard~
 &+reyes, as it has been &+Rsummoned&+r by the &+Rgithzerai&+r for protection
 &+rof this tower.
 ~
-3082 1 0 152 1 0 4096 -1000 S
-X 0 16777217 -1
+3082 1 0 0 152 1 0 4096 -1000 S
+X 0 16777217 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1161,8 +1161,8 @@ githzerai caretaker~
 &+Lhang over past the velvet pillow in which he levitates upon, lost
 &+Lcompletely in his otherwordly meditation.
 ~
-1073743882 1 0 134217872 0 0 0 -1000 S
-GZ 0 516 -1
+1073743882 1 0 0 134217872 0 0 0 -1000 S
+GZ 0 516 0 -1
 56 0 0 1250d2+850 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1177,8 +1177,8 @@ adamantite golem~
 &+LThis creature born of adamantite, living only to serve, protects the
 &+Lfortress until it is slain.
 ~
-2058 1 0 268435640 0 0 0 0 S
-OG 0 1 -1
+2058 1 0 0 268435640 0 0 0 0 S
+OG 0 1 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1191,8 +1191,8 @@ animated book spellbook~
 &+Wclosed much like a winged creature in flight.  It has been animated by
 &+Wsome sort of powerful magic to take on a life of its own.
 ~
-1073744008 1 0 402653240 0 0 0 -1000 S
-EA 0 1 1
+1073744008 1 0 0 402653240 0 0 0 -1000 S
+EA 0 1 0 1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1205,8 +1205,8 @@ githzerai apprentice~
 &+Lis here, wanting to destroy you. Unlike the other githzerai mages, this
 &+Lone seems much deadlier..
 ~
-268437512 1 0 0 0 0 0 -1000 S
-GZ 0 512 -1
+268437512 1 0 0 0 0 0 0 -1000 S
+GZ 0 512 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1222,8 +1222,8 @@ animated staff~
 &+LThe staff swirls about, spinning with brutal accuracy - completely
 &+Lby the very &+bwill&+L of its githzerai master.
 ~
-67110922 1 0 16 0 67108864 0 0 S
-EA 0 1 4
+67110922 1 0 0 16 0 67108864 0 0 S
+EA 0 1 0 4
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1241,8 +1241,8 @@ small dragonkin familiar~
 &+Lin deep meditation.  Nevertheless, this foul otherwordly creature
 &+Lrests here looking villainous and protective of the githzerai.
 ~
-67110954 1 0 16 1 0 0 -1000 S
-DK 0 1 1
+67110954 1 0 0 16 1 0 0 -1000 S
+DK 0 1 0 1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1256,8 +1256,8 @@ robed githzerai seer~
 &+LHis long white beard has several small dark beads tied into long braids.
 &+LA tattoo of darkness endorns his entire forehead.
 ~
-268437514 1 0 134217872 0 0 0 -1000 S
-GZ 0 512 -1
+268437514 1 0 0 134217872 0 0 0 -1000 S
+GZ 0 512 0 -1
 58 0 0 1150d2+650 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1275,8 +1275,8 @@ high steward githzerai tower~
 &+Lkeeper of the &+mtower &+Lof &+mincantations&+L has a great power and a fierce
 &+Lhunger for destruction.
 ~
-1342179338 1 0 134217872 0 0 0 -1000 S
-GZ 0 516 -1
+1342179338 1 0 0 134217872 0 0 0 -1000 S
+GZ 0 516 0 -1
 59 0 0 2550d2+850 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1291,8 +1291,8 @@ adamantite golem~
 &+LThis creature born of adamantite, living only to serve, protects the
 &+Lfortress until it is slain.
 ~
-2058 1 0 268435640 0 0 0 0 S
-OG 0 1 -1
+2058 1 0 0 268435640 0 0 0 0 S
+OG 0 1 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1310,8 +1310,8 @@ adamantite caryatid pillar~
 &+Lavatar, one of the early Rrakkma known for slaying the
 &+Lillithid onslaughts and protecting his people.
 ~
-67110922 1 0 134217752 0 0 0 0 S
-UV 0 1 6
+67110922 1 0 0 134217752 0 0 0 0 S
+UV 0 1 0 6
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1324,8 +1324,8 @@ black githzerai acolyte~
 &+Lis wearing black robes and emanates an unholy aura.  It walks through the
 &+Lchapel, head bowed.
 ~
-1140852744 1 0 134217880 0 0 0 -1000 S
-GZ 0 32 -1
+1140852744 1 0 0 134217880 0 0 0 -1000 S
+GZ 0 32 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1344,8 +1344,8 @@ holy githzerai chaplain~
 &+Lsenses, the changes in the power, as githzerai of the
 &+Lchaplain's power become one with their home plane.
 ~
-1073743882 1 0 152 0 0 0 -1000 S
-UG 0 16908288 -1
+1073743882 1 0 0 152 0 0 0 -1000 S
+UG 0 16908288 0 -1
 55 0 0 1250d2+850 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1358,8 +1358,8 @@ white githzerai acolyte~
 &+Lis wearing white robes and emanates a holy aura.  It walks through the
 &+Lchapel, head bowed.
 ~
-67110922 1 0 134217880 0 0 0 1000 S
-GZ 0 32 -1
+67110922 1 0 0 134217880 0 0 0 1000 S
+GZ 0 32 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1372,8 +1372,8 @@ black githzerai acolyte~
 &+Lis wearing black robes and emanates an unholy aura.  It walks through the
 &+Lchapel, head bowed.
 ~
-67110922 1 0 134217880 0 0 0 -1000 S
-GZ 0 32 -1
+67110922 1 0 0 134217880 0 0 0 -1000 S
+GZ 0 32 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1392,8 +1392,8 @@ arch-bishop arch bishop githzerai~
 &+Lthe Rrakkma, and has become lost in his own powers to the point
 &+Lof total insanity.
 ~
-287311882 1 0 134217880 0 0 0 -1000 S
-X 0 16908288 3
+287311882 1 0 0 134217880 0 0 0 -1000 S
+X 0 16908288 0 3
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1409,8 +1409,8 @@ shadow dragon~
 &+Lmassive, one headed dragon, &+Rroars&+L with a deep and unhuman
 &+Lgrowl, and blackness spews from its mouth.
 ~
-135268362 1 0 40 0 0 0 -1000 S
-D 0 1 -1
+135268362 1 0 0 40 0 0 0 -1000 S
+D 0 1 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1425,8 +1425,8 @@ githzerai rider~
    &+LThis githzerai is covered in a black robe, a large hood completely
 &+Lconcealing his face.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 5 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 5 0 -1
 52 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1438,8 +1438,8 @@ githzerai elite guard~
    &+LDressed in long black robes and a tight headband, this githzerai waits
 &+Lpatiently for an attack so he can sweep death upon his enemies.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 1 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 1 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1454,8 +1454,8 @@ adamantite golem~
 &+LThis creature born of adamantite, living only to serve, protects the
 &+Lfortress until it is slain.
 ~
-2058 1 0 268435640 0 0 0 0 S
-OG 0 1 -1
+2058 1 0 0 268435640 0 0 0 0 S
+OG 0 1 0 -1
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1473,8 +1473,8 @@ captain githzerai militia~
 &+Lparticular officer directs the troops by company and places them before
 &+Lbattle.
 ~
-1140852746 1 0 134217752 0 0 0 -1000 S
-GZ 0 17 4
+1140852746 1 0 0 134217752 0 0 0 -1000 S
+GZ 0 17 0 4
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1488,8 +1488,8 @@ short githzerai squire~
 &+Lwatches his captain angrily scream at the militia to form and
 &+Lprepare for combat.
 ~
-67110922 1 0 24 0 0 0 -1000 S
-GZ 0 1 2
+67110922 1 0 0 24 0 0 0 -1000 S
+GZ 0 1 0 2
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1504,8 +1504,8 @@ brutalized githyanki prisoner~
 &+Lsurrounding githzerai to spare him any more torture and
 &+Ljust end his life.
 ~
-2186 0 0 0 0 0 0 -1000 S
-GI 0 4 -1
+2186 0 0 0 0 0 0 0 -1000 S
+GI 0 4 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 5 1
@@ -1520,8 +1520,8 @@ sinister githzerai torturer~
 &+Llifts the githyanki up and tosses him to the ground with
 &+Lease, while violating his mind.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 4 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 4 0 -1
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1536,8 +1536,8 @@ githzerai admiral~
 &+Lhas also awarded him the position of admiral after centuries of
 &+Lvictories on the battlefield.
 ~
-2058 1 0 24 1 67108864 0 -1000 S
-GZ 0 33 4
+2058 1 0 0 24 1 67108864 0 -1000 S
+GZ 0 33 0 4
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1550,8 +1550,8 @@ githzerai honor guard~
 &+Lis definately very high in rank due to his job of guarding the lead
 &+Lcombat hallway of all the githzerai in the universe.
 ~
-67110920 1 0 24 0 0 0 -1000 S
-GZ 0 1 -1
+67110920 1 0 0 24 0 0 0 -1000 S
+GZ 0 1 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1566,8 +1566,8 @@ githzerai tactitian armored~
 &+Lcloaked, muscular body is also adorned with various pieces of
 &+Lspiked adamantite platemail.
 ~
-2058 1 0 134217752 0 0 0 -1000 S
-GZ 0 16777217 -1
+2058 1 0 0 134217752 0 0 0 -1000 S
+GZ 0 16777217 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1580,8 +1580,8 @@ githzerai honor guard~
 &+Lis definately very high in rank due to his job of guarding the lead
 &+Lcombat hallway of all the githzerai in the universe.
 ~
-67110920 1 0 24 0 0 0 -1000 S
-GZ 0 2097152 -1
+67110920 1 0 0 24 0 0 0 -1000 S
+GZ 0 2097152 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1595,8 +1595,8 @@ dark ritualist githzerai~
 &+Lunnaturally-dark looking githzerai appears to be chanting some sort
 &+Lof ancient and unholy verse.
 ~
-1140852744 1 0 24 1 0 0 -1000 S
-GZ 0 32 -1
+1140852744 1 0 0 24 1 0 0 -1000 S
+GZ 0 32 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1609,8 +1609,8 @@ githzerai death knight~
 &+Lis definately very high in rank due to his job of guarding this unholy
 &+Land vile place.
 ~
-1140852744 1 0 24 0 0 512 -1000 S
-GZ 0 16 -1
+1140852744 1 0 0 24 0 0 512 -1000 S
+GZ 0 16 0 -1
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1625,8 +1625,8 @@ huge hellhound hell hound~
 &+Lsummoned from the fiery depths of hell, serves Raylen
 &+LXarvyn as his pet and steed.
 ~
-134219818 1 0 134217752 1 0 512 -1000 S
-A 0 1 5
+134219818 1 0 0 134217752 1 0 512 -1000 S
+A 0 1 0 5
 54 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 8 1
@@ -1641,8 +1641,8 @@ insane githzerai blood warrior~
 &+Lhis mouth.  His teeth are clenched and his muscles flexed as he
 &+Lpaces back and forth in this area, waiting for the next battle.
 ~
-1073743880 1 0 402653336 262145 67108864 0 -1000 S
-GZ 0 1048576 -1
+1073743880 1 0 0 402653336 262145 67108864 0 -1000 S
+GZ 0 1048576 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1658,8 +1658,8 @@ sinister githzerai necrolyte~
 &+Ldecrepid face.  A single bony hand makes gestures towards
 &+Lthis githzerai's fiendish shadows.
 ~
-2058 1 0 0 0 0 0 -1000 S
-GZ 0 1024 -1
+2058 1 0 0 0 0 0 0 -1000 S
+GZ 0 1024 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1673,8 +1673,8 @@ dark undead shadow~
 &+LIt wields a powerful control of psionics as it &+blashes&+L out with
 &+Lits &+Mmind&+L.
 ~
-67110922 0 0 24 0 0 0 -1000 S
-U 0 4 -1
+67110922 0 0 0 24 0 0 0 -1000 S
+U 0 4 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1687,8 +1687,8 @@ githzerai royal patrolman guard~
 &+Lis definately very high in rank due to his job of guarding the lead
 &+Lcombat hallway of all the githzerai in the universe.
 ~
-67110920 1 0 24 0 67108864 0 -1000 S
-GZ 0 32769 -1
+67110920 1 0 0 24 0 67108864 0 -1000 S
+GZ 0 32769 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1703,8 +1703,8 @@ caliginous githzerai ascetic~
 &+Lbeneath these robes as he &+cinfuses &+Lhis strength from the
 &+Lstatues within this gallery.
 ~
-1073744072 1 0 24 0 0 0 -1000 S
-GZ 0 68 -1
+1073744072 1 0 0 24 0 0 0 -1000 S
+GZ 0 68 0 -1
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1718,8 +1718,8 @@ crystalline entity~
 &+Cto be formed of the same substance that makes up the statues behind
 &+Cthese magical fields.
 ~
-1073743880 1 0 134217752 0 0 0 0 S
-BH 0 1 4
+1073743880 1 0 0 134217752 0 0 0 0 S
+BH 0 1 0 4
 47 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1734,8 +1734,8 @@ robe and a frown.  Something seems to be bothering this githzerai
 as he gazes up and down each &+Wstatue&N and let's out the same
 disagreeing sigh each time.
 ~
-2184 0 0 24 0 0 0 0 S
-GZ 0 516 -1
+2184 0 0 0 24 0 0 0 0 S
+GZ 0 516 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1752,8 +1752,8 @@ towards this magi's gesture of &+chonor&N and &+cacknowledgement&N.  The
 that he &+Wbows&N with an empty heart, only interested in pleasing his
 King, or perhaps groveling for mercy.
 ~
-2058 1 0 24 0 0 0 -1000 S
-GZ 0 512 -1
+2058 1 0 0 24 0 0 0 -1000 S
+GZ 0 512 0 -1
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 5 8 1
@@ -1766,8 +1766,8 @@ spiritual guardian dragon~
 &+Lelemental of &+Cair&+L.  This dragon's shape, however, becomes all too
 &+Lreal as it lashes out to protect the tomb.
 ~
-1073743914 1 0 24 0 0 0 0 S
-D 0 1 -1
+1073743914 1 0 0 24 0 0 0 0 S
+D 0 1 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1782,8 +1782,8 @@ marble statue guardian~
 &+Wthat the guardian's pose captured by this statue was during an
 &+Wancient time.
 ~
-2058 1 0 152 2 0 0 0 S
-OG 0 513 6
+2058 1 0 0 152 2 0 0 0 S
+OG 0 513 0 6
 57 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1798,8 +1798,8 @@ apparition nearly wraith invisible~
 &+Lupon tresspassers, however, the calm and &+mexpressionless&+L face of this
 &+Lwraith &+gtwists &+Land &+Rflares &+Lup into a &+mdiabolical &+Land &+Wfrightening &+Lvisage.
 ~
-2056 1 0 24 2 0 0 -1000 S
-UG 0 512 -1
+2056 1 0 0 24 2 0 0 -1000 S
+UG 0 512 0 -1
 40 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1814,8 +1814,8 @@ soul githzerai lord~
 &+Lmer githzerai lord searches out and destroys the intruder
 &+Lwho has awoken his slumber.
 ~
-1140852744 1 0 56 2050 0 0 -1000 S
-UG 0 32 -1
+1140852744 1 0 0 56 2050 0 0 -1000 S
+UG 0 32 0 -1
 50 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1831,8 +1831,8 @@ hulking diorite elemental~
   &+LDark swirls for eyes rest deep in the head of this elemental.
 &+LWisps of &+ggreen gas&+L escape the mouth of this fearsome beast.
 ~
-1074268232 1 0 184 2 262144 0 0 S
-EE 0 1 5
+1074268232 1 0 0 184 2 262144 0 0 S
+EE 0 1 0 5
 53 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1851,8 +1851,8 @@ spirit king kezyr-dryn kezyr~
 &+Lit is the rising soul of one of the greater githzerai, Kezyr-
 &+LDryn, father of the current king Tayr-Dryn.
 ~
-270534666 1 0 268435640 2 0 0 -1000 S
-UV 0 16777728 -1
+270534666 1 0 0 268435640 2 0 0 -1000 S
+UV 0 16777728 0 -1
 54 0 0 1250d2+450 1d1+1
 0.0.0.0 0
 8 8 1
@@ -1868,8 +1868,8 @@ ghostly guardian spirit~
 &+Lbeen one of king Kezyr-Dryn's personal bodyguards, as he guards
 &+Lthe &+cspirit&+L of the king even in the afterlife.
 ~
-335544392 1 0 24 0 0 0 -1000 S
-U 0 512 -1
+335544392 1 0 0 24 0 0 0 -1000 S
+U 0 512 0 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1883,8 +1883,8 @@ transparent githzerai~
 &+LThis githzerai is dressed like a magician, but is completely
 &+Ltransparent.
 ~
-1140852744 1 0 24 0 0 0 -1000 S
-UG 0 512 -1
+1140852744 1 0 0 24 0 0 0 -1000 S
+UG 0 512 0 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1900,8 +1900,8 @@ spiritual shadow dragon~
 &+Lmassive, one headed dragon, &+Rroars&+L with a deep and unhuman
 &+Lgrowl, and blackness spews from its mouth.
 ~
-1074792456 1 0 40 0 0 0 -1000 S
-D 0 1 -1
+1074792456 1 0 0 40 0 0 0 -1000 S
+D 0 1 0 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1916,8 +1916,8 @@ large thought eater~
 &+Lhead, and a powerful aura of &+mpsionic&+L energy pulsates around its
 &+Lentire body.
 ~
-1073743880 1 0 24 0 0 0 -1000 S
-H 0 4 -1
+1073743880 1 0 0 24 0 0 0 -1000 S
+H 0 4 0 -1
 56 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1931,8 +1931,8 @@ poisonous black slaad~
 &+Lhuge trunk of a body.  The defining characteristic of this creature,
 &+Lhowever, is the thick green &+gooze&+L dripping from its gaping maw.
 ~
-1074268168 1 0 134217752 0 0 0 -1000 S
-H 0 1 6
+1074268168 1 0 0 134217752 0 0 0 -1000 S
+H 0 1 0 6
 55 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1946,8 +1946,8 @@ pocket anti matter anti-matter~
 &+Ltorrent of &+rchaotic&+L energy, this pocket travels here unconcious and
 &+Lunstable.
 ~
-1074792456 1 0 134217752 0 0 0 -1000 S
-EA 0 4 1
+1074792456 1 0 0 134217752 0 0 0 -1000 S
+EA 0 4 0 1
 35 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -1958,8 +1958,8 @@ shadow necromancer~
 ~
    &+LTwo black eyes stare forward, as its arms reach out..
 ~
-140 1 0 404226232 0 0 0 -1000 S
-UG 0 1024 -1
+140 1 0 0 404226232 0 0 0 -1000 S
+UG 0 1024 0 -1
 49 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
