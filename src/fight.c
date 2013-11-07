@@ -4433,7 +4433,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     }
 
     // adjust damage based on zone difficulty
-    if( IS_NPC(ch) )
+    if( IS_NPC(ch) && !affected_by_spell(ch, TAG_CONJURED_PET) )
     {
       int zone_difficulty = BOUNDED(1, zone_table[world[real_room0(GET_BIRTHPLACE(ch))].zone].difficulty, 10);
       
@@ -4457,6 +4457,9 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 	}
       }
     }
+
+    if ((IS_NPC(ch) && IS_PC(victim)) && affected_by_spell(ch, TAG_CONJURED_PET))
+    dam = dam/2;
 
     // across the board spell damage multiplier
     dam = (int) ( dam * get_property("damage.spell.multiplier", 1.0) );
@@ -4635,7 +4638,7 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
       rnumber -= GET_CHAR_SKILL(ch, SKILL_DEVOTION) / 50;
       
       // Elite and greater races get a similar bonus also. Jan08 -Lucrot
-      if(IS_NPC(ch) &&
+      if(IS_NPC(ch) && !affected_by_spell(ch, TAG_CONJURED_PET) &&
          GET_LEVEL(ch) >= 51 &&
          (IS_ELITE(ch) ||
          IS_GREATER_RACE(ch)))
