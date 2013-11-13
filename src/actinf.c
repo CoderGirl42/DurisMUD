@@ -4126,6 +4126,32 @@ void do_attributes(P_char ch, char *argument, int cmd)
       else
       sprintf(buf, "&+cArmor Points: &+Y%d&+c  Reduces melee damage taken by &+Y%.1f&n&+y%%&n \n", t_val, (double)(t_val * -0.10) );
 
+/*  statupdate2013 stats - drannak */
+
+     if(IS_PC(ch))
+	{
+
+	// Crit Chance:
+  	int rollmod = 5;
+  	if (GET_C_INT(ch) < 80)
+ 	rollmod = 7;
+ 	else if (GET_C_INT(ch) > 130)
+  	rollmod = 4;
+  	int critroll = (int) (GET_C_INT(ch) / rollmod);
+	
+	// Magic Res:
+      int resmod = GET_C_WIS(ch);
+      double modifier = resmod - 120;
+      if (modifier > 75)
+      modifier = 75;
+      if (modifier < 0)
+      modifier = 0;
+     
+        sprintf(buf, "&+cMelee Critical Percentage: &+Y%d   &n&+cMax Spell Damage Reduction Percent: &+Y%d\r\n",
+            critroll,
+            (int)modifier);
+	}
+
 
 //    sprintf(buf, "&+cArmor Class: &+Y%s\n", ac_to_string(t_val));
 
