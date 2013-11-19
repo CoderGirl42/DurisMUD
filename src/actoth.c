@@ -3411,7 +3411,7 @@ void do_quaff(P_char ch, char *argument, int cmd)
        affected_by_spell(ch, SPELL_COMBAT_MIND))
           chance = (int)(chance * 1.25);
       
-    if(number(0, 99) >= chance)
+    if(number(0, 99) >= chance && GET_OBJ_VNUM(temp) != 400228)
     {
       act("Whoops!  You spilled it!", TRUE, ch, 0, 0, TO_CHAR);
       act("$n attempts to quaff $p, but spills it instead!",
@@ -3442,6 +3442,12 @@ void do_quaff(P_char ch, char *argument, int cmd)
 
   if(equipped)
     unequip_char(ch, HOLD);
+  //epic potion
+  if(GET_OBJ_VNUM(temp) == 400234)
+  {
+   ch->only.pc->epics += 75;
+   send_to_char("&+CYou suddenly feel.. epic!\r\n", ch);
+  }
 
     /* value[5] specifies special functions for epic potions */
 /*
@@ -3466,6 +3472,7 @@ void do_quaff(P_char ch, char *argument, int cmd)
       return;
     }
   }
+
 
   if(IS_SET(world[ch->in_room].room_flags, NO_MAGIC))
   {

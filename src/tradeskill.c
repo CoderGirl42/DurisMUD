@@ -2111,8 +2111,9 @@ int epic_store(P_char ch, P_char pl, int cmd, char *arg)
               "&+y|&+W 5) &+La &+Gbottle &+Lof &+GT&+go&+GR&+gM&+Ge&+gN&+GT&+ge&+GD &+gS&+Goul&+gs     &n              &+C%30d&n               &+y|\n"
               "&+y|&+W 6) &+ca &+Cbr&+Will&+Bia&+Wnt &+cset of &+rLantan &+CScientific&+L Tools&n    &n&+C%30d&n               &+y|\n"
               "&+y|&+W 7) &+Lthe &+ge&+Gy&+ge&+Gs &+Lof the &+gHi&+Ggh For&+gest&n     &n              &+C%30d&n&+y               |\n"
+              "&+y|&+W 8) &+Ca &+Wbottle &+Cof &+GPa&+gs&+Lt Exp&+gerien&+Gces&n     &n             &+C%30d&n&+y               |\n"
               "&+y=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n"
-		"\n", 125, 85, 50, 5000, 500, 150, 2500);
+		"\n", 125, 85, 50, 5000, 500, 150, 2500, 100);
       send_to_char(buffer, pl);
       return TRUE;
     }//endifnoarg
@@ -2262,7 +2263,7 @@ int epic_store(P_char ch, P_char pl, int cmd, char *arg)
 
 //400228 - forest sight
 	else if(strstr(arg, "7"))
-    {//buy6
+    {//buy7
 	//check for 2500 epics
 	int availepics = pl->only.pc->epics;
 	if (availepics < 2500)
@@ -2281,6 +2282,26 @@ int epic_store(P_char ch, P_char pl, int cmd, char *arg)
 	obj_to_char(obj, pl);
        return TRUE;
     }//endbuy7
+	else if(strstr(arg, "8"))
+    {//buy8
+	//check for 100 epics required to buy
+	int availepics = pl->only.pc->epics;
+	if (availepics < 100)
+	{
+	  send_to_char("&+WKannard&+L &+wsays '&nI'm sorry, but you do not seem to have the &+W100 epics&n available for that item.\r\n&n", pl);
+	  return TRUE;
+        }
+	//subtract 100 epics
+       P_obj obj;
+	obj = read_object(400234, VIRTUAL);
+	pl->only.pc->epics -= 100;
+       send_to_char("&+WKannard&+L &+wsays '&nAh, good choice! Quite a rare item!'\n", pl);
+	send_to_char("&+WKannard &+Lthe &+ctra&+Cvell&+cer &nmakes a strange gesture about your body, and hands you your item.\r\n&n", pl);
+       act("You now have $p!\r\n", FALSE, pl, obj, 0, TO_CHAR);
+       extract_obj(obj, FALSE);
+	obj_to_char(read_object(400234, VIRTUAL), pl);
+       return TRUE;
+    }//endbuy8
 
 
 
@@ -2645,6 +2666,9 @@ int itemvalue(P_char ch, P_obj obj)
  if (IS_SET(obj->bitvector4, AFF4_WILDMAGIC))
 	 workingvalue += 50;
 
+ if(IS_SET(obj->wear_flags, ITEM_WIELD) && (obj->value[5] != 0)) //has a proc
+   workingvalue +=40;
+
   //------- A0/A1 -------------  
  int i = 0; 
  while(i < 2)
@@ -2756,12 +2780,13 @@ int itemvalue(P_char ch, P_obj obj)
 	(obj->affected[i].location == APPLY_INT_MAX) ||
 	(obj->affected[i].location == APPLY_WIS_MAX) ||
 	(obj->affected[i].location == APPLY_CON_MAX) ||
+	(obj->affected[i].location == APPLY_CHA_MAX) ||
 	(obj->affected[i].location == APPLY_AGI_MAX) ||
 	(obj->affected[i].location == APPLY_POW_MAX) ||
 	(obj->affected[i].location == APPLY_LUCK_MAX)
 	)
    {
-    workingvalue += (obj->affected[i].modifier * 2);
+    workingvalue += (obj->affected[i].modifier * 2.5);
    }
     i++;
   }

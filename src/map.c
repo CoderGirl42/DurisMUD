@@ -825,7 +825,10 @@ int map_view_distance(P_char ch, int room)
   {
     if(has_innate(ch, INNATE_DAYBLIND))
     {
-      n = BOUNDED(0, map_e_modifier, 8);
+      if (IS_AFFECTED2(ch, AFF2_ULTRAVISION)) //drannak
+      n = BOUNDED(0, (map_e_modifier + 2), 8);
+      else
+      n = BOUNDED(0, (map_e_modifier), 8);
     }
     else
     {
@@ -849,6 +852,9 @@ int map_view_distance(P_char ch, int room)
       
       if (IS_AFFECTED2(ch, AFF2_ULTRAVISION))
         n += 1;
+
+      if (IS_AFFECTED(ch, AFF_UD_VISION))
+        n += 2;
     }
     else
     {

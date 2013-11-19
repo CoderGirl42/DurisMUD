@@ -1764,6 +1764,9 @@ This sign contains information about the items for sale in this store:
 
 &+W 7) &+Lthe &+ge&+Gy&+ge&+Gs &+Lof the &+gGre&+Gat For&+gest&n
 &+C-This item grants its wearer forest sight (the ability to see long distances) while in forest map rooms.&n
+
+&+W 8) &+Ca &+Wbottle &+Cof &+GPa&+gs&+Lt Exp&+gerien&+Gces&n
+&+C-This item grants the imbiber &+W75 epic&+C points.&n
 ~
 #400217
 bag faerie mystical loot stolen~
@@ -1953,3 +1956,11 @@ E
 mystical energies hand-sewn bag~
 &+BSeemingly crafted from magical energies, this bag contains a random item of great power!&n
 ~
+#400234
+bottle past experiences~
+&+Ca &+Wbottle &+Cof &+GPa&+gs&+Lt Exp&+gerien&+Gces&n~
+&+ga bottle of past experiences rests here&n~
+~
+10 8 1 0 15 0 8201 8404993 0 0 0
+60 0 0 0 0 0 0 0
+0 0 100

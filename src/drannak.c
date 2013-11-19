@@ -1886,8 +1886,9 @@ void enhance(P_char ch, P_obj source, P_obj material)
 
        if(val < minval)
        {
-        char buf[MAX_STRING_LENGTH];
-        sprintf(buf, "&+RYour %s &+Rrequires an item with at least an &+Witem value of: %d&n\r\n", source, minval);
+        char buf[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH];
+        sprintf(buf2, "%s", source->short_description);
+        sprintf(buf, "&+REnhancing %s requires an item with at least an &+Witem value of: %d&n\r\n", buf2, minval);
         send_to_char(buf, ch);
         return;
        }
@@ -1974,7 +1975,7 @@ void enhance(P_char ch, P_obj source, P_obj material)
 		(IS_SET(source->wear_flags, ITEM_WEAR_QUIVER) && !IS_SET(robj->wear_flags, ITEM_WEAR_QUIVER)) ||
 		(IS_SET(source->wear_flags, ITEM_WEAR_FINGER) && !IS_SET(robj->wear_flags, ITEM_WEAR_FINGER)) ||
 		(IS_SET(source->wear_flags, ITEM_WEAR_WRIST) && !IS_SET(robj->wear_flags, ITEM_WEAR_WRIST)) ||
-		(IS_SET(source->wear_flags, ITEM_WEAR_NOSE) && !IS_SET(robj->wear_flags, ITEM_WEAR_NOSE)) ||
+		(IS_SET(source->wear_flags, ITEM_GUILD_INSIGNIA) && !IS_SET(robj->wear_flags, ITEM_GUILD_INSIGNIA)) ||
 		(IS_SET(source->wear_flags, ITEM_WEAR_TAIL) && !IS_SET(robj->wear_flags, ITEM_WEAR_TAIL)) ||
 		(IS_SET(source->wear_flags, ITEM_WEAR_NECK) && !IS_SET(robj->wear_flags, ITEM_WEAR_NECK)) ||
 		(IS_SET(source->wear_flags, ITEM_WEAR_WAIST) && !IS_SET(robj->wear_flags, ITEM_WEAR_WAIST)) ||
