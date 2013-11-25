@@ -2089,7 +2089,7 @@ void do_enhance(P_char ch, char *argument, int cmd)
  enhance(ch, source, material);
 }
 
-int get_progress(P_char ch, int ach, long required)
+int get_progress(P_char ch, int ach, uint required)
 {
   int prog = 0, percentage = 0;
   struct affected_type *findaf, *next_af;  //initialize affects
