@@ -2283,11 +2283,20 @@ void do_open(P_char ch, char *argument, int cmd)
 		  return;
 		}
         if(obj_index[obj->R_num].virtual_number == 400235 || obj_index[obj->R_num].virtual_number == 400217)
+        {
 	 send_to_char("&+mAs you open the &+Mbag&+m, a magical mist &+rex&+Rpl&+Mod&+Wes&+m covering everything!\r\n", ch);
+        act("&+mAs $n opens the &+Mbag&+m, a magical mist &+rex&+Rpl&+Mod&+Wes&+m covering everything!", FALSE, temp_ch, obj, 0, TO_ROOM);
+	}
         else if(obj_index[obj->R_num].virtual_number == 400233)
+        {
 	 send_to_char("&+mAs you open the &+Ychest&+m, a magical mist &+rex&+Rpl&+Mod&+Wes&+m covering everything!\r\n", ch);
+        act("&+mAs $n opens the &+Ychest&+m, a magical mist &+rex&+Rpl&+Mod&+Wes&+m covering everything!", FALSE, temp_ch, obj, 0, TO_ROOM);
+        }
 	else //turkey gut
+        {
 	 send_to_char("&+rYou thrust your &+yhand &+rdeep into the slimy &+Lgut&+r, covering everything in &+Rblood&+r!\r\n", ch);
+        act("&+r$n&+r thrusts their &+yhand &+rdeep into the slimy &+Lgut&+r, covering everything in &+Rblood&+r!", FALSE, temp_ch, obj, 0, TO_ROOM);
+        }
 	 char buf[MAX_STRING_LENGTH];
 	 P_obj robj;
 	 long robjint;
@@ -2349,9 +2358,15 @@ void do_open(P_char ch, char *argument, int cmd)
 	
 
        if(obj_index[obj->R_num].virtual_number == 400232)
+       {
       	act("&+rAfter some &+Rmessy &+rsearching, you finally find &n$p&+m!\r\n", FALSE, ch, robj, 0, TO_CHAR);
+       act("&+rAfter some &+Rmessy &+rsearching, $n finally finds &n$p&+m!\r\n", FALSE, ch, robj, 0, TO_ROOM);
+       }
        else
+       {
       	act("&+mWhen at last it clears the &+Mbag&+m is gone, and all that remains is &n$p&+m!\r\n", FALSE, ch, robj, 0, TO_CHAR);
+	act("&+mWhen at last it clears the &+Mbag&+m is gone, and all that remains is &n$p&+m!\r\n", FALSE, ch, robj, 0, TO_ROOM);
+       }
 	obj_to_char(robj, ch);     
 	obj_from_char(obj, TRUE);
        extract_obj(obj, FALSE);
