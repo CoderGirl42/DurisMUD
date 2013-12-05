@@ -6577,7 +6577,7 @@ void do_retreat(P_char ch, char *arg, int cmd)
         {
           // Mirror image stuff broken, as is MoveAllAttackers
           //  So now, we'll just let them retreat
-          //if(newvict = make_mirror(ch)) {
+          //if(newvict = make_mirror(ch))
           StopAllAttackers(ch);
           //MoveAllAttackers(ch,newvict);
           stop_fighting(ch);

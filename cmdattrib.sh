@@ -46,6 +46,9 @@ rm -f command_attributes.txt
 FUNCTIONNAME="void do_apply_poison"
 parsefile
 
+FUNCTIONNAME="void do_appraise"
+parsefile
+
 FUNCTIONNAME="void armlock_check"
 parsefile
 
@@ -83,6 +86,15 @@ FUNCTIONNAME="void branch"
 parsefile
 
 FUNCTIONNAME="void buck"
+parsefile
+
+FUNCTIONNAME="void do_capture"
+parsefile
+
+FUNCTIONNAME="void do_carve"
+parsefile
+
+FUNCTIONNAME="void do_chi"
 parsefile
 
 FUNCTIONNAME="void event_combination"
@@ -172,6 +184,9 @@ parsefile
 FUNCTIONNAME="void do_infuriate"
 parsefile
 
+FUNCTIONNAME="void chant_jin_touch"
+parsefile
+
 FUNCTIONNAME="void kick"
 parsefile
 
@@ -193,10 +208,16 @@ parsefile
 FUNCTIONNAME="void do_murder"
 parsefile
 
+FUNCTIONNAME="void do_ogre_roar"
+parsefile
+
 FUNCTIONNAME="void parlay"
 parsefile
 
 FUNCTIONNAME="void do_quaff"
+parsefile
+
+FUNCTIONNAME="void chant_quivering_palm"
 parsefile
 
 FUNCTIONNAME="void do_rage"
@@ -306,49 +327,6 @@ parsefile
 
 exit
 
-new_skills.c:void do_summon_mount(P_char ch, char *arg, int cmd)
-new_skills.c:void do_summon_warg(P_char ch, char *arg, int cmd)
-new_skills.c:void do_summon_orc(P_char ch, char *arg, int cmd)
-new_skills.c:void do_ogre_roar(P_char ch, char *argument, int cmd)
-new_skills.c:void do_carve(struct char_data *ch, char *argument, int cmd)
-new_skills.c:void do_bind(P_char ch, char *arg, int cmd)
-new_skills.c:void do_unbind(P_char ch, char *arg, int cmd)
-new_skills.c:void do_capture(P_char ch, char *argument, int cmd)
-new_skills.c:void do_appraise(P_char ch, char *argument, int cmd)
-new_skills.c:void do_chi(P_char ch, char *argument, int cmd)
-new_skills.c:void do_lotus(P_char ch, char *argument, int cmd)
-new_skills.c:void do_true_strike(P_char ch, char *argument, int cmd)
-old_guildhalls.c:void do_build_secret(P_house house, P_char ch);
-old_guildhalls.c:void do_construct_guild(P_char, int);
-old_guildhalls.c:void do_delete_room(P_house house, P_char ch, char *arg);
-old_guildhalls.c:void do_construct(P_char ch, char *arg, int cmd)
-old_guildhalls.c:void do_hcontrol(P_char ch, char *arg, int cmd)
-old_guildhalls.c:void do_house(P_char ch, char *arg, int cmd)
-old_guildhalls.c:void do_delete_room(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_build_window(P_house house, P_char ch)
-old_guildhalls.c:void do_build_movedoor(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_build_heal(P_house house, P_char ch)
-old_guildhalls.c:void do_build_secret(P_house house, P_char ch)
-old_guildhalls.c:void do_build_holy(P_house house, P_char ch)
-old_guildhalls.c:void do_build_unholy(P_house house, P_char ch)
-old_guildhalls.c:void do_build_mouth(P_house house, P_char ch)
-old_guildhalls.c:void do_build_teleporter(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_build_shop(P_house house, P_char ch)
-old_guildhalls.c:void do_build_chest(P_house house, P_char ch)
-old_guildhalls.c:void do_build_fountain(P_house house, P_char ch)
-old_guildhalls.c:void do_build_inn(P_house house, P_char ch)
-old_guildhalls.c:void do_build_golem(P_house house, P_char ch, int type)
-old_guildhalls.c:void do_describe_room(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_name_room(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_construct_room(P_house house, P_char ch, char *arg)
-old_guildhalls.c:void do_show_q(P_char ch)
-old_guildhalls.c:void do_sack(P_char ch, char *arg, int cmd)
-old_guildhalls.c:void do_construct_guild(P_char ch, int type)
-old_guildhalls.c:void do_stathouse(P_char ch, char *argument, int cmd)
-outposts.c:void do_outpost(P_char ch, char *arg, int cmd) 
-outposts.c:void do_outpost(P_char ch, char *arg, int cmd)
-paladins.c:void do_aura(P_char ch, int aura)
-properties.c:void do_properties(P_char ch, char *args, int cmd)
 psionics.c:void do_drain(P_char ch, char *arg, int cmd)
 psionics.c:void do_gith_neckbite(P_char ch, char *arg, int cmd)
 psionics.c:void do_absorbe(P_char ch, char *arg, int cmd)
@@ -404,7 +382,5 @@ trap.c:void do_trapremove(P_char ch, char *argument, int cmd)
 trap.c:void do_trapstat(P_char ch, char *argument, int cmd)
 trap.c:void do_traplist(P_char ch, char *argument, int cmd)
 trap.c:void do_trapset(P_char ch, char *argument, int cmd)
-trophy.c:void do_trophy(P_char ch, char *arg, int cmd)
 utility.c:void do_introduce(P_char ch, char *arg, int level)
 utility.c:void do_testdesc(P_char ch, char *arg, int level)
-world_quest.c:void do_quest(P_char ch, char *args, int cmd)
