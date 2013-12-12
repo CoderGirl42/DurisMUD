@@ -10213,7 +10213,7 @@ void load_towns()
         (*town)->zone = &(zone_table[i]);
 
         fgets( line, sizeof line, town_file );
-        (*town)->level = atoi( line );
+        (*town)->resources = atoi( line );
         fgets( line, sizeof line, town_file );
         (*town)->defense = atoi( line );
         fgets( line, sizeof line, town_file );
@@ -10258,7 +10258,7 @@ void save_towns()
   {
     // Save the info.
     fprintf(town_file, "%s\n", town->zone->filename);
-    fprintf(town_file, "%d\n", town->level);
+    fprintf(town_file, "%d\n", town->resources);
     fprintf(town_file, "%d\n", town->defense);
     fprintf(town_file, "%d\n", town->offense);    
   }
@@ -10277,11 +10277,11 @@ void list_town( P_char ch, P_town town )
 
   if( town->zone )
     // Show town name: level, off, def.
-    sprintf( buf, "Town '%s': Level %d, Offense %d, Defense %d.\n",
-      town->zone->name, town->level, town->offense, town->defense );
+    sprintf( buf, "Town '%s': Resources %d, Offense %d, Defense %d.\n",
+      town->zone->name, town->resources, town->offense, town->defense );
   else
     sprintf( buf, "Town 'Unknown': Level %d, Offense %d, Defense %d.\n",
-      town->level, town->offense, town->defense );
+      town->resources, town->offense, town->defense );
   send_to_char( buf, ch );
 }
 
@@ -10303,7 +10303,7 @@ void list_towns( P_char ch )
   }
 }
 
-void add_trooplevel(P_char ch, P_town town, int amount )
+void add_troopresources(P_char ch, P_town town, int amount )
 {
   char buf[MAX_STRING_LENGTH];
 
@@ -10312,7 +10312,9 @@ void add_trooplevel(P_char ch, P_town town, int amount )
   send_to_char( buf, ch );
 */
 
-  town->level += amount;
+  town->resources += amount;
+  if( town->resources < 0 )
+    town->resources = 0;
   list_town( ch, town );
   // Save the town info.
   save_towns();
@@ -10321,6 +10323,8 @@ void add_trooplevel(P_char ch, P_town town, int amount )
 void add_troopdefense(P_char ch, P_town town, int amount)
 {
   town->defense += amount;
+  if( town->defense < 0 )
+    town->defense = 0;
   list_town( ch, town );
   // Save the town info.
   save_towns();
@@ -10329,6 +10333,8 @@ void add_troopdefense(P_char ch, P_town town, int amount)
 void add_troopoffense(P_char ch, P_town town, int amount)
 {
   town->offense += amount;
+  if( town->offense < 0 )
+    town->offense = 0;
   list_town( ch, town );
   // Save the town info.
   save_towns();
@@ -10362,7 +10368,7 @@ void do_add(P_char ch, char *arg, int cmd)
   if(!*arg1 )
   {
     send_to_char("This command is to add to troops in a town.\n", ch);
-    send_to_char("Syntax: add [level|defense|offense] <town> <amount>.\n", ch);
+    send_to_char("Syntax: add [resources|defense|offense] <town> <amount>.\n", ch);
     send_to_char("     or add list.\n", ch);
     return;
   }
@@ -10372,14 +10378,14 @@ void do_add(P_char ch, char *arg, int cmd)
   {
     list_towns( ch );
   }
-  else if( is_abbrev(arg1, "level") )
+  else if( is_abbrev(arg1, "resources") )
   {
     argument_interpreter(rest, arg1, arg2);
     amount = atoi( arg2 );
     town = add_findtown( arg1 );
     if( amount == 0)
     {
-      send_to_char("Syntax: add level <town> <amount>.\n", ch);
+      send_to_char("Syntax: add resources <town> <amount>.\n", ch);
       return;
     }
     if( !town )
@@ -10389,7 +10395,7 @@ void do_add(P_char ch, char *arg, int cmd)
       send_to_char(  "'.\n", ch );
       return;
     }
-    add_trooplevel( ch, town, amount );
+    add_troopresources( ch, town, amount );
   }
   else if( is_abbrev(arg1, "defense") )
   {
@@ -10431,7 +10437,7 @@ void do_add(P_char ch, char *arg, int cmd)
   }
   else
   {
-    send_to_char("Syntax: add [level|defense|offense] <town> <amount>.\n", ch);
+    send_to_char("Syntax: add [resources|defense|offense] <town> <amount>.\n", ch);
     send_to_char("     or add list.\n", ch);
     return;
   }

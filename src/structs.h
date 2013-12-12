@@ -662,7 +662,7 @@ struct zone_data {
 };
 
 struct town {
-  int level;
+  int resources;
   int defense;
   int offense;
 
