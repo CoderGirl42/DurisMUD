@@ -72,3 +72,28 @@ a 0 1 1 3
 45 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
+#400006
+elf christmas~
+&+Wa &+gC&+rh&+Wr&+gi&+rs&+Wt&+gm&+ra&+Ws &+Gelf&n~
+&+WA &+Gf&+We&+Rs&+Gt&+Wi&+Rv&+Ge&+Wl&+Ry &+Wdressed &+Gelf &+Wstands here making a note about your &+ractions&+W!&n
+~
+Summoned here by your &+rfoul&n deed, this elf is
+apparently making a note for Santa Claws.
+~
+1074137160 0 0 0 402653192 0 0 0 -1000 S
+UG 0 1 1 3
+35 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1
+#400007
+santa claws~
+&+rSanta C&+RL&+ra&+RW&+rS&n~
+&+WA &+rH&+Rorri&+rD &+Wlooking &+Lcreature&+W dressed in &+rblood &+Wsoaked &+rSanta &+Wclothes &+Lsnarls &+Wat you!&n
+~
+This... is not the fat, jolly man you were hoping for!
+~
+1074137160 0 0 0 940048536 0 0 0 -1000 S
+x 0 48 1 7
+61 0 0 1d1+1 1d1+1
+0.0.0.0 0
+8 8 1

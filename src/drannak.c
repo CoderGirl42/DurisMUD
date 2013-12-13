@@ -2142,3 +2142,22 @@ void thanksgiving_proc(P_char ch)
  obj_to_char(read_object(400232, VIRTUAL), mob);
  char_to_room(mob, ch->in_room, 0);
 }
+
+void christmas_proc(P_char ch)
+{
+  P_char mob;
+  if(!ch)
+  return;
+  char buff[MAX_STRING_LENGTH];
+  sprintf(buff, " %s 86", GET_NAME(ch));
+  act("&+WAs the last bit of &+rblood&+W drips onto the ground, a &+Gf&+We&+Rs&+Gt&+Wi&+Rv&+Ge&+Wl&+Ry &+rdressed &+Gelf &+Wsuddenly appears in a &+Lpuff &+Wof smoke....&n\r\n"
+       "&n'Ah ha! Being quite &+RNaughty&n this year aren't we $n? Wait until &+rSanta Claws&n hears about this!' &+Whe cackles as he reaches beneath his &+Gc&+Ro&+Wa&+Gt&+W and pulls out a small parchment and quill.\r\n", TRUE, ch, 0, 0, TO_CHAR);
+  act("&+WAs the last bit of &+rblood&+W drips onto the ground, a &+Gf&+We&+Rs&+Gt&+Wi&+Rv&+Ge&+Wl&+Ry &+rdressed &+Gelf &+Wsuddenly appears in a &+Lpuff &+Wof smoke....&n\r\n"
+       "&n'Ah ha! Being quite &+RNaughty&n this year aren't we $n? Wait until &+rSanta Claws&n hears about this!' &+Whe cackles as he reaches beneath his &+Gc&+Ro&+Wa&+Gt&+W and pulls out a small parchment and quill.\r\n", TRUE, ch, 0, 0, TO_ROOM);
+  //do_givepet(ch, buff, CMD_GIVEPET);
+  mob = read_mobile(400006, VIRTUAL);
+  if(!mob)
+  return;
+ obj_to_char(read_object(400232, VIRTUAL), mob);
+ char_to_room(mob, ch->in_room, 0);
+}
