@@ -2158,6 +2158,6 @@ void christmas_proc(P_char ch)
   mob = read_mobile(400006, VIRTUAL);
   if(!mob)
   return;
- obj_to_char(read_object(400232, VIRTUAL), mob);
+ obj_to_char(read_object(400217, VIRTUAL), mob);
  char_to_room(mob, ch->in_room, 0);
 }
