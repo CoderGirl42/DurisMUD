@@ -811,6 +811,7 @@ void enhance(P_char, P_obj, P_obj);
 void do_enhance(P_char ch, char *argument, int cmd);
 int get_progress(P_char ch, int ach, uint required);
 void thanksgiving_proc(P_char ch);
+void christmas_proc(P_char ch);
 
 
 /* editor.c */

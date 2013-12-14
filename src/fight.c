@@ -2212,6 +2212,12 @@ void die(P_char ch, P_char killer)
       (number(0, 100) < get_property("thanksgiving.turkey.chance", 5.000)))
     thanksgiving_proc(ch);
      }
+   if(IS_NPC(ch) && GET_LEVEL(ch) > 35)
+     { if (get_property("christmas", 0.000) &&
+      (number(0, 100) < get_property("christmas.elf.chance", 5.000)))
+    christmas_proc(ch);
+     }
+
   }
 
  /* if(  (IS_PC(ch)) &&
