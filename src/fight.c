@@ -8892,21 +8892,42 @@ int calculate_attacks(P_char ch, int attacks[])
   {
   if(GET_C_DEX(ch) >= 155)
     {
-     send_to_char("&nYour &+gsuper&+Gbly dext&+gerous movements allow you to throttle your enemy with attacks!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
     }
   else if(GET_C_DEX(ch) >=140)
     {
-     send_to_char("&nYour &+Gimproved &+gdexterity&n allows you to swiftly attack your enemy!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
     }
   else if(GET_C_DEX(ch) >=125)
     {
-     send_to_char("&nYour heightened &+gdexterity&n allows you to easily attack your enemy!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
     }
    }
 
@@ -8914,14 +8935,24 @@ int calculate_attacks(P_char ch, int attacks[])
   {
   if(GET_C_DEX(ch) >= 155)
     {
-     send_to_char("&nYour &+gimproved &+Gdexterity&n allows you to mitigate some of the &+Lweight&n of this weapon and attack!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
     }
   else if(GET_C_DEX(ch) >=140)
     {
-     send_to_char("&nThis weapon feels &+Wslightly&n heavy in your hands, but still allows you to move &+gquickly&n and attack!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
 
     }
    }
@@ -8930,8 +8961,11 @@ int calculate_attacks(P_char ch, int attacks[])
   {
   if(GET_C_DEX(ch) >= 155)
     {
-     send_to_char("&nAlthough quite &+gdexterous&n, the weight of this &+Lweapon&n makes it harder to &+Lswing!&n\n\r", ch);
+     if(number(1, GET_C_DEX(ch)) > 60)
+     {
+     send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
      ADD_ATTACK(PRIMARY_WEAPON);
+     }
     }
    }
 

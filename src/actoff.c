@@ -4852,8 +4852,8 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
     spinal = TRUE;
   }
 
-  //no longer else if - can spinal as well as critical stab.
-  if(GET_CHAR_SKILL(ch, SKILL_CRITICAL_STAB) &&
+  //else if - can not spinal as well as critical stab. (drannak 1/7/14)
+  else if(GET_CHAR_SKILL(ch, SKILL_CRITICAL_STAB) &&
          (notch_skill(ch, SKILL_CRITICAL_STAB, get_property("skill.notch.offensive", 25)) ||
          (critical_stab * GET_CHAR_SKILL(ch, SKILL_CRITICAL_STAB)) > number(1, 100)))
   {
@@ -4957,7 +4957,7 @@ bool backstab(P_char ch, P_char victim)
        !IS_ALIVE(victim))
     {
       send_to_char("Backstab who?\n", ch);
-      //CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
+      CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
       return FALSE;
     }
   }

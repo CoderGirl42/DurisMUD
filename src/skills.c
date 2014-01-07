@@ -4124,7 +4124,7 @@ SPELL_ADD(CLASS_NONE, 1);
   SPELL_CREATE_MSG("vampiric trance", SPELL_VAMPIRE, PULSE_SPELLCAST * 2,
                 TAR_SELF_ONLY | TAR_NOCOMBAT,
                 spell_vampire, "Color fades slowly into your face.");
-  SPELL_ADD(CLASS_NECROMANCER, 10);
+ // SPELL_ADD(CLASS_NECROMANCER, 10);
 
   SPELL_CREATE_MSG("divine blessing", SPELL_DIVINE_BLESSING, PULSE_SPELLCAST * 3,
                 TAR_SELF_ONLY,
@@ -5484,8 +5484,8 @@ void update_racial_skills(P_char ch)
 			break;
 			case RACE_THRIKREEN:
 			//assign thri-kreen racial epic skills
-			ch->only.pc->skills[SKILL_SHIELDLESS_BASH].taught = BOUNDED(10, GET_LEVEL(ch) *2, 100);
-			ch->only.pc->skills[SKILL_SHIELDLESS_BASH].learned = BOUNDED(10, GET_LEVEL(ch) *2, 100);
+			//ch->only.pc->skills[SKILL_SHIELDLESS_BASH].taught = BOUNDED(10, GET_LEVEL(ch) *2, 100);
+			//ch->only.pc->skills[SKILL_SHIELDLESS_BASH].learned = BOUNDED(10, GET_LEVEL(ch) *2, 100);
 			ch->only.pc->skills[SKILL_IMPROVED_ENDURANCE].taught = BOUNDED(10, GET_LEVEL(ch) *2, 100);
 			ch->only.pc->skills[SKILL_IMPROVED_ENDURANCE].learned = BOUNDED(10, GET_LEVEL(ch) *2, 100);
 			do_save_silent(ch, 1); // racial skills require a save.
