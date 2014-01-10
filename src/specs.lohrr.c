@@ -1,4 +1,5 @@
 #include "damage.h"
+#include "objmisc.h"
 #include "structs.h"
 #include "graph.h"
 #include "db.h"
@@ -17,7 +18,8 @@ int adjacent_room_nesw(P_char ch, int num_rooms );
 P_ship leviathan_find_ship( P_char leviathan, int room, int num_rooms );
 void explode_ammo( P_char ch, P_obj ammo );
 bool is_siege( P_obj weapon );
-void damage_siege( P_obj siege, int damage, P_obj ammo );
+bool is_loading( P_obj siege );
+void damage_siege( P_obj siege, P_obj ammo );
 P_obj get_siege_room( P_char ch, char *arg );
 
 // This is an old proc for Lohrr's eq..
@@ -306,6 +308,7 @@ void event_load_engine(P_char ch, P_char victim, P_obj obj, void *data)
 {
   act( "You finish loading $p.", FALSE, ch, obj, NULL, TO_CHAR );
   act( "$n finishes loading $p.", TRUE, ch, obj, 0, TO_ROOM);
+  obj->value[3]--;
   obj->value[2] = 1;
 }
 
@@ -396,6 +399,10 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
       return FALSE;
     if( obj->value[2] > 0 )
       act( "$p is already loaded.", FALSE, ch, obj, NULL, TO_CHAR );
+    else if( obj->value[3] <= 0 )
+      act( "$p has no more ammo.", FALSE, ch, obj, NULL, TO_CHAR );
+    else if( is_loading( obj ) )
+      act( "$p is already being reloaded.", FALSE, ch, obj, NULL, TO_CHAR );
     else
     {
       act( "You begin loading $p.", FALSE, ch, obj, NULL, TO_CHAR );
@@ -456,7 +463,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
           return FALSE;
         }
         // Load exploded ammo into the room.
-        ammo = read_object(real_object(178), REAL);
+        ammo = read_object(real_object(obj->value[0]), REAL);
         if( !ammo )
         {
           logit(LOG_DEBUG, "ballista: couldn't load ammo.");
@@ -484,7 +491,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
             sprintf( buf, "%s slams into $p", ammo->short_description );
             act( buf, TRUE, NULL, target, 0, TO_ROOM );
             act( buf, TRUE, ch, target, 0, TO_CHAR );
-            damage_siege( target, 50, ammo );
+            damage_siege( target, ammo );
             ch->in_room = ch_room;
             return TRUE;
           }
@@ -520,7 +527,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
           sprintf( buf, "%s slams into $p", ammo->short_description );
           act( buf, TRUE, NULL, target, 0, TO_ROOM );
           act( buf, TRUE, ch, target, 0, TO_CHAR );
-          damage_siege( target, 50, ammo );
+          damage_siege( target, ammo );
         }
         // If victim in final room...
         else if( (vict = get_char_room_vis(ch, arg2)) != NULL )
@@ -532,7 +539,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
         else
           act( "$p slams into the ground.", TRUE, NULL, ammo, NULL, TO_ROOM );
         if( vict )
-          damage(ch, vict, 50, MSG_CRUSH );
+          damage(ch, vict, dice( ammo->value[0], ammo->value[1] * 3 ), TYPE_UNDEFINED );
         ch->in_room = ch_room;
         return TRUE;
       }
@@ -616,7 +623,7 @@ int battering_ram( P_obj obj, P_char ch, int cmd, char *arg )
         sprintf( buf, "$n thrusts %s at $p!", obj->short_description );
         act( buf, FALSE, ch, target, NULL, TO_ROOM );
 
-        damage_siege( target, 50, obj );
+        damage_siege( target, obj );
       }
       else
         act( "Thrust $p at what?", FALSE, ch, obj, NULL, TO_CHAR );
@@ -688,6 +695,10 @@ int catapult( P_obj obj, P_char ch, int cmd, char *arg )
       return FALSE;
     if( obj->value[2] > 0 )
       act( "$p is already loaded.", FALSE, ch, obj, NULL, TO_CHAR );
+    else if( obj->value[3] <= 0 )
+      act( "$p has no more ammo.", FALSE, ch, obj, NULL, TO_CHAR );
+    else if( is_loading( obj ) )
+      act( "$p is already being reloaded.", FALSE, ch, obj, NULL, TO_CHAR );
     else
     {
       act( "You begin loading $p.", FALSE, ch, obj, NULL, TO_CHAR );
@@ -746,7 +757,7 @@ int catapult( P_obj obj, P_char ch, int cmd, char *arg )
           return FALSE;
         }
         // Load exploded ammo into the room.
-        ammo = read_object(real_object(179), REAL);
+        ammo = read_object(real_object(obj->value[0]), REAL);
         obj->value[2] = 0;
         obj_to_room( ammo, in_room );
         // Fire the weapon 4x spaces to the dir. Hits walls.
@@ -818,7 +829,7 @@ void explode_ammo( P_char ch, P_obj ammo )
   for( vict = world[ammo->loc.room].people;vict;vict = next_vict )
   {
     next_vict = vict->next_in_room;
-    damage(ch, vict, 50, TYPE_UNDEFINED );
+    damage(ch, vict, dice( ammo->value[0], ammo->value[1] * 3 ), TYPE_UNDEFINED );
   }
 
   // Splat other siege weapons.
@@ -826,7 +837,7 @@ void explode_ammo( P_char ch, P_obj ammo )
   {
     next_obj = obj->next_content;
     if( is_siege( obj ) )
-      damage_siege( obj, 50, ammo );
+      damage_siege( obj, ammo );
   }
 }
 
@@ -836,25 +847,117 @@ bool is_siege( P_obj weapon )
   if( !weapon )
     return FALSE;
 
-  if( weapon->R_num < 0 || weapon->R_num > top_of_objt )
-    return FALSE;
-
-  switch( obj_index[weapon->R_num].virtual_number )
-  {
-  case 461:
-  case 462:
-  case 463:
+  // If the object proc is ballista/battering_ram/catapult..
+  if(  obj_index[weapon->R_num].func.obj == ballista
+    || obj_index[weapon->R_num].func.obj == battering_ram
+    || obj_index[weapon->R_num].func.obj == catapult )
     return TRUE;
-  default:
-    return FALSE;
-  }
+
+  return FALSE;
 }
 
-void damage_siege( P_obj siege, int damage, P_obj ammo )
+void damage_siege( P_obj siege, P_obj ammo )
 {
   char  buf[MAX_STRING_LENGTH];
   bool  destroy = FALSE;
+  int   damage;
   P_obj scraps;
+
+  damage = dice( ammo->value[0], ammo->value[1] );
+
+  switch( siege->material )
+  {
+  default:
+  break;
+  case MAT_NONSUBSTANTIAL:
+  case MAT_LIQUID:
+  case MAT_WAX:
+    damage *= 10;
+  break;
+  case MAT_PAPER:
+  case MAT_PARCHMENT:
+  case MAT_LEAVES:
+  case MAT_FLESH:
+  case MAT_RUBBER:
+  case MAT_FEATHER:
+    damage *= 5;
+  break;
+  case MAT_CLOTH:
+    damage = ( damage * 10 ) / 3;
+  break;
+  case MAT_BAMBOO:
+  case MAT_REEDS:
+  case MAT_HEMP:
+  case MAT_EGGSHELL:
+  case MAT_BARK:
+  case MAT_GENERICFOOD:
+    damage = ( damage * 5 ) / 2;
+  break;
+  case MAT_SOFTWOOD:
+  case MAT_HARDWOOD:
+  case MAT_PEARL:
+    damage = ( damage * 9 ) / 4;
+  break;
+  case MAT_SILICON:
+  case MAT_CERAMIC:
+    damage = ( damage * 5 ) / 3;
+  break;
+  case MAT_HIDE:
+  case MAT_LEATHER:
+  case MAT_CURED_LEATHER:
+    damage = ( damage * 7 ) / 3;
+  break;
+  case MAT_CRYSTAL:
+  case MAT_BONE:
+    damage = ( damage * 7 ) / 3;
+  break;
+  case MAT_GEM:
+  case MAT_STONE:
+  case MAT_GRANITE:
+  case MAT_MARBLE:
+  case MAT_LIMESTONE:
+    damage = ( damage * 85 ) / 100;
+  break;
+  case MAT_IRON:
+  case MAT_STEEL:
+    damage = ( damage * 75 ) / 100;
+  break;
+  case MAT_BRASS:
+  case MAT_MITHRIL:
+    damage = ( damage * 70 ) / 100;
+  break;
+  case MAT_GLASSTEEL:
+  case MAT_ADAMANTIUM:
+    damage = ( damage * 65 ) / 100;
+  break;
+  case MAT_BRONZE:
+  case MAT_COPPER:
+  case MAT_SILVER:
+  case MAT_ELECTRUM:
+  case MAT_GOLD:
+  case MAT_PLATINUM:
+  case MAT_RUBY:
+  case MAT_EMERALD:
+  case MAT_SAPPHIRE:
+  case MAT_IVORY:
+    damage = ( damage * 89 ) / 100;
+  break;
+  case MAT_DRAGONSCALE:
+  case MAT_DIAMOND:
+    damage = ( damage * 67 ) / 100;
+  break;
+  case MAT_OBSIDIAN:
+    damage = ( damage * 63 ) / 100;
+  break;
+  case MAT_CHITINOUS:
+  case MAT_REPTILESCALE:
+    damage = ( damage * 95 ) / 100;
+  break;
+  }
+
+  // This should never happen, but just to make sure we don't heal target...
+  if( damage < 1 )
+    damage = 1;
 
   siege->condition -= damage;
   if( siege->condition <= 0 )
@@ -869,7 +972,10 @@ void damage_siege( P_obj siege, int damage, P_obj ammo )
     act("$p collapses into scraps.", TRUE, NULL, siege, 0, TO_ROOM);
     scraps = read_object(9, VIRTUAL);
     if( !scraps )
+    {
+      extract_obj( siege, TRUE );
       return;
+    }
     sprintf(buf, "Scraps from %s&n lie in a pile here.",
       siege->short_description);
     scraps->description = str_dup(buf);
@@ -880,6 +986,7 @@ void damage_siege( P_obj siege, int damage, P_obj ammo )
     scraps->str_mask = STRUNG_DESC1 | STRUNG_DESC2 | STRUNG_KEYS;
     set_obj_affected(scraps, 400, TAG_OBJ_DECAY, 0);
     obj_to_room(scraps, siege->loc.room);
+
     extract_obj( siege, TRUE );
   }
 }
@@ -903,4 +1010,13 @@ P_obj get_siege_room( P_char ch, char *arg )
   }
 
   return NULL;
+}
+
+// See if someone already started a reload event.
+bool is_loading( P_obj siege )
+{
+  for( P_nevent e = siege->nevents; e; e = e->next )
+    if( e->func == event_load_engine )
+      return TRUE;
+  return FALSE;
 }
