@@ -2465,9 +2465,9 @@ void die(P_char ch, P_char killer)
      IS_NPC(ch))
   {
     //world quest hook
-    if((IS_PC(killer) || IS_PC_PET(killer)) && killer->in_room >= 0)
+    if((IS_PC(killer) || IS_PC_PET(killer)) && killer->in_room >= 0 && !affected_by_spell(ch, TAG_CONJURED_PET))
     {
-      if (!IS_PC_PET(ch))
+      if (!IS_PC_PET(ch) && !affected_by_spell(ch, TAG_CONJURED_PET))
       {
 	check_boon_completion(killer, ch, 0, BOPT_MOB);
 	check_boon_completion(killer, ch, 0, BOPT_RACE);
