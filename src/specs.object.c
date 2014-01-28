@@ -5920,6 +5920,8 @@ int banana(P_obj obj, P_char ch, int cmd, char *arg)
           0, TO_ROOM);
       if (ch->specials.fighting)
         stop_fighting(ch);
+      if( IS_DESTROYING(ch) )
+        stop_destroying(ch);
       KnockOut(ch, 6);
       SET_POS(ch, GET_STAT(ch) + POS_PRONE);
 /*
@@ -11260,6 +11262,8 @@ int imprison_armor(P_obj obj, P_char ch, int cmd, char *arg)
 
   if (IS_FIGHTING(victim))
     stop_fighting(victim);
+  if( IS_DESTROYING(victim) )
+    stop_destroying(victim);
 
   return TRUE;
 
@@ -14240,6 +14244,8 @@ int mentality_mace(P_obj obj, P_char ch, int cmd, char *arg)
         if( tch && IS_NPC(tch) && GET_VNUM(tch) == 250 )
         {
           stop_fighting(tch);
+          if( IS_DESTROYING(tch) )
+            stop_destroying(tch);
           StopAllAttackers(tch);
           extract_char(tch);
         }

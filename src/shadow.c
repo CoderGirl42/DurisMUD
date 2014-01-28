@@ -652,132 +652,148 @@ void event_grapple(P_char ch, P_char victim, P_obj obj, void *data)
 
 }
 
-void do_grapple(P_char ch, char *arg, int cmd) {
+void do_grapple(P_char ch, char *arg, int cmd)
+{
 
-    P_char vict = NULL;
-      P_char kala, kala2;
+  P_char vict = NULL;
+  P_char kala, kala2;
+  int i, skl;
+  struct affected_type af;
+  int door, target_room;
+  int percent_chance;
 
-        int i, skl;
-          struct affected_type af;
-            int door, target_room;
-              int percent_chance;
+  if (!IS_FIGHTING(ch))
+  {
+    vict = ParseTarget(ch, arg);
+    if (!vict)
+    {
+      send_to_char("Who do you plan to grapple?\r\n", ch);
+      return;
+    }
+  }
+  else
+  {
+    vict = ch->specials.fighting;
+    if (!vict)
+    {
+      stop_fighting(ch);
+      return;
+    }
+  }
 
-                if (!IS_FIGHTING(ch)) {
-                      vict = ParseTarget(ch, arg);
-                          if (!vict) {
-                                  send_to_char("Who do you plan to grapple?\r\n", ch);
-                                        return;
-                                            }
-                            } else {
-                                  vict = ch->specials.fighting;
-                                      if (!vict) {
-                                              stop_fighting(ch);
-                                                    return;
-                                                        }
-                                        }
+  if (affected_by_spell(ch, SKILL_GRAPPLE))
+  {
+    send_to_char("You are not ready yet for another grapple attempt!\r\n", ch);
+    return;
+  }
+  if (affected_by_spell(vict, SKILL_GRAPPLE))
+  {
+    send_to_char("Get in line, someone is already holding him!\r\n", ch);
+    return;
+  }
 
-                    if (affected_by_spell(ch, SKILL_GRAPPLE)) {
-                           send_to_char("You are not ready yet for another grapple attempt!\r\n", ch);
-                                return;
-                                  }
-                        if (affected_by_spell(vict, SKILL_GRAPPLE)) {
-                               send_to_char("Get in line, someone is already holding him!\r\n", ch);
-                                    return;
-                                      }
+  if ( get_takedown_size(vict)  <  (get_takedown_size(ch) - 1) )
+  {
+    send_to_char("No way, they are way to small for a maneuver like that!\r\n", ch);
+    return;
+  }
 
-                          if ( get_takedown_size(vict)  <  (get_takedown_size(ch) - 1) ) {
-                                send_to_char("No way, they are way to small for a maneuver like that!\r\n", ch);
-                                    return;
-                                      }
+                          
+  if ( get_takedown_size(vict)  >  (get_takedown_size(ch) + 1) )
+  {
+    send_to_char("Ugh, you might want to pick on someone your own size!\r\n", ch);
+    return;
+  }
+                            
+  if (GET_CHAR_SKILL(ch, SKILL_GRAPPLE) == 0)
+  {
+    send_to_char("Yeah right, you suddenly change into a specialized mercenary?!?!.\r\n", ch);
+    return;
+  }
 
-                            if ( get_takedown_size(vict)  >  (get_takedown_size(ch) + 1) ){
-                                  send_to_char("Ugh, you might want to pick on someone your own size!\r\n", ch);
-                                      return;
-                                        }
-                              if (GET_CHAR_SKILL(ch, SKILL_GRAPPLE) == 0) {
-                                      send_to_char("Yeah right, you suddenly change into a specialized mercenary?!?!.\r\n", ch);
-                                            return;
-                                              }
+                                
+  if (GET_POS(vict) != POS_STANDING)
+  {
+    act("You leap at $N only to realize $E is already down .", FALSE, ch, 0, vict, TO_CHAR);
+    act("$n leaps at $N only to realize $E is already down.", FALSE, ch, 0, vict, TO_NOTVICT);
+    act("$n leaps at you only to realize you are already down.",  FALSE, ch, 0, vict, TO_VICT);
+    CharWait(ch, PULSE_VIOLENCE * 1);
+    return;
+  }
 
-                                  if (GET_POS(vict) != POS_STANDING) {
-                                          act("You leap at $N only to realize $E is already down .", FALSE, ch, 0, vict, TO_CHAR);
-                                                act("$n leaps at $N only to realize $E is already down.", FALSE, ch, 0, vict, TO_NOTVICT);
-                                                      act("$n leaps at you only to realize you are already down.",  FALSE, ch, 0, vict, TO_VICT);
-                                                            CharWait(ch, PULSE_VIOLENCE * 1);
-                                                                  return;
-                                                                    }
+  skl = GET_CHAR_SKILL(ch, SKILL_GRAPPLE);
+  if(skl > number(0,120))
+  {
 
+  CharWait(vict, PULSE_VIOLENCE * 3.1);
+  CharWait(ch, PULSE_VIOLENCE * 4);
 
-                                     skl = GET_CHAR_SKILL(ch, SKILL_GRAPPLE);
-                                         if(skl > number(0,120))
-                                               {
+  for (kala = world[ch->in_room].people; kala; kala = kala2)
+  {
+    kala2 = kala->next_in_room;
 
-                                                      CharWait(vict, PULSE_VIOLENCE * 3.1);
-                                                               CharWait(ch, PULSE_VIOLENCE * 4);
+    if (kala == ch)
+      continue;
+    if(kala == vict)
+      continue;
 
-                                                                    for (kala = world[ch->in_room].people; kala; kala = kala2) {
-                                                                                    kala2 = kala->next_in_room;
-                                                                                            if (kala == ch)
-                                                                                                            continue;
-                                                                                                     if(kala == vict)
-                                                                                                               continue;
+    if(kala->specials.fighting == ch)
+    {
+      stop_fighting(kala);
+                                                                                           
+      act("You cannot fight for fear of hitting $N. ", FALSE, ch, 0, kala, TO_CHAR);
+    }
 
-                                                                                                           if(kala->specials.fighting == ch){
-                                                                                                                   stop_fighting(kala);
-                                                                                                                           act("You cannot fight for fear of hitting $N. ", FALSE, ch, 0, kala, TO_CHAR);
-                                                                                                                                   }
+    if(kala->specials.fighting == vict)
+    {
+      stop_fighting(kala);
+      act("You cannot fight for fear of hitting $N. ", FALSE, vict, 0, kala, TO_CHAR);
+    }
+  }
+  if (!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
+    set_fighting(ch, vict);
+  if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
+    set_fighting(vict, ch);
 
-                                                                                                                   if(kala->specials.fighting == vict){
-                                                                                                                           stop_fighting(kala);
-                                                                                                                                   act("You cannot fight for fear of hitting $N. ", FALSE, vict, 0, kala, TO_CHAR);
-                                                                                                                                           }
-                                                                                                                        }
+  act("You lock $N's arms with your own holding $M tightly. ", FALSE, ch, 0, vict, TO_CHAR);
+  act("$n grabs you holding your arms tightly together.", FALSE, ch, 0, vict, TO_VICT);
+  act("$n locks $N's arms with $s own holding $M tightly.", FALSE, ch, 0, vict, TO_NOTVICT);
 
-                                                                           if (!IS_FIGHTING(ch))
-                                                                                    set_fighting(ch, vict);
-                                                                                  if (!IS_FIGHTING(vict))
-                                                                                           set_fighting(vict, ch);
-
-                                                                                       act("You lock $N's arms with your own holding $M tightly. ", FALSE, ch, 0, vict, TO_CHAR);
-                                                                                                  act("$n grabs you holding your arms tightly together.", FALSE, ch, 0, vict, TO_VICT);
-                                                                                                       act("$n locks $N's arms with $s own holding $M tightly.", FALSE, ch, 0, vict, TO_NOTVICT);
-
-                                                                                                         //ch
-                                                                                                       //   bzero(&af, sizeof(af));
-                                                                                                       //      af.type = SKILL_GRAPPLE;
-                                                                                                       //         af.bitvector5 = AFF5_GRAPPLER;
-                                                                                                       //            af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL;
-                                                                                                       //               af.duration = 7 * PULSE_VIOLENCE;
-                                                                                                       //                  affect_to_char_with_messages(ch, &af,
-                                                                                                       //                            "",
-                                                                                                       //                                "");
-                                                                                                       //
-                                                                                                       //                                  //victim
-                                                                                                       //                                     bzero(&af, sizeof(af));
-                                                                                                       //                                        af.type = SKILL_GRAPPLE;
-                                                                                                       //                                           af.bitvector5 = AFF5_GRAPPLED;
-                                                                                                       //                                              af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL;
-                                                                                                       //                                                 af.duration = 3 * PULSE_VIOLENCE;
-                                                                                                       //                                                    affect_to_char_with_messages(vict, &af,
-                                                                                                       //                                                              "&+rYou manage to break the arm lock!&n",
-                                                                                                       //                                                                  "&+r$n manages to get the arm lock!&n");
-                                                                                                       //
-                                                                                                       //                                                                     add_event(event_grapple,
-                                                                                                       //                                                                            GET_LEVEL(ch) < 51 ? 2 * PULSE_VIOLENCE : PULSE_VIOLENCE,
-                                                                                                       //                                                                                   ch, vict, 0, 0, 0, 0);
-                                                                                                       //                                                                                       }
-                                                                                                       //                                                                                            else {
-                                                                                                       //                                                                                                 act("You charge $N, but $E nimbly rolls out of the way.", FALSE, ch, 0, vict, TO_CHAR);
-                                                                                                       //                                                                                                            act("$n lunges forward, but you roll out of the way", FALSE, ch, 0, vict, TO_VICT);
-                                                                                                       //                                                                                                                 act("$n lunges forward, but $N rolls out of the way.", FALSE, ch, 0, vict, TO_NOTVICT);
-                                                                                                       //                                                                                                                          CharWait(ch, PULSE_VIOLENCE * 1);
-                                                                                                       //                                                                                                                                     SET_POS(ch, POS_SITTING + GET_STAT(ch));
-                                                                                                       //                                                                                                                                              }
-                                                                                                       //
-                                                                                                       //
-                                                                                                       //                                                                                                                                              }
-                                                                                                       //
-                                                                                                       //
+  //ch
+  //   bzero(&af, sizeof(af));
+  //      af.type = SKILL_GRAPPLE;
+  //         af.bitvector5 = AFF5_GRAPPLER;
+  //            af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL;
+  //               af.duration = 7 * PULSE_VIOLENCE;
+  //                  affect_to_char_with_messages(ch, &af,
+  //                            "",
+  //                                "");
+  //victim
+  //                                     bzero(&af, sizeof(af));
+  //                                        af.type = SKILL_GRAPPLE;
+  //                                           af.bitvector5 = AFF5_GRAPPLED;
+  //                                              af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL;
+  //                                                 af.duration = 3 * PULSE_VIOLENCE;
+  //                                                    affect_to_char_with_messages(vict, &af,
+  //                                                              "&+rYou manage to break the arm lock!&n",
+  //                                                                  "&+r$n manages to get the arm lock!&n");
+  //
+  //                                                                     add_event(event_grapple,
+  //                                                                            GET_LEVEL(ch) < 51 ? 2 * PULSE_VIOLENCE : PULSE_VIOLENCE,
+  //                                                                                   ch, vict, 0, 0, 0, 0);
+  //                                                                                       }
+  //                                                                                            else {
+  //                                                                                                 act("You charge $N, but $E nimbly rolls out of the way.", FALSE, ch, 0, vict, TO_CHAR);
+  //                                                                                                            act("$n lunges forward, but you roll out of the way", FALSE, ch, 0, vict, TO_VICT);
+  //                                                                                                                 act("$n lunges forward, but $N rolls out of the way.", FALSE, ch, 0, vict, TO_NOTVICT);
+  //                                                                                                                          CharWait(ch, PULSE_VIOLENCE * 1);
+  //                                                                                                                                     SET_POS(ch, POS_SITTING + GET_STAT(ch));
+  //                                                                                                                                              }
+  //
+  //
+  //                                                                                                                                              }
+  //
+  //
 
 
 #if 0

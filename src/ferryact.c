@@ -237,7 +237,7 @@ int ferry_room_proc(int room_num, P_char ch, int cmd, char *arg) {
 			return (TRUE);
 		}
 
-		if (IS_FIGHTING(ch)) {
+		if( IS_FIGHTING(ch) || IS_DESTROYING(ch) ) {
 			send_to_char("You're too busy fighting for your life to disembark!&n\r\n", ch);
 			return (TRUE);
 		}

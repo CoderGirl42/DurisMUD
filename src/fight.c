@@ -96,11 +96,13 @@ extern int get_honing(P_obj);
 extern void apply_honing(P_obj, int);
 extern void holy_crusade_check(P_char, P_char);
 extern int is_wearing_necroplasm(P_char);
+extern void multihit_siege( P_char ch );
 
 /* Structures */
 
 //extern struct mm_ds *dead_trophy_pool;
 P_char   combat_list = 0;       /* head of l-list of fighting chars  */
+P_char   destroying_list = 0;   /* head of l-list of destroying chars  */
 P_char   combat_next_ch = 0;    /* Next in combat global trick    */
 int      damage_dealt;          /* needed by shield spells until I find a better solution */
 float    dam_factor[LAST_DF + 1];
@@ -896,7 +898,7 @@ unsigned int calculate_ch_state(P_char ch)
     else if (GET_HIT(ch) <= -3)
       return STAT_INCAP;
     else if (((GET_STAT(ch) == STAT_SLEEPING) || (GET_STAT(ch) == STAT_RESTING))
-             && (IS_FIGHTING(ch) || NumAttackers(ch)))
+             && (IS_FIGHTING(ch) || NumAttackers(ch) || IS_DESTROYING(ch)))
       return STAT_NORMAL;
     else if (GET_STAT(ch) < STAT_SLEEPING)
       return STAT_RESTING;
@@ -922,6 +924,9 @@ void update_pos(P_char ch)
   if (IS_FIGHTING(ch))
     if (ch->in_room != ch->specials.fighting->in_room)
       stop_fighting(ch);
+  if( IS_DESTROYING(ch) )
+    if( ch->in_room != ch->specials.destroying_obj->loc.room)
+      stop_destroying(ch);
 
   mount = get_linked_char(ch, LNK_RIDING);
   if (mount && mount->in_room != ch->in_room)
@@ -1116,9 +1121,8 @@ void update_pos(P_char ch)
       else if (GET_HIT(ch) <= -3)
         stat = STAT_INCAP;
       else
-        if (((GET_STAT(ch) == STAT_SLEEPING) ||
-             (GET_STAT(ch) == STAT_RESTING)) && (IS_FIGHTING(ch) ||
-                                                 NumAttackers(ch)))
+        if( ((GET_STAT(ch) == STAT_SLEEPING) || (GET_STAT(ch) == STAT_RESTING)) 
+          && (IS_FIGHTING(ch) || NumAttackers(ch) || IS_DESTROYING(ch)) )
         stat = STAT_NORMAL;
       else if (GET_STAT(ch) < STAT_SLEEPING)
         stat = STAT_RESTING;
@@ -1185,6 +1189,8 @@ void update_pos(P_char ch)
   {
     if (IS_FIGHTING(ch))
       stop_fighting(ch);
+    if( IS_DESTROYING(ch))
+      stop_destroying(ch);
     StopAllAttackers(ch);
     stat = STAT_DYING;          /*
                                  * reason being, killing people in
@@ -1208,6 +1214,8 @@ void update_pos(P_char ch)
   {
     if (IS_FIGHTING(ch))
       stop_fighting(ch);
+    if( IS_DESTROYING(ch) )
+      stop_destroying(ch);
     StopMercifulAttackers(ch);
   }
   /*
@@ -1216,9 +1224,9 @@ void update_pos(P_char ch)
   /*
    * added check - DTS 7/11/95
    */
-  if (IS_NPC(ch) && (stat > STAT_SLEEPING) && !IS_FIGHTING(ch) && CAN_ACT(ch)
-      && ((ch->only.npc->default_pos & STAT_MASK) >= STAT_SLEEPING) &&
-      (!HAS_MEMORY(ch) || !GET_MEMORY(ch)))
+  if( IS_NPC(ch) && (stat > STAT_SLEEPING) && !IS_FIGHTING(ch) && CAN_ACT(ch)
+      && ((ch->only.npc->default_pos & STAT_MASK) >= STAT_SLEEPING)
+      && (!HAS_MEMORY(ch) || !GET_MEMORY(ch)) && !IS_DESTROYING(ch) )
     ch->specials.position = ch->only.npc->default_pos;
 }
 
@@ -1987,6 +1995,8 @@ P_char ForceReturn(P_char ch)
     }
     if (t_ch->specials.fighting)
       stop_fighting(t_ch);
+    if( IS_DESTROYING(t_ch) )
+      stop_destroying(t_ch);
     un_morph(t_ch);
     return true_id;
   }
@@ -2003,6 +2013,8 @@ P_char ForceReturn(P_char ch)
        FALSE, t_ch, 0, 0, TO_ROOM);
     if (t_ch->specials.fighting)
       stop_fighting(t_ch);
+    if( IS_DESTROYING(t_ch) )
+      stop_destroying(t_ch);
     un_morph(t_ch);
     return ch;
   }
@@ -2355,6 +2367,8 @@ void die(P_char ch, P_char killer)
   {
     stop_fighting(ch);
   }
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
   StopAllAttackers(ch);
 
   REMOVE_BIT(ch->specials.act2, PLR2_WAIT);
@@ -3511,7 +3525,8 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
 
 void attack_back(P_char ch, P_char victim, int physical)
 {
-  if (!ch || !victim || IS_FIGHTING(victim) || (GET_STAT(ch) == STAT_DEAD) || (GET_STAT(victim) == STAT_DEAD))
+  if( !ch || !victim || IS_FIGHTING(victim) || (GET_STAT(ch) == STAT_DEAD) 
+    || (GET_STAT(victim) == STAT_DEAD) || IS_DESTROYING(victim) )
     return;
 
   update_pos(victim);
@@ -3625,7 +3640,7 @@ bool damage(P_char ch, P_char victim, double dam, int attacktype)
   }
   else
   {
-    if (!IS_FIGHTING(ch) && (ch->in_room == victim->in_room) ){
+    if( !IS_FIGHTING(ch) && !IS_DESTROYING(ch) && (ch->in_room == victim->in_room) ){
       set_fighting(ch, victim);
       attack_back(ch, victim, attacktype > FIRST_SKILL);
     }
@@ -4455,6 +4470,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 
         if(IS_FIGHTING(victim))
           stop_fighting(victim);
+        if(IS_DESTROYING(victim))
+          stop_destroying(victim);
       }
     }*/
 
@@ -4946,10 +4963,9 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags,
     messages = &dummy_messages;
   }
   
-  if(!IS_FIGHTING(ch) &&
-    !(flags & PHSDAM_NOENGAGE) &&
-    ch->in_room == victim->in_room)
-        set_fighting(ch, victim);
+  if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch)
+    && !(flags & PHSDAM_NOENGAGE) && ch->in_room == victim->in_room)
+    set_fighting(ch, victim);
   
   if (!(flags & PHSDAM_NOREDUCE))
   {
@@ -6048,9 +6064,9 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags,
     {
       if(IS_FIGHTING(victim))
         stop_fighting(victim);
-      {
-        StopMercifulAttackers(victim);
-      }
+      if(IS_DESTROYING(victim))
+        stop_destroying(victim);
+      StopMercifulAttackers(victim);
     }
 
     update_pos(victim);
@@ -6999,7 +7015,7 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
     }
   }
 
-  if (!IS_FIGHTING(ch))
+  if (!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
     set_fighting(ch, victim);
 
 /* The blind and eyeless cannot see "flashing lights." - Lucrot */
@@ -7607,9 +7623,14 @@ void set_fighting(P_char ch, P_char vict)
       !SanityCheck(victim, "set_fighting - victim"))
     return;
 
-  if (IS_FIGHTING(ch) || ch->specials.next_fighting)
+  if( IS_FIGHTING(ch) || ch->specials.next_fighting )
   {
     logit(LOG_EXIT, "assert: set_fighting() when already fighting");
+    raise(SIGSEGV);
+  }
+  if( IS_DESTROYING(ch) )
+  {
+    logit(LOG_EXIT, "assert: set_fighting() when destroying object");
     raise(SIGSEGV);
   }
   /*
@@ -7644,10 +7665,10 @@ void set_fighting(P_char ch, P_char vict)
     return;
   }
   
-  if (IS_TRUSTED(ch) && IS_SET(ch->specials.act, PLR_AGGIMMUNE))
+  if( IS_TRUSTED(ch) && IS_SET(ch->specials.act, PLR_AGGIMMUNE))
     return;
 
-  if (IS_TRUSTED(victim) && IS_SET(victim->specials.act, PLR_AGGIMMUNE))
+  if( IS_TRUSTED(victim) && IS_SET(victim->specials.act, PLR_AGGIMMUNE))
   {
     if (IS_FIGHTING(victim))
       stop_fighting(victim);
@@ -7779,6 +7800,85 @@ void set_fighting(P_char ch, P_char vict)
     do_dread_wrath(ch,vict);
 
 
+}
+
+// Attack that object!
+void set_destroying(P_char ch, P_obj obj)
+{
+  P_char   tch;
+  char     Gbuf[10];
+
+  if( !SanityCheck(ch, "set_destroying - ch") )
+    return;
+
+  if( IS_DESTROYING(ch) || ch->specials.next_destroying )
+  {
+    logit(LOG_EXIT, "assert: set_fighting() when already destroying object");
+    raise(SIGSEGV);
+  }
+  if( IS_FIGHTING(ch) )
+  {
+    logit(LOG_EXIT, "assert: set_fighting() when fighting");
+    raise(SIGSEGV);
+  }
+
+  if(IS_IMMOBILE(ch) || !AWAKE(ch))
+    return;
+  
+  if( IS_TRUSTED(ch) && IS_SET(ch->specials.act, PLR_AGGIMMUNE) )
+    return;
+
+  if (affected_by_spell(ch, SONG_SLEEP))
+    affect_from_char(ch, SONG_SLEEP);
+
+  if (affected_by_spell(ch, SPELL_SLEEP))
+    affect_from_char(ch, SPELL_SLEEP);
+
+  if (IS_AFFECTED(ch, AFF_SLEEP))
+    REMOVE_BIT(ch->specials.affected_by, AFF_SLEEP);
+
+  if (IS_AFFECTED(ch, AFF_SNEAK))
+  {
+    if (affected_by_spell(ch, SKILL_SNEAK))
+      affect_from_char(ch, SKILL_SNEAK);
+    if (IS_AFFECTED(ch, AFF_SNEAK))
+      REMOVE_BIT(ch->specials.affected_by, AFF_SNEAK);
+  }
+  if (IS_AFFECTED(ch, AFF_HIDE))
+  {
+    act("$n comes out of hiding!", TRUE, ch, 0, 0, TO_ROOM);
+    REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
+  }
+  
+  appear(ch);
+  
+
+  if (affected_by_spell(ch, SPELL_CEGILUNE_BLADE)) {
+	  struct affected_type *afp = get_spell_from_char(ch, SPELL_CEGILUNE_BLADE);
+	  afp->modifier = 0;
+  }
+
+  ch->specials.destroying_obj = obj;
+  ch->specials.next_destroying = destroying_list;
+  destroying_list = ch;
+  stop_memorizing(ch);
+
+  if (GET_STAT(ch) == STAT_SLEEPING)
+  {
+    send_to_char("You are VERY rudely awakened!\r\n", ch);
+    act("$n has a RUDE awakening!", TRUE, ch, 0, 0, TO_ROOM);
+    SET_POS(ch, POS_SITTING + GET_STAT(ch));
+    do_wake(ch, 0, -4);
+  }
+  if (P_char mount = get_linked_char(ch, LNK_RIDING))
+  {
+    if (!GET_CHAR_SKILL(ch, SKILL_MOUNTED_COMBAT)/* && !is_natural_mount(ch, mount)*/)
+    {
+      send_to_char("I'm afraid you aren't quite up to mounted combat.\r\n", ch);
+      act("$n quickly slides off $N's back.", TRUE, ch, 0, mount, TO_NOTVICT);
+      stop_riding(ch);
+    }
+  }
 }
 
 void MoveAllAttackers(P_char ch,P_char v)
@@ -8662,6 +8762,34 @@ void stop_fighting(P_char ch)
   update_pos(ch);
 }
 
+void stop_destroying(P_char ch)
+{
+  P_char tmp;
+
+  if( !SanityCheck(ch, "stop_destroying") || !IS_DESTROYING(ch) )
+    return;
+
+  if( destroying_list == ch )
+  {
+    destroying_list = ch->specials.next_destroying;
+  }
+  else
+  {
+    for (tmp = destroying_list; tmp && (tmp->specials.next_destroying != ch);
+         tmp = tmp->specials.next_destroying) ;
+    if (!tmp)
+    {
+      logit(LOG_EXIT, "%s not found in destroying_list stop_destroying()",
+            GET_NAME(ch));
+      raise(SIGSEGV);
+    }
+    tmp->specials.next_destroying = ch->specials.next_destroying;
+  }
+
+  ch->specials.next_destroying = NULL;
+  ch->specials.destroying_obj = NULL;
+}
+
 void event_windstrom(P_char ch, P_char vict, char *args)
 {
   int      hits;
@@ -9121,6 +9249,19 @@ void perform_violence(void)
 
   time_now = time(0);
 
+  for( ch = destroying_list; ch; ch = ch->specials.next_destroying )
+  {
+    if (ch->specials.combat_tics > 0)
+    {
+      ch->specials.combat_tics--;
+    }
+    else
+    {
+      ch->specials.combat_tics = ch->specials.base_combat_round;
+      multihit_siege( ch );
+    }
+  }
+
   for (ch = combat_list; ch; ch = combat_next_ch)
   {
     if(!(ch))
@@ -9136,8 +9277,7 @@ void perform_violence(void)
 
     opponent = ch->specials.fighting;
     
-    if(!opponent &&
-       ch->in_room != NOWHERE)
+    if(!opponent && ch->in_room != NOWHERE)
     {
       logit(LOG_DEBUG, "%s fighting null opponent in (%d) perform_violence()!", GET_NAME(ch), world[ch->in_room].number);
       return;
@@ -9650,10 +9790,10 @@ int battle_frenzy(P_char ch, P_char victim)
 
 void engage(P_char ch, P_char victim)
 {
-  if (!IS_FIGHTING(ch))
+  if( !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
     set_fighting(ch, victim);
 
-  if (!IS_FIGHTING(victim))
+  if( !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
     set_fighting(victim, ch);
 }
 

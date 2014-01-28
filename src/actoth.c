@@ -272,6 +272,12 @@ void do_camp(P_char ch, char *arg, int cmd)
         FALSE, ch, 0, ch->specials.fighting, TO_CHAR);
     return;
   }
+  if (IS_DESTROYING(ch))
+  {
+    act("Better finish dealing with $p first, bunky.",
+        FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
+    return;
+  }
   if (IS_TRUSTED(ch))
   {
     ch->specials.was_in_room = world[ch->in_room].number;
@@ -973,7 +979,7 @@ void do_forage(P_char ch, char *arg, int cmd)
                  ch);
     return;
   }
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     act("Forage while fighting?  Are you mad!?",
         FALSE, ch, 0, ch->specials.fighting, TO_CHAR);
@@ -1296,7 +1302,7 @@ void do_quit(P_char ch, char *argument, int cmd)
   {
 
     /* check if they can currently do a quit at all */
-    if (IS_FIGHTING(ch))
+    if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     {
       send_to_char("No way! You are fighting.\r\n", ch);
       if (ch->desc)
@@ -1318,7 +1324,7 @@ void do_quit(P_char ch, char *argument, int cmd)
   }
   /* confirmed quit! */
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("No way! You are fighting.\r\n", ch);
     return;
@@ -1982,11 +1988,9 @@ void do_hide(P_char ch, char *argument, int cmd)
       return;
     }
     
-    if (IS_FIGHTING(ch))
+    if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     {
-      send_to_char
-        ("Hide behind your weapon, you're a little busy for anything else.\r\n",
-         ch);
+      send_to_char("Hide behind your weapon, you're a little busy for anything else.\r\n", ch);
       return;
     }
     send_to_char("You attempt to hide yourself.\r\n", ch);
@@ -2297,8 +2301,8 @@ void do_steal(P_char ch, char *argument, int cmd)
     return;
   if(!IS_TRUSTED(ch))
   {
-  send_to_char("Steal is temporarily disabled for rework. Go stab something.\r\n", ch);
-  return;
+    send_to_char("Steal is temporarily disabled for rework. Go stab something.\r\n", ch);
+    return;
   }
 
   if (GET_LEVEL(ch) < 10)
@@ -2425,7 +2429,7 @@ void do_steal(P_char ch, char *argument, int cmd)
       return;
     }
 
-  if (IS_FIGHTING(victim))
+  if( IS_FIGHTING(victim) || IS_DESTROYING(victim) )
   {
     send_to_char("Yah, right, good way to lose a hand, or a head!\r\n", ch);
     return;
@@ -2484,7 +2488,7 @@ void do_steal(P_char ch, char *argument, int cmd)
   if(is_being_guarded(victim))
     percent = (int) (percent * 0.60);
 
-  if(IS_FIGHTING(victim))
+  if( IS_FIGHTING(victim) )
     percent = (int) (percent * 0.60);
 
   if(affected_by_spell(victim, SPELL_GUARDIAN_SPIRITS))
@@ -2892,7 +2896,7 @@ void do_steal(P_char ch, char *argument, int cmd)
 
   remember(victim, ch);
 
-  if (!IS_FIGHTING(victim))
+  if (!IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
     MobStartFight(victim, ch);
 
 }
@@ -2929,6 +2933,12 @@ bool newsteal_CheckIfValid(P_char ch, const char *victim_name, const char *args)
     send_to_char("Your conscience prevents you from stealing in such a peaceful place.\r\n",ch);
     return false;
   }
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You can't focus enough right now.\n", ch );
+    return FALSE;
+  }
+
   P_char victim = get_char_room_vis(ch, victim_name);
   if (!victim)
   {
@@ -3341,7 +3351,7 @@ void do_quaff(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if(IS_FIGHTING(ch))
+  if(IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     chance = 50;
 

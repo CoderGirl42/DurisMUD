@@ -78,6 +78,8 @@ extern P_char misfire_check(P_char ch, P_char spell_target, int flag);
 extern void event_mob_mundane(P_char, P_char, P_obj, void *);
 extern void disarm_char_events(P_char, event_func);
 extern P_char make_mirror(P_char);
+void kill_siege( P_char ch, P_obj obj );
+P_obj get_siege_room( P_char ch, char *arg );
 
 struct failed_takedown_messages
 {
@@ -758,7 +760,12 @@ void do_hit(P_char ch, char *argument, int cmd)
 
   if(!victim)
   {
-    send_to_char("Slay whom?\n", ch);
+    // Allow attacking of siege objects.
+    P_obj obj = get_siege_room( ch, argument );
+    if( obj )
+      kill_siege( ch, obj );
+    else
+      send_to_char("Slay whom?\n", ch);
     return;
   }
 
@@ -824,7 +831,7 @@ void lance_charge(P_char ch, char *argument)
     return;
   }
 
-  if(IS_FIGHTING(ch))
+  if(IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("You are too busy fighting to prepare yourself for a charge!", ch);
     return;
@@ -836,7 +843,7 @@ void lance_charge(P_char ch, char *argument)
     return;
   }
   
-  if(IS_FIGHTING(mount))
+  if( IS_FIGHTING(mount) || IS_DESTROYING(mount) )
   {
     send_to_char("You mount is too busy fighting!\r\n", ch);
     return;
@@ -1253,8 +1260,14 @@ void do_charge(P_char ch, char *argument, int cmd)
   
   if(IS_FIGHTING(ch))
   {
-	send_to_char("&+rYou may not charge while already engaged!\r\n", ch);
-	return;
+  	send_to_char("&+rYou may not charge while already engaged!\r\n", ch);
+	  return;
+  }
+
+  if(IS_DESTROYING(ch))
+  {
+  	send_to_char("Try disengaging from the object first.\r\n", ch);
+	  return;
   }
   
   half_chop(argument, arg1, arg2);
@@ -1591,7 +1604,14 @@ void do_kill(P_char ch, char *argument, int cmd)
   else
   {
     if(!(victim = get_char_room_vis(ch, Gbuf1)))
-      send_to_char("He/she/it isn't here.\n", ch);
+    {
+      // Allow attacking of siege objects.
+      P_obj obj = get_siege_room( ch, argument );
+      if( obj )
+        kill_siege( ch, obj );
+      else
+        send_to_char("He/she/it isn't here.\n", ch);
+    }
     else if(ch == victim)
       send_to_char("Your mother would be so sad... \n", ch);
     else if(IS_TRUSTED(victim))
@@ -2471,6 +2491,8 @@ void do_flee(P_char ch, char *argument, int cmd)
 
   if(atts)
     StopAllAttackers(ch);
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
 
   if(was_fighting && IS_NPC(was_fighting))
   {
@@ -3533,6 +3555,8 @@ void kick(P_char ch, P_char victim)
           SET_POS(victim, POS_PRONE + GET_STAT(victim));
           
           stop_fighting(victim);
+          if( IS_DESTROYING(victim) )
+            stop_destroying(victim);
 
           CharWait(victim, (int) (PULSE_VIOLENCE *
             get_property("kick.roomkick.victimlag", 1.000)));
@@ -3554,6 +3578,8 @@ void kick(P_char ch, P_char victim)
           Stun(victim, ch, (PULSE_VIOLENCE * number(1, 2)), TRUE);
         }
         stop_fighting(victim);
+        if( IS_DESTROYING(victim) )
+          stop_destroying(victim);
         CharWait(victim, (int) (PULSE_VIOLENCE *
           get_property("kick.wallkick.victimlag", 1.5)));
       }
@@ -3577,6 +3603,8 @@ void kick(P_char ch, P_char victim)
         Stun(victim, ch, (PULSE_VIOLENCE * number(1, 3)), TRUE);
       }
       stop_fighting(victim);
+      if( IS_DESTROYING(victim) )
+        stop_destroying(victim);
       CharWait(victim, (int) (PULSE_VIOLENCE * get_property("kick.groinkick.victimlag", 1.000)));
     }
     return;
@@ -3972,6 +4000,8 @@ void knock_out(P_char ch, int duration)
         "expression... finally collapsing.", FALSE, ch, 0, 0, TO_ROOM);
 
     stop_fighting(ch);
+    if( IS_DESTROYING(ch) )
+      stop_destroying(ch);
     StopMercifulAttackers(ch);
 
     memset(&af, 0, sizeof(af));
@@ -4930,11 +4960,8 @@ bool backstab(P_char ch, P_char victim)
   int      percent_chance;
   bool     stabbed = FALSE;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return FALSE;
-  }
 
   if(!SanityCheck(ch, "do_backstab"))
     return FALSE;
@@ -4960,6 +4987,12 @@ bool backstab(P_char ch, P_char victim)
       CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
       return FALSE;
     }
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You can't backstab an object.\n", ch );
+    return FALSE;
   }
 
   if(ch->specials.fighting)
@@ -5160,9 +5193,9 @@ bool backstab(P_char ch, P_char victim)
       if(stabbed)
       {
         if(IS_FIGHTING(victim))
-        {
           stop_fighting(victim);
-        }
+        if(IS_DESTROYING(victim))
+          stop_destroying(victim);
         ch->specials.combat_tics = ch->specials.base_combat_round;
       }
       else
@@ -5222,6 +5255,12 @@ void attack(P_char ch, P_char victim)
   }
 
   skl = GET_CHAR_SKILL(ch, SKILL_SWITCH_OPPONENTS);
+
+  if( IS_DESTROYING( ch ) )
+  {
+    send_to_char( "Not while destroying an object.\n", ch );
+    return;
+  }
 
   if(!IS_FIGHTING(ch))
   {
@@ -5454,7 +5493,12 @@ void bash(P_char ch, P_char victim)
   {
     return;
   }
-  
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "Not while fighting an object.\n", ch );
+    return;
+  }
 
   if(affected_by_spell(ch, SKILL_BASH))
   {
@@ -6002,7 +6046,12 @@ void do_tackle(P_char ch, char *arg, int cmd)
   if(!(ch) ||
      !IS_ALIVE(ch))
         return;
-  
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You can't tackle an object.\n", ch );
+    return;
+  }
+
   if(!IS_FIGHTING(ch))
   {
     vict = ParseTarget(ch, arg);
@@ -6044,7 +6093,7 @@ void do_tackle(P_char ch, char *arg, int cmd)
     SET_POS(ch, POS_SITTING + GET_STAT(ch));
     CharWait(ch, PULSE_VIOLENCE * 1);
     
-    if(!IS_FIGHTING(ch))
+    if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
       set_fighting(ch, vict);
     
     return;
@@ -6345,7 +6394,16 @@ void do_disengage(P_char ch, char *arg, int cmd)
   }
   if(!IS_FIGHTING(ch))
   {
-    send_to_char("But you aren't fighting anything!\n", ch);
+    if( IS_DESTROYING( ch ) )
+    {
+      char buf[ 300 ];
+      sprintf( buf, "You stop trying to destroy %s.\n",
+        ch->specials.destroying_obj->short_description );
+      send_to_char( buf, ch );
+      stop_destroying( ch );
+    }
+    else
+      send_to_char("But you aren't fighting anything!\n", ch);
     return;
   }
   if(IS_RIDING(ch))
@@ -6434,7 +6492,7 @@ void do_retreat(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if(!IS_FIGHTING(ch))
+  if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
   {
     send_to_char("You're not fighting anything to retreat from!\n", ch);
     return;
@@ -6580,6 +6638,8 @@ void do_retreat(P_char ch, char *arg, int cmd)
           StopAllAttackers(ch);
           //MoveAllAttackers(ch,newvict);
           stop_fighting(ch);
+          if( IS_DESTROYING(ch) )
+            stop_destroying(ch);
           sprintf(Gbuf1, "&+WYou stop fighting and retreat to the %s!&n",dirs[dir]);
           act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
           
@@ -6752,7 +6812,7 @@ void rescue(P_char ch, P_char rescuee, bool rescue_all)
               ch, 0, rescuee, TO_NOTVICT);
         if(rescuee->specials.fighting == t_ch)
           stop_fighting(rescuee);
-        if(!IS_FIGHTING(ch))
+        if( !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
           set_fighting(ch, t_ch);
 
       }
@@ -7246,8 +7306,7 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
     0
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if(!(ch) || !IS_ALIVE(ch))
   {
     return;
   }
@@ -7255,6 +7314,12 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
   if(GET_CHAR_SKILL(ch, SKILL_SWEEPING_THRUST) < 1) // Need the skill.
   {
     send_to_char("You don't know how to do this.\n", ch);
+    return;
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char("You can't do that to an object.\n", ch);
     return;
   }
   
@@ -7653,6 +7718,8 @@ void do_rearkick(P_char ch, char *argument, int cmd)
           get_property("kick.roomkick.victimlag", 1.000)));
         SET_POS(victim, POS_PRONE + GET_STAT(victim));
         stop_fighting(victim);
+        if( IS_DESTROYING(victim) )
+          stop_destroying(victim);
       }
     }
     else
@@ -7667,6 +7734,8 @@ void do_rearkick(P_char ch, char *argument, int cmd)
         get_property("kick.wallkick.victimlag", 1.5)));
       SET_POS(victim, POS_SITTING + GET_STAT(victim));
       stop_fighting(victim);
+      if( IS_DESTROYING(victim) )
+        stop_destroying(victim);
     }
   }
   return;
@@ -7837,11 +7906,8 @@ void do_trample(P_char ch, char *argument, int cmd)
     0, 0
   };
   
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return;
-  }
 
   if(!SanityCheck(ch, "trample"))
     return;
@@ -8268,12 +8334,9 @@ void do_springleap(P_char ch, char *argument, int cmd)
   int      dir = -1;
   int      a;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return;
-  }
-  
+
   if(!GET_CHAR_SKILL(ch, SKILL_SPRINGLEAP))
   {
     send_to_char("You don't know how to springleap!\n", ch);
@@ -8291,6 +8354,12 @@ void do_springleap(P_char ch, char *argument, int cmd)
   if(MIN_POS(ch, POS_STANDING + STAT_RESTING))
   {
     send_to_char("You're not in position for that!\n", ch);
+    return;
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "Not while destroying an object.\n", ch );
     return;
   }
 
@@ -8602,7 +8671,7 @@ void do_whirlwind(P_char ch, char *argument, int cmd)
     }
   }
 
-  if(!IS_FIGHTING(ch))
+  if( !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
   {
     send_to_char("But you aren't engaged!\n", ch);
     return;
@@ -8649,16 +8718,12 @@ void do_trip(P_char ch, char *argument, int cmd)
   char     name[MAX_INPUT_LENGTH];
   int      percent_chance;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return;
-  }
   
   if(GET_CHAR_SKILL(ch, SKILL_TRIP) < 1)
   {
-    send_to_char
-      ("Battle-field tripping is too acrobatic for you to attempt.\n", ch);
+    send_to_char("Battle-field tripping is too acrobatic for you to attempt.\n", ch);
     return;
   }
 
@@ -8682,6 +8747,13 @@ void do_trip(P_char ch, char *argument, int cmd)
   if(!vict)
   {
     send_to_char("Trip who?\n", ch);
+    return;
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    act("You futilely try to trip $p.&n",
+      FALSE, ch, ch->specials.destroying_obj, 0, TO_CHAR);
     return;
   }
   
@@ -8823,11 +8895,8 @@ void do_flank(P_char ch, char *argument, int cmd)
   P_char   victim = NULL;
   char     target[128];
   
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return;
-  }
 
   if(!GET_CHAR_SKILL(ch, SKILL_FLANK))
   {
@@ -8878,6 +8947,12 @@ void flanking_broken(struct char_link_data *cld)
 bool flank(P_char ch, P_char victim)
 {
   P_char   tch;
+
+  if( IS_DESTROYING( ch ) )
+  {
+    send_to_char("You can't flank an object.. well maybe a steak.\n", ch );
+    return FALSE;
+  }
 
   if(get_linked_char(ch, LNK_FLANKING))
   {
@@ -9220,6 +9295,12 @@ void do_gaze(P_char ch, char *argument, int cmd)
     act("You are dead. Lay still!", FALSE, ch, 0, victim, TO_CHAR);
     return;
   }
+
+  if( IS_DESTROYING(ch) )
+  {
+    act("You stare at $p.", FALSE, ch, ch->specials.destroying_obj, victim, TO_CHAR);
+    return;
+  }
   
   if(GET_CHAR_SKILL(ch, SKILL_GAZE) < 1)
   {
@@ -9552,18 +9633,23 @@ void restrain(P_char ch, P_char victim)
 
   if(ch == victim)
   {
-    send_to_char
-      ("&+LOh, but that would be way too much fun...\n", ch);
+    send_to_char("&+LOh, but that would be way too much fun...\n", ch);
     CharWait(ch, PULSE_VIOLENCE);
+    return;
+  }
+
+  if( IS_DESTROYING( ch ) )
+  {
+    act("You stare at $p and say 'hold still'.", FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
     return;
   }
   
   appear(ch);
 
-    if(affected_by_spell(victim, SKILL_BASH))
+  if(affected_by_spell(victim, SKILL_BASH))
   {
     send_to_char("&+LThey cannot be restrained in their current position.\n", ch);
-	CharWait(ch, (int) (PULSE_VIOLENCE));
+    CharWait(ch, (int) (PULSE_VIOLENCE));
     return;
   }
 
@@ -9905,7 +9991,7 @@ void do_shriek(P_char ch, char *argument, int cmd)
         set_fighting(person, ch);
     }
 
-    if(!IS_FIGHTING(ch))
+    if( !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
       set_fighting(ch, person);
 
     // apply the damage to the person
@@ -10012,19 +10098,19 @@ void do_dreadnaught(P_char ch, char *, int)
   struct affected_type af;
 
   if(GET_CHAR_SKILL(ch, SKILL_DREADNAUGHT) < 1)
-   {
+  {
     send_to_char("You have no training in such a specialized area of defensive abilities.\r\n", ch);
-	return;
-   }
+    return;
+  }
   
   if(affected_by_spell(ch, TAG_DREADNAUGHT))
   {
     send_to_char("You are not ready to assume a defensive stance yet.\r\n", ch);
-	return;
+    return;
   }  
 
   if(number(1, 102) < GET_CHAR_SKILL(ch, SKILL_DREADNAUGHT))
-    {
+  {
     act("&+RCCCHHHAAARRGGEEEE!!!&+y You raise your defenses and assume a stoic stance!&n", FALSE, ch, 0, 0, TO_CHAR);
     act("$n &+ysuddenly assumes a &+Ydefensive&+y position, shield and weapon at the ready!&n", FALSE, ch, 0, 0, TO_ROOM);
   
@@ -10034,7 +10120,7 @@ void do_dreadnaught(P_char ch, char *, int)
     af.bitvector5 = AFF5_DREADNAUGHT;
     af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL ;
     af.duration = 40;
-	affect_to_char(ch, &af);
+    affect_to_char(ch, &af);
 
     memset(&af, 0, sizeof(af));
     af.type = SKILL_DREADNAUGHT;
@@ -10046,14 +10132,15 @@ void do_dreadnaught(P_char ch, char *, int)
                                  "&+yYou lower your &+Yguard&+y, and assume an offensive stance.",
                                  "$n &+ylowers his guard, and assumes an offensive stance.&n");
 								 
-	set_short_affected_by(ch, TAG_DREADNAUGHT, 65);
-    notch_skill(ch, SKILL_DREADNAUGHT, 15);
-    return;
-    }
-    act("&nYou attempt to assume a &+ydefensive &nposition, but fail horribly!&n", FALSE, ch, 0, 0, TO_CHAR);
-    act("$n &+yattempts to assume a &+Ydefensive&+y position, but fails horribly!&n", FALSE, ch, 0, 0, TO_ROOM);
     set_short_affected_by(ch, TAG_DREADNAUGHT, 65);
     notch_skill(ch, SKILL_DREADNAUGHT, 15);
+    return;
+  }
+
+  act("&nYou attempt to assume a &+ydefensive &nposition, but fail horribly!&n", FALSE, ch, 0, 0, TO_CHAR);
+  act("$n &+yattempts to assume a &+Ydefensive&+y position, but fails horribly!&n", FALSE, ch, 0, 0, TO_ROOM);
+  set_short_affected_by(ch, TAG_DREADNAUGHT, 65);
+  notch_skill(ch, SKILL_DREADNAUGHT, 15);
 }
 
 void do_shadowstep(P_char ch, char *, int)
@@ -10062,19 +10149,26 @@ void do_shadowstep(P_char ch, char *, int)
   struct affected_type af;
 
   if(GET_CHAR_SKILL(ch, SKILL_SHADOWSTEP) < 1)
-   {
+  {
     send_to_char("&+LYou are not sneaky enough to attempt shadow stepping.\r\n", ch);
-	return;
-   }
+    return;
+  }
   
   if(affected_by_spell(ch, SKILL_SHADOWSTEP))
   {
     send_to_char("&+LYou must wait for the &+wshadows&+L to coalesce before attempting to shadow step once again.\r\n", ch);
-	return;
-  }  
-    int dur = 140 - GET_CHAR_SKILL(ch, SKILL_SHADOWSTEP);
- if(number(1, 102) < GET_CHAR_SKILL(ch, SKILL_SHADOWSTEP))
-    {
+    return;
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    act("You're too busy destroying $p.", FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
+    return;
+  }
+
+  int dur = 140 - GET_CHAR_SKILL(ch, SKILL_SHADOWSTEP);
+  if(number(1, 102) < GET_CHAR_SKILL(ch, SKILL_SHADOWSTEP))
+  {
 
     act("&+LPooF! You perform an evasive maneouver, quickling darting into the sha&+wdo&+Wws&+L!&n", FALSE, ch, 0, 0, TO_CHAR);
     act("&+LPooF! &n$n &+ysuddenly performs an evasive maneouver, quickling darting into the sha&+wdo&+Wws&+L!&n", FALSE, ch, 0, 0, TO_ROOM);
@@ -10093,67 +10187,67 @@ void do_shadowstep(P_char ch, char *, int)
     af.bitvector = AFF_HIDE;
     af.duration = 20;
     af.flags = AFFTYPE_SHORT | AFFTYPE_NODISPEL | AFFTYPE_NOSHOW ;
-	affect_to_char(ch, &af);
+    affect_to_char(ch, &af);
     
 								 
     notch_skill(ch, SKILL_SHADOWSTEP, 15);
-  if( IS_FIGHTING(ch) )
-   {
-    P_char victim, victim2;
-    for (victim = world[ch->in_room].people; victim; victim = victim2)
+    if( IS_FIGHTING(ch) )
     {
-      victim2 = victim->next_in_room;
-
-      // immortals are not effected
-      if(IS_TRUSTED(victim))
+      P_char victim, victim2;
+      for (victim = world[ch->in_room].people; victim; victim = victim2)
       {
-        continue;
+        victim2 = victim->next_in_room;
+
+        // immortals are not effected
+        if(IS_TRUSTED(victim))
+        {
+          continue;
+        }
+       if(GET_OPPONENT(victim) == ch)
+         stop_fighting(victim);
       }
-     if(GET_OPPONENT(victim) == ch)
-     stop_fighting(victim);
     }
-   }
     stop_fighting(ch);
-
-
     return;
-    }
-    act("&nYou attempt to step into the &+Lsha&+wdo&+Wws&n, but fail horribly!&n", FALSE, ch, 0, 0, TO_CHAR);
-    act("$n makes an attempt to step into the &+Lsha&+wdo&+Wws&n, but fails horribly!&n", FALSE, ch, 0, 0, TO_ROOM);
-    set_short_affected_by(ch, SKILL_SHADOWSTEP, dur);
-    notch_skill(ch, SKILL_SHADOWSTEP, 15);
+  }
 
+  act("&nYou attempt to step into the &+Lsha&+wdo&+Wws&n, but fail horribly!&n", FALSE, ch, 0, 0, TO_CHAR);
+  act("$n makes an attempt to step into the &+Lsha&+wdo&+Wws&n, but fails horribly!&n", FALSE, ch, 0, 0, TO_ROOM);
+  set_short_affected_by(ch, SKILL_SHADOWSTEP, dur);
+  notch_skill(ch, SKILL_SHADOWSTEP, 15);
 }
 
 void do_garrote(P_char ch, char *argument, int cmd)
 {
   P_char   victim = NULL;
 
-  if(!(ch) ||
-    !IS_ALIVE(ch))
-  {
+  if(!(ch) || !IS_ALIVE(ch))
     return;
-  }
   
   if(affected_by_spell(ch, SKILL_GARROTE))
   {
     send_to_char("You must wait before attempting to &+rgarrote&n again.\r\n", ch);
-	return;
+    return;
   }
 
   victim = ParseTarget(ch, argument);
   
   if (GET_CHAR_SKILL(ch, SKILL_GARROTE) < 1)
   {
-	send_to_char("Sure! You'll probably cut yourself trying!&n\r\n", ch);
-	return;
+    send_to_char("Sure! You'll probably cut yourself trying!&n\r\n", ch);
+    return;
   }
   
-  if(!(victim) ||
-     !IS_ALIVE(victim))
+  if(!(victim) || !IS_ALIVE(victim))
   {
     //CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
     send_to_char("Who's throat would you like to &+rcut&n?\n", ch);
+    return;
+  }
+
+  if( IS_DESTROYING( ch ) )
+  {
+    act("You choke $p viciously.", FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
     return;
   }
 
@@ -10163,24 +10257,24 @@ void do_garrote(P_char ch, char *argument, int cmd)
   {
     act("&+LYou try to slip behind &n$N&+L, but they notice the attempt and block your advance!",
     FALSE, ch, 0, victim, TO_CHAR); 
-	act("&+LYou notice &n$n &+Lattempting to sneak behind you, but quickly block their advance!",
+    act("&+LYou notice &n$n &+Lattempting to sneak behind you, but quickly block their advance!",
     FALSE, ch, 0, victim, TO_VICT);
     act("$N &+Ladeptly notices &n$n's attempt to &+rgarrote&+L them and blocks the attempt!",
     FALSE, ch, 0, victim, TO_NOTVICT);
     set_short_affected_by(ch, SKILL_GARROTE, (int) (2.8 * PULSE_VIOLENCE));
     CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
-	return;
+    return;
   }
   
-    act("&+LYou skillfully slip behind&n $N &+Land &+rslit &+Ltheir &+rth&+Rro&+rat&+L resulting in a &+Rmist &+Lof &+rblood&+L!&n",
+  act("&+LYou skillfully slip behind&n $N &+Land &+rslit &+Ltheir &+rth&+Rro&+rat&+L resulting in a &+Rmist &+Lof &+rblood&+L!&n",
     FALSE, ch, 0, victim, TO_CHAR); 
 	act("&+rOUCH! &n$n &+Lsuddenly appears behind you and makes a &+rslashing &+Lmotion at your &+rth&+Rro&+rat&+L!",
     FALSE, ch, 0, victim, TO_VICT);
-    act("$N &+Lsuddenly stumbles, grasping at their &+rneck&+L as &n$n &+Lstands behind them grinning!",
+  act("$N &+Lsuddenly stumbles, grasping at their &+rneck&+L as &n$n &+Lstands behind them grinning!",
     FALSE, ch, 0, victim, TO_NOTVICT);
-    set_short_affected_by(ch, SKILL_GARROTE, (int) (2.8 * PULSE_VIOLENCE));
+  set_short_affected_by(ch, SKILL_GARROTE, (int) (2.8 * PULSE_VIOLENCE));
 	int	numb = number(5, 8);
-    CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
+  CharWait(ch, (int)(0.5 * PULSE_VIOLENCE));
   if (!IS_FIGHTING(ch))
     set_fighting(ch, victim);
 

@@ -457,7 +457,7 @@ void spell_sever_link(int level, P_char ch, char *arg, int type, P_char victim, 
       send_to_char("But it seems that this time you are powerless.\r\n", ch);
       send_to_char("But it seems they are powerless.\r\n", victim->following);
       act("$N just tried to break the link between you and your master...", FALSE, ch, 0, victim, TO_CHAR);
-      if (!IS_FIGHTING(victim))
+      if (!IS_FIGHTING(victim) && !IS_DESTROYING(victim))
          MobStartFight(victim, ch);
       return;
     }
@@ -558,7 +558,7 @@ void spell_awe(int level, P_char ch, char *arg, int type, P_char victim, P_obj o
     if(total_levels + GET_LEVEL(victim) >= max_total_levels ||
       GET_LEVEL(victim) > max_level)
     {
-      if(!IS_FIGHTING(victim))
+      if(!IS_FIGHTING(victim) && !IS_DESTROYING(victim))
       {
         act("$N&n seems really &+RPISSED OFF!&n", FALSE, ch, 0, victim, TO_CHAR);
         act("You see $n gazing at you, then charges $m!&n",
@@ -590,9 +590,8 @@ void spell_awe(int level, P_char ch, char *arg, int type, P_char victim, P_obj o
         GET_C_POW(ch) + level - GET_C_INT(victim) - GET_LEVEL(victim),
         95);
       
-      if(save < number(0, 100) && 
-        !IS_TRUSTED(victim) &&
-        !IS_FIGHTING(victim))
+      if(save < number(0, 100) && !IS_TRUSTED(victim) &&
+        !IS_FIGHTING(victim) && !IS_DESTROYING(victim))
         {
           set_fighting(victim, ch);
           return;
@@ -611,6 +610,8 @@ void spell_awe(int level, P_char ch, char *arg, int type, P_char victim, P_obj o
           stop_fighting(victim);
           StopMercifulAttackers(victim);
         }
+        if( IS_DESTROYING(victim) )
+          stop_destroying(victim);
       }
     }
     else
@@ -634,13 +635,11 @@ void spell_mind_travel(int level, P_char ch, char *arg, int type, P_char victim,
     25459, 25458, 12535, 12536, 12540
   };
 
-  if (IS_FIGHTING(ch))
+  if(IS_FIGHTING(ch) || IS_DESTROYING(ch))
   {
-    act
-      ("$n travel with the speed of &+Clight&n and reapear at the same place...",
+    act("$n travels with the speed of &+Clight&n and reappears at the same place...",
        FALSE, ch, obj, 0, TO_CHAR);
-    act
-      ("You travel with the speed of &+Clight&n and reapear at the same place",
+    act("You travel with the speed of &+Clight&n and reappear at the same place",
        FALSE, ch, obj, 0, TO_NOTVICT);
     return;
   }
@@ -663,9 +662,7 @@ void spell_mind_travel(int level, P_char ch, char *arg, int type, P_char victim,
   return;
 }
 
-void
-spell_ballistic_attack(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_ballistic_attack(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   const int dam_each[61] = { 0,
     3, 4, 4, 5, 6, 6, 6, 7, 7, 7,
@@ -2021,8 +2018,7 @@ spell_lend_health(int level, P_char ch, char *arg, int type, P_char victim,
   return;
 }
 
-void
-spell_confuse(int level, P_char ch, char *arg, int type, P_char victim,
+void spell_confuse(int level, P_char ch, char *arg, int type, P_char victim,
               P_obj obj)
 {
   int      temp, max_level = 0;
@@ -2083,9 +2079,9 @@ spell_confuse(int level, P_char ch, char *arg, int type, P_char victim,
 		
         case 6:
           if (IS_FIGHTING(tch))
-          {
             stop_fighting(tch);
-          }
+          if (IS_DESTROYING(tch))
+            stop_destroying(tch);
           if ((!(IS_NPC(tch))) && (!(GET_RACE(tch) == RACE_GOLEM)))
           {
             do_flee(tch, 0, 2);
@@ -2117,7 +2113,7 @@ spell_confuse(int level, P_char ch, char *arg, int type, P_char victim,
       else if (IS_NPC(tch) && CAN_SEE(tch, ch))
       {
         remember(tch, ch);
-        if (!IS_FIGHTING(tch))
+        if (!IS_FIGHTING(tch) && !IS_DESTROYING(tch))
           MobStartFight(tch, ch);
       }
     }
@@ -2339,6 +2335,8 @@ void spell_depart(int level, P_char ch, char *arg, int type, P_char victim, P_ob
   
   if(IS_FIGHTING(victim))
     stop_fighting(victim);
+  if(IS_DESTROYING(victim))
+    stop_destroying(victim);
   
   if(victim->in_room != NOWHERE)
     for (t_ch = world[victim->in_room].people; t_ch; t_ch = t_ch->next)
@@ -2719,6 +2717,8 @@ void spell_innate_blast(int level, P_char ch, char *arg, int type,
          victim);
       if (IS_FIGHTING(victim))
         stop_fighting(victim);
+      if (IS_DESTROYING(victim))
+        stop_destroying(victim);
 
       /*
        * stop all non-vicious/agg attackers
@@ -2732,7 +2732,7 @@ void spell_innate_blast(int level, P_char ch, char *arg, int type,
   else if (IS_NPC(victim) && CAN_SEE(victim, ch))
   {
     remember(victim, ch);
-    if (!IS_FIGHTING(victim))
+    if (!IS_FIGHTING(victim) && !IS_DESTROYING(victim))
       MobStartFight(victim, ch);
   }
 }

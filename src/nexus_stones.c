@@ -747,6 +747,8 @@ void nexus_guardian_energy_burst(P_char ch, bool show_message = true)
           act("$n flies in, crashing on the floor!", TRUE, tch, 0, 0, TO_ROOM);
           SET_POS(tch, POS_PRONE + GET_STAT(tch));
           stop_fighting(tch);
+          if( IS_DESTROYING(tch) )
+            stop_destroying(tch);
           CharWait(tch, PULSE_VIOLENCE * 3);
         }
         
@@ -757,6 +759,8 @@ void nexus_guardian_energy_burst(P_char ch, bool show_message = true)
         act("The wave slams into $N, knocking $M off $S feet!", FALSE, ch, 0, tch, TO_NOTVICT);
         SET_POS(tch, POS_SITTING + GET_STAT(tch));
         stop_fighting(tch);
+        if( IS_DESTROYING(tch) )
+          stop_destroying(tch);
         CharWait(tch, PULSE_VIOLENCE * 2);
       }
     

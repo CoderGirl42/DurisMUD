@@ -402,6 +402,12 @@ void do_fire(P_char ch, char *argument, int cmd)
     raise(SIGSEGV);
   }  
 
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You're too busy destroying something.\n", ch );
+    return;
+  }
+
    weapon = ch->equipment[WIELD];
 
    if (!weapon)
@@ -527,7 +533,7 @@ void do_fire(P_char ch, char *argument, int cmd)
    }
    //-------------------------------
 
-   if (IS_FIGHTING(ch))
+   if( IS_FIGHTING(ch))
    {
       if( notch_skill(ch, SKILL_POINT_BLANK_SHOT, 10) ||
           number(1, 130) <= GET_CHAR_SKILL(ch, SKILL_POINT_BLANK_SHOT) )

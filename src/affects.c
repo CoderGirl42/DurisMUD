@@ -626,7 +626,7 @@ void apply_affs(P_char ch, int mode)
   // players to cast hawkvision. innate_perception has a bonus in track.c
   // if (has_innate(ch, INNATE_PERCEPTION))
     // SET_BIT(ch->specials.affected_by4, AFF4_HAWKVISION);
-  if (IS_FIGHTING(ch) && IS_AFFECTED(ch, AFF_HIDE))
+  if ((IS_FIGHTING(ch) || IS_DESTROYING(ch)) && IS_AFFECTED(ch, AFF_HIDE))
     REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
   if (GET_CHAR_SKILL(ch, SKILL_LISTEN))
     SET_BIT(ch->specials.affected_by5, AFF5_LISTEN);
@@ -2904,9 +2904,9 @@ void Stun(P_char stunnee, P_char stunner, int duration, bool Fear_Check)
       send_to_char("&+wThe world starts spinning, and your ears are ringing!\r\n", stunnee);
       act("$n&n is &+Wstunned!&n", TRUE, stunnee, 0, 0, TO_ROOM);
       if(IS_FIGHTING(stunnee))
-      {
         stop_fighting(stunnee);
-      }
+      if(IS_DESTROYING(stunnee))
+        stop_destroying(stunnee);
     }
     else if(!NewSaves(stunnee, SAVING_FEAR, chance + number(0, 3)))
     {
@@ -2922,6 +2922,8 @@ void Stun(P_char stunnee, P_char stunner, int duration, bool Fear_Check)
       if(!number(0, 3) && IS_FIGHTING(stunnee))
       {
         stop_fighting(stunnee);
+        if( IS_DESTROYING(stunnee) )
+          stop_destroying(stunnee);
       }
     }
   }
@@ -2937,9 +2939,9 @@ void Stun(P_char stunnee, P_char stunner, int duration, bool Fear_Check)
     send_to_char("&+wThe world starts spinning, and your ears are ringing!\r\n", stunnee);
     act("$n&n is &+Wstunned!&n", TRUE, stunnee, 0, 0, TO_ROOM);
     if(IS_FIGHTING(stunnee))
-    {
       stop_fighting(stunnee);
-    }
+    if(IS_DESTROYING(stunnee))
+      stop_destroying(stunnee);
   }
 }
 
@@ -3124,6 +3126,7 @@ int camp(P_char ch)
     {
       if (!ch->desc ||
           IS_FIGHTING(ch) ||
+          IS_DESTROYING(ch) ||
           (ch->in_room != af->modifier) ||
           (GET_STAT(ch) < STAT_SLEEPING) ||
           IS_SET(ch->specials.affected_by, AFF_HIDE) ||
@@ -3145,6 +3148,8 @@ int camp(P_char ch)
           /* done the time, now we rent em out.  */
           if (IS_FIGHTING(ch))
             stop_fighting(ch);
+          if( IS_DESTROYING(ch) )
+            stop_destroying(ch);
           affect_from_char(ch, SKILL_CAMP);
           if (!RACE_PUNDEAD(ch))
           {

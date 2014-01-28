@@ -298,6 +298,8 @@ void npc_steal(P_char ch, P_char vict)
         ((world[ch->in_room].room_flags & SINGLE_FILE) &&
          !AdjacentInRoom(ch, vict)) || IS_FIGHTING(ch) || IS_FIGHTING(vict))
       return;
+    if( IS_DESTROYING(ch) || IS_DESTROYING(vict) )
+      return;
     chance = ((2 * GET_LEVEL(vict) + GET_LEVEL(vict) / 4) - GET_LEVEL(ch));
     if (chance == 0)
       chance = 1;

@@ -1434,6 +1434,8 @@ int mob_vecna_procs(P_obj obj, P_char ch, int cmd, char *arg)
 
       if(IS_FIGHTING(victim))
         stop_fighting(victim);
+      if(IS_DESTROYING(victim))
+        stop_destroying(victim);
         
       SET_POS(victim, POS_KNEELING + GET_STAT(victim));
       CharWait(victim, PULSE_VIOLENCE * 2);
@@ -1452,6 +1454,8 @@ int mob_vecna_procs(P_obj obj, P_char ch, int cmd, char *arg)
 
       if(IS_FIGHTING(victim))
         stop_fighting(victim);
+      if(IS_DESTROYING(victim))
+        stop_destroying(victim);
         
       CharWait(victim, PULSE_VIOLENCE * 2);
       berserk(victim, 5);

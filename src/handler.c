@@ -425,7 +425,7 @@ int room_light(int room_nr, int flag)
 
     LOOP_THRU_PEOPLE(t_ch, world[rroom].people)
     {
-      if (IS_NPC(t_ch) && AWAKE(t_ch) && !IS_FIGHTING(t_ch) &&
+      if (IS_NPC(t_ch) && AWAKE(t_ch) && !IS_DESTROYING(t_ch) && !IS_FIGHTING(t_ch) &&
           MIN_POS(t_ch, POS_STANDING + STAT_NORMAL) &&
           (victim = PickTarget(t_ch)) && is_aggr_to(t_ch, victim))
         AddEvent(EVENT_AGG_ATTACK, number(1, 5), TRUE, t_ch, victim);
@@ -1015,6 +1015,8 @@ int char_to_room(P_char ch, int room, int dir)
 
   if (ch->specials.fighting && (dir >= 0))
     stop_fighting(ch);
+  if( IS_DESTROYING(ch) && (dir >= 0) )
+    stop_destroying(ch);
 
   char_light(ch);
   room_light(ch->in_room, REAL);
@@ -2792,7 +2794,8 @@ void extract_char(P_char ch)
 
   if (ch->specials.fighting)
     stop_fighting(ch);
-
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
   /*
    * Code to stop all that are attacking ch
    */

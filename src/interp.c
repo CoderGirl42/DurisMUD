@@ -1459,7 +1459,7 @@ void command_interpreter(P_char ch, char *argument)
   if ((cmd > 0) && (cmd_info[cmd].command_pointer != 0))
   {
     if (!MIN_POS(ch, cmd_info[cmd].minimum_position) ||
-        (IS_FIGHTING(ch) && !cmd_info[cmd].in_battle))
+        ((IS_FIGHTING(ch) || IS_DESTROYING(ch)) && !cmd_info[cmd].in_battle))
     {
       if (GET_STAT(ch) < (cmd_info[cmd].minimum_position & STAT_MASK))
         switch (GET_STAT(ch))
@@ -1494,10 +1494,8 @@ void command_interpreter(P_char ch, char *argument)
           send_to_char("Maybe you should get on your feet first?\r\n", ch);
           break;
         }
-      if (IS_FIGHTING(ch) && !cmd_info[cmd].in_battle)
-        send_to_char("Sorry, you aren't allowed to do that in combat.\r\n",
-                     ch);
-
+      if( (IS_FIGHTING(ch) || IS_DESTROYING(ch)) && !cmd_info[cmd].in_battle )
+        send_to_char("Sorry, you aren't allowed to do that in combat.\r\n", ch);
       return;
     }
     else

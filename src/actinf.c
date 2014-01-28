@@ -1302,7 +1302,7 @@ void show_char_to_char(P_char i, P_char ch, int mode)
 
     if (IS_PC(i) || (i->specials.position != i->only.npc->default_pos) ||
         IS_FIGHTING(i) || IS_RIDING(i) || i->lobj->Visible_Type() ||
-        (GET_RNUM(i) == real_mobile(250)))
+        (GET_RNUM(i) == real_mobile(250)) || IS_DESTROYING(ch) )
     {
       /* A player char or a mobile w/o long descr, or not in default pos. */
       if (IS_PC(i) || (GET_RNUM(i) == real_mobile(250)))
@@ -1373,7 +1373,7 @@ void show_char_to_char(P_char i, P_char ch, int mode)
           if (racewar(ch, i) && !IS_TRUSTED(i) && !IS_ILLITHID(ch))
             sprintf(buffer + strlen(buffer), "%s %s (%s)",
             ((GET_RACE(i) == RACE_ILLITHID) ||
-	     (GET_RACE(i) == RACE_PILLITHID) ||
+            (GET_RACE(i) == RACE_PILLITHID) ||
             (GET_RACE(i) == RACE_ORC) ||
             (GET_RACE(i) == RACE_OROG) ||
             (GET_RACE(i) == RACE_AGATHINON) ||
@@ -1620,6 +1620,11 @@ void show_char_to_char(P_char i, P_char ch, int mode)
           sprintf(buffer + strlen(buffer), " %s $p",i->lobj->Visible_Message());
         if (!i->specials.fighting)
         {
+          if( i->specials.destroying_obj )
+          {
+            strcat( buffer, " destroying " );
+            strcat( buffer, (i->specials.destroying_obj)->short_description );
+          }
           strcat(buffer, ".");
         }
         else
@@ -4697,6 +4702,10 @@ void do_score(P_char ch, char *argument, int cmd)
     {
       sprintf(buf + strlen(buf), ", fighting %s.",
               PERS(ch->specials.fighting, ch, FALSE));
+    }
+    else if( IS_DESTROYING(ch) )
+    {
+      sprintf(buf + strlen(buf), ", destroying %s.", ch->specials.destroying_obj);
     }
     else if (NumAttackers(ch) > 0)
     {

@@ -1130,7 +1130,7 @@ void do_trap(P_char ch, char *arg, int cmd)
     send_to_char("You can't lay a trap in here!\r\n", ch);
     return;
   }
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("You cannot possibly lay a trap while fighting!\r\n", ch);
     return;
@@ -1177,7 +1177,7 @@ void do_trap(P_char ch, char *arg, int cmd)
 
       /* Decide if monster should attack */
 
-      if (IS_FIGHTING(monster))
+      if( IS_FIGHTING(monster) || IS_DESTROYING(monster) )
         continue;
 
       if (!CAN_SEE(monster, ch))
@@ -1303,7 +1303,7 @@ void do_subterfuge(P_char ch, char *arg, int cmd)
     send_to_char("You don't know how.\r\n", ch);
     return;
   }
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("No way!! You simply are not able to concentrate.\r\n", ch);
     return;
@@ -1353,7 +1353,7 @@ void do_subterfuge(P_char ch, char *arg, int cmd)
   if (CAN_SEE(npc, ch))
   {
     remember(npc, ch);
-    if (!IS_FIGHTING(npc))
+    if( !IS_FIGHTING(npc) && !IS_DESTROYING(npc) )
       MobStartFight(npc, ch);
   }
 }
@@ -1374,7 +1374,7 @@ void do_disarm(P_char ch, char *arg, int cmd)
   arg = one_argument(arg, vict_name);
   if (*vict_name == '\0')
   {
-    if (IS_FIGHTING(ch))
+    if( IS_FIGHTING(ch) )
       send_to_char("Disarm who?\r\n", ch);
     else
       send_to_char("Disarm what?\r\n", ch);
@@ -2526,7 +2526,7 @@ void do_dirttoss(P_char ch, char *arg, int cmd)
   if (IS_NPC(vict) && CAN_SEE(vict, ch))
   {
     remember(vict, ch);
-    if (!IS_FIGHTING(vict))
+    if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
       MobStartFight(vict, ch);
   }
   return;
@@ -2566,7 +2566,7 @@ void do_lore(P_char ch, char *arg, int cmd)
   if (!ch)
     return;
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("You can't concentrate on that right now.\r\n", ch);
     return;
@@ -3072,6 +3072,12 @@ void do_throat_crush(P_char ch, char *arg, int cmd)
   {
     return;
   }
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You can't throat crush an object.\n", ch );
+    return;
+  }
   
   if(!IS_FIGHTING(ch))
   {
@@ -3221,6 +3227,12 @@ void do_hamstring(P_char ch, char *arg, int cmd)
   if (!ch)
     return;
 
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "You can't hamstring an object.\n", ch );
+    return;
+  }
+  
 //  if(!GET_SPEC(ch, CLASS_ASSASSIN,  SPEC_ASSMASTER))
 //   return;
 

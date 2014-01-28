@@ -141,7 +141,7 @@ void new_ah_call(P_char ch, char *arguments, int cmd)
   if ( cmd != CMD_AUCTION )
   return;
 
-  if (IS_FIGHTING(ch)) 
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("&+yYou're too busy fighting for your life to participate "
                  "in an auction!&n\r\n", ch);
@@ -196,7 +196,7 @@ int auction_house_room_proc(int room_num, P_char ch, int cmd, char *arguments)
   if( !IS_PC(ch) )
     return FALSE;
 	
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("&+yYou're too busy fighting for your life to participate "
                  "in an auction!&n\r\n", ch);

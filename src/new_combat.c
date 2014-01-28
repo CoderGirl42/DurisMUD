@@ -2155,6 +2155,8 @@ int hit(P_char ch, P_char victim, P_obj weapon, const int hit_type,
        * room, if none found, _SELF_! muhahahahahahaaaa..
        */
       stop_fighting(ch);
+      if( IS_DESTROYING(ch) )
+        stop_destroying(ch);
       sic = 1;
       for (tch = world[ch->in_room].people; (tch && sic);
            tch = tch->next_in_room)
@@ -2357,6 +2359,11 @@ void perform_violence(void)
   /* new stuff */
 
   bool     no_dodge;
+
+  for( ch = destroying_list; ch; ch = ch->next_destroying )
+  {
+    multihit_siege( ch );
+  }
 
   for (ch = combat_list; ch; ch = combat_next_ch)
   {

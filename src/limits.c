@@ -203,7 +203,7 @@ int mana_regen(P_char ch)
 
   gain += ch->points.mana_reg;
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     gain = 0;
 
   if (has_innate(ch, INNATE_VULN_SUN) && IS_SUNLIT(ch->in_room) &&
@@ -301,7 +301,7 @@ int hit_regen(P_char ch)
   if (gain == 0 && GET_STAT(ch) < STAT_SLEEPING)
     gain = -1;
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     for (af = ch->affected; af; af = af->next)
       if (af->bitvector4 & AFF4_REGENERATION)
@@ -311,7 +311,7 @@ int hit_regen(P_char ch)
     else if (IS_AFFECTED4(ch, AFF4_REGENERATION))
       gain >>= 1;
     else if (has_innate(ch, INNATE_WOODLAND_RENEWAL) && (world[ch->in_room].sector_type == SECT_FOREST)) //can regen in battle in forest - Drannak
-	gain >>= 1;
+      gain >>= 1;
     else
       gain = 0;
   }
@@ -349,6 +349,7 @@ int move_regen(P_char ch)
      IS_AFFECTED2(ch, AFF2_HOLDING_BREATH) ||
      IS_AFFECTED2(ch, AFF2_IS_DROWNING) ||
      IS_FIGHTING(ch) ||
+     IS_DESTROYING(ch) ||
      IS_STUNNED(ch))
         return 0;
         

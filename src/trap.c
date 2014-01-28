@@ -521,6 +521,8 @@ void trapdamage(P_char ch, P_obj obj)
          FALSE, ch, obj, 0, TO_CHAR);
       if (ch->specials.fighting)
         stop_fighting(ch);
+      if( IS_DESTROYING(ch) )
+        stop_destroying(ch);
       if (GET_STAT(ch) > STAT_SLEEPING)
       {
         act("&+LA strange gas pours forth from $p, and $n goes to sleep.",
@@ -546,6 +548,8 @@ void trapdamage(P_char ch, P_obj obj)
            FALSE, wch, obj, 0, TO_CHAR);
         if (wch->specials.fighting)
           stop_fighting(wch);
+        if( IS_DESTROYING(wch) )
+          stop_destroying(wch);
         if (GET_STAT(wch) > STAT_SLEEPING)
         {
           SET_POS(wch, GET_POS(wch) + STAT_SLEEPING);

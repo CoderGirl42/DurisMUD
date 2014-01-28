@@ -1209,6 +1209,8 @@ void blow_char_somewhere_else(P_char ch, int dir)
 
   if (IS_FIGHTING(ch))
     stop_fighting(ch);
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
   for (t_ch = world[ch->in_room].people; t_ch; t_ch = t_ch->next)
     if (IS_FIGHTING(t_ch) && (t_ch->specials.fighting == ch))
       stop_fighting(t_ch);
@@ -1834,6 +1836,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
         CAN_ACT(k->follower) &&
         MIN_POS(k->follower, POS_STANDING + STAT_RESTING) &&
         !IS_FIGHTING(k->follower) &&
+        !IS_DESTROYING(k->follower) &&
         !NumAttackers(k->follower) &&
         CAN_SEE(k->follower, ch))
       {
@@ -2845,11 +2848,9 @@ void do_pick(P_char ch, char *argument, int cmd)
     send_to_char("You don't know how to pick locks...\n", ch);
     return;
   }
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
-    send_to_char
-      ("Uh huh, while fighting eh?  That would be a REALLY nice trick!\n",
-       ch);
+    send_to_char("Uh huh, while fighting eh?  That would be a REALLY nice trick!\n", ch);
     return;
   }
   pick = ch->equipment[HOLD];
@@ -4146,10 +4147,15 @@ void do_rest(P_char ch, char *argument, int cmd)
     return;
     break;
   case STAT_NORMAL:
-    if (IS_FIGHTING(ch) || NumAttackers(ch))
+    if( IS_FIGHTING(ch) || NumAttackers(ch) )
     {
       send_to_char("Resting now will most likely lead to your final rest!\n",
                    ch);
+      return;
+    }
+    if( IS_DESTROYING(ch) )
+    {
+      send_to_char("You try, but you can't focus while destroying.\n", ch);
       return;
     }
     if (IS_AFFECTED(ch, AFF_BOUND))
@@ -4273,6 +4279,11 @@ void do_sleep(P_char ch, char *argument, int cmd)
   if (IS_FIGHTING(ch) || NumAttackers(ch))
   {
     send_to_char("Sleep while fighting?  Are you MAD?\n", ch);
+    return;
+  }
+  if( IS_DESTROYING( ch ) )
+  {
+    send_to_char("Sleep while destroying an object?\n", ch);
     return;
   }
   if (world[ch->in_room].sector_type >= SECT_WATER_SWIM &&

@@ -79,9 +79,9 @@ void spell_beholder_sleep(int level, P_char ch, P_char victim, P_obj obj)
        "&+Lla-la land.\r\n", victim);
        
     if(victim->specials.fighting)
-    {
       stop_fighting(victim);
-    }
+    if( IS_DESTROYING(victim) )
+      stop_destroying(victim);
     
     if(GET_STAT(victim) > STAT_SLEEPING)
     {
@@ -109,7 +109,7 @@ void spell_beholder_sleep(int level, P_char ch, P_char victim, P_obj obj)
   {
     remember(victim, ch);
     
-    if(!IS_FIGHTING(victim))
+    if(!IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
     {
       MobStartFight(victim, ch);
     }
@@ -283,9 +283,9 @@ void spell_beholder_paralyze(int level, P_char ch, P_char victim, P_obj obj)
       ("&+LA short gasp escapes your lips as your flesh turns into stone.\r\n",
        victim);
     if(IS_FIGHTING(victim))
-    {
       stop_fighting(victim);
-    }
+    if(IS_DESTROYING(victim))
+      stop_destroying(victim);
     
     /*
      * stop all non-vicious/agg attackers
@@ -297,7 +297,7 @@ void spell_beholder_paralyze(int level, P_char ch, P_char victim, P_obj obj)
           (CAN_SEE(victim, ch)))
   {
     remember(victim, ch);
-    if(!IS_FIGHTING(victim))
+    if(!IS_FIGHTING(victim) && !IS_DESTROYING(victim))
     {
       MobStartFight(victim, ch);
     }
@@ -534,7 +534,7 @@ void spell_beholder_fear(int level, P_char ch, P_char victim, P_obj obj)
       CAN_SEE(victim, ch))
     {
       remember(victim, ch);
-      if (!IS_FIGHTING(victim))
+      if( !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
       {
         MobStartFight(victim, ch);
       }
@@ -601,7 +601,7 @@ void spell_beholder_slowness(int level, P_char ch, P_char victim, P_obj obj)
     CAN_SEE(victim, ch))
   {
     remember(victim, ch);
-    if (!IS_FIGHTING(victim))
+    if( !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
     {
       MobStartFight(victim, ch);
     }

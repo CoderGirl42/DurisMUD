@@ -25,6 +25,7 @@ void save_towns();
 void apply_zone_modifier(P_char ch);
 int castlewall( P_obj obj, P_char ch, int cmd, char *arg );
 bool has_gates( int room );
+int calculate_attacks(P_char ch, int attacks[]);
 
 // Dependent on ch's str and weight.  Pretty simple atm.
 int siege_move_wait( P_char ch )
@@ -62,7 +63,7 @@ void event_load_engine(P_char ch, P_char victim, P_obj obj, void *data)
 // Char can move if exit is unblocked and ch not fighting.
 bool can_move( P_char ch, int dir )
 {
-  if( IS_FIGHTING(ch) )
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     return FALSE;
 
   if( !EXIT( ch, dir ) )
@@ -1289,4 +1290,106 @@ bool has_gates( int room )
     objects = objects->next_content;
   }
   return FALSE;
+}
+
+void kill_siege( P_char ch, P_obj obj )
+{
+  char buf[MAX_STRING_LENGTH];
+
+  if( IS_FIGHTING( ch ) || IS_DESTROYING(ch) )
+  {
+    send_to_char( "You are already fighting.\n", ch );
+    return;
+  }
+  if( !is_siege( obj ) )
+  {
+    send_to_char( "You can only attack siege objects.\n", ch );
+    return;
+  }
+
+  act( "You begin to attack $p.", FALSE, ch, obj, NULL, TO_CHAR );
+
+  set_destroying( ch, obj );
+
+}
+
+void multihit_siege( P_char ch )
+{
+  P_obj siege, scraps, weapon;
+  bool  destroy = FALSE;
+  char  buf[MAX_STRING_LENGTH];
+  int   number_attacks, num_attacks;
+  int   damage;
+  int   attacks[256];
+
+  if( !ch )
+    return;
+
+  siege = ch->specials.destroying_obj;
+
+  if( !IS_DESTROYING(ch) )
+    return;
+  if( !siege )
+    return;
+
+  appear(ch);
+
+  num_attacks = 0;
+  number_attacks = calculate_attacks(ch, attacks);
+  while( ++num_attacks <= number_attacks )
+  {
+    act( "You hit $p.", FALSE, ch, siege, NULL, TO_CHAR | ACT_NOTTERSE );
+    act( "$n hits $p.", FALSE, ch, siege, NULL, TO_ROOM | ACT_NOTTERSE );
+
+    weapon = ch->equipment[attacks[num_attacks-1]];
+    if( !weapon )
+    {
+      if( GET_CLASS(ch, CLASS_MONK) )
+        damage = MonkDamage(ch) + GET_DAMROLL(ch) / 2;
+      else
+        damage = 1 + GET_DAMROLL(ch) / 2;
+    }
+    else
+      damage = dice( weapon->value[1], weapon->value[2] ) + GET_DAMROLL(ch) / 2;
+    siege->condition -= MAX( 1, damage / 20 );
+    if( siege->condition <= 0 )
+      break;
+  }
+  if( num_attacks > number_attacks )
+    num_attacks = number_attacks;
+  sprintf( buf, "You hit $p &+R%d&n times.", num_attacks );
+  act( buf, FALSE, ch, siege, NULL, TO_CHAR | ACT_TERSE );
+  sprintf( buf, "$n hits $p &+R%d&n times.", num_attacks );
+  act( buf, FALSE, ch, siege, NULL, TO_ROOM | ACT_TERSE );
+  if( siege->condition <= 0 )
+    destroy = TRUE;
+
+  sprintf(buf, "$q %s", destroy ? "is completely destroyed!" :
+                                  "is damaged from the blow!" );
+  act(buf, TRUE, NULL, siege, 0, TO_ROOM);
+
+  if( destroy )
+  {
+    stop_destroying( ch );
+
+    act("$p collapses into scraps.", TRUE, NULL, siege, 0, TO_ROOM);
+    scraps = read_object(9, VIRTUAL);
+    if( !scraps )
+    {
+      extract_obj( siege, TRUE );
+      return;
+    }
+    sprintf(buf, "Scraps from %s&n lie in a pile here.",
+      siege->short_description);
+    scraps->description = str_dup(buf);
+    sprintf(buf, "a pile of scraps from %s", siege->short_description);
+    scraps->short_description = str_dup(buf);
+    sprintf(buf, "%s scraps pile", siege->name);
+    scraps->name = str_dup(buf);
+    scraps->str_mask = STRUNG_DESC1 | STRUNG_DESC2 | STRUNG_KEYS;
+    set_obj_affected(scraps, 400, TAG_OBJ_DECAY, 0);
+    obj_to_room(scraps, siege->loc.room);
+
+    extract_obj( siege, TRUE );
+  }
 }

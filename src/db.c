@@ -4093,6 +4093,7 @@ void reset_char(P_char ch)
 #else
   ch->specials.next_fighting = 0;
 #endif
+  ch->specials.destroying_obj = 0;
   ch->next_in_room = 0;
   ch->specials.fighting = 0;
   ch->specials.carry_weight = 0;

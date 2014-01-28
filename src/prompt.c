@@ -30,6 +30,7 @@ extern P_desc descriptor_list;
 void make_prompt(void)
 {
   P_char   t_ch = NULL, t_ch_f = NULL, tank = NULL;
+  P_obj    t_obj_f = NULL;
   P_desc   point, next_point;
   char     promptbuf[MAX_INPUT_LENGTH]; /*, pname[512]; */
   int      percent, t_ch_p = 0;
@@ -40,7 +41,10 @@ void make_prompt(void)
     next_point = point->next;
     t_ch = point->character;
     if (t_ch)
+    {
       t_ch_f = t_ch->specials.fighting;
+      t_obj_f = t_ch->specials.destroying_obj;
+    }
 
     if (!point->prompt_mode     /*&& !point->showstr_count && !point->str &&
                                    !point->olc */ )
@@ -544,6 +548,24 @@ void make_prompt(void)
           }
         }
       }
+      if( t_obj_f )
+      {
+        if (IS_ANSI_TERM(point))
+        {
+          strcat(promptbuf, "\033[32m E: ");
+          strcat(promptbuf, FirstWord(t_obj_f->name) );
+          sprintf(promptbuf + strlen(promptbuf), " EC: %d ",
+            t_obj_f->condition );
+        }
+        else
+        {
+          strcat(promptbuf, " E: ");
+          strcat(promptbuf, FirstWord(t_obj_f->name) );
+          sprintf(promptbuf + strlen(promptbuf), " EC: %d",
+            t_obj_f->condition );
+        }
+      }
+
       if (IS_SET(t_ch_p, PROMPT_VIS) && IS_TRUSTED(t_ch))
       {
         if (IS_ANSI_TERM(point))

@@ -666,6 +666,7 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
   /* || IS_SET(ch->specials.act, PLR_DEBUG)*/)
 
 #define IS_FIGHTING(ch) ((ch->specials.fighting)? 1: 0)
+#define IS_DESTROYING(ch) ((ch->specials.destroying_obj)? 1: 0)
 #define GET_OPPONENT(ch) (ch->specials.fighting)
 
 /* Defining this to make life considerably easier - SKB 24 Mar 1995 */

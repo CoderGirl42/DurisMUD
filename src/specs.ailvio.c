@@ -113,18 +113,12 @@ int bandage_mob(P_char ch, P_char pl, int cmd, char *arg)
 {
 
   if (cmd == CMD_SET_PERIODIC)
-  {
     return TRUE;
-  }
   
-  if(!(ch) ||
-     IS_PC(ch))
-  {
+  if(!(ch) || IS_PC(ch))
     return FALSE;
-  }
 
-  if ((GET_STAT(ch) > STAT_INCAP) &&
-       !IS_FIGHTING(ch))
+  if ((GET_STAT(ch) > STAT_INCAP) && !IS_FIGHTING(ch) && !IS_DESTROYING(ch))
   {
     SET_POS(ch, POS_PRONE + STAT_INCAP);
     GET_HIT(ch) = 0;

@@ -729,6 +729,7 @@ bool MobCastSpell(P_char ch, P_char victim, P_obj object, int spl, int lvl)
       {
         if(IS_NPC(victim) &&
           !IS_FIGHTING(victim) &&
+          !IS_DESTROYING(victim) &&
           CAN_SEE(victim, ch) &&
           (GET_POS(ch) == POS_STANDING))
         {
@@ -1147,6 +1148,7 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
    */
   if(!IS_GOOD(ch) &&
      !IS_FIGHTING(ch) &&
+     !IS_DESTROYING(ch) &&
      !GET_MASTER(ch) &&
      !CHAR_IN_JUSTICE_AREA(ch) &&
      !CHAR_IN_TOWN(ch) &&
@@ -1299,6 +1301,7 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
      let's go to town on this too */
 
   if(!IS_FIGHTING(ch) &&
+     !IS_DESTROYING(ch) &&
      !GET_MASTER(ch) &&
      !CHAR_IN_JUSTICE_AREA(ch) &&
      !CHAR_IN_TOWN(ch))
@@ -1322,7 +1325,7 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
   {
     if(!spl && npc_has_spell_slot(ch, SPELL_INVIS_MAJOR)
         && !IS_FIGHTING(ch) && !IS_AFFECTED(target, AFF_INVISIBLE)
-        && !IS_AFFECTED2(target, AFF2_MINOR_INVIS)
+        && !IS_DESTROYING(ch) && !IS_AFFECTED2(target, AFF2_MINOR_INVIS)
         && !IS_ACT(target, ACT_TEACHER) && !IS_FIGHTING(target)
         && (!IS_NPC(target) || !mob_index[GET_RNUM(target)].qst_func)
         && (GET_HIT(target) < GET_MAX_HIT(target)) && !CHAR_IN_TOWN(ch)
@@ -1333,7 +1336,7 @@ bool CastMageSpell(P_char ch, P_char victim, int helping)
   {
     if(!spl && npc_has_spell_slot(ch, SPELL_INVISIBLE)
         && !IS_FIGHTING(ch) && !IS_AFFECTED(target, AFF_INVISIBLE)
-        && !IS_AFFECTED2(target, AFF2_MINOR_INVIS)
+        && !IS_DESTROYING(ch) && !IS_AFFECTED2(target, AFF2_MINOR_INVIS)
         && !IS_ACT(target, ACT_TEACHER) && !IS_FIGHTING(target)
         && (!IS_NPC(target) || !mob_index[GET_RNUM(target)].qst_func)
         && (GET_HIT(target) < GET_MAX_HIT(target)) && !CHAR_IN_TOWN(ch)
@@ -5922,6 +5925,7 @@ bool MobBerserker(P_char ch)
 
   return FALSE;
 }
+
 /* Lets try our hand at making bards a bit more intuitive in combat */
 bool MobBard(P_char ch)
 {
@@ -7079,7 +7083,7 @@ void MobStartFight(P_char ch, P_char vict)
     }
     else
     {
-      if(!IS_FIGHTING(ch))
+      if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
       {
         set_fighting(ch, vict); // May or may not roar depends on level.
       }
@@ -7867,7 +7871,7 @@ PROFILE_END(mundane_justice);
 PROFILE_END(mundane_justice);
 
 PROFILE_START(mundane_commune);
-  if(!IS_FIGHTING(ch) && !number(0, 20)) // If not fighting, "mem"
+  if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch) && !number(0, 20)) // If not fighting, "mem"
   {// 5%
     // made a separate procedure for mobs, w/o sprintfs and all  -Odorf
     do_npc_commune(ch);
@@ -7882,7 +7886,7 @@ PROFILE_END(mundane_commune);
 PROFILE_START(mundane_autostand);
   if(GET_POS(ch) < POS_STANDING)
   {// 3%
-    if(IS_FIGHTING(ch))
+    if(IS_FIGHTING(ch) || IS_DESTROYING(ch))
     {
       do_stand(ch, 0, 0);
 PROFILE_END(mundane_autostand);
@@ -8211,7 +8215,8 @@ PROFILE_START(mundane_assist);
       if(CAN_GO(ch, door) && !IS_SET(world[EXIT(ch, door)->to_room].room_flags, NO_MOB) &&
         (world[EXIT(ch, door)->to_room].zone == world[ch->in_room].zone) &&
         !IS_SET(zone_table[world[EXIT(ch, door)->to_room].zone].flags, ZONE_SILENT) &&
-        !IS_SET(world[EXIT(ch, door)->to_room].room_flags, ROOM_SILENT)
+        !IS_SET(world[EXIT(ch, door)->to_room].room_flags, ROOM_SILENT
+        && (EXIT(ch, door)->to_room != NOWHERE) )
         /* &&!IS_SET(world[EXIT(ch, door)->to_room].room_flags, MAGIC_DARK) */)
       {
         P_char next;
@@ -8497,8 +8502,7 @@ bool MobDestroyWall(P_char ch, P_obj wall, bool bTryHit)
     {
       MobCastSpell(ch, 0, wall, SPELL_DISPEL_MAGIC, GET_LEVEL(ch));
     }
-    else if(bTryHit &&
-            !IS_FIGHTING(ch))
+    else if(bTryHit && !IS_FIGHTING(ch) && !IS_DESTROYING(ch))
     {
       char cmdBuf[500];
       sprintf(cmdBuf, "wall %s", dirs[wall->value[1]]);
@@ -9758,7 +9762,7 @@ void mob_hunt_event(P_char ch, P_char victim, P_obj obj, void *d)
         do_action(ch, 0, CMD_CURSE);
         break;
       }
-    if(!IS_FIGHTING(ch))
+    if(!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
     {
       /*
        * they flee?  whatever happened, stay on them...
@@ -10029,7 +10033,7 @@ P_char find_protector_target(P_char ch)
   int      is_guard = FALSE;    /* set to TRUE if ch is a justice
                                    guard */
 
-  if(!ch || IS_FIGHTING(ch) || !CAN_ACT(ch) || ALONE(ch) || GET_MASTER(ch))
+  if(!ch || IS_FIGHTING(ch) || IS_DESTROYING(ch) || !CAN_ACT(ch) || ALONE(ch) || GET_MASTER(ch))
     return NULL;
 
   if(CHAR_IN_TOWN(ch) && (hometowns[CHAR_IN_TOWN(ch) - 1].flags) && IS_GUARD(ch))
@@ -10168,6 +10172,8 @@ void MobRetaliateRange(P_char ch, P_char vict)
     else
       StopCasting(ch);
 
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
   /* Add to memory! */
 
   if(HAS_MEMORY(ch))
@@ -10491,8 +10497,7 @@ void event_agg_attack(P_char ch, P_char victim, P_obj obj, void *data)
       return;                   /* PCs will have to track on their own */
     }
     
-    if(IS_SET(ch->specials.act, ACT_SENTINEL) ||
-      IS_FIGHTING(ch))
+    if(IS_SET(ch->specials.act, ACT_SENTINEL) || IS_FIGHTING(ch))
     {
       return;                   /* damn, missed again */
     }

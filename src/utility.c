@@ -2325,6 +2325,7 @@ bool is_aggr_to(P_char ch, P_char target)
   }
   
   if(IS_FIGHTING(ch) ||
+    IS_DESTROYING(ch) ||
     !AWAKE(ch) ||
     IS_IMMOBILE(ch) ||
     CHAR_IN_SAFE_ZONE(ch) ||

@@ -1027,6 +1027,7 @@ void event_fish_check(P_char ch, P_char victim, P_obj, void *data)
 
   if (!ch->desc ||
       IS_FIGHTING(ch) ||
+      IS_DESTROYING(ch) ||
       (ch->in_room != fdata->room) ||            
       !MIN_POS(ch, POS_STANDING + STAT_NORMAL) ||                    
       IS_SET(ch->specials.affected_by, AFF_HIDE) ||
@@ -1214,6 +1215,7 @@ void event_mine_check(P_char ch, P_char victim, P_obj, void *data)
 
   if (!ch->desc ||
       IS_FIGHTING(ch) ||
+      IS_DESTROYING(ch) ||
       (ch->in_room != mdata->room) ||            
       !MIN_POS(ch, POS_STANDING + STAT_NORMAL) ||                    
       IS_SET(ch->specials.affected_by, AFF_HIDE) ||
@@ -1637,10 +1639,12 @@ void event_bandage_check(P_char ch, P_char victim, P_obj, void *data)
 
   if (!ch->desc ||
       IS_FIGHTING(ch) ||
+      IS_DESTROYING(ch) ||
       (ch->in_room != mdata->room) ||
       (GET_STAT(ch) < STAT_SLEEPING) ||                    
       IS_SET(ch->specials.affected_by, AFF_HIDE) ||
       IS_FIGHTING(victim) ||
+      IS_DESTROYING(victim) ||
       (victim->in_room != mdata->room) ||            
       IS_SET(victim->specials.affected_by, AFF_HIDE) ||
       affected_by_spell(ch, TAG_FIRING) ||
@@ -1888,7 +1892,8 @@ void do_bandage(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if (IS_FIGHTING(victim) || IS_FIGHTING(victim) )
+  if( IS_FIGHTING(victim) || IS_DESTROYING(victim)
+    || IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("The battle in room prevents you from that.\r\n", ch);
     return;

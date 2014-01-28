@@ -546,7 +546,7 @@ return FALSE;
       justice_action_invader(tch);
   }
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     return FALSE;
 
   if (IS_SET(ch->only.npc->spec[2], MOB_SPEC_J_REMOVE))
@@ -673,6 +673,8 @@ void JusticeGuardHunt(P_char ch)
     act("$n disappears in a puff of smoke!", TRUE, vict, 0, 0, TO_ROOM);
     send_to_char("&+LYou suddenly feel very dizzy...\r\n", vict);
     stop_fighting(vict);
+    if( IS_DESTROYING(vict) )
+      stop_destroying(vict);
     char_from_room(vict);
     char_to_room(vict, outcast_room, -1);
 
@@ -1010,6 +1012,8 @@ void justice_sentence_outcast(P_char ch, int town)
     outcast_room = real_room(74444);
 
   stop_fighting(ch);
+  if( IS_DESTROYING(ch) )
+    stop_destroying(ch);
   char_from_room(ch);
   char_to_room(ch, outcast_room, -1);
 

@@ -2977,7 +2977,7 @@ void spell_mirage(int level, P_char ch, char *arg, int type, P_char victim, P_ob
   
   for (fm = world[ch->in_room].people; fm; fm = fm->next_in_room)
   {
-    if (fm && IS_FIGHTING(fm))
+    if (fm && (IS_FIGHTING(fm) || IS_DESTROYING(fm)))
     {
       send_to_char("Your mirage swirls briefly before dissapearing from a disturence in the area.\r\n", ch);
       return;

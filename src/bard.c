@@ -211,16 +211,14 @@ void bard_aggro(P_char ch, P_char victim)
     return;
   }
   
-  if(IS_PC(victim) &&
-     !IS_FIGHTING(victim))
+  if(IS_PC(victim) && !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
   {
     // justice_witness(victim, ch, CRIME_ATT_MURDER);
     // strcpy(Gbuf1, GET_NAME(victim));
     
     set_fighting(victim, ch);
   }
-  else if(IS_NPC(victim) &&
-           !IS_FIGHTING(victim))
+  else if(IS_NPC(victim) && !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
   {
     MobStartFight(ch, victim);
     remember(victim, ch);
@@ -331,7 +329,7 @@ int bard_calc_chance(P_char ch, int song)
   {
     c = c * 85 / 100;           // 15% chance reduction for casting
   }
-  else if(IS_FIGHTING(ch))
+  else if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     c = c * 93 / 100;           // 7% chance reduction while fighting...
   }
@@ -726,6 +724,8 @@ void bard_charm(int l, P_char ch, P_char victim, int song)
       FALSE, ch, 0, victim, TO_VICT);
   if(IS_FIGHTING(victim))
     stop_fighting(victim);
+  if(IS_DESTROYING(victim))
+    stop_destroying(victim);
   StopMercifulAttackers(victim);
   if(IS_NPC(victim))
     victim->only.npc->aggro_flags = 0;
@@ -810,7 +810,8 @@ void bard_sleep(int l, P_char ch, P_char victim, int song)
   
   if(victim->specials.fighting)
     stop_fighting(victim);
-  
+  if( IS_DESTROYING(victim) )
+    stop_destroying(victim);
   if(GET_STAT(victim) > STAT_SLEEPING)
   {
     act("&+G$n falls sleep.", TRUE, victim, 0, 0, TO_ROOM);
@@ -829,6 +830,8 @@ void bard_calm(int l, P_char ch, P_char victim, int song)
        IS_TRUSTED(ch))
     {
       stop_fighting(victim);
+      if( IS_DESTROYING(victim) )
+        stop_destroying(victim);
       clearMemory(victim);
       send_to_char("A sense of calm comes upon you.\r\n", victim);
     }
@@ -2111,7 +2114,3 @@ void do_riff(P_char ch, char *arg, int cmd)
   set_short_affected_by(ch, SKILL_RIFF, (int) (4 * PULSE_VIOLENCE));
   CharWait(ch, (int)(PULSE_VIOLENCE));
 }
-
-
-
-

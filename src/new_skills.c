@@ -55,11 +55,8 @@ extern P_char character_list;
 
 int CanDoFightMove(P_char ch, P_char victim)
 {
-  if(!(ch) ||
-    !(victim))
-  {
+  if(!(ch) || !(victim))
     return false;
-  }
 
   if(victim == ch)
   {
@@ -174,6 +171,12 @@ int CanDoFightMove(P_char ch, P_char victim)
   {
     send_to_char("Since you are not being offensive... try something else.\r\n", ch);
     return false;
+  }
+
+  if( IS_DESTROYING(ch) )
+  {
+    send_to_char( "Not while you're destroying an object.\n", ch );
+    return FALSE;
   }
 
   return TRUE;
@@ -552,6 +555,8 @@ void do_feign_death(P_char ch, char *arg, int cmd)
   if (number(1, 101) < (skl_lvl * number(2, 5) / 2))
   {
     stop_fighting(ch);
+    if( IS_DESTROYING(ch) )
+      stop_destroying(ch);
     for (t = world[ch->in_room].people; t; t = t_next)
     {
       t_next = t->next_in_room;
@@ -680,6 +685,8 @@ void chant_calm(P_char ch, char *argument, int cmd)
         }
       }
     }
+    else if( IS_DESTROYING(d) )
+      stop_destroying(d);
   }
   CharWait(ch, PULSE_VIOLENCE);
 }
@@ -1099,7 +1106,7 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
     if(IS_NPC(vict) && CAN_SEE(vict, ch) && number(0, 1))
     {
       remember(vict, ch); 
-      if(!IS_FIGHTING(vict))
+      if(!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
       {
         MobStartFight(vict, ch);
       }
@@ -1140,7 +1147,7 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
   if (IS_NPC(vict) && CAN_SEE(vict, ch) && number(0, 1))
   {
     remember(vict, ch);
-    if (!IS_FIGHTING(vict))
+    if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
       MobStartFight(vict, ch);
   }
   
@@ -1266,26 +1273,24 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
     if (IS_NPC(vict) && CAN_SEE(vict, ch) && number(0, 1))
     {
       remember(vict, ch);
-      if (!IS_FIGHTING(vict))
+      if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
         MobStartFight(vict, ch);
     }
 
     return;
   }
-    if (!IS_FIGHTING(ch))
-      set_fighting(ch, vict);
-  {
-    appear(ch);
-    act("&+BYou swiftly strike at $N&+B, delivering a quick, decisive blow to a pressure point!&n",
-      FALSE, ch, 0, vict, TO_CHAR);
-    act("&+B$n&+B lunges at $N&+B striking $S chest, leaving $M slightly dazed!&n",
-      FALSE, ch, 0, vict, TO_NOTVICT);
-    act("&+B$n&+B lunges at you, and before you can react, you feel somewhat dazed!&n",
-       FALSE, ch, 0, vict, TO_VICT);
-    CharWait(vict, (int) (1.5 * PULSE_VIOLENCE));
-    if (!char_in_list(ch))
-      return;
-  }
+  if (!IS_FIGHTING(ch) && !IS_DESTROYING(ch))
+    set_fighting(ch, vict);
+  appear(ch);
+  act("&+BYou swiftly strike at $N&+B, delivering a quick, decisive blow to a pressure point!&n",
+    FALSE, ch, 0, vict, TO_CHAR);
+  act("&+B$n&+B lunges at $N&+B striking $S chest, leaving $M slightly dazed!&n",
+    FALSE, ch, 0, vict, TO_NOTVICT);
+  act("&+B$n&+B lunges at you, and before you can react, you feel somewhat dazed!&n",
+     FALSE, ch, 0, vict, TO_VICT);
+  CharWait(vict, (int) (1.5 * PULSE_VIOLENCE));
+  if (!char_in_list(ch))
+    return;
 
   CharWait(ch, (int) (2.5 * PULSE_VIOLENCE));
 
@@ -1717,6 +1722,11 @@ void do_OLD_bandage(P_char ch, char *arg, int cmd)
   if (IS_FIGHTING(ch))
   {
     send_to_char("Try again when someone isn't trying to kill you.\r\n", ch);
+    return;
+  }
+  if (IS_DESTROYING(ch))
+  {
+    send_to_char("Try again when you're not trying to break anything.\r\n", ch);
     return;
   }
   one_argument(arg, name);
@@ -2453,7 +2463,7 @@ void do_ogre_roar(P_char ch, char *argument, int cmd)
     if (IS_NPC(vict) && CAN_SEE(vict, ch))
     {
       remember(vict, ch);
-      if (!IS_FIGHTING(vict))
+      if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
         MobStartFight(vict, ch);
     }
 
@@ -2513,7 +2523,7 @@ void do_ogre_roar(P_char ch, char *argument, int cmd)
     if (IS_NPC(vict) && CAN_SEE(vict, ch))
     {
       remember(vict, ch);
-      if (!IS_FIGHTING(vict))
+      if (!IS_FIGHTING(vict) && !IS_DESTROYING(vict))
         MobStartFight(vict, ch);
     }
 
@@ -2782,6 +2792,11 @@ void do_bind(P_char ch, char *arg, int cmd)
     send_to_char("Try again when someone isn't trying to kill you.\r\n", ch);
     return;
   }
+  if (IS_DESTROYING(ch))
+  {
+    send_to_char("Try again when you're not trying to break something.\r\n", ch);
+    return;
+  }
   one_argument(arg, name);
 
   if (!(t_char = get_char_room_vis(ch, name)))
@@ -2808,7 +2823,7 @@ void do_bind(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if (IS_FIGHTING(t_char))
+  if (IS_FIGHTING(t_char) || IS_DESTROYING(t_char))
   {
     send_to_char("Cannot bind someone fighting.\r\n", ch);
     return;
@@ -3198,7 +3213,7 @@ void capture(P_char ch, P_char victim)
     if (!is_wanted)
     {
       justice_witness(ch, victim, CRIME_ATT_MURDER);
-      if ((GET_STAT(victim) > STAT_INCAP) && !IS_FIGHTING(ch))
+      if((GET_STAT(victim) > STAT_INCAP) && !IS_FIGHTING(ch) && !IS_DESTROYING(ch))
         set_fighting(ch, victim);
     }
   }
@@ -3213,6 +3228,7 @@ void capture(P_char ch, P_char victim)
 
     stop_fighting(ch);
     stop_fighting(victim);
+    stop_destroying(victim);
 
     SET_BIT(victim->specials.affected_by, AFF_BOUND);
     SET_POS(victim, POS_PRONE + GET_STAT(victim));
@@ -3518,7 +3534,7 @@ void do_lotus(P_char ch, char *argument, int cmd)
   if (!GET_SPEC(ch, CLASS_MONK, SPEC_CHIMONK))
     return;
 
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("That would be un-wise!\n\r", ch);
     return;
@@ -3568,8 +3584,7 @@ void lotus_event(P_char ch, P_char victim, P_obj obj, void *data)
     return;
   }
 
-  if (IS_FIGHTING(ch))
-
+  if(IS_FIGHTING(ch) || IS_DESTROYING(ch))
     return;
 
   if (IS_RIDING(ch))

@@ -1214,7 +1214,7 @@ bool cast_common_generic(P_char ch, int spl)
     }
     return FALSE;
   }
-  else if((IS_FIGHTING(ch) &&
+  else if(((IS_FIGHTING(ch) || IS_DESTROYING(ch)) &&
            IS_SET(skills[spl].targets, TAR_NOCOMBAT) && 
            !IS_NPC(ch)) ||
            IS_STUNNED(ch))
@@ -1817,7 +1817,8 @@ bool check_mob_retaliate(P_char ch, P_char tar_char, int spl)
              justice hook: read comments above
            */
           justice_witness(ch, tar_char, CRIME_ATT_MURDER);
-
+          if( IS_DESTROYING(tar_char) )
+            stop_destroying(tar_char);
           MobStartFight(tar_char, ch);
 
           if (!char_in_list(ch))

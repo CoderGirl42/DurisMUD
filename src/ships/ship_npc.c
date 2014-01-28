@@ -1026,6 +1026,7 @@ int npc_ship_crew_member_func(P_char ch, P_char player, int cmd, char *arg)
     }
     if (zone_table[world[ch->in_room].zone].number != 600 && !IS_FIGHTING(ch))
     {
+        logit(LOG_DEBUG, "Bad char: '%s' %d.", ch->player.name, GET_VNUM(ch) );
         extract_char(ch);
     }
     return FALSE;

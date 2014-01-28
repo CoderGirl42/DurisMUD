@@ -468,14 +468,13 @@ void do_outpost(P_char ch, char *arg, int cmd)
       building = get_building_from_id(id);
       if (!building)
       {
-	send_to_char("Invalid outpost ID.\r\n", ch);
-	return;
+        send_to_char("Invalid outpost ID.\r\n", ch);
+        return;
       }
       reset_one_outpost(building);
       sprintf(buff, "You reset outpost # %d.", id);
       return;
     }
-
     return;
   }
   
@@ -551,7 +550,7 @@ void do_outpost(P_char ch, char *arg, int cmd)
     for (rubble = world[ch->in_room].contents; rubble; rubble = rubble->next)
     {
       if (GET_OBJ_VNUM(rubble) == BUILDING_RUBBLE)
-	break;
+        break;
     }
     // Ok found rubble
     if (rubble && GET_OBJ_VNUM(rubble) == BUILDING_RUBBLE)
@@ -566,8 +565,8 @@ void do_outpost(P_char ch, char *arg, int cmd)
       if (GET_A_NUM(ch))
       {
         send_to_char("You begin the arduous task of rebuilding the destroyed tower, claiming it for your guild!\r\n", ch);
-	int ownerid = GET_A_NUM(ch);
-	update_outpost_owner(ownerid, building);
+        int ownerid = GET_A_NUM(ch);
+        update_outpost_owner(ownerid, building);
       }
       if (!GET_A_NUM(ch))
       {
@@ -594,48 +593,47 @@ void do_outpost(P_char ch, char *arg, int cmd)
       for (tch = world[ch->in_room].people; tch != NULL; tch = tch->next_in_room)
       {
         if (affected_by_spell(tch, TAG_BUILDING))
-	{
-	  op = tch;
-	  break;
-	}
+	      {
+          op = tch;
+          break;
+        }
       }
       if(op)
       {
-	building = get_building_from_char(op);
+        building = get_building_from_char(op);
 
-	if (!building)
-	{
-	  send_to_char("Can't find building associated with outpost, tell a god.\r\n", ch);
-	  return;
-	}
-	if (GET_A_NUM(ch) != building->guild_id)
-	{
-	  send_to_char("You don't own this outpost!\r\n", ch);
-	  return;
-	}
-	if (GET_HIT(op) >= building_types[BUILDING_OUTPOST-1].hitpoints)
-	{
-	  send_to_char("This outpost doesn't need any repairs.\r\n", ch);
-	  return;
-	}
+        if (!building)
+        {
+          send_to_char("Can't find building associated with outpost, tell a god.\r\n", ch);
+          return;
+        }
+        if (GET_A_NUM(ch) != building->guild_id)
+        {
+          send_to_char("You don't own this outpost!\r\n", ch);
+          return;
+        }
+        if (GET_HIT(op) >= building_types[BUILDING_OUTPOST-1].hitpoints)
+        {
+          send_to_char("This outpost doesn't need any repairs.\r\n", ch);
+          return;
+        }
         for (tch = world[op->in_room].people; tch != NULL; tch = tch->next_in_room)
         {
-          if (GET_OPPONENT(tch) == op ||
-	      IS_FIGHTING(op))
-	  {
-	    send_to_char("You cannot repair an outpost being attacked!\r\n", ch);
+          if (GET_OPPONENT(tch) == op || IS_FIGHTING(op))
+      	  {
+	          send_to_char("You cannot repair an outpost being attacked!\r\n", ch);
             return;
-	  }
-	}
+      	  }
+        }
         if (get_scheduled(op, event_outpost_repair))
         {
-	  send_to_char("The outpost is already being repaired.\r\n", ch);
-	  return;
+          send_to_char("The outpost is already being repaired.\r\n", ch);
+          return;
         }
 
-	send_to_char("You order repairs to begin upon the outpost.\r\n", ch);
+      	send_to_char("You order repairs to begin upon the outpost.\r\n", ch);
         act("$n orders repairs begin on the outpost.", TRUE, ch, 0, 0, TO_ROOM);
-	add_event(event_outpost_repair, PULSES_IN_TICK, op, NULL, NULL, 0, NULL, 0);
+        add_event(event_outpost_repair, PULSES_IN_TICK, op, NULL, NULL, 0, NULL, 0);
         return;
       }
       else
@@ -814,8 +812,7 @@ void event_outpost_repair(P_char op, P_char vict, P_obj obj, void *data)
 
   for (P_char tch = world[op->in_room].people; tch != NULL; tch = tch->next_in_room)
   {
-    if (GET_OPPONENT(tch) == op ||
-	IS_FIGHTING(op))
+    if (GET_OPPONENT(tch) == op || IS_FIGHTING(op))
       return;
   }
 

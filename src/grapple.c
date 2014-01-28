@@ -72,7 +72,7 @@ int grapple_flee_check(P_char ch)
 {
   P_char grappler, victim;
 
-  if (!IS_FIGHTING(ch))
+  if( !IS_FIGHTING(ch) )
   {
     return FALSE;
   }
@@ -289,14 +289,7 @@ void do_bearhug(P_char ch, char *argument, int cmd)
      
       add_event(event_bearhug, PULSE_VIOLENCE/2, ch, victim, 0, 0, 0, 0);
       
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
+      engage( ch, victim );
       CharWait(ch, (int)(PULSE_VIOLENCE * (float)get_property("grapple.bearhug.duration", 3.00))-3);
       CharWait(victim, (int)(PULSE_VIOLENCE * (float)get_property("grapple.bearhug.duration.victim", 2.00)));
     }
@@ -307,14 +300,7 @@ void do_bearhug(P_char ch, char *argument, int cmd)
       act("$n tries to grab $N in a bearhug but $E manages to slip away.", TRUE, ch, 0, victim, TO_NOTVICT);
       CharWait(ch, (int)(PULSE_VIOLENCE * (float)get_property("grapple.bearhug.duration", 3.00)));
       
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
+      engage( ch, victim );
     }
   }
 }
@@ -563,15 +549,7 @@ void do_headlock(P_char ch, char *argument, int cmd)
       
       CharWait(ch, (int)(PULSE_VIOLENCE * (float)get_property("grapple.headlock.duration", 2.00)));
 
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
-      
+      engage( ch, victim );
     }
     else
     {
@@ -580,14 +558,7 @@ void do_headlock(P_char ch, char *argument, int cmd)
       act("$n tries to catch $N in a headlock but $E manages to slip out of it.", TRUE, ch, 0, victim, TO_NOTVICT);
       CharWait(ch, (int)(PULSE_VIOLENCE * (float)get_property("grapple.headlock.duration", 2.00)));
       
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
+      engage( ch, victim );
     }
   }
 }
@@ -675,6 +646,8 @@ void event_headlock(P_char ch, P_char victim, P_obj obj, void *data)
       unlink_char(ch, victim, LNK_GRAPPLED);
 
       stop_fighting(victim);
+      if( IS_DESTROYING(victim) )
+        stop_destroying(victim);
       StopMercifulAttackers(victim);
 
       memset(&af, 0, sizeof(af));
@@ -1062,14 +1035,7 @@ void do_leglock(P_char ch, char *argument, int cmd)
       
       add_event(event_leglock, PULSE_VIOLENCE/2, ch, victim, 0, 0, 0, 0);
 
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
+      engage( ch, victim );
     }
     else
     {
@@ -1078,14 +1044,7 @@ void do_leglock(P_char ch, char *argument, int cmd)
       act("$n grabs $N's legs but $E manages to kick $m away.", TRUE, ch, 0, victim, TO_NOTVICT);
       CharWait(ch, PULSE_VIOLENCE * (2+lag));
 
-      if (!IS_FIGHTING(ch))
-      {
-        set_fighting(ch, victim);
-      }
-      if (!IS_FIGHTING(victim))
-      {
-        set_fighting(victim, ch);
-      }
+      engage( ch, victim );
     }
   }
 }
