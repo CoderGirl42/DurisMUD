@@ -11,7 +11,7 @@ ulimit -c unlimited
   mv src/dms_new dms
 
   echo "Generating list of function names.."
-  nm --demangle dms | grep " T " | sed -e 's/[(].*[)]//g' > lib/misc/event_names
+  nm --demangle dms | grep " T " | sed -e 's/[(].*//g' > lib/misc/event_names
 
   echo "Starting duris test enviornment..."
   gdb -ex "run ${PORT}" dms
