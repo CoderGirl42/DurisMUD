@@ -523,16 +523,16 @@ int vamp(P_char ch, double fhits, double fcap)
   hits = MAX(0, MIN(hits, cap - GET_HIT(ch)));
   GET_HIT(ch) = GET_HIT(ch) + hits;
   
-  if(hits > 1)
+ /* if(hits > 1)
   {
-    sprintf(buf, "%s healed: %d\n", GET_NAME(ch), hits);
+    //sprintf(buf, "%s healed: %d\n", GET_NAME(ch), hits);
     // only send buf if it actually filled
     for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
   #ifndef TEST_MUD
       if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_HEAL))
   #endif
-        send_to_char(buf, tch);
-  }
+        //send_to_char(buf, tch);
+  }*/
 
   //Client
   for (gl = ch->group; gl; gl = gl->next)
