@@ -523,16 +523,16 @@ int vamp(P_char ch, double fhits, double fcap)
   hits = MAX(0, MIN(hits, cap - GET_HIT(ch)));
   GET_HIT(ch) = GET_HIT(ch) + hits;
   
-  if(hits > 1)
+ /* if(hits > 1)
   {
-    sprintf(buf, "%s healed: %d\n", GET_NAME(ch), hits);
+    //sprintf(buf, "%s healed: %d\n", GET_NAME(ch), hits);
     // only send buf if it actually filled
     for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
   #ifndef TEST_MUD
       if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_HEAL))
   #endif
-        send_to_char(buf, tch);
-  }
+        //send_to_char(buf, tch);
+  }*/
 
   //Client
   for (gl = ch->group; gl; gl = gl->next)
@@ -2845,6 +2845,7 @@ void kill_gain(P_char ch, P_char victim)
   {
     send_to_char("You receive your share of experience.\r\n", ch);
     gain_exp(ch, victim, gain, EXP_KILL);
+    if(IS_PC(ch))
     add_bloodlust(ch, victim);
 
     update_achievements(ch, victim, 0, 2);//this is for all kinds of kill-type quests
@@ -2946,6 +2947,7 @@ void kill_gain(P_char ch, P_char victim)
       
       send_to_char("You receive your share of experience.\r\n", gl->ch);
       gain_exp(gl->ch, victim, (XP + (XP*(group_size*.25))), EXP_KILL);
+          if(IS_PC(gl->ch))
           add_bloodlust(gl->ch, victim);
     update_achievements(gl->ch, victim, 0, 2);//this is for all kinds of kill-type quests
     if((GET_LEVEL(victim) > 30) && !IS_PC(victim) && !affected_by_spell(victim, TAG_CONJURED_PET))
