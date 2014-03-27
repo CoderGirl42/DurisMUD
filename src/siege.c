@@ -898,12 +898,12 @@ int warmaster( P_char ch, P_char pl, int cmd, char *arg )
     if( IS_TRUSTED( pl ) )
     {
       sprintf( buf, "Guards: %d deployed of %d max, vnum %d, load in room %d.\n", 
-        mob_index[real_mobile(town->guard_vnum)].number, town->guard_max, town->guard_vnum, 
-        town->guard_load_room );
+        town->guard_vnum ? mob_index[real_mobile(town->guard_vnum)].number : 0,
+        town->guard_max, town->guard_vnum, town->guard_load_room );
       send_to_char( buf, pl );
       sprintf( buf, "Cavalry: %d deployed of %d max, vnum %d, load in room %d.\n\n", 
-        mob_index[real_mobile(town->cavalry_vnum)].number, town->cavalry_max, town->cavalry_vnum, 
-        town->cavalry_load_room );
+        town->cavalry_vnum ? mob_index[real_mobile(town->cavalry_vnum)].number : 0,
+        town->cavalry_max, town->cavalry_vnum,  town->cavalry_load_room );
       send_to_char( buf, pl );
     }
 
