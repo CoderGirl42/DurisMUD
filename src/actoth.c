@@ -1410,11 +1410,13 @@ void do_save_silent(P_char ch, int type)
 
   if (IS_HARDCORE(ch))
   {
-    sprintf(tmp_buf, "NotDead %d", ch->only.pc->numb_deaths);
+    sprintf(tmp_buf, "NotDead %lu", ch->only.pc->numb_deaths);
     checkHallOfFame(ch, tmp_buf);
   }
   if (!IS_TRUSTED(ch))
+  {
     checkLeaderBoard(ch);
+  }
 
   update_achievements(ch, 0, 0, 0);
   set_surname(ch, 0);
@@ -1485,12 +1487,14 @@ void do_save(P_char ch, char *argument, int cmd)
 
   if (IS_HARDCORE(ch))
   {
-    sprintf(tmp_buf, "NotDead %d", ch->only.pc->numb_deaths);
+    sprintf(tmp_buf, "NotDead %lu", ch->only.pc->numb_deaths);
     checkHallOfFame(ch, tmp_buf);
 
   }
   if (!IS_TRUSTED(ch))
+  {
     checkLeaderBoard(ch);
+  }
 
   update_achievements(ch, 0, 0, 0);
   set_surname(ch, 0);
