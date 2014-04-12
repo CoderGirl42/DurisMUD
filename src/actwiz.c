@@ -2861,35 +2861,35 @@ void do_stat(P_char ch, char *argument, int cmd)
     if(k->specials.affected_by)
     {
       sprintbitde(k->specials.affected_by, affected1_bits, buf2);
-      sprintf(buf, "&+YAffected by (1):\n%s\n", buf2);
+      sprintf(buf, "&+YAffected by (1): %u\n%s\n", k->specials.affected_by, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by2)
     {
       sprintbitde(k->specials.affected_by2, affected2_bits, buf2);
-      sprintf(buf, "&+YAffected by (2):\n%s\n", buf2);
+      sprintf(buf, "&+YAffected by (2): %u\n%s\n", k->specials.affected_by2, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by3)
     {
       sprintbitde(k->specials.affected_by3, affected3_bits, buf2);
-      sprintf(buf, "&+YAffected by (3):\n%s\n", buf2);
+      sprintf(buf, "&+YAffected by (3): %u\n%s\n", k->specials.affected_by3, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by4)
     {
       sprintbitde(k->specials.affected_by4, affected4_bits, buf2);
-      sprintf(buf, "&+YAffected by (4):\n%s\n", buf2);
+      sprintf(buf, "&+YAffected by (4): %u\n%s\n", k->specials.affected_by4, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by5)
     {
       sprintbitde(k->specials.affected_by5, affected5_bits, buf2);
-      sprintf(buf, "&+YAffected by (5):\n%s\n", buf2);
+      sprintf(buf, "&+YAffected by (5): %u\n%s\n", k->specials.affected_by5, buf2);
       strcat(o_buf, buf);
     }
 
