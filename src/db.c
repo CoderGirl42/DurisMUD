@@ -1916,7 +1916,6 @@ P_char read_mobile(int nr, int type)
   char     Gbuf1[MAX_STRING_LENGTH], buf[MAX_INPUT_LENGTH], letter = 0;
   int      foo, bar, i, j;
   long     tmp, tmp1, tmp2, tmp3, tmp4, tmp5, tmp6, tmp7, tmp8, tmp9;
-  unsigned tmp1u, tmp2u, tmp3u, tmp4u, tmp5u, tmp6u, tmp7u, tmp8u, tmp9u;
   static int idnum = 0;
 
   i = nr;
@@ -2033,19 +2032,18 @@ P_char read_mobile(int nr, int type)
    */
 
   fgets(buf, sizeof(buf) - 1, mob_f);
-  if (sscanf
-      (buf, " %u %u %u %u %u %u %u %u %u %c \n", &tmp1u, &tmp7u, &tmp8u, &tmp9u, &tmp2u, &tmp3u, &tmp4u, &tmp5u, &tmp6u, &letter) == 10)
+  if (sscanf(buf, " %u %u %u %u %u %u %u %u %u %c \n", &tmp1, &tmp7, &tmp8, &tmp9, &tmp2, &tmp3, &tmp4, &tmp5, &tmp6, &letter) == 10)
   {
-    mob->specials.act = tmp1u;
-    mob->specials.affected_by = tmp2u;
-    mob->specials.affected_by2 = tmp3u;
-    mob->specials.affected_by3 = tmp4u;
-    mob->specials.affected_by4 = tmp5u;
+    mob->specials.act = tmp1;
+    mob->specials.affected_by = tmp2;
+    mob->specials.affected_by2 = tmp3;
+    mob->specials.affected_by3 = tmp4;
+    mob->specials.affected_by4 = tmp5;
     mob->specials.affected_by5 = 0;
-    mob->specials.alignment = tmp6u;
-    mob->only.npc->aggro_flags = tmp7u;
-    mob->only.npc->aggro2_flags = tmp8u;
-    mob->only.npc->aggro3_flags = tmp9u;
+    mob->specials.alignment = tmp6;
+    mob->only.npc->aggro_flags = tmp7;
+    mob->only.npc->aggro2_flags = tmp8;
+    mob->only.npc->aggro3_flags = tmp9;
   }
   else if (sscanf
       (buf, " %lu %lu %lu %lu %lu %lu %lu %lu %c \n", &tmp1, &tmp7, &tmp8,
@@ -2105,7 +2103,7 @@ P_char read_mobile(int nr, int type)
   if (letter == 'S')
   {
     fgets(buf, sizeof(buf) - 1, mob_f);
-    if (sscanf(buf, " %s %ld %ld %ld %ld \n", Gbuf1, &tmp, &tmp2, &tmp3, &tmp4) == 5)
+    if (sscanf(buf, " %s %i %u %i %i \n", Gbuf1, &tmp, &tmp2, &tmp3, &tmp4) == 5)
     {
       mob->player.race = 0;
 
@@ -2121,7 +2119,7 @@ P_char read_mobile(int nr, int type)
     }
     else
     {
-      sscanf(buf, " %s %ld %ld %ld \n", Gbuf1, &tmp, &tmp2, &tmp3);
+      sscanf(buf, " %s %i %u %i \n", Gbuf1, &tmp, &tmp2, &tmp3);
 
       mob->player.race = 0;
 
