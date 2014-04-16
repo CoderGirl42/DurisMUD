@@ -3825,10 +3825,24 @@ void do_craft(P_char ch, char *argument, int cmd)
     }
 
     if(has_affect(tobj))
+    {
       send_to_char("...as well as &+W1 &nof &+ma &+Mm&+Ya&+Mg&+Yi&+Mc&+Ya&+Ml &+messence&n due to the &+mmagical &nproperties this item possesses.\r\n", ch);
-    extract_obj(tobj, FALSE);
-    extract_obj(material2, FALSE);
-    extract_obj(material, FALSE);
+    }
+    
+    if(tobj)
+    {
+      extract_obj(tobj, FALSE);
+    }
+    
+    if(material2)
+    {
+      extract_obj(material2, FALSE);
+    }
+    
+    if(material)
+    {
+      extract_obj(material, FALSE);
+    }
     return;
   }
   else if (is_abbrev(first, "make"))
