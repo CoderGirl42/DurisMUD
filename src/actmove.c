@@ -2613,7 +2613,8 @@ void do_lock(P_char ch, char *argument, int cmd)
       send_to_char("Maybe you should close it first...\n", ch);
     else if (obj->value[2] < 1)
       send_to_char("That thing can't be locked.\n", ch);
-    else if (!(key_obj = has_key(ch, obj->value[2])) && !IS_TRUSTED(ch))
+    else if( !(key_obj = has_key(ch, obj->value[2]))
+      && (!IS_TRUSTED(ch) || IS_NPC(ch)) )
       send_to_char("You don't seem to have the proper key.\n", ch);
     else if (IS_SET(obj->value[1], CONT_LOCKED))
       send_to_char("It is locked already.\n", ch);
@@ -2635,7 +2636,8 @@ void do_lock(P_char ch, char *argument, int cmd)
       send_to_char("You have to close it first, I'm afraid.\n", ch);
     else if (EXIT(ch, door)->key < 1)
       send_to_char("There does not seem to be any keyholes.\n", ch);
-    else if (!has_key(ch, EXIT(ch, door)->key) && !IS_TRUSTED(ch))
+    else if( !has_key(ch, EXIT(ch, door)->key)
+      && (!IS_TRUSTED(ch) || IS_NPC(ch)) )
       send_to_char("You don't have the proper key.\n", ch);
     else if (IS_SET(EXIT(ch, door)->exit_info, EX_LOCKED))
       send_to_char("It's already locked!\n", ch);
@@ -2700,7 +2702,7 @@ void do_unlock(P_char ch, char *argument, int cmd)
     else if (obj->value[2] < 0)
     {
       send_to_char("Odd, you can't seem to find a keyhole.\n", ch);
-      if (GET_LEVEL(ch) < MINLVLIMMORTAL)
+      if (GET_LEVEL(ch) < MINLVLIMMORTAL || IS_NPC(ch))
         return;
       REMOVE_BIT(obj->value[1], CONT_LOCKED);
       send_to_char("...but you unlock it anyway!\n", ch);
@@ -2716,7 +2718,7 @@ void do_unlock(P_char ch, char *argument, int cmd)
     else if (!(key_obj = has_key(ch, obj->value[2])))
     {
       send_to_char("You don't seem to have the proper key.\n", ch);
-      if (GET_LEVEL(ch) < MINLVLIMMORTAL)
+      if (GET_LEVEL(ch) < MINLVLIMMORTAL || IS_NPC(ch))
         return;
       REMOVE_BIT(obj->value[1], CONT_LOCKED);
       send_to_char("...but you unlock it anyway!\n", ch);
@@ -2784,7 +2786,7 @@ void do_unlock(P_char ch, char *argument, int cmd)
     {
 
       send_to_char("You do not have the proper key for that.\n", ch);
-      if (GET_LEVEL(ch) < MINLVLIMMORTAL)
+      if (GET_LEVEL(ch) < MINLVLIMMORTAL || IS_NPC(ch))
         return;
       send_to_char("...but you unlock it anyway!\n", ch);
 

@@ -149,6 +149,10 @@ int can_exec_cmd(P_char ch, int cmd)
       if ((ch->only.pc->gcmd_arr[i] == cmd) && IS_TRUSTED(ch))
         return TRUE;
 
+  // NPCs do NOT execute God commands.
+  if (cmd_info[cmd].minimum_level > 56 && IS_NPC(ch))
+    return FALSE;
+
   if (cmd_info[cmd].minimum_level <= GET_LEVEL(ch))
     return TRUE;
 
