@@ -811,7 +811,7 @@ void do_artifact(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if( GET_LEVEL(ch) < FORGER )
+  if( GET_LEVEL(ch) < FORGER || IS_NPC(ch) )
   {
     send_to_char( "Valid arguments are list, unique or ioun.\n\r", ch );
     return;
