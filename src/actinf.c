@@ -4124,109 +4124,103 @@ void do_attributes(P_char ch, char *argument, int cmd)
   send_to_char(buf, ch);
 /*  statupdate2013 stats - drannak */
 
-     if(IS_PC(ch))
+  if(IS_PC(ch))
 	{
 
-	// Crit Chance:
+	  // Crit Chance:
 /* Making this linear.. might should be less than linear. - Lohrr
-  int rollmod = 6;
-  if (GET_C_INT(ch) < 90)
-   	rollmod = 7;
- 	else if (GET_C_INT(ch) > 140)
-    rollmod = 4;
+    int rollmod = 6;
+    if (GET_C_INT(ch) < 90)
+      rollmod = 7;
+ 	  else if (GET_C_INT(ch) > 140)
+      rollmod = 4;
 */
-  // At 100 int : 5% crit, at 200 int : 25% crit
-  int critroll = (GET_C_INT(ch) - 100)/5 + 5;
-  // Min crit % is 3%.
-  if( critroll < 3 ) critroll = 3;
+    // At 100 int : 5% crit, at 200 int : 25% crit
+    int critroll = (GET_C_INT(ch) - 100)/5 + 5;
+    // Min crit % is 3%.
+    if( critroll < 3 ) critroll = 3;
 
-	// Calm Chance:
-  int rolmod = 7;
-  if (GET_C_INT(ch) < 80)
- 	  rolmod = 9;
- 	else if (GET_C_INT(ch) > 160)
-    rolmod = 4;
-  int calmroll = (int) (GET_C_INT(ch) / rolmod);
+	  // Calm Chance:
+    int rolmod = 7;
+    if (GET_C_INT(ch) < 80)
+   	  rolmod = 9;
+ 	  else if (GET_C_INT(ch) > 160)
+      rolmod = 4;
+    int calmroll = (int) (GET_C_INT(ch) / rolmod);
 
-	// Magic Res:
-  double modifier = (GET_C_WIS(ch) - 110)/2;
-  if (modifier > 75)
-    modifier = 75;
-  if (modifier < 0)
-    modifier = 0;
+  	// Magic Res:
+    double modifier = (GET_C_WIS(ch) - 110)/2;
+    if (modifier > 75)
+      modifier = 75;
+    if (modifier < 0)
+      modifier = 0;
 
-	//vamp percentage:
-       double vamppct = BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220);
-      /* if (vamppct < 1.10)
-       vamppct = 1.10;
-       else if (vamppct > 2.20)
-       vamppct = 2.20;*/
-       //vamppct *= 100.00;
+  	//vamp percentage:
+    double vamppct = BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220);
+    /*
+    if (vamppct < 1.10)
+      vamppct = 1.10;
+    else if (vamppct > 2.20)
+      vamppct = 2.20;
+    vamppct *= 100.00;
+    */
 
-      // Magic Dam:
-      int dammod = GET_C_STR(ch);
-      double modifierx = dammod - 120;
-      double remod = 100;
-      if(modifierx >=1)
-      {
+    // Magic Dam:
+    // 121 str -> 10%, 141 str -> 20%, 181 str -> 30%.
+    double modifierx = GET_C_STR(ch) - 120;
+    double remod = 100;
+    if(modifierx >=1)
+    {
       if (modifierx <= 20)
-      remod += 10;
+        remod += 10;
       else if (modifierx <= 60)
-      remod += 20;
+        remod += 20;
       else
-      remod += 30;
-      }
+        remod += 30;
+    }
 
-      // Bloodlust:
-      int bloodlust = 0;
-      if(affected_by_spell(ch, TAG_BLOODLUST))
+    // Bloodlust:
+    int bloodlust = 0;
+    if(affected_by_spell(ch, TAG_BLOODLUST))
+    {
+      struct affected_type *findaf, *next_af;
+      for(findaf = ch->affected; findaf; findaf = next_af)
       {
-       struct affected_type *findaf, *next_af;  //initialize affects
-       for(findaf = ch->affected; findaf; findaf = next_af)
-	{
         next_af = findaf->next;
-	 if((findaf && findaf->type == TAG_BLOODLUST))
-         bloodlust = ((findaf->modifier * 10));
-       }
+        if((findaf && findaf->type == TAG_BLOODLUST))
+          bloodlust = ((findaf->modifier * 10));
       }
+    }
 
-
-
-       /* sprintf(buf, "&+cMelee Critical Percentage(int): &+Y%d%   &n&+cMax Spell Damage Reduction Percent(wis): &+Y%d%\r\n",
-            critroll,
-            (int)modifier);
-  send_to_char(buf, ch);*/
-
-        sprintf(buf, "&+cMelee Critical Percentage&n(&+Mint&n): &+Y%d%%\r\n", critroll);
-  send_to_char(buf, ch);        
-sprintf(buf, "&+cMax Spell Damage Reduction Percent&n(&+cwis&n): &+Y%d%%\r\n",
-            (int)modifier);
+/*
+  sprintf(buf, "&+cMelee Critical Percentage(int): &+Y%d%   &n&+cMax Spell Damage Reduction Percent(wis): &+Y%d%\r\n",
+    critroll, (int)modifier);
   send_to_char(buf, ch);
+*/
 
-        sprintf(buf, "&+cCalming Chance&n(&+Ccha&n): &+Y%d%% \r\n",
-            calmroll);
-  send_to_char(buf, ch);
+    sprintf(buf, "&+cMelee Critical Percentage&n(&+Mint&n): &+Y%d%%\r\n", critroll);
+    send_to_char(buf, ch);
+    sprintf(buf, "&+cMax Spell Damage Reduction Percent&n(&+cwis&n): &+Y%d%%\r\n", (int)modifier);
+    send_to_char(buf, ch);
+    sprintf(buf, "&+cCalming Chance&n(&+Ccha&n): &+Y%d%% \r\n", calmroll);
+    send_to_char(buf, ch);
 
-        /*sprintf(buf, "&+cHP Vamp Cap Percentage&n(&+mpow&n): &+Y%d%     &n&+cSpell Damage Modifier(str): &+Y%d%\r\n",
-            (int)vamppct,
-            (int)remod);*/
-	
-        sprintf(buf, "&+cHP Vamp Cap Percentage&n(&+mpow&n): &+Y%d%% \r\n",
-            (int)vamppct);
-  send_to_char(buf, ch);
-        sprintf(buf, "&+cSpell Damage Modifier&n(&+rstr&n): &+Y%d%% \r\n",
-            (int)remod);
-  send_to_char(buf, ch);
-        sprintf(buf, "&+rBloodlust &+cDamage Bonus&n(&+yvs mob only&n): &+Y%d%% \r\n", (int)bloodlust);
+/*
+  sprintf(buf, "&+cHP Vamp Cap Percentage&n(&+mpow&n): &+Y%d%     &n&+cSpell Damage Modifier(str): &+Y%d%\r\n",
+    (int)vamppct, (int)remod);
+*/
+    sprintf(buf, "&+cHP Vamp Cap Percentage&n(&+mpow&n): &+Y%d%% \r\n", (int)vamppct);
+    send_to_char(buf, ch);
+    sprintf(buf, "&+cSpell Damage Modifier&n(&+rstr&n): &+Y%d%% \r\n", (int)remod);
+    send_to_char(buf, ch);
+    sprintf(buf, "&+rBloodlust &+cDamage Bonus&n(&+yvs mob only&n): &+Y%d%% \r\n", (int)bloodlust);
+    send_to_char(buf, ch);
 	}
 
 
 
-//    sprintf(buf, "&+cArmor Class: &+Y%s\n", ac_to_string(t_val));
-
-
-/*  if (IS_TRUSTED(ch)) send_to_char(buf, ch); */
-  send_to_char(buf, ch);
+//  sprintf(buf, "&+cArmor Class: &+Y%s\n", ac_to_string(t_val));
+//  send_to_char(buf, ch);
 
   if (IS_PC(ch) && GET_CLASS(ch, CLASS_MONK))
     MonkSetSpecialDie(ch);
