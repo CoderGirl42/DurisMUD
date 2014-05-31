@@ -4142,11 +4142,11 @@ void do_attributes(P_char ch, char *argument, int cmd)
 
 	  // Calm Chance:
     int rolmod = 7;
-    if (GET_C_INT(ch) < 80)
+    if (GET_C_CHA(ch) < 80)
    	  rolmod = 9;
- 	  else if (GET_C_INT(ch) > 160)
+ 	  else if (GET_C_CHA(ch) > 160)
       rolmod = 4;
-    int calmroll = (int) (GET_C_INT(ch) / rolmod);
+    int calmroll = (int) (GET_C_CHA(ch) / rolmod);
 
   	// Magic Res:
     double modifier = (GET_C_WIS(ch) - 110)/2;
