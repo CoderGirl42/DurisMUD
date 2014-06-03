@@ -7616,19 +7616,18 @@ void do_rearkick(P_char ch, char *argument, int cmd)
     "$n shifts $s weight and viciously slams $s rear hooves into $N's chest which falls in with a loud CRUNCH.",
     0, 0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
 
-  if(!has_innate(ch, INNATE_HORSE_BODY) &&
-     !(GET_RACE(ch) == RACE_QUADRUPED) &&
-     !IS_TRUSTED(ch))
+  if(!(ch) || !IS_ALIVE(ch))
+    return;
+
+  if(!has_innate(ch, INNATE_HORSE_BODY)
+    && !(GET_RACE(ch) == RACE_QUADRUPED)
+    && !IS_TRUSTED(ch))
   {
     send_to_char("You wish you were a horse...\n", ch);
     return;
   }
-  
+
   if(!on_front_line(ch))
   {
     send_to_char("You can't seem to break the ranks!\n", ch);
@@ -7647,7 +7646,7 @@ void do_rearkick(P_char ch, char *argument, int cmd)
     return;
 
   appear(ch);
-  
+
   victim = guard_check(ch, victim);
 
   if((percent_chance = chance_kick(ch, victim)) == 0)
@@ -7658,17 +7657,17 @@ void do_rearkick(P_char ch, char *argument, int cmd)
 
   // dam = GET_CHAR_SKILL(ch, SKILL_KICK) +
     // (int) (1.6 * number(1, GET_CHAR_SKILL(ch, SKILL_KICK)));
-    
   dam = (int)(MAX((int) (GET_C_STR(ch) / 2),
-              GET_CHAR_SKILL(ch, SKILL_KICK)) *
-              get_property("skill.rearkick.dam", 2) *
-              GET_LEVEL(ch) / 56);
+    (GET_CHAR_SKILL(ch, SKILL_KICK)) * get_property("skill.rearkick.dam", 2) * GET_LEVEL(ch)) / 56);
+
+  // Randomize damage same as in kick.
+  dam = number( dam/2, dam );
 
   if(vict_size > ch_size + 1)
-    dam = dam * 3 / 4;
+    dam = (dam * 3) / 4;
 
   if(vict_size < ch_size - 1)
-    dam = (int) (dam * 1.25);
+    dam = (dam * 5) / 4;
 
   CharWait(ch, PULSE_VIOLENCE * 2);
 
@@ -7686,43 +7685,41 @@ void do_rearkick(P_char ch, char *argument, int cmd)
     engage(ch, victim);
     return;
   }
-  
+
   melee_damage(ch, victim, dam, PHSDAM_TOUCH, &messages);
 
-  if(!IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-        return;
+  if(!IS_ALIVE(ch) || !IS_ALIVE(victim))
+    return;
 
-  if(IS_GREATER_RACE(victim) ||
-     LEGLESS(victim) ||
-     IS_TRUSTED(victim) ||
-     IS_ELITE(ch))
-        return;
+  if(IS_GREATER_RACE(victim) || LEGLESS(victim)
+    || IS_TRUSTED(victim) || IS_ELITE(ch))
+    return;
 
   if(get_takedown_size(victim) + 2 > get_takedown_size(ch))
-      return;
+    return;
 
   if(GET_POS(victim) != POS_STANDING)
     return;
-  
+
   takedown_chance = (ch_size - vict_size) * 5;  /*10-25% */
 
   if(IS_NPC(ch))
     takedown_chance += 15;
 
-  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK,
-                                   APPLY_ALL ^ AGI_CHECK ^ FOOTING);
+  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK, APPLY_ALL ^ AGI_CHECK ^ FOOTING);
 
-  if(takedown_chance == TAKEDOWN_CANCELLED ||
-    takedown_chance == TAKEDOWN_PENALTY)
-      return;
-      
+  if(takedown_chance == TAKEDOWN_CANCELLED || takedown_chance == TAKEDOWN_PENALTY)
+    return;
+
   if(takedown_chance > number(0, 100))
   {
-    int gh = (zone_table[world[ch->in_room].zone].number == GH_ZONE_NUMBER);
-    door = number(0+gh, 9);
+//    int gh = (zone_table[world[ch->in_room].zone].number == GH_ZONE_NUMBER);
+
+    door = number(0, 9);
+    // Exit that's not up or down.
     if((door == UP) || (door == DOWN))
-      door = number(0+gh, 3);
+      door = number(0, 3);
+
     if((CAN_GO(victim, door)) && (!check_wall(victim->in_room, door)))
     {
       act("&+LYour mighty rearkick sends&n $N &+Lflying out of the room!&n",
