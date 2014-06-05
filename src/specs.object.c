@@ -8619,7 +8619,7 @@ int stat_pool_luc(P_obj obj, P_char ch, int cmd, char *arg)
   return stat_pool_common(obj, ch, cmd, &(ch->base_stats.Luck),
                           "&+LYour outlook on life is somewaht grimmer..\n",
                           "$n doesn't look so confident in believing in his lucky stars.\n",
-                          "&+WYou feel as if you could roll Tripple Tiamat's at the slots..\n",
+                          "&+WYou feel as if you could roll Triple Tiamat's at the slots..\n",
                           "$n looks to have the confidence that life is going his way.\n");
 }
 

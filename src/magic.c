@@ -21474,7 +21474,7 @@ if(affected_by_spell(ch, SPELL_VITALITY))
   }    
   */
 
-  send_to_char("&+GYou feel the &+ywarm &+Gbreathe of the Goddess Mielikki.\r\n", ch);
+  send_to_char("&+GYou feel the &+ywarm &+Gbreath of the Goddess Mielikki.\r\n", ch);
 }
 
 void spell_repair_one_item(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
