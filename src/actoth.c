@@ -255,11 +255,24 @@ void do_camp(P_char ch, char *arg, int cmd)
 //      send_to_char("You cannot camp in a hall. Use inn like everyone else!\r\n", ch);
 //      return;
 //      }
+  while (*arg == ' ')
+    arg++;
+
+  if( isname( arg, "abort" ) )
+  {
+    if (!IS_AFFECTED(ch, AFF_CAMPING))
+      send_to_char( "Your not setting up camp atm?!?\n", ch );
+    else
+    {
+      send_to_char( "You quickly pack up your things and move on.\n", ch );
+      affect_from_char(ch, SKILL_CAMP);
+    }
+    return;
+  }
 
   if (IS_AFFECTED2(ch, AFF2_SCRIBING))
   {
-    send_to_char
-      ("Sorry, you're quite busy with your scribing right now..\\r\n", ch);
+    send_to_char("Sorry, you're quite busy with your scribing right now..\\r\n", ch);
     return;
   }
   if (IS_AFFECTED2(ch, AFF2_MEMORIZING))
@@ -269,16 +282,15 @@ void do_camp(P_char ch, char *arg, int cmd)
   }
   if (IS_FIGHTING(ch))
   {
-    act("Better finish dealing with $N first, bunky.",
-        FALSE, ch, 0, ch->specials.fighting, TO_CHAR);
+    act("Better finish dealing with $N first, bunky.", FALSE, ch, 0, ch->specials.fighting, TO_CHAR);
     return;
   }
   if (IS_DESTROYING(ch))
   {
-    act("Better finish dealing with $p first, bunky.",
-        FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
+    act("Better finish dealing with $p first, bunky.", FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
     return;
   }
+
   if (IS_TRUSTED(ch))
   {
     ch->specials.was_in_room = world[ch->in_room].number;
@@ -321,16 +333,16 @@ void do_camp(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if(world[ch->in_room].sector_type == SECT_FIREPLANE ||
-    world[ch->in_room].sector_type == SECT_WATER_PLANE ||
-    world[ch->in_room].sector_type == SECT_AIR_PLANE ||
-    world[ch->in_room].sector_type == SECT_EARTH_PLANE)
+  if( world[ch->in_room].sector_type == SECT_FIREPLANE
+    || world[ch->in_room].sector_type == SECT_WATER_PLANE
+    || world[ch->in_room].sector_type == SECT_AIR_PLANE
+    || world[ch->in_room].sector_type == SECT_EARTH_PLANE )
   {
     send_to_char("Camping here is not permitted.\r\n", ch);
     return;
   }
 
-  switch (world[ch->in_room].sector_type)
+  switch( world[ch->in_room].sector_type )
   {
   case SECT_CITY:
   case SECT_UNDRWLD_CITY:
@@ -390,6 +402,7 @@ void do_camp(P_char ch, char *arg, int cmd)
     return;
     break;
   }
+
   if (ch->specials.z_cord < 0)
   {
     send_to_char("I've got just three words: Davy Jones' Locker.\r\n", ch);
@@ -419,21 +432,17 @@ void do_camp(P_char ch, char *arg, int cmd)
   }
   if (IS_SET(world[ch->in_room].room_flags, JAIL))
   {
-    send_to_char
-      ("Just relax Jailbird, you are gonna be here for a while.\r\n", ch);
+    send_to_char("Just relax Jailbird, you are gonna be here for a while.\r\n", ch);
     return;
   }
   if (IS_SET(world[ch->in_room].room_flags, GUILD_ROOM))
   {
-    send_to_char
-    ("You're not allowed to camp here!\r\n", ch);
+    send_to_char("You're not allowed to camp here!\r\n", ch);
     return;
-  }  
+  }
   if (IS_SET(zone_table[world[ch->in_room].zone].flags, ZONE_TOWN))
   {
-    send_to_char
-      ("Riiight, you'd get run over by a cart, or knifed in your sleep!  Go to an Inn!\r\n",
-       ch);
+    send_to_char("Riiight, you'd get run over by a cart, or knifed in your sleep!  Go to an Inn!\r\n", ch);
     return;
   }
   if (IS_STUNNED(ch))
@@ -443,8 +452,7 @@ void do_camp(P_char ch, char *arg, int cmd)
   }
   if (IS_SET(ch->specials.affected_by, AFF_KNOCKED_OUT))
   {
-    send_to_char
-      ("Being knocked out, camping is not really an option for you.\r\n", ch);
+    send_to_char("Being knocked out, camping is not really an option for you.\r\n", ch);
     return;
   }
   if (GET_HIT(ch) < 0)
@@ -471,13 +479,13 @@ void do_camp(P_char ch, char *arg, int cmd)
         break;
       }
     }
-	
+
   	if (aff)
   	{
   		char buf[100];
   		int i = 0;
   		int j = 0;
-      
+
       i = aff->duration;
 
       i = i*100;
@@ -502,11 +510,11 @@ void do_camp(P_char ch, char *arg, int cmd)
 	  }
 	  else
 	  {
-      send_to_char("Your preparations are not quite complete!\r\n", ch);
+      send_to_char("Your preparations are not quite complete...\r\n", ch);
 	  }
 	  return;
   }
-  
+
   if (!RACE_PUNDEAD(ch))
   {
     send_to_char("You start setting up camp...\r\n", ch);
