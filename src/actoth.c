@@ -3711,8 +3711,18 @@ void do_use(P_char ch, char *argument, int cmd)
       if (target_data.t_char != NULL)
       {
         tmp_char = target_data.t_char;
-        act("$n points $p at $N.", TRUE, ch, stick, tmp_char, TO_ROOM);
-        act("You direct $p at $N.", FALSE, ch, stick, tmp_char, TO_CHAR);
+        act("$n points $p at $N!", TRUE, ch, stick, tmp_char, TO_ROOM);
+        act("You direct $p at $N!", FALSE, ch, stick, tmp_char, TO_CHAR);
+      }
+      else if( IS_SET(skills[spl].targets, TAR_IGNORE) )
+      {
+        // Skip whitespace..
+        while( isspace(*argument) )
+          argument++;
+        sprintf( Gbuf1, "You wave $p and say '%s'.", argument );
+        act(Gbuf1, TRUE, ch, stick, NULL, TO_CHAR);
+        sprintf( Gbuf1, "$n waves $p and says '%s'.", argument );
+        act(Gbuf1, TRUE, ch, stick, NULL, TO_ROOM);
       }
       else
       {
@@ -3722,8 +3732,10 @@ void do_use(P_char ch, char *argument, int cmd)
       }
 
 
-      ((*skills[spl].spell_pointer) ((int) stick->value[0], ch, 0,
-                                     SPELL_TYPE_SPELL, tmp_char, tmp_object));
+      if( IS_SET(skills[spl].targets, TAR_IGNORE) )
+        ((*skills[spl].spell_pointer) ((int) stick->value[0], ch, argument, SPELL_TYPE_SPELL, tmp_char, tmp_object));
+      else
+        ((*skills[spl].spell_pointer) ((int) stick->value[0], ch, 0, SPELL_TYPE_SPELL, tmp_char, tmp_object));
 
 
       if (char_in_list(ch))
