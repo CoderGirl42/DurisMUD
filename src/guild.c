@@ -368,6 +368,26 @@ P_char FindTeacher(P_char ch)
   return NULL;
 }
 
+// Checks to see if teacher is the proper class & lvl for a spec spell
+// Returns TRUE iff teacher's class has a spec that knows spell skl.
+bool is_spec_spell( P_char teacher, int skl )
+{
+  int spec = teacher->player.spec;
+
+  for (int i = 0; i < MAX_SPEC; i++)
+  {
+    teacher->player.spec = i;
+    if( knows_spell( teacher, skl ) )
+    {
+      teacher->player.spec = spec;
+      return TRUE;
+    }
+  }
+
+  teacher->player.spec = spec;
+  return FALSE;
+}
+
 int IsTaughtHere(P_char ch, int skl)
 {
   P_char   teacher;
@@ -385,7 +405,8 @@ int IsTaughtHere(P_char ch, int skl)
   }
   if (IS_SPELL(skl))
   {
-    if (IS_TRUSTED(teacher) || knows_spell(teacher, skl))
+    if (IS_TRUSTED(teacher) || knows_spell(teacher, skl)
+      || is_spec_spell( teacher, skl ) )
     {
       return TRUE;
     }
@@ -862,7 +883,7 @@ void prac_all_spells(P_char ch)
     // if they can't have the spell, then don't look at it!
     if( !SKILL_DATA_ALL(ch, spl).maxlearn[0] && !SKILL_DATA_ALL(ch, spl).maxlearn[ch->player.spec] )
       continue;
-    
+
     int circle = get_spell_circle(ch, spl);
     if (circle > max_circle)
       continue;
@@ -908,20 +929,18 @@ void prac_all_spells(P_char ch)
 
 void do_practice(P_char ch, char *arg, int cmd)
 {
-  char     buf[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH],
-    obuf[MAX_STRING_LENGTH];
-  int      skl, spl, circle, i, meming_cl, cost, ret;
-  P_char   teacher;
+  char   buf[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH],
+         obuf[MAX_STRING_LENGTH];
+  int    skl, spl, circle, i, meming_cl, cost, ret;
+  P_char teacher;
 
 #ifdef SKILLPOINTS
   do_practice_new( ch, arg, cmd );
   return;
 #endif
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !IS_PC(ch))
-        return;
+
+  if( !(ch) || !IS_ALIVE(ch) || !IS_PC(ch) )
+    return;
 
   teacher = FindTeacher(ch);
 
@@ -931,7 +950,7 @@ void do_practice(P_char ch, char *arg, int cmd)
   meming_cl = meming_class(ch);
 
 
-  if (!*arg && FindTeacher(ch))
+  if( !*arg && teacher )
   {                             /*
                                  * list skills available to be
                                  * taught
@@ -990,7 +1009,7 @@ void do_practice(P_char ch, char *arg, int cmd)
   {                             /* request teachings of a certain skill */
     *buf1='\0';
     *buf='\0';
-    
+
     arg = skip_spaces(arg);
     if (!str_cmp(arg, "all"))
     {
@@ -1002,7 +1021,7 @@ void do_practice(P_char ch, char *arg, int cmd)
     }
     skl = search_block(arg, (const char **) spells, FALSE);
     i = skl;
-    
+
 
     if (!IsTaughtHere(ch, skl))
     {
@@ -1027,7 +1046,7 @@ void do_practice(P_char ch, char *arg, int cmd)
              "Hmm, I don't think you'd understand a damn thing if I *did* try to teach you.");
       else
         send_to_char("You wouldn't understand.\n", ch);
-      return;      
+      return;
     }
 
     if (SKILL_DATA_ALL(ch, skl).rlevel[ch->player.spec] >= 51)
