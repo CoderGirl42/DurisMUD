@@ -3246,8 +3246,8 @@ bool isMaulable(P_char ch, P_char victim)
     return false;
   }
 
-  if((has_innate(victim, INNATE_HORSE_BODY ||
-      has_innate(victim, INNATE_SPIDER_BODY))) &&
+  if((has_innate(victim, INNATE_HORSE_BODY) ||
+      has_innate(victim, INNATE_SPIDER_BODY)) &&
     get_takedown_size(ch) <= get_takedown_size(victim))
   {
     return false;
@@ -4290,7 +4290,7 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     {
       dam = (int) (dam * get_property("damage.headbutt.damBonusMinotaur", 1.500));
     }
-    
+
     // if victim is smaller, do a bit more damage
     if (get_takedown_size(victim) < get_takedown_size(ch))
       dam = (int) (dam * get_property("damage.headbutt.damBonusVsSmaller", 1.10));
@@ -4298,19 +4298,22 @@ void do_headbutt(P_char ch, char *argument, int cmd)
     // if victim is larger, do a bit less damage
     if (get_takedown_size(victim) > get_takedown_size(ch))
       dam = (int) (dam * get_property("damage.headbutt.damPenaltyVsLarger", 0.900));    
-    
-    if (melee_damage(ch, victim, dam, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, messages))
+
+    if (melee_damage(ch, victim, dam, PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE, messages)
+      != DAM_NONEDEAD)
+    {
       return;
+    }
 
     if(GET_CHAR_SKILL(ch, SKILL_DOUBLE_HEADBUTT) > number(0,300))
     {
-      for( int j = 1; j < 2 && !number(0,j); j++ ) //max 2 headbutts
+      act("You deftly pull back your head and ram it into $N again!", FALSE, ch, 0, victim, TO_CHAR);
+      act("With a quick move, $n pulls back $s head and rams it into you again!", FALSE, ch, 0, victim, TO_VICT);
+      act("$n deftly pulls back $s head and slams it into $N again!", FALSE, ch, 0, victim, TO_NOTVICTROOM);
+      if (melee_damage(ch, victim, (int) (dam / 2), PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE , messages)
+        != DAM_NONEDEAD)
       {
-        act("You deftly pull back your head and ram it into $N again!", FALSE, ch, 0, victim, TO_CHAR);
-        act("With a quick move, $n pulls back $s head and rams it into you again!", FALSE, ch, 0, victim, TO_VICT);
-        act("$n deftly pulls back $s head and slams it into $N again!", FALSE, ch, 0, victim, TO_NOTVICTROOM);
-        if (melee_damage(ch, victim, (int) (dam / j), PHSDAM_NOPOSITION | PHSDAM_TOUCH | PHSDAM_NOREDUCE , messages))
-          return;        
+        return;
       }
     }
 
@@ -6101,7 +6104,7 @@ void do_tackle(P_char ch, char *arg, int cmd)
   if((has_innate(vict, INNATE_HORSE_BODY) ||
     has_innate(vict, INNATE_SPIDER_BODY) ||
     GET_RACE(ch) == RACE_QUADRUPED)  &&
-    (get_takedown_size(ch) < get_takedown_size(vict)) + 1)
+    (get_takedown_size(ch) <= get_takedown_size(vict)) )
   {
     act("$n makes a futile attempt to tackle $N, but $E is simply immovable.",
         FALSE, ch, 0, vict, TO_NOTVICT);
