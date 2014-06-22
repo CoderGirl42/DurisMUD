@@ -4802,7 +4802,7 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
 
   dam += (number (10, GET_C_LUK(ch)) / 10);
 
-  dam =  (int)((float)dam * ((float)skill / (float)100)); //(goes to 0)
+  dam =  (int)((float)dam * ((float)skill / (float)100));
 
   dice_mult = (int) (weapon->value[1] + (weapon->value[2] / 2)) / 2;
   dice_mult += weapon->value[1] + (weapon->value[1] / 2);
@@ -4832,7 +4832,8 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
   critical_stab = get_property("backstab.CriticalStab", 0.200);
   critical_stab_mult = get_property("backstab.CriticalStab.Multiplier", 1.000);
 
-  if(GET_STAT(victim) <= STAT_INCAP || GET_STAT(victim) >= STAT_DYING)
+  // Yeah.. we want them really dead.
+  if( GET_STAT(victim) <= STAT_INCAP )
     dam = MAX(200, dam);
 
   if(affected_by_spell(victim, SPELL_STONE_SKIN))
