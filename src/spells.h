@@ -684,7 +684,8 @@
 #define SPELL_IMPLOSION              634
 #define SPELL_BLIGHT                 635
 #define SPELL_SANDSTORM              636
-#define LAST_SPELL  SPELL_SANDSTORM
+#define SPELL_FIRELANCE              637
+#define LAST_SPELL  SPELL_FIRELANCE
 
 #define FIRST_SKILL                  1000  /* should be a decent split point */
 #define SKILL_SNEAK                  1000

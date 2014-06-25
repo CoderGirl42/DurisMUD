@@ -620,3 +620,39 @@ void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P
   spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
 
 }
+// Target Damage.
+void spell_firelance(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+{
+  int dam;
+  struct damage_messages messages = {
+    "As you complete your spell, you launch a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
+    "As $n completes $s spell, $e launches a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at you, &+rscorching&n your skin!",
+    "As $n completes $s spell, $e launches a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
+    "$N succumbs to your &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
+    "You succumb to $n's &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
+    "$N succumbs to $n's &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
+      0
+  };
+
+  if( !ch || !victim || !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+
+  if(level > 50)
+  {
+    dam = dice(6 * MIN(20, (level / 2 + 1)), 9);
+  }
+  else
+  {
+    dam = dice(5 * MIN(20, (level / 2 + 1)), 9);
+  }
+
+  if(!NewSaves(victim, SAVING_SPELL, 1.5))
+  {
+    dam /= 2;
+  }
+
+  spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
+
+}
