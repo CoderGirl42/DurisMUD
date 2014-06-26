@@ -535,6 +535,14 @@ void apply_affs(P_char ch, int mode)
     {
       REMOVE_BIT(ch->specials.affected_by4, AFF4_NEG_SHIELD);
     }
+    if( affected_by_spell(ch, SPELL_ELEMENTAL_AURA) )
+    {
+      REMOVE_BIT(ch->specials.affected_by2, AFF2_FIRE_AURA);
+      REMOVE_BIT(ch->specials.affected_by2, AFF2_WATER_AURA);
+      REMOVE_BIT(ch->specials.affected_by2, AFF2_EARTH_AURA);
+      REMOVE_BIT(ch->specials.affected_by2, AFF2_AIR_AURA);
+      REMOVE_BIT(ch->specials.affected_by4, AFF4_ICE_AURA);
+    }
     if (IS_AFFECTED2(ch, AFF2_FIRE_AURA))
     {
       REMOVE_BIT(ch->specials.affected_by2, AFF2_WATER_AURA);

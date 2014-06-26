@@ -4400,7 +4400,12 @@ void spell_elemental_aura(int level, P_char ch, char *arg, int type,
   if(!ch)
     return;
 
-  if(affected_by_spell(ch, SPELL_ELEMENTAL_AURA))
+  if( affected_by_spell(ch, SPELL_ELEMENTAL_AURA)
+    || IS_AFFECTED2(ch, AFF2_EARTH_AURA)
+    || IS_AFFECTED2(ch, AFF2_WATER_AURA)
+    || IS_AFFECTED2(ch, AFF2_FIRE_AURA)
+    || IS_AFFECTED2(ch, AFF2_AIR_AURA)
+    || IS_AFFECTED4(ch, AFF4_ICE_AURA) )
   {
     send_to_char("Nothing seems to happen.\n", ch);
     return;
