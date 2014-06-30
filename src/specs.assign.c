@@ -1662,6 +1662,7 @@ void assign_objects(void)
 
   /* heavens */
   obj_index[real_object0(750)].func.obj = druid_spring;
+  obj_index[real_object0(749)].func.obj = blighter_pond;
 //  obj_index[real_object0(366)].func.obj = druid_sabre;
   obj_index[real_object0(1218)].func.obj = flying_citadel;
   obj_index[real_object0(1222)].func.obj = gfstone;

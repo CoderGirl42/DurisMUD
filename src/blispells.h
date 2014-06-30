@@ -11,3 +11,5 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
 void spell_blight(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
 void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
 void spell_firelance(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
+void spell_drain_nature(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
+void spell_create_pond(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);

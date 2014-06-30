@@ -588,6 +588,7 @@ int fumblegaunts(P_obj, P_char, int, char *);
 int confusionsword(P_obj, P_char, int, char *);
 int guild_badge(P_obj, P_char, int, char *);
 int druid_spring(P_obj, P_char, int, char *);
+int blighter_pond(P_obj, P_char, int, char *);
 int druid_sabre(P_obj, P_char, int, char *);
 int death_proc(P_obj, P_char, int, char *);
 int olympus_portal(P_obj, P_char, int, char *);

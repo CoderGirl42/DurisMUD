@@ -625,12 +625,12 @@ void spell_firelance(int level, P_char ch, char *arg, int type, P_char victim, P
 {
   int dam;
   struct damage_messages messages = {
-    "As you complete your spell, you launch a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
-    "As $n completes $s spell, $e launches a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at you, &+rscorching&n your skin!",
-    "As $n completes $s spell, $e launches a &+Rmassive fi&+r&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
-    "$N succumbs to your &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
-    "You succumb to $n's &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
-    "$N succumbs to $n's &+Rmassive fi&+r&+Yel&+ran&+Rce&n.",
+    "As you complete your spell, you launch a &+Rmassive fi&+rr&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
+    "As $n completes $s spell, $e launches a &+Rmassive fi&+rr&+Yel&+ran&+Rce&n at you, &+rscorching&n your skin!",
+    "As $n completes $s spell, $e launches a &+Rmassive fi&+rr&+Yel&+ran&+Rce&n at $N, &+rscorching&n $S skin!",
+    "$N succumbs to your &+Rmassive fi&+rr&+Yel&+ran&+Rce&n.",
+    "You succumb to $n's &+Rmassive fi&+rr&+Yel&+ran&+Rce&n.",
+    "$N succumbs to $n's &+Rmassive fi&+rr&+Yel&+ran&+Rce&n.",
       0
   };
 
@@ -641,18 +641,135 @@ void spell_firelance(int level, P_char ch, char *arg, int type, P_char victim, P
 
   if(level > 50)
   {
-    dam = dice(6 * MIN(20, (level / 2 + 1)), 9);
+    dam = dice(5 * MIN(20, (level / 2 + 1)), 7);
   }
   else
   {
-    dam = dice(5 * MIN(20, (level / 2 + 1)), 9);
+    dam = dice(4 * MIN(20, (level / 2 + 1)), 7);
   }
 
   if(!NewSaves(victim, SAVING_SPELL, 1.5))
   {
-    dam /= 2;
+    dam /= 1.5;
   }
 
   spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
 
+}
+
+// Heals the target/cures blind.
+void spell_drain_nature(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
+{
+  struct affected_type af;
+  int healpoints;
+  int duration = (int) (WAIT_SEC * 1.5 * 56 / level);
+
+  if(!IS_ALIVE(victim) || !IS_ALIVE(ch))
+    return;
+
+  healpoints = level * 5 / 2;
+
+  if(!GET_CLASS(ch, CLASS_BLIGHTER))
+  {
+    healpoints /= 2;
+  }
+
+  if( GET_CLASS(ch, CLASS_BLIGHTER) && IS_BLIND(victim) )
+  {
+    spell_cure_blind(level, ch, NULL, SPELL_TYPE_SPELL, victim, NULL);
+  }
+
+  grapple_heal(victim);
+
+  switch (world[ch->in_room].sector_type)
+  {
+    case SECT_CITY:
+      healpoints -= 20;
+      break;
+    case SECT_FIELD:
+      healpoints += 40;
+      break;
+    case SECT_FOREST:
+      healpoints += 60;
+      break;
+    case SECT_HILLS:
+      healpoints += 30;
+      break;
+    case SECT_UNDERWATER_GR:
+    case SECT_MOUNTAIN:
+      healpoints += 10;
+      break;
+    case SECT_UNDRWLD_WILD:
+    case SECT_UNDRWLD_CITY:
+    case SECT_UNDRWLD_MOUNTAIN:
+    case SECT_UNDRWLD_SLIME:
+    case SECT_UNDRWLD_LOWCEIL:
+    case SECT_UNDRWLD_LIQMITH:
+    case SECT_UNDRWLD_MUSHROOM:
+      healpoints += 5;
+      break;
+    default:
+      break;
+  }
+
+  if(IS_NPC(victim))
+  {
+    heal(victim, ch, healpoints, GET_MAX_HIT(victim) - number(1, 4));
+  }
+  else
+  {
+    memset(&af, 0, sizeof(af));
+    af.type = SPELL_DRAIN_NATURE;
+    af.flags = AFFTYPE_SHORT | AFFTYPE_NOSAVE;
+    af.duration = duration;
+    af.location = APPLY_HIT_REG;
+    af.modifier = SECS_PER_MUD_HOUR * WAIT_SEC / duration * healpoints;
+    af.bitvector4 = AFF4_REGENERATION;
+    affect_to_char(victim, &af);
+    update_achievements(ch, victim, healpoints, 1);
+
+    if(IS_FIGHTING(victim))
+    {
+      gain_exp( ch, victim, MIN(healpoints, GET_MAX_HIT(victim) - GET_HIT(victim)), EXP_HEALING );
+      update_pos(victim);
+    }
+    if(ch == victim)
+    {
+      act( "&+yYou drain &+Whealth&+y from your surroundings.&n", FALSE, ch, 0, victim, TO_CHAR );
+    }
+    else
+    {
+      act("&+yYou feel &+Whealth&+y flow into you from your surroundings.&m", FALSE, ch, 0, victim, TO_VICT );
+      act("&+yYou drain &+Whealth&+y from you surroundings, sending it to $N&+y.&n",
+        FALSE, ch, 0, victim, TO_CHAR);
+    }
+    act("&+y$n&+y sucks the &+glife&+y out of the surroundings, &+Whealing&+y $N&+y.&n",
+      FALSE, ch, 0, victim, TO_NOTVICT);
+  }
+}
+
+void spell_create_pond(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
+{
+  P_obj pond;
+
+  if (world[ch->in_room].sector_type == SECT_NO_GROUND ||
+      world[ch->in_room].sector_type == SECT_UNDRWLD_NOGROUND ||
+      world[ch->in_room].sector_type == SECT_OCEAN)
+  {
+    send_to_char("&+bA pond usually needs more solid ground for support!\n", ch);
+    return;
+  }
+
+  pond = read_object(749, VIRTUAL);
+  if(!pond)
+  {
+    logit(LOG_DEBUG, "spell_create_pond(): obj 749 (pond) not loadable");
+    send_to_char("Tell someone to make a pond object ASAP!\n", ch);
+    return;
+  }
+
+  pond->value[0] = GET_LEVEL(ch);
+  send_to_room("&+bA pool grows out of nowhere!\n", ch->in_room);
+  set_obj_affected(pond, 60 * 10, TAG_OBJ_DECAY, 0);
+  obj_to_room(pond, ch->in_room);
 }

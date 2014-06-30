@@ -1688,7 +1688,11 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 TAR_CHAR_ROOM, spell_natures_touch);
   SPELL_ADD(CLASS_DRUID, 5);
 //  SPELL_ADD(CLASS_RANGER, 7);
-  
+
+  SPELL_CREATE("drain nature", SPELL_DRAIN_NATURE, PULSE_SPELLCAST * 3 / 2,
+                TAR_CHAR_ROOM, spell_drain_nature);
+  SPELL_ADD(CLASS_BLIGHTER, 5);
+
   SPELL_CREATE("sticks to snakes", SPELL_STICKS_TO_SNAKES, PULSE_SPELLCAST * 3 / 2,
                 TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO,
                 spell_sticks_to_snakes);
@@ -4288,6 +4292,10 @@ SPELL_ADD(CLASS_NONE, 1);
   SPELL_CREATE("create spring", SPELL_CREATE_SPRING, PULSE_SPELLCAST * 2,
                 TAR_IGNORE, spell_create_spring);
   SPELL_ADD(CLASS_DRUID, 4);
+
+  SPELL_CREATE("create pond", SPELL_CREATE_POND, PULSE_SPELLCAST * 2,
+                TAR_IGNORE, spell_create_pond);
+  SPELL_ADD(CLASS_BLIGHTER, 4);
 
   SPELL_CREATE_MSG("barkskin", SPELL_BARKSKIN, PULSE_SPELLCAST,
                 TAR_CHAR_ROOM,

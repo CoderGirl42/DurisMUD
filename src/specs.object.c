@@ -33,6 +33,7 @@ using namespace std;
 #include "map.h"
 #include "handler.h"
 #include "ctf.h"
+#include "blispells.h"
 
 /*
    external variables
@@ -8660,21 +8661,23 @@ int druid_spring(P_obj obj, P_char ch, int cmd, char *arg)
     {
       act("You drink from $p.", FALSE, ch, obj, 0, TO_CHAR);
       act("$n drinks from $p.", FALSE, ch, obj, 0, TO_ROOM);
-      
+
       if (obj->value[0] >= 51)
-	spell_regeneration(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
-      //if (obj->value[0] >= 41)
-	//spell_endurance(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+        spell_regeneration(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+//      if (obj->value[0] >= 41)
+//        spell_endurance(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
       if (obj->value[0] >= 36)
-	spell_aid(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+        spell_aid(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
 
       if (obj->value[0] >= 31)
+      {
         spell_natures_touch(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+      }
       else
+      {
         spell_cure_serious(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
-      
+      }
       spell_invigorate(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
-      
       CharWait(ch, PULSE_VIOLENCE);
       return TRUE;
     }
@@ -8685,11 +8688,57 @@ int druid_spring(P_obj obj, P_char ch, int cmd, char *arg)
     if (world[obj->loc.room].people)
     {
       act("$p rapidly shrinks in size until finally it disappears entirely.",
-          0, world[obj->loc.room].people, obj, 0, TO_ROOM);
+        0, world[obj->loc.room].people, obj, 0, TO_ROOM);
       act("$p rapidly shrinks in size until finally it disappears entirely.",
-          0, world[obj->loc.room].people, obj, 0, TO_CHAR);
+        0, world[obj->loc.room].people, obj, 0, TO_CHAR);
     }
+    return TRUE;
+  }
 
+  return FALSE;
+}
+
+int blighter_pond(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  if (cmd == CMD_SET_PERIODIC)
+    return FALSE;
+
+  if (cmd == CMD_DRINK)
+  {
+    if (!arg || !*arg)
+      return FALSE;
+    arg = skip_spaces(arg);
+    if( *arg && !strcmp(arg, "pond") )
+    {
+      act("You drink from $p.", FALSE, ch, obj, 0, TO_CHAR);
+      act("$n drinks from $p.", FALSE, ch, obj, 0, TO_ROOM);
+
+      if( obj->value[0] >= 31 )
+      {
+        spell_drain_nature(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+      }
+      if( obj->value[0] >= 51 )
+      {
+        spell_regeneration(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+      }
+      if( GET_VITALITY(ch) < GET_MAX_VITALITY(ch) )
+      {
+        spell_invigorate(obj->value[0], ch, 0, SPELL_TYPE_SPELL, ch, 0);
+      }
+      CharWait(ch, PULSE_VIOLENCE);
+      return TRUE;
+    }
+  }
+
+  if (cmd == CMD_DECAY)
+  {
+    if (world[obj->loc.room].people)
+    {
+      act("$p rapidly shrinks in size until finally it disappears entirely.",
+        0, world[obj->loc.room].people, obj, 0, TO_ROOM);
+      act("$p rapidly shrinks in size until finally it disappears entirely.",
+        0, world[obj->loc.room].people, obj, 0, TO_CHAR);
+    }
     return TRUE;
   }
 
