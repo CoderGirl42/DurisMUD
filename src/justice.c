@@ -2469,7 +2469,6 @@ int shout_and_hunt(P_char ch, int max_distance, const char *shout_str, int (*loc
        * got one.  If they aren't already hunting someone, make
        * things happen
        */
-      has_help = TRUE;
 
       if (IS_FIGHTING(target))
         continue;
@@ -2482,6 +2481,8 @@ int shout_and_hunt(P_char ch, int max_distance, const char *shout_str, int (*loc
       }
       if (ev)
         continue;
+
+      has_help = TRUE;
 
       /*
        * check if its a possible hunt.. and if its within the max
