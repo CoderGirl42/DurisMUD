@@ -687,8 +687,8 @@
 #define SPELL_FIRELANCE              637
 #define SPELL_DRAIN_NATURE           638
 #define SPELL_CREATE_POND            639
-#define SPELL_SWAMP_GAS              640
-#define LAST_SPELL  SPELL_SWAMP_GAS
+#define SPELL_TOXIC_FOG              640
+#define LAST_SPELL  SPELL_TOXIC_FOG
 
 #define FIRST_SKILL                  1000  /* should be a decent split point */
 #define SKILL_SNEAK                  1000

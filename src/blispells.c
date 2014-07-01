@@ -572,12 +572,12 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
   int dam = dice(level * 3, 10);
 
   struct damage_messages messages = {
-    "You begin to crush $N.",
-    "$n begins to crush you.",
-    "$N is crushed by $n.",
-    "$N implodes!",
-    "You implode!",
-    "$N implodes!",
+    "Your &+We&+wy&+We&+ws&n roll back into your head as you cause $N's &+Gcells&n to &+rimplode&n!",
+    "The &+Rpain&n is &+rexcruciating&n as $n summons the power of &+Gnature's &+Ldarker side&n to &+Ycrush&n your body!",
+    "$N almost hits his knees in &+Wagony&n as $n &+Ycrushes&n his body, causing parts of him to &+Rimplode&n!",
+    "There is one final &+Csu&+crg&+Ce&N of raw &+Mpower&N before you &+Ycrush&n $N's &+Rhe&+rar&+Rt&n."
+    "As $n crushes you, there is one final &+Csu&+crg&+Ce&N of raw &+Rpa&+ri&+Rn&N before your &+Rhe&+rar&+Rt&n is &+Wcrushed&n, then &+Lblackness&n...",
+    "$N is utterly &+Ccr&+cush&+Ced&n by $n's &+rdestructive&n &+Gnatural &+mmagic&n!",
       0
   };
 
@@ -767,16 +767,16 @@ void spell_create_pond(int level, P_char ch, char *arg, int type, P_char victim,
 }
 
 // Target Damage.
-void spell_swamp_gas(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+void spell_toxic_fog(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int dam;
   struct damage_messages messages = {
-    "As you complete your spell, you launch a &+Ggreen cloud&n at $N!",
-    "As $n completes $s spell, $e launches a &+Ggreen cloud&n at you, scorching your lungs!",
-    "As $n completes $s spell, $e launches a &+Ggreen cloud&n at $N!",
-    "$N succumbs to your &+Mswamp &+Ggas&n.",
-    "You succumb to $n's &+Mswamp &+Ggas&n.",
-    "$N succumbs to $n's &+Mswamp &+Ggas&n.",
+    "&+GToxic ten&+gdri&+Gls&n of &+Wm&+Li&+ws&+Wt float out and &+csuffocate&n $N &+Wcausing&+w them to &+cchoke&n!",
+    "&+GToxic ten&+gdri&+Gls&n of &+Wm&+Li&+ws&+Wt float out to &+csuffocate&n you, &+Wcausing&+w you to &+Cchoke&n!",
+    "$N &+Cgasps&n for &+Cair&n as $n's &+Glethal&n &+Wm&+Li&+ws&+Wt&n envelops $M!",
+    "You smile as $N's &+Wlungs&n fill with &+Gto&+gxi&+Gc poison&n and they turn &+wgrey&n and &+Bbl&+bu&+Be&N before keeling over &+rdead&n.",
+    "You &+cgasp&n for &+Ca&+ci&+Cr as $n's &+Wm&+Li&+ws&+Wt &ncompletely fills your &+Wlungs&n before passing out for lack of &+Coxygen&n...",
+    "$N &+cwheezes&n and &+Cchokes&n as $E turns &+Bbl&+bu&+Be&n and collapses into a crumpled heap.",
       0
   };
 
