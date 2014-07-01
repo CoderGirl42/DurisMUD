@@ -594,32 +594,76 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
 
 }
 
-// Target Damage.
-void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+// Just display growing messages..
+void event_sandstorm_message(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  int dam = dice(level * 3, 6);
+  int room = *((int *)data);
+
+  send_to_room( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n\n", ch->in_room );
+}
+
+void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
+{
+  int    room = *((int *)data);
+  P_char next;
   struct damage_messages messages = {
-    "You molest $N with sand.",
-    "$n sends sand at you!",
-    "$N is beleaguered with sand by $n.",
-    "$N chokes to death on the sand!",
-    "You choke to death on the sand!",
-    "$N chokes to death on the sand!",
+    "",
+    "&+yYou are en&+Ygu&+ylfed in s&+Ya&+ynd which &+Rsh&+rre&+Rds&+y your &+Yskin&+y and gets in your &+Weyes&+y!&n",
+    "",
+    "&+yYou smile as the &+Lhowling &+ys&+Yan&+yds consume $N&+y completely!&n",
+    "&+ySand&+Y, sand&+y, sand and more s&+Yan&+yd &+Rsh&+rre&+Rds&+y you and &+Wfills&+y your lungs, causing a major case of &+Ldeath&+y!&n",
+    "&+yYou can barely &+wsee&+y, but you believe that you just witnessed the &+Ysandy &+Ldeath&+y of $N&+y.&n",
       0
   };
 
-  if( !ch || !victim || !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  if( !ch || !IS_ALIVE(ch) )
   {
     return;
   }
 
-  if(!NewSaves(victim, SAVING_SPELL, 0))
+  for( victim = world[room].people; victim; victim = next )
   {
-    dam /= 2;
+    next = victim->next_in_room;
+    if( victim == ch || ( ch->group && ch->group == victim->group ) )
+      continue;
+    if( !NewSaves(victim, SAVING_SPELL, 1.5) )
+    {
+      spell_damage(ch, victim, dice(GET_LEVEL(ch) * 3, 6), SPLDAM_GAS, 0, &messages);
+      if( victim && IS_ALIVE(victim) )
+      {
+        blind(ch, victim, number((int)(GET_LEVEL(ch) / 3), (int)(GET_LEVEL(ch) / 2)) * WAIT_SEC);
+      }
+    }
+    else
+    {
+      spell_damage(ch, victim, dice(GET_LEVEL(ch) * 3, 6)/2, SPLDAM_GAS, 0, &messages);
+    }
   }
-  spell_damage(ch, victim, dam, SPLDAM_GAS, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
 
 }
+
+// Area Damage on timer.
+void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+{
+  // j = number of rounds before sandstorm hits.
+  int i, j = number( 1, 3 );
+
+  if( !ch || !IS_ALIVE(ch) )
+  {
+    return;
+  }
+  act( "&+yYour &+Weyes roll&+y back into your head as you begin to &+Ysummon&+y the fury of the &+Ys&+ya&+Yn&+yd&+Ys&+y!&n", FALSE, ch, 0, victim, TO_CHAR );
+  act( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n",0, ch, 0, 0, TO_ROOM);
+
+  // For rounds before sandstorm hits, display message.
+  for( i = 1; i < j; i++ )
+  {
+    add_event( event_sandstorm_message, i * PULSE_VIOLENCE*2, ch, victim, 0, 0, &(ch->in_room), sizeof(ch->in_room) );
+  }
+  // At j rounds, have it hit!
+  add_event( event_sandstorm, j*PULSE_VIOLENCE*2, ch, victim, 0, 0, &(ch->in_room), sizeof(ch->in_room) );
+}
+
 // Target Damage.
 void spell_firelance(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
