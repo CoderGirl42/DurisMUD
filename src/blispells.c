@@ -225,12 +225,13 @@ void spell_contagion(int level, P_char ch, char *arg, int type, P_char victim, P
     temp += 3;
   }
 
+/* Allowing multiple contagions atm.
   if( affected_by_spell(victim, SPELL_CONTAGION) )
   {
     act("$N is sick enough.", FALSE, ch, 0, victim, TO_CHAR);
     return;
   }
-
+*/
   // If saves or is undead, do nothing...
   if( NewSaves(victim, SAVING_PARA, temp) || IS_UNDEADRACE(victim) )
   {
@@ -418,6 +419,7 @@ void spell_waves_fatigue(int level, P_char ch, char *arg, int type, P_char victi
 void event_acid_rain(P_char ch, P_char victim, P_obj obj, void *data)
 {
   int    room = *((int *)data);
+  int    dam;
   P_char next;
   struct damage_messages messages = {
     "",
@@ -433,6 +435,10 @@ void event_acid_rain(P_char ch, P_char victim, P_obj obj, void *data)
   {
     return;
   }
+
+  dam = 110 + GET_LEVEL(ch) * 3 + number(1, 10);
+//  dam = 40 + GET_LEVEL(ch) + number(0, 20);
+
   if( world[room].people)
   {
     act("An awful &+Gburning rain&n continues to fall from the sky.",0, world[room].people, 0, 0, TO_ROOM);
@@ -442,9 +448,11 @@ void event_acid_rain(P_char ch, P_char victim, P_obj obj, void *data)
   for( victim = world[room].people; victim; victim = next )
   {
     next = victim->next_in_room;
-    if( (victim != ch) && !saves_spell(victim, SAVING_SPELL) )
+    if( victim == ch || ( ch->group && ch->group == victim->group ) )
+      continue;
+    if( !NewSaves(victim, SAVING_SPELL, GET_LEVEL(ch)>50 ? GET_LEVEL(ch)-50 : 0) )
     {
-      spell_damage(ch, victim, dice(GET_LEVEL(ch)/2, 6), SPLDAM_ACID, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
+      spell_damage(ch, victim, dam, SPLDAM_ACID, SPLDAM_NODEFLECT, &messages);
     }
   }
 
@@ -461,7 +469,7 @@ void spell_acid_rain(int level, P_char ch, char *arg, int type, P_char victim, P
     return;
   }
 
-  if( !OUTSIDE(ch) )
+  if( !IS_OUTSIDE(ch->in_room) )
   {
     send_to_char( "Try again.. Outdoors next time!", ch );
     return;
@@ -511,11 +519,11 @@ void spell_horrid_wilting(int level, P_char ch, char *arg, int type, P_char vict
 
   if( GET_RACE(victim) != RACE_PLANT && GET_RACE(victim) != RACE_SLIME && GET_RACE(victim) != RACE_W_ELEMENTAL )
   {
-    spell_damage(ch, victim, dam, SPLDAM_ACID, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
+    spell_damage(ch, victim, dam, SPLDAM_ACID, 0, &messages);
   }
   else
   {
-    spell_damage(ch, victim, (dam*4)/3, SPLDAM_ACID, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
+    spell_damage(ch, victim, (dam*4)/3, SPLDAM_ACID, 0, &messages);
   }
 }
 
@@ -566,7 +574,7 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
     "Your &+We&+wy&+We&+ws&n roll back into your head as you cause $N's &+Gcells&n to &+rimplode&n!",
     "The &+Rpain&n is &+rexcruciating&n as $n summons the power of &+Gnature's &+Ldarker side&n to &+Ycrush&n your body!",
     "$N almost hits his knees in &+Wagony&n as $n &+Ycrushes&n his body, causing parts of him to &+Rimplode&n!",
-    "There is one final &+Csu&+crg&+Ce&N of raw &+Mpower&N before you &+Ycrush&n $N's &+Rhe&+rar&+Rt&n."
+    "There is one final &+Csu&+crg&+Ce&N of raw &+Mpower&N before you &+Ycrush&n $N's &+Rhe&+rar&+Rt&n.",
     "As $n crushes you, there is one final &+Csu&+crg&+Ce&N of raw &+Rpa&+ri&+Rn&N before your &+Rhe&+rar&+Rt&n is &+Wcrushed&n, then &+Lblackness&n...",
     "$N is utterly &+Ccr&+cush&+Ced&n by $n's &+rdestructive&n &+Gnatural &+mmagic&n!",
       0
@@ -579,9 +587,9 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
 
   if(!NewSaves(victim, SAVING_SPELL, 0))
   {
-    dam /= 2;
+    dam /= 1.8;
   }
-  spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
+  spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages);
 
 }
 
