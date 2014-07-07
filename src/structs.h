@@ -2093,6 +2093,9 @@ struct mcname {
 #define SPEC_DARK_DREAMER 2
 
 /* CLASS_BLIGHTER Specs */
+#define SPEC_STORMBRINGER 1
+#define SPEC_SCOURGE      2
+#define SPEC_RUINER       3
 
 //Avenger Specs
 #define SPEC_LIGHTBRINGER 1

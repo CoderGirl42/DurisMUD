@@ -119,6 +119,10 @@ void spell_flame_sphere(int level, P_char ch, char *arg, int type, P_char victim
   {
     dam = (int) (dam * 1.33);
   }
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_RUINER) )
+  {
+    dam = (dam * 112) / 100;
+  }
 
   spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
 
@@ -343,6 +347,11 @@ void spell_blight(int level, P_char ch, char *arg, int type, P_char victim, P_ob
   }
 
   int dam = (level > 40) ? dice( 40*3, 6 ) : dice( level*3, 6 );
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_RUINER)
+    || GET_SPEC(ch, CLASS_BLIGHTER, SPEC_SCOURGE) )
+  {
+    dam = (dam * 112) / 100;
+  }
 
   if(NewSaves(victim, SAVING_SPELL, 0))
   {
@@ -436,8 +445,12 @@ void event_acid_rain(P_char ch, P_char victim, P_obj obj, void *data)
     return;
   }
 
-  dam = 110 + GET_LEVEL(ch) * 3 + number(1, 10);
-//  dam = 40 + GET_LEVEL(ch) + number(0, 20);
+//  dam = 110 + GET_LEVEL(ch) * 3 + number(1, 10);
+  dam = 30 + GET_LEVEL(ch)/2 + number(0, 20);
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_STORMBRINGER) )
+  {
+    dam += 10;
+  }
 
   if( world[room].people)
   {
@@ -517,6 +530,11 @@ void spell_horrid_wilting(int level, P_char ch, char *arg, int type, P_char vict
     blind(ch, victim, number((int)(level / 3), (int)(level / 2)) * WAIT_SEC);
   }
 
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_RUINER) )
+  {
+    dam = (dam * 112) / 100;
+  }
+
   if( GET_RACE(victim) != RACE_PLANT && GET_RACE(victim) != RACE_SLIME && GET_RACE(victim) != RACE_W_ELEMENTAL )
   {
     spell_damage(ch, victim, dam, SPLDAM_ACID, 0, &messages);
@@ -589,6 +607,10 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
   {
     dam /= 1.8;
   }
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_RUINER) )
+  {
+    dam = (dam * 112) / 100;
+  }
   spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages);
 
 }
@@ -598,7 +620,7 @@ void event_sandstorm_message(P_char ch, P_char victim, P_obj obj, void *data)
 {
   int room = *((int *)data);
 
-  send_to_room( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n\n", ch->in_room );
+  send_to_room( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n\n", room );
 }
 
 void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
@@ -619,6 +641,8 @@ void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
   {
     return;
   }
+
+  send_to_room( "&+YA &+RM&+rA&+RSSI&+rV&+RE &+yw&+Ya&+yll of s&+Yan&+yd engulfs the area crashing into everything!!!&n\n", room );
 
   for( victim = world[room].people; victim; victim = next )
   {
@@ -745,6 +769,11 @@ void spell_drain_nature(int level, P_char ch, char *arg, int type, P_char victim
       break;
     default:
       break;
+  }
+
+  if( GET_SPEC(ch, CLASS_BLIGHTER, SPEC_SCOURGE) )
+  {
+    healpoints += 50;
   }
 
   if(IS_NPC(victim))
