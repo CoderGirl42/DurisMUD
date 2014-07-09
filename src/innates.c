@@ -109,18 +109,19 @@ void     do_shift_ethereal(P_char, char *, int);
 void     do_fade(P_char, char *, int);
 
 void       do_aura_protection(P_char, char *, int);
+void       do_aura_spell_protection(P_char, char *, int);
 void       do_aura_precision(P_char, char *, int);
 void       do_aura_battlelust(P_char, char *, int);
 void       do_aura_endurance(P_char, char *, int);
 void       do_aura_healing(P_char, char *, int);
 void       do_aura_vigor(P_char, char *, int);
 void       do_divine_force(P_char, char *, int);
-void	    do_wall_climbing(P_char, char *, int);
+void       do_wall_climbing(P_char, char *, int);
 
-int      get_relic_num(P_char ch);
-int      fight_in_room(P_char ch);
+int        get_relic_num(P_char ch);
+int        fight_in_room(P_char ch);
 
-int      bite_poison(P_char, P_char, int); 
+int        bite_poison(P_char, P_char, int); 
 
 extern const struct innate_data innates_data[];
 const struct innate_data
@@ -383,6 +384,7 @@ const struct innate_data
   {"holy combat", 0},
   {"giant avoidance", 0},
   {"seadog", 0},
+  {"aura_of_spell_protection", do_aura_spell_protection},
 };
 
 string list_innates(int race, int cls, int spec)
@@ -929,6 +931,8 @@ void assign_innates()
   ADD_CLASS_INNATE(INNATE_KNIGHT, CLASS_PALADIN, 30, SPEC_CAVALIER);
   ADD_CLASS_INNATE(INNATE_HOLY_CRUSADE, CLASS_PALADIN, 30, SPEC_CRUSADER);
   ADD_CLASS_INNATE(INNATE_AURA_PROTECTION, CLASS_PALADIN, 1, 0);
+  ADD_CLASS_INNATE(INNATE_AURA_PROTECTION, CLASS_CLERIC, 1, SPEC_HOLYMAN);
+  ADD_CLASS_INNATE(INNATE_AURA_SPELL_PROTECTION, CLASS_CLERIC, 1, SPEC_HOLYMAN);
   ADD_CLASS_INNATE(INNATE_AURA_PRECISION, CLASS_PALADIN, 10, 0);
   ADD_CLASS_INNATE(INNATE_AURA_ENDURANCE, CLASS_PALADIN, 15, 0);
   ADD_CLASS_INNATE(INNATE_AURA_HEALING, CLASS_PALADIN, 30, 0);
@@ -4620,6 +4624,11 @@ void holy_crusade_check(P_char ch, P_char victim)
 
 void do_aura_protection(P_char ch, char *arg, int cmd) {
         do_aura(ch, AURA_PROTECTION);
+  CharWait(ch, PULSE_VIOLENCE);
+}
+
+void do_aura_spell_protection(P_char ch, char *arg, int cmd) {
+        do_aura(ch, AURA_SPELL_PROTECTION);
   CharWait(ch, PULSE_VIOLENCE);
 }
 

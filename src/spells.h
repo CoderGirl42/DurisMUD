@@ -1016,7 +1016,8 @@
 #define AURA_HEALING                 (FIRST_AURA+3)
 #define AURA_ENDURANCE               (FIRST_AURA+4)
 #define AURA_VIGOR                   (FIRST_AURA+5)
-#define LAST_AURA                    (FIRST_AURA+5)
+#define AURA_SPELL_PROTECTION        (FIRST_AURA+6)
+#define LAST_AURA                    (FIRST_AURA+6)
 
 /* Instrument stuff */
 #define FIRST_INSTRUMENT             (LAST_AURA+1)

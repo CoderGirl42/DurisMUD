@@ -27,7 +27,8 @@ struct aura_description
   {"Battle Lust", "&+rblood-red glow&n"},
   {"Improved Healing", "&+Wwhite glow&n"},
   {"Endurance", "&+Yyellow glow&n"},
-  {"Vigor", "&+mpurple glow&n"}
+  {"Vigor", "&+mpurple glow&n"},
+  {"Spell Protection", "&+Mmagenta glow&n"}
 };
 
 /*
@@ -130,9 +131,12 @@ void apply_aura_to_group(P_char ch, int aura) {
 }
 
 /* actually apply the aura to victim char */
-void apply_aura(P_char ch, P_char victim, int aura) {
-  if (is_linked_to(ch, victim, LNK_PALADIN_AURA) || has_aura(victim, aura) )
+void apply_aura(P_char ch, P_char victim, int aura)
+{
+  if( is_linked_to(ch, victim, LNK_PALADIN_AURA) || has_aura(victim, aura) )
+  {
     return;
+  }
 
   struct affected_type af;
   memset(&af, 0, sizeof(af));
@@ -140,47 +144,46 @@ void apply_aura(P_char ch, P_char victim, int aura) {
   af.type = aura;
   af.duration = -1;
   af.flags = AFFTYPE_NODISPEL;
-  
+
   switch( aura ) {
     case AURA_PROTECTION:
       af.location = APPLY_AC;
-      af.modifier = 
+      af.modifier =
         (int) (-1 * get_property("innate.paladin_aura.protection_ac_mod", 1.0) * GET_LEVEL(ch) );
       break;
-
     case AURA_PRECISION:
       af.location = APPLY_HITROLL;
-      af.modifier = 
+      af.modifier =
         (int) (get_property("innate.paladin_aura.precision_hitroll_mod", 0.2) * GET_LEVEL(ch));
       break;
-      
     case AURA_BATTLELUST:
       af.modifier = GET_LEVEL(ch);
       break;
-
     case AURA_HEALING:
       af.modifier = GET_LEVEL(ch);
       break;
-      
     case AURA_ENDURANCE:
       af.location = APPLY_MOVE;
-      af.modifier = 
+      af.modifier =
         (int) (get_property("innate.paladin_aura.endurance_move_mod", 1.0) * GET_LEVEL(ch));
       break;
-      
     case AURA_VIGOR:
       af.location = APPLY_HIT;
       af.modifier =
         (int) (get_property("innate.paladin_aura.vigor_hp_mod", 1.0) * GET_LEVEL(ch));
       break;
-      
+    case AURA_SPELL_PROTECTION:
+      af.modifier =
+        (int) (get_property("innate.paladin_aura.protection_spell_mod", 0.5) * GET_LEVEL(ch) )-3;
+      break;
     default:
+      debug( "apply_aura: Error - invalid aura to apply (%d)", aura );
       logit(LOG_DEBUG, "Error in apply_aura, invalid aura to apply (%d)", aura);
       break;
   }
 
   linked_affect_to_char(victim, &af, ch, LNK_PALADIN_AURA);
-  SET_BIT(victim->specials.affected_by3, AFF3_PALADIN_AURA);	
+  SET_BIT(victim->specials.affected_by3, AFF3_PALADIN_AURA);
 
   sprintf(_buff, "You are surrounded by a %s.", auras[aura-FIRST_AURA].glow_name);
   act(_buff, FALSE, victim, 0, victim, TO_CHAR);
@@ -191,7 +194,7 @@ void send_paladin_auras(P_char ch, P_char tar_ch) {
   for( struct affected_type* aff = tar_ch->affected; aff; aff = aff->next ) {
     if( aff->type >= FIRST_AURA && aff->type <= LAST_AURA ) {
       sprintf(_buff, "$E is surrounded by a %s.", auras[aff->type-FIRST_AURA].glow_name);
-      act(_buff, FALSE, ch, 0, tar_ch, TO_CHAR);			
+      act(_buff, FALSE, ch, 0, tar_ch, TO_CHAR);
     }
   }
 }

@@ -386,7 +386,7 @@ struct edit_data {
 #define INNATE_HAMMER_MASTER     92
 #define INNATE_AXE_MASTER        93
 #define INNATE_GAZE              94
-#define INNATE_EMBRACE_DEATH       95
+#define INNATE_EMBRACE_DEATH     95
 #define INNATE_LIFEDRAIN         96
 #define INNATE_IMMOLATE          97
 #define INNATE_VULN_SUN          98
@@ -396,9 +396,9 @@ struct edit_data {
 #define INNATE_SUMMON_WARG       102
 #define INNATE_HATRED            103
 #define INNATE_EVASION           104
-#define INNATE_DRAGONMIND           105
-#define INNATE_SHIFT_ETHEREAL       106
-#define INNATE_ASTRAL_NATIVE        107
+#define INNATE_DRAGONMIND        105
+#define INNATE_SHIFT_ETHEREAL    106
+#define INNATE_ASTRAL_NATIVE     107
 #define INNATE_TWO_DAGGERS       108
 #define INNATE_HOLY_LIGHT        109
 #define INNATE_COMMAND_AURA      110
@@ -438,7 +438,7 @@ struct edit_data {
 #define INNATE_ENGULF            144
 #define INNATE_SLIME             145
 #define INNATE_DUAL_WIELDING_MASTER 146
-#define INNATE_SPEED              147
+#define INNATE_SPEED             147
 #define INNATE_ICE_AURA          148
 #define INNATE_REQUIEM           149
 #define INNATE_ALLY              150
@@ -452,12 +452,13 @@ struct edit_data {
 #define INNATE_WALL_CLIMBING     158
 #define INNATE_WOODLAND_RENEWAL  159
 #define INNATE_NATURAL_MOVEMENT  160
-#define MAGIC_VULNERABILITY 161
+#define MAGIC_VULNERABILITY      161
 #define TWO_HANDED_SWORD_MASTERY 162
-#define HOLY_COMBAT		     163
-#define INNATE_GIANT_AVOIDANCE	     164
-#define INNATE_SEADOG	     165
-#define LAST_INNATE              165   // LAST means last, not last + 1 or whatever
+#define HOLY_COMBAT		           163
+#define INNATE_GIANT_AVOIDANCE	 164
+#define INNATE_SEADOG     	     165
+#define INNATE_AURA_SPELL_PROTECTION 166
+#define LAST_INNATE              166   // LAST means last, not last + 1 or whatever
 
 struct extra_descr_data {
   char *keyword;                /* Keyword in look/examine          */

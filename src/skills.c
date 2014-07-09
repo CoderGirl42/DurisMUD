@@ -5164,6 +5164,7 @@ SPELL_ADD(CLASS_NONE, 1);
   TAG_CREATE("aura of improved healing", AURA_HEALING);
   TAG_CREATE("aura of endurance", AURA_ENDURANCE);
   TAG_CREATE("aura of vigor", AURA_VIGOR);
+  TAG_CREATE("aura of spell protection", AURA_SPELL_PROTECTION);
   TAG_CREATE("epic level", TAG_EPIC_LEVEL);
   TAG_CREATE("guarding nexus stone", TAG_GUARD_NEXUS_STONE);
   TAG_CREATE("hit counter", TAG_HIT_COUNTER);

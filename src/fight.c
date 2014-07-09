@@ -3742,7 +3742,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       IS_PC(ch))
   {
     dam = (int) (dam * get_property("damage.pcs.vs.pets", 2.000));
-  }  
+  }
 
   /* Being berserked incurs more damage from spells. Ouch. */
   if(affected_by_spell(victim, SKILL_BERSERK))
@@ -4140,9 +4140,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
   dam /= 100;
   }
   */
-  if(!(flags & SPLDAM_NODEFLECT) &&
-      IS_AFFECTED4(victim, AFF4_HELLFIRE) &&
-      !number(0, 5))
+  if(!(flags & SPLDAM_NODEFLECT) && IS_AFFECTED4(victim, AFF4_HELLFIRE) && !number(0, 5))
   {
     act("&+LYour spell is absorbed by&n $N's &+Rhellfire!",
         FALSE, ch, 0, victim, TO_CHAR);
@@ -4398,10 +4396,10 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     dam *= 1.10;
 
   if(has_innate(victim, MAGIC_VULNERABILITY) && (GET_RACE(victim) == RACE_FIRBOLG))
-    dam *= 1.10; 
+    dam *= 1.10;
 
   if(affected_by_spell(ch, ACH_DRAGONSLAYER) && (GET_RACE(victim) == RACE_DRAGON))
-    dam *=1.10;  
+    dam *=1.10;
 
   if(affected_by_spell(victim, SPELL_SOULSHIELD) && GET_CLASS(victim, CLASS_PALADIN) || GET_CLASS(victim, CLASS_ANTIPALADIN))
     dam *= .85;
@@ -4444,11 +4442,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     dam *= rdmod;
   }
 
-
-
-
-  if((af = get_spell_from_char(victim, SPELL_ELEM_AFFINITY)) &&
-      ELEMENTAL_DAM(type))
+  if((af = get_spell_from_char(victim, SPELL_ELEM_AFFINITY)) && ELEMENTAL_DAM(type))
   {
     char    *colors[5] = { "rfire", "Bcold", "Ylightning", "ggas", "Gacid" };
     char     buf[128];
@@ -4478,16 +4472,13 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     awe = FALSE;
   }
 
-  if(ELEMENTAL_DAM(type) &&
-      IS_AFFECTED4(victim, AFF4_PHANTASMAL_FORM) &&
-      !awe)
+  if(ELEMENTAL_DAM(type) && IS_AFFECTED4(victim, AFF4_PHANTASMAL_FORM) && !awe)
   {
     char buf[128];
     dam *= dam_factor[DF_PHANTFORM];
   }
 
-  if(has_innate(victim, INNATE_VULN_COLD) &&
-      type == SPLDAM_COLD)
+  if(has_innate(victim, INNATE_VULN_COLD) && type == SPLDAM_COLD)
   {
     dam *= dam_factor[DF_VULNCOLD];
     send_to_char("&+CThe freezing cold causes you intense pain!\n", victim);
@@ -4541,7 +4532,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
       affect_to_char(victim, &af);
 
     }
-}
+  }
 
 if (parse_chaos_shield(ch, victim))
 {
@@ -4625,51 +4616,55 @@ if (get_linked_char(victim, LNK_ETHEREAL) || get_linking_char(victim, LNK_ETHERE
   }
 }
 
-dam = MAX(1, dam);
-
-// ugly hack - we smuggle damage_type for eq poofing messages on 8 highest bits
-messages->type |= type << 24;
-result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT ^ flags, messages);
-
-// Tether code here
-if( FALSE )//GET_CLASS( ch, CLASS_CABALIST ) )
-{
-  tetherheal( ch, dam );
-}
-
-if(type == SPLDAM_ACID &&
-    !number(0, 3))
-{
-  DamageStuff(victim, SPLDAM_ACID);
-}
-
-if(result == DAM_NONEDEAD)
-{
-  if(ilogb(dam) > number(3, 60))
+  // Aura of spell protection reduces damage by mod percent.
+  if( IS_AFFECTED3( victim, AFF3_PALADIN_AURA ) && has_aura(victim, AURA_SPELL_PROTECTION ) )
   {
-    DamageStuff(victim, type);
+    dam *= (100 - aura_mod(victim, AURA_SPELL_PROTECTION));
+    dam /= 100;
   }
 
-  attack_back(ch, victim, FALSE);
+  dam = MAX(1, dam);
 
-  if(IS_AFFECTED5(victim, AFF5_WET) &&
-      type == SPLDAM_LIGHTNING &&
-      ilogb(dam) > number(0, 10))
+  // ugly hack - we smuggle damage_type for eq poofing messages on 8 highest bits
+  messages->type |= type << 24;
+  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT ^ flags, messages);
+
+  // Tether code here
+  if( FALSE )//GET_CLASS( ch, CLASS_CABALIST ) )
   {
-    struct affected_type shock_af;
+    tetherheal( ch, dam );
+  }
 
-    act("The &+Celectricity&n surges through $n's wet clothes immobilizing $m momentarily!",
+  if(type == SPLDAM_ACID && !number(0, 3))
+  {
+    DamageStuff(victim, SPLDAM_ACID);
+  }
+
+  if(result == DAM_NONEDEAD)
+  {
+    if(ilogb(dam) > number(3, 60))
+    {
+      DamageStuff(victim, type);
+    }
+
+    attack_back(ch, victim, FALSE);
+
+    if(IS_AFFECTED5(victim, AFF5_WET) && type == SPLDAM_LIGHTNING && ilogb(dam) > number(0, 10))
+    {
+      struct affected_type shock_af;
+
+      act("The &+Celectricity&n surges through $n's wet clothes immobilizing $m momentarily!",
         FALSE, victim, 0, 0, TO_ROOM);
-    act("The &+Celectricity&n surges through your wet clothes paralyzing you in a shock!",
+      act("The &+Celectricity&n surges through your wet clothes paralyzing you in a shock!",
         FALSE, victim, 0, 0, TO_CHAR);
-    memset(&shock_af, 0, sizeof(shock_af));
-    shock_af.type = SPELL_LIGHTNING_BOLT;
-    shock_af.flags = AFFTYPE_SHORT;
-    shock_af.duration = (int) (get_property("shock.duration", 2.000 * WAIT_SEC));
-    affect_to_char(victim, &shock_af);
+      memset(&shock_af, 0, sizeof(shock_af));
+      shock_af.type = SPELL_LIGHTNING_BOLT;
+      shock_af.flags = AFFTYPE_SHORT;
+      shock_af.duration = (int) (get_property("shock.duration", 2.000 * WAIT_SEC));
+      affect_to_char(victim, &shock_af);
+    }
   }
-}
-return result;
+  return result;
 }
 
 // End spell_damage()
