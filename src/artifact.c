@@ -1071,6 +1071,7 @@ void poof_arti( P_char ch, char *arg )
     {
       sprintf( buf3, "Arti '%s' %d is not on %s's pfile.", buf, vnum, buf2 );
       wizlog( 56, buf3 );
+// PENIS: Need to extract eq from char here.
     }
     else
     {
@@ -1248,7 +1249,7 @@ void swap_arti( P_char ch, char *arg )
     owner->desc = NULL;
     if( restoreCharOnly( owner, buf2 ) < 0 )
     {
-      sprintf( buf, "poof_arti: %s has bad pfile.\n\r", buf2 );
+      sprintf( buf, "swap_arti: %s has bad pfile.\n\r", buf2 );
       send_to_char( buf, ch );
       return;
     }
@@ -1336,6 +1337,7 @@ void swap_arti( P_char ch, char *arg )
         {
           sprintf( buf, "Artifact '%s' in undefined position.\r\n", arti1name );
           send_to_char( buf, ch );
+          extract_obj( arti2, FALSE );
           return;
         }
       }
@@ -1350,6 +1352,7 @@ void swap_arti( P_char ch, char *arg )
         {
           sprintf( buf, "Artifact '%s' not on owner, but is worn!?\r\n", arti1name );
           send_to_char( buf, ch );
+          extract_obj( arti2, FALSE );
           if( vnum )
           {
             owner->in_room = NOWHERE;
@@ -1390,7 +1393,6 @@ void swap_arti( P_char ch, char *arg )
     }
     else
     {
-      arti2->timer[3] = arti1->timer[3];
       obj_to_room( arti2, arti1->loc.room );
       act( "$p suddenly tranforms in a bright flash of light!", FALSE,
         NULL, arti1, 0, TO_ROOM );
@@ -1666,6 +1668,7 @@ void event_check_arti_poof( P_char ch, P_char vict, P_obj obj, void * arg )
         sprintf(name, ARTIFACT_DIR "%d", vnum);
         unlink(name);
         // Remove eq from char and extract.
+/*
         for( int i = 0; i < MAX_WEAR; i++ )
         {
           if (ch->equipment[i])
@@ -1680,6 +1683,8 @@ void event_check_arti_poof( P_char ch, P_char vict, P_obj obj, void * arg )
           obj_from_char( item, TRUE );
           extract_obj( item, TRUE );
         }
+*/
+        owner->in_room = NOWHERE;
         extract_char( owner );
       }
       else
@@ -1708,7 +1713,8 @@ void save_artifact_data( P_char owner, P_obj artifact )
 
   if (!f)
   {
-    statuslog(56, "could not open arti file %s for writing", fname);
+    statuslog(56, "save_artifact_data: could not open arti file '%s' for writing", fname);
+    debug( "save_artifact_data: could not open arti file '%s' for writing", fname);
     return;
   }
 
