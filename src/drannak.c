@@ -1950,18 +1950,35 @@ bool calmcheck(P_char ch)
 void enhance(P_char ch, P_obj source, P_obj material)
 {
   int mod = 0;
+  char buf[MAX_STRING_LENGTH];
+  P_obj robj;
+  long robjint;
+  int cost, searchcount, maxsearch, tries, sval;
+  bool validobj;
+  int val, minval, chluck, wearflags;
 
   if(!ch || !source || !material)
     return;
 
-  char buf[MAX_STRING_LENGTH];
-  P_obj robj;
-  long robjint;
-  int validobj, cost, searchcount = 0, tries;
-  int sval = itemvalue(ch, source);
-  validobj = 0;
-  int val = itemvalue(ch, material);
-  int minval = itemvalue(ch, source) - 5;
+  chluck = (GET_C_LUK(ch));
+  sval = itemvalue(ch, source);
+  val = itemvalue(ch, material);
+  minval = itemvalue(ch, source) - 5;
+  validobj = FALSE;
+  searchcount = 0;
+  maxsearch = 20000;
+  // Only search matching wear flags unless none matching, then just search source wear flags.
+  //  We skip ITEM_TAKE 'cause it's not really a wear flag.  We skip ITEM_HOLD, ITEM_ATTACH_BELT, and
+  //  ITEM_WEAR_BACK because these are too common and override what people really want (i.e. a quiver).
+  wearflags = ( source->wear_flags & material->wear_flags ) & ~( ITEM_TAKE | ITEM_HOLD | ITEM_ATTACH_BELT | ITEM_WEAR_BACK );
+  if( !wearflags )
+    wearflags = ( source->wear_flags ) & ~( ITEM_TAKE | ITEM_HOLD | ITEM_ATTACH_BELT | ITEM_WEAR_BACK );
+
+  if( !wearflags )
+  {
+    send_to_char( "This item can not be enhanced.\n", ch );
+    return;
+  }
 
   if( itemvalue( ch, source ) > 100 )
   {
@@ -1969,10 +1986,10 @@ void enhance(P_char ch, P_obj source, P_obj material)
     return;
   }
 
-  if(IS_SET(source->wear_flags, ITEM_GUILD_INSIGNIA))
-    minval +=10;
+  if( IS_SET(source->wear_flags, ITEM_GUILD_INSIGNIA) )
+    minval +=5;
 
-  if(val < minval)
+  if( val < minval )
   {
     char buf[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH];
     sprintf(buf2, "%s", source->short_description);
@@ -1981,45 +1998,43 @@ void enhance(P_char ch, P_obj source, P_obj material)
     return;
   }
 
-  if(val <= 20)
+  if( val <= 20 )
   {
     cost = 1000;
-    if (GET_MONEY(ch) < 1000)
-    {
-      send_to_char("It will require &+W1 platinum&n to &+Benhance&n this item.\r\n", ch);
-      return;
-    }
   }
-  if(val > 20)
+  else
   {
     cost = 10000;
-    if (GET_MONEY(ch) < 10000)
-    {
-      send_to_char("It will require &+W10 platinum&n to &+Benhance&n this item.\r\n", ch);
-      return;
-    }
+  }
+
+  if( GET_MONEY(ch) < cost )
+  {
+    sprintf(buf, "It will require &+W%d platinum&n to &+Benhance&n this item.\r\n", cost/1000);
+    send_to_char(buf, ch);
+    return;
   }
 
   mod = 1;
-
-  int chluck = (GET_C_LUK(ch));
   if(number(1, 1200) < chluck)
   {
     mod += 3;
+    maxsearch *= 4;
     send_to_char("&+YYou feel &+MEXTREMELY Lucky&+Y!\r\n", ch);
   }
   else if(number(1, 800) < chluck)
   {
     mod += 2;
+    maxsearch *= 3;
     send_to_char("&+YYou feel &+MVery Lucky&+Y!\r\n", ch);
   }
   else if(number(1, 400) < chluck)
   {
     mod ++;
+    maxsearch *= 2;
     send_to_char("&+YYou feel &+MLucky&+Y!\r\n", ch);
   }
 
-  mod += (itemvalue(ch, source));
+  mod += itemvalue(ch, source);
   /*debug sprintf(buf, "validobj value: %d\n\r", validobj);
     send_to_char(buf, ch);*/
   while(validobj == 0)
@@ -2052,6 +2067,7 @@ void enhance(P_char ch, P_obj source, P_obj material)
       validobj = 0;
       extract_obj(robj, FALSE);
     }
+/*  Tidying this up into a short simple statement...
     else if( (IS_SET(source->wear_flags, ITEM_WIELD) && IS_SET(robj->wear_flags, ITEM_WIELD)) ||
         (IS_SET(source->wear_flags, ITEM_WEAR_BODY) && IS_SET(robj->wear_flags, ITEM_WEAR_BODY)) ||
         (IS_SET(source->wear_flags, ITEM_WEAR_LEGS) && IS_SET(robj->wear_flags, ITEM_WEAR_LEGS)) ||
@@ -2074,17 +2090,19 @@ void enhance(P_char ch, P_obj source, P_obj material)
         (IS_SET(source->wear_flags, ITEM_WEAR_HANDS) && IS_SET(robj->wear_flags, ITEM_WEAR_HANDS)) ||
         (IS_SET(source->wear_flags, ITEM_WEAR_BACK) && IS_SET(robj->wear_flags, ITEM_WEAR_BACK))
         )
-        {
+*/
+    else if( wearflags & robj->wear_flags )
+    {
           validobj = 1;
-        }
+    }
     else
     {
       validobj = 0;
       extract_obj(robj, FALSE);
     }
 
-    searchcount ++;
-    if(searchcount >  20000)
+    searchcount++;
+    if( searchcount > maxsearch )
     {
       act("&+GThe &+ritem gods&+G could not find a better type of &+yitem &+Gthan your &n$p&+G this time. &+WTry again&+G. If your item's value is above &+W55&+G you may have the &+Wbest&+G item of that type!\r\n", FALSE, ch, source, 0, TO_CHAR);
       return;
