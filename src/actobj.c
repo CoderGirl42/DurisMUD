@@ -171,13 +171,15 @@ void get(P_char ch, P_obj o_obj, P_obj s_obj, int showit)
         OBJ_INSIDE(o_obj) ? o_obj->loc.inside->name :
         OBJ_CARRIED(o_obj) ? GET_NAME(o_obj->loc.carrying) :
         GET_NAME(o_obj->loc.wearing));
-
-      sql_log(ch, PLAYERLOG, "Got %s from %s.",
-        coin_stringv(total_value),
-        OBJ_NOWHERE(o_obj) ? "NOWHERE!!" : OBJ_ROOM(o_obj) ? "room" :
-        OBJ_INSIDE(o_obj) ? o_obj->loc.inside->name :
-        OBJ_CARRIED(o_obj) ? GET_NAME(o_obj->loc.carrying) :
-        GET_NAME(o_obj->loc.wearing));
+      if( IS_PC( ch ) )
+      {
+        sql_log(ch, PLAYERLOG, "Got %s from %s.",
+          coin_stringv(total_value),
+          OBJ_NOWHERE(o_obj) ? "NOWHERE!!" : OBJ_ROOM(o_obj) ? "room" :
+          OBJ_INSIDE(o_obj) ? o_obj->loc.inside->name :
+          OBJ_CARRIED(o_obj) ? GET_NAME(o_obj->loc.carrying) :
+          GET_NAME(o_obj->loc.wearing));
+      }
 
       wizlog(MINLVLIMMORTAL, "%s (%d) got %s from %s.",
         J_NAME(ch), world[ch->in_room].number, 
