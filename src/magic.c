@@ -8222,9 +8222,9 @@ void spell_word_of_recall(int level, P_char ch, char *arg, int type,
   }
   if( IS_DESTROYING(victim) )
     stop_destroying(victim);
+  if( IS_PC( victim ) )
+    sql_log(victim, PLAYERLOG, "Word of recalled", world[victim->in_room].number);
 
-  sql_log(victim, PLAYERLOG, "Word of recalled", world[victim->in_room].number);
-  
   /* Exceeding wieght limit? */
   e_pos = heavy = 0;
   do
@@ -8239,11 +8239,13 @@ void spell_word_of_recall(int level, P_char ch, char *arg, int type,
         logit(LOG_WIZ, "WORD OF RECALL: (%s) drops (%s) in [%d].",
           GET_NAME(victim), victim->equipment[e_pos]->short_description,
           world[victim->in_room].number);
-
-        sql_log(victim, PLAYERLOG, "Dropped %s&n [%d] while word of recalling.", 
-                victim->equipment[e_pos]->short_description, 
-                obj_index[victim->equipment[e_pos]->R_num].virtual_number,
-                world[victim->in_room].number);
+        if( IS_PC( victim ) )
+        {
+          sql_log(victim, PLAYERLOG, "Dropped %s&n [%d] while word of recalling.", 
+            victim->equipment[e_pos]->short_description, 
+            obj_index[victim->equipment[e_pos]->R_num].virtual_number,
+            world[victim->in_room].number);
+        }
 
         obj_to_room(unequip_char(victim, e_pos), victim->in_room);
         heavy = TRUE;

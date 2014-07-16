@@ -5082,72 +5082,76 @@ bool find_chance(P_char ch)
 
 bool is_salvageable(P_obj temp)
 {
-if(obj_index[temp->R_num].virtual_number == 1252)
-      {
+  if( GET_OBJ_VNUM(temp) == 1252 )
+  {
     return FALSE;
-   }
+  }
 
- if(GET_OBJ_VNUM(temp) > 400237 && GET_OBJ_VNUM(temp) < 400259)
-  return TRUE;
+  if( GET_OBJ_VNUM(temp) > 400237 && GET_OBJ_VNUM(temp) < 400259 )
+  {
+    return TRUE;
+  }
 
-
-//make sure its not food or container
-  if ((temp->type == ITEM_CONTAINER ||
-       temp->type == ITEM_STORAGE) && temp->contains)
-   {
+  // Make sure its not food or container
+  if( (temp->type == ITEM_CONTAINER
+    || temp->type == ITEM_STORAGE) && temp->contains )
+  {
     return FALSE;
-   }
+  }
 
-  if (IS_SET(temp->extra_flags, ITEM_NOSELL))
-    {
-        return FALSE;
+  if( IS_SET(temp->extra_flags, ITEM_NOSELL) )
+  {
+    return FALSE;
 	}
 
-  if(GET_OBJ_VNUM(temp) == 366)
-   {
-    return FALSE;
-   }
-
- if(IS_SET(temp->extra2_flags, ITEM2_SOULBIND))
-  return FALSE;
-
-
-  if (temp->type == ITEM_WAND)
-   {
-    return FALSE;
-   }
-   
-     if(GET_OBJ_VNUM(temp) == 352)
+  if( GET_OBJ_VNUM(temp) == 366 )
   {
     return FALSE;
   }
 
-     if(GET_OBJ_VNUM(temp) == 98)
+  if( IS_SET(temp->extra2_flags, ITEM2_SOULBIND) )
   {
     return FALSE;
   }
 
-
-  if (temp->type == ITEM_FOOD)
-   {
-    return FALSE;
-   }
-  if (temp->type == ITEM_TREASURE || temp->type == ITEM_POTION || temp->type == ITEM_MONEY || temp->type == ITEM_KEY)
-   {
-    return FALSE;
-   }
-  if (IS_OBJ_STAT2(temp, ITEM2_STOREITEM))
-   {
-    return FALSE;
-   }
-  if (IS_SET(temp->extra_flags, ITEM_ARTIFACT))
+  if( temp->type == ITEM_WAND )
   {
     return FALSE;
   }
-  if((temp->type == ITEM_STAFF) && (temp->value[3] > 0))
-  return FALSE;
 
-return TRUE;
+  if( GET_OBJ_VNUM(temp) == 352 )
+  {
+    return FALSE;
+  }
+
+  if( GET_OBJ_VNUM(temp) == 98 )
+  {
+    return FALSE;
+  }
+
+  if( temp->type == ITEM_FOOD )
+  {
+    return FALSE;
+  }
+
+  if( temp->type == ITEM_TREASURE || temp->type == ITEM_POTION || temp->type == ITEM_MONEY || temp->type == ITEM_KEY )
+  {
+    return FALSE;
+  }
+  if( IS_OBJ_STAT2(temp, ITEM2_STOREITEM) )
+   {
+    return FALSE;
+   }
+  if( IS_SET(temp->extra_flags, ITEM_ARTIFACT) )
+  {
+    return FALSE;
+  }
+  if( (temp->type == ITEM_STAFF) && (temp->value[3] > 0) )
+  {
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 
