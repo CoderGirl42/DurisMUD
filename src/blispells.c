@@ -851,7 +851,8 @@ void spell_drain_nature(int level, P_char ch, char *arg, int type, P_char victim
   }
   else
   {
-    act("&+yYou feel &+Whealth&+y flow into you from your surroundings.&n", FALSE, ch, 0, victim, TO_VICT );
+    act("&+y$n&+y sucks the &+glife&+y out of the surroundings, &+Whealing&+y you.&n",
+      FALSE, ch, 0, victim, TO_VICT );
     act("&+yYou drain &+Whealth&+y from your surroundings, sending it to $N&+y.&n",
       FALSE, ch, 0, victim, TO_CHAR);
   }
