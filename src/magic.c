@@ -1881,8 +1881,7 @@ void event_elemental_swarm_death(P_char ch, P_char victim, P_obj obj, void *data
 
 }
 
-void spell_elemental_swarm(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_elemental_swarm(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   P_char   mob;
   int      lvl;
@@ -1908,8 +1907,6 @@ void spell_elemental_swarm(int level, P_char ch, char *arg, int type,
   justice_witness(ch, NULL, CRIME_SUMMON);
 
   lvl = number(level - 3, level + 3);
-
- // GET_LEVEL(mob) = BOUNDED(10, lvl, 45);
   mob->player.level = BOUNDED(1, lvl, 51);
 
   SET_BIT(mob->specials.affected_by, AFF_INFRAVISION);
@@ -1920,15 +1917,14 @@ void spell_elemental_swarm(int level, P_char ch, char *arg, int type,
   mob->points.base_hitroll = mob->points.hitroll = GET_LEVEL(mob) / 2;
   mob->points.base_damroll = mob->points.damroll = GET_LEVEL(mob) + 10;
   MonkSetSpecialDie(mob);       /* 2d6 to 4d5 */
+  apply_achievement(mob, TAG_CONJURED_PET);
 
   if(!can_conjure_lesser_elem(ch, level))
   {
-    act
-      ("$N &+Lis NOT pleased at being suddenly summoned with this many &+Celementals&+L in the room!&n",
-       TRUE, ch, 0, mob, TO_ROOM);
-    act
-      ("$N &+Lis NOT pleased with you summon $S with this many &+Celementals&+L in the room!",
-       TRUE, ch, 0, mob, TO_CHAR);
+    act("$N &+Lis NOT pleased at being suddenly summoned with this many &+Celementals&+L in the room!&n",
+      TRUE, ch, 0, mob, TO_ROOM);
+    act("$N &+Lis NOT pleased with you summon $S with this many &+Celementals&+L in the room!",
+      TRUE, ch, 0, mob, TO_CHAR);
     MobStartFight(mob, ch);
     return;
   }
@@ -1942,11 +1938,13 @@ void spell_elemental_swarm(int level, P_char ch, char *arg, int type,
     {
       duration = number(5,30) * WAIT_SEC;
       add_event(event_elemental_swarm_death, duration, mob, NULL, NULL, 0, NULL, 0);
-        }
+    }
   }
 
   if(victim)
+  {
     MobStartFight(mob, victim);
+  }
   group_add_member(ch, mob);
 }
 

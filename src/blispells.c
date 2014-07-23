@@ -627,6 +627,7 @@ void spell_shambler(int level, P_char ch, char *arg, int type, P_char victim, P_
       add_event(event_pet_death, dice(2,6) * 60 * WAIT_SEC, mob, NULL, NULL, 0, NULL, 0);
     }
     add_follower(mob, ch);
+    apply_achievement(mob, TAG_CONJURED_PET);
   }
 }
 
