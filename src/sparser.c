@@ -1049,19 +1049,16 @@ bool NewSaves(P_char ch, int save_type, int mod)
 
   // Calculate the base save amount with class/race mods.
   save = find_save(ch, save_type);
-/* find_save does not return an error ever. - Lohrr
-  // error in find_save
-  if ((save = find_save(ch, save_type)) == -1)
-  {
-    return FALSE;
-  }
-*/
+  //debug( "NewSaves: find_save = %d", save );
 
    /*
      save file scale has changed, so need to change meaning of the mods to it.
      For now, we just multiply the mod by 5.
    */
   save += (ch->specials.apply_saving_throw[save_type] + mod) * 5;
+
+  //debug( "NewSaves: apply_sv_throw[%d] = %d", save_type, ch->specials.apply_saving_throw[save_type] );
+  //debug( "NewSaves: final save = %d", save );
 
   /* always 1% chance to fail/save regardless of saving throw  */
   i = (BOUNDED(1, save, 99) < number(1, 100));

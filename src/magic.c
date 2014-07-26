@@ -11835,7 +11835,10 @@ void spell_entangle(int level, P_char ch, char *arg, int type, P_char victim,
   int      chance;
 
   chance = 5;
-  skl_lvl = MAX(1, ((level / 10) - 1));
+  // 56 / 5 - 1 = 10 => -50 svpara to always save
+  //   .. and 0 svpara to save 50% of the time.
+  //   .. and 50 svpara to never save.
+  skl_lvl = MAX(1, ((level / 5) - 1));
 
   if( !IS_OUTSIDE(ch->in_room) )
   {
@@ -11886,7 +11889,7 @@ if( (!(IS_NPC(victim)) && (world[ch->in_room].sector_type == SECT_FOREST)  && (C
     StopMercifulAttackers(victim);
 
     if( world[ch->in_room].sector_type == SECT_FOREST
-      && number(1, 120) < chance )
+      && number(1, 100) < chance )
     {
       act("&+GThe vegetation closes tightly, completely entangling $n!", TRUE, victim, 0, 0, TO_ROOM);
       send_to_char("&+GThe vegetation closes tightly, completely entangling you!\n", victim);
@@ -11895,7 +11898,8 @@ if( (!(IS_NPC(victim)) && (world[ch->in_room].sector_type == SECT_FOREST)  && (C
     else
     {
       af.type = SPELL_ENTANGLE;
-      af.duration = WAIT_SEC * GET_LEVEL(ch)/4;
+      // 56 / 2 - 5 = 23 sec and 12 / 2 - 5 = 1 sec
+      af.duration = WAIT_SEC * (level / 2 - 5);
       af.flags = AFFTYPE_SHORT | AFFTYPE_NOSHOW;
       af.bitvector2 = AFF2_MINOR_PARALYSIS;
 //      af.bitvector2 = AFF2_SLOW;
