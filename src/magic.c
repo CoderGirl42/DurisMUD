@@ -1976,7 +1976,13 @@ void spell_conjour_elemental(int level, P_char ch, char *arg, int type,
     return;
   }
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if( IS_PC_PET( ch ) )
+  {
+    send_to_char( "Your pet can not summon pets.", get_linked_char(ch, LNK_PET) );
+    return;
+  }
+
+  if( CHAR_IN_SAFE_ZONE(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -2535,9 +2541,17 @@ void conjure_specialized(P_char ch, int level)
 
   if( !IS_ALIVE(ch) || !(mob) || !(room) )
   {
-    logit(LOG_DEBUG, "spell_conjour_greater_elemental(): mob %d not loadable",
+    logit(LOG_DEBUG, "conjure_specialized(): mob %d not loadable",
           pets[summoned].vnum);
-    send_to_char("Bug in conjour greater elemental.  Tell a god!\n", ch);
+    if( ch )
+    {
+      send_to_char("Bug in conjour greater elemental.  Tell a god!\n", ch);
+    }
+    // Don't waste memory.
+    if( mob )
+    {
+      extract_char( mob );
+    }
     return;
   }
 
@@ -2685,6 +2699,12 @@ void spell_conjour_greater_elemental(int level, P_char ch, char *arg,
 
   if( !IS_ALIVE(ch) )
   {
+    return;
+  }
+
+  if( IS_PC_PET( ch ) )
+  {
+    send_to_char( "Your pet can not summon pets.", get_linked_char(ch, LNK_PET) );
     return;
   }
 
