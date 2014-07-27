@@ -225,7 +225,7 @@ const struct innate_data
   {
   "flurry", do_flurry},
   {
-  "shapechange", 0}, //do_shapechange,
+  "shapechange", do_shapechange},
   {
   "battle frenzy", 0},
   {
@@ -304,32 +304,56 @@ const struct innate_data
   "frightening presence", 0},
   {
   "blindsinging", 0},
-  {"improved flee", 0}, // Deceiver Spec
+  {
+  "improved flee", 0}, // Deceiver Spec
   {
   "echo", 0},
-  {"branch", do_branch},
-  {"webwrap", do_webwrap},
-  {"summon imp", do_summon_imp},
-  {"hammer master", 0},
-  {"axe master", 0},
-  {"gaze", do_innate_gaze},
-  {"embrace death", 0},
-  {"drain life", do_lifedrain},
-  {"pyrokinesis", do_immolate},
-  {"vulnerable to sun",0},
-  {"decrepify",0},
-  {"groundfighting",0},
-  {"bow mastery",0},
-  {"summon warg",do_summon_warg},
-  {"hatred",0},
-  {"evasion",0},
-  {"mind of the dragon",0},
-  {"shift ethereal", do_shift_ethereal},
-  {"astral affinity", 0},
-  {"parrying dagger", 0},
-  {"holy light", 0},
-  {"command aura", 0},
-  {"deceptive flee", 0},
+  {
+  "branch", do_branch},
+  {
+  "webwrap", do_webwrap},
+  {
+  "summon imp", do_summon_imp},
+  {
+  "hammer master", 0},
+  {
+  "axe master", 0},
+  {
+  "gaze", do_innate_gaze},
+  {
+  "embrace death", 0},
+  {
+  "drain life", do_lifedrain},
+  {
+  "pyrokinesis", do_immolate},
+  {
+  "vulnerable to sun", 0},
+  {
+  "decrepify", 0},
+  {
+  "groundfighting", 0},
+  {
+  "bow mastery", 0},
+  {
+  "summon warg", do_summon_warg},
+  {
+  "hatred", 0},
+  {
+  "evasion", 0},
+  {
+  "mind of the dragon", 0},
+  {
+  "shift ethereal", do_shift_ethereal},
+  {
+  "astral affinity", 0},
+  {
+  "parrying dagger", 0},
+  {
+  "holy light", 0},
+  {
+  "command aura", 0},
+  {
+  "deceptive flee", 0},
   {"miner", 0},
   {"foundry", do_foundry},
   {"fade", do_fade},
@@ -343,7 +367,7 @@ const struct innate_data
   {"aura_of_endurance", do_aura_endurance},
   {"aura_of_improved_healing", do_aura_healing},
   {"aura_of_vigor", do_aura_vigor},
-  {"speedy"},
+  {"speedy", 0},
   {"dauntless", 0},
   {"summon totem", do_summon_totem},
   {"entrapment", 0},
@@ -358,7 +382,7 @@ const struct innate_data
   {"undead fealty", 0},
   {"call of the grave", do_call_grave},
   {"sacrilegious power", 0}, // Vampire innate
-  {"blur"}, // I have no idea.
+  {"blur", 0}, // Not passive, but no supporting func anymore.
   {"swashbuckling", 0}, // Swashbuckler
   {"elemental body", 0},
   {"amorphous body", 0},
