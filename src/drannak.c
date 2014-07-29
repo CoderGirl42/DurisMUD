@@ -1663,37 +1663,41 @@ bool new_summon_check(P_char ch, P_char selected)
 
   desired = GET_LEVEL(selected);
 
-  if((desired - (GET_LEVEL(ch)) > 4) && (GET_LEVEL(ch) < 51))
+  if( desired - GET_LEVEL(ch) > 5 )
+  {
     return FALSE;
+  }
 
   for (k = ch->followers, i = 0, j = 0; k; k = k->next)
   {
     victim = k->follower;
 
-    if(!IS_PC(victim) && (!isname("image", GET_NAME(victim))))
+    if( !IS_PC(victim) && !isname("image", GET_NAME(victim)) )
     {
       i += GET_LEVEL(victim);
       if(GET_LEVEL(victim) >= 50)
+      {
         greater = 1;
-
+      }
       count++;
     }
   }
   i += desired;
 
-  if(count >= 4)
+  if( count >= 4 )
   {
     send_to_char("You have too many followers already.\r\n", ch);
     return FALSE;
   }
 
-  if((greater == 1) && (desired >= 50))
+  if( greater == 1 && desired >= 50 )
   {
     send_to_char("You may not summon an additional being of such great power.\r\n", ch);
     return FALSE;
   }
 
-  if(i > 120)
+  // 70 at lvl 30 and 122 at lvl 56.
+  if( i > GET_LEVEL(ch) * 2 + 10 )
   {
     send_to_char("Your current pets are too powerful to summon that being.\r\n", ch);
     return FALSE;
