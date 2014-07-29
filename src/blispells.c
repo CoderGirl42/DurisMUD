@@ -667,14 +667,19 @@ void spell_implosion(int level, P_char ch, char *arg, int type, P_char victim, P
 // Just display growing messages..
 void event_sandstorm_message(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  int room = *((int *)data);
+  int room;
 
-  send_to_room( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n\n", room );
+  if( IS_ALIVE(ch) && ch->in_room )
+  {
+    room = ch->in_room;
+    send_to_room( "&+yA MASS&+YIV&+yE wall of s&+Ya&+ynd engulfs the area, crashing into everything in sight!&n\n", room );
+  }
 }
 
 void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  int    room = *((int *)data);
+  int    level = *((int *)data);
+  int    room;
   P_char next;
   struct damage_messages messages = {
     "&+yYou en&+Ygu&+ylf $N&+y in s&+Ya&+ynd which &+Rsh&+rre&+Rds&+y $S &+Yskin&+y and gets in $S &+Weyes&+y!&n",
@@ -686,10 +691,12 @@ void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
       0
   };
 
-  if( !ch || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
+
+  room = ch->in_room;
 
   send_to_room( "&+YA &+RM&+rA&+RSSI&+rV&+RE &+yw&+Ya&+yll of s&+Yan&+yd engulfs the area crashing into everything!!!&n\n", room );
 
@@ -698,17 +705,17 @@ void event_sandstorm(P_char ch, P_char victim, P_obj obj, void *data)
     next = victim->next_in_room;
     if( victim == ch || ( ch->group && ch->group == victim->group ) )
       continue;
-    if( !NewSaves(victim, SAVING_SPELL, 1.5) )
+    if( !NewSaves(victim, SAVING_SPELL, level/8) )
     {
-      spell_damage(ch, victim, dice(GET_LEVEL(ch) * 3, 6), SPLDAM_GAS, 0, &messages);
+      spell_damage(ch, victim, dice(level * 3, 6), SPLDAM_GAS, 0, &messages);
       if( victim && IS_ALIVE(victim) )
       {
-        blind(ch, victim, number((int)(GET_LEVEL(ch) / 3), (int)(GET_LEVEL(ch) / 2)) * WAIT_SEC);
+        blind(ch, victim, number((int)(level / 3), (int)(level / 2)) * WAIT_SEC);
       }
     }
     else
     {
-      spell_damage(ch, victim, dice(GET_LEVEL(ch) * 3, 6)/2, SPLDAM_GAS, 0, &messages);
+      spell_damage(ch, victim, dice(level * 3, 6)/2, SPLDAM_GAS, 0, &messages);
     }
   }
 
@@ -720,7 +727,7 @@ void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P
   // j = number of rounds before sandstorm hits.
   int i, j = number( 1, 3 );
 
-  if( !ch || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -730,10 +737,10 @@ void spell_sandstorm(int level, P_char ch, char *arg, int type, P_char victim, P
   // For rounds before sandstorm hits, display message.
   for( i = 1; i < j; i++ )
   {
-    add_event( event_sandstorm_message, i * PULSE_VIOLENCE*2, ch, victim, 0, 0, &(ch->in_room), sizeof(ch->in_room) );
+    add_event( event_sandstorm_message, i * PULSE_VIOLENCE*2, ch, victim, 0, 0, &(level), sizeof(level) );
   }
   // At j rounds, have it hit!
-  add_event( event_sandstorm, j*PULSE_VIOLENCE*2, ch, victim, 0, 0, &(ch->in_room), sizeof(ch->in_room) );
+  add_event( event_sandstorm, j*PULSE_VIOLENCE*2, ch, victim, 0, 0, &(level), sizeof(level) );
 }
 
 // Target Damage.
