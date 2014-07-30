@@ -2542,8 +2542,8 @@ int get_skill_level( int cls, int spec, int skl )
   else
   {
     // If it's a pure spec skill..
-    if( !skills[skl].m_class[cls-1].rlevel[0]
-      && skills[skl].m_class[cls-1].rlevel[spec] )
+    if( !(skills[skl].m_class[cls-1].rlevel[0]
+      == skills[skl].m_class[cls-1].rlevel[spec]) )
     {
       return skills[skl].m_class[cls-1].rlevel[spec];
     }

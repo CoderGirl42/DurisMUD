@@ -1614,6 +1614,11 @@ string list_spells( int cls, int spec )
     found = TRUE;
     strcat(buf1, buf);
   }
+
+  if( *buf1 == '\0' )
+  {
+    strcat( buf1, "None." );
+  }
   strcat(buf1, "\n");
   return string(buf1);
 }
@@ -1673,6 +1678,11 @@ string list_skills( int cls, int spec )
     sprintf(buf, "%s&+c%s&n", found ? ", " : " ", skills[skill].name);
     found = TRUE;
     strcat(buf1, buf);
+  }
+
+  if( *buf1 == '\0' )
+  {
+    strcat( buf1, "None." );
   }
   strcat(buf1, "\n");
   return string(buf1);

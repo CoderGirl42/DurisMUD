@@ -464,6 +464,7 @@ string wiki_help_single(string str)
   if( atoi(row[2]) == 25 )
   {
     title += row[0];
+    return_str += "\n";
     return_str += wiki_classes(title);
     return_str += "\n";
     return_str += wiki_racial_stats(title);
@@ -474,6 +475,7 @@ string wiki_help_single(string str)
   else if( atoi(row[2]) == 9 )
   {
     title += row[0];
+    return_str += "\n";
     return_str += wiki_races(title);
     return_str += "\n";
     return_str += wiki_innates(title);
@@ -498,7 +500,7 @@ string wiki_help_single(string str)
     char buf[MAX_INPUT_LENGTH];
     one_argument( row[0], buf );
     title += buf;
-    return_str += "\n";
+    return_str += "\n\n";
     return_str += wiki_skills(title);
     return_str += "\n";
     return_str += wiki_innates(title);
