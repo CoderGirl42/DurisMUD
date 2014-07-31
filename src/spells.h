@@ -1047,7 +1047,7 @@
 #define SONG_STORMS                  (FIRST_SONG+15)
 #define SONG_DISCORD                 (FIRST_SONG+16)
 #define SONG_HARMONY                 (FIRST_SONG+17)
-#define SONG_SNATCHING		           (FIRST_SONG+18)
+#define SONG_SNATCHING               (FIRST_SONG+18)
 #define SONG_DISSONANCE              (FIRST_SONG+19)
 #define SONG_DRIFTING                (FIRST_SONG+20)
 #define LAST_SONG                    (SONG_DRIFTING)

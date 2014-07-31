@@ -486,7 +486,8 @@ string wiki_help_single(string str)
   else if( atoi(row[2]) == 16 )
   {
     title += row[0];
-    return_str += "\n";
+    // Dunno why it requires two carriage returns here, but it does.
+    return_str += "\n\n";
     return_str += wiki_innates(title);
     return_str += "\n";
     return_str += wiki_skills(title);
@@ -744,6 +745,19 @@ string wiki_spells( string title )
   // List spells( class, spec )
   return_str += list_spells( i, j );
 
+  // If Bard, then show songs after spells.
+  if( i == flag2idx(CLASS_BARD) )
+  {
+    if( j == 0 )
+    {
+      return_str += "\n==Songs==";
+    }
+    else
+    {
+      return_str += "\n==Spec Songs==";
+    }
+    return_str += list_songs( i, j );
+  }
   return return_str;
 }
 

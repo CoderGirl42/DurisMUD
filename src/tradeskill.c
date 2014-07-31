@@ -1009,7 +1009,7 @@ void do_fish(P_char ch, char*, int cmd)
 
    struct fishing_data data;
     data.room = ch->in_room;
-    data.counter = (140 - GET_CHAR_SKILL(ch, SKILL_FISHING)) /3;
+    data.counter = (140 - GET_CHAR_SKILL(ch, SKILL_FISHING)) / 4;
 	
    add_event( event_fish_check, PULSE_VIOLENCE, ch, 0, 0, 0, &data, sizeof(struct fishing_data));
     return;
@@ -1064,7 +1064,7 @@ void event_fish_check(P_char ch, P_char victim, P_obj, void *data)
   if(fdata->counter == 0 )
   {
 
-   if (GET_CHAR_SKILL(ch, SKILL_FISHING)/2 < number(1,105) )  
+   if (GET_CHAR_SKILL(ch, SKILL_FISHING) < number(1,125) )
   {
     send_to_char("You didn't catch a thing..\n", ch);
     return;
@@ -1102,7 +1102,7 @@ void event_fish_check(P_char ch, P_char victim, P_obj, void *data)
   }
 
   send_to_char("You continue fishing...\n", ch);
-  notch_skill(ch, SKILL_FISHING, 2.5);
+  notch_skill(ch, SKILL_FISHING, 10);
   GET_VITALITY(ch) -= (number(0,100) > GET_CHAR_SKILL(ch, SKILL_FISHING)) ? 3 : 2;
 
   fdata->counter--;

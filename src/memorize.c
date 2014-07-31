@@ -2509,6 +2509,7 @@ int get_spell_circle( int cls, int spec, int spl )
   else
   {
     // If it's a pure spec spell..
+    // Note: Lost spells will return a value of 0 or less or MAX_CIRCLE+1.
     if( !skills[spl].m_class[cls-1].rlevel[0]
       && skills[spl].m_class[cls-1].rlevel[spec] )
     {
@@ -2542,10 +2543,43 @@ int get_skill_level( int cls, int spec, int skl )
   else
   {
     // If it's a pure spec skill..
-    // Note: Lost skills will return a value of 0.
+    // Note: Lost skills will return a value of 0 or less.
     if( skills[skl].m_class[cls-1].rlevel[0] != skills[skl].m_class[cls-1].rlevel[spec] )
     {
       return skills[skl].m_class[cls-1].rlevel[spec];
+    }
+    else
+    {
+      return MAXLVLMORTAL+1;
+    }
+  }
+}
+
+// Returns the level of the song
+// If spec is 0, returns level for base class.
+// If spec > 0 returns level for spec skill or MAXLVLMORTAL+1 if not specifically a spec skill.
+int get_song_level( int cls, int spec, int sng )
+{
+  // If we're not looking at a spec..
+  if( spec == 0 )
+  {
+    // Just check the base for a rlevel.
+    if( skills[sng].m_class[cls-1].rlevel[0] )
+    {
+      return skills[sng].m_class[cls-1].rlevel[0];
+    }
+    else
+    {
+      return MAXLVLMORTAL+1;
+    }
+  }
+  else
+  {
+    // If it's a pure spec song..
+    // Note: Lost songs will return a value of 0 or less.
+    if( skills[sng].m_class[cls-1].rlevel[0] != skills[sng].m_class[cls-1].rlevel[spec] )
+    {
+      return skills[sng].m_class[cls-1].rlevel[spec];
     }
     else
     {

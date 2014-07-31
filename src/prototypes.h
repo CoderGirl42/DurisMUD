@@ -1084,6 +1084,7 @@ void SetGuildSpellLvl(void);
 void update_skills(P_char);
 string list_spells(int, int);
 string list_skills(int, int);
+string list_songs(int, int);
 
 /* handler.c */
 
@@ -1621,6 +1622,7 @@ int GetPagesInBook(P_obj);
 int get_spell_circle(P_char, int);
 int get_spell_circle(int, int, int);
 int get_skill_level(int, int, int);
+int get_song_level(int, int, int);
 int GetTotalPagesInBook(P_obj);
 int IS_SEMI_CASTER(P_char);
 int IS_PARTIAL_CASTER(P_char);

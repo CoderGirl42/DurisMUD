@@ -1714,3 +1714,96 @@ string list_skills( int cls, int spec )
   return string(buf1);
 }
 
+string list_songs( int cls, int spec )
+{
+  int      sng, song, snglvl, i, oldsnglvl, lvlending;
+  char     buf[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH];
+  struct spl_list song_list[LAST_SONG - FIRST_SONG + 1 ];
+  bool     found;
+
+  *buf = '\0';
+  *buf1 = '\0';
+  *buf2 = '\0';
+  memset( song_list, 0, sizeof(spl_list) * (LAST_SONG - FIRST_SONG + 1) );
+
+  // first, build a list of all the spells for this class/spec.
+  i = 0;
+  for( sng = FIRST_SONG; sng <= LAST_SONG; sng++ )
+  {
+    snglvl = get_song_level(cls, spec, sng);
+
+    if( snglvl < MAXLVLMORTAL + 1 )
+    {
+      song_list[i].circle = snglvl;
+      song_list[i++].spell = sng;
+    }
+  }
+  /* then sort the list... (Can use spell_cmp although we're doing songs and levels not spells and circles). */
+  qsort(song_list, i, sizeof(struct spl_list), spell_cmp);
+
+  oldsnglvl = 0;
+  found = FALSE;
+  /* finally, show it */
+  // First, hunt for lost skills:
+  for( sng = 0; sng < i; sng++ )
+  {
+    song = song_list[sng].spell;
+    snglvl = song_list[sng].circle;
+    // Don't think this will be the case ever, but...
+    if( snglvl < 1)
+    {
+      if( !found )
+      {
+        sprintf( buf, "\n&+BSongs lost:&N &+c%s&n", skills[song].name);
+        strcat(buf1, buf);
+        found = TRUE;
+      }
+      else
+      {
+        sprintf(buf, ", &+c%s&n", skills[song].name);
+        strcat(buf1, buf);
+      }
+    }
+    else
+    {
+      break;
+    }
+  }
+  // Second, show gained skills.
+  found = FALSE;
+  for( ; sng < i; sng++ )
+  {
+    song = song_list[sng].spell;
+    snglvl = song_list[sng].circle;
+
+    // If they don't have the song..
+    if( !(skills[song].m_class[cls-1]).maxlearn[spec] )
+    {
+      continue;
+    }
+    if( !sng || snglvl != oldsnglvl )
+    {
+      // Lvls 4-20 get "th", rest get the st/nd/rd or th.
+      lvlending = (snglvl > 3 && snglvl < 21) ? 4 : snglvl % 10;
+      sprintf( buf, "\n&+B%d%s Level:&N", snglvl,
+        lvlending == 1 ? "st" : lvlending == 2 ? "nd" : lvlending == 3 ? "rd" : "th" );
+      strcat( buf1, buf );
+      oldsnglvl = snglvl;
+      found = FALSE;
+    }
+    strcpy(buf2, " ");
+
+    sprintf(buf, "%s&+c%s&n", found ? ", " : " ", skills[song].name);
+    found = TRUE;
+    strcat(buf1, buf);
+  }
+
+  // Don't think this will ever be the case either.
+  if( *buf1 == '\0' )
+  {
+    strcat( buf1, "\nNone." );
+  }
+  strcat(buf1, "\n");
+  return string(buf1);
+}
+
