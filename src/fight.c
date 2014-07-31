@@ -8192,8 +8192,9 @@ int dodgeSucceed(P_char char_dodger, P_char attacker, P_obj wpn)
     percent = (int) (percent * 1.20);
   }
 
-  // Improved Zealot dodge.
-  if(GET_SPEC(char_dodger, CLASS_CLERIC, SPEC_ZEALOT))
+  // Improved Zealot/Scoundrel dodge.
+  if(GET_SPEC(char_dodger, CLASS_CLERIC, SPEC_ZEALOT)
+    || GET_SPEC(char_dodger, CLASS_BARD, SPEC_SCOUNDREL))
   {
     percent += 5;
   }
