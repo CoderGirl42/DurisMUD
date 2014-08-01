@@ -2183,17 +2183,15 @@ int process_output(P_desc t)
   int      i, j, k, bg = 0;
   snoop_by_data *snoop_by_ptr;
 
-  if (!t->connected && IS_PC(t->character) &&
-      ((t->prompt_mode ==
-        (IS_SET(t->character->specials.act, PLR_SMARTPROMPT)) ||
-        (t->prompt_mode !=
-         IS_SET(t->character->specials.act, PLR_OLDSMARTP)))))
+  if( !t->connected && IS_PC(t->character)
+    && ((t->prompt_mode == (IS_SET(t->character->specials.act, PLR_SMARTPROMPT))
+    || (t->prompt_mode != IS_SET(t->character->specials.act, PLR_OLDSMARTP)))) )
   {
-    if (write_to_descriptor(t->descriptor, "\r\n") < 0)
+    if( write_to_descriptor(t->descriptor, "\r\n") < 0 )
       return (-1);
   }
-  if ((t->character != NULL) && IS_ANSI_TERM(t) &&
-      GET_LEVEL(t->character) >= 1 && (STATE(t) != CON_TEXTED))
+  if( (t->character != NULL) && IS_ANSI_TERM(t)
+    && GET_LEVEL(t->character) >= 1 && (STATE(t) != CON_TEXTED) )
   {
     flg = TRUE;
   }
@@ -2203,7 +2201,7 @@ int process_output(P_desc t)
   }
 
   /* Cycle thru output queue */
-  while (get_from_q(&t->output, buf))
+  while( get_from_q(&t->output, buf) )
   {
 #if 0
     if (IS_SET(t->character->specials.act, PLR_SMARTPROMPT))
@@ -2241,7 +2239,6 @@ int process_output(P_desc t)
         case '&':
           buffer[j++] = '&';
           break;
-
         case 'N':
         case 'n':
           if (flg)
@@ -2281,7 +2278,7 @@ int process_output(P_desc t)
                 was_upper = FALSE;
               }
               sprintf(&buffer[j], "\033[%s%s%sm", bold ? "1;" : "",
-                      blink ? "5;" : "",
+                      blink ? (PLR3_FLAGGED(t->character, PLR3_UNDERLINE) ? "4;" : "5;") : "",
                       (bg ? color_table[k].bg_code : color_table[k].fg_code));
               j += (5 + (bold ? 2 : 0) + (blink ? 2 : 0));
             }
@@ -2320,8 +2317,8 @@ int process_output(P_desc t)
                 was_upper = FALSE;
               }
               sprintf(&buffer[j], "\033[%s%s%s;%sm", bold ? "1;" : "",
-                      blink ? "5;" : "", color_table[bg].bg_code,
-                      color_table[k].fg_code);
+                      blink ? (PLR3_FLAGGED(t->character, PLR3_UNDERLINE) ? "4;" : "5;") : "",
+                      color_table[bg].bg_code, color_table[k].fg_code);
               j += (8 + (bold ? 2 : 0) + (blink ? 2 : 0));
             }
           }

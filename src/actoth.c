@@ -3829,12 +3829,13 @@ void show_toggles(P_char ch)
           "&+r   Hint Channel:&+g %-3s    &+y|&N"
           "&+r     Group Needed:&+g %-3s    &+y|&N"
           "&+r     Showspec    :&+g %-3s    &+y|&N\r\n"
-	  "&+r   Web Info    :&+g %-3s    &+y|&N"
-	  "&+r     Show Quests :&+g %-3s    &+y|&N"
+          "&+r   Web Info    :&+g %-3s    &+y|&N"
+          "&+r     Show Quests :&+g %-3s    &+y|&N"
           "&+rBoon Notification:&+g %-3s    &+y|&N\r\n"
-	  "&+r   Newbie EQ   :&+g %-3s    &+y|&N"
-	  "&+r     No Beep     :&+g %-3s    &+y|&n\r\n"
-	  "&+r   Surname     :&+g %-3s    &+y|&N\r\n"
+          "&+r   Newbie EQ   :&+g %-3s    &+y|&N"
+          "&+r     No Beep     :&+g %-3s    &+y|&n"
+          "&+r     Underline   :&+g %-3s    &+y|&N\r\n"
+          "&+r   Surname     :&+g %-3s    &+y|&N\r\n"
           "&+y-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
           "-=-=-=-=-=-=-=-=-=-=-=-=-=-&N\r\n",
           ONOFF(!PLR_FLAGGED(ch, PLR_NOTELL)),
@@ -3851,8 +3852,7 @@ void show_toggles(P_char ch)
           ONOFF(PLR_FLAGGED(ch, PLR_SNOTIFY)),
           ONOFF(PLR_FLAGGED(ch, PLR_ANONYMOUS)),
           Gbuf3,
-          (send_ch->desc->term_type ==
-           1 ? "GEN " : (send_ch->desc->term_type == 2 ? "ANSI" : "MSP ")),
+          (send_ch->desc->term_type == 1 ? "GEN " : (send_ch->desc->term_type == 2 ? "ANSI" : "MSP ")),
           ONOFF(PLR_FLAGGED(ch, PLR_MAP)),
           ONOFF(PLR_FLAGGED(ch, PLR_OLDSMARTP)),
           ONOFF(!PLR2_FLAGGED(ch, PLR2_NOTITLE)),
@@ -3869,11 +3869,12 @@ void show_toggles(P_char ch)
           ONOFF(PLR2_FLAGGED(ch, PLR2_LGROUP)),
           ONOFF(PLR2_FLAGGED(ch, PLR2_SPEC)),
           ONOFF(PLR2_FLAGGED(ch, PLR2_WEBINFO)),
-	  ONOFF(PLR2_FLAGGED(ch, PLR2_SHOW_QUEST)),
-	  ONOFF(PLR2_FLAGGED(ch, PLR2_BOON)),
-	  ONOFF(PLR2_FLAGGED(ch, PLR2_NEWBIEEQ)),
-	  ONOFF(PLR3_FLAGGED(ch, PLR3_NOBEEP)),
-	  ONOFF(PLR3_FLAGGED(ch, PLR3_NOSUR)));
+          ONOFF(PLR2_FLAGGED(ch, PLR2_SHOW_QUEST)),
+          ONOFF(PLR2_FLAGGED(ch, PLR2_BOON)),
+          ONOFF(PLR2_FLAGGED(ch, PLR2_NEWBIEEQ)),
+          ONOFF(PLR3_FLAGGED(ch, PLR3_NOBEEP)),
+          ONOFF(PLR3_FLAGGED(ch, PLR3_UNDERLINE)),
+          ONOFF(PLR3_FLAGGED(ch, PLR3_NOSUR)));
   send_to_char(Gbuf1, send_ch);
 
   if (GET_LEVEL(ch) >= AVATAR)
@@ -4020,6 +4021,7 @@ static const char *toggles_list[] = {
   "boon",
   "newbie",
   "beep",
+  "underline",
   "surname",
   "\n"
 };
@@ -4133,7 +4135,9 @@ static const char *tog_messages[][2] = {
   {"You will not load with newbie EQ when you die.\r\n",
    "You will now load with newbie EQ when you die.\r\n"},
   {"You can be beeped.\r\n",
-   "You can not be beeped.\r\n"}
+   "You can not be beeped.\r\n"},
+  {"You will receive blinking instead of underlined text.\r\n",
+   "You will receive underlined instead of blinking text.\r\n"}
 };
 
 void do_more(P_char ch, char *arg, int cmd)
@@ -4623,7 +4627,10 @@ void do_toggle(P_char ch, char *arg, int cmd)
   case 58:
     result = PLR3_TOG_CHK(ch, PLR3_NOBEEP);
     break;
-  case 59: //surname
+  case 59:
+    result = PLR3_TOG_CHK(ch, PLR3_UNDERLINE);
+    break;
+  case 60: //surname
     arg = one_argument(arg, Gbuf1);
 
    /* if (is_number(Gbuf1) && (wimp_lev = atoi(Gbuf1)))
