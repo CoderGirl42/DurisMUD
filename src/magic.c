@@ -12074,11 +12074,10 @@ void spell_heal_undead(int level, P_char ch, char *arg, int type,
   int      healpoints;
 
   // GET_RACE2 -> shapeshifted into skeleton (Blighters).
-  if(!IS_UNDEADRACE(victim) && !GET_RACE2(victim) == RACE_SKELETON
-    && GET_RACE(victim) != RACE_GOLEM && !GET_CLASS(victim, CLASS_NECROMANCER))
+  if( !IS_UNDEADRACE(victim) && !(GET_RACE2(victim) == RACE_SKELETON)
+    && (GET_RACE(victim) != RACE_GOLEM) && !GET_CLASS(victim, CLASS_NECROMANCER) )
   {
-    act
-      ("$N chants something odd and takes a look at $n, a weird look in $S eyes.",
+    act("$N chants something odd and takes a look at $n, a weird look in $S eyes.",
        TRUE, ch, 0, victim, TO_NOTVICT);
     act("Um... $N isn't undead...", TRUE, ch, 0, victim, TO_CHAR);
     return;
@@ -12098,8 +12097,9 @@ void spell_heal_undead(int level, P_char ch, char *arg, int type,
 
   // healCondition(victim, healpoints);
   if(healpoints)
-    send_to_char("&+WYou feel the powers of darkness strengthen you!\n",
-                 victim);
+  {
+    send_to_char("&+WYou feel the powers of darkness strengthen you!\n", victim);
+  }
   if(victim != ch && healpoints)
   {
     act("$n reaches out at $N, touching $M. ", FALSE, ch, 0, victim,
@@ -12155,9 +12155,8 @@ void spell_prot_undead(int level, P_char ch, char *arg, int type,
 {
   struct affected_type af;
 
-  if(!IS_UNDEADRACE(victim) &&
-     !IS_ANGEL(victim) &&
-     GET_RACE(victim) != RACE_GOLEM && !GET_CLASS(victim, CLASS_NECROMANCER))
+  if(!IS_UNDEADRACE(victim) && !IS_ANGEL(victim)
+    && GET_RACE(victim) != RACE_GOLEM && !GET_CLASS(victim, CLASS_NECROMANCER))
   {
     send_to_char("The target is not undead!\r\n", ch);
     return;
