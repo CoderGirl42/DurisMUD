@@ -1471,12 +1471,12 @@ void initialize_skills()
   SPEC_SPELL_ADD(CLASS_DRUID, 8, SPEC_WOODLAND);
   SPEC_SPELL_ADD(CLASS_BLIGHTER, 8, SPEC_SCOURGE);
 
-/*
+
   SPELL_CREATE("control weather", SPELL_CONTROL_WEATHER, PULSE_SPELLCAST * 3,
                 TAR_IGNORE | TAR_NOCOMBAT, cast_control_weather);
-     SPELL_ADD(CLASS_DRUID, 7);
-     SPELL_ADD(CLASS_RANGER, 8);
-*/
+//     SPELL_ADD(CLASS_DRUID, 7);
+//     SPELL_ADD(CLASS_RANGER, 8);
+
   SPELL_CREATE_MSG("mage flame", SPELL_MAGE_FLAME, (PULSE_SPELLCAST * 3) / 2,
                 TAR_SELF_ONLY | TAR_NOCOMBAT,
                 spell_mage_flame, "Your mage flame slowly fades into nothingness.");
@@ -1713,8 +1713,7 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
   SPELL_ADD(CLASS_ANTIPALADIN, 6);
   SPELL_ADD(CLASS_BLIGHTER, 3);
 
-  SPELL_CREATE("heal", SPELL_HEAL,
-               PULSE_SPELLCAST * 3 / 2, TAR_CHAR_ROOM, spell_heal);
+  SPELL_CREATE("heal", SPELL_HEAL, PULSE_SPELLCAST * 3 / 2, TAR_CHAR_ROOM, spell_heal);
 //  SPELL_ADD(CLASS_DRUID, 6);
   SPELL_ADD(CLASS_CLERIC, 5);
   SPELL_ADD(CLASS_PALADIN, 8);
@@ -3073,7 +3072,7 @@ SPELL_ADD(CLASS_NONE, 1);
                 TAR_CHAR_ROOM | TAR_SPIRIT, spell_lesser_mending);
   SPELL_ADD(CLASS_SHAMAN, 2);
 
-  SPELL_CREATE("mending", SPELL_MENDING, PULSE_SPELLCAST,
+  SPELL_CREATE("mending", SPELL_MENDING, (3 * PULSE_SPELLCAST) / 2,
                 TAR_CHAR_ROOM | TAR_SPIRIT, spell_mending);
   SPELL_ADD(CLASS_SHAMAN, 4);
 
@@ -3101,7 +3100,7 @@ SPELL_ADD(CLASS_NONE, 1);
                 TAR_IGNORE | TAR_SPIRIT, spell_wellness);
   SPELL_ADD(CLASS_SHAMAN, 6);
 
-  SPELL_CREATE("greater mending", SPELL_GREATER_MENDING, PULSE_SPELLCAST,
+  SPELL_CREATE("greater mending", SPELL_GREATER_MENDING, PULSE_SPELLCAST * 2,
                 TAR_CHAR_ROOM | TAR_SPIRIT,
                 spell_greater_mending);
   SPELL_ADD(CLASS_SHAMAN, 6);

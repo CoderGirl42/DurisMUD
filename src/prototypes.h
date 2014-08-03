@@ -1691,6 +1691,7 @@ bool CastRangerSpell(P_char, P_char, int);
 bool CastReaverSpell(P_char, P_char, int);
 bool CastIllusionistSpell(P_char, P_char, int);
 bool CastDruidSpell(P_char, P_char, int);
+bool CastBlighterSpell(P_char, P_char, bool);
 void BreathWeapon(P_char, int);
 int DemonCombat(P_char);
 bool DragonCombat(P_char, int);

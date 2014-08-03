@@ -2135,7 +2135,16 @@ P_char read_mobile(int nr, int type)
     }
     /* The new easy monsters */
     fscanf(mob_f, " %ld ", &tmp);
-    mob->player.level = tmp;
+    if( tmp > MAXLVL || tmp < 1 )
+    {
+      logit(LOG_DEBUG, "Bad level %d for mob '%s' %d", tmp, J_NAME(mob), GET_VNUM(mob) );
+      debug( "Bad level %d for mob '%s' %d", tmp, J_NAME(mob), GET_VNUM(mob) );
+      mob->player.level = (tmp > MAXLVL) ? MAXLVL : 1;
+    }
+    else
+    {
+      mob->player.level = tmp;
+    }
 #if defined(CTF_MUD) && (CTF_MUD == 1)
     if (!IS_SET(mob->specials.act, ACT_ELITE))
       mob->player.level = MAX(1, (int)(mob->player.level/2));
@@ -2154,8 +2163,8 @@ P_char read_mobile(int nr, int type)
  * Element 0 of this tracking array serves as an accumulator used in
  * replenishing used slots. - SKB 31 Mar 1995
  */
-    mob->specials.undead_spell_slots[0] = 0;
 
+    mob->specials.undead_spell_slots[0] = 0;
     for (j = 1; j <= MAX_CIRCLE; j++)
       mob->specials.undead_spell_slots[j] = spl_table[GET_LEVEL(mob)][j - 1];
 

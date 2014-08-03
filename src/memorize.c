@@ -61,7 +61,7 @@ char     Gbuf1[MAX_STRING_LENGTH], Gbuf2[MAX_STRING_LENGTH],
    paladins/rangers rock relatively hard as they get more spells/lvl
    than in adnd, but .. karma.
  */
-int      spl_table[TOTALLVLS + 1][MAX_CIRCLE];
+int spl_table[TOTALLVLS + 1][MAX_CIRCLE];
 
 /*
    coolest thing since sliced bread, instead of linear or anything table,
@@ -307,7 +307,7 @@ void SetSpellCircles(void)
   for (i = 0; i < MAX_CIRCLE; i++)
     spl_table[0][i] = 0;
 
-  for (lvl = 1; lvl < TOTALLVLS; lvl++)
+  for( lvl = 1; lvl < TOTALLVLS; lvl++ )
   {
 
     added = FALSE;

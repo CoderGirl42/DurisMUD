@@ -515,17 +515,17 @@ void spell_acid_rain(int level, P_char ch, char *arg, int type, P_char victim, P
   // If ch already has a doom going.. fail.
   if( has_scheduled_area_acid_rain( ch ) && !victim )
   {
-    send_to_char( "You've already called some &+grain&n.\n", ch );
+    send_to_char( "You've already called some &+grain&n.\n\r", ch );
     return;
   }
 
   if( !IS_OUTSIDE(ch->in_room) )
   {
-    send_to_char( "Try again.. Outdoors next time!", ch );
+    send_to_char( "Try again.. Outdoors next time!\n\r", ch );
     return;
   }
 
-  send_to_char("The clouds above converge and turn &+Lpitch black&n, and suddenly an awful &+Gburning rain&n begins to fall from the sky.\n", ch );
+  send_to_char("The clouds above converge and turn &+Lpitch black&n, and suddenly an awful &+Gburning rain&n begins to fall from the sky.\n\r", ch );
   act("The clouds above converge and turn &+Lpitch black&n, and suddenly an awful &+Gburning rain&n begins to fall from the sky.",0, ch, 0, 0, TO_ROOM);
 
   for( int i = 1; i <= waves; i++ )
