@@ -18321,26 +18321,24 @@ void spell_vampire(int level, P_char ch, char *arg, int type, P_char vict,
   int circle;
 
 
-  // old pets no longer follow orders but still take same damage as PCs
-  // and count towards pet limit to avoid cheesing
-  // doesn't apply to mobs
-  
-  if(!ch || !IS_ALIVE(ch))
+  // Old pets no longer follow orders but still take same damage as PCs
+  // and count towards pet limit to avoid cheesing: doesn't apply to mobs.
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
-  if(IS_PC(ch))
+  if( IS_PC(ch) )
   {
-   for (foll = ch->followers; foll; foll = next_foll)
+   for( foll = ch->followers; foll; foll = next_foll )
    {
     next_foll = foll->next;
     tch = foll->follower;
-    if(IS_PC_PET(tch)) 
+    if( IS_PC_PET(tch) )
     {
       stop_follower(tch);
       setup_pet(tch, ch, 2, PET_NOORDER);
-     //force pets to die after 30 minutes when trance is cast, to remove the pet links
-        add_event(event_pet_death, 1800, tch, NULL, NULL, 0, NULL, 0);
+      //force pets to die after 30 minutes when trance is cast, to remove the pet links
+      add_event(event_pet_death, 1800, tch, NULL, NULL, 0, NULL, 0);
     }
    }
   }
@@ -18354,51 +18352,57 @@ void spell_vampire(int level, P_char ch, char *arg, int type, P_char vict,
   }
   else
   {
-  send_to_char("You take on the shape of undead...\n", ch);
-  act("A chill passes by as all the color drains from $n.", TRUE, ch, 0, 0,
-      TO_ROOM);
+    send_to_char("You take on the shape of undead...\n", ch);
+    act("A chill passes by as all the color drains from $n.", TRUE, ch, 0, 0, TO_ROOM);
   }
-  
+
   if(affected_by_spell(ch, SPELL_VAMPIRE) || affected_by_spell(ch, SPELL_ANGELIC_COUNTENANCE))
   {
-    for (afp = ch->affected; afp; afp = afp->next)
-      if(afp->type == SPELL_VAMPIRE ||
-	 afp->type == SPELL_ANGELIC_COUNTENANCE)
+    for( afp = ch->affected; afp; afp = afp->next )
+    {
+      if(afp->type == SPELL_VAMPIRE || afp->type == SPELL_ANGELIC_COUNTENANCE)
       {
         afp->duration = 10;
       }
+    }
     return;
   }
 
   bzero(&af, sizeof(af));
   af.type = (GET_CLASS(ch, CLASS_THEURGIST) ? SPELL_ANGELIC_COUNTENANCE : SPELL_VAMPIRE);
   af.duration = 10;
-  af.modifier = (ch->base_stats.Str / 3);
+  af.modifier = (get_property("stats.str.Vampire", 100) - 100);
   af.location = APPLY_STR_MAX;
   affect_to_char(ch, &af);
-  af.modifier = (int) (ch->base_stats.Con);
+  af.modifier = (get_property("stats.con.Vampire", 100) - 100);
   af.location = APPLY_CON_MAX;
   affect_to_char(ch, &af);
   af.location = APPLY_HITROLL;
-  af.modifier = 20;
+  af.modifier = 15;
   affect_to_char(ch, &af);
   af.location = APPLY_DAMROLL;
-  af.modifier = 15;
+  af.modifier = 10;
   af.bitvector2 = AFF2_VAMPIRIC_TOUCH;
   af.bitvector4 = AFF4_VAMPIRE_FORM;
   affect_to_char(ch, &af);
 
-  if(USES_SPELL_SLOTS(ch))
-    return;
 
-  // code below makes sure necro gets only as much assim slots as he had memorized spells
-  // if we ever remove ability of assimilating from tranced necros - junk it
-  for (circle = 0; circle <= MAX_CIRCLE; circle++) {
+  if( !USES_SPELL_SLOTS(ch) )
+  {
+    return;
+  }
+
+  // The code below makes sure necro gets only as much assim slots as he had memorized spells.
+  // If we ever remove ability of assimilating from tranced necros - junk it.
+  for( circle = 0; circle <= MAX_CIRCLE; circle++ )
+  {
     ch->specials.undead_spell_slots[circle] = 0;
   }
 
-  for (afp = ch->affected; afp; afp = afp->next) {
-    if(afp->type == TAG_MEMORIZE && (afp->flags & MEMTYPE_FULL)) {
+  for (afp = ch->affected; afp; afp = afp->next)
+  {
+    if(afp->type == TAG_MEMORIZE && (afp->flags & MEMTYPE_FULL))
+    {
       ch->specials.undead_spell_slots[get_spell_circle(ch, afp->modifier)]++;
     }
   }
