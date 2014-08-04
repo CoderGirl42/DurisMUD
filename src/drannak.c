@@ -1295,8 +1295,8 @@ void do_conjure(P_char ch, char *argument, int cmd)
   char     first[MAX_INPUT_LENGTH];
   char     second[MAX_INPUT_LENGTH];
   char     rest[MAX_INPUT_LENGTH];
-  int i = 0, room = ch->in_room; 
-  int choice = 0;  
+  int i = 0, room = ch->in_room;
+  int choice = 0;
 
   if( !IS_ALIVE(ch) || IS_NPC(ch) )
     return;
@@ -1352,7 +1352,7 @@ void do_conjure(P_char ch, char *argument, int cmd)
   //buf[0] snags first character of name
   sprintf(Gbuf1, "%s/%c/%s.spellbook", SAVE_DIR, buf[0], buf);
   recipelist = fopen(Gbuf1, "r");
-  if (!recipelist)
+  if( !recipelist )
   {
     create_spellbook_file(ch);
     recipelist = fopen(Gbuf1, "r");
@@ -1528,7 +1528,10 @@ void do_conjure(P_char ch, char *argument, int cmd)
     REMOVE_BIT(tobj->specials.affected_by4, AFF4_DEFLECT);
     REMOVE_BIT(tobj->specials.act, ACT_SCAVENGER);
     REMOVE_BIT(tobj->specials.act, ACT_PATROL);
-    REMOVE_BIT(tobj->specials.act, ACT_SPEC);
+    if( number(1,100) > 50 )
+    {
+      REMOVE_BIT(tobj->specials.act, ACT_SPEC);
+    }
     REMOVE_BIT(tobj->specials.act, ACT_BREAK_CHARM);
     // Stop mobs from randomly sitting all the time.
     tobj->only.npc->default_pos = POS_STANDING + STAT_NORMAL;
