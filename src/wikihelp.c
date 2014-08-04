@@ -329,21 +329,24 @@ string wiki_specs(string title)
   return return_str;
 }
 
-string wiki_innates(string title)
+string wiki_innates(string title, int type)
 {
   string return_str;
-  int i, j, innate, found = 0;
+  int i, j = 0, innate, found = 0;
 
-  for (i = 0; i <= RACE_PLAYER_MAX; i++)
+  if( type == INNATES_RACE )
   {
-    if (!strcmp(tolower(race_names_table[i].normal).c_str(), tolower(title).c_str()))
+    for (i = 0; i <= RACE_PLAYER_MAX; i++)
     {
-      found = 1;
-      break;
+      if (!strcmp(tolower(race_names_table[i].normal).c_str(), tolower(title).c_str()))
+      {
+        found = 1;
+        break;
+      }
     }
   }
 
-  if (!found)
+  if( type == INNATES_CLASS )
   {
     for (i = 0; i <= CLASS_COUNT; i++)
     {
@@ -355,13 +358,12 @@ string wiki_innates(string title)
     }
   }
 
-  j = 0;
-
-  if (!found)
+  if( type == INNATES_SPEC )
   {
-    for (i = 0; i <= CLASS_COUNT; i++)
+    // Skip "CLASS_NONE"
+    for( i = 1; i <= CLASS_COUNT; i++ )
     {
-      for (j = 0; j < MAX_SPEC; j++)
+      for( j = 0; j < MAX_SPEC; j++ )
       {
         if (!strcmp(tolower(strip_ansi(specdata[i][j])).c_str(), tolower(title).c_str()))
         {
@@ -471,7 +473,7 @@ string wiki_help_single(string str)
     return_str += "\n";
     return_str += wiki_racial_stats(title);
     return_str += "\n";
-    return_str += wiki_innates(title);
+    return_str += wiki_innates(title, INNATES_RACE);
   }
   // Class type help files
   else if( atoi(row[2]) == 9 )
@@ -480,7 +482,7 @@ string wiki_help_single(string str)
     return_str += "\n";
     return_str += wiki_races(title);
     return_str += "\n";
-    return_str += wiki_innates(title);
+    return_str += wiki_innates(title, INNATES_CLASS);
     return_str += "\n";
     return_str += wiki_specs(title);
   }
@@ -490,7 +492,7 @@ string wiki_help_single(string str)
     title += row[0];
     // Dunno why it requires two carriage returns here, but it does.
     return_str += "\n\n";
-    return_str += wiki_innates(title);
+    return_str += wiki_innates(title, INNATES_SPEC);
     return_str += "\n";
     return_str += wiki_skills(title);
     return_str += "\n";
@@ -504,9 +506,9 @@ string wiki_help_single(string str)
     one_argument( row[0], buf );
     title += buf;
     return_str += "\n\n";
-    return_str += wiki_skills(title);
+    return_str += wiki_innates(title, INNATES_CLASS);
     return_str += "\n";
-    return_str += wiki_innates(title);
+    return_str += wiki_skills(title);
     return_str += "\n";
     return_str += wiki_spells(title);
   }

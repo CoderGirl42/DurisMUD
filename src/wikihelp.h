@@ -33,5 +33,9 @@ char *attrib_help( char * );
 #define ATT_LUK	9
 #define ATT_MAX 10
 
+#define INNATES_RACE 1
+#define INNATES_CLASS 2
+#define INNATES_SPEC 3
+
 #endif // __WIKIHELP_H__
 
