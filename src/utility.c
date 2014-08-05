@@ -3887,42 +3887,41 @@ void broadcast_to_arena(const char *msg, P_char ch, P_char vict, int rm)
  * get_class_string
  */
 
-char    *get_class_string(P_char ch, char *strn)
+char *get_class_string(P_char ch, char *strn)
 {
-  int      i = 0;
-  char    *t;
-
+  int   i = 0;
+  char *t;
+  bool found;
 
   strn[0] = 0;
-
-  for (i = 0; i <= CLASS_COUNT; i++)
+  found = FALSE;
+  // Display all classes (multiple -> ch is a NPC).
+  for( i = 0; i <= CLASS_COUNT; i++ )
   {
-    if (ch->player.m_class & (1 << i))
+    if( ch->player.m_class & (1 << i) )
     {
-      sprintf(strn + strlen(strn), "%s ", class_names_table[i + 1].ansi);
+      sprintf(strn + strlen(strn), "%s%s", found ? " " : "", class_names_table[i + 1].ansi);
+      found = TRUE;
     }
   }
-  if (IS_SPECIALIZED(ch))
+  if( IS_SPECIALIZED(ch) )
   {
-    sprintf(strn + strlen(strn), "&n/ %s",
-            GET_SPEC_NAME(ch->player.m_class, ch->player.spec-1));
+    sprintf(strn + strlen(strn), "&n / %s", GET_SPEC_NAME(ch->player.m_class, ch->player.spec-1));
   }
-  
-  if (IS_MULTICLASS_PC(ch))
+
+  if( IS_MULTICLASS_PC(ch) )
   {
-  
-    for (i = 0; i <= CLASS_COUNT; i++)
+    for( i = 0; i <= CLASS_COUNT; i++ )
+    {
       {
-        if (ch->player.secondary_class & (1 << i))
+        if( ch->player.secondary_class & (1 << i) )
         {
-          sprintf(strn + strlen(strn), "%s ", class_names_table[i + 1].ansi);
+          sprintf(strn + strlen(strn), " %s", class_names_table[i + 1].ansi);
         }
       }
-  
+    }
   }
-  
 
-  
   return strn;
 }
 
