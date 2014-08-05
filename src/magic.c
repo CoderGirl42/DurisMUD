@@ -4264,7 +4264,7 @@ void spell_fortitude(int level, P_char ch, char *arg, int type, P_char victim,
     af.type = SPELL_FORTITUDE;
     af.duration = 2 * (1 + temp);
     af.location = APPLY_CON;
-    af.modifier = BOUNDED(1, GET_LEVEL(ch) / 4, 10);
+    af.modifier = BOUNDED(1, GET_LEVEL(ch) / 4, 5);
     affect_to_char(victim, &af);
     send_to_char("&+WYour will to live grows stronger!\n", victim);
   }
@@ -11947,7 +11947,7 @@ void spell_vampiric_touch(int level, P_char ch, char *arg, int type,
   af.bitvector2 = AFF2_VAMPIRIC_TOUCH;
   affect_to_char(ch, &af);
   af.location = APPLY_HITROLL;
-  af.modifier = number(6, level);
+  af.modifier = 3 + level / 8;
   affect_to_char(ch, &af);
   }
   act("$n's hands start to glow &+RRED&n as blood..", FALSE, ch, 0, 0,
