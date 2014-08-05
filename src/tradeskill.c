@@ -75,6 +75,8 @@ extern struct forge_item forge_item_list[];
 void     set_keywords(P_obj t_obj, const char *newKeys);
 void     set_short_description(P_obj t_obj, const char *newShort);
 void     set_long_description(P_obj t_obj, const char *newDescription);
+int      get_ival_from_proc( obj_proc_type );
+int      get_mincircle( int spell );
 
 struct mine_range_data {
   char *name;
@@ -1469,12 +1471,12 @@ void initialize_tradeskills()
   int i;
 
   obj_index[real_object0(MINE_VNUM)].func.obj = mine;
-  
+
   for (i = 0; mine_data[i].name; i++)
-  {  
+  {
     load_mines(mine_data[i].reload, TRUE, i);
   }
-  
+
   // set procs on smiths
   for (i = 0; smith_array[i].vnum; i++)
     if (!mob_index[real_mobile0(smith_array[i].vnum)].func.mob)
@@ -2542,182 +2544,184 @@ int itemvalue(P_char ch, P_obj obj)
 {
   long workingvalue = 0;
   double multiplier = 1;
+  double mod;
 
-  if (!obj)
+  if( !obj )
   {
     return 0;
   }
 
   if(IS_SET(obj->wear_flags, ITEM_WEAR_EYES))
-    multiplier = 2.0;
+    multiplier *= 1.9;
 
   if(IS_SET(obj->wear_flags, ITEM_WEAR_EARRING))
-    multiplier = 2.5;
+    multiplier *= 1.4;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_FACE))
-    multiplier = 1.5;
+    multiplier *= 1.5;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_QUIVER))
-    multiplier = 1.5;
+    multiplier *= 1.8;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_FINGER))
-    multiplier = 2.5;
+    multiplier *= 1.4;
 
   if (IS_SET(obj->wear_flags, ITEM_GUILD_INSIGNIA))
-    multiplier = 2.5;
+    multiplier *= 2.0;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_NECK))
-    multiplier = 1.5;
+    multiplier *= 1.4;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_WAIST))
-    multiplier = 1.5;
+    multiplier *= 1.3;
 
   if (IS_SET(obj->wear_flags, ITEM_WEAR_WRIST))
-    multiplier = 1.5;
+    multiplier *= 1.1;
 
+  // Aff's add to the base value.
   if (IS_SET(obj->bitvector, AFF_STONE_SKIN))
-	  workingvalue += 60;
+	  workingvalue += 90;
 
   if (IS_SET(obj->bitvector, AFF_BIOFEEDBACK))
 	  workingvalue += 90;
 
   if (IS_SET(obj->bitvector, AFF_FARSEE))
-	  workingvalue += 28;
+	  workingvalue += 35;
 
   if (IS_SET(obj->bitvector, AFF_DETECT_INVISIBLE))
-	  workingvalue += 45;
+	  workingvalue += 80;
 
   if (IS_SET(obj->bitvector, AFF_HASTE))
-	  workingvalue += 55;
+	  workingvalue += 75;
 
   if (IS_SET(obj->bitvector, AFF_INVISIBLE))
-	  workingvalue += 30;
+	  workingvalue += 35;
 
   if (IS_SET(obj->bitvector, AFF_SENSE_LIFE))
-	  workingvalue += 20;
+	  workingvalue += 45;
 
   if (IS_SET(obj->bitvector, AFF_MINOR_GLOBE))
-	  workingvalue += 18;
+	  workingvalue += 28;
 
   if (IS_SET(obj->bitvector, AFF_UD_VISION))
 	  workingvalue += 40;
 
   if (IS_SET(obj->bitvector, AFF_WATERBREATH))
-	  workingvalue += 25;
+	  workingvalue += 45;
 
   if (IS_SET(obj->bitvector, AFF_PROTECT_EVIL))
-	  workingvalue += 8;
+	  workingvalue += 28;
 
   if (IS_SET(obj->bitvector, AFF_SLOW_POISON))
-	  workingvalue += 10;
+	  workingvalue += 20;
 
   if (IS_SET(obj->bitvector, AFF_SNEAK))
-	  workingvalue += 50;
+	  workingvalue += 75;
 
   if (IS_SET(obj->bitvector, AFF_BARKSKIN))
-	  workingvalue += 18;
+	  workingvalue += 25;
 
   if (IS_SET(obj->bitvector, AFF_INFRAVISION))
-	  workingvalue += 2;
+	  workingvalue += 7;
 
   if (IS_SET(obj->bitvector, AFF_LEVITATE))
 	  workingvalue += 13;
 
   if (IS_SET(obj->bitvector, AFF_HIDE))
-	  workingvalue += 60;
+	  workingvalue += 85;
 
   if (IS_SET(obj->bitvector, AFF_FLY))
-	  workingvalue += 55;
+	  workingvalue += 65;
 
   if (IS_SET(obj->bitvector, AFF_AWARE))
-	  workingvalue += 60;
+	  workingvalue += 75;
 
   if (IS_SET(obj->bitvector, AFF_PROT_FIRE))
-	  workingvalue += 15;
+	  workingvalue += 25;
 
   if (IS_SET(obj->bitvector2, AFF2_FIRESHIELD))
-	  workingvalue += 24;
+	  workingvalue += 35;
 
   if (IS_SET(obj->bitvector2, AFF2_ULTRAVISION))
-	  workingvalue += 40;
+	  workingvalue += 75;
 
   if (IS_SET(obj->bitvector2, AFF2_DETECT_EVIL))
-	  workingvalue += 7;
+	  workingvalue += 10;
 
   if (IS_SET(obj->bitvector2, AFF2_DETECT_GOOD))
-	  workingvalue += 7;
+	  workingvalue += 10;
 
   if (IS_SET(obj->bitvector2, AFF2_DETECT_MAGIC))
-	  workingvalue += 8;
-
-  if (IS_SET(obj->bitvector2, AFF2_PROT_COLD))
 	  workingvalue += 15;
 
+  if (IS_SET(obj->bitvector2, AFF2_PROT_COLD))
+	  workingvalue += 25;
+
   if (IS_SET(obj->bitvector2, AFF2_PROT_LIGHTNING))
-    workingvalue += 15;
+    workingvalue += 25;
 
   if (IS_SET(obj->bitvector2, AFF2_GLOBE))
-	  workingvalue += 50;
+	  workingvalue += 60;
 
   if (IS_SET(obj->bitvector2, AFF2_PROT_GAS))
-    workingvalue += 15;
+    workingvalue += 25;
 
   if (IS_SET(obj->bitvector2, AFF2_PROT_ACID))
-    workingvalue += 15;
+    workingvalue += 25;
 
   if (IS_SET(obj->bitvector2, AFF2_SOULSHIELD))
     workingvalue += 35;
 
   if (IS_SET(obj->bitvector2, AFF2_MINOR_INVIS))
-	  workingvalue += 5;
+	  workingvalue += 15;
 
   if (IS_SET(obj->bitvector2, AFF2_VAMPIRIC_TOUCH))
-	  workingvalue += 40;
+	  workingvalue += 50;
 
   if (IS_SET(obj->bitvector2, AFF2_EARTH_AURA))
-	  workingvalue += 70;
+	  workingvalue += 110;
 
   if (IS_SET(obj->bitvector2, AFF2_WATER_AURA))
-	  workingvalue += 70;
+	  workingvalue += 115;
 
   if (IS_SET(obj->bitvector2, AFF2_FIRE_AURA))
-	  workingvalue += 70;
+	  workingvalue += 120;
 
   if (IS_SET(obj->bitvector2, AFF2_AIR_AURA))
-	  workingvalue += 70;
+	  workingvalue += 130;
 
   if (IS_SET(obj->bitvector2, AFF2_PASSDOOR))
-	  workingvalue += 40;
+	  workingvalue += 80;
 
   if (IS_SET(obj->bitvector2, AFF2_FLURRY))
-	  workingvalue += 75;
+	  workingvalue += 105;
 
   if (IS_SET(obj->bitvector3, AFF3_PROT_ANIMAL))
-	  workingvalue += 14;
+	  workingvalue += 18;
 
   if (IS_SET(obj->bitvector3, AFF3_SPIRIT_WARD))
-	  workingvalue += 14;
+	  workingvalue += 40;
 
   if (IS_SET(obj->bitvector3, AFF3_GR_SPIRIT_WARD))
-	  workingvalue += 28;
+	  workingvalue += 65;
 
   if (IS_SET(obj->bitvector3, AFF3_ENLARGE))
-	  workingvalue += 65;
+	  workingvalue += 100;
 
   if (IS_SET(obj->bitvector3, AFF3_REDUCE))
-	  workingvalue += 65;
+	  workingvalue += 100;
 
   if (IS_SET(obj->bitvector3, AFF3_INERTIAL_BARRIER))
-	  workingvalue += 65;
+	  workingvalue += 75;
 
   if (IS_SET(obj->bitvector3, AFF3_COLDSHIELD))
-	  workingvalue += 28;
+	  workingvalue += 30;
 
   if (IS_SET(obj->bitvector3, AFF3_TOWER_IRON_WILL))
-	  workingvalue += 35;
+	  workingvalue += 45;
 
   if (IS_SET(obj->bitvector3, AFF3_BLUR))
-	  workingvalue += 45;
+	  workingvalue += 55;
 
   if (IS_SET(obj->bitvector3, AFF3_PASS_WITHOUT_TRACE))
 	  workingvalue += 30;
@@ -2726,22 +2730,22 @@ int itemvalue(P_char ch, P_obj obj)
 	  workingvalue += 90;
 
   if (IS_SET(obj->bitvector4, AFF4_HOLY_SACRIFICE))
-	  workingvalue += 65;
+	  workingvalue += 95;
 
   if (IS_SET(obj->bitvector4, AFF4_BATTLE_ECSTASY))
-	  workingvalue += 80;
+	  workingvalue += 95;
 
   if (IS_SET(obj->bitvector4, AFF4_DAZZLER))
 	  workingvalue += 35;
 
   if (IS_SET(obj->bitvector4, AFF4_PHANTASMAL_FORM))
-	  workingvalue += 60;
+	  workingvalue += 90;
 
   if (IS_SET(obj->bitvector4, AFF4_NOFEAR))
 	  workingvalue += 40;
 
   if (IS_SET(obj->bitvector4, AFF4_REGENERATION))
-	  workingvalue += 30;
+	  workingvalue += 60;
 
   if (IS_SET(obj->bitvector4, AFF4_GLOBE_OF_DARKNESS))
 	  workingvalue += 15;
@@ -2750,47 +2754,86 @@ int itemvalue(P_char ch, P_obj obj)
 	  workingvalue += 20;
 
   if (IS_SET(obj->bitvector4, AFF4_SANCTUARY))
-	  workingvalue += 75;
+	  workingvalue += 105;
 
   if (IS_SET(obj->bitvector4, AFF4_HELLFIRE))
-	  workingvalue += 80;
+	  workingvalue += 110;
 
   if (IS_SET(obj->bitvector4, AFF4_SENSE_HOLINESS))
-	  workingvalue += 5;
+	  workingvalue += 15;
 
   if (IS_SET(obj->bitvector4, AFF4_PROT_LIVING))
-	  workingvalue += 30;
+	  workingvalue += 60;
 
   if (IS_SET(obj->bitvector3, AFF3_ENLARGE))
-    workingvalue += 400;
+    workingvalue += 100;
 
   if (IS_SET(obj->bitvector4, AFF4_DETECT_ILLUSION))
-	  workingvalue += 30;
+	  workingvalue += 40;
 
   if (IS_SET(obj->bitvector4, AFF4_ICE_AURA))
-	  workingvalue += 70;
+	  workingvalue += 90;
 
   if (IS_SET(obj->bitvector4, AFF4_NEG_SHIELD))
 	  workingvalue += 30;
 
   if (IS_SET(obj->bitvector4, AFF4_WILDMAGIC))
-	  workingvalue += 80;
+	  workingvalue += 120;
 
-  if(IS_SET(obj->wear_flags, ITEM_WIELD) && (obj->value[5] > 1)) //has a ghetto proc
+  // Has a old school proc (Up to three spells).
+  // Can un-comment the debug stuff if you want to modify this.
+  if(IS_SET(obj->wear_flags, ITEM_WIELD) && (obj->value[5] > 0))
   {
-    workingvalue +=50;
-    //send_to_char("ghetto proc\r\n", ch);
+    int spells[3];
+    int spellcirclesum, numspells;
+
+    // val5 : 3 spells + all or one.
+    spells[0] = obj->value[5] % 1000;
+    spells[1] = obj->value[5] % 1000000 / 1000;
+    spells[2] = obj->value[5] % 1000000000 / 1000000;
+//    debug( "Spells0: %d, Spells1: %d, Spells2: %d.", spells[0], spells[1], spells[2] );
+
+    // val6 = level * val7 = chance -> 1/30 chance = 1, 1/60 chance = .5, 1/15 chance = 2, etc.
+    mod = ((obj->value[6] > 19) ? obj->value[6] / 10.0 : 1) * ( 30.0 / obj->value[7] );
+//    debug( "mod: %f, objval6/10: %f, 30/objval7: %f", mod, (obj->value[6] > 19) ? obj->value[6] / 10.0 : 1, (30.0 / obj->value[7]) );
+
+    spellcirclesum = get_mincircle( spells[0] );
+    spellcirclesum += get_mincircle( spells[1] );
+    spellcirclesum += get_mincircle( spells[2] );
+//    debug( "spellcirclesum: %d, circle0: %d, circle1: %d, circle2: %d.", spellcirclesum, get_mincircle(spells[0]), get_mincircle(spells[1]), get_mincircle(spells[2]) );
+
+    // 1 lvl 10 spell  2nd circle 1/60 chance = 1*1* 2*.5 =  1
+    // 1 lvl 60 spell  1st circle 1/30 chance = 1*6* 1*1  =  6
+    // 1 lvl 40 spell  3rd circle 1/30 chance = 1*4* 3*1  = 12
+    // 1 lvl 60 spell 12th circle 1/30 chance = 1*6*12*1  = 72 etc.
+    // val5 / 1000000000 -> 1, otherwise casts all.
+    if( obj->value[5] / 1000000000 )
+    {
+      // Add up number of spells
+      numspells = ((spells[0]) ? 1 : 0)+((spells[1]) ? 1 : 0)+((spells[2]) ? 1 : 0);
+      // If there are none?!, set to 1 anyway.
+      numspells = numspells ? numspells : 1;
+      // Compute average circle.
+//      debug( "mod * spellcirclesum / numspells: %d.",(int) (mod * (spellcirclesum / numspells)) );
+      workingvalue += (int) (mod * (spellcirclesum / numspells));
+    }
+    else
+    {
+//      debug( "spellcirclesum * mod: %d.", (int) (spellcirclesum * mod) );
+      workingvalue += mod * spellcirclesum;
+    }
   }
 
   //------- A0/A1/A2 -------------  
   int i = 0;
   while(i < 3)
   {
+    mod = obj->affected[i].modifier;
     //dam/hitroll are normal values
     if( (obj->affected[i].location == APPLY_DAMROLL)
 	    || (obj->affected[i].location == APPLY_HITROLL) )
     {
-      workingvalue += obj->affected[i].modifier;
+      workingvalue += (mod <= 2) ? mod : mod * (mod - 1);
     }
 
     //regular stats can be high numbers - half them
@@ -2803,7 +2846,7 @@ int itemvalue(P_char ch, P_obj obj)
 	    || (obj->affected[i].location == APPLY_POW)
 	    || (obj->affected[i].location == APPLY_LUCK) )
     {
-      workingvalue += (int)(obj->affected[i].modifier *.8);
+      workingvalue += (mod <= 2) ? mod : (mod - 1) * (mod - 1);
     }
 
     //hit, move, mana, are generally large #'s - 1/10
@@ -2811,7 +2854,8 @@ int itemvalue(P_char ch, P_obj obj)
 	    || (obj->affected[i].location == APPLY_MOVE)
 	    || (obj->affected[i].location == APPLY_MANA) )
     {
-      workingvalue += (int)(obj->affected[i].modifier *.5);
+      // Need x log x here.. xlog x < x until x = 4
+      workingvalue += (mod < 4) ? mod : (int) (mod * log(mod));
     }
 
     //hit, move, mana, regen are generally large #'s - 1/10
@@ -2819,7 +2863,7 @@ int itemvalue(P_char ch, P_obj obj)
 	    || (obj->affected[i].location == APPLY_MOVE_REG)
 	    || (obj->affected[i].location == APPLY_MANA_REG) )
     {
-      workingvalue += (int)(obj->affected[i].modifier *.3);
+      workingvalue += mod/3;
     }
 
     //racial attributes #'s - 1/10
@@ -2837,13 +2881,13 @@ int itemvalue(P_char ch, P_obj obj)
     //obj procs
     if(obj_index[obj->R_num].func.obj && i < 1)
     {
-      workingvalue += 50;
+      workingvalue += get_ival_from_proc(obj_index[obj->R_num].func.obj);
     }
 
     //AC negative is good
     if( (obj->affected[i].location == APPLY_AC) )
     {
-      workingvalue -= (int)(obj->affected[i].modifier*.1);
+      workingvalue -= mod / 10;
     }
 
     //saving throw values (good) are negative
@@ -2853,14 +2897,14 @@ int itemvalue(P_char ch, P_obj obj)
 	    || (obj->affected[i].location == APPLY_SAVING_BREATH)
 	    || (obj->affected[i].location == APPLY_SAVING_SPELL) )
     {
-      workingvalue -= obj->affected[i].modifier * 2;
+      workingvalue -= mod * 2;
     }
 
     //pulse is quite valuable and negative is good
     if( (obj->affected[i].location == APPLY_COMBAT_PULSE)
       || (obj->affected[i].location == APPLY_SPELL_PULSE) )
     {
-      workingvalue += (int)(obj->affected[i].modifier * -100);
+      workingvalue += mod * -100;
     }
 
     //max_stats double points
@@ -2874,7 +2918,7 @@ int itemvalue(P_char ch, P_obj obj)
       || (obj->affected[i].location == APPLY_POW_MAX)
       || (obj->affected[i].location == APPLY_LUCK_MAX) )
     {
-      workingvalue += (obj->affected[i].modifier * 2.5);
+      workingvalue += (mod < 2) ? mod : mod * mod;
     }
     i++;
   }
@@ -3414,3 +3458,331 @@ int assoc_founder(P_char ch, P_char victim, int cmd, char *arg)
   return FALSE;
 }
 
+int get_mincircle( int spell )
+{
+  int i, j;
+  int lowest = 13;
+
+  // If not a spell, return 0.
+  if( spell < FIRST_SPELL || spell > LAST_SPELL )
+  {
+    return 0;
+  }
+
+  // Skip CLASS_NONE..
+  for( i = 1; i <= CLASS_COUNT; i++ )
+  {
+    for( j = 0; j < MAX_SPEC; j++ )
+    {
+      if( (skills[spell].m_class[i].rlevel[j] > 0) && (skills[spell].m_class[i].rlevel[j] <= lowest))
+      {
+        lowest = skills[spell].m_class[i].rlevel[j];
+      }
+    }
+  }
+
+  return lowest;
+}
+
+// New object proc?  Add it here with a value associated with it.
+int get_ival_from_proc( obj_proc_type proc )
+{
+  if( proc == artifact_stone )
+  {
+    return 90;
+  }
+  if( proc == artifact_biofeedback )
+  {
+    return 90;
+  }
+  if( proc == artifact_hide )
+  {
+    return 85;
+  }
+  if( proc == artifact_invisible )
+  {
+    return 80;
+  }
+
+  return 100;
+/* Below is a list of procs I haven't gotten a chance to define a ivalue to:
+ *   jet_black_maul;
+ *   faith;
+ *   mistweave;
+ *   leather_vest;
+ *   deva_cloak;
+ *   icicle_cloak;
+ *   ogrebane;
+ *   giantbane;
+ *   mindbreaker;
+ *   treasure_chest;
+ *   dwarfslayer;
+ *   artifact_monolith;
+ *   miners_helmet;
+ *   burbul_map_obj;
+ *   chyron_search_obj;
+ *   storage_locker_obj_hook;
+ *   storage_locker_obj_hook;
+ *   blood_stains;
+ *   ice_shattered_bits;
+ *   tracks;
+ *   frost_beacon;
+ *   ice_block;
+ *   glades_dagger;
+ *   lucky_weapon;
+ *   mace_dragondeath;
+ *   khildarak_warhammer;
+ *   ogre_warlords_sword;
+ *   flaming_axe_of_azer;
+ *   mrinlor_whip;
+ *   sphinx_prefect_crown;
+ *   platemail_of_defense;
+ *   master_set;
+ *   ioun_sustenance;
+ *   deflect_ioun;
+ *   ioun_testicle;
+ *   ioun_warp;
+ *   tendrils;
+ *   elvenkind_cloak;
+ *   charon_ship;
+ *   olympus_portal;
+ *   earthquake_gauntlet;
+ *   blind_boots;
+ *   thanksgiving_wings;
+ *   pathfinder;
+ *   orb_of_destruction;
+ *   sanguine;
+ *   neg_orb;
+ *   totem_of_mastery;
+ *   ring_of_regeneration;
+ *   glowing_necklace;
+ *   staff_shadow_summoning;
+ *   rod_of_magic;
+ *   proc_whirlwinds;
+ *   lyrical_instrument_of_time;
+ *   sinister_tactics_staff;
+ *   shard_frozen_styx_water;
+ *   pesky_imp_chest;
+ *   pesky_imp_chest;
+ *   pesky_imp_chest;
+ *   holy_weapon;
+ *   mox_totem;
+ *   flayed_mind_mask;
+ *   stalker_cloak;
+ *   finslayer_air;
+ *   aboleth_pendant;
+ *   artifact_stone;
+ *   tower_summoning;
+ *   lightning_armor;
+ *   imprison_armor;
+ *   fun_dagger;
+ *   rax_red_dagger;
+ *   cutting_dagger;
+ *   circlet_of_light;
+ *   ljs_sword;
+ *   wuss_sword;
+ *   head_guard_sword;
+ *   priest_rudder;
+ *   alch_bag;
+ *   alch_rod;
+ *   ljs_armor;
+ *   dragon_skull_helm;
+ *   nightcrawler_dagger;
+ *   rightous_blade;
+ *   xmas_cap;
+ *   khaziddea_blade;
+ *   revenant_helm;
+ *   dragonlord_plate;
+ *   sunblade;
+ *   bloodfeast;
+ *   dragonslayer;
+ *   mankiller;
+ *   madman_mangler;
+ *   madman_shield;
+ *   mentality_mace;
+ *   vapor;
+ *   serpent_of_miracles;
+ *   transparent_blade;
+ *   Einjar;
+ *   tripboots;
+ *   blindbadge;
+ *   fumblegaunts;
+ *   confusionsword;
+ *   guild_badge;
+ *   thrusted_eq_proc;
+ *   set_proc;
+ *   encrusted_eq_proc;
+ *   parchment_forge;
+ *   relic_proc;
+ *   relic_proc;
+ *   relic_proc;
+ *   cold_hammer;
+ *   brainripper;
+ *   hammer_titans;
+ *   stormbringer;
+ *   living_necroplasm;
+ *   vigor_mask;
+ *   church_door;
+ *   splinter;
+ *   demo_scimitar;
+ *   dranum_mask;
+ *   golem_chunk;
+ *   good_evil_sword;
+ *   good_evil_sword;
+ *   transp_tow_misty_gloves;
+ *   flying_citadel;
+ *   gfstone;
+ *   disarm_pick_gloves;
+ *   roulette_pistol;
+ *   orb_of_deception;
+ *   zombies_game; 
+ *   trap_razor_hooks;
+ *   trap_tower1_para;
+ *   trap_tower2_sleep;
+ *   illesarus;
+ *   hoa_plat;
+ *   vecna_stonemist;
+ *   vecna_ghosthands;
+ *   vecna_torturerroom;
+ *   vecna_gorge;
+ *   vecna_pestilence;
+ *   vecna_minifist;
+ *   vecna_dispel;
+ *   vecna_boneaxe;
+ *   vecna_staffoaken;
+ *   vecna_krindor_main;
+ *   vecna_death_mask;
+ *   mob_vecna_procs;
+ *   lifereaver;
+ *   flame_blade;
+ *   SeaKingdom_Tsunami;
+ *   shimmering_longsword;
+ *   rod_of_zarbon;
+ *   frost_elb_dagger;
+ *   dagger_submission;
+ *   trans_tower_shadow_globe;
+ *   burn_touch_obj;
+ *   drowcrusher;
+ *   squelcher;
+ *   dragonarmor;
+ *   kearonor_hide;
+ *   hewards_mystical_organ;
+ *   amethyst_orb;
+ *   wand_of_wonder;
+ *   blade_of_paladins;
+ *   fade_drusus;
+ *   lightning_sword;
+ *   elfdawn_sword;
+ *   flame_of_north_sword;
+ *   magebane_falchion;
+ *   woundhealer_scimitar;
+ *   martelo_mstar;
+ *   mir_fire;
+ *   githpc_special_weap;
+ *   githpc_special_weap;
+ *   trustee_artifact;
+ *   orcus_wand;
+ *   varon;
+ *   changelog;
+ *   obj_imprison;
+ *   huntsman_ward;
+ *   item_switch;
+ *   clock_tower;
+ *   hammer;
+ *   barb;
+ *   gesen;
+ *   verzanan_portal;
+ *   holy_weapon;
+ *   labelas;
+ *   dragonkind;
+ *   resurrect_totem;
+ *   guildwindow;
+ *   guildhome;
+ *   crystal_spike;
+ *   automaton_lever;
+ *   illithid_teleport_veil;
+ *   forest_corpse;
+ *   torment;
+ *   avernus;
+ *   githyanki;
+ *   kvasir_dagger;
+ *   doombringer;
+ *   flamberge;
+ *   ring_elemental_control;
+ *   holy_mace;
+ *   staff_of_blue_flames;
+ *   staff_of_power;
+ *   reliance_pegasus;
+ *   lightning;
+ *   dagger_of_wind;
+ *   orb_of_the_sea;
+ *   zion_mace_of_earth;
+ *   unholy_avenger_bloodlust;
+ *   holy_weapon;
+ *   tiamat_stinger;
+ *   dispator;
+ *   nightbringer;
+ *   undead_trident;
+ *   generic_drow_eq;
+ *   iron_flindbar;
+ *   generic_parry_proc;
+ *   generic_riposte_proc;
+ *   flame_of_north;
+ *   menden_figurine;
+ *   llyms_altar;
+ *   fw_ruby_monocle;
+ *   sevenoaks_longsword;
+ *   mace_of_sea;
+ *   serpent_blade;
+ *   lich_spine;
+ *   doom_blade_Proc;
+ *   dagger_ra;
+ *   illithid_axe;
+ *   deathseeker_mace;
+ *   demon_slayer;
+ *   snowogre_warhammer;
+ *   volo_longsword;
+ *   blur_shortsword;
+ *   buckler_saints;
+ *   helmet_vampires;
+ *   storm_legplates;
+ *   gauntlets_legend;
+ *   gladius_backstabber;
+ *   elemental_wand;
+ *   earring_powers;
+ *   lorekeeper_scroll;
+ *   damnation_staff;
+ *   nuke_damnation;
+ *   collar_frost;
+ *   collar_flames;
+ *   lancer_gift;
+ *   splinter;
+ *   zion_shield_absorb_proc;
+ *   generic_shield_block_proc;
+ *   zion_fnf;
+ *   zion_light_dark;
+ *   barovia_undead_necklace;
+ *   artifact_shadow_shield;
+ *   ravenloft_bell;
+ *   shimmer_shortsword;
+ *   toe_chamber_switch;
+ *   hellfire_axe;
+ *   illithid_whip;
+ *   skull_leggings;
+ *   flesh_golem_repop;
+ *   deliverer_hammer;
+ *   blue_sword_armor;
+ *   sword_named_magik;
+ *   bel_sword;
+ *   zarthos_vampire_slayer;
+ *   critical_attack_proc;
+ *   mask_of_wildmagic;
+ *   flow_amulet;
+ *   zion_netheril;
+ *   eth2_tree_obj;
+ *   eth2_tree_obj;
+ *   eth2_godsfury;
+ *   eth2_aramus_crown;
+ *   lucrot_mindstone;
+*/
+}

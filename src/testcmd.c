@@ -4,7 +4,9 @@
 #include "sql.h"
 #include "db.h"
 #include "map.h"
+#include "spells.h"
 #include <fstream>
+#include <math.h>
 using namespace std;
 
 extern struct zone_data *zone_table;
@@ -14,6 +16,9 @@ extern mapSymbolInfo color_symbol[];
 extern P_index mob_index;
 extern int count_classes( P_char mob );
 extern long new_exp_table[];
+extern const char *spells[];
+
+extern int get_mincircle( int spell );
 
 void display_map(P_char ch, int n, int show_map_regardless);
 
@@ -189,19 +194,19 @@ extern Skill skills[];
 void do_test(P_char ch, char *arg, int cmd)
 {
   char buff[MAX_STRING_LENGTH];
-  
+
   if( !IS_TRUSTED(ch) )
   {
     return;
   }
-  
+
   sprintf(buff, "%s in [%d]: test %s", GET_NAME(ch), world[ch->in_room].number, arg);
-  
+
   wizlog(56, buff);
   logit(LOG_WIZ, buff);
-  
+
   arg = one_argument(arg, buff);
-  
+
   if( isname("room", buff) )
   {
     do_test_room(ch, arg, cmd);
@@ -254,11 +259,9 @@ void do_test(P_char ch, char *arg, int cmd)
     if( spell )
     {
       char buf[256];
-      sprintf( buf, "&+Cpower of %s\n",
-               skills[spell].name );
+      sprintf( buf, "&+Cpower of %s\n", skills[spell].name );
       send_to_char(buf, ch);
     }
-    
     return;
   }
   else if( isname("skills", buff) )
@@ -266,8 +269,8 @@ void do_test(P_char ch, char *arg, int cmd)
     for( int i = 0; i < MAX_SKILLS; i++ )
     {
       debug("[%d] %s", GET_CHAR_SKILL(ch, i), skills[i].name);
-    }    
-  }  
+    }
+  }
   else if ( isname("loadallchars", buff) )
   {
     test_load_all_chars(ch);
@@ -301,6 +304,60 @@ void do_test(P_char ch, char *arg, int cmd)
     mob = read_mobile(92076, VIRTUAL);
     sql_log( mob, WIZLOG, "SQL: '%s'" , arg );
     extract_char( mob );
+  }
+  else if ( isname("xlogx", buff) )
+  {
+    int num = atoi(arg);
+    char   buf[MAX_STRING_LENGTH];
+
+    if( num > 0 )
+    {
+      for( int i = 1;i <= num; i++ )
+      {
+        sprintf( buf, "%d log %d: %f == %d.\n\r", i, i, i * log(i), (int) (i * log(i)) );
+        send_to_char( buf, ch );
+      }
+    }
+    else
+    {
+      send_to_char( "This is for testing x*log(x) function used in itemvalue.\n\rTakes a number > 0 as an argument.\n\r", ch );
+    }
+  }
+  else if ( isname("xlog2x", buff) )
+  {
+    int num = atoi(arg);
+    char   buf[MAX_STRING_LENGTH];
+
+    if( num > 0 )
+    {
+      for( int i = 1;i <= num; i++ )
+      {
+        sprintf( buf, "%d log2 %d: %f == %d.\n\r", i, i, i * log2(i), (int) (i * log2(i)) );
+        send_to_char( buf, ch );
+      }
+    }
+    else
+    {
+      send_to_char( "This is for testing x*log2(x) function used in itemvalue.\n\rTakes a number > 0 as an argument.\n\r", ch );
+    }
+  }
+  else if ( isname("spell", buff) )
+  {
+    int num = atoi(arg);
+    char   buf[MAX_STRING_LENGTH];
+
+    if( num < 1 )
+    {
+      num = search_block( skip_spaces(arg), (const char **) spells, FALSE );
+    }
+    if( num < FIRST_SPELL || num > LAST_SPELL )
+    {
+      sprintf( buf, "Spell must be a number between %d and %d, or a valid spell name.\n\r", FIRST_SPELL, LAST_SPELL );
+      send_to_char( buf, ch );
+      return;
+    }
+    sprintf( buf, "The mincircle for spell '%s' (%d), is %d.\n\r", spells[num], num, get_mincircle(num) );
+    send_to_char( buf, ch );
   }
   else
   {
