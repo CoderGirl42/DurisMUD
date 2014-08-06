@@ -102,7 +102,8 @@ void convertMob(P_char ch)
              *GET_SPEC_NAME(ch->player.m_class, 3) )
     {
       ch->player.spec = 4;
-    }    
+    }
+/* No spec means no spec.  Not random spec!
     else if( !isname("_nospec_", GET_NAME(ch)) &&
              GET_LEVEL(ch) > number(20,50) )
     {
@@ -113,8 +114,9 @@ void convertMob(P_char ch)
         ch->player.spec = i+1;
       }
     }
-  }  
-  
+*/
+  }
+
   /* for guild golem and mob that should not move set cover
      so they don't get attack by range */
 
@@ -137,15 +139,15 @@ void convertMob(P_char ch)
     affect_total(ch, FALSE);
     return;
   }
-   
+
   if ((ch->player.m_class == 0) && (GET_LEVEL(ch) >= 15))
     ch->player.m_class = CLASS_WARRIOR;
 
   /* minimum mob level */
-  if (!GET_LEVEL(ch))
+  if( GET_LEVEL(ch) < 1 )
     ch->player.level = 1;
 
-  if (GET_LEVEL(ch) > MAXLVL)
+  if( GET_LEVEL(ch) > MAXLVL )
     ch->player.level = MAXLVL;
 
   xp = copp = silv = gold = plat = 0;
@@ -206,14 +208,13 @@ void convertMob(P_char ch)
   GET_GOLD(ch) = (int) (GET_LEVEL(ch) * gold * number(75, 125) / 100);
   GET_SILVER(ch) = (int) (GET_LEVEL(ch) * silv * number(75, 125) / 100);
   GET_COPPER(ch) = (int) (GET_LEVEL(ch) * copp * number(75, 125) / 100);
-  
+
 // EXP modifiers are found in limits.c in gain_exp().
-  
+
   /* handle special situations for special races in regards to
      money */
-  if(IS_GREATER_RACE(ch) ||
-     IS_ELITE(ch))
-      GET_PLATINUM(ch) *= 4;
+  if( IS_GREATER_RACE(ch) || IS_ELITE(ch) )
+    GET_PLATINUM(ch) *= 4;
 
   /* finally, rarefy valuable platinum */
   xhigh = GET_PLATINUM(ch);
@@ -226,7 +227,7 @@ void convertMob(P_char ch)
       (GET_RACE(ch) == RACE_W_ELEMENTAL) ||
       (GET_RACE(ch) == RACE_E_ELEMENTAL) ||
       (GET_RACE(ch) == RACE_V_ELEMENTAL) ||
-	  (GET_RACE(ch) == RACE_I_ELEMENTAL) ||
+      (GET_RACE(ch) == RACE_I_ELEMENTAL) ||
       IS_UNDEADRACE(ch) ||
       (GET_RACE(ch) == RACE_INSECT) ||
       (GET_RACE(ch) == RACE_REPTILE) ||
@@ -399,20 +400,15 @@ void convertMob(P_char ch)
    * in property hp_mob_con_factor ranging from 0 to 1 tells us how much
    * racial con affects hitpoints. when it's 0, then all mob races have
    * same hitpoints, when it's 1 then differences are as big as for the
-   * PC races, so ogres having twice human and nearly for times drow
+   * PC races, so ogres having twice human and nearly four times drow
    * hitpoints etc. the goal was to make it intuitively adjustable via
    * two provided properties. /tharkun
    */
   hits = (int) ((0.00000045 *
-                 (stat_factor[GET_RACE(ch)].Con *
-                  stat_factor[GET_RACE(ch)].Con * hp_mob_con_factor +
-                  100 * 100 * (1 - hp_mob_con_factor)) * level * level +
-                 2) * level * hp_mob_npc_pc_ratio);
+    (stat_factor[GET_RACE(ch)].Con * stat_factor[GET_RACE(ch)].Con * hp_mob_con_factor
+    + 100 * 100 * (1 - hp_mob_con_factor)) * level * level + 2) * level * hp_mob_npc_pc_ratio);
 
-  hits *= 1.3; //Drannak - quick tweak for 2013 wipe.
-  hits -=
-    (int) (0.5 * hits *
-           (1.0 - class_hitpoints[flag2idx(ch->player.m_class)]));
+  hits -= (int) (0.5 * hits * (1.0 - class_hitpoints[flag2idx(ch->player.m_class)]));
 
 #if defined(CHAOS_MUD) && (CHAOS_MUD == 1)
   hits = (int)(hits * (1/10));
@@ -503,60 +499,61 @@ void convertMob(P_char ch)
   /* now that the STONE_SKIN affect does something without the spell
      being cast, need to make sure area builders didn't use it
      improperly... so... */
-  if (IS_AFFECTED(ch, AFF_STONE_SKIN) &&
-      !((GET_LEVEL(ch) > 39) &&
-       ((GET_RACE(ch) == RACE_GOLEM) ||
-       (GET_RACE(ch) == RACE_CONSTRUCT) ||
-       isname("iron", GET_NAME(ch)) ||
-       isname("stone", GET_NAME(ch)))))
+  if( IS_AFFECTED(ch, AFF_STONE_SKIN) && !((GET_LEVEL(ch) > 39)
+    && ((GET_RACE(ch) == RACE_GOLEM) || (GET_RACE(ch) == RACE_CONSTRUCT)
+    || isname("iron", GET_NAME(ch)) || isname("stone", GET_NAME(ch)))) )
+  {
     REMOVE_BIT(ch->specials.affected_by, AFF_STONE_SKIN);
+  }
 
   /* earth elems get perm stoneskin */
-  if (GET_RACE(ch) == RACE_E_ELEMENTAL)
+  if( GET_RACE(ch) == RACE_E_ELEMENTAL )
+  {
     SET_BIT(ch->specials.affected_by, AFF_STONE_SKIN);
+  }
 
   /* remove ALL affects that don't belong! */
   REMOVE_BIT(ch->specials.affected_by,
 /*           AFF_BLIND |*/
-             AFF_KNOCKED_OUT |
-             AFF_BOUND |
-             AFF_CHARM |
-             AFF_FEAR |
-             AFF_MEDITATE |
-             AFF_CAMPING |
-             AFF_SLEEP);
+    AFF_KNOCKED_OUT |
+    AFF_BOUND |
+    AFF_CHARM |
+    AFF_FEAR |
+    AFF_MEDITATE |
+    AFF_CAMPING |
+    AFF_SLEEP);
 
   REMOVE_BIT(ch->specials.affected_by2,
-             AFF2_MINOR_PARALYSIS |
-             AFF2_MAJOR_PARALYSIS |
-             AFF2_POISONED |
-             AFF2_SILENCED |
-             AFF2_STUNNED |
-             AFF2_HOLDING_BREATH |
-             AFF2_MEMORIZING |
-             AFF2_IS_DROWNING |
-             AFF2_CASTING |
-             AFF2_SCRIBING |
-             AFF2_HUNTER);
-             
-  REMOVE_BIT(ch->specials.affected_by3,
-             AFF3_TRACKING |
-             AFF3_FAMINE |
-             AFF3_SWIMMING);
-  REMOVE_BIT(ch->specials.affected_by4,
-             AFF4_SACKING);
-  REMOVE_BIT(ch->specials.affected_by5,
-             AFF5_IMPRISON |
-             AFF5_MEMORY_BLOCK);
+    AFF2_MINOR_PARALYSIS |
+    AFF2_MAJOR_PARALYSIS |
+    AFF2_POISONED |
+    AFF2_SILENCED |
+    AFF2_STUNNED |
+    AFF2_HOLDING_BREATH |
+    AFF2_MEMORIZING |
+    AFF2_IS_DROWNING |
+    AFF2_CASTING |
+    AFF2_SCRIBING |
+    AFF2_HUNTER);
 
-  if (IS_SET(ch->specials.act, ACT_ELITE)) 
+  REMOVE_BIT(ch->specials.affected_by3,
+    AFF3_TRACKING |
+    AFF3_FAMINE |
+    AFF3_SWIMMING);
+  REMOVE_BIT(ch->specials.affected_by4,
+    AFF4_SACKING);
+  REMOVE_BIT(ch->specials.affected_by5,
+    AFF5_IMPRISON |
+    AFF5_MEMORY_BLOCK);
+
+  if( IS_SET(ch->specials.act, ACT_ELITE) )
   {
     give_proper_stat(ch);
     ch->points.hit = ch->points.max_hit = ch->points.base_hit =
       (int)(ch->points.hit * get_property("hitpoints.mob.eliteBonus", 2.5));
     ch->points.damnodice = (int)(get_property("damage.eliteBonus", 1.2) * ch->points.damnodice);
     GET_EXP(ch) = (int) (GET_EXP(ch) * get_property("hitpoints.mob.eliteBonus", 2.5) *
-        get_property("damage.eliteBonus", 1.2));
+      get_property("damage.eliteBonus", 1.2));
   }
 
   affect_total(ch, FALSE);
