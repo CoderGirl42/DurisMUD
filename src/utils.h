@@ -1360,6 +1360,7 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch) || IS_EFREET(ch)) &&
                       (GET_RACE(ch) == RACE_DEVA) || \
                        IS_ANGELIC(ch))
 
-#define SPELL_PULSE(ch) (((float)PULSE_SPELLCAST*2 + ch->points.spell_pulse)/(2*PULSE_SPELLCAST))
+// Good spell pulse is negative.
+#define SPELL_PULSE(ch) (1.0 + (.03 * ch->points.spell_pulse))
 
 #endif /* _DURIS_UTILS_H_ */
