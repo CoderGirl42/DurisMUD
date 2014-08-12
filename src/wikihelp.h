@@ -8,7 +8,7 @@ string wiki_help_single(string str);
 string wiki_classes(string str);
 string wiki_innates(string title, int type);
 string wiki_multiclass( string title );
-string wiki_races(string str);
+string wiki_races(string str, int type);
 string wiki_racial_stats(string str);
 string wiki_specs(string str);
 string wiki_spells(string title, int type);

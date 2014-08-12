@@ -318,7 +318,7 @@ string wiki_specs(string title)
 
   for (j = 0; j < MAX_SPEC; j++)
   {
-    if (!strcmp(specdata[i][j], "") || !strcmp(specdata[i][j], "Not Used"))
+    if( !strcmp(specdata[i][j], "") || !strcmp(specdata[i][j], "Not Used") )
     {
       continue;
     }
@@ -400,18 +400,43 @@ string wiki_innates(string title, int type)
   return return_str;
 }
 
-string wiki_races(string title)
+string wiki_races(string title, int type )
 {
   string return_str;
-  int cls, race;
-  bool found = FALSE;
+  int cls, spec, race;
+  bool found;
 
-  // Find class to search for.
-  for( cls = 0; cls <= CLASS_COUNT; cls++ )
+  if( type == WIKI_CLASS )
   {
-    if (!strcmp(tolower(class_names_table[cls].normal).c_str(), tolower(title).c_str()))
+    spec = 0;
+    // Find class to search for.
+    for( cls = 0; cls <= CLASS_COUNT; cls++ )
     {
-      break;
+      if (!strcmp(tolower(class_names_table[cls].normal).c_str(), tolower(title).c_str()))
+      {
+        break;
+      }
+    }
+  }
+  else if( type == WIKI_SPEC )
+  {
+    found = FALSE;
+    for( cls = 0; cls <= CLASS_COUNT; cls++ )
+    {
+      for( spec = 0; spec < MAX_SPEC; spec++ )
+      {
+        if( !strcmp(tolower(strip_ansi(specdata[cls][spec])).c_str(), tolower(title).c_str()) )
+        {
+          found = TRUE;
+          break;
+        }
+      }
+      if( found == TRUE )
+      {
+        // Specs range from 1-4 not 0-3.
+        spec++;
+        break;
+      }
     }
   }
 
@@ -419,29 +444,57 @@ string wiki_races(string title)
 
   if( cls > CLASS_COUNT )
   {
-    return_str += "No data found for class '";
+    if( type == WIKI_CLASS )
+    {
+      return_str += "No data found for class '";
+    }
+    else if( type == WIKI_SPEC )
+    {
+      return_str += "No data found for spec '";
+    }
+    else
+    {
+      return_str += "Unknown type.  Plz report to a God.\n";
+      return return_str;
+    }
     return_str += title;
     return_str += "&n'\n";
     return return_str;
   }
 
+  found = FALSE;
   for( race = 1; race <= RACE_PLAYER_MAX; race++ )
   {
-    if (class_table[race][cls] == 5)
+    // Class not allowed for race.
+    if( class_table[race][cls] == 5 )
     {
       continue;
     }
-    found = TRUE;
-    return_str += "* ";
+    // Spec not allowed for race.
+    if( type == WIKI_SPEC && !is_allowed_race_spec(race, 1 << (cls - 1), spec) )
+    {
+      continue;
+    }
+    if( !found )
+    {
+      return_str += "&+W*&n ";
+      found = TRUE;
+    }
+    else
+    {
+      return_str += ", ";
+    }
     return_str += string(race_names_table[race].ansi);
-    return_str += "&n\n";
+    return_str += "&n";
   }
 
-  if (!found)
+  if( !found )
   {
     return_str += "None.\n";
     return return_str;
   }
+
+  return_str += "\n";
   return return_str;
 }
 
@@ -490,7 +543,7 @@ string wiki_help_single(string str)
   {
     title += row[0];
     return_str += "\n";
-    return_str += wiki_races(title);
+    return_str += wiki_races(title, WIKI_CLASS);
     return_str += "\n";
     return_str += wiki_innates(title, WIKI_CLASS);
     return_str += "\n";
@@ -502,6 +555,8 @@ string wiki_help_single(string str)
     title += row[0];
     // Dunno why it requires two carriage returns here, but it does.
     return_str += "\n\n";
+    return_str += wiki_races(title, WIKI_SPEC);
+    return_str += "\n";
     return_str += wiki_innates(title, WIKI_SPEC);
     return_str += "\n";
     return_str += wiki_skills(title, WIKI_SPEC);
