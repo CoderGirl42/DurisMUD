@@ -239,7 +239,7 @@ int flow_amulet(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
   }
 
-  if( IS_ALIVE(ch) || !OBJ_WORN_BY(obj, ch) )
+  if( !IS_ALIVE(ch) || !OBJ_WORN_BY(obj, ch) )
   {
     return FALSE;
   }

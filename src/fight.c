@@ -475,8 +475,7 @@ int vamp(P_char ch, double fhits, double fcap)
     return 0;
   }
 
-  if((af = get_spell_from_char(ch, SPELL_PLAGUE)) &&
-      !IS_AFFECTED4(ch, AFF4_CARRY_PLAGUE))
+  if( (af = get_spell_from_char(ch, SPELL_PLAGUE)) && !IS_AFFECTED4(ch, AFF4_CARRY_PLAGUE) )
   {
     blocked = (int) (MIN(hits * (((float) number(30, 40)) / 100), af->modifier));
     hits -= blocked;
@@ -490,16 +489,16 @@ int vamp(P_char ch, double fhits, double fcap)
       af->modifier -= blocked;
     }
   }
-  else if (IS_AFFECTED4(ch, AFF4_CARRY_PLAGUE))
+  else if( IS_AFFECTED4(ch, AFF4_CARRY_PLAGUE) )
   {
     blocked = (int) (hits * (((float)number(50, 60)) / 100));
     hits -= blocked;
   }
-  else if(af = get_spell_from_char(ch, SPELL_BMANTLE))
+  else if( af = get_spell_from_char(ch, SPELL_BMANTLE) )
   {
     blocked = (int) (MIN(hits * (GET_LEVEL(ch) / 100), af->modifier));
     hits -=blocked;
-    if(af->modifier <= blocked)
+    if( af->modifier <= blocked )
     {
       affect_remove(ch, af);
       wear_off_message(ch, af);
@@ -510,13 +509,11 @@ int vamp(P_char ch, double fhits, double fcap)
     }
   }
 
-  if(IS_PC(ch) &&
-      IS_AFFECTED3(ch, AFF3_PALADIN_AURA) &&
-      has_aura(ch, AURA_HEALING))
-  { // This stops the massive healing when used with the following: Nov08 -Lucrot
-    if(!IS_SET(ch->specials.affected_by4, AFF4_REGENERATION) &&
-        !affected_by_spell(ch, SPELL_ACCEL_HEALING) &&
-        !affected_by_skill(ch, SKILL_REGENERATE))
+  if( IS_PC(ch) && IS_AFFECTED3(ch, AFF3_PALADIN_AURA) && has_aura(ch, AURA_HEALING) )
+  {
+    // This stops the massive healing when used with the following: Nov08 -Lucrot
+    if( !IS_SET(ch->specials.affected_by4, AFF4_REGENERATION) && !affected_by_spell(ch, SPELL_ACCEL_HEALING)
+      && !affected_by_skill(ch, SKILL_REGENERATE) )
     {
       hits += (int) (hits * ((get_property("innate.paladin_aura.healing_mod", 0.2) * aura_mod(ch, AURA_HEALING) ) / 100 ));
     }
@@ -537,9 +534,9 @@ if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_HEAL))
   }*/
 
   //Client
-  for (gl = ch->group; gl; gl = gl->next)
+  for( gl = ch->group; gl; gl = gl->next )
   {
-    if (gl->ch && gl->ch->desc && gl->ch->desc->term_type == TERM_MSP)
+    if( gl->ch && gl->ch->desc && gl->ch->desc->term_type == TERM_MSP )
     {
       gl->ch->desc->last_group_update = 1;
     }
@@ -2967,7 +2964,7 @@ void kill_gain(P_char ch, P_char victim)
   // exp gain drops slower than group size increases 
   // to avoid people being unable to get in groups  -Odorf
   //float exp_divider = ((float)group_size + 2.0) / 3.0; -old value drannak
-  float exp_divider = 1.0; 
+  float exp_divider = 1.0;
 
   for (gl = ch->group; gl; gl = gl->next)
   {
@@ -3787,18 +3784,12 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
   //      so could not heal globed fire elemental with fireball or burning hands
 
   // vamping from spells might happen
-  if(type == SPLDAM_FIRE &&
-      ch != victim &&
-      ((IS_AFFECTED2(victim, AFF2_FIRE_AURA) &&
-        IS_AFFECTED2(victim, AFF2_FIRESHIELD)) ||
-       GET_RACE(victim) == RACE_F_ELEMENTAL))
+  if( type == SPLDAM_FIRE && ch != victim && ((IS_AFFECTED2(victim, AFF2_FIRE_AURA)
+    && IS_AFFECTED2(victim, AFF2_FIRESHIELD)) || GET_RACE(victim) == RACE_F_ELEMENTAL) )
   {
-    act("$N&+R absorbs your spell!",
-        FALSE, ch, 0, victim, TO_CHAR);
-    act("&+RYou absorb&n $n's&+R spell!",
-        FALSE, ch, 0, victim, TO_VICT);
-    act("$N&+R absorbs&n $n's&+R spell!",
-        FALSE, ch, 0, victim, TO_NOTVICT);
+    act("$N&+R absorbs your spell!", FALSE, ch, 0, victim, TO_CHAR);
+    act("&+RYou absorb&n $n's&+R spell!", FALSE, ch, 0, victim, TO_VICT);
+    act("$N&+R absorbs&n $n's&+R spell!", FALSE, ch, 0, victim, TO_NOTVICT);
     vamp(victim,  dam / 4, GET_MAX_HIT(victim) * 1.1);
 
     // Solving issue of fire elementals not unmorting after vamping from fire spell
@@ -3808,18 +3799,12 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
 
     return DAM_NONEDEAD;
   }
-  if(type == SPLDAM_COLD &&
-      ch != victim &&
-      ((IS_AFFECTED4(victim, AFF4_ICE_AURA)) && 
-       IS_AFFECTED3(victim, AFF3_COLDSHIELD)))
+  if( type == SPLDAM_COLD && ch != victim && ((IS_AFFECTED4(victim, AFF4_ICE_AURA)) &&  IS_AFFECTED3(victim, AFF3_COLDSHIELD)) )
   {
-    act("$N&+C absorbs your spell!",
-        FALSE, ch, 0, victim, TO_CHAR);
-    act("&+CYou absorb&n $n's&+C spell!",
-        FALSE, ch, 0, victim, TO_VICT);
-    act("$N&+C absorbs&n $n's &+Cspell!",
-        FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim, dam / 4, GET_MAX_HIT(victim) * 1.1); 
+    act("$N&+C absorbs your spell!", FALSE, ch, 0, victim, TO_CHAR);
+    act("&+CYou absorb&n $n's&+C spell!", FALSE, ch, 0, victim, TO_VICT);
+    act("$N&+C absorbs&n $n's &+Cspell!", FALSE, ch, 0, victim, TO_NOTVICT);
+    vamp(victim, dam / 4, GET_MAX_HIT(victim) * 1.1);
 
     update_pos(victim);
     if (IS_NPC(victim))
@@ -4148,8 +4133,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
         FALSE, ch, 0, victim, TO_VICT);
     act("$n's&+L spell is absorbed by&n $N's &+Rhellfire!",
         FALSE, ch, 0, victim, TO_NOTVICT);
-    vamp(victim, dam * get_property("vamping.hellfire.absorb", 0.14),
-        (int)(GET_MAX_HIT(victim) * 1.3));
+    vamp(victim, dam * get_property("vamping.hellfire.absorb", 0.14), (int)(GET_MAX_HIT(victim) * 1.3));
     return DAM_NONEDEAD;
   }
 
@@ -4406,8 +4390,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     dam *= .85;
 
   //statupdate2013 - drannak
-  double modifier = (GET_C_WIS(victim) - 110)/2;
-  if(modifier >=1 && !(flags & SPLDAM_NOSHRUG))
+  double modifier = MAGICRES(ch);
+  if( modifier >=1 && !(flags & SPLDAM_NOSHRUG) )
   {
     float redmod = 100;
 
@@ -4418,30 +4402,15 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags,
     else
       redmod -= (number(40, modifier));
 
-    if(redmod < 25)
-      redmod = 25;
-
     redmod *= .01;
     dam *= redmod;
   }
 
   //statupdate2013 - drannak - imp spell damage
-  int rsmod = GET_C_STR(ch);
-  double mdifier = rsmod - 120;
-  if(mdifier >=1)
-  {
-    float rdmod = 100;
-    if (mdifier <= 20)
-      rdmod += (number(1, 10));
-    else if (mdifier <= 40)
-      rdmod += (number(10, 20));
-    else
-      rdmod += (number(20, 30));
-    if(rdmod > 130)
-      rdmod = 130;
-    rdmod *= .01;
-    dam *= rdmod;
-  }
+//  int mdambonus = (MAGICDAMBONUS(ch) <= 100) ? 100 : (number(1, 10) + MAGICDAMBONUS(ch) - 10);
+//  dam = (dam * mdambonus) / 100;
+  // Real bonus is 1-10 % random up to MAGICDAMBONUS % damage.
+  dam = dam * (MAGICDAMBONUS(ch) <= 100 ? 100 : MAGICDAMBONUS(ch) - 10 + number(1, 10) )/100;
 
   if((af = get_spell_from_char(victim, SPELL_ELEM_AFFINITY)) && ELEMENTAL_DAM(type))
   {
@@ -5358,7 +5327,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( (flags & PHSDAM_ARROW) && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
     && IS_PC(ch) && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) && dam >= 4 )
   {
-    vamped = vamp(ch, dam * 0.050, GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+    vamped = vamp(ch, dam * 0.050, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
   }
 
   // Physical type actions that vamp
@@ -5369,44 +5338,44 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     // The class order makes a difference to multiclass chars.
     if(GET_CLASS(ch, CLASS_ANTIPALADIN))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.antipaladins", 0.700), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.antipaladins", 0.700), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_MONK))
     {
-      vamped = vamp(ch, dam * dam_factor[DF_MONKVAMP], GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * dam_factor[DF_MONKVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_MERCENARY))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.mercs", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.mercs", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_WARRIOR))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.warriors", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.warriors", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_BERSERKER))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.berserkers", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.berserkers", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_ROGUE))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.rogues", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.rogues", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_PALADIN))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.paladins", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.paladins", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_RANGER))
     {
-      vamped = vamp(ch,  dam * get_property("vamping.vampiricTouch.rangers", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch,  dam * get_property("vamping.vampiricTouch.rangers", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_AVENGER) || GET_CLASS(ch, CLASS_DREADLORD))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.dreadaven", 0.100), GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.dreadaven", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else
     {
       //vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * 1.10); //113?
-      vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01)); //113?
+      vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
   }
 
@@ -5415,7 +5384,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( (flags & PHSDAM_TOUCH) && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
     && IS_NPC(ch) && !IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) )
   {
-    vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+    vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
   }
   // end TOUCHVAMP
 
@@ -5438,7 +5407,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
       temp_dam = dam * get_property("vamping.self.battleEcstasy", 0.150);
       //vamp(ch, temp_dam, GET_MAX_HIT(ch) * get_property("vamping.BTX.self.HP.PC", 1.10));
       //vamp(ch, temp_dam, GET_MAX_HIT(ch) * 1.10); 
-      vamp(ch, temp_dam, GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamp(ch, temp_dam, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
 
     if(IS_NPC(ch))
@@ -5477,7 +5446,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
           && IS_SET((tch)->specials.affected_by4, AFF4_BATTLE_ECSTASY)
           && tch->in_room == ch->in_room && tch != ch )
         {
-          vamp(tch, temp_dam, GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+          vamp(tch, temp_dam, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
         }
       }
     }
@@ -5486,7 +5455,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( !vamped && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
     && (flags & RAWDAM_TRANCEVAMP) && (IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM)) )
   {
-    vamped = vamp(ch, dam * dam_factor[DF_TRANCEVAMP], GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+    vamped = vamp(ch, dam * dam_factor[DF_TRANCEVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
   }
 
   // hellfire vamp
@@ -5505,7 +5474,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     }
     if( wdam )
     {
-      vamped = vamp(ch, wdam * dam_factor[DF_HFIREVAMP], GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, wdam * dam_factor[DF_HFIREVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
   }
 
@@ -5532,7 +5501,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     if( IS_NPC(ch) )
     {
       fhits = dam * dam_factor[DF_NPCVAMP];
-      vamped = vamp(ch, fhits, GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+      vamped = vamp(ch, fhits, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if( dam >= 25 && IS_PC(ch) )
     {
@@ -5547,7 +5516,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( !vamped && ch->equipment[WIELD]
     && (obj_index[ch->equipment[WIELD]->R_num].virtual_number == HOA_ILLESARUS_VNUM) )
   {
-    vamped = vamp(ch, MIN(dam, number(2, 7)), (GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01)));
+    vamped = vamp(ch, MIN(dam, number(2, 7)), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
   }
 
   if( (dam >= 2 && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY)
@@ -6934,12 +6903,7 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
   int critroll = (int) (GET_C_INT(ch) / rollmod);
 */
   // At 100 int : 5% crit, at 200 int : 25% crit
-  int critroll = (GET_C_INT(ch) - 100)/5 + 8;
-  // Min crit % is 8%.
-  if( critroll < 8 )
-  {
-    critroll = 8;
-  }
+  int critroll = CRITRATE(ch);
   if(critroll > number(1, 100)) 
   {
     sic = -1;
@@ -7167,7 +7131,7 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
     act("$n touches you with $s bare hands, draining your life force.", FALSE, ch, 0, victim, TO_VICT);
     damage(ch, victim, to_hit, SPELL_VAMPIRIC_TOUCH);
     affect_from_char(ch, SPELL_VAMPIRIC_TOUCH);
-    vamp(ch, to_hit, GET_MAX_HIT(ch) * (double)(BOUNDED(110, ((GET_C_POW(ch) * 10) / 9), 220) * .01));
+    vamp(ch, to_hit, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     return FALSE;
   }
 

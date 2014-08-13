@@ -1360,4 +1360,16 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch) || IS_EFREET(ch)) &&
 // Good spell pulse is negative.
 #define SPELL_PULSE(ch) (1.0 + (.03 * ch->points.spell_pulse))
 
+// New effects of attributes:
+// Vamp multiplier for ch: value between 1.1 and 2.2.
+#define VAMPPERCENT(ch) (BOUNDEDF(1.10, (GET_C_POW(ch) / 90.0), 2.20))
+// Crit rate for ch: value between 8 and 100+ (if you get int to 560+).
+#define CRITRATE(ch) ((GET_C_INT(ch) < 105) ? 8 : (GET_C_INT(ch) - 100)/5 + 8)
+// Calming chance for ch: value between 1 and 100+ (if you get cha to 400+).
+#define CALMCHANCE(ch) (GET_C_CHA(ch) / ((GET_C_CHA(ch) > 160) ? 4 : (GET_C_CHA(ch) < 80) ? 9 : 7))
+// Magic Resistance for ch: value between 0 and 75 (75 at wisdom of 260).
+#define MAGICRES(ch) (BOUNDED( 0, (GET_C_WIS(ch) - 110)/2, 75))
+// Damage bonus to offensive magic for ch: value between 100 and 130% (130 at strength of 181).
+#define MAGICDAMBONUS(ch) ((GET_C_STR(ch) < 121) ? 100 : (GET_C_STR(ch) < 141) ? 110 : (GET_C_STR(ch) < 181) ? 120 : 130)
+
 #endif /* _DURIS_UTILS_H_ */

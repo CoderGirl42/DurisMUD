@@ -3742,21 +3742,24 @@ void spell_wellness(int level, P_char ch, char *arg, int type, P_char victim,
   P_char tch;
   int gain, in_room;
 
-  if(!(ch))
-    return;
-  
-  gain = (int)(dice(4, 7 + (level / 10)));
-  
-  if(has_innate(ch, INNATE_IMPROVED_HEAL))
-    gain += GET_LEVEL(ch);
-  
-  if(IS_SPIRITUALIST(ch) &&
-     GET_LEVEL(ch) > 53 && 
-     ch->group)
+  if( !IS_ALIVE(ch) )
   {
-    for (struct group_list *gl = ch->group; gl; gl = gl->next)
+    return;
+  }
+
+  gain = (int)(dice(4, 7 + (level / 10)));
+
+  if( has_innate(ch, INNATE_IMPROVED_HEAL) )
+  {
+    gain += GET_LEVEL(ch);
+  }
+  act("&+GYou bring forth a sphere of pure healing energy.", FALSE, ch, 0, 0, TO_CHAR);
+  act("$n&+W brings forth a sphere of pure healing energy.", TRUE, ch, 0, 0, TO_ROOM);
+  if( IS_SPIRITUALIST(ch) && GET_LEVEL(ch) > 53 && ch->group )
+  {
+    for( struct group_list *gl = ch->group; gl; gl = gl->next )
     {
-      if(ch != gl->ch && gl->ch->in_room == ch->in_room)
+      if( gl->ch->in_room == ch->in_room )
       {
         if( GET_HIT(gl->ch) < GET_MAX_HIT(gl->ch) )
         {
@@ -3769,11 +3772,13 @@ void spell_wellness(int level, P_char ch, char *arg, int type, P_char victim,
   }
   else
   {
-    for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
+    for( tch = world[ch->in_room].people; tch; tch = tch->next_in_room )
     {
-      if(GET_HIT(tch) > GET_MAX_HIT(tch))
+      if( GET_HIT(tch) >= GET_MAX_HIT(tch) )
+      {
         continue;
-  
+      }
+
       heal(tch, ch, gain, GET_MAX_HIT(tch));
 //      healCondition(tch, gain);
       update_pos(tch);

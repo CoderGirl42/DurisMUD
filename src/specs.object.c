@@ -9891,13 +9891,14 @@ int totem_of_mastery(P_obj obj, P_char ch, int cmd, char *arg)
     return TRUE;
   }
 
-  if( !IS_ALIVE(ch) || !OBJ_WORN(obj) || OBJ_WORN_BY(obj, ch) )
+  if( !IS_ALIVE(ch) || !OBJ_WORN(obj) || !OBJ_WORN_BY(obj, ch) )
   {
     return FALSE;
   }
 
   // If it must be wielded, use this
-  e_pos = ((obj->loc.wearing->equipment[HOLD] == obj) ? WIELD :
+  e_pos = ((obj->loc.wearing->equipment[HOLD] == obj) ? HOLD :
+           (obj->loc.wearing->equipment[WIELD] == obj) ? WIELD :
            (obj->loc.wearing->equipment[SECONDARY_WEAPON] == obj) ? SECONDARY_WEAPON :
            (obj->loc.wearing->equipment[THIRD_WEAPON] == obj) ? THIRD_WEAPON :
            (obj->loc.wearing->equipment[FOURTH_WEAPON] == obj) ? FOURTH_WEAPON : 0);

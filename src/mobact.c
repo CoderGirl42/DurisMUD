@@ -8288,23 +8288,14 @@ PROFILE_START(mundane_picktarget);
         calming = (int)get_property("innate.calming.delay", 10);
       }
 
-    //statupdate2013 - Drannak
-      if(calmcheck(ch))
+      // Statupdate2013 - Drannak
+      if( calmcheck(ch) )
       {
-      int rollmod = 7;
-      if (GET_C_CHA(ch) < 80)
-      rollmod = 9;
-      else if (GET_C_CHA(ch) > 160)
-      rollmod = 4;
-      int calmroll = (int) (GET_C_CHA(ch) / rollmod);
-      calmroll /= 2;
-      calmroll = BOUNDED(1, calmroll, 20);
-      calming = calmroll;
+        int calmroll = CALMCHANCE(ch) / 2;
+        calming = BOUNDED(1, calmroll, 20);
       }
 
-
-    add_event(event_agg_attack, 1 + calming,
-	  ch, tmp_ch, 0, 0, 0, 0);
+    add_event(event_agg_attack, 1 + calming, ch, tmp_ch, 0, 0, 0, 0);
 PROFILE_END(mundane_picktarget);
     goto normal;
   }
