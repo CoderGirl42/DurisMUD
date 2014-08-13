@@ -379,11 +379,8 @@ bool rapier_dirk(P_char victim, P_char attacker)
   P_obj wep2 = victim->equipment[SECONDARY_WEAPON];
 
   // Off-hand special riposte
-  if(rapier_dirk_check(victim) &&
-      chance > number(1, 900) &&
-      MIN_POS(victim, POS_STANDING + STAT_NORMAL) &&
-      !IS_DRAGON(attacker) &&
-      victim->specials.fighting == attacker)
+  if( rapier_dirk_check(victim) && chance > number(1, 900) && MIN_POS(victim, POS_STANDING + STAT_NORMAL)
+    && !IS_DRAGON(attacker) && victim->specials.fighting == attacker )
   {
     if(number(0, 1))
     {
@@ -428,24 +425,20 @@ bool rapier_dirk(P_char victim, P_char attacker)
 
       f = number(1, (int) (GET_LEVEL(victim) / 18));
 
-      for (i = 0;
-          i < f &&
-          IS_ALIVE(victim) &&
-          IS_ALIVE(attacker);
-          i++)
+      for (i = 0; i < f && IS_ALIVE(victim) && IS_ALIVE(attacker); i++)
       {
         hit(victim, attacker, wep1);
       }
     }
-    else
+    else if( IS_ALIVE(victim) && IS_ALIVE(attacker) )
     {
       hit(victim, attacker, wep1);
     }
 
-    return true;
+    return TRUE;
   }
 
-  return false;
+  return FALSE;
 }
 
 bool opposite_racewar(P_char ch, P_char victim)
@@ -3307,19 +3300,15 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
   int expertriposte = 0, victim_dead;
   int randomnumber = number(1, 1000);
   double skl;
-  bool npcepicriposte = false;
+  bool npcepicriposte = FALSE;
 
-  if(!(ch) ||
-      !(victim) ||
-      !IS_ALIVE(victim) ||
-      !IS_ALIVE(ch))
+  if( !IS_ALIVE(victim) || !IS_ALIVE(ch) )
   {
-    return false;
+    return FALSE;
   }
 
-  // Innate two daggers is static at 5%. 
-  if(innate_two_daggers(ch) &&
-      !number(0, 19))
+  // Innate two daggers is static at 5%.
+  if( innate_two_daggers(ch) && !number(0, 19) )
   {
     act("$n flourishes $s dagger, intercepting $N's attack, and gracefully counters!",
         TRUE, ch, 0, victim, TO_NOTVICT);
@@ -3329,22 +3318,25 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
         TRUE, ch, 0, victim, TO_CHAR);
 
     hit(ch, victim, ch->equipment[PRIMARY_WEAPON]);
-    if (char_in_list(victim))
+    if( char_in_list(victim) && char_in_list(ch) )
+    {
       hit(ch, victim, ch->equipment[SECONDARY_WEAPON]);
-    return true;      
+    }
+    return TRUE;
   }
 
-  skl = GET_CHAR_SKILL(ch, SKILL_RIPOSTE);
 
   // No longer able to riposte without the skill.
-  if(skl < 1)
+  if( (skl = GET_CHAR_SKILL(ch, SKILL_RIPOSTE)) < 1 )
   {
-    return false;
+    return FALSE;
   }
 
   // Notching the skill means failing the riposte.
-  if(notch_skill(ch, SKILL_RIPOSTE, get_property("skill.notch.defensive", 17)))
-    return false;
+  if( notch_skill(ch, SKILL_RIPOSTE, get_property("skill.notch.defensive", 17)) )
+  {
+    return FALSE;
+  }
 
   // Skill range is 1 to 100.
   expertriposte = GET_CHAR_SKILL(ch, SKILL_EXPERT_RIPOSTE);
@@ -3358,7 +3350,7 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
         GET_CLASS(ch, CLASS_AVENGER))
     {
       skl += 100;
-      npcepicriposte == true;
+      npcepicriposte = TRUE;
     }
   }
 
@@ -3366,50 +3358,70 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
    *  the full riposte skill
    */
   if(GET_SPEC(ch, CLASS_RANGER, SPEC_BLADEMASTER))
+  {
     skl *= 1.05;
+  }
 
   /*  Hey, lets do the same for Swashbucklers */
   if(GET_SPEC(ch, CLASS_WARRIOR, SPEC_SWASHBUCKLER))
+  {
     skl *= 1.10;
+  }
 
   /* lucky or unlucky? */
-  if(number(0, GET_C_LUK(ch)) > number(0, GET_C_LUK(victim)))
+  if( number(0, GET_C_LUK(ch)) > number(0, GET_C_LUK(victim)) )
+  {
     skl *= 1.05;
+  }
   else
+  {
     skl *= 0.95;
+  }
 
   // Harder to riposte while stunned.
   if(IS_STUNNED(ch))
+  {
     skl *= 0.50;
+  }
 
   // Easier to riposte versus stunned attacker.
   if(IS_STUNNED(victim))
+  {
     skl *= 1.15;
-
+  }
   // Much harder to riposte while knocked down.
   if(!MIN_POS(ch, POS_STANDING + STAT_NORMAL))
+  {
     skl *= 0.50;
+  }
 
   // Much harder to riposte something you are not fighting.
   if(ch->specials.fighting != victim)
+  {
     skl *= 0.50;
+  }
 
   if(IS_AFFECTED5(ch, AFF5_DAZZLEE))
+  {
     skl *= 0.95;
+  }
 
   // Expert riposte.
-  if(expertriposte)
+  if( expertriposte )
   {
     skl += expertriposte;
   }
 
-  if(GET_CHAR_SKILL(ch, SKILL_MANGLE) > 0 &&
-      try_mangle(ch, victim) > 0)
+  if( GET_CHAR_SKILL(ch, SKILL_MANGLE) > 0 && try_mangle(ch, victim) > 0 )
+  {
     return FALSE;
+  }
 
   // Simple comparison.
   if(randomnumber > skl)
-    return false;
+  {
+    return FALSE;
+  }
 
   if(ch->equipment[FOURTH_WEAPON] && !number(0, 4))
     wpn = ch->equipment[FOURTH_WEAPON];
@@ -3420,28 +3432,20 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
   else
     wpn = ch->equipment[PRIMARY_WEAPON];
 
-  if(expertriposte > number(1, 500) &&
-      ch->specials.fighting == victim)
+  if( expertriposte > number(1, 500) && ch->specials.fighting == victim )
   {
-    act("$n &+wslams aside&n $N's attack and then pounds $M!", TRUE, ch, 0, victim,
-        TO_NOTVICT);
-    act("$n &+wslams aside&n your attack and counters!", TRUE, ch, 0, victim,
-        TO_VICT);
-    act("You &+wslam aside&n $N's attack and counter!", TRUE, ch, 0, victim,
-        TO_CHAR);
+    act("$n &+wslams aside&n $N's attack and then pounds $M!", TRUE, ch, 0, victim, TO_NOTVICT);
+    act("$n &+wslams aside&n your attack and counters!", TRUE, ch, 0, victim, TO_VICT);
+    act("You &+wslam aside&n $N's attack and counter!", TRUE, ch, 0, victim, TO_CHAR);
 
     hit(ch, victim, wpn);
 
-    if(expertriposte > number(1, 500) &&
-        IS_ALIVE(ch) &&
-        IS_ALIVE(victim))
+    if( expertriposte > number(1, 500) && IS_ALIVE(ch) && IS_ALIVE(victim) )
     {
       hit(ch, victim, wpn);
     }
   }
-  else if((npcepicriposte == true) &&
-      !number(0, 4) &&
-      ch->specials.fighting == victim)
+  else if( (npcepicriposte == TRUE) && !number(0, 4) && ch->specials.fighting == victim )
   {
     act("$n &+wslams aside&n $N's attack and then pounds $M!", TRUE, ch, 0, victim,
         TO_NOTVICT);
@@ -3452,21 +3456,16 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
 
     hit(ch, victim, wpn);
 
-    if(!number(0, 1) &&
-        IS_ALIVE(ch) &&
-        IS_ALIVE(victim))
+    if( !number(0, 1) && IS_ALIVE(ch) && IS_ALIVE(victim) )
     {
       hit(ch, victim, wpn);
     }
   }
   else
   {
-    act("$n deflects $N's blow and strikes back at $M!", TRUE, ch, 0, victim,
-        TO_NOTVICT);
-    act("$n deflects your blow and strikes back at YOU!", TRUE, ch, 0, victim,
-        TO_VICT);
-    act("You deflect $N's blow and strike back at $M!", TRUE, ch, 0, victim,
-        TO_CHAR);
+    act("$n deflects $N's blow and strikes back at $M!", TRUE, ch, 0, victim, TO_NOTVICT);
+    act("$n deflects your blow and strikes back at YOU!", TRUE, ch, 0, victim, TO_VICT);
+    act("You deflect $N's blow and strike back at $M!", TRUE, ch, 0, victim, TO_CHAR);
   }
 
   hit(ch, victim, wpn);
@@ -3474,10 +3473,9 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
 
 #ifndef NEW_COMBAT
 
-  if(char_in_list(victim) &&
-      GET_CLASS(ch, CLASS_BERSERKER))
+  if( char_in_list(ch) && char_in_list(victim) && GET_CLASS(ch, CLASS_BERSERKER) )
   {
-    if (affected_by_spell(ch, SKILL_BERSERK))
+    if( affected_by_spell(ch, SKILL_BERSERK) )
     {
       hit(ch, victim, wpn);
     }
@@ -3497,68 +3495,42 @@ int try_riposte(P_char ch, P_char victim, P_obj wpn)
   }                             // same as above
 #endif
 
-  if(char_in_list(ch) && char_in_list(victim) &&
-      (skl = GET_CHAR_SKILL(ch, SKILL_FOLLOWUP_RIPOSTE)) > 0)
-  { 
+  if( char_in_list(ch) && char_in_list(victim) && (skl = GET_CHAR_SKILL(ch, SKILL_FOLLOWUP_RIPOSTE)) > 0 )
+  {
     notch_skill(ch, SKILL_FOLLOWUP_RIPOSTE, get_property("skill.notch.defensive", 17));
 
     if(number(0, 1) == 0)
     {
       if(skl / 3 > number(0, 100))
       {
-        act
-          ("Before $N can recover $n steps forward and slams $s fist into $S face.",
-           TRUE, ch, 0, victim, TO_NOTVICT);
-        act
-          ("Before $E can recover you step forward and slam your fist into $S face.",
-           TRUE, ch, 0, victim, TO_CHAR);
-        act
-          ("Before you can recover $n steps forward and slams $s fist into your face!",
-           TRUE, ch, 0, victim, TO_VICT);
-        victim_dead =
-          damage(ch, victim, GET_DAMROLL(ch) * ch->specials.damage_mod,
-              SKILL_FOLLOWUP_RIPOSTE);
+        act("Before $N can recover $n steps forward and slams $s fist into $S face.", TRUE, ch, 0, victim, TO_NOTVICT);
+        act("Before $E can recover you step forward and slam your fist into $S face.", TRUE, ch, 0, victim, TO_CHAR);
+        act("Before you can recover $n steps forward and slams $s fist into your face!", TRUE, ch, 0, victim, TO_VICT);
+        victim_dead = damage(ch, victim, GET_DAMROLL(ch) * ch->specials.damage_mod, SKILL_FOLLOWUP_RIPOSTE);
 
-        if(!victim_dead &&
-            skl / 3 > number(0, 100))
+        if( !victim_dead && skl / 3 > number(0, 100) )
         {
-          act("As $N staggers back $n follows-up with a well-placed kick.",
-              TRUE, ch, 0, victim, TO_NOTVICT);
-          act("As $E staggers back you follow-up with a well-placed kick.",
-              TRUE, ch, 0, victim, TO_CHAR);
-          act("As you stagger from the blow $n follows-up with a well-placed kick.",
-              TRUE, ch, 0, victim, TO_VICT);
+          act("As $N staggers back $n follows-up with a well-placed kick.", TRUE, ch, 0, victim, TO_NOTVICT);
+          act("As $E staggers back you follow-up with a well-placed kick.", TRUE, ch, 0, victim, TO_CHAR);
+          act("As you stagger from the blow $n follows-up with a well-placed kick.", TRUE, ch, 0, victim, TO_VICT);
           melee_damage(ch, victim, dice(20, 6), 0, 0);
         }
       }
     }
     else
     {
-      if(skl / 3 > number(0, 100))
+      if( skl / 3 > number(0, 100) )
       {
-        act("Spinning around $n slams his elbow into $N's throat.", TRUE, ch,
-            0, victim, TO_NOTVICT);
-        act
-          ("Before you can react $n spins around and slams $s elbow into your throat.",
-           TRUE, ch, 0, victim, TO_VICT);
-        act("Spinning around you slam your elbow into $N's throat.", TRUE, ch,
-            0, victim, TO_CHAR);
-        victim_dead =
-          damage(ch, victim, GET_DAMROLL(ch) * ch->specials.damage_mod,
-              SKILL_FOLLOWUP_RIPOSTE);
+        act("Spinning around $n slams his elbow into $N's throat.", TRUE, ch, 0, victim, TO_NOTVICT);
+        act("Before you can react $n spins around and slams $s elbow into your throat.", TRUE, ch, 0, victim, TO_VICT);
+        act("Spinning around you slam your elbow into $N's throat.", TRUE, ch, 0, victim, TO_CHAR);
+        victim_dead = damage(ch, victim, GET_DAMROLL(ch) * ch->specials.damage_mod, SKILL_FOLLOWUP_RIPOSTE);
 
-        if(!victim_dead &&
-            skl / 3 > number(0, 100))
+        if( !victim_dead && skl / 3 > number(0, 100) )
         {
-          act
-            ("...then steps forward and brutally slams $s head into $N's face.",
-             TRUE, ch, 0, victim, TO_NOTVICT);
-          act
-            ("As $E gasps for breath you step forward and slam your head into $S face. ",
-             TRUE, ch, 0, victim, TO_CHAR);
-          act
-            ("As you stagger and gasp for breath $e steps forward and slams $s head into your face. Yikes!",
-             TRUE, ch, 0, victim, TO_VICT);
+          act("...then steps forward and brutally slams $s head into $N's face.", TRUE, ch, 0, victim, TO_NOTVICT);
+          act("As $E gasps for breath you step forward and slam your head into $S face. ", TRUE, ch, 0, victim, TO_CHAR);
+          act("As you stagger and gasp for breath $e steps forward and slams $s head into your face. Yikes!", TRUE, ch, 0, victim, TO_VICT);
           damage(ch, victim, dice(20, 6), SKILL_FOLLOWUP_RIPOSTE);
         }
 

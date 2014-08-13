@@ -428,7 +428,7 @@
 
 #define IS_DAGGER(obj) ((obj)->type == ITEM_WEAPON && \
                        (obj)->value[0] == WEAPON_DAGGER)
-                       
+
 #define IS_DIRK(obj) ((obj)->type == ITEM_WEAPON && \
                      !IS_SET((obj)->extra_flags, ITEM_TWOHANDS) && \
                      ((obj)->value[0] == WEAPON_DAGGER || \

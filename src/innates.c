@@ -351,7 +351,7 @@ const struct innate_data
   {
   "astral affinity", 0},
   {
-  "parrying dagger", 0},
+  "two daggers", 0},
   {
   "holy light", 0},
   {
@@ -924,6 +924,8 @@ void assign_innates()
   ADD_CLASS_INNATE(INNATE_RAPIER_DIRK, CLASS_BARD, 1, 0);
   ADD_CLASS_INNATE(INNATE_MELEE_MASTER, CLASS_WARRIOR, 1, SPEC_SWORDSMAN);
 
+  ADD_CLASS_INNATE(INNATE_TWO_DAGGERS, CLASS_ROGUE, 1, SPEC_ASSASSIN);
+
   ADD_CLASS_INNATE(INNATE_SEADOG, CLASS_WARRIOR, 30, SPEC_SWASHBUCKLER);
 
   ADD_CLASS_INNATE(INNATE_DET_SUBVERSION, CLASS_MERCENARY, 30, SPEC_BOUNTY);
@@ -1030,8 +1032,7 @@ void assign_innates()
   ADD_CLASS_INNATE(INNATE_INTERCEPT, CLASS_MERCENARY, 31, SPEC_BOUNTY);
 
   ADD_CLASS_INNATE(INNATE_SNEAK, CLASS_ROGUE, 1, SPEC_THIEF);
-  //ADD_CLASS_INNATE(INNATE_SNEAK, CLASS_ROGUE, 1, SPEC_THIEF);
-  ADD_CLASS_INNATE(INNATE_TWO_DAGGERS, CLASS_ROGUE, 1, SPEC_THIEF);
+//  ADD_CLASS_INNATE(INNATE_SNEAK, CLASS_ROGUE, 1, SPEC_THIEF);
 //  ADD_CLASS_INNATE(INNATE_QUICK_THINKING, CLASS_THIEF, 36, SPEC_TRICKSTER); No longer in game.
   ADD_CLASS_INNATE(INNATE_WALL_CLIMBING, CLASS_ROGUE, 56, SPEC_THIEF);
 
@@ -4393,29 +4394,40 @@ void event_hatred_check(P_char ch, P_char victim, P_obj obj, void *data)
 
 bool rapier_dirk_check(P_char ch) //now known as swashbuckling, single weapon.
 {
-  P_obj weapon;
+  P_obj weap1, weap2;
 
-/*oldcheck: (has_innate(ch, INNATE_RAPIER_DIRK) &&
-    (weapon = ch->equipment[PRIMARY_WEAPON]) && IS_SWORD(weapon) &&
-    (weapon = ch->equipment[SECONDARY_WEAPON]) && IS_DIRK(weapon) ) || */
-
-  if(GET_CLASS(ch, CLASS_BARD) || GET_CLASS(ch, CLASS_MERCENARY) || GET_SPEC(ch, CLASS_ROGUE, SPEC_THIEF))
+  if( !IS_ALIVE(ch) )
   {
-    return true;
+    return FALSE;
   }
-  return false;
+
+  weap1 = ch->equipment[PRIMARY_WEAPON];
+  weap2 = ch->equipment[SECONDARY_WEAPON];
+
+//  if(GET_CLASS(ch, CLASS_BARD) || GET_CLASS(ch, CLASS_MERCENARY) || GET_SPEC(ch, CLASS_ROGUE, SPEC_THIEF))
+  if( has_innate(ch, INNATE_RAPIER_DIRK) && weap1 && IS_SWORD(weap1) && weap2 && IS_DIRK(weap2) )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 bool innate_two_daggers(P_char ch)
 {
-  P_obj weapon;
+  P_obj weap1, weap2;
 
-  if (has_innate(ch, INNATE_TWO_DAGGERS) &&
-     // (weapon = ch->equipment[PRIMARY_WEAPON]) && IS_DAGGER(weapon) &&
-      (weapon = ch->equipment[SECONDARY_WEAPON]) && IS_DAGGER(weapon))
-    return true;
+  if( !IS_ALIVE(ch) )
+  {
+    return FALSE;
+  }
 
-  return false;
+  weap1 = ch->equipment[PRIMARY_WEAPON];
+  weap2 = ch->equipment[SECONDARY_WEAPON];
+
+  if( has_innate(ch, INNATE_TWO_DAGGERS) && weap1 && IS_DAGGER(weap1) && weap2 && IS_DAGGER(weap2) )
+    return TRUE;
+
+  return TRUE;
 }
 
 struct fade_data {
