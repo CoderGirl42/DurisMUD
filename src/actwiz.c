@@ -111,7 +111,7 @@ extern int bounce_null_sites;
 extern int number_of_shops;
 extern int invitemode;
 extern int pulse;
-extern int shutdownflag, _reboot, _autoboot, _copyover;
+extern int shutdownflag, _reboot, _autoboot, _copyover, _pwipe;
 extern int spl_table[TOTALLVLS][MAX_CIRCLE];
 extern int top_of_mobt;
 extern int top_of_objt;
@@ -3977,16 +3977,20 @@ void timedShutdown(P_char ch, P_char, P_obj, void *data)
         break;
 
       case TimedShutdownData::PWIPE:
-        sprintf(buf, "\r\n&=BrDuris begins to fade into nothing.. So do you.. \r\n&=BrThis is really the end!!!\r\n&=Br.\r\n&=Br.\r\n&=Br.\r\n&=Br.\r\n&=Br.&n\n\r", shutdownData.IssuedBy);
+        // Dunno why, but send_to_all isn't color coding here, maybe term type is erased in database or such? :(
+        sprintf(buf, "\r\n\033[1;5;44mDuris begins to fade into nothing.. So do you.. \033[0m\r\n\033[1;5;44mThis is really the end!!!\033[0m\r\n\033[1;5;44m............\033[0m\r\n\033[1;5;44m........\033[0m\r\n\033[1;5;44m......\033[0m\r\n\033[1;5;44m...\033[0m\r\n\033[1;5;44m.\033[0m\n\r", shutdownData.IssuedBy);
         send_to_all(buf);
-        logit(LOG_STATUS, buf);
-        sql_log(ch, WIZLOG, buf);
+        logit(LOG_STATUS, "Shutdown pwipe called.");
         if( !sql_pwipe( 1723699 ) )
         {
           send_to_all( "&=GlSQL database not wiped clean.. Aborting shutdown wipe.&n\n\r&+WYou're still alive!  Yay!&n\n\r" );
           return;
         }
-        shutdownflag = 1;
+        else
+        {
+          send_to_all( "Successful wipe of SQL stuff." );
+        }
+        shutdownflag = _pwipe = 1;
         break;
 
       default:
@@ -4054,9 +4058,11 @@ void timedShutdown(P_char ch, P_char, P_obj, void *data)
     if(secs <= shutdownData.next_warning)
     {
       const char *type = "REBOOT";
-      if(shutdownData.eShutdownType == TimedShutdownData::OK)
+      if( shutdownData.eShutdownType == TimedShutdownData::OK
+        || shutdownData.eShutdownType == TimedShutdownData::PWIPE )
+      {
         type = "SHUTDOWN";
-
+      }
       if(secs > 60)
 //        sprintf(buf, "&+R*** Scheduled %s in %d minutes ***&n\n", type, secs/60, shutdownData.IssuedBy);
         sprintf(buf, "&+R*** Scheduled %s in %ld minutes ***&n\n", type, secs/60);
@@ -4099,8 +4105,11 @@ void displayShutdownMsg(P_char ch)
   char buf[200];
   time_t secs = shutdownData.reboot_time - time(0);
   const char *type = "REBOOT";
-  if(shutdownData.eShutdownType == TimedShutdownData::OK)
+  if( shutdownData.eShutdownType == TimedShutdownData::OK
+    || shutdownData.eShutdownType == TimedShutdownData::PWIPE )
+  {
     type = "SHUTDOWN";
+  }
 
   if(secs > 60)
     sprintf(buf, "&+R*** Scheduled %s in %ld minute%s***&n\n", type, secs/60, (secs >= 120) ? "s " : " ");
@@ -4119,6 +4128,12 @@ void do_shutdown(P_char ch, char *argument, int cmd)
   argument = one_argument(argument, arg);
 
   int mins_to_reboot = 0;
+  const char *type = "reboot";
+  if( shutdownData.eShutdownType == TimedShutdownData::OK
+    || shutdownData.eShutdownType == TimedShutdownData::PWIPE )
+  {
+    type = "shutdown";
+  }
   if(argument)
   {
     while (isspace(*argument))
@@ -4129,29 +4144,28 @@ void do_shutdown(P_char ch, char *argument, int cmd)
     }
   }
 
-  if((shutdownData.eShutdownType == TimedShutdownData::AUTOREBOOT))
-  return; //AutoREboots cannot be cycled.
+  if( shutdownData.eShutdownType == TimedShutdownData::AUTOREBOOT )
+  {
+    return; //AutoREboots cannot be cycled.
+  }
 
   // if there is a pending shutdown, cancel it now...
-
   if((shutdownData.eShutdownType != TimedShutdownData::NONE))
   {
+    sprintf(buf, "&+R*** Scheduled %s cancelled ***&n\n", type, GET_NAME(ch));
+    send_to_all(buf);
+    sprintf(buf, "Scheduled %s cancelled by %s", type, GET_NAME(ch));
     shutdownData.eShutdownType = TimedShutdownData::NONE;
-    send_to_all("&+R*** Scheduled Reboot Cancelled ***&n\n");
-    sprintf(buf, "Scheduled reboot cancelled by %s", GET_NAME(ch));
     wizlog(60, buf);
   }
 
-  if(!*arg)
+  if( !*arg )
   {
     send_to_char("Syntax: shutdown <ok | reboot | copyover>  [minutes to reboot].\r\n"
                  "  Scheduled shutdowns are cancelled when the scheduler leaves the game or\r\n"
                  "  uses the shutdown command again (even only to get this help)\r\n", ch);
     return;
   }
-
-  if((shutdownData.eShutdownType == TimedShutdownData::AUTOREBOOT))
-  return; //AutoREboots cannot be cycled.
 
   if(!str_cmp(arg, "ok"))
   {
@@ -4212,7 +4226,7 @@ void do_shutdown(P_char ch, char *argument, int cmd)
   strcpy(shutdownData.IssuedBy, GET_NAME(ch));
   shutdownData.next_warning = -1;
   shutdownData.reboot_time = (time(0) + (mins_to_reboot * 60));
-  sprintf(buf, "Scheduled reboot initiated by %s in %d minutes", GET_NAME(ch), mins_to_reboot);
+  sprintf(buf, "Scheduled %s initiated by %s in %d minutes", type, GET_NAME(ch), mins_to_reboot);
   wizlog(60, buf);
   // calling the event will start the event
   timedShutdown(NULL, NULL, NULL, NULL);

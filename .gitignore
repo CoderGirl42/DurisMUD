@@ -13,5 +13,7 @@ lib/information/leaderboard
 lib/information/leaderboardprod
 lib/information/hardcore_hall_of_fame
 lib/information/hardcore_hall_of_fameprod
-lib/etc/vote.undead
 lib/information/leaderboardprod
+lib/etc/vote.undead
+lib/ban_sites
+Ships/ship_index

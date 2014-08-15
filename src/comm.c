@@ -19,7 +19,7 @@
 #include <sys/wait.h>
 #include <zlib.h>
 #include <unistd.h>
-#include <stdarg.h> 
+#include <stdarg.h>
 
 #include "helpfile.h"
 #include "comm.h"
@@ -98,6 +98,7 @@ bool     after_events_call = FALSE;
 int      _reboot = 0;
 int      _copyover = 0;
 int      _autoboot = 0;
+int      _pwipe = 0;
 int      req_passwd = 1;
 int      shutdownflag = 0;
 int      slow_death = 0;
@@ -448,6 +449,11 @@ void run_the_game(int port)
   {
     logit(LOG_EXIT, "Auto reboot.");
     exit(54);
+  }
+  if( _pwipe )
+  {
+    logit(LOG_EXIT, "Pwipe Shutdown.");
+    exit(55);
   }
   logit(LOG_STATUS, "Normal termination of game.");
 }
@@ -940,14 +946,21 @@ void game_loop(int s)
   save_func_call_info();
 #endif
 
-  if( no_ferries == 0 ) shutdown_ferries();
-        
-  shutdown_ships();
+  // Don't want to save stuff just after we wiped all the tables in SQL.
+  if( !_pwipe )
+  {
+    if( no_ferries == 0 )
+    {
+      shutdown_ferries();
+    }
 
-  shutdown_auction_houses();
-  
-  Guildhall::shutdown();
-  
+    shutdown_ships();
+
+    shutdown_auction_houses();
+
+    Guildhall::shutdown();
+  }
+
   for (point = descriptor_list; point; point = point->next)
   {
     if (point->character)
@@ -967,12 +980,15 @@ void game_loop(int s)
             stop_destroying(point->character);
           un_morph(point->character);
         }
-        if (shutdown_message)
+        if( shutdown_message )
         {
           write_to_descriptor(point->descriptor, shutdown_message);
         }
-        write_to_descriptor(point->descriptor, "\r\nSaving...\r\n");
-        do_save_silent(point->character, 3);
+        if( !_pwipe )
+        {
+          write_to_descriptor(point->descriptor, "\r\nSaving...\r\n");
+          do_save_silent(point->character, 3);
+        }
         extract_char(point->character);
       }
     }

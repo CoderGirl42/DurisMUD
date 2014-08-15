@@ -5,7 +5,7 @@ STOP_REASON="initial bootup"
 
 ulimit -c unlimited
 
-while [ $RESULT != 0 ]; do
+while [[ $RESULT != 0 && $RESULT != 55 ]]; do
 	DATESTR=`date +%C%y.%m.%d-%H.%M.%S`
 
   if [ $RESULT == 53 ]; then
@@ -48,11 +48,17 @@ while [ $RESULT != 0 ]; do
 		52) STOP_REASON="reboot";;
 		53) STOP_REASON="copyover reboot";;
 		54) STOP_REASON="auto reboot";;
+		55) STOP_REASON="pwipe shutdown";;
 		*) STOP_REASON="unknown";;
-	esac	
+	esac
 
 	echo "Mud stopped, reason: ${STOP_REASON} [${RESULT}]"
 
   echo "Sleeping 10 seconds to prevent coreflood..."
   sleep 10
 done
+
+if [ $RESULT == 55 ]; then
+  echo "Wiping player data..."
+  ./Players/wipers/wipe_it_all
+fi

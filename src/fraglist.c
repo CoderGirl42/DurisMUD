@@ -615,10 +615,9 @@ void checkFragList_internal(P_char ch, char type)
   fraglist = fopen(fraglist_file, "rt");
   if (!fraglist)
   {
-    sprintf(buffer, "cp Fraglists/fraglist.empty %s", fraglist_file);
+    sprintf(buffer, "cp lib/etc/fraglist.empty %s", fraglist_file);
     system(buffer);
-    sprintf(buffer, "Fraglist didn't exist, so created empty one: %s\r\n",
-            fraglist_file);
+    sprintf(buffer, "Fraglist didn't exist, so created empty one: %s\r\n", fraglist_file);
     logit(LOG_DEBUG, buffer);
     fraglist = fopen(fraglist_file, "rt");
   }

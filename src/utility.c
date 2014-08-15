@@ -80,7 +80,6 @@ extern struct mm_ds *dead_pconly_pool;
 
 char     GS_buf1[MAX_STRING_LENGTH];
 
-
 int      is_ice(P_char ch, int room);
 int      CheckFor_remember(P_char ch, P_char victim);
 
@@ -690,7 +689,7 @@ void logit(const char *filename, const char *format, ...)
   bzero(lbuf, MAX_STRING_LENGTH);
   bzero(tbuf, MAX_STRING_LENGTH);
 
-  if (str_cmp(filename, LOG_EVENT))
+  if( str_cmp(filename, LOG_EVENT) )
   {
     strcpy(tbuf, asctime(localtime(&ct)));
     tbuf[strlen(tbuf) - 1] = 0;
@@ -699,7 +698,7 @@ void logit(const char *filename, const char *format, ...)
   else
     *tbuf = '\0';
 
-  if (str_cmp(filename, LOG_DEBUG))
+  if( str_cmp(filename, LOG_DEBUG) )
     debugcount++;
 
   vsprintf(lbuf, format, args);
@@ -720,8 +719,10 @@ void logit(const char *filename, const char *format, ...)
   }
   fputs(tbuf, log_f);
   fclose(log_f);
-  if (!str_cmp(filename, LOG_EXIT))
+  if( !str_cmp(filename, LOG_EXIT) )
+  {
     perror(tbuf);
+  }
   va_end(args);
 }
 

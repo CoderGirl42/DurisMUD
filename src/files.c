@@ -5461,7 +5461,7 @@ void restore_town_justice(void)
   sprintf(Gbuf1, "%s/Justice", SAVE_DIR);
   if (stat(Gbuf1, &statbuf) == -1)
   {
-    logit(LOG_FILE, "Justice dir");
+    logit(LOG_FILE, "restore_town_justice: dir '%s' missing.", Gbuf1);
     return;
   }
   sprintf(Gbuf2, "%s/justice_list", SAVE_DIR);
@@ -5471,7 +5471,7 @@ void restore_town_justice(void)
   }
   else if (errno != ENOENT)
   {
-    logit(LOG_FILE, "justice list");
+    logit(LOG_FILE, "restore_town_justice: File '%s' missing.", Gbuf2);
     return;
   }
   sprintf(Gbuf3, "/bin/ls -1 %s > %s", Gbuf1, Gbuf2);
@@ -5479,7 +5479,7 @@ void restore_town_justice(void)
   flist = fopen(Gbuf2, "r");
   if (!flist)
   {
-    logit(LOG_FILE, "Troubles opening justic files.");
+    logit(LOG_FILE, "restore_town_justice: Troubles opening justic file '%s'.", Gbuf2);
     return;
   }
   while (fscanf(flist, " %s \n", Gbuf2) != EOF)
