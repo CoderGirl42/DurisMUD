@@ -2924,17 +2924,18 @@ void kill_gain(P_char ch, P_char victim)
 
   for (gl = ch->group; gl; gl = gl->next)
   {
-    if(IS_PC(gl->ch) &&
-        !IS_TRUSTED(gl->ch))
+    // Ppl out of room still count against exp gain? Erm... no
+    if( IS_PC(gl->ch) && !IS_TRUSTED(gl->ch) && (ch->in_room == gl->ch->in_room) )
+    {
       group_size++;
+    }
 
-    if (IS_PC(gl->ch) &&
-        !IS_TRUSTED(gl->ch) &&
-        (ch->in_room == gl->ch->in_room))
-      if(GET_LEVEL(gl->ch) > highest_level)
+    if( IS_PC(gl->ch) && !IS_TRUSTED(gl->ch) && (ch->in_room == gl->ch->in_room)
+      && GET_LEVEL(gl->ch) > highest_level )
+    {
         highest_level = GET_LEVEL(gl->ch);
-
-  }  
+    }
+  }
 
 
   /* This prevents group from ganking solo racewar victims and gaining
@@ -2954,40 +2955,39 @@ void kill_gain(P_char ch, P_char victim)
     exp_divider *= 10;
     }  //removed group cap for exp  -Odorf*/
 
-  // exp gain drops slower than group size increases 
-  // to avoid people being unable to get in groups  -Odorf
-  //float exp_divider = ((float)group_size + 2.0) / 3.0; -old value drannak
-  float exp_divider = 1.0;
+  // exp gain drops slower than group size increases to avoid people being unable to get in groups  -Odorf
+  // Groupsize:exp_divider - 1:1, 2:1.33, 3:1.67, 4:2.00, 5:2.33, .. , 10:4.00, .. , 15:5.67.. and so on.
+  float exp_divider = ((float)group_size + 2.0) / 3.0;
 
-  for (gl = ch->group; gl; gl = gl->next)
+  for( gl = ch->group; gl; gl = gl->next )
   {
-    if (IS_PC(gl->ch) &&
-        !IS_TRUSTED(gl->ch) &&
-        (gl->ch->in_room == ch->in_room))
+    if( IS_PC(gl->ch) && !IS_TRUSTED(gl->ch) && (gl->ch->in_room == ch->in_room) )
     {
       XP = (int) (((float)GET_LEVEL(gl->ch) / (float)highest_level) * ((float)gain / exp_divider));
 
       /* power leveler stopgap measure */
-      if ((GET_LEVEL(gl->ch) + 40) < highest_level)
+      if( (GET_LEVEL(gl->ch) + 40) < highest_level )
         XP /= 10000;
-      else if ((GET_LEVEL(gl->ch) + 30) < highest_level)
-        XP /= 5000;
-      else if ((GET_LEVEL(gl->ch) + 20) < highest_level)
-        XP /= 1000;
-      else if ((GET_LEVEL(gl->ch) + 15) < highest_level)
-        XP /= 200;
+      else if( (GET_LEVEL(gl->ch) + 30) < highest_level )
+        XP /= 2000;
+      else if( (GET_LEVEL(gl->ch) + 20) < highest_level )
+        XP /= 300;
+      else if( (GET_LEVEL(gl->ch) + 15) < highest_level )
+        XP /= 80;
 
 
-      if (XP && IS_PC(gl->ch))
+      if( XP && IS_PC(gl->ch) )
       {
         logit(LOG_EXP, "%s: %d, group kill of: %s [%d]", GET_NAME(gl->ch), XP,
-            GET_NAME(victim), ( IS_NPC(victim) ? GET_VNUM(victim) : 0));        
+            GET_NAME(victim), ( IS_NPC(victim) ? GET_VNUM(victim) : 0));
       }
 
       send_to_char("You receive your share of experience.\r\n", gl->ch);
-      gain_exp(gl->ch, victim, (XP + (XP*(group_size*.25))), EXP_KILL);
-      if(IS_PC(gl->ch))
+      gain_exp(gl->ch, victim, XP, EXP_KILL);
+      if( IS_PC(gl->ch) )
+      {
         add_bloodlust(gl->ch, victim);
+      }
       //this is for all kinds of kill-type quests
       update_achievements(gl->ch, victim, 0, 2);
 
