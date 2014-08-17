@@ -3988,7 +3988,7 @@ void timedShutdown(P_char ch, P_char, P_obj, void *data)
         }
         else
         {
-          send_to_all( "Successful wipe of SQL stuff." );
+          logit(LOG_STATUS, "Successful wipe of SQL stuff." );
         }
         shutdownflag = _pwipe = 1;
         break;
@@ -4223,10 +4223,15 @@ void do_shutdown(P_char ch, char *argument, int cmd)
     send_to_char("Go shut down someone your own size.\n", ch);
     return;
   }
+  if( shutdownData.eShutdownType == TimedShutdownData::OK
+    || shutdownData.eShutdownType == TimedShutdownData::PWIPE )
+  {
+    type = "shutdown";
+  }
   strcpy(shutdownData.IssuedBy, GET_NAME(ch));
   shutdownData.next_warning = -1;
   shutdownData.reboot_time = (time(0) + (mins_to_reboot * 60));
-  sprintf(buf, "Scheduled %s initiated by %s in %d minutes", type, GET_NAME(ch), mins_to_reboot);
+  sprintf(buf, "Scheduled %s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot);
   wizlog(60, buf);
   // calling the event will start the event
   timedShutdown(NULL, NULL, NULL, NULL);

@@ -39,6 +39,7 @@ extern struct mm_ds *dead_pconly_pool;
 extern char *artilist_mortal_main;
 extern char *artilist_mortal_unique;
 extern char *artilist_mortal_ioun;
+extern P_room world;
 
 void poof_arti( P_char ch, char *arg );
 void swap_arti( P_char ch, char *arg );
@@ -275,7 +276,7 @@ void UpdateArtiBlood(P_char ch, P_obj obj, int mod)
 
     if( f )
     {
-      fscanf(f, "%s %d %lu %d %lu", name, &id, &last_time, &uo, &blood);
+      fscanf(f, "%s %d %lu %d %lu\n", name, &id, &last_time, &uo, &blood);
 
       if ((id != GET_PID(ch)) && !uo)
       {
@@ -359,7 +360,7 @@ void feed_artifact(P_char ch, P_obj obj, int feed_seconds, int bypass)
   f = fopen(fname, "rt");
   if( f )
   {
-    fscanf(f, "%s %d %lu %d %lu", name, &id, &last_time, &uo, &blood);
+    fscanf(f, "%s %d %lu %d %lu\n", name, &id, &last_time, &uo, &blood);
 
     // If PIDs don't match && not on corpse..
     if ((id != GET_PID(ch)) && !uo)
@@ -419,7 +420,7 @@ bool add_owned_artifact(P_obj arti, P_char ch, long unsigned blood)
   //   If not, spam status log on mud.
   if( f )
   {
-    fscanf(f, "%s %d %lu %d %lu", name, &id, &last_time, &uo, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", name, &id, &last_time, &uo, &t_blood);
     fclose(f);
 
     // If tracked on another player (not a corpse)...
@@ -497,7 +498,7 @@ int remove_owned_artifact(P_obj arti, P_char ch, int full_remove)
       return FALSE;
     }
 
-    fscanf(f, "%s %d %lu %d %lu", name, &id, &last_time, &true_u, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", name, &id, &last_time, &true_u, &t_blood);
 
     if( true_u )
     {
@@ -531,11 +532,10 @@ int remove_owned_artifact(P_obj arti, P_char ch, int full_remove)
 //
 // can specify obj by vnum or rnum - if rnum < 0, vnum is used
 //
-int get_current_artifact_info(int rnum, int vnum, char *pname, int *id,
-                              time_t * last_time, int *truly_unowned,
-                              int get_mort, time_t * blood)
+int get_current_artifact_info( int rnum, int vnum, char *pname, int *id,
+      time_t * last_time, int *truly_unowned, int get_mort, time_t *blood )
 {
-  char     name[256];
+  char     name[256], fname[256];
   int      t_id, t_tu;
   long unsigned t_last_time, t_blood;
   FILE    *f;
@@ -550,14 +550,14 @@ int get_current_artifact_info(int rnum, int vnum, char *pname, int *id,
 
   if( get_mort )
   {
-    sprintf(name, ARTIFACT_MORT_DIR "%d", vnum);
+    sprintf(fname, ARTIFACT_MORT_DIR "%d", vnum);
   }
   else
   {
-    sprintf(name, ARTIFACT_DIR "%d", vnum);
+    sprintf(fname, ARTIFACT_DIR "%d", vnum);
   }
 
-  f = fopen(name, "rt");
+  f = fopen(fname, "rt");
 
   if( !f )
   {
@@ -566,7 +566,7 @@ int get_current_artifact_info(int rnum, int vnum, char *pname, int *id,
     return 0;
   }
 
-  fscanf(f, "%s %d %lu %d %lu", name, &t_id, &t_last_time, &t_tu, &t_blood);
+  fscanf(f, "%s %d %lu %d %lu\n", name, &t_id, &t_last_time, &t_tu, &t_blood);
 
   fclose(f);
 
@@ -611,7 +611,31 @@ int get_current_artifact_info(int rnum, int vnum, char *pname, int *id,
   }
   else
   {
-    owner_race = 0;
+    // Try to hunt for obj in room save.
+    if( (f = fopen(fname, "rt")) )
+    {
+      sprintf( name, "%s", fread_string(f) );
+      fscanf(f, " %d %lu %d %lu\n", &t_id, &t_last_time, &t_tu, &t_blood);
+      if( pname )
+      {
+        // Copy name into pname
+        strcpy( pname, name );
+      }
+      fclose(f);
+
+      if( !str_cmp( name, world[real_room(t_id)].name ) )
+      {
+        owner_race = -1;
+      }
+      else
+      {
+        owner_race = 0;
+      }
+    }
+    else
+    {
+      owner_race = 0;
+    }
   }
 
   if( id )
@@ -788,14 +812,23 @@ void list_artifacts(P_char ch, char *arg, int type)
       minutes = blood_time / 60;
 
       sprintf(blooddate, "%d:%02d:%02d ", days, hours, minutes);
-
-      sprintf(strn, "%-20s%-11s%-30s%s (#%d)%s\r\n",
+// PENIS: HERE IS WHERE IT"S BUGGY
+      if( t_uo == -1 )
+      {
+        sprintf(strn, "%s\n%28s   %-30s%s (#%d)%s\r\n",
               pname, blooddate, strn2, obj->short_description, vnum,
-              t_uo ? " (on corpse)" : "");
-
+              "(on ground)" );
+      }
+      else
+      {
+        sprintf(strn, "%-20s%-11s%-30s%s (#%d)%s\r\n",
+              pname, blooddate, strn2, obj->short_description, vnum,
+              t_uo ? "(on corpse)" : "");
+      }
       send_to_char(strn, ch);
     }
-    else
+    // Don't show artis on ground to mortals.
+    else if( t_uo != -1 )
     {
       sprintf(strn, "%-20s%s\r\n", pname, obj->short_description);
 
@@ -1130,7 +1163,7 @@ void poof_arti( P_char ch, char *arg )
       send_to_char(buf2, ch);
       return;
     }
-    fscanf(f, "%s %d %lu %d %lu", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
     fclose(f);
 
     // Load pfile
@@ -1341,7 +1374,7 @@ void swap_arti( P_char ch, char *arg )
       send_to_char(buf2, ch);
       return;
     }
-    fscanf(f, "%s %d %lu %d %lu", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
     fclose(f);
 
     // Load pfile
@@ -1615,7 +1648,7 @@ void set_timer_arti( P_char ch, char *arg )
       send_to_char(buf2, ch);
       return;
     }
-    fscanf(f, "%s %d %lu %d %lu", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", buf2, &t_id, &t_last_time, &t_tu, &t_blood);
     fclose(f);
 
     // Load pfile
@@ -1719,7 +1752,7 @@ void event_check_arti_poof( P_char ch, P_char vict, P_obj obj, void * arg )
     }
 
     // Read arti file.
-    fscanf(f, "%s %d %lu %d %lu", name, &t_id, &t_last_time, &t_tu, &t_blood);
+    fscanf(f, "%s %d %lu %d %lu\n", name, &t_id, &t_last_time, &t_tu, &t_blood);
     fclose(f);
 
     // If arti is overdue to poof..
@@ -1840,7 +1873,7 @@ int is_tracked( P_obj artifact )
   }
 
   // If file is corrupted?
-  if( (res = fscanf(f, "%s %d %lu %d %lu", name, &id, &last_time, &uo, &blood)) < 5)
+  if( (res = fscanf(f, "%s %d %lu %d %lu\n", name, &id, &last_time, &uo, &blood)) < 5)
   {
     debug( "is_tracked: fscanf returned bad result: %d.", res );
     fclose(f);
@@ -2138,4 +2171,52 @@ void artifact_feed_to_min( P_obj arti, int min_minutes )
   {
     send_to_char("&+RYou feel a light sense of satisfaction from somewhere...\r\n", ch);
   }
+}
+
+// This function is designed to be called just before reboot/shutdown.  It looks
+//   for any dropped artifacts, and creates an arti file listing them as on ground.
+void dropped_arti_hunt()
+{
+  int   vnum;
+  char  fname[256];
+  FILE *f;
+  P_obj obj;
+  const int timelimit = time(NULL) - 2 * SECS_PER_REAL_DAY;
+
+int count = 0;
+logit(LOG_DEBUG, "dropped_arti_hunt: Initiated." );
+
+  for( obj = object_list; obj; obj = obj->next )
+  {
+count++;
+    if( IS_ARTIFACT(obj) || CAN_WEAR(obj, ITEM_WEAR_IOUN) )
+    {
+logit(LOG_DEBUG,  "dropped_arti_hunt: found arti '%s' %d.", obj->short_description, obj_index[obj->R_num].virtual_number );
+
+      // If arti is on ground with less than 2 days on it.. then it's been dropped.
+      // is_tracked: -1 means untracked arti, 0 means not an arti, and > 0 means tracked.
+      // Note: is_tracked won't return > 0 if a God drops arti.. must be owned/dropped by a mort.
+// PENIS: Need to test this: Is obj->time[3] > timelimit or < timelimit right? What about is_tracked?
+      if( OBJ_ROOM(obj) && obj->loc.room && obj->timer[3] <= timelimit )//&& (is_tracked(obj) > 0) )
+      {
+        vnum = obj_index[obj->R_num].virtual_number;
+logit(LOG_DEBUG,  "dropped_arti_hunt: ON GROUND found arti '%s' %d on ground with timer.", obj->short_description, obj_index[obj->R_num].virtual_number );
+
+        sprintf(fname, ARTIFACT_DIR "%d", vnum);
+        f = fopen(fname, "wt");
+
+        if (!f)
+        {
+          statuslog(56, "dropped_arti_hunt: could not open arti file '%s' for writing", fname);
+          logit(LOG_DEBUG,  "dropped_arti_hunt: could not open arti file '%s' for writing", fname);
+          continue;
+        }
+// PENIS: This will currently corrupt the arti system: need a way in each file call to verify this 'non-owner & no pop' state.
+        // Put Room's name, rooms vnum, time -1(!), obj timer.
+        fprintf(f, "%s~\n %d %lu -1 %lu", world[obj->loc.room].name, world[obj->loc.room].number, time(NULL), obj->timer[3]);
+        fclose(f);
+      }
+    }
+  }
+logit(LOG_DEBUG, "dropped_arti_hunt: Completed, count == %d.", count );
 }

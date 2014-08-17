@@ -1545,11 +1545,9 @@ int create_lab(int type)
   obj = read_object(RELIC, VIRTUAL);
   vnum = obj_index[obj->R_num].virtual_number;
 
-  if (get_current_artifact_info
-      (-1, vnum, NULL, NULL, NULL, NULL, FALSE, NULL))
+  if( get_current_artifact_info(-1, vnum, NULL, NULL, NULL, NULL, FALSE, NULL) )
   {
-    wizlog(56, "Already tracked %d, not creating random map #%d ", vnum,
-           type);
+    wizlog(56, "Already tracked %d, not creating random map #%d ", vnum, type);
     extract_obj(obj, TRUE);
     return 0;
   }
@@ -1632,8 +1630,7 @@ int create_lab(int type)
             obj = read_object(RELIC, VIRTUAL);
             vnum = obj_index[obj->R_num].virtual_number;
 
-            if (get_current_artifact_info
-                (-1, vnum, NULL, NULL, NULL, NULL, FALSE, NULL))
+            if( get_current_artifact_info(-1, vnum, NULL, NULL, NULL, NULL, FALSE, NULL) )
             {
               wizlog(56, "Already tracked %d", vnum);
               extract_obj(obj, TRUE);

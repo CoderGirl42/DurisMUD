@@ -430,6 +430,9 @@ void run_the_game(int port)
 
   close_sockets(s);
 
+  // Look for dropped artis and remove them from the next boot.
+  dropped_arti_hunt();
+
 #ifdef MEMCHK
   free_world();
   dump_mem_log();
@@ -455,6 +458,7 @@ void run_the_game(int port)
     logit(LOG_EXIT, "Pwipe Shutdown.");
     exit(55);
   }
+  logit(LOG_EXIT, "Normal termination of game.");
   logit(LOG_STATUS, "Normal termination of game.");
 }
 
