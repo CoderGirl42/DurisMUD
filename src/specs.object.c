@@ -2702,7 +2702,7 @@ int dragonlord_plate(P_obj obj, P_char ch, int cmd, char *arg)
     return TRUE;
   }
 
-  if( cmd == CMD_PERIODIC && OBJ_WORN(obj) && IS_ALIVE(ch) && ch == obj->loc.wearing )
+  if( cmd == CMD_PERIODIC && OBJ_WORN(obj) && IS_ALIVE(ch) && (ch = obj->loc.wearing) )
   {
     curr_time = time(NULL);
     // Every 30 min.
@@ -4096,7 +4096,7 @@ int sunblade(P_obj obj, P_char ch, int cmd, char *arg)
 
   if( cmd == CMD_PERIODIC )
   {
-    if( OBJ_WORN(obj) && ch == obj->loc.wearing )
+    if( OBJ_WORN(obj) && (ch = obj->loc.wearing) )
     {
       curr_time = time(NULL);
 
