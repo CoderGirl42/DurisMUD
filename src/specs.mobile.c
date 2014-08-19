@@ -13910,15 +13910,19 @@ int conj_specpet_slyph(P_char ch, P_char pl, int cmd, char *arg)
   P_char   vict;
   int      room, in_room;
 
-  if (cmd == CMD_SET_PERIODIC)
+  if( cmd == CMD_SET_PERIODIC )
+  {
     return TRUE;
+  }
 
-  if (IS_FIGHTING(ch) && (cmd == 0) && (number(1, 10) == 1))
+  if( IS_ALIVE(ch) && IS_FIGHTING(ch) && cmd == CMD_MOB_MUNDANE && number(1, 10) == 1 )
   {
     room = ch->in_room;
     vict = ch->specials.fighting;
-    if(vict->in_room != ch->in_room)
-        return false;
+    if( vict->in_room != room )
+    {
+      return FALSE;
+    }
     act("$n&+C gains a burst of &+Wenergy&+C!", FALSE, ch, 0, vict, TO_ROOM);
     spell_cyclone(45, ch, NULL, SPELL_TYPE_SPELL, vict, 0);
    // if (is_char_in_room(ch, room) && is_char_in_room(vict, room))
@@ -13999,31 +14003,29 @@ int conj_specpet_salamander(P_char ch, P_char pl, int cmd, char *arg)
   P_char   vict;
   int in_room;
 
-  if (cmd == CMD_SET_PERIODIC)
+  if( cmd == CMD_SET_PERIODIC )
+  {
     return TRUE;
+  }
 
-  if(IS_FIGHTING(ch) &&
-    (cmd == 0) &&
-    (number(1, 10) == 1) &&
-    world[ch->in_room].sector_type != SECT_WATER_PLANE)
+  if( IS_FIGHTING(ch) && cmd == CMD_MOB_MUNDANE && (number(1, 10) == 1)
+    && world[ch->in_room].sector_type != SECT_WATER_PLANE )
   {
     vict = ch->specials.fighting;
-    if(vict->in_room != ch->in_room)
-        return false;
-    act
-      ("$n &+ropens its &+Rjaws &+rspewing a &+Rf&+rl&+Ra&+rm&+Ri&+rn&+Rg mass at $N!",
-       FALSE, ch, 0, vict, TO_NOTVICT);
-    act
-      ("$n &+ropens its &+Rjaws &+rspewing a &+Rf&+rl&+Ra&+rm&+Ri&+rn&+Rg mass at you!",
-       FALSE, ch, 0, vict, TO_VICT);
-    spell_immolate(50, ch, NULL, 0, vict, 0);
-    if (number(1, 5) == 5)
+    if( vict->in_room != ch->in_room )
     {
-      act
-        ("&+RSucking &+rin another &+Rbreath &+r$n &+rcovers &+R$N &+rwith &+Wwhite&+r-&+Rhot &+rmagma!",
+      return FALSE;
+    }
+    act("$n &+ropens its &+Rjaws &+rspewing a &+Rf&+rl&+Ra&+rm&+Ri&+rn&+Rg mass at $N!",
+      FALSE, ch, 0, vict, TO_NOTVICT);
+    act("$n &+ropens its &+Rjaws &+rspewing a &+Rf&+rl&+Ra&+rm&+Ri&+rn&+Rg mass at you!",
+      FALSE, ch, 0, vict, TO_VICT);
+    spell_immolate(50, ch, NULL, 0, vict, 0);
+    if( number(1, 5) == 5 )
+    {
+      act("&+RSucking &+rin another &+Rbreath &+r$n &+rcovers &+R$N &+rwith &+Wwhite&+r-&+Rhot &+rmagma!",
          FALSE, ch, 0, vict, TO_NOTVICT);
-      act
-        ("&+RSucking &+rin another &+Rbreath &+r$n &+rcovers &+Ryou &+rwith &+Wwhite&+r-&+Rhot &+rmagma!",
+      act("&+RSucking &+rin another &+Rbreath &+r$n &+rcovers &+Ryou &+rwith &+Wwhite&+r-&+Rhot &+rmagma!",
          FALSE, ch, 0, vict, TO_VICT);
       spell_magma_burst(60, ch, NULL, 0, vict, 0);
     }
@@ -16281,7 +16283,7 @@ int clear_epic_task_spec(P_char npc, P_char ch, int cmd, char *arg)
 
 int block_dir(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if( cmd == CMD_SET_PERIODIC || cmd == CMD_PERIODIC )
+  if( cmd == CMD_SET_PERIODIC || cmd == CMD_MOB_MUNDANE )
     return FALSE;
   
   if( !ch || !pl )
@@ -16505,7 +16507,7 @@ int monk_remort(P_char ch, P_char pl, int cmd, char *arg)
 
   argument_interpreter(arg, name, msg);
 
-  if (!pl && (cmd == CMD_PERIODIC))
+  if (!pl && (cmd == CMD_MOB_MUNDANE))
   {
     LOOP_THRU_PEOPLE(tch, ch)
     {

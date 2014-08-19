@@ -1524,9 +1524,10 @@ void do_conjure(P_char ch, char *argument, int cmd)
     REMOVE_BIT(tobj->specials.affected_by4, AFF4_DEFLECT);
     REMOVE_BIT(tobj->specials.act, ACT_SCAVENGER);
     REMOVE_BIT(tobj->specials.act, ACT_PATROL);
+    REMOVE_BIT(tobj->specials.act, ACT_SPEC);
     if( number(1,100) > 50 )
     {
-      REMOVE_BIT(tobj->specials.act, ACT_SPEC);
+      tobj->player.spec = 0;
     }
     REMOVE_BIT(tobj->specials.act, ACT_BREAK_CHARM);
     // Stop mobs from randomly sitting all the time.

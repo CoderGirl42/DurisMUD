@@ -2376,9 +2376,10 @@ int conjure_terrain_check(P_char ch, P_char mob)
           TRUE, ch, 0, mob, TO_CHAR);
       return -1;
 	}
-	else		
+	else
+  {
 	  return 0;
-
+  }
 	break;
 
 	case 2: /* WATER conjurer*/
@@ -2475,7 +2476,7 @@ void conjure_specialized(P_char ch, int level)
   } pets[] = // If you add or remove mobs, make sure to adjust 
               // IS_GREATER_ELEMENTAL define in utils.h -Lucrot
   {
-  /*  {
+    {
     1130, 500, 20},
     {
     1131, 400, 20},
@@ -2499,31 +2500,32 @@ void conjure_specialized(P_char ch, int level)
     1121, 800, 30},
     {
     1122, 700, 25},             // EARTH 
-*/
+/* These are reg pets.
     {
     43, 500, 20},
     {
     43, 400, 20},
     {
-    43, 600, 20},             /* AIR */
+    43, 600, 20},             // AIR
     {
     44, 600, 25},
     {
     44, 600, 20},
     {
-    44, 600, 20},             /* WATER */
+    44, 600, 20},             // WATER
     {
     41, 600, 20},
     {
     41, 700, 25},
     {
-    41, 650, 20},             /* FIRE */
+    41, 650, 20},             // FIRE
     {
     42, 600, 20},
     {
     42, 800, 30},
     {
-    42, 700, 25},             /* EARTH */
+    42, 700, 25},             // EARTH
+*/
 
   };
 

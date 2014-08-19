@@ -7904,14 +7904,18 @@ void event_mob_mundane(P_char ch, P_char victim, P_obj object, void *data)
   bool CombatInRoom;
   int rnum;
 
-  if(IS_PC(ch) || !ch)
+  if( !IS_ALIVE(ch) || IS_PC(ch) )
+  {
     return;
+  }
 
-  if(TRUSTED_NPC(ch))
+  if( TRUSTED_NPC(ch) )
+  {
     goto normal; // 0%
+  }
 
   if(ch->in_room == NOWHERE)
-  {// 0%
+  {
     char_to_room(ch, 0, -2);
     return;
   }
@@ -8054,7 +8058,7 @@ PROFILE_END(mundane_autostand);
 
   /* Examine call for special procedure */
 PROFILE_START(mundane_specproc);
-  if(IS_SET(ch->specials.act, ACT_SPEC) && !no_specials && !affected_by_spell(ch, TAG_CONJURED_PET))
+  if(IS_SET(ch->specials.act, ACT_SPEC) && !no_specials )
   { // 8%
     if(!mob_index[ch->only.npc->R_num].func.mob)
     { // 0%
