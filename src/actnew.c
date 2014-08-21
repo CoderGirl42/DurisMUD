@@ -1337,30 +1337,32 @@ void do_disarm(P_char ch, char *arg, int cmd)
   P_obj    obj, trap;
   P_char   victim;
 
-  if ((GET_CHAR_SKILL(ch, SKILL_DISARM) == 0) && !IS_TRUSTED(ch))
+  if( (GET_CHAR_SKILL(ch, SKILL_DISARM) == 0) && !IS_TRUSTED(ch) )
   {
     send_to_char("Heh, you might end up losing a finger.\n", ch);
     return;
   }
 
   arg = one_argument(arg, vict_name);
-  if (*vict_name == '\0')
+  if( *vict_name == '\0' )
   {
     if( IS_FIGHTING(ch) )
+    {
       send_to_char("Disarm who?\r\n", ch);
+    }
     else
+    {
       send_to_char("Disarm what?\r\n", ch);
+    }
     return;
   }
   /* begin paste in of trap disarming */
-  if ((bits =
-        generic_find(vict_name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim,
-          &trap)) && GET_CLASS(ch, CLASS_ROGUE) &&
-      GET_CLASS(ch, CLASS_THIEF))
+  if( (bits = generic_find(vict_name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &trap))
+    && (GET_SPEC(ch, CLASS_ROGUE, SPEC_THIEF) || GET_CLASS(ch, CLASS_THIEF)) )
   {
-    if (trap->trap_charge)
+    if( trap->trap_charge )
     {
-      if (GET_CHAR_SKILL(ch, SKILL_DISARM) > number(1, 91))
+      if( GET_CHAR_SKILL(ch, SKILL_DISARM) > number(1, 91) )
       {
         send_to_char("Success! The vile trap is now disarmed.\r\n", ch);
         trap->trap_charge = 0;
@@ -1379,67 +1381,81 @@ void do_disarm(P_char ch, char *arg, int cmd)
   /* we now return you to your regularly scheduled code */
 
   one_argument(arg, obj_name);
-  if (*obj_name == '\0')
+  if( *obj_name == '\0' )
   {
     send_to_char("Disarm what?\r\n", ch);
     return;
   }
 
-  if (!ch->equipment[WIELD])
+  if( !ch->equipment[WIELD] )
   {
     send_to_char("You must be wielding some kind of weapon.\r\n", ch);
     return;
   }
 
-  if (!(victim = get_char_room_vis(ch, vict_name)))
+  if( !(victim = get_char_room_vis(ch, vict_name)) )
   {
     send_to_char("That creature isn't present.\r\n", ch);
     return;
   }
 
-  if (victim == ch)
+  if( victim == ch )
   {
     send_to_char("Be serious... use remove to disarm yourself.\r\n", ch);
     return;
   }
 
-  if (!IS_FIGHTING(ch) || ch->specials.fighting != victim)
+  percent = 0;
+  if( !IS_FIGHTING(ch) || ch->specials.fighting != victim )
   {
-    act("You must engage in combat with $N before $e can be disarmed.", FALSE,
-        ch, 0, victim, TO_CHAR);
-    return;
+    if( GET_SPEC(ch, CLASS_WARRIOR, SPEC_SWASHBUCKLER) )
+    {
+      if( !IS_FIGHTING(ch) )
+      {
+        act("You attempt to enter battle with a disarm.", FALSE, ch, 0, victim, TO_CHAR);
+        percent = -15;
+      }
+      else
+      {
+        act("You attempt to disarm $N while fighting someone else.", FALSE, ch, 0, victim, TO_CHAR);
+        percent = -30;
+      }
+    }
+    else
+    {
+      act("You must engage in combat with $N before $E can be disarmed.", FALSE, ch, 0, victim, TO_CHAR);
+      return;
+    }
   }
-  for (obj = NULL, pos = 0; pos < MAX_WEAR; pos++)
+  for( obj = NULL, pos = 0; pos < MAX_WEAR; pos++ )
   {
-    if ((obj = victim->equipment[pos]) && isname(obj_name, obj->name) &&
-        CAN_SEE_OBJ(ch, obj))
+    if( (obj = victim->equipment[pos]) && isname(obj_name, obj->name) && CAN_SEE_OBJ(ch, obj) )
+    {
       break;
+    }
   }
 
-  if (obj == NULL)
+  if( obj == NULL )
   {
     act("You can't seem to find it on $N.", FALSE, ch, 0, victim, TO_CHAR);
     return;
   }
 
-  if (obj->type != ITEM_WEAPON && obj->type != ITEM_FIREWEAPON)
+  if( obj->type != ITEM_WEAPON && obj->type != ITEM_FIREWEAPON )
   {
     act("You can only disarm weapons.", FALSE, ch, 0, 0, TO_CHAR);
     return;
   }
 
-  percent = (GET_CHAR_SKILL(ch, SKILL_DISARM) + STAT_INDEX(GET_C_DEX(ch)) -
-      STAT_INDEX(GET_C_DEX(victim)) + GET_LEVEL(ch) -
-      GET_LEVEL(victim)) / 2;
+  percent += (GET_CHAR_SKILL(ch, SKILL_DISARM) + STAT_INDEX(GET_C_DEX(ch)) -
+      STAT_INDEX(GET_C_DEX(victim)) + GET_LEVEL(ch) - GET_LEVEL(victim)) / 2;
 
   rnd_num = number(1, 100);
 
-  if (percent > rnd_num)
+  if( percent > rnd_num )
   {
-    act("$n successfully knocks $N's weapon from $S grips!", FALSE, ch, 0,
-        victim, TO_NOTVICT);
-    act
-      ("$n forces your weapon out of your hands with a fancy disarming maneuver.",
+    act("$n successfully knocks $N's weapon from $S grips!", FALSE, ch, 0, victim, TO_NOTVICT);
+    act("$n forces your weapon out of your hands with a fancy disarming maneuver.",
        FALSE, ch, 0, victim, TO_VICT);
     act("You make a great effort, and send $N's weapon out of control..",
         FALSE, ch, 0, victim, TO_CHAR);
@@ -1447,13 +1463,17 @@ void do_disarm(P_char ch, char *arg, int cmd)
     obj_to_char(unequip_char(victim, pos), victim);
     strip_holy_sword( victim );
     set_short_affected_by(victim, SKILL_DISARM, 3 * PULSE_VIOLENCE);
+    // Engage ch only if successful disarm..
+    if( !IS_FIGHTING(ch) )
+    {
+      set_fighting(ch, victim);
+    }
   }
   else if (rnd_num >= 90)
   {
     act("$n fails $s disarming maneuver so badly, $e fumbles $s own weapon.",
         FALSE, ch, 0, victim, TO_NOTVICT);
-    act
-      ("In a vain attempt, $n tries to disarm you, but instead, fumbles $s weapon.",
+    act("In a vain attempt, $n tries to disarm you, but instead, fumbles $s weapon.",
        FALSE, ch, 0, victim, TO_VICT);
     act("You fail miserably in your attempt to disarm $N.", FALSE, ch, 0,
         victim, TO_CHAR);
@@ -1465,13 +1485,11 @@ void do_disarm(P_char ch, char *arg, int cmd)
   {
     act("$n failingly attempts a complex disarming technique on $N.", FALSE,
         ch, 0, victim, TO_NOTVICT);
-    act
-      ("$e begins to fumble $s own weapon, loosing complete control over it.",
+    act("$e begins to fumble $s own weapon, loosing complete control over it.",
        FALSE, ch, 0, 0, TO_NOTVICT);
     act("$n starts to fumble $s weapon in a vain attempt to disarm you.",
         FALSE, ch, 0, victim, TO_VICT);
-    act
-      ("You make a grave error in judgement, and lose control of your weapon.",
+    act("You make a grave error in judgement, and lose control of your weapon.",
        FALSE, ch, 0, 0, TO_CHAR);
     notch_skill(ch, SKILL_DISARM, 7);
   }
@@ -1484,7 +1502,11 @@ void do_disarm(P_char ch, char *arg, int cmd)
     act("Your disarming maneuver had no effect on $N.", FALSE, ch, 0, victim,
         TO_CHAR);
   }
-
+  // Engage victim regardless of outcome.
+  if( !IS_FIGHTING(victim) )
+  {
+    set_fighting(victim, ch);
+  }
   CharWait(ch, PULSE_VIOLENCE * 2);
 }
 
