@@ -219,18 +219,23 @@ int hit_regen(P_char ch)
   int      gain;
   struct affected_type *af;
 
-  if (affected_by_spell(ch, TAG_BUILDING))
+  if( affected_by_spell(ch, TAG_BUILDING) )
+  {
     return 0;
-  
-  if (ch->points.hit_reg >= 0 && GET_HIT(ch) == GET_MAX_HIT(ch))
-    return 0;
+  }
 
-  if (GET_HIT(ch) > GET_MAX_HIT(ch))
+  if( ch->points.hit_reg >= 0 && GET_HIT(ch) == GET_MAX_HIT(ch) )
+  {
+    return 0;
+  }
+
+  if( GET_HIT(ch) > GET_MAX_HIT(ch) )
   {
     gain = (int) (GET_MAX_HIT(ch) - GET_HIT(ch)) / 10;
     return MIN(-1, gain);
   }
-  if (IS_NPC(ch))
+
+  if( IS_NPC(ch) )
   {
     gain = 14;
   }
@@ -240,7 +245,7 @@ int hit_regen(P_char ch)
   }
 
   /* * Position calculations    */
-  switch (GET_STAT(ch))
+  switch( GET_STAT(ch) )
   {
   case STAT_DEAD:
     gain = 0;                   /* * overrides normal gains */
@@ -259,7 +264,7 @@ int hit_regen(P_char ch)
     break;
   }
 
-  switch (GET_POS(ch))
+  switch( GET_POS(ch) )
   {
   case POS_PRONE:
     gain += (gain < 0) ? (-(gain >> 2)) : (gain >> 2);  /* * 125% */
@@ -272,56 +277,86 @@ int hit_regen(P_char ch)
     break;
   }
 
-  if (GET_COND(ch, FULL) == 0)
+  if( GET_COND(ch, FULL) == 0 )
+  {
     gain >>= 1;
-  if (GET_COND(ch, THIRST) == 0)
+  }
+  if( GET_COND(ch, THIRST) == 0 )
+  {
     gain >>= 1;
+  }
 
-  if (CHAR_IN_HEAL_ROOM(ch) && (GET_STAT(ch) >= STAT_SLEEPING))
+  if( CHAR_IN_HEAL_ROOM(ch) && (GET_STAT(ch) >= STAT_SLEEPING) )
+  {
     gain += GET_LEVEL(ch) * 2;
+  }
 
   gain += ch->points.hit_reg;
 
   gain += (int)((float)gain * get_epic_bonus(ch, EPIC_BONUS_HEALTH));
 
-  if (IS_AFFECTED4(ch, AFF4_REGENERATION) ||
-      has_innate(ch, INNATE_REGENERATION) ||
-      (has_innate(ch, INNATE_WOODLAND_RENEWAL) && (world[ch->in_room].sector_type == SECT_FOREST)) ||
-      has_innate(ch, INNATE_ELEMENTAL_BODY))
+  if( IS_AFFECTED4(ch, AFF4_REGENERATION) || has_innate(ch, INNATE_REGENERATION)
+    || (has_innate(ch, INNATE_WOODLAND_RENEWAL) && (world[ch->in_room].sector_type == SECT_FOREST))
+    || has_innate(ch, INNATE_ELEMENTAL_BODY))
+  {
     gain += get_innate_regeneration(ch);
+  }
 
-  if (IS_AFFECTED4(ch, AFF4_TUPOR))
+  if( IS_AFFECTED4(ch, AFF4_TUPOR) )
+  {
     gain += (int) (GET_LEVEL(ch) * 3.5);
+  }
 
-  if (CHAR_IN_NO_HEAL_ROOM(ch) && gain > 0)
+  if( CHAR_IN_NO_HEAL_ROOM(ch) && gain > 0 )
+  {
     gain = 0;
+  }
 
-  if (gain == 0 && GET_STAT(ch) < STAT_SLEEPING)
+  if( gain == 0 && GET_STAT(ch) < STAT_SLEEPING )
+  {
     gain = -1;
+  }
 
   if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     for (af = ch->affected; af; af = af->next)
+    {
       if (af->bitvector4 & AFF4_REGENERATION)
+      {
         break;
+      }
+    }
     if (af)
+    {
       ;
+    }
     else if (IS_AFFECTED4(ch, AFF4_REGENERATION))
+    {
       gain >>= 1;
+    }
     else if (has_innate(ch, INNATE_WOODLAND_RENEWAL) && (world[ch->in_room].sector_type == SECT_FOREST)) //can regen in battle in forest - Drannak
+    {
       gain >>= 1;
+    }
     else
+    {
       gain = 0;
+    }
   }
 
-  
-  if (has_innate(ch, INNATE_VULN_SUN) && IS_SUNLIT(ch->in_room) &&
-     !IS_TWILIGHT_ROOM(ch->in_room) && !IS_AFFECTED4(ch, AFF4_GLOBE_OF_DARKNESS))
-    gain = 0;
 
-  if (IS_AFFECTED3(ch, AFF3_SWIMMING) || IS_AFFECTED2(ch, AFF2_HOLDING_BREATH)
-      || IS_AFFECTED2(ch, AFF2_IS_DROWNING))
+  if( has_innate(ch, INNATE_VULN_SUN) && IS_SUNLIT(ch->in_room)
+    && !IS_TWILIGHT_ROOM(ch->in_room) && !IS_AFFECTED4(ch, AFF4_GLOBE_OF_DARKNESS)
+    && !IS_MAGIC_DARK(ch->in_room) )
+  {
     gain = 0;
+  }
+
+  if( IS_AFFECTED3(ch, AFF3_SWIMMING) || IS_AFFECTED2(ch, AFF2_HOLDING_BREATH)
+    || IS_AFFECTED2(ch, AFF2_IS_DROWNING) )
+  {
+    gain = 0;
+  }
 
   return (gain);
 }
