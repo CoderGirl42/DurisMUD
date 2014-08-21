@@ -997,8 +997,9 @@
 #define SKILL_SHADOWSTEP             1299
 #define SKILL_GARROTE                1300
 #define SKILL_LEGSWEEP               1301
+#define SKILL_NATURES_RUIN           1302
 
-#define LAST_SKILL                   SKILL_LEGSWEEP
+#define LAST_SKILL                   SKILL_NATURES_RUIN
 
 //#ifdef SKILLPOINTS
 //#define WHITE_SKILL                  -1

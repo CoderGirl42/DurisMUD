@@ -710,7 +710,8 @@ int get_circle_memtime(P_char ch, int circle, bool bStatOnly)
     time = time * get_property("memorize.factor.commune", 1.0);
 
     // reduction in time if you have the epic skill
-    if(GET_CHAR_SKILL(ch, SKILL_NATURES_SANCTITY) > number(1, 100) && OUTSIDE(ch))
+    if( OUTSIDE(ch) && (GET_CHAR_SKILL(ch, SKILL_NATURES_SANCTITY) > number(1, 100)
+      || GET_CHAR_SKILL(ch, SKILL_NATURES_RUIN) > number(1, 100)) )
     {
       time = time * .65;
     }

@@ -3585,7 +3585,7 @@ if(d->character->player.time.played <  10000000  && !IS_TRUSTED(d->character))
 
   // This is to remove the racial epic skills set with TAG_RACIAL_SKILLS
   // after the current wipe (as of 4/25/14) this should be removed - Torgal
-  clear_racial_skills(ch);
+//  clear_racial_skills(ch); - And removed. - Lohrr
 }
 
 void select_terminal(P_desc d, char *arg)

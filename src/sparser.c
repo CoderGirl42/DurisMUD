@@ -2238,9 +2238,15 @@ void do_cast(P_char ch, char *argument, int cmd)
     dura = (int) (dura * .75);
     CharWait(ch, dura);
   }
-  else if( GET_CHAR_SKILL(ch, SKILL_NATURES_SANCTITY) > number(1, 100) && OUTSIDE(ch) )
+  else if( OUTSIDE(ch) && GET_CHAR_SKILL(ch, SKILL_NATURES_SANCTITY) > number(1, 100) )
   {
     send_to_char("&+GThe power of nature flows into you, hastening your incantation.\n", ch);
+    dura = (int) (dura * .75);
+    CharWait(ch, dura);
+  }
+  else if( OUTSIDE(ch) && GET_CHAR_SKILL(ch, SKILL_NATURES_RUIN) > number(1, 100) )
+  {
+    send_to_char("&+yYou drain power from nature, hastening your incantation.\n", ch);
     dura = (int) (dura * .75);
     CharWait(ch, dura);
   }

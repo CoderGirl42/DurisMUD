@@ -109,7 +109,7 @@ epic_reward epic_rewards[] = {
   {EPIC_REWARD_SKILL, SKILL_INDOMITABLE_RAGE, 100, 10, 100000,
     CLASS_WARRIOR | CLASS_BERSERKER },
   {EPIC_REWARD_SKILL, SKILL_NATURES_SANCTITY, 100, 75, 750000,
-    CLASS_DRUID | CLASS_BLIGHTER },
+    CLASS_DRUID },
   {EPIC_REWARD_SKILL, SKILL_EXPERT_PARRY, 100, 200,  2000000,
     CLASS_WARRIOR | CLASS_PALADIN | CLASS_RANGER},
   {EPIC_REWARD_SKILL, SKILL_EXPERT_RIPOSTE, 100, 200, 2000000,
@@ -134,6 +134,8 @@ epic_reward epic_rewards[] = {
     0 },
   {EPIC_REWARD_SKILL, SKILL_SHIP_DAMAGE_CONTROL, 1000, 80, 8000000,
     0 },
+  {EPIC_REWARD_SKILL, SKILL_NATURES_RUIN, 100, 75, 750000,
+    CLASS_BLIGHTER },
   {0}
 };
 
@@ -184,7 +186,8 @@ epic_teacher_skill epic_teachers[] = {
   {66671, SKILL_EPIC_CONSTITUTION, 0, 100, 0, 0, 0}, //Thurdorf in Torrhan
   {82408, SKILL_EPIC_CHARISMA, 0, 100, 0, 0, 0}, //Frolikk in Temple of Sun
   {21535, SKILL_EPIC_LUCK, 0, 100, 0, 0, 0}, //Babedo in Aravne
-  {2733, SKILL_SHIP_DAMAGE_CONTROL, 0, 100, 0, 0, 0}, // Commodore in Headless 
+  {2733, SKILL_SHIP_DAMAGE_CONTROL, 0, 100, 0, 0, 0}, // Commodore in Headless
+  {402029, SKILL_NATURES_RUIN, 0, 100, 0, 0, 0}, // Shezeera in Library zone
   {0}
 };
 
@@ -232,7 +235,8 @@ void create_epic_skills()
   SKILL_CREATE("natures sanctity", SKILL_NATURES_SANCTITY, TAR_MENTAL | TAR_EPIC);
   SKILL_CREATE("expert parry", SKILL_EXPERT_PARRY, TAR_MENTAL | TAR_EPIC);
   SKILL_CREATE("expert riposte", SKILL_EXPERT_RIPOSTE, TAR_MENTAL | TAR_EPIC);
-  
+  SKILL_CREATE("natures ruin", SKILL_NATURES_RUIN, TAR_MENTAL | TAR_EPIC);
+
   /* Stat adjustment epic skills */
   SKILL_CREATE("epic strength", SKILL_EPIC_STRENGTH, TAR_MENTAL | TAR_EPIC);
   SKILL_CREATE("epic power", SKILL_EPIC_POWER, TAR_MENTAL | TAR_EPIC);
