@@ -2301,7 +2301,7 @@ void do_cast(P_char ch, char *argument, int cmd)
   }
 
   tmp_spl.timeleft = dura;
-
+// if( IS_PC(ch) ) debug( "Final cast time: %d.", tmp_spl.timeleft );
   if( get_spell_circle(ch, tmp_spl.spell) == get_max_circle(ch)
     && number(0,100) > GET_C_AGI(ch)/2 + 50 )
   {
