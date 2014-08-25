@@ -2601,13 +2601,12 @@ void spell_slashing_darkness(int level, P_char ch, char *arg, int type,
 
 }
 
-void spell_undead_to_death(int level, P_char ch, char *arg, int type,
-                             P_char victim, P_obj obj)
+void spell_undead_to_death(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
 
-  int save = 0, dam, hits;
+  int save, dam, hits;
   struct affected_type af;
-  
+
   struct damage_messages messages = {
     "&+GA strange magical aura forms around $N.",
     "&+GA strange magical aura forms around you causing immense &+Rpain!!!",
@@ -2617,88 +2616,87 @@ void spell_undead_to_death(int level, P_char ch, char *arg, int type,
     "$N's skin gains a little color.. then crumbles to &+Ldust!!!&n",
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
 
-  if(!IS_ALIVE(victim))
-  {
-    return;
-  }
-  
-  if(!IS_UNDEADRACE(victim))
+  if( !IS_UNDEADRACE(victim) )
   {
     send_to_char("They aren't even undead!", ch);
     return;
-  }  
+  }
 
-  save += BOUNDED(-10, GET_LEVEL(ch) - GET_LEVEL(victim), 10);
-
-  if(IS_GREATER_RACE(ch) ||
-     IS_ELITE(ch) ||
-     IS_PC_PET(victim))
+  if( IS_GREATER_RACE(ch) || IS_ELITE(ch) || IS_PC_PET(victim) )
   {
     save = 5;
   }
-  
-  dam = (9 * level) + number(-40, 40);
+  else
+  {
+    save = BOUNDED(-10, GET_LEVEL(ch) - GET_LEVEL(victim), 10);
+  }
 
-  if(IS_AFFECTED2(victim, AFF2_SOULSHIELD))
+  if( level > 56 )
+  {
+    level = 56;
+  }
+  // Note: For destroy undead (5th circle) dam = 15*lvl +/- 40.
+  // (16 * 56 = 896) / 4 => 224 +/- 10.
+  dam = (16 * level) + number(-40, 40);
+
+  if( IS_AFFECTED2(victim, AFF2_SOULSHIELD) )
   {
     dam = (int) (dam * 0.50);
     save -= 2;
   }
-  
-  if(!NewSaves(victim, SAVING_SPELL, save))
+
+  if( !NewSaves(victim, SAVING_SPELL, save) )
   {
     spell_damage(ch, victim, dam, SPLDAM_HOLY, SPLDAM_NOSHRUG, &messages);
   }
-  else if(!number(0, 3))
+  else if( !number(0, 3) )
   {
     spell_damage(ch, victim, (int) (dam * 0.75), SPLDAM_HOLY, SPLDAM_NOSHRUG, &messages);
   }
-  else if(GET_HIT(victim) > GET_MAX_HIT(victim))
+  else if( GET_HIT(victim) > GET_MAX_HIT(victim) )
   {
-    hits = GET_HIT(victim) - GET_MAX_HIT(victim);
-    GET_HIT(victim) -= hits;
-
     act("&+LYour undeath reserves were neutralized!&n", FALSE, ch, 0, victim, TO_VICT);
     act("&+GThe green mist surrounding&n $n &+Gexplodes!&n", TRUE, victim, 0, 0, TO_ROOM);
+
+    hits = GET_HIT(victim) - GET_MAX_HIT(victim);
+    GET_HIT(victim) -= hits;
   }
-  else if(!NewSaves(victim, SAVING_PARA, save) &&
-          !affected_by_spell(victim, SPELL_UNDEAD_TO_DEATH))
+  else if( !NewSaves(victim, SAVING_PARA, save)
+    && !affected_by_spell(victim, SPELL_UNDEAD_TO_DEATH) )
   {
-  
     act("&+LSomething is very, very wrong. Your undead bindings were greatly weakened!&n",
       FALSE, ch, 0, victim, TO_VICT);
     act("$n wavers and almost &+ycollapses!!!&n", TRUE, victim, 0, 0, TO_ROOM);
 
     bzero(&af, sizeof(af));
     af.type = SPELL_UNDEAD_TO_DEATH;
-    
+
     af.duration = number(1, 2);
-    
+
     af.location = APPLY_STR;
     af.modifier = (int) (-1 * dice(3, 10));
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_CON;
     af.modifier = (int) (-1 * dice(3, 20));
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_AGI;
     af.modifier = (int) (-1 * dice(3, 10));
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_DEX;
     af.modifier = (int) (-1 * dice(3, 10));
-    affect_to_char(victim, &af); 
+    affect_to_char(victim, &af);
   }
   else
   {
-    spell_damage(ch, victim, (int) (dam / 2), SPLDAM_HOLY, SPLDAM_NOSHRUG, &messages);
+    spell_damage(ch, victim, (int) (dam * .67), SPLDAM_HOLY, SPLDAM_NOSHRUG, &messages);
   }
 }
 

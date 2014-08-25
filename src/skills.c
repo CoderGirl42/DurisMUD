@@ -654,7 +654,7 @@ void initialize_skills()
                 TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO, spell_undead_to_death);
   SPELL_ADD(CLASS_NECROMANCER, 9);
   SPELL_ADD(CLASS_THEURGIST, 9);
-  
+
 
   SPELL_CREATE_MSG("regeneration", SPELL_REGENERATION, PULSE_SPELLCAST * 3 / 2,
                 TAR_CHAR_ROOM | TAR_NOCOMBAT,
