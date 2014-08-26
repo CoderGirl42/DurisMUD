@@ -249,7 +249,7 @@ void update_achievements(P_char ch, P_char victim, int cmd, int ach)
     {
       send_to_char("&+rCon&+Rgra&+Wtula&+Rtio&+rns! You have completed the &+RThe Sailor's Tattoo&+r achievement!&n\r\n", ch);
       send_to_char("&+yThis &+Yachievement&+y rewards a small &+bS&+Ba&+bi&+Bl&+bo&+Br&+b'&+Bs&n &+yTattoo&+y on your forearm.&n\r\n", ch);
-      if( get_ship_from_char( ch ) )
+      if( get_ship_from_owner( GET_NAME(ch) ) )
       {
         send_to_char( "&+ySeeing as you already own a ship, here's &n100 &+WPlatinum&+y!&n\n\r", ch);
         ADD_MONEY( ch, 100000 );
