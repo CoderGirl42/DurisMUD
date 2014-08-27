@@ -3076,23 +3076,20 @@ void enter_game(P_desc d)
     }
     else if(d->rtype == RENT_SWAPARTI)
     {
-      send_to_char("\r\nThe gods have taken your artifact... and "
-	"replaced it with another!\r\n", ch);
+      send_to_char("\r\nThe gods have taken your artifact... and replaced it with another!\r\n", ch);
       cost = restoreItemsOnly(ch, 100);
     }
     else if (d->rtype == RENT_DEATH)
     {
       if (ch->only.pc->pc_timer[PC_TIMER_HEAVEN] > time(NULL))
-        send_to_char("\r\nYour soul finds its way to the afterlife...\r\n",
-                     ch);
+        send_to_char("\r\nYour soul finds its way to the afterlife...\r\n", ch);
       else
         send_to_char("\r\nYou rejoin the land of the living...\r\n", ch);
       restoreItemsOnly(ch, 0);
     }
     else
     {
-      send_to_char("\r\nCouldn't find any items in storage for you...\r\n",
-                   ch);
+      send_to_char("\r\nCouldn't find any items in storage for you...\r\n", ch);
     }
 
   if (cost == -2)
@@ -3177,9 +3174,6 @@ void enter_game(P_desc d)
 //    reset_racial_skills( ch );
 
     set_surname(ch, 0);
-
-
-
   }
   /* don't do any of above for new chars */
   
@@ -3280,11 +3274,8 @@ void enter_game(P_desc d)
 
   if (!ch->player.name)
   {
-    wizlog(57,
-           "&+WSomething fucked up with character name. Tell a coder immediately!&n");
-    SEND_TO_Q
-      ("Serious screw-up with your player file. Log on another char and talk to gods.",
-       d);
+    wizlog(57, "&+WSomething fucked up with character name. Tell a coder immediately!&n");
+    SEND_TO_Q("Serious screw-up with your player file. Log on another char and talk to gods.", d);
     STATE(d) = CON_FLUSH;
   }
 
@@ -3295,7 +3286,7 @@ void enter_game(P_desc d)
   }
 
   ch->only.pc->last_ip = ip2ul(d->host);
-  
+
   if (!d->login)
   {
     wizlog(57, "%s had null login.", GET_NAME(ch));
@@ -3331,7 +3322,7 @@ void enter_game(P_desc d)
     {
       if(i->connected)
         continue;
- 
+
       if( opposite_racewar( ch, i->character ) )
         continue;
       if(!IS_SET(i->character->specials.act2, PLR2_NCHAT))
@@ -3342,7 +3333,7 @@ void enter_game(P_desc d)
         IS_DISGUISE_ILLUSION(i->character) ||
         IS_DISGUISE_SHAPE(i->character))
         continue;
- 
+
       send_to_char(Gbuf1, i->character, LOG_PRIVATE);
     }
   }
@@ -3360,8 +3351,8 @@ void enter_game(P_desc d)
   if( ch->only.pc->highest_level > MAXLVL )
   {
     ch->only.pc->highest_level = GET_LEVEL(ch);
-  }    
-  
+  }
+
   if (time_gone > 1)
   {
     strcpy(Gbuf1, "  (MIA: ");
@@ -3385,6 +3376,38 @@ void enter_game(P_desc d)
   }
   else
     *Gbuf1 = '\0';
+
+  // Add well-rested or rested bonus, if applicable.
+  // 24 hrs -> 2h well-rested bonus.
+  if( time_gone >= 24 * 60 )
+  {
+    affect_from_char(ch, TAG_WELLRESTED);
+    affect_from_char(ch, TAG_RESTED);
+
+    memset(&af1, 0, sizeof(struct affected_type));
+    af1.type = TAG_WELLRESTED;
+    af1.modifier = 0;
+    af1.duration = 120;
+    af1.location = 0;
+    af1.flags = AFFTYPE_PERM | AFFTYPE_NODISPEL;
+    affect_to_char(ch, &af1);
+    debug( "'%s' getting well-rested bonus!", J_NAME(ch) );
+  }
+  // 10 hrs -> 2h rested bonus.
+  else if( time_gone >= 10 * 60 )
+  {
+    affect_from_char(ch, TAG_WELLRESTED);
+    affect_from_char(ch, TAG_RESTED);
+
+    memset(&af1, 0, sizeof(struct affected_type));
+    af1.type = TAG_RESTED;
+    af1.modifier = 0;
+    af1.duration = 120;
+    af1.location = 0;
+    af1.flags = AFFTYPE_PERM | AFFTYPE_NODISPEL;
+    affect_to_char(ch, &af1);
+    debug( "'%s' getting rested bonus!", J_NAME(ch) );
+  }
 
   loginlog(GET_LEVEL(ch), "%s [%s] enters game.%s [%d]",
            GET_NAME(ch), d->host, Gbuf1, world[ch->in_room].number);

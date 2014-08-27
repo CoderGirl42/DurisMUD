@@ -5137,9 +5137,9 @@ void do_score(P_char ch, char *argument, int cmd)
   
   if(IS_PC(ch))
   {
-	int RemainingBartenderQuests = sql_world_quest_can_do_another(ch);
-	sprintf(buf, "&+yBartender Quests Remaining:&n %d\n", RemainingBartenderQuests);
-	send_to_char(buf, ch);
+  	int RemainingBartenderQuests = sql_world_quest_can_do_another(ch);
+	  sprintf(buf, "&+yBartender Quests Remaining:&n %d\n", RemainingBartenderQuests);
+	  send_to_char(buf, ch);
   }
 
   if(IS_PC(ch))
@@ -5302,7 +5302,8 @@ void do_score(P_char ch, char *argument, int cmd)
 
     for (aff = ch->affected; aff; aff = aff->next)
     {
-      if(aff->type && skills[aff->type].name && (aff->type <= LAST_SKILL || aff->type == TAG_CTF) )
+      if( aff->type && skills[aff->type].name
+        && (aff->type <= LAST_SKILL || aff->type == TAG_CTF || aff->type == TAG_RESTED || aff->type == TAG_WELLRESTED) )
       {
         switch (aff->type)
         {

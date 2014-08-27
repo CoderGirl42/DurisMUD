@@ -1042,13 +1042,12 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 {
   int goodcap = get_property("exp.level.cap.good", 15);
   int evilcap = get_property("exp.level.cap.evil", 15);
-  if(!(ch))
+  if( !ch )
   {
     return 0;
   }
-  
-  if(ch &&
-     IS_PC(ch))
+
+  if(ch && IS_PC(ch))
   {
     ch = GET_PLYR(ch);
   }
@@ -1056,19 +1055,17 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
   {
     return 0;
   }
-// debug("check 1 exp (%d:%d).", type, value);  
-  if(GET_LEVEL(ch) >= MINLVLIMMORTAL ||
-     CHAR_IN_ARENA(ch) ||
-     IS_SET(world[ch->in_room].room_flags, GUILD_ROOM | SAFE_ZONE))
+
+// debug("check 1 exp (%d:%d).", type, value);
+  if( GET_LEVEL(ch) >= MINLVLIMMORTAL || CHAR_IN_ARENA(ch)
+    || IS_SET(world[ch->in_room].room_flags, GUILD_ROOM | SAFE_ZONE) )
   {
     return 0;
   }
-  if(victim &&
-     type != EXP_RESURRECT)
+  if( victim && type != EXP_RESURRECT )
   {
-    if(IS_PC_PET(victim) ||
-      IS_SHOPKEEPER(victim) ||
-      IS_SET(world[victim->in_room].room_flags, GUILD_ROOM | SAFE_ZONE))
+    if( IS_PC_PET(victim) || IS_SHOPKEEPER(victim)
+      || IS_SET(world[victim->in_room].room_flags, GUILD_ROOM | SAFE_ZONE) )
     {
       return 0;
     }
@@ -1079,18 +1076,26 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     if((RACE_EVIL(ch) && RACE_GOOD(victim)) ||
        (RACE_GOOD(ch) && RACE_EVIL(victim)))
     {
-      pvp = true;
+      pvp = TRUE;
     }
-    
+
     if(GET_MASTER(ch) &&
       ((RACE_EVIL(GET_MASTER(ch)) && RACE_GOOD(victim)) ||
       (RACE_GOOD(GET_MASTER(ch)) && RACE_EVIL(victim))))
     {
-      pvp = true;
+      pvp = TRUE;
     }
   }
-  
+
   float XP = MAX(1, value);
+  if( affected_by_spell(ch, TAG_WELLRESTED) )
+  {
+    XP *= 3;
+  }
+  else if( affected_by_spell(ch, TAG_RESTED) )
+  {
+    XP *= 2;
+  }
 // debug("check 2 xp (%d)", (int)XP);  
   if(type == EXP_RESURRECT)
   {

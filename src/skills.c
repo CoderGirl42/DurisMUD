@@ -5230,6 +5230,8 @@ void create_tags()
   TAG_CREATE_WITH_MESSAGES("broken leg", TAG_LEGLOCK, "&+WYour leg has healed.&n", "$n's leg has healed.&n");
   TAG_CREATE_WITH_MESSAGES("arrow bleed", TAG_ARROW_BLEED, "&+WYour bleeding wound has healed.&n", "$n's bleeding wound has healed.&n");
   TAG_CREATE("summon spawn/ally", TAG_SPAWN);
+  TAG_CREATE("rested bonus", TAG_RESTED);
+  TAG_CREATE("well-rested bonus", TAG_WELLRESTED);
 }
 
 #ifdef SKILLPOINTS
