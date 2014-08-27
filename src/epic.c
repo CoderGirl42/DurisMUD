@@ -485,7 +485,7 @@ void epic_frag(P_char ch, int victim_pid, int amount)
     if(afp->modifier == SPILL_BLOOD) {
       send_to_char("The &+rGods of Duris&n are very pleased with this &+rblood&n.\n", ch);
       send_to_char("You can now progress further in your quest for epic power!\n", ch);
-      amount *= 2;
+      amount *= 3;
       affect_remove(ch, afp);
     }
   }
