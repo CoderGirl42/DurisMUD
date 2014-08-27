@@ -4033,32 +4033,32 @@ ClassSkillInfo SKILL_DATA_ALL(P_char ch, int skill)
   ClassSkillInfo dummy;
   int required_level, new_cap;
   int pri_rlevel, sec_rlevel, pri_cap, sec_cap;
-  float pri_mod = get_property("skill.cap.multi.mod.primarySkill", 0.950);
-  float sec_mod = get_property("skill.cap.multi.mod.secondarySkill", 0.750);
-  
+  float pri_mod = get_property("skill.cap.multi.mod.primarySkill", 100.0);
+  float sec_mod = get_property("skill.cap.multi.mod.secondarySkill", 95.0);
+
   if (IS_MULTICLASS_PC(ch))
   {
     new_cap = 0;
     required_level = 0;
-   
+
     pri_rlevel = SKILL_DATA(ch, skill).rlevel[0];
     sec_rlevel = SKILL_DATA2(ch, skill).rlevel[0];
     pri_cap = SKILL_DATA(ch, skill).maxlearn[0];
     sec_cap = SKILL_DATA2(ch, skill).maxlearn[0];
-    
+
     if( pri_rlevel && !sec_rlevel )
     {
-      new_cap = (int) ( pri_cap * pri_mod);
+      new_cap = (int) ( pri_cap * pri_mod) / 100;
       required_level = pri_rlevel;
     }
     else if( sec_rlevel && !pri_rlevel )
     {
-      new_cap = (int) (sec_cap * sec_mod);
+      new_cap = (int) (sec_cap * sec_mod) / 100;
       required_level = sec_rlevel + 5;
-    } 
+    }
     else if( pri_rlevel && sec_rlevel )
     {
-      new_cap = MAX( (int) (pri_cap * pri_mod), (int) (sec_cap * sec_mod) );
+      new_cap = (MAX( (int) (pri_cap * pri_mod), (int) (sec_cap * sec_mod) ))/100;
       required_level = MIN(pri_rlevel, (sec_rlevel+5) );
     }
 
