@@ -424,11 +424,12 @@ int takedown_check(P_char ch, P_char victim, int chance, int skill, ulong applic
   /*
    *  EVADE
    */
-  if(GET_CHAR_SKILL(victim, SKILL_EVADE)
+  if(GET_CHAR_SKILL(victim, SKILL_EVADE) && !get_spell_from_char(victim, SKILL_EVADE)
     && (notch_skill(victim, SKILL_EVADE, get_property("skill.notch.offensive", 7))
     || GET_CHAR_SKILL(victim, SKILL_EVADE) / 3 > number(0, 100)))
   {
     show_failed_takedown_messages(ch, victim, skill, EVADE);
+    set_short_affected_by(victim, SKILL_EVADE, PULSE_VIOLENCE/2);
     CharWait(ch, (int) (PULSE_VIOLENCE * 0.5));
     return TAKEDOWN_CANCELLED;
   }
@@ -535,9 +536,7 @@ int takedown_check(P_char ch, P_char victim, int chance, int skill, ulong applic
   // Agi versus agi Nov08 -Lucrot
   if( applicable & AGI_CHECK )
   {
-    chance =
-      (int) (chance *
-        ((double) BOUNDED(70, (100 + cagi - vagi), 125) / 100));
+    chance = (int) (chance * ((double) BOUNDED(70, (100 + cagi - vagi), 125) / 100));
   }
 
   // NPC bonus to bash Nov08 - Lucrot

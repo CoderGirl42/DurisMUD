@@ -8253,14 +8253,12 @@ int blockSucceed(P_char victim, P_char attacker, P_obj wpn)
   learned += dex_app[STAT_INDEX(GET_C_DEX(victim))].reaction * 2;
 
   if(GET_CLASS(attacker, CLASS_MONK))
-    learned = (int) (learned * 1.75); 
+    learned = (int) (learned * 1.75);
 
   // Shield block works well versus an attacker that is using a whip/flail.
-  if((wpn &&
-        IS_FLAYING(wpn)) ||
-      (attacker->equipment[WIELD] &&
-       IS_FLAYING(attacker->equipment[WIELD])))
-    learned = (int) (learned * 1.5); 
+  if((wpn && IS_FLAYING(wpn))
+    || (attacker->equipment[WIELD] && IS_FLAYING(attacker->equipment[WIELD])))
+    learned = (int) (learned * 1.5);
 
   if(IS_AFFECTED5(victim, AFF5_DAZZLEE))
     learned -= 10;
@@ -8418,8 +8416,8 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
     // All this does is set someone up to be repeatedly bashed and lagged,
     // utterly and insanely stupid. -- Jexni 1/21/11
 
-    if( GET_C_AGI(victim) > number(1, 1000) &&
-        GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS) > number(1, 100))
+    if( GET_C_AGI(victim) > number(1, 1000) && !get_spell_from_char(victim, SKILL_MARTIAL_ARTS)
+      && GET_CHAR_SKILL(victim, SKILL_MARTIAL_ARTS) > number(1, 100))
     {
       act("$n tucks in $s arms, rolls quickly away, then thrust $s feet skywards, leaping back to $s feet!",
           TRUE, victim, 0, attacker, TO_NOTVICT);
@@ -8430,6 +8428,7 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
       SET_POS(victim, POS_STANDING + GET_STAT(victim));
       // Clear the lag!
       disarm_char_events(victim, event_wait);
+      set_short_affected_by(victim, SKILL_MARTIAL_ARTS, PULSE_VIOLENCE/2);
       REMOVE_BIT(victim->specials.act2, PLR2_WAIT);
       update_pos(victim);
       return FALSE;
