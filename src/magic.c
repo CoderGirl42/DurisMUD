@@ -1538,8 +1538,7 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
 }
 
 P_char make_mirror (P_char);
-void spell_mirror_image(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_mirror_image(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   P_char   image, tmpch, j;
 
@@ -1550,6 +1549,12 @@ void spell_mirror_image(int level, P_char ch, char *arg, int type,
   int      numb, i, c, c2, placement;
   struct follow_type *k;
 
+  if( IS_NPC(ch) && (victim = GET_MASTER(ch)))
+  {
+    act("$n slaps you savagely across the face, and then kicks you in your pubic area.", FALSE, victim, 0, ch, TO_VICT);
+    send_to_char( "You feel lame now, don't you?  You should.\n\r", victim );
+    return;
+  }
 
   if(IS_SET(world[ch->in_room].room_flags, SINGLE_FILE))
   {
