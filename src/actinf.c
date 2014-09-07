@@ -5872,6 +5872,7 @@ void do_who(P_char ch, char *argument, int cmd)
   long     timer = 0;
   snoop_by_data *snoop_by_ptr;
   int      align = 0, min_level = 70, max_level = -1, sort = FALSE, zone = FALSE, lfg = FALSE;
+  struct affected_type *pafepics = get_spell_from_char(ch, TAG_EPICS_GAINED);
 
   if(!(ch) ||
      !IS_ALIVE(ch) ||
@@ -6285,8 +6286,8 @@ void do_who(P_char ch, char *argument, int cmd)
             "      Experience to next level = %d.\n",
             (new_exp_table[GET_LEVEL(tch) + 1] - GET_EXP(tch)));
     strcat(buf, buf3);
-    sprintf(buf3, "      Epic points = %ld.   Epic skill points = %ld.\n",
-      tch->only.pc->epics, tch->only.pc->epic_skill_points );
+    sprintf(buf3, "      Epic points = %ld.   Total epics gained = %d.\n",
+      tch->only.pc->epics, pafepics ? pafepics->modifier : 0 );
     strcat(buf, buf3);
 
     sprintf(buf3,

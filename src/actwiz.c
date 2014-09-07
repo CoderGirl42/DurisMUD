@@ -2573,7 +2573,9 @@ void do_stat(P_char ch, char *argument, int cmd)
     
     if(IS_PC(k))
     {
-      sprintf(buf, "&+YEpic points: &n%ld&+Y  Epic skill points: &n%ld\n", k->only.pc->epics, k->only.pc->epic_skill_points);
+      struct affected_type *paf = get_spell_from_char(ch, TAG_EPICS_GAINED);
+
+      sprintf(buf, "&+YEpic points: &n%ld&+Y  Total epics gained: &n%d\n", k->only.pc->epics, paf ? paf->modifier : 0);
       strcat(o_buf, buf);
 
       sprintf(buf,
