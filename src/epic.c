@@ -502,11 +502,12 @@ void epic_frag(P_char ch, int victim_pid, int amount)
 
 void epic_feed_artifacts(P_char ch, int epics, int epic_type)
 {
-  if(IS_TRUSTED(ch) || !IS_PC(ch))
+  if( IS_TRUSTED(ch) || !IS_PC(ch) )
+  {
     return;
+  }
 
-  // return; //disabling feeding for now. Re-enabling it Zion 4 8 2014
-
+  /* Disabled this code because we're feeding normal now and letting artis fight in artifact_wars().
   int num_artis = 0;
   for (int i = 0; i < MAX_WEAR; i++)
   {
@@ -515,6 +516,7 @@ void epic_feed_artifacts(P_char ch, int epics, int epic_type)
       num_artis++;
     }
   }
+  */
 
   int feed_seconds = (epics * get_property("artifact.feeding.epic.point.seconds", 3600));
 
@@ -545,21 +547,23 @@ void epic_feed_artifacts(P_char ch, int epics, int epic_type)
       break;
   }
 
+  /* Making feed normal because we have artifact_wars for chars with multiple artis now.
   // Changed slope from x to 2x for num_artis, making it 3x as hard for 2 artis, 5x as hard for 3, 7x for 4, and so on.
   if( num_artis > 0 )
   {
     feed_seconds = (int) (feed_seconds / (2 * num_artis - 1));
   }
+  */
 
   if( affected_by_spell(ch, TAG_PLR_RECENT_FRAG) )
   {
     feed_seconds = (feed_seconds * 3 ) / 2;
   }
 
-  for (int i = 0; i < MAX_WEAR; i++)
+  for( int i = 0; i < MAX_WEAR; i++ )
   {
     P_obj obj = ch->equipment[i];
-    if(obj && IS_ARTIFACT(obj))
+    if( obj && IS_ARTIFACT(obj) )
     {
       feed_artifact(ch, ch->equipment[i], feed_seconds, ((epic_type == EPIC_PVP || epic_type == EPIC_SHIP_PVP) ? TRUE : FALSE));
     }
