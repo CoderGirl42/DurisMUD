@@ -1059,16 +1059,20 @@ void do_practice(P_char ch, char *arg, int cmd)
       }
       return;
     }
-    skl = search_block(arg, (const char **) spells, FALSE);
+    // Search for an exact match first... otherwise guard -> guardian spirits instead of guard.
+    if( !(skl = search_block(arg, (const char **) spells, TRUE)) )
+    {
+      skl = search_block(arg, (const char **) spells, FALSE);
+    }
     i = skl;
 
 
-    if (!IsTaughtHere(ch, skl))
+    if( !IsTaughtHere(ch, skl) )
     {
       /* function will give approp. message */
       return;
     }
-    if (IS_SPELL(skl) && get_max_circle(ch) < get_spell_circle(ch, skl))
+    if( IS_SPELL(skl) && get_max_circle(ch) < get_spell_circle(ch, skl) )
     {
       sprintf(buf, "Well, sure, I know that one, but my conscience prevents me from teaching it to someone so unskilled as yourself.");
       if( teacher )
