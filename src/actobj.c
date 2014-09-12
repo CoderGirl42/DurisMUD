@@ -6452,12 +6452,14 @@ void do_search(P_char ch, char *argument, int cmd)
   /*
    * support for secret exits -DCL
    * but only when searching room, not containers in room. JAB
+   * Same goes for searching containers vs hidden chars.
    */
   if (!*name)
-    for (door = 0; (door < NUM_EXITS) &&
-         (!found_something || IS_TRUSTED(ch)); door++)
-      if (EXIT(ch, door) && IS_SET(EXIT(ch, door)->exit_info, EX_SECRET) &&
-          !IS_SET(EXIT(ch, door)->exit_info, EX_BLOCKED))
+  {
+    for( door = 0; (door < NUM_EXITS) && (!found_something || IS_TRUSTED(ch)); door++ )
+    {
+      if( EXIT(ch, door) && IS_SET(EXIT(ch, door)->exit_info, EX_SECRET)
+        && !IS_SET(EXIT(ch, door)->exit_info, EX_BLOCKED) )
       {
         if (find_chance(ch))
         {
@@ -6467,27 +6469,30 @@ void do_search(P_char ch, char *argument, int cmd)
           REMOVE_BIT(EXIT(ch, door)->exit_info, EX_SECRET);
         }
       }
-  /*
-   * new bit, give them chance to find hiding thieves/mobs
-   */
-  for (dummy = world[ch->in_room].people;
-       dummy && (!found_something || IS_TRUSTED(ch));
-       dummy = dummy->next_in_room)
-  {
-    if (IS_AFFECTED(dummy, AFF_HIDE) && find_chance(ch) && !number(0, 3))
+    }
+    /*
+     * new bit, give them chance to find hiding thieves/mobs
+     */
+    for( dummy = world[ch->in_room].people; dummy && (!found_something || IS_TRUSTED(ch)); dummy = dummy->next_in_room )
     {
-      REMOVE_BIT(dummy->specials.affected_by, AFF_HIDE);
-      if (CAN_SEE(ch, dummy))
+      if (IS_AFFECTED(dummy, AFF_HIDE) && find_chance(ch) && !number(0, 3))
       {
-        act("You find $N lurking here!", FALSE, ch, 0, dummy, TO_CHAR);
-        act("$n points out $N lurking here!", FALSE, ch, 0, dummy,
-            TO_NOTVICT);
-        if (find_chance(dummy) && !number(0, 3))
-          act("You think $n has spotted you!", TRUE, ch, 0, dummy, TO_VICT);
-        found_something = TRUE;
+        REMOVE_BIT(dummy->specials.affected_by, AFF_HIDE);
+        if (CAN_SEE(ch, dummy))
+        {
+          act("You find $N lurking here!", FALSE, ch, 0, dummy, TO_CHAR);
+          act("$n points out $N lurking here!", FALSE, ch, 0, dummy, TO_NOTVICT);
+          if (find_chance(dummy) && !number(0, 3))
+          {
+            act("You think $n has spotted you!", TRUE, ch, 0, dummy, TO_VICT);
+          }
+          found_something = TRUE;
+        }
+        else
+        {
+          SET_BIT(dummy->specials.affected_by, AFF_HIDE);
+        }
       }
-      else
-        SET_BIT(dummy->specials.affected_by, AFF_HIDE);
     }
   }
 
