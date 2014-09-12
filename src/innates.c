@@ -3900,7 +3900,7 @@ bool resists_spell(P_char caster, P_char victim)
     return FALSE;
   }
 
-  if( caster == victim )
+  if( caster == victim || is_linked_to(caster, victim, LNK_CONSENT) )
   {
     return FALSE;
   }
