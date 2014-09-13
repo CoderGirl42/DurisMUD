@@ -2836,3 +2836,83 @@ void spell_antimatter_collision(int level, P_char ch, char *arg, int type, P_cha
   add_event(event_antimatter_collision, PULSE_SPELLCAST*2, victim, ch, NULL, 0, &duration, sizeof(int));
 }
 
+// Event for spec nuke
+// victim and ch have to be backwards for the event search to work right.. *sigh*
+void event_arctic_blast(P_char victim, P_char ch, P_obj obj, void *data)
+{
+  int temp, dam, duration;
+
+  struct damage_messages messages = {
+    "&+C$N&+C &+Wsh&+wud&+Wde&+wrs &+Cviolently as the &+Wi&+Cc&+we &+Bcold &+Wwinds &+Cslice through $M.&n",
+    "&+CYou &+Wsh&+wud&+Wde&+wr &+Cviolently as the &+Wi&+Cc&+we &+Bcold &+Wwinds &+Cslice through you.&n",
+    "&+C$N&+C &+Wsh&+wud&+Wde&+wrs &+Cviolently as the &+Wi&+Cc&+we &+Bcold &+Wwinds &+Cslice through $M.&n",
+    "&+CThe &+Wi&+Cc&+wy &+Wwinds &+Cclaim the life of $N&+C...&n",
+    "&+CThe &+Wfrozen gale &+Cproves to be too much, sapping the last bit of &+rheat &+Cfrom your body leaving you in a &+Bfrost &+Ccovered heap...&n",
+    "&+CThe &+Wi&+Cc&+wy &+Wwinds &+Cclaim the life of $N&+C...&n",
+      0
+  };
+
+  duration = *((int *) data);
+  // 40-60 damage.
+  dam = 200 + number( -40, 40);
+
+  if( !NewSaves(victim, SAVING_SPELL, 3) )
+  {
+    dam = (int)(dam *  1.2);
+  }
+
+  if( spell_damage(ch, victim, (int) dam, SPLDAM_COLD, 0, &messages) == DAM_NONEDEAD
+    && --duration > 0 )
+  {
+    // This has to be backwards for the event search to work right.. *sigh*
+    add_event(event_arctic_blast, (PULSE_SPELLCAST * 3) / 2, victim, ch, NULL, 0, &duration, sizeof(int));
+  }
+  else if( IS_ALIVE(victim) && duration <= 0 )
+  {
+    send_to_char( "&+CThe &+Bcold &+Wwinds &+Csurrounding you subside.&n\n\r", victim );
+  }
+}
+
+void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
+{
+  int duration = 3;
+  P_nevent e1 = NULL;
+  bool found = FALSE;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+
+  // Look for an event already going on.
+  for( e1 = victim->nevents; e1; e1 = e1->next )
+  {
+    if( e1->func == event_arctic_blast )
+    {
+      found = TRUE;
+      break;
+    }
+  }
+
+  // If there's an event already going on, suck it's data and kill it!
+  if( found )
+  {
+    duration = *((int *) e1->data) + 2;
+    disarm_char_events(victim, event_arctic_blast);
+
+    act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround $N &+Wintensify!", TRUE, ch, 0, victim, TO_CHAR);
+    act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround you &+Wintensify!", TRUE, ch, 0, victim, TO_VICT);
+    act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround $N &+Wintensify!", TRUE, ch, 0, victim, TO_NOTVICT);
+  }
+  else
+  {
+    act( "&+CYou open an &+Wi&+Cc&+wy &+cvortex &+Cin the ether and &+Wbl&+Ca&+Cs&+wt $N &+Cwith the &+BF&+bu&+BR&+by &+Cof &+WAu&+Cri&+wl&+C!", TRUE, ch, 0, victim, TO_CHAR);
+    act( "&+cAn &+Carctic &+Wgale &+cbegins to blow unleashing the &+Bcold &+Cf&+Wu&+Cr&+Wy &+con YOU!", TRUE, ch, 0, victim, TO_VICT);
+    act( "&+BCold &+cand &+Wi&+Cc&+wy &+Wwinds &+cbegin to &+wblow &+cand engulf $N&+c!&n", TRUE, ch, 0, victim, TO_NOTVICT);
+  }
+
+  // This has to be backwards for the event search to work right.. *sigh*
+  add_event(event_arctic_blast, PULSE_SPELLCAST*2, victim, ch, NULL, 0, &duration, sizeof(int));
+
+}
+
