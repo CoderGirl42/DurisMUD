@@ -10109,7 +10109,7 @@ void do_newb_spellup(P_char ch, char *arg, int cmd)
 void do_givepet(P_char ch, char *arg, int cmd)
 {
   char msg[MAX_STRING_LENGTH], buf[MAX_STRING_LENGTH], pet[MAX_STRING_LENGTH];
-  P_char mob;
+  P_char mob = NULL;
 
   arg = one_argument(arg, buf);
   arg = one_argument(arg, pet);
@@ -10146,6 +10146,11 @@ void do_givepet(P_char ch, char *arg, int cmd)
       wizlog(56, "%s has loaded pet %s(Level: %d) for %s.", GET_NAME(ch), mob->player.short_descr, GET_LEVEL(mob), GET_NAME(victim));
       logit(LOG_WIZ, "(%s) has loaded pet (%s)(Level: %d) for (%s).",
         GET_NAME(ch), mob->player.short_descr, GET_LEVEL(mob), GET_NAME(victim));
+    }
+    else
+    {
+       send_to_char( "Valid pets are 'dog', 'cat', or vnum of mob!\n", ch );
+       return;
     }
 
     if(mob)
