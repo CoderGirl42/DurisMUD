@@ -3212,7 +3212,7 @@ SPELL_ADD(CLASS_SUMMONER, 11);
 
   SPELL_CREATE_MSG("kanchelsis fury", SPELL_KANCHELSIS_FURY, (PULSE_SPELLCAST * 3) / 2,
                 TAR_SELF_ONLY,
-                spell_kanchelsis_fury, "&+LThe world speeds up around you.&n");
+                spell_kanchelsis_fury, "&+LYou feel the world speeding up around you.&n");
   SPELL_ADD(CLASS_REAVER, 8);
 
   SPELL_CREATE("blood alliance", SPELL_BLOOD_ALLIANCE, PULSE_SPELLCAST * 2,
