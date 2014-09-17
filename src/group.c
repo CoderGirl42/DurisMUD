@@ -146,8 +146,16 @@ void displayM(P_char ch, char *tbuf)
   int      percent = 0;
   char     color[10];
 
-  GET_VITALITY(ch), GET_MAX_VITALITY(ch),
+//  GET_VITALITY(ch), GET_MAX_VITALITY(ch), WTF is this for?
+  // Stops divide by zero crashes (see spell enervation).
+  if( GET_MAX_VITALITY(ch) != 0 )
+  {
     percent = 100 * GET_VITALITY(ch) / GET_MAX_VITALITY(ch);
+  }
+  else
+  {
+    percent = 0;
+  }
 
 //wizlog(56, "percent:%d", percent);
 
