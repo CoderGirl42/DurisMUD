@@ -535,24 +535,20 @@ void do_gcc(P_char ch, char *argument, int cmd)
         logit(LOG_CHAT, "%s gcc's '%s'", GET_NAME(ch), argument);
     }
     for (i = descriptor_list; i; i = i->next)
-      {
+    {
 
-      if ((i->character != ch) && !i->connected &&
-          !is_silent(i->character, FALSE) &&
-          (i->connected == CON_PLYNG ) &&
-          IS_SET(i->character->specials.act, PLR_GCC) &&
-          IS_MEMBER(GET_A_BITS(i->character)) &&
-          (GET_A_NUM(i->character) == GET_A_NUM(ch)) &&
-          (!(IS_AFFECTED4(i->character, AFF4_DEAF))) &&
-          (GT_PAROLE(GET_A_BITS(i->character))) ||
-         (IS_TRUSTED(i->character) && IS_SET(i->character->specials.act, PLR_GCC) && (i->character != ch)))
+      if( (i->character != ch) && !is_silent(i->character, FALSE)
+        && (i->connected == CON_PLYNG ) && IS_SET(i->character->specials.act, PLR_GCC)
+        && IS_MEMBER(GET_A_BITS(i->character)) && (GET_A_NUM(i->character) == GET_A_NUM(ch))
+        && (!(IS_AFFECTED4(i->character, AFF4_DEAF))) && (GT_PAROLE(GET_A_BITS(i->character)))
+        || (IS_TRUSTED(i->character) && IS_SET(i->character->specials.act, PLR_GCC)
+        && (i->character != ch) && i->connected == CON_PLYNG) )
       {
-        sprintf(Gbuf1, "&+c%s&n&+c tells your guild '&+C%s&n&+c'\r\n",
-                PERS(ch, i->character, FALSE),
-                language_CRYPT(ch, i->character, argument));
+        sprintf(Gbuf1, "&+c%s&n&+c tells your guild '&+C%s&n&+c'\r\n", PERS(ch, i->character, FALSE),
+          language_CRYPT(ch, i->character, argument));
         send_to_char(Gbuf1, i->character, LOG_PRIVATE);
       }
-       }
+    }
   }
 }
 
