@@ -5103,7 +5103,7 @@ bool backstab(P_char ch, P_char victim)
     percent_chance = 101;
   }
 
-  CharWait(ch, (3 * WAIT_SEC) / 2);
+  CharWait(ch, WAIT_SEC);
 
   if( IS_PC(ch) && (!on_front_line(ch) || !on_front_line(victim)) )
   {
@@ -5185,7 +5185,7 @@ bool backstab(P_char ch, P_char victim)
 
   if( victim && IS_ALIVE(victim) && !affected_by_spell(victim, SKILL_AWARENESS) )
   {
-    set_short_affected_by(victim, SKILL_BACKSTAB, PULSE_VIOLENCE );
+    set_short_affected_by(victim, SKILL_BACKSTAB, 2*WAIT_SEC );
 /* Making this a short duration instead of PULSE_VIOLENCE ticks (like 20 min).
     bzero(&af, sizeof(af));
     af.type = SKILL_BACKSTAB;
@@ -10174,7 +10174,7 @@ void do_garrote(P_char ch, char *argument, int cmd)
     act("$N &+Ladeptly notices &n$n's attempt to &+rgarrote&+L them and blocks the attempt!",
     FALSE, ch, 0, victim, TO_NOTVICT);
     set_short_affected_by(ch, SKILL_GARROTE, PULSE_VIOLENCE);
-    CharWait(ch, WAIT_SEC * 2);
+    CharWait(ch, (3*WAIT_SEC) / 2);
     return;
   }
 
@@ -10190,7 +10190,7 @@ void do_garrote(P_char ch, char *argument, int cmd)
   }
   set_short_affected_by(ch, SKILL_GARROTE, PULSE_VIOLENCE);
 	int	numb = number(5, 8);
-  CharWait(ch, WAIT_SEC);
+  CharWait(ch, WAIT_SEC / 2);
   if( !IS_FIGHTING(ch) )
   {
     set_fighting(ch, victim);
