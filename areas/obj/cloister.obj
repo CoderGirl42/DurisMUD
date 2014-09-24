@@ -108,7 +108,7 @@ black key~
 &+LA black key is lying here.~
 ~
 18 15 3 0 7 0 8916992 16385 0 0 0
-0 40 0 0 0 0 0 0
+0 100 0 0 0 0 0 0
 0 0 100
 #67108
 bucket~
@@ -181,7 +181,7 @@ thin key~
 &+LA thin key is lying here.~
 ~
 18 15 3 0 7 0 8392705 16385 0 0 0
-0 0 0 0 0 0 0 0
+0 100 0 0 0 0 0 0
 0 0 100
 #67113
 ring elder~
