@@ -502,11 +502,14 @@ void epic_frag(P_char ch, int victim_pid, int amount)
 {
   struct affected_type *afp;
 
-  if(afp = get_epic_task(ch)) {
-    if(afp->modifier == SPILL_BLOOD) {
+  if( afp = get_epic_task(ch) )
+  {
+    if( afp->modifier == SPILL_BLOOD )
+    {
       send_to_char("The &+rGods of Duris&n are very pleased with this &+rblood&n.\n", ch);
       send_to_char("You can now progress further in your quest for epic power!\n", ch);
-      amount *= 3;
+      // Spill blood task is now a flat 500 epics, not a multiplier since that very easily translates to 3*0=0.
+      amount += 500;
       affect_remove(ch, afp);
     }
   }

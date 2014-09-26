@@ -822,9 +822,7 @@ void AddFrags(P_char ch, P_char victim)
 
         if(real_gain + recfrag >= get_property("epic.frag.threshold", 0.10)*100 )
         {
-          frag_gain = (int) ((real_gain/100.00) * (float)
-              (get_property("epic.frag.amount", 20.000)));
-
+          frag_gain = (int) ((real_gain/100.00) * (float) (get_property("epic.frag.amount", 20.000)));
           epic_frag(tch, GET_PID(victim), frag_gain);
         }
 
