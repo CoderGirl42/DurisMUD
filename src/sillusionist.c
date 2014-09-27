@@ -1270,17 +1270,21 @@ void spell_hammer(int level, P_char ch, char *arg, int type, P_char victim, P_ob
     return;
   }
 
-  if( affected_by_spell(victim, SPELL_DEFLECT) ||
-    IS_AFFECTED4(victim, AFF4_DEFLECT) )
+  if( affected_by_spell(victim, SPELL_DEFLECT) || IS_AFFECTED4(victim, AFF4_DEFLECT) )
   {
     stunself = 1;
   }
 
+  // Imms casting hammer lvl reduced to 56 for testing.
+  if( level > 56 && IS_PC(ch) )
+  {
+    level = 56;
+  }
   dam = 9 * level + number(-25, 25);
 
   // Adding a save for this since 115 damage for 7th circle is absurd.
   //  This brings 115 down to 76, which is normal non-sorc 7th circle damage.
-  if( NewSaves(victim, SAVING_SPELL, 0) )
+  if( NewSaves(victim, SAVING_SPELL, level/7) )
   {
     dam = (dam * 2) / 3;
   }
