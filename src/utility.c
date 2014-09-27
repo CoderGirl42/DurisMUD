@@ -139,6 +139,11 @@ int get_vis_mode(P_char ch, int room)
   {
     return 2;
   }
+  // Underdark rooms are visible to Ultravision naturally.
+  if( IS_UNDERWORLD(room) && IS_AFFECTED2(ch, AFF2_ULTRAVISION) )
+  {
+    return 2;
+  }
 
   // Ok, they don't have ultra .. if it's dark and they have infra.
   if( IS_AFFECTED(ch, AFF_INFRAVISION) && (IS_DARK(room) || IS_MAGIC_DARK(room)) )
