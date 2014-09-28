@@ -3137,42 +3137,34 @@ bool spell_can_affect_char(P_char ch, int spl)
 
 bool racewar(P_char viewer, P_char viewee)
 {
-  if (!viewer || !viewee)
-    return FALSE;
-
-  if (!IS_ALIVE(viewer) || !IS_ALIVE(viewee) )
+  if( !IS_ALIVE(viewer) || !IS_ALIVE(viewee) )
   {
     return FALSE;
   }
-  
-  if (viewer && IS_MORPH(viewer))
-    viewer = MORPH_ORIG(viewer);
 
-  if (!viewer || !viewee)
-    return FALSE;
-
-  if (IS_TRUSTED(viewer) || IS_TRUSTED(viewee))
-    return FALSE;
-
-  if (viewer == viewee)
-    return FALSE;
-
-  if (IS_NPC(viewer))
-    return FALSE;
-
-  if(IS_NPC(viewee))
+  if( IS_MORPH(viewer) )
   {
-    if(GET_VNUM(viewee) != IMAGE_REFLECTION_VNUM)
+    viewer = MORPH_ORIG(viewer);
+    if( !IS_ALIVE(viewer) )
     {
       return FALSE;
     }
   }
 
+  if( IS_TRUSTED(viewer) || IS_TRUSTED(viewee) || (viewer == viewee) || IS_NPC(viewer) )
+  {
+    return FALSE;
+  }
+
+  if( IS_NPC(viewee) && GET_VNUM(viewee) != IMAGE_REFLECTION_VNUM )
+  {
+    return FALSE;
+  }
+
   /* illithids see everyone's true name */
+//  if (IS_ILLITHID(viewer)) return FALSE;
 
-/*  if (IS_ILLITHID(viewer)) return FALSE;  */
-
-  if (IS_DISGUISE(viewee))
+  if( IS_DISGUISE(viewee) )
   {
     if (IS_DISGUISE_NPC(viewee))
     {

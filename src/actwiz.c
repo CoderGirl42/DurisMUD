@@ -3637,16 +3637,22 @@ void do_wizlock(P_char ch, char *arg, int cmd)
 
 void do_nchat(P_char ch, char *argument, int cmd)
 {
-  P_desc   i;
-  int      goodie = 0;
-  int      evil = 0;
-  int      undead = 0;
-  int      all = 0;
-  char     Gbuf1[MAX_STRING_LENGTH];
-  char     Gbuf2[MAX_STRING_LENGTH];
+  P_desc i;
+  bool   good, evil, undead, all;
+  char   Gbuf1[MAX_STRING_LENGTH];
+  char   Gbuf2[MAX_STRING_LENGTH];
+  P_char to;
+
+  all = good = evil = undead = FALSE;
 
   if( !IS_ALIVE(ch) )
   {
+    return;
+  }
+
+  if( IS_NPC(ch) )
+  {
+    send_to_char("You try, but you just can't figure out how.. Maybe this requires being a PC.\n\r", ch);
     return;
   }
 
@@ -3704,20 +3710,17 @@ void do_nchat(P_char ch, char *argument, int cmd)
     {
       if(((*argument == 'g') || (*argument == 'G')) &&
           (*(argument + 1) == ' '))
-        goodie = 1;
+        good = TRUE;
       else if(((*argument == 'e') || (*argument == 'E')) &&
                (*(argument + 1) == ' '))
-        evil = 1;
+        evil = TRUE;
       else if(((*argument == 'u') || (*argument == 'U')) &&
                (*(argument + 1) == ' '))
-        undead = 1;
+        undead = TRUE;
       else if(((*argument == 'a') || (*argument == 'A')) &&
                (*(argument + 1) == ' '))
       {
-        undead = 1;
-        evil = 1;
-        goodie = 1;
-        all = 1;
+        all = good = evil = undead = TRUE;
       }
       else
       {
@@ -3726,22 +3729,22 @@ void do_nchat(P_char ch, char *argument, int cmd)
       }
       argument += 2;
 
-      if( all == 1 )
-        sprintf(Gbuf2, "&+C*all* &n");
-      else if(goodie == 1)
-        sprintf(Gbuf2, "&+Wgoodie &n");
-      else if(evil == 1)
-        sprintf(Gbuf2, "&+Revil &n");
-      else if(undead == 1)
-        sprintf(Gbuf2, "&+Lundead &n");
+      if( all )
+        sprintf(Gbuf2, "&+C*all*&n");
+      else if( good )
+        sprintf(Gbuf2, "&+Wgood&n");
+      else if( evil )
+        sprintf(Gbuf2, "&+Revil&n");
+      else if( undead )
+        sprintf(Gbuf2, "&+Lundead&n");
       else
-        sprintf(Gbuf2, "undefined ");
+        sprintf(Gbuf2, "undefined");
 
 
-      sprintf(Gbuf1, "&+mYou racewar chat to %s'&+w%s&n&+w'\n", Gbuf2, argument);
+      sprintf(Gbuf1, "&+mYou racewar chat to %s '&+w%s&n&+w'\n", Gbuf2, argument);
       send_to_char(Gbuf1, ch, LOG_PRIVATE);
     }
-    else if(IS_SET(ch->specials.act, PLR_ECHO) || IS_NPC(ch))
+    else if( IS_SET(ch->specials.act, PLR_ECHO) )
     {
       sprintf(Gbuf1, "&+mYou tell your racewar '&+W%s&n&+w'\n", argument);
       send_to_char( Gbuf1, ch, LOG_PRIVATE );
@@ -3750,19 +3753,22 @@ void do_nchat(P_char ch, char *argument, int cmd)
       send_to_char("Ok.\n", ch);
   }
 
-  if(!IS_TRUSTED(ch))
+  if( !IS_TRUSTED(ch) )
   {
     if( RACE_GOOD(ch) )
     {
       sprintf(Gbuf2, "&+Wgood&n");
+      good = TRUE;
     }
     else if(RACE_EVIL(ch))
     {
       sprintf(Gbuf2, "&+Revil&n");
+      evil = TRUE;
     }
     else if(RACE_PUNDEAD(ch))
     {
       sprintf(Gbuf2, "&+Lundead&n");
+      undead = TRUE;
     }
     else
     {
@@ -3772,44 +3778,43 @@ void do_nchat(P_char ch, char *argument, int cmd)
 
   for( i = descriptor_list; i; i = i->next )
   {
-    if( i->connected )
+    if( i->connected || !(to = i->character) || to == ch )
     {
       continue;
     }
-    // Skip ch, if ch is a mortal skip anyone who's a mortal on diff't sides, and skip anyone it's not directed to.
-    //   I don't get how someone can nchat across racewar sides?  This makes the racewar(..) irrelevant?
-    //   However, it works right atm, so I'll leave it even though it might be a waste of time.
-    if( (!IS_TRUSTED(ch) && (racewar(ch, i->character) || (!all && evil && !RACE_EVIL(i->character))
-      || (!all && undead && !RACE_PUNDEAD(i->character)) || (!all && goodie && !RACE_GOOD(i->character))))
-      || i->character == ch )
+    // If mortal && racewar side doesn't match.  (Immortals see all nchats).
+    if( !IS_TRUSTED(to) && !all && ( (evil && !RACE_EVIL(to)) || (undead && !RACE_PUNDEAD(to))
+      || (good && !RACE_GOOD(to)) ) )
     {
       continue;
     }
-    if( !IS_SET(i->character->specials.act2, PLR2_NCHAT) )
+    // NPCs need to not hear nchat so that the pc only flags can be checked in peace.
+    if( IS_NPC(to) || !PLR2_FLAGGED(to, PLR2_NCHAT) )
     {
       continue;
     }
-    if( i->character->only.pc->ignored == ch )
+    // Skip if to is ignoring ch.
+    if( to->only.pc->ignored == ch )
     {
       continue;
     }
-    if( IS_DISGUISE(i->character) || IS_DISGUISE_ILLUSION(i->character) || IS_DISGUISE_SHAPE(i->character) )
+    if( IS_DISGUISE(to) || IS_DISGUISE_ILLUSION(to) || IS_DISGUISE_SHAPE(to) )
     {
       continue;
     }
-    if( IS_TRUSTED(i->character) )
+    if( IS_TRUSTED(to) )
     {
       sprintf(Gbuf1, "&+W%s&n&+m racewar-chats &+w(%s&+w): '&+Y%s&n&+w'\n",
-        PERS(ch, i->character, FALSE), Gbuf2, language_CRYPT(ch, i->character, argument));
+        PERS(ch, to, FALSE), Gbuf2, language_CRYPT(ch, to, argument));
     }
     else
     {
       sprintf(Gbuf1, "&+W%s&n&+m tells your racewar: &+w'&+Y%s&n&+w'\n",
-        PERS(ch, i->character, FALSE), language_CRYPT(ch, i->character, argument));
+        PERS(ch, to, FALSE), language_CRYPT(ch, to, argument));
     }
-    send_to_char(Gbuf1, i->character, LOG_PRIVATE);
+    send_to_char(Gbuf1, to, LOG_PRIVATE);
   }
-  if( get_property("logs.chat.status", 0.000) && IS_PC(ch) )
+  if( get_property("logs.chat.status", 0.000) )
   {
     logit(LOG_CHAT, "%s newb chat's (%s) '%s'", GET_NAME(ch), Gbuf2, argument);
   }
