@@ -2216,12 +2216,13 @@ void do_enhance(P_char ch, char *argument, int cmd)
     return;
   }
   else if(GET_OBJ_VNUM(material) == GET_OBJ_VNUM(source))
-  {  
+  {
     send_to_char("&+yYou cannot enhance an item with itself!\r\n", ch);
     return;
   }
-  if( (IS_SET(source->wear_flags, ITEM_WIELD) && !IS_SET(material->wear_flags, ITEM_WIELD)) ||
-      (IS_SET(material->wear_flags, ITEM_WIELD) && !IS_SET(source->wear_flags, ITEM_WIELD)) && (GET_OBJ_VNUM(material) < 400238 && GET_OBJ_VNUM(material) > 400258))
+  // If source is a weapon, material must be either a weapon or an essence.
+  if( IS_SET(source->wear_flags, ITEM_WIELD) && !IS_SET(material->wear_flags, ITEM_WIELD)
+    && (GET_OBJ_VNUM(material) < 400238 || GET_OBJ_VNUM(material) > 400258) )
   {
     send_to_char("&+YWeapons&+y can only enhance other &+Yweapons&n!\r\n", ch);
     return;
