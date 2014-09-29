@@ -1748,7 +1748,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     return;
   }
 
-  if (!affect_timer(ch, get_property("timer.mins.planetaryAlignment", 3) * WAIT_MIN, SPELL_PLANETARY_ALIGNMENT)) 
+  if( !affect_timer(ch, get_property("timer.mins.planetaryAlignment", 3) * WAIT_MIN, SPELL_PLANETARY_ALIGNMENT) )
   {
     send_to_char("&+LYou are too tired to align celestial bodies.&n\n", ch);
     return;
@@ -1758,7 +1758,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     FALSE, ch, 0, 0, TO_CHAR);
   act("$n &+Lgazes upwards towards the &+Yco&+Wsm&+Yos&n&+L and strains for control.&n",
     FALSE, ch, 0, 0, TO_ROOM);
-  
+
   memset(&af, 0, sizeof(af));
 
   if (number(0,100) < 11)
@@ -1789,11 +1789,11 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     af.location = APPLY_WIS_MAX;
     af.modifier = 15;
     affect_to_char(victim, &af);
-     
+
     af.location = APPLY_POW_MAX;
     af.modifier = 15;
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_CHA_MAX;
     af.modifier = 15;
     affect_to_char(victim, &af);
@@ -1841,7 +1841,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     af.location = APPLY_POW_MAX;
     af.modifier = 10;
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_CHA_MAX;
     af.modifier = 10;
     affect_to_char(victim, &af);
@@ -1860,7 +1860,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     af.type = SPELL_PLANETARY_ALIGNMENT;
     af.duration = level / 5;
     af.modifier = 10;
-    
+
     af.location = APPLY_STR;
     affect_to_char(victim, &af);
 
@@ -1881,7 +1881,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
 
     af.location = APPLY_POW;
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_CHA;
     affect_to_char(victim, &af);
 
@@ -1919,7 +1919,7 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
 
     af.location = APPLY_POW;
     affect_to_char(victim, &af);
-    
+
     af.location = APPLY_CHA;
     affect_to_char(victim, &af);
 
@@ -1931,9 +1931,11 @@ void spell_planetary_alignment(int level, P_char ch, char *arg, int type, P_char
     act("&+LThe &+Yco&+Wsm&+Yic&n&+L power brushes you.&n",
       FALSE, ch, 0, 0, TO_CHAR);
   }
-  act("&n&+LYet you fail to bring them under your control.&n",
-    FALSE, ch, 0, 0, TO_CHAR);
-
+  else
+  {
+    act("&n&+LYet you fail to bring them under your control.&n",
+      FALSE, ch, 0, 0, TO_CHAR);
+  }
 }
 
 void spell_single_polar_vortex(int level, P_char ch, char *arg, int type,
