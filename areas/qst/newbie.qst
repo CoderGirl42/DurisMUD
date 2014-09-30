@@ -1221,7 +1221,7 @@ $n begins speaking in a high pitched &+RGnomish&N voice.
 &+Whave in your memory&+R.  &+WUsing the &+Cpray&+W command again will show the list of
 &+Wspells currently at&+R yo&+Wur disposal. Use the &+Ccast&+W command followed by the spell
 &+Wname enclosed by &+Capostrophes&+W, and then the target name, if necessary.  Try
-&+Wcasting cure light wounds on yourself now, &+Ccast 'cure light wounds' me&+W!"
+&+Wcasting cure light on yourself now, &+Ccast 'cure light' me&+W!"
 ~
 M
 circles spellcircle~
@@ -1466,7 +1466,7 @@ The &+WPaladin&N displays his &+CBlue Cross&N and speaks, &+W"You will get spell
 &+Whave in your memory&+C.  &+WUsing the &+Ypray&+W command again will show the list of
 &+Wspells currently at&+C yo&+Wur disposal. Use the &+Ycast&+W command followed by the spell
 &+Wname enclosed by &+Yapostrophes&+W, and then the target name, if necessary.  Try
-&+Wcasting cure light wounds on yourself now, &+Ycast 'cure light wounds' me&+W!"
+&+Wcasting cure light on yourself now, &+Ycast 'cure light' me&+W!"
 
 &+W"&+YMeditation&+W is a skill for users of magic and whose benefit helps reduce the
 &+Wamount of time you will need to spend in prayer by up to half.  To use it you
