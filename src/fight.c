@@ -728,7 +728,7 @@ void setHeavenTime(P_char victim)
 void AddFrags(P_char ch, P_char victim)
 {
   P_char   tch;
-  int allies, recfrag = 0, frag_gain;
+  int allies, recfrag = 0, frag_gain, real_gain;
   char buffer[1024];
   struct affected_type af, *afp, *next_af;
 
@@ -779,7 +779,7 @@ void AddFrags(P_char ch, P_char victim)
 
       if (fragWorthy(tch, victim))
       {
-        int real_gain = gain;
+        real_gain = gain;
         if(GET_LEVEL(tch) > GET_LEVEL(victim) + 5)
           real_gain = (int)(real_gain * get_property("frag.leveldiff.modifier.low", 0.500));
         if(GET_LEVEL(tch) + 5 < GET_LEVEL(victim))
@@ -855,6 +855,7 @@ void AddFrags(P_char ch, P_char victim)
   sql_modify_frags(victim, -loss);
   victim->only.pc->frags -= loss;
   sprintf(buffer, "You just lost %.02f frags!\r\n", ((float) loss) / 100);
+  debug( "%s just fragged %s for %.02f/%.02f frags!", J_NAME(ch), J_NAME(victim), ((float) real_gain) / 100, ((float) loss) / 100);
 
   if(IS_PC(victim))
   {
