@@ -664,7 +664,8 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 
 #define GET_LEVEL(character) ((character==NULL) ? -1 :(int) character->player.level)
 
-#define IS_TRUSTED(ch) (GET_LEVEL(ch) > MAXLVLMORTAL && IS_PC(ch) && !IS_SET(ch->specials.act, PLR_MORTAL))
+ // Most common fail: NPC, second: mortal, third: fog set.
+#define IS_TRUSTED(ch) (IS_PC(ch) && GET_LEVEL(ch) > MAXLVLMORTAL && !IS_SET(ch->specials.act, PLR_MORTAL))
   /* || IS_SET(ch->specials.act, PLR_DEBUG))*/
 
 #define IS_FIGHTING(ch) ((ch->specials.fighting)? 1: 0)
@@ -1121,9 +1122,8 @@ IS_GIANT(ch) || IS_PC_PET(ch) || IS_PC(ch) || IS_UNDEAD(ch) || IS_EFREET(ch)) &&
 
 #define IS_ENCRUSTED(obj) (IS_SET(obj->extra_flags, ITEM_ENCRUSTED))
 
-#define WIZ_INVIS(viewer, target) \
-(IS_TRUSTED(target) && (GET_LEVEL(viewer) <= target->only.pc->wiz_invis) && \
- !is_linked_to(viewer, target, LNK_CONSENT))
+#define WIZ_INVIS(viewer, target) (IS_TRUSTED(target) && (GET_LEVEL(viewer) <= target->only.pc->wiz_invis) \
+ && !is_linked_to(viewer, target, LNK_CONSENT))
 
 /* This is for a check to see if the the player/mob has the footing
    to do any actions, i.e. bash, etc, in certain sector types, such

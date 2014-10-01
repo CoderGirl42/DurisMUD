@@ -1993,7 +1993,6 @@ void list_char_to_char(P_char list, P_char ch, int mode)
       show_char_to_char(i, ch, 0);
       continue;
     }*/
-//    }
   }
 }
 

@@ -1178,9 +1178,6 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   bool   globe, flame;
   P_char tmp_char;
 
-  globe = FALSE;
-  flame = FALSE;
-
   if( !sub )
   {
     logit(LOG_EXIT, "No P_char sub found during ac_can_see() call");
@@ -1202,7 +1199,7 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   // This shouldn't make too much of a difference since not many lvl 57+ mobs/chars.
   // Had to add these checks for toggle fog?  Also, NPCs 57+ see all?
   // Most common fail: NPC, second: mortal, third: fog set.
-  if( IS_PC(sub) && GET_LEVEL(sub) > MAXLVLMORTAL && !IS_SET(sub->specials.act, PLR_MORTAL) )
+  if( IS_TRUSTED(sub) )
   {
       return 1;
   }
@@ -1279,20 +1276,30 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     return 1;
   }
 
+  globe = FALSE;
+  flame = FALSE;
   // No need to search for these until they're used.
   for( tmp_char = world[sub->in_room].people; tmp_char; tmp_char = tmp_char->next_in_room )
   {
     if (IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME))
     {
       flame = TRUE;
+      if( globe )
+      {
+        break;
+      }
     }
     if (IS_AFFECTED4(tmp_char, AFF4_GLOBE_OF_DARKNESS))
     {
       globe = TRUE;
+      if( flame )
+      {
+        break;
+      }
     }
   }
 
-  // Room is magically dark & viewer has no ultra & no mage flames.
+  // Room is magically dark & viewer has no infra/ultra & no mage flames.
   if( IS_SET(world[obj->in_room].room_flags, MAGIC_DARK) && IS_PC(sub)
     && world[obj->in_room].light <= 0
     && !IS_AFFECTED(sub, AFF_INFRAVISION)
@@ -1360,9 +1367,15 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     return 1;
   }
 
-  // Darkened rooms aren't dark when there's a light source.
-  if( IS_SET(world[obj->in_room].room_flags, MAGIC_DARK) && IS_PC(sub)
-    && world[obj->in_room].light > 0 )
+  // Dayvision.
+  if( (CAN_DAYPEOPLE_SEE(obj->in_room) || flame) && !has_innate(sub, INNATE_DAYBLIND) )
+  {
+    return 1;
+  }
+
+  // Normal nightvision
+  if( (CAN_NIGHTPEOPLE_SEE(obj->in_room) || globe)
+    && (IS_AFFECTED(sub, AFF_INFRAVISION) || IS_AFFECTED2(sub, AFF2_ULTRAVISION)) )
   {
     return 1;
   }
