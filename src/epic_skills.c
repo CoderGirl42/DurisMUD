@@ -165,7 +165,7 @@ epic_teacher_skill epic_teachers[] = {
   {20242, SKILL_IMPROVED_TRACK, 0, 100, SKILL_TRACK, 0, 95},
   {99548, SKILL_EMPOWER_SONG, 0, 100, 0, 0},
   {22436, SKILL_FIX, 0, 100, 0, 0, 0}, //smith in stormport
-  {9454,  SKILL_CRAFT, 0, 100, 0, 0, 0}, //Rjinal in Samirz
+//  {9454,  SKILL_CRAFT, 0, 100, 0, 0, 0}, //Rjinal in Samirz
   {40760, SKILL_ENCRUST, 0, 100, SKILL_CRAFT, 0, 100}, //Snent in Divine Home
   {78006, SKILL_ENCHANT, 0, 100, 0, SKILL_SPELLBIND, 0}, //Bargor in Oasis
   {94017, SKILL_SPELLBIND, 0, 100, 0, SKILL_ENCHANT, 0}, //Kalroh in Maze of Undead Army
@@ -194,7 +194,7 @@ epic_teacher_skill epic_teachers[] = {
 void create_epic_skills()
 {
   SKILL_CREATE("mine", SKILL_MINE, TAR_EPIC);
-  SKILL_CREATE("craft", SKILL_CRAFT, TAR_EPIC);
+  SKILL_CREATE("craft", SKILL_CRAFT, TAR_PHYS | TAR_EPIC);
   SKILL_CREATE("forge", SKILL_FORGE, TAR_MENTAL | TAR_EPIC);
   SKILL_CREATE("spell mastery", SKILL_SPELL_MASTERY, TAR_MENTAL | TAR_EPIC);
   SKILL_CREATE("chant mastery", SKILL_CHANT_MASTERY, TAR_MENTAL | TAR_EPIC);
@@ -225,7 +225,6 @@ void create_epic_skills()
   SKILL_CREATE("infuse magical device", SKILL_INFUSE_MAGICAL_DEVICE, TAR_PHYS |TAR_EPIC);
   SKILL_CREATE("indomitable rage", SKILL_INDOMITABLE_RAGE, TAR_PHYS | TAR_EPIC);
   SKILL_CREATE("fix", SKILL_FIX, TAR_EPIC);
-  SKILL_CREATE("craft", SKILL_CRAFT, TAR_PHYS | TAR_EPIC);
   SKILL_CREATE("encrust", SKILL_ENCRUST, TAR_PHYS | TAR_EPIC);
   SKILL_CREATE("enchant", SKILL_ENCHANT, TAR_PHYS | TAR_EPIC);
   SKILL_CREATE("spellbind", SKILL_SPELLBIND, TAR_PHYS | TAR_EPIC);
