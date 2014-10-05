@@ -1535,41 +1535,48 @@ void spell_comet(int level, P_char ch, char *arg, int type, P_char victim, P_obj
 
 void spell_cosmic_vacuum(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
-  int mod;
+  int success_chance;
   struct affected_type af;
 
-  if (affected_by_spell(victim, SPELL_COSMIC_VACUUM))
+  if( affected_by_spell(victim, SPELL_COSMIC_VACUUM) )
   {
     send_to_char("&+cThey are already affected by a cosmic vacuum!\r\n", ch);
     return;
   }
-  
-  else if (resists_spell(ch, victim))
+  else if( resists_spell(ch, victim) )
+  {
     return;
+  }
 
-  int success_chance = BOUNDED(50, 70 + GET_LEVEL(ch) - GET_LEVEL(victim), 80);
-  if (success_chance <= number(1, 100))
+  success_chance = BOUNDED(50, 70 + GET_LEVEL(ch) - GET_LEVEL(victim), 80);
+  if( success_chance <= number(1, 100) )
+  {
     return;
+  }
 
   memset(&af, 0, sizeof(af));
 
-  if (NewSaves(victim, SAVING_SPELL, 0))
+  if( NewSaves(victim, SAVING_SPELL, 0) )
   {
     af.flags = AFFTYPE_SHORT;
+    // Saved -> 1/3 level seconds
     af.duration = level / 3 * WAIT_SEC;
   }
-  else 
+  else
+  {
+    // Failed save -> level / 10 minutes.
     af.duration = level / 10;
+  }
 
-  mod = MAX(0, GET_AC(victim) + level);
-  
   af.type = SPELL_COSMIC_VACUUM;
-  
-  af.modifier = mod;
+  // Set AC to 100 if AC + level goes over 100.
+  af.modifier = (GET_AC(victim) + level) > 100 ? 100 - GET_AC(victim) : level;
   af.location = APPLY_AC;
   affect_to_char(victim, &af);
-  
-  af.modifier = level / 5;
+
+  // At level 55, it's 11-2=9 points vs curse at 10 points max for PC.
+  // At level 60, it's the same as curse.  Requires item/NPC.
+  af.modifier = level / 5 - 2;
   af.location = APPLY_CURSE;
   affect_to_char(victim, &af);
 
