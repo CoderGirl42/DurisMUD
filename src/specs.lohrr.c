@@ -1,3 +1,5 @@
+#include "structs.h"
+#include "achievements.h"
 #include "comm.h"
 #include "damage.h"
 #include "db.h"
@@ -8,7 +10,6 @@
 #include "prototypes.h"
 #include "ships.h"
 #include "spells.h"
-#include "structs.h"
 #include "utils.h"
 #include <string.h>
 
@@ -318,3 +319,54 @@ P_ship leviathan_find_ship( P_char leviathan, int room, int num_rooms )
    return NULL;
 }
 
+// This is a proc for Soldon's hat which he won via winning competitive wipe: ship frags.
+int proc_soldon_hat( P_obj obj, P_char ch, int cmd, char *argument )
+{
+  P_char mob;
+  int    count;
+  static time_t timer = 0;
+
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return FALSE;
+  }
+
+  // Make sure he's rubbing it, he's alive, it's worn by him, and it's his hat.
+  if( cmd != CMD_RUB || !IS_ALIVE(ch) || !OBJ_WORN_BY(obj, ch) || GET_OBJ_VNUM(obj) != 435 )
+  {
+    return FALSE;
+  }
+
+  // 5 min timer.
+  if( time(NULL) < timer + 300 )
+  {
+    send_to_char( "&+yYou rub the brim of your hat, but nothing happens..&n\n\r", ch );
+    return TRUE;
+  }
+  // Reset timer.
+  timer = time(NULL);
+
+  count = 4;
+  // Load count deck hands.
+  while( count-- )
+  {
+    // Use vnum to load them here and set charm.
+    // Note: These pets have a proc that purges them if not on a ship!
+    mob = read_mobile(40248, VIRTUAL);
+    if( !mob )
+    {
+      logit(LOG_DEBUG, "proc_soldon_hat: mob 40248 not loadable");
+      send_to_char("Bug in Soldon's hat proc.  Tell a god!\n", ch);
+      return TRUE;
+    }
+    char_to_room( mob, ch->in_room, 0 );
+    // If the pet will stop being charmed after a bit, also make it suicide 10 minutes later
+    if( setup_pet(mob, ch, 11, PET_NOCASH | PET_NOAGGRO) >= 0 )
+    {
+      add_event(event_pet_death, 10 * 60 * WAIT_SEC, mob, NULL, NULL, 0, NULL, 0);
+    }
+    add_follower(mob, ch);
+    apply_achievement(mob, TAG_CONJURED_PET);
+  }
+
+}
