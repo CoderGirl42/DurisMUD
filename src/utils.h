@@ -727,7 +727,6 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
            (GET_RACE(ch) == RACE_PSBEAST) || \
            (GET_RACE(ch) == RACE_WIGHT) || \
            (GET_RACE(ch) == RACE_PHANTOM) || \
-           (GET_RACE(ch) == RACE_V_ELEMENTAL) || \
            (IS_DRACOLICH(ch)) || \
            (IS_UNDEAD(ch)))
 

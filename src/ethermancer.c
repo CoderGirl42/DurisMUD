@@ -927,7 +927,8 @@ void spell_greater_ethereal_recharge(int level, P_char ch, char *arg, int type, 
 {
   int healpoints;
 
-  if (IS_PC_PET(victim) && GET_RACE(victim) != RACE_A_ELEMENTAL)
+  if( IS_PC_PET(victim) && GET_RACE(victim) != RACE_A_ELEMENTAL
+    && GET_RACE(victim) != RACE_V_ELEMENTAL )
   {
     send_to_char("They are not composed of ethereal matter...\r\n", ch);
     return;
@@ -953,7 +954,7 @@ void spell_greater_ethereal_recharge(int level, P_char ch, char *arg, int type, 
   }
   
   send_to_char("&+WYou feel the powers of greater ethereal matter recharge you..!\r\n", victim);
-  act("$N's ethereal form shimmers and seems to glow with renewed strength.", FALSE, victim, 0, 0, TO_ROOM);
+  act("$n's ethereal form shimmers and seems to glow with renewed strength.", FALSE, victim, 0, 0, TO_ROOM);
 
   update_pos(victim);
 }
@@ -963,7 +964,8 @@ void spell_ethereal_recharge(int level, P_char ch, char *arg, int type, P_char v
 {
   int healpoints;
 
-  if (IS_PC_PET(victim) && GET_RACE(victim) != RACE_A_ELEMENTAL)
+  if( IS_PC_PET(victim) && GET_RACE(victim) != RACE_A_ELEMENTAL
+    && GET_RACE(victim) != RACE_V_ELEMENTAL )
   {
     send_to_char("They are not composed of ethereal matter...\r\n", ch);
     return;
