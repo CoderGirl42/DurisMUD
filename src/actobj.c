@@ -2753,19 +2753,15 @@ void do_eat(P_char ch, char *argument, int cmd)
   {
     if(oaffect == 1337) //+1 level mushroom
     {
-      if((GET_LEVEL(ch) > 45) ||
-       (GET_RACE(ch) == RACE_PLICH)  
-	)
-	{
-	  send_to_char("&+GYou are much too powerful for the magic of this item&n.\r\n", ch);
-	  return;
-	}
+      if( (GET_LEVEL(ch) > 45) || (GET_RACE(ch) == RACE_PLICH) )
+      {
+        send_to_char("&+GYou are much too powerful for the magic of this item&n.\r\n", ch);
+        return;
+      }
       send_to_char("&+gAs you eat the &+GMushroom&+g, a &+Mmagical&+g essence surrounds you and you suddenly feel more &+Gexperienced!&n\r\n", ch);
-     // GET_EXP(ch) = new_exp_table[GET_LEVEL(ch)];
-     statuslog(ch->player.level,
-        "&+CLevel:&n (%s&n) just ate level mushroom at [%d]!",
-          GET_NAME(ch),
-          (ch->in_room == NOWHERE) ? -1 : world[ch->in_room].number);
+      // GET_EXP(ch) = new_exp_table[GET_LEVEL(ch)];
+      statuslog(ch->player.level, "&+CLevel:&n (%s&n) just ate level mushroom at [%d]!",
+        GET_NAME(ch), (ch->in_room == NOWHERE) ? -1 : world[ch->in_room].number);
       advance_level(ch);
       do_save_silent(ch, 1);
       extract_obj(temp, TRUE);
@@ -2775,8 +2771,6 @@ void do_eat(P_char ch, char *argument, int cmd)
 
   act("$n eats $p.", TRUE, ch, temp, 0, TO_ROOM);
   act("You eat the $q.", FALSE, ch, temp, 0, TO_CHAR);
-
-  
 
   if (temp->type == ITEM_FOOD)
   {
@@ -2810,7 +2804,7 @@ void do_eat(P_char ch, char *argument, int cmd)
       af.location = APPLY_HIT_REG;
       af.modifier = 15 * hit_reg;
       affect_to_char(ch, &af);
-      
+
       af.location = APPLY_MOVE_REG;
       af.modifier = mov_reg;
       affect_to_char(ch, &af);
@@ -2842,8 +2836,8 @@ void do_eat(P_char ch, char *argument, int cmd)
       af.location = APPLY_HITROLL;
       af.modifier = temp->value[7];
       affect_to_char(ch, &af);
-    } 
-    else 
+    }
+    else
     {
       act("You feel sated already.", FALSE, ch, 0, 0, TO_CHAR);
       return;
@@ -2859,13 +2853,11 @@ void do_eat(P_char ch, char *argument, int cmd)
        act("You feel comfortably sated.", FALSE, ch, 0, 0, TO_CHAR);
 
        if (temp->value[3] && (GET_LEVEL(ch) < MINLVLIMMORTAL))
-       {                           
-
-
-       act("Oops, it tasted rather strange?!!?", FALSE, ch, 0, 0, TO_CHAR);
-       act("$n coughs and utters some strange sounds.",
-       FALSE, ch, 0, 0, TO_ROOM);
-       poison_lifeleak(10, ch, 0, 0, ch, 0);
+       {
+         act("Oops, it tasted rather strange?!!?", FALSE, ch, 0, 0, TO_CHAR);
+         act("$n coughs and utters some strange sounds.",
+         FALSE, ch, 0, 0, TO_ROOM);
+         poison_lifeleak(10, ch, 0, 0, ch, 0);
        }
      */
   }

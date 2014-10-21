@@ -871,6 +871,7 @@ void statuslog(int level, const char *format, ...)
 {
   va_list  args;
   char     lbuf[MAX_STRING_LENGTH];
+  char     sbuf[MAX_STRING_LENGTH];
   P_desc   d;
 
   strcpy(lbuf, "&+c*** STATUS:&n ");
@@ -879,17 +880,19 @@ void statuslog(int level, const char *format, ...)
   strcat(lbuf, "\r\n");
   lbuf[sizeof(lbuf)] = 0;
 
-  for (d = descriptor_list; d; d = d->next)
+  for( d = descriptor_list; d; d = d->next )
   {
-    if (d->connected == CON_PLYNG &&
-        IS_TRUSTED(d->character) &&
-        GET_LEVEL(d->character) >= level &&
-        IS_SET(d->character->specials.act, PLR_STATUS))
+    if( d->connected == CON_PLYNG && IS_TRUSTED(d->character)
+      && GET_LEVEL(d->character) >= level && IS_SET(d->character->specials.act, PLR_STATUS) )
     {
       send_to_char(lbuf, d->character);
     }
   }
   va_end(args);
+
+  // Remove the newline/carriage return and send it to the log file.
+  lbuf[strlen(lbuf)-2] = '\0';
+  logit(LOG_STATUS, stripansi(lbuf));
 }
 
 void banlog(int level, const char *format, ...)
