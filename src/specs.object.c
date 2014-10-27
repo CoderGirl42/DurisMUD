@@ -6075,14 +6075,13 @@ int crystal_spike(P_obj obj, P_char ch, int cmd, char *arg)
   return FALSE;
 }
 
+/* Woundhealer is in specs.undermountain.c -> woundhealer_scimitar.
 int woundhealer(P_obj obj, P_char ch, int cmd, char *arg)
 {
   int      dam;
   P_char   vict;
 
-  /*
-     check for periodic event calls
-   */
+  // Check for periodic event calls
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
@@ -6105,6 +6104,7 @@ int woundhealer(P_obj obj, P_char ch, int cmd, char *arg)
   }
   return (TRUE);
 }
+*/
 
 #if 0
 

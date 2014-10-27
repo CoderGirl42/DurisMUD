@@ -484,7 +484,7 @@ int woundhealer_scimitar(P_obj obj, P_char ch, int cmd, char *arg)
 {
   P_char   vict;
   char     e_pos;
-  int      in_battle;
+  int      in_battle, hits;
 
   vict = (P_char) arg;
 
@@ -507,6 +507,19 @@ int woundhealer_scimitar(P_obj obj, P_char ch, int cmd, char *arg)
   }
 
   in_battle = BOUNDED(0, (GET_MAX_HIT(vict) - GET_HIT(vict)), number(1, 8));
+  hits = GET_MAX_HIT(ch) - GET_HIT(ch);
+  // If we're not full hps/vamped already.
+  if( hits > 0 )
+  {
+    // Don't heal over max hps.
+    in_battle = MIN( in_battle, hits );
+  }
+  else
+  {
+    // Don't heal someone who's not hurt.
+    return FALSE;
+  }
+
 
   if ((obj->loc.wearing == ch) && vict)
   {
