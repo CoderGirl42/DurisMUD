@@ -2254,12 +2254,12 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
   }
 
   vis_mode = get_vis_mode(ch, room_no);
-  if( vis_mode == 5 )
+  if( vis_mode == 5 && cmd != -5 )
   {
     send_to_char("&+LIt is pitch black...\n", ch);
     return;
   }
-  if( vis_mode == 6 )
+  if( vis_mode == 6 && cmd != -5 )
   {
     send_to_char("&+WArgh!!! It's too bright!\n", ch);
     return;
