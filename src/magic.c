@@ -12189,12 +12189,6 @@ void spell_prot_undead(int level, P_char ch, char *arg, int type, P_char victim,
     spell_globe(level, ch, 0, 0, victim, obj);
   }
 
-  // Prot undeads no longer stack on Aktosh.  This is cheesy for MindFlayer.
-  if( has_skin_spell(victim) && isname( GET_NAME(victim), "Aktosh") )
-  {
-    act("$N seems to be already protected.", FALSE, ch, 0, victim, TO_CHAR);
-    return;
-  }
   /*
   if(has_skin_spell(victim) && IS_PC(victim))
   {
