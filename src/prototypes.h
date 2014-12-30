@@ -644,6 +644,7 @@ void dropped_arti_hunt();
 void save_artifact_data( P_char );
 // automatic_rules.c
 int is_Raidable(P_char, char *, int);
+void removeArtiData( char *name );
 
 /* bard.c */
 

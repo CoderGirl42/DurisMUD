@@ -50,6 +50,9 @@ using namespace std;
 
 #define GUILD_FRAG_FILE    "lib/information/guild_frags"        /* for the 'guild frag command' command    */
 #define NEWS_FILE         "lib/information/news"        /* for the 'news' command    */
+#define ARTIFACT_DIR "Players/Artifacts/"
+#define ARTIFACT_MORT_DIR "Players/Artifacts/Mortal/"
+#define ARTI_BIND_DIR "Players/Artifacts/Bind/"
 #define MORTAL_ARTI_MAIN_FILE  "Players/Artifacts/mortal_main" /* for the 'arti ' command    */
 #define MORTAL_ARTI_IOUN_FILE  "Players/Artifacts/mortal_ioun" /* for the 'arti ioun' command    */
 #define MORTAL_ARTI_UNIQUE_FILE "Players/Artifacts/mortal_unique" /* for the 'arti unique' command    */

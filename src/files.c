@@ -1907,14 +1907,16 @@ int deleteCharacter(P_char ch, bool bDeleteLocker)
   char    *tmp;
   char     name[MAX_STRING_LENGTH];
   char     Gbuf1[MAX_STRING_LENGTH], Gbuf2[MAX_STRING_LENGTH];
+  P_obj    obj;
 
   strcpy(name, GET_NAME(ch));
-  tmp = name;
-  for (; *tmp; tmp++)
-	    *tmp = LOWER(*tmp);
+  for( tmp = name; *tmp; tmp++ )
+  {
+    *tmp = LOWER(*tmp);
+  }
 
-  if (!ch)
-		return FALSE;
+  // Remove all artis from char.
+  removeArtiData( GET_NAME(ch) );
 
 #ifdef USE_ACCOUNT
   remove_char_from_list(ch->desc->account, ch->player.name);

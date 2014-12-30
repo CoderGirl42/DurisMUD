@@ -126,6 +126,8 @@ typedef struct combat_data *P_combat;
 
 #define CST_SPELLWEAVE   BIT_1
 
+#define MAX_NAME_LENGTH 12
+
 /* structs for shops and utils related */
 struct stack_data {
   int data[100];

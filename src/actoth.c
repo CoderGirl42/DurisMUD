@@ -263,8 +263,10 @@ void do_camp(P_char ch, char *arg, int cmd)
 
   if( isname( arg, "abort" ) )
   {
-    if (!IS_AFFECTED(ch, AFF_CAMPING))
-      send_to_char( "Your not setting up camp atm?!?\n", ch );
+    if( !IS_AFFECTED(ch, AFF_CAMPING) )
+    {
+      send_to_char( "You're not setting up camp atm?!?\n", ch );
+    }
     else
     {
       send_to_char( "You quickly pack up your things and move on.\n", ch );
@@ -283,18 +285,18 @@ void do_camp(P_char ch, char *arg, int cmd)
     send_to_char("Sorry, you're quite busy memorizing at the moment.\n", ch);
     return;
   }
-  if (IS_FIGHTING(ch))
+  if( IS_FIGHTING(ch) )
   {
     act("Better finish dealing with $N first, bunky.", FALSE, ch, 0, ch->specials.fighting, TO_CHAR);
     return;
   }
-  if (IS_DESTROYING(ch))
+  if( IS_DESTROYING(ch) )
   {
     act("Better finish dealing with $p first, bunky.", FALSE, ch, ch->specials.destroying_obj, NULL, TO_CHAR);
     return;
   }
 
-  if (IS_TRUSTED(ch))
+  if( IS_TRUSTED(ch) )
   {
     ch->specials.was_in_room = world[ch->in_room].number;
     ch->in_room = ch->in_room;

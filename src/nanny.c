@@ -2779,8 +2779,10 @@ bool _parse_name(char *arg, char *name)
     "\n"
   };
 
-  if (strlen(arg) > 12)         /* max name size */
+  if( strlen(arg) > MAX_NAME_LENGTH )        /* max name size */
+  {
     return TRUE;
+  }
 
   if (strlen(arg) < 2)          /* min name size */
     return TRUE;

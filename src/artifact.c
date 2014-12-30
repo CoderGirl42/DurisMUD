@@ -23,9 +23,6 @@
 #include "utility.h"
 #include "utils.h"
 
-#define ARTIFACT_DIR "Players/Artifacts/"
-#define ARTIFACT_MORT_DIR "Players/Artifacts/Mortal/"
-#define ARTI_BIND_DIR "Players/Artifacts/Bind/"
 #define ARTIFACT_MAIN   0
 #define ARTIFACT_UNIQUE 1
 #define ARTIFACT_IOUN   2
@@ -2465,4 +2462,88 @@ void artifact_fight( P_char owner, P_obj arti )
       arti->short_description, GET_OBJ_VNUM(arti), numartis, J_NAME(owner) );
     act("&+L$p &+Lseems very upset with you.&n", FALSE, owner, arti, 0, TO_CHAR);
   }
+}
+
+// Removes all artifact files from the char with name "name" (the function's arg).
+// Used in deleteCharacter().
+void removeArtiData( char *name )
+{
+  DIR           *dir;
+  struct dirent *dire;
+  FILE          *f;
+  int            vnum, id, uo;
+  char           buf[256], name2[MAX_NAME_LENGTH], fname[512];
+  long unsigned  last_time, blood;
+
+  if( !name || !(*name) )
+  {
+    debug( "removeArtiData: Some idiot trying to remove artifact data from a char with no name." );
+    return;
+  }
+
+  dir = opendir( ARTIFACT_DIR );
+  while( dire = readdir(dir) )
+  {
+    vnum = atoi(dire->d_name);
+    if( !vnum )
+    {
+      continue;
+    }
+    sprintf( fname, "%s%d", ARTIFACT_DIR, vnum );
+    // Reset name2 just in case we loop to the next and it doesn't scan right.
+    name2[0] = '\0';
+    if( (f = fopen(fname, "r"))
+      && (fscanf(f, "%s %d %lu %d %lu\n", name2, &id, &last_time, &uo, &blood) > 0) )
+    {
+      // close the file, we're either deleting it or skipping it.
+      fclose( f );
+      // If names don't match, skip file.
+      if( strcmp( name, name2) )
+      {
+        continue;
+      }
+      // Otherwise, delete it.
+      sprintf( buf, "%s%d", ARTIFACT_DIR, vnum );
+      // Note: Since we're about to change the directory contents, we need to close/reopen the directory.
+      closedir( dir );
+      wizlog( 56, "%s: Deleting arti file '%d'...", name, vnum );
+      unlink( buf );
+      dir = opendir( ARTIFACT_DIR );
+    }
+  }
+  closedir( dir );
+
+  // Now go through the same motions with the artifact mortals directory.
+  dir = opendir( ARTIFACT_MORT_DIR );
+  while( dire = readdir(dir) )
+  {
+    vnum = atoi(dire->d_name);
+    if( !vnum )
+    {
+      continue;
+    }
+    sprintf( fname, "%s%d", ARTIFACT_MORT_DIR, vnum );
+    // Reset name2 just in case we loop to the next and it doesn't scan right.
+    name2[0] = '\0';
+    if( (f = fopen(fname, "r"))
+      && (fscanf(f, "%s %d %lu %d %lu\n", name2, &id, &last_time, &uo, &blood) > 0) )
+    {
+      // close the file, we're either deleting it or skipping it.
+      fclose( f );
+      // If names don't match, skip file.
+      if( strcmp( name, name2) )
+      {
+        continue;
+      }
+      // Otherwise, delete it.
+      sprintf( buf, "%s%d", ARTIFACT_MORT_DIR, vnum );
+      // Note: Since we're about to change the directory contents, we need to close/reopen the directory.
+      closedir( dir );
+      wizlog( 56, "%s: Deleting (mortal) arti file '%d'...", name, vnum );
+      unlink( buf );
+      dir = opendir( ARTIFACT_MORT_DIR );
+    }
+  }
+  closedir( dir );
+
 }
