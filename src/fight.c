@@ -6063,7 +6063,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
 
       if( GET_HIT(victim) < (max_hit / 8) && ch != victim )
       {
-        send_to_char("You wish that your wounds would stop &-L&+RBLEEDING&n so much!\r\n", victim);
+        send_to_char("You wish that your wounds would stop &+RBLEEDING&n so much!\r\n", victim);
       }
 
       if (GET_HIT(victim) < 2 && new_stat > STAT_INCAP && number(0, 1))
