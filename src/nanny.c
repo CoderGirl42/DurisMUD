@@ -4677,7 +4677,7 @@ void select_race(P_desc d, char *arg)
     GET_RACE(d->character) = RACE_TROLL;
     break;
   case 'T':
-    strcpy(Gbuf, "SWAMP TROLL");
+    strcpy(Gbuf, "TROLL");
     break;
   /*
   case 'f':
