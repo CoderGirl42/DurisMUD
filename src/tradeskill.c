@@ -2766,25 +2766,33 @@ int epic_store(P_char ch, P_char pl, int cmd, char *arg)
 
 //400227 - lantan tools
 	else if(strstr(arg, "6"))
-    {//buy6
-	//check for 150 epics required to reset
+{//buy6 comments by Gellz 08/02/2015 - Removed to comment out Lantan for now.
 	int availepics = pl->only.pc->epics;
-	if (availepics < 150)
-	{
-	  send_to_char("&+WKannard&+L &+wsays '&nI'm sorry, but you do not seem to have the &+Wepics&n available for that item.\r\n&n", pl);
-	  return TRUE;
-        }
-	//subtract 150 epics
-       P_obj obj;
-	obj = read_object(400227, VIRTUAL);
-	pl->only.pc->epics -= 150;
-       send_to_char("&+WKannard&+L &+wsays '&nAh, good choice! Quite a rare item!'\n", pl);
-	send_to_char("&+WKannard &+Lthe &+ctra&+Cvell&+cer &nmakes a strange gesture about your body, and hands you your item.\r\n&n", pl);
-       act("You now have $p!\r\n", FALSE, pl, obj, 0, TO_CHAR);
-       extract_obj(obj, FALSE);
-	obj_to_char(read_object(400227, VIRTUAL), pl);
-       return TRUE;
-    }//endbuy6
+	//Just performing check anyway
+	send_to_char("&+WKannard&+L &+wsays '&nI'm sorry, but due to such a high demand, those items seem to be temporarily out of stock.\r\n&n", pl);
+	return TRUE;
+	} //endbuy6
+	
+//    {//buy6
+//	//check for 150 epics required to reset
+//	int availepics = pl->only.pc->epics;
+//	if (availepics < 150)
+//	{
+//	  send_to_char("&+WKannard&+L &+wsays '&nI'm sorry, but you do not seem to have the &+Wepics&n available for that item.\r\n&n", pl);
+//	  return TRUE;
+//        }
+//	//subtract 150 epics
+//       P_obj obj;
+//	obj = read_object(400227, VIRTUAL);
+//	pl->only.pc->epics -= 150;
+//       send_to_char("&+WKannard&+L &+wsays '&nAh, good choice! Quite a rare item!'\n", pl);
+//	send_to_char("&+WKannard &+Lthe &+ctra&+Cvell&+cer &nmakes a strange gesture about your body, and hands you your item.\r\n&n", pl);
+//       act("You now have $p!\r\n", FALSE, pl, obj, 0, TO_CHAR);
+//       extract_obj(obj, FALSE);
+//	obj_to_char(read_object(400227, VIRTUAL), pl);
+//       return TRUE;
+//    }//endbuy6
+// End Comments by Gellz - 08/02/2015
 
 //400228 - forest sight
 	else if(strstr(arg, "7"))
