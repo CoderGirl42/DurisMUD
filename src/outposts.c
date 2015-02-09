@@ -1488,7 +1488,7 @@ void outposts_upkeep()
   char buff[MAX_STRING_LENGTH];
   int i, j, k;
   Building *building;
-  int cost = (int)get_property("outpost.cost.upkeep", 1000000); // per day
+  int cost = (int)get_property("outpost.cost.upkeep", 500000); // per day
   int deduct = 0;
   int owners[MAX_ASC];
 
