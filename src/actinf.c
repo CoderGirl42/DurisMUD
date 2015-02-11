@@ -5594,7 +5594,12 @@ void do_score(P_char ch, char *argument, int cmd)
 	            sprintf(buf1, " (&+W%d &+Yminutes&n)\n", aff->duration);
               strcat(buf, buf1);
             }
-            else if (aff->duration <= 1)
+            else if( aff->duration == 1 )
+            {
+	            sprintf(buf1, " (&+W1 &+Yminute&n)\n" );
+              strcat(buf, buf1);
+            }
+            else if (aff->duration < 1)
             {
               strcat(buf, " (&+Rless than a minute remaining&n)\n");
             }
