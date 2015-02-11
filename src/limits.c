@@ -1023,27 +1023,45 @@ float gain_global_exp_modifiers(P_char ch, float XP)
   return XP;
 }
 
-int exp_mod(P_char k, P_char victim)
+// Percentage of exp gained.
+int exp_mod(P_char killer, P_char victim)
 {
   int      diff, mod;
 
-  diff = GET_LEVEL(k) - GET_LEVEL(victim);
-  if (diff > 40)
+  // High difference -> high lvl killing lowbies
+  diff = GET_LEVEL(killer) - GET_LEVEL(victim);
+  if( diff > 40 )
+  {
+    mod = 0;
+  }
+  else if( diff > 30 )
+  {
     mod = 1;
-  else if (diff > 30)           /* 31+    */
+  }
+  else if( diff > 20 )          /* 21 - 30  */
+  {
     mod = 3;
-  else if (diff > 20)           /* 21-30    */
+  }
+  else if( diff > 15 )          /* 16 - 20  */
+  {
     mod = 10;
-  else if (diff > 15)           /* 16-20    */
-    mod = 20;
-  else if (diff > 10)           /* 11-15    */
+  }
+  else if( diff > 10 )          /* 11 - 15  */
+  {
     mod = 30;
-  else if (diff > 5)            /* 6-10    */
+  }
+  else if( diff > 5 )           /*  6 - 10  */
+  {
     mod = 55;
-  else if (diff > 2)            /* 3-5    */
+  }
+  else if( diff > 2 )           /*  3 -  5  */
+  {
     mod = 90;
-  else if (diff >= 0)           /* 0-2    */
+  }
+  else if( diff >= 0 )          /*  0 -  2  */
+  {
     mod = 100;
+  }
   else if (diff > -3)           /* -2 - 1    */
     mod = 120;
   else if (diff > -6)           /* -6 - -3    */
@@ -1055,8 +1073,8 @@ int exp_mod(P_char k, P_char victim)
   else if (diff > -20)          /* -19 - -15    */
     mod = 140;
   else                          /* < -20 */
-    mod = 150;                  
-    
+    mod = 150;
+
   return mod;
 }
 
