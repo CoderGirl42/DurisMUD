@@ -1520,6 +1520,7 @@ void do_conjure(P_char ch, char *argument, int cmd)
     // 20% bonus hps for max skill, 2% for each skill notch.
     if( GET_CHAR_SKILL(ch, SKILL_INFUSE_LIFE) )
     {
+      act("You channel extra &+Wlifeforce&n as you call forth your minion.", TRUE, ch, 0, tobj, TO_CHAR);
       GET_MAX_HIT(tobj) = GET_HIT(tobj) = tobj->points.base_hit = GET_HIT(tobj) * ((500.0 + GET_CHAR_SKILL(ch, SKILL_INFUSE_LIFE)) / 500.0);
     }
 
