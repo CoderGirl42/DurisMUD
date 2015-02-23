@@ -11455,39 +11455,47 @@ int world_quest(P_char ch, P_char pl, int cmd, char *arg)
   float timediff, costmod;
 
 
-  if (cmd == CMD_SET_PERIODIC)
-    return TRUE;
-  if (!ch || !cmd || !arg || !pl || IS_NPC(pl))
+  if( cmd == CMD_SET_PERIODIC )
+  {
     return FALSE;
+  }
 
-  if ((cmd == CMD_ASK && pl))
+  if( !IS_ALIVE(ch) || !arg || !IS_ALIVE(pl) || IS_NPC(pl) )
+  {
+    return FALSE;
+  }
+
+  if( (cmd == CMD_ASK) && pl )
   {
     half_chop(arg, name, what);
 
-    if(ch != ParseTarget(ch, name))
+    // ask <bartender> <quest|abandon|resign> ...
+    if( ch != ParseTarget(ch, name) )
+    {
       return FALSE;
+    }
 
-    if (isname(what, "abandon") || isname(arg, "resign"))
+    if( isname( "abandon", what ) || isname( "resign", what ) )
     {
 
-      if(pl->only.pc->quest_accomplished)
+      if( pl->only.pc->quest_accomplished )
       {
         mobsay(ch, "Why would you like to resign when you done?!");
         return TRUE;
       }
-      if(!pl->only.pc->quest_active)
+      if( !pl->only.pc->quest_active )
       {
         mobsay(ch, "Abandon what quest, hmmmm!");
         return TRUE;
       }
-      
-// Can now abandon your quest at any bartender.
-      // if(pl->only.pc->quest_giver != GET_VNUM(ch))
-      // {
-        // mobsay(ch, "Abandon that quest at same place as you got it!");
-        // return TRUE;
 
-      // }
+      /* Can now abandon your quest at any bartender.
+      if(pl->only.pc->quest_giver != GET_VNUM(ch))
+      {
+        mobsay(ch, "Abandon that quest at same place as you got it!");
+        return TRUE;
+      }
+      */
 
       temp = (int)((get_property("world.quest.abandon.mod", 1.0) * GET_LEVEL(pl) * GET_LEVEL(pl) * GET_LEVEL(pl)));
 
@@ -11499,13 +11507,16 @@ int world_quest(P_char ch, P_char pl, int cmd, char *arg)
       //debug("temp: %d", temp);
       temp = temp * BOUNDED(1, costmod, 100) / 100;
       //debug("temp: %d", temp);
-      
       //debug("timediff: %f, hrsdiff: %f, costmod: %f, temp: %d, cost: %s", timediff, timediff / 60 / 60, costmod, temp, coin_stringv(temp));
 
-      if (pl->only.pc->quest_type == FIND_AND_KILL && pl->only.pc->quest_kill_how_many > 0)
+      if( pl->only.pc->quest_type == FIND_AND_KILL && pl->only.pc->quest_kill_how_many > 0 )
       {
-        send_to_char("You cannot buy off a kill task after starting it...\r\n", pl);
-        return (TRUE);
+        // Allowing them to abandon at the cost of 1 quest (cost is done during the call to sql_world_quest_finished).
+        if( !isname( "confirm", what ) )
+        {
+          send_to_char("You must be &+Wcrazy&N!  Try asking &+yabandon confirm&n if you really want to do that.\r\n", pl);
+          return TRUE;
+        }
       }
 
       sprintf(money_string, "OH NO, you've cost me alot of time and money, but toss me %s and I'll take care of your task!", coin_stringv(temp) );
@@ -11523,10 +11534,14 @@ int world_quest(P_char ch, P_char pl, int cmd, char *arg)
       send_to_char("You hand over the money.\r\n", pl);
 
       send_to_char("You no longer have a task.\r\n", pl);
-      if (pl->only.pc->quest_type == FIND_AND_KILL && pl->only.pc->quest_kill_how_many > 0)
+      // Make it so pl doesn't get the same quest again; once you fail, you fail.
+      //   This also makes quest count as one of "today's quests."
+      if( pl->only.pc->quest_type == FIND_AND_KILL && pl->only.pc->quest_kill_how_many > 0 )
+      {
         sql_world_quest_finished(pl, 0);
+      }
       resetQuest(pl);
-      return TRUE;	
+      return TRUE;
     }
 
     if (isname(what, "map") || isname(arg, "m"))
