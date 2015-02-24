@@ -555,6 +555,13 @@ void do_forge(P_char ch, char *argument, int cmd)
   {
     // Attempt to make obj:
     iVal = itemvalue(ch, obj);
+    if( iVal > 100 )
+    {
+      act("You look at the recipe for $p&n, but can't seem to discern how to make it.  &+mHow strange.&N",
+        FALSE, ch, obj, 0, TO_CHAR);
+      extract_obj(obj, FALSE);
+      return;
+    }
     numHighQuality = (iVal + 4) / 5;
     numLowQuality = (iVal + 4) - numHighQuality * 5;
     lowQualityMaterialVnum = get_matstart(obj);
