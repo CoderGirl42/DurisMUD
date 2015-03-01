@@ -1434,11 +1434,21 @@ int mortal_heaven(int room, P_char ch, int cmd, char *arg)
      check for periodic event calls
    */
 
-  if (cmd == CMD_SET_PERIODIC)
+  if( cmd == CMD_SET_PERIODIC )
+  {
     return TRUE;
+  }
 
-  if (cmd)
+  if( cmd == CMD_SUICIDE )
+  {
+    send_to_char("You feel too comfortable here.\n\r", ch );
+    return TRUE;
+  }
+
+  if( cmd )
+  {
     return FALSE;
+  }
 
   for (tch = world[real_room(room)].people; tch; tch = next)
   {
