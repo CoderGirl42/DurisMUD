@@ -79,7 +79,7 @@
 #define SPLDAM_EARTH    12
 #define LAST_SPLDAM_TYPE 12
 
-#define ELEMENTAL_DAM(type) (type >= SPLDAM_FIRE && type <= SPLDAM_ACID)
+#define ELEMENTAL_DAM(type) ((type >= SPLDAM_FIRE && type <= SPLDAM_ACID) || (type == SPLDAM_EARTH))
 
 /* all flags below share the same vector */
 #define PHSDAM_TOUCH      BIT_1
