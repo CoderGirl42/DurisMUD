@@ -3833,7 +3833,7 @@ void show_toggles(P_char ch)
           "&+r   Petition    :&+g %-3s    &+y|&N"
           "&+r     Paging      :&+g %-3s    &+y|&N"
           "&+r     Save Notify :&+g %-3s    &+y|&N\r\n"
-          "&+r   Anonymous   :&+g %-3s    &+y|&N"
+          "&+r   Who List    :&+g %-3s    &+y|&N"
           "&+r     Screen Size :&+g %-3s    &+y|&N"
           "&+r     Terminal    :&+g %-4s   &+y|&N\r\n"
           "&+r   Map         :&+g %-3s    &+y|&N"
@@ -3874,7 +3874,7 @@ void show_toggles(P_char ch)
           ONOFF(PLR_FLAGGED(ch, PLR_PETITION)),
           ONOFF(PLR_FLAGGED(ch, PLR_PAGING_ON)),
           ONOFF(PLR_FLAGGED(ch, PLR_SNOTIFY)),
-          ONOFF(PLR_FLAGGED(ch, PLR_ANONYMOUS)),
+          ONOFF(PLR_FLAGGED(ch, PLR_NOWHO)),
           Gbuf3,
           (send_ch->desc->term_type == 1 ? "GEN " : (send_ch->desc->term_type == 2 ? "ANSI" : "MSP ")),
           ONOFF(PLR_FLAGGED(ch, PLR_MAP)),
@@ -4264,20 +4264,16 @@ void do_toggle(P_char ch, char *arg, int cmd)
   case 3:                      /*
                                  * no who
                                  */
-    send_to_char("Sorry, we'll have none of that here!\r\n", send_ch);
-    return;
-/* removed by Zod
-    if (GET_LEVEL(ch) <= 9 &&
+// Enabled by Gellz - 22042015
+//    send_to_char("Sorry, we'll have none of that here!\r\n", send_ch);
+//    return;
+    if (GET_LEVEL(ch) <= 29 &&
         !IS_SET(ch->specials.act, PLR_NOWHO)) {
-      send_to_char("Sorry, you must be at least level 10 to toggle who!\r\n", send_ch);
+      send_to_char("Sorry, you must be at least level 30 to toggle who!\r\n", send_ch);
       return;
-    } else if(EVIL_RACE(ch)) {
-      send_to_char("You're much to evil to think about toggling who!\r\n", send_ch);
-      return;
-    } else
+    } 
       result = PLR_TOG_CHK(ch, PLR_NOWHO);
     break;
-*/
   case 4:                      /*
                                  * vicious
                                  */
