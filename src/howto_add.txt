@@ -30,7 +30,28 @@ Howto Add a Material Type:
     Fourth, add the name of the material in common.c (in materials[]).
     Fifth, add MAT_<new material> in objmisc.h (and increment MAT_HIGHEST).
     Sixth, add MAT_<new material> in obj/material.h (and increment MAT_HIGHEST).
+
 Howto Add a Spldam Type:
   First, goto damage.h and add the type and increment LAST_SPLDAM_TYPE.
   Second, goto fight.c and add the text for the type in spldam_types[].
   Third, fix the hardcoded line in actwiz.c in stat_spldam to list the new type in the header.
+
+Howto Add a Boon Reward Type:
+  First, goto boon.h and add BTYPE_... and increment MAX_BTYPE.
+  Second, goto boon.c and add a line in boon_types struct.
+  Third, in boon.c, add the necessary lines in boon_data array.
+    Add 1 line for each option available to new type.
+  Fourth, in boon.c, update " &+ctype&n [expm|exp|epic..." under boon "?" in do_boon.
+  Fifth, in boon.c, review and update parse_boon_args if applicable.
+    Add "else if( bdata->type == BTYPE_... )" in parse_boon_args.
+      Add handling for bonus.
+      Add handling for bonus2 if applicable.
+    Add "case BTYPE_...:" in the switch( bdata->type ) under case BARG_BONUS in parse_boon_args.
+      Add handling for error message numbers from validate_boon_data (defined next step).
+  Sixth, in boon.c, review and update validate_boon_data if applicable.
+    Add "case BTYPE_...:" in the switch( bdata->type ) under case BARG_BONUS.
+      Define error messages via return value (handled in parse_boon_args).
+  Seventh, in boon.c, goto boon_display and update the display for the new type.
+    Add "case BTYPE_...:" in switch(type).
+  Lastly, in boon.c, review and update check_boon_completion to give PC a reward.
+    Add "case BTYPE_...:" in the switch( bdata.type )

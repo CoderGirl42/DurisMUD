@@ -15,7 +15,7 @@
 // Add the define to boon.h
 // Update boon_types or boon_options with the appropriate messages
 // Update boon_data to include the new type or option
-// Update parse_boon_data if special circumstances require, especailly
+// Update parse_boon_args if special circumstances require, especially
 //   if the bonus or criteria arguments require words instead of numbers.
 // Update validate_boon_data with appropriate checks
 // Update check_boon_completion
@@ -50,6 +50,7 @@ extern P_room world;
 extern Skill skills[];
 extern struct race_names race_names_table[];
 extern P_index mob_index;
+extern P_index obj_index;
 extern const struct attr_names_struct attr_names[];
 extern int top_of_zone_table;
 extern struct zone_data *zone_table;
@@ -61,18 +62,20 @@ extern const flagDef affected5_bits[];
 extern const int new_exp_table[];
 extern struct ctfData ctfdata[];
 
-struct boon_types_struct boon_types[] = {
-  {"none",	"No bonus exists"}, 
-  {"expm",	"Gain %d% bonus to exp"},
-  {"exp",	"Gain exp"},
-  {"epic",	"Gain %d epics"},
-  {"cash",	"Receive %s"},
-  {"level",	"Gain a level"},
-  {"power",	"Gain the power of '%s'"},
-  {"spell",	"Gain the spell '%s'"},
-  {"stat",	"Notch the %s attribute"},
-  {"stats",	"Notch %d attributes of your choice"},
-  {"point",	"Receive %d boon points"},
+// Max_btype + 1 since we have a null ender.
+struct boon_types_struct boon_types[MAX_BTYPE+1] = {
+  {"none",  "No bonus exists"},
+  {"expm",  "Gain %d% bonus to exp"},
+  {"exp",   "Gain exp"},
+  {"epic",  "Gain %d epics"},
+  {"cash",  "Receive %s"},
+  {"level", "Gain a level"},
+  {"power", "Gain the power of '%s'"},
+  {"spell", "Gain the spell '%s'"},
+  {"stat",  "Notch the %s attribute"},
+  {"stats", "Notch %d attributes of your choice"},
+  {"point", "Receive %d boon points"},
+  {"item",  "Receive '%s'"},
   {"\0"}
 };
 
@@ -99,90 +102,97 @@ struct boon_options_struct boon_options[] = {
 // Can make more randomly set once the data_validation is updated so we don't end
 // up with crazy bonuses for easy accomplishments.
 struct boon_data_struct boon_data[] = {
-// Type		Option		Level Requirement
-  {BTYPE_EXPM,	BOPT_NONE,	0},		// 0
-  {BTYPE_EXPM,	BOPT_RACE,	0},
-  {BTYPE_EXPM,	BOPT_MOB,	0},
-  {BTYPE_EXP,	BOPT_ZONE,	0},
-  {BTYPE_EXP,	BOPT_MOB,	0},
-  {BTYPE_EXP,	BOPT_FRAG,	0},
-  {BTYPE_EXP,	BOPT_FRAGS,	0},		// 6
-  {BTYPE_EXP,	BOPT_LEVEL,	0},
-  {BTYPE_EXP,	BOPT_OP,	0},
-  {BTYPE_EXP,	BOPT_NEXUS,	0},
-  {BTYPE_EXP,	BOPT_CTF,	0},
-  {BTYPE_EXP,	BOPT_CTFB,	0},
-  {BTYPE_EPIC,	BOPT_ZONE,	0},
-  {BTYPE_EPIC,	BOPT_MOB,	0},		// 11
-  {BTYPE_EPIC,	BOPT_RACE,	GREATER_G},
-  {BTYPE_EPIC,	BOPT_FRAG,	0},
-  {BTYPE_EPIC,	BOPT_FRAGS,	0},
-  {BTYPE_EPIC,	BOPT_LEVEL,	GREATER_G},
-  {BTYPE_EPIC,  BOPT_OP,	0},		// 16
-  {BTYPE_EPIC,	BOPT_NEXUS,	0},
-  {BTYPE_EPIC,	BOPT_CTF,	0},
-  {BTYPE_EPIC,	BOPT_CTFB,	0},
-  {BTYPE_CASH,	BOPT_ZONE,	0},
-  {BTYPE_CASH,	BOPT_MOB,	0},
-  {BTYPE_CASH,	BOPT_RACE,	GREATER_G},
-  {BTYPE_CASH,	BOPT_FRAG,	0},		// 21
-  {BTYPE_CASH,	BOPT_FRAGS,	0},
-  {BTYPE_CASH,	BOPT_LEVEL,	GREATER_G},
-  {BTYPE_CASH,	BOPT_OP,	0},
-  {BTYPE_CASH,	BOPT_NEXUS,	0},
-  {BTYPE_CASH,	BOPT_CTF,	0},
-  {BTYPE_CASH,	BOPT_CTFB,	0},
-  {BTYPE_LEVEL,	BOPT_ZONE,	GREATER_G},	// 26
-  {BTYPE_LEVEL, BOPT_MOB,	GREATER_G},
-  {BTYPE_LEVEL, BOPT_RACE,	GREATER_G},
-  {BTYPE_LEVEL,	BOPT_FRAG,	FORGER},
-  {BTYPE_LEVEL, BOPT_FRAGS,	FORGER},
-  {BTYPE_LEVEL,	BOPT_OP,	FORGER},	// 31
-  {BTYPE_LEVEL,	BOPT_NEXUS,	FORGER},
-  {BTYPE_LEVEL,	BOPT_CTF,	FORGER},
-  {BTYPE_LEVEL,	BOPT_CTFB,	FORGER},
-  {BTYPE_POWER,	BOPT_ZONE,	GREATER_G},
-  {BTYPE_POWER, BOPT_MOB,	GREATER_G},
-  {BTYPE_POWER,	BOPT_FRAG,	GREATER_G},
-  {BTYPE_POWER, BOPT_FRAGS,	GREATER_G},	// 36
-  {BTYPE_POWER,	BOPT_OP,	GREATER_G},
-  {BTYPE_POWER,	BOPT_NEXUS,	GREATER_G},
-  {BTYPE_POWER,	BOPT_CTF,	GREATER_G},
-  {BTYPE_POWER,	BOPT_CTFB,	GREATER_G},
-  {BTYPE_SPELL, BOPT_ZONE,	GREATER_G},
-  {BTYPE_SPELL, BOPT_MOB,	GREATER_G},
-  {BTYPE_SPELL, BOPT_FRAG,	GREATER_G},	// 41
-  {BTYPE_SPELL, BOPT_FRAGS,	GREATER_G},
-  {BTYPE_SPELL, BOPT_OP,	GREATER_G},
-  {BTYPE_SPELL, BOPT_NEXUS,	GREATER_G},
-  {BTYPE_SPELL, BOPT_CTF,	GREATER_G},
-  {BTYPE_SPELL, BOPT_CTFB,	GREATER_G},
-  {BTYPE_STAT,	BOPT_ZONE,	FORGER},
-  {BTYPE_STAT,	BOPT_MOB,	FORGER},	// 46
-  {BTYPE_STAT,	BOPT_FRAG,	FORGER},
-  {BTYPE_STAT,	BOPT_FRAGS,	FORGER},
-  {BTYPE_STAT,	BOPT_OP,	FORGER},
-  {BTYPE_STAT,	BOPT_NEXUS,	FORGER},
-  {BTYPE_STAT,	BOPT_CTF,	FORGER},
-  {BTYPE_STAT,	BOPT_CTFB,	FORGER},
-  {BTYPE_STATS,	BOPT_ZONE,	FORGER},	// 51
-  {BTYPE_STATS, BOPT_MOB,	FORGER},
-  {BTYPE_STATS,	BOPT_FRAG,	FORGER},
-  {BTYPE_STATS,	BOPT_FRAGS,	FORGER},
-  {BTYPE_STATS,	BOPT_OP,	FORGER},
-  {BTYPE_STATS,	BOPT_NEXUS,	FORGER},	// 56
-  {BTYPE_STATS,	BOPT_CTF,	FORGER},
-  {BTYPE_STATS,	BOPT_CTFB,	FORGER},
-  {BTYPE_POINT,	BOPT_ZONE,	GREATER_G},
-  {BTYPE_POINT, BOPT_MOB,	GREATER_G},
-  {BTYPE_POINT, BOPT_RACE,	GREATER_G},
-  {BTYPE_POINT,	BOPT_FRAG,	GREATER_G},
-  {BTYPE_POINT,	BOPT_FRAGS,	GREATER_G},	// 61
-  {BTYPE_POINT, BOPT_LEVEL,	GREATER_G},
-  {BTYPE_POINT,	BOPT_OP,	GREATER_G},
-  {BTYPE_POINT,	BOPT_NEXUS,	GREATER_G},
-  {BTYPE_POINT,	BOPT_CTF,	GREATER_G},
-  {BTYPE_POINT,	BOPT_CTFB,	GREATER_G},
+  // Type         Option        Level Requirement
+  {BTYPE_EXPM,    BOPT_NONE,    0},           // 0
+  {BTYPE_EXPM,    BOPT_RACE,    0},
+  {BTYPE_EXPM,    BOPT_MOB,     0},
+  {BTYPE_EXP,     BOPT_ZONE,    0},
+  {BTYPE_EXP,     BOPT_MOB,     0},
+  {BTYPE_EXP,     BOPT_FRAG,    0},
+  {BTYPE_EXP,     BOPT_FRAGS,   0},           // 6
+  {BTYPE_EXP,     BOPT_LEVEL,   0},
+  {BTYPE_EXP,     BOPT_OP,      0},
+  {BTYPE_EXP,     BOPT_NEXUS,   0},
+  {BTYPE_EXP,     BOPT_CTF,     0},
+  {BTYPE_EXP,     BOPT_CTFB,    0},
+  {BTYPE_EPIC,    BOPT_ZONE,    0},
+  {BTYPE_EPIC,    BOPT_MOB,     0},           // 11
+  {BTYPE_EPIC,    BOPT_RACE,    GREATER_G},
+  {BTYPE_EPIC,    BOPT_FRAG,    0},
+  {BTYPE_EPIC,    BOPT_FRAGS,   0},
+  {BTYPE_EPIC,    BOPT_LEVEL,   GREATER_G},
+  {BTYPE_EPIC,    BOPT_OP,      0},           // 16
+  {BTYPE_EPIC,    BOPT_NEXUS,   0},
+  {BTYPE_EPIC,    BOPT_CTF,     0},
+  {BTYPE_EPIC,    BOPT_CTFB,    0},
+  {BTYPE_CASH,    BOPT_ZONE,    0},
+  {BTYPE_CASH,    BOPT_MOB,     0},
+  {BTYPE_CASH,    BOPT_RACE,    GREATER_G},
+  {BTYPE_CASH,    BOPT_FRAG,    0},           // 21
+  {BTYPE_CASH,    BOPT_FRAGS,   0},
+  {BTYPE_CASH,    BOPT_LEVEL,   GREATER_G},
+  {BTYPE_CASH,    BOPT_OP,      0},
+  {BTYPE_CASH,    BOPT_NEXUS,   0},
+  {BTYPE_CASH,    BOPT_CTF,     0},
+  {BTYPE_CASH,    BOPT_CTFB,    0},
+  {BTYPE_LEVEL,   BOPT_ZONE,    GREATER_G},   // 26
+  {BTYPE_LEVEL,   BOPT_MOB,     GREATER_G},
+  {BTYPE_LEVEL,   BOPT_RACE,    GREATER_G},
+  {BTYPE_LEVEL,   BOPT_FRAG,    FORGER},
+  {BTYPE_LEVEL,   BOPT_FRAGS,   FORGER},
+  {BTYPE_LEVEL,   BOPT_OP,      FORGER},      // 31
+  {BTYPE_LEVEL,   BOPT_NEXUS,   FORGER},
+  {BTYPE_LEVEL,   BOPT_CTF,     FORGER},
+  {BTYPE_LEVEL,   BOPT_CTFB,    FORGER},
+  {BTYPE_POWER,   BOPT_ZONE,    GREATER_G},
+  {BTYPE_POWER,   BOPT_MOB,     GREATER_G},
+  {BTYPE_POWER,   BOPT_FRAG,    GREATER_G},
+  {BTYPE_POWER,   BOPT_FRAGS,   GREATER_G},   // 36
+  {BTYPE_POWER,   BOPT_OP,      GREATER_G},
+  {BTYPE_POWER,   BOPT_NEXUS,   GREATER_G},
+  {BTYPE_POWER,   BOPT_CTF,     GREATER_G},
+  {BTYPE_POWER,   BOPT_CTFB,    GREATER_G},
+  {BTYPE_SPELL,   BOPT_ZONE,    GREATER_G},
+  {BTYPE_SPELL,   BOPT_MOB,     GREATER_G},
+  {BTYPE_SPELL,   BOPT_FRAG,    GREATER_G},   // 41
+  {BTYPE_SPELL,   BOPT_FRAGS,   GREATER_G},
+  {BTYPE_SPELL,   BOPT_OP,      GREATER_G},
+  {BTYPE_SPELL,   BOPT_NEXUS,   GREATER_G},
+  {BTYPE_SPELL,   BOPT_CTF,     GREATER_G},
+  {BTYPE_SPELL,   BOPT_CTFB,    GREATER_G},
+  {BTYPE_STAT,    BOPT_ZONE,    FORGER},
+  {BTYPE_STAT,    BOPT_MOB,     FORGER},      // 46
+  {BTYPE_STAT,    BOPT_FRAG,    FORGER},
+  {BTYPE_STAT,    BOPT_FRAGS,   FORGER},
+  {BTYPE_STAT,    BOPT_OP,      FORGER},
+  {BTYPE_STAT,    BOPT_NEXUS,   FORGER},
+  {BTYPE_STAT,    BOPT_CTF,     FORGER},
+  {BTYPE_STAT,    BOPT_CTFB,    FORGER},
+  {BTYPE_STATS,   BOPT_ZONE,    FORGER},      // 51
+  {BTYPE_STATS,   BOPT_MOB,     FORGER},
+  {BTYPE_STATS,   BOPT_FRAG,    FORGER},
+  {BTYPE_STATS,   BOPT_FRAGS,   FORGER},
+  {BTYPE_STATS,   BOPT_OP,      FORGER},
+  {BTYPE_STATS,   BOPT_NEXUS,   FORGER},      // 56
+  {BTYPE_STATS,   BOPT_CTF,     FORGER},
+  {BTYPE_STATS,   BOPT_CTFB,    FORGER},
+  {BTYPE_POINT,   BOPT_ZONE,    GREATER_G},
+  {BTYPE_POINT,   BOPT_MOB,     GREATER_G},
+  {BTYPE_POINT,   BOPT_RACE,    GREATER_G},
+  {BTYPE_POINT,   BOPT_FRAG,    GREATER_G},
+  {BTYPE_POINT,   BOPT_FRAGS,   GREATER_G},   // 61
+  {BTYPE_POINT,   BOPT_LEVEL,   GREATER_G},
+  {BTYPE_POINT,   BOPT_OP,      GREATER_G},
+  {BTYPE_POINT,   BOPT_NEXUS,   GREATER_G},
+  {BTYPE_POINT,   BOPT_CTF,     GREATER_G},
+  {BTYPE_POINT,   BOPT_CTFB,    GREATER_G},
+  {BTYPE_ITEM,    BOPT_ZONE,    GREATER_G},
+  {BTYPE_ITEM,    BOPT_MOB,     GREATER_G},
+  {BTYPE_ITEM,    BOPT_RACE,    GREATER_G},
+  {BTYPE_ITEM,    BOPT_FRAG,    GREATER_G},
+  {BTYPE_ITEM,    BOPT_FRAGS,   GREATER_G},
+  {BTYPE_ITEM,    BOPT_CTF,     GREATER_G},
+  {BTYPE_ITEM,    BOPT_CTFB,    GREATER_G},
   {0}
 };
 
@@ -438,253 +448,341 @@ bool get_boon_shop_data(int pid, BoonShop *bshop)
 // Returns 0 if data validates OK
 // returns number for error msg to display in parse_boon_args
 // Special return for BARG_ALL that fails:
-// retval / 100 = which BARG flag we failed
-// retval % 100 = true retval for diagnosing problem
+//   retval / 100 = which BARG flag we failed
+//   retval % 100 = true retval for diagnosing problem
 int validate_boon_data(BoonData *bdata, int flag)
 {
   char buff[MAX_STRING_LENGTH];
-  int i, retval = 0;
+  int i, j, z, criteria, retval = 0;
+  Guildhall *gh;
+  NexusStoneInfo nexus;
 
-  if (!bdata)
+  if( !bdata )
   {
-    debug("validate_boon_data(): NULL BoonData sent to function");
+    debug("validate_boon_data: NULL BoonData sent to function");
     return FALSE;
   }
 
-  switch (flag)
+  switch( flag )
   {
     case BARG_RACEWAR:
+      if( bdata->racewar < 0 || bdata->racewar > RACEWAR_NEUTRAL )
       {
-	if (bdata->racewar < 0 || bdata->racewar > RACEWAR_NEUTRAL)
-	  return 1;
-	break;
+        return 1;
       }
+      break;
     case BARG_TYPE:
+      if( bdata->type <= BTYPE_NONE || bdata->type >= MAX_BTYPE )
       {
-	if (bdata->type <= BTYPE_NONE || bdata->type >= MAX_BTYPE)
-	  return 1;
-	break;
+        return 1;
       }
+      break;
     case BARG_OPTION:
+      if( bdata->option < 0 || bdata->option >= MAX_BOPT )
       {
-	if (bdata->option < 0 || bdata->option >= MAX_BOPT)
-	  return 1;
-	if (bdata->type && !check_boon_combo(bdata->type, bdata->option, FALSE))
-	  return 2;
-        break;
+        return 1;
       }
+      if( bdata->type && !check_boon_combo(bdata->type, bdata->option, FALSE) )
+      {
+        return 2;
+      }
+      break;
     case BARG_CRITERIA:
+      criteria = (int)bdata->criteria;
+      switch( bdata->option )
       {
-	switch(bdata->option)
-	{
-	  case BOPT_NONE:
-	  case BOPT_ZONE:
-	    {
-	      i = 0;
-	      while (i <= top_of_zone_table)
-	      {
-		if (zone_table[i].number == (int)bdata->criteria)
-		  break;
-		else
-		  i++;
-	      }
-	      if (i > top_of_zone_table)
-	      {
-		return 1;
-	      }
-	      vector<epic_zone_data> epic_zones = get_epic_zones();
-	      if (bdata->option == BOPT_ZONE)
-	      {
-		int j;
-		// is epic zone complete
-		if (epic_zone_done_now(zone_table[i].number))
-		  return 2;
-		// is it even an epic zone
-		for (j = 0; j <= epic_zones.size(); j++)
-		{
-		  if (epic_zones[j].number == (int)bdata->criteria)
-		  {
-		    break;
-		  }
-		}
-		if (j > epic_zones.size())
-		  return 3;
-	      }
-	      break;
-	    }
-	  case BOPT_MOB:
-	    {
-	      int r_num = 0;
-	      if (bdata->criteria2 < 0)
-		return 1;
-	      if ((r_num = real_mobile((int)bdata->criteria2)) < 0)
-		return 2;
-	      if (!read_mobile(r_num, REAL))
-		return 3;
-	      if (bdata->criteria < 1)
-		return 4;
-	      if (bdata->type == BTYPE_EXPM)
-	      {
-		bdata->criteria = 1;
-	      }
-	      break;
-	    }
-	  case BOPT_RACE:
-	    {
-	      if (bdata->criteria < 1)
-		return 1;
-	      if (bdata->criteria2 < RACE_NONE ||
-		  bdata->criteria2 > LAST_RACE)
-		return 2;
-	      if (bdata->type == BTYPE_EXPM)
-	      {
-		bdata->criteria = 1;
-	      }
-	      break;
-	    }
-	  case BOPT_GH:
-	    {
-	      Guildhall *gh;
-	      if ((gh = Guildhall::find_by_id((int)bdata->criteria)) == NULL)
-		return 1;
-	      else if (bdata->racewar != 0 && gh->racewar == bdata->racewar)
-		return 2;
-	      break;
-	    }
-	  case BOPT_NEXUS:
-	    {
-	      NexusStoneInfo nexus;
-	      if (!nexus_stone_info(bdata->criteria, &nexus))
-		return 1;
-	      if ((nexus.align == 3 && bdata->racewar == RACEWAR_GOOD) ||
-		  (nexus.align == -3 && bdata->racewar == RACEWAR_EVIL))
-		return 2;
-	      break;
-	    }
-	  case BOPT_OP:
-	    {
-	      Building *building;
-	      if ((building = get_building_from_id((int)bdata->criteria)) == NULL)
-		return 1;
-	      break;
-	    }
-	  case BOPT_LEVEL:
-	    {
-	      if (bdata->criteria < 0 || bdata->criteria > 56)
-		return 1;
-	    }
-	  case BOPT_FRAG:
-	    {
-	      if (bdata->criteria <= 0 || bdata->criteria > 1.2)
-		return 1;
-	      break;
-	    }
-	  case BOPT_FRAGS:
-	    {
-	      if (bdata->criteria <= 0)
-		return 1;
-	      break;
-	    }
-	  case BOPT_CTF:
-	    {
-	      int z = 0;
-	      if (bdata->criteria <= 0)
-		return 1;
-	      for (z = 1; ctfdata[z].id; z++)
-	      {
-		if (ctfdata[z].id == bdata->criteria)
-		  break;
-	      }
-	      if (!ctfdata[z].id)
-		return 2;
-	      if (!ctfdata[z].room)
-		return 2;
-	      else
-		bdata->criteria2 = ctfdata[z].room;
-	      break;
-	    }
-	  case BOPT_CTFB:
-	    {
-	      int z = 0;
-	      if (bdata->racewar != RACEWAR_NONE)
-		bdata->racewar = RACEWAR_NONE;
-	      if (!real_room0(bdata->criteria2))
-		return 1;
-	      for (z = 1; ctfdata[z].id; z++)
-	      {
-		if (ctfdata[z].type != CTF_BOON)
-		  continue;
-		if (!ctfdata[z].room)
-		  break;
-	      }
-	      if (!ctfdata[z].id)
-		return 2; // no boon ctf's left to pick
-	      break;
-	    }
-	  default:
-	    break;
-	}
-	break;
+        case BOPT_NONE:
+        case BOPT_ZONE:
+          for(i = 0;i <= top_of_zone_table;i++ )
+          {
+            if( zone_table[i].number == criteria )
+            {
+              break;
+            }
+          }
+          if( i > top_of_zone_table )
+          {
+            return 1;
+          }
+          if( bdata->option == BOPT_ZONE )
+          {
+            vector<epic_zone_data> epic_zones = get_epic_zones();
+
+            // Is epic zone already complete?
+            if( epic_zone_done_now(zone_table[i].number) )
+            {
+              return 2;
+            }
+            // Is it even an epic zone?
+            j = 0;
+            while( j <= epic_zones.size() && epic_zones[j].number != criteria )
+              j++;
+            for( j = 0; j <= epic_zones.size(); j++ )
+            {
+              if( epic_zones[j].number == criteria )
+              {
+                break;
+              }
+            }
+            if( j > epic_zones.size() )
+            {
+              return 3;
+            }
+          }
+          break;
+
+        case BOPT_MOB:
+          // Vnum must be > 0.
+          if( bdata->criteria2 <= 0 )
+          {
+            return 1;
+          }
+
+          // Get the R_num from the vnum. .. Do we really car what the R_num is? no.
+          //   This is to verify that there is an actual mob type with said vnum.
+          if( real_mobile((int)bdata->criteria2) < 0 )
+          {
+            return 2;
+          }
+
+          /* Need to remove this as it puts a copy of the mob in room 0?!?
+           *   It's not needed as we can trust that the mob is loadable if it has an R_num.
+           *   Since we don't need this, we don't need to record the R_num in the previous if.
+          if( !read_mobile(r_num, REAL) )
+          {
+            return 3;
+          }
+           */
+
+          // Exp multiplier always has a 1 mob criteria.
+          if( bdata->type == BTYPE_EXPM )
+          {
+            bdata->criteria = 1;
+            // If it wasn't set to 1 already, return 3.
+            if( criteria != bdata->criteria )
+            {
+              return 3;
+            }
+          }
+
+          // criteria is the number you must kill in order to get the boon.
+          if( criteria < 1 )
+          {
+            return 4;
+          }
+          break;
+
+        case BOPT_RACE:
+          // Number of chars that have to be killed to complete the boon.
+          if( criteria < 1 )
+          {
+            return 1;
+          }
+          // criteria2 is the number corresponding to what race to kill.
+          if( bdata->criteria2 < RACE_NONE || bdata->criteria2 > LAST_RACE )
+          {
+            return 2;
+          }
+
+          // Exp multiplier always has a 1 mob criteria.
+          if( bdata->type == BTYPE_EXPM )
+          {
+            bdata->criteria = 1;
+            // If it wasn't set to 1 already, return 3.
+            if( criteria != bdata->criteria )
+            {
+              return 3;
+            }
+          }
+	        break;
+
+        case BOPT_GH:
+          gh = Guildhall::find_by_id(criteria);
+          if( !gh )
+          {
+            return 1;
+          }
+          else if( bdata->racewar != 0 && gh->racewar == bdata->racewar )
+          {
+            return 2;
+          }
+          break;
+
+        case BOPT_NEXUS:
+          // If we can't find the nexus stone
+          if( !nexus_stone_info(criteria, &nexus) )
+          {
+            return 1;
+          }
+          if( (nexus.align == 3 && bdata->racewar == RACEWAR_GOOD)
+            || (nexus.align == -3 && bdata->racewar == RACEWAR_EVIL) )
+          {
+            return 2;
+          }
+          break;
+
+        case BOPT_OP:
+          // If we can't find the building.
+          if( get_building_from_id(criteria) == NULL )
+          {
+            return 1;
+          }
+          break;
+
+        case BOPT_LEVEL:
+          // criteria is the level gained.  You start at lvl 1 so min level gained is 2.
+          //   And the max level for mortals is 56.
+  	      if( criteria < 2 || bdata->criteria > 56 )
+          {
+            return 1;
+          }
+          break;
+
+        case BOPT_FRAG:
+          // Criteria is the amount of frags gained at one time.  Can't gain 0 or less.
+          //   And you can't gain more than the multiplier for killing above your level.
+          if( criteria <= 0 || bdata->criteria > get_property("frag.leveldiff.modifier.high", 1.200) )
+          {
+            return 1;
+          }
+          break;
+
+        case BOPT_FRAGS:
+          // criteria is the cumulative number of frags gained within the time limit.
+          //   Makes no sense for this to be <= 0, but can be as high as you want.
+          if( criteria <= 0 )
+          {
+            return 1;
+          }
+          break;
+
+        case BOPT_CTF:
+          if( criteria <= 0 )
+          {
+            return 1;
+          }
+          for( z = 1; ctfdata[z].id; z++ )
+          {
+            if( ctfdata[z].id == criteria )
+            {
+              break;
+            }
+          }
+          if( !ctfdata[z].id || !ctfdata[z].room )
+          {
+            return 2;
+          }
+          bdata->criteria2 = ctfdata[z].room;
+          break;
+
+        case BOPT_CTFB:
+          if( bdata->racewar != RACEWAR_NONE )
+          {
+            bdata->racewar = RACEWAR_NONE;
+          }
+
+          if( !real_room0(bdata->criteria2) )
+          {
+            return 1;
+          }
+
+          // Walk through ctf data and look for a ctf boon type that's not in a room?
+          for( z = 1; ctfdata[z].id; z++ )
+          {
+            // Skip non boon type ctf data.
+            if( ctfdata[z].type != CTF_BOON )
+            {
+              continue;
+            }
+            // Stop at data that doesn't have a room?
+            if( !ctfdata[z].room )
+            {
+              break;
+            }
+          }
+
+          // No boon ctf's left to pick
+          if( !ctfdata[z].id )
+          {
+            return 2;
+          }
+          break;
+
+        default:
+          break;
       }
+      // End of BARG_CRITERIA
+      break;
+
     case BARG_BONUS:
+      switch( bdata->type )
       {
-	switch(bdata->type)
-	{
-	  case BTYPE_EXP:
-	  case BTYPE_EXPM:
-	  case BTYPE_EPIC:
-	  case BTYPE_CASH:
-	    {
-	      if (bdata->bonus <= 0)
-		return 1;
-	      break;
-	    }
-	  case BTYPE_LEVEL:
-	    {
-	      if (bdata->bonus < 1 || bdata->bonus > 56)
-		return 1;
-	      break;
-	    }
-	  case BTYPE_SPELL:
-	    {
-	      if (IS_SET(skills[(int)bdata->bonus].targets, TAR_FIGHT_VICT) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_OBJ_INV) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_OBJ_ROOM) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_OBJ_WORLD) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_OBJ_EQUIP) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_OFFAREA) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_AGGRO) ||
-		  IS_SET(skills[(int)bdata->bonus].targets, TAR_WALL))
-		return 1;
-	    break;
-	    }
-	  default:
-	    break;
-	}
-	break;
+        case BTYPE_EXP:
+        case BTYPE_EXPM:
+        case BTYPE_EPIC:
+        case BTYPE_CASH:
+          if( bdata->bonus <= 0 )
+          {
+            return 1;
+          }
+          break;
+
+        case BTYPE_LEVEL:
+          // Makes no sense to grant less than level 2.  Also, don't want to grant Immortality.
+          if( bdata->bonus < 2 || bdata->bonus > 56 )
+          {
+            return 1;
+          }
+          break;
+
+        case BTYPE_SPELL:
+          // Faster to do it this way, than to make a zillion IS_SET checks.
+          if( IS_SET(skills[(int)bdata->bonus].targets, TAR_FIGHT_VICT | TAR_OBJ_INV | TAR_OBJ_ROOM
+            | TAR_OBJ_WORLD | TAR_OBJ_EQUIP | TAR_OFFAREA | TAR_AGGRO | TAR_WALL) )
+          {
+            return 1;
+          }
+          break;
+
+        case BTYPE_ITEM:
+          // Must be a positive vnum for a real item.
+          if( bdata->bonus <= 0 || real_object( bdata->bonus ) == -1 )
+          {
+            return 1;
+          }
+          break;
+
+        default:
+          break;
       }
+      break;
+
     case BARG_REPEAT:
+      // Setting default repeats...
+      if( bdata->type == BTYPE_EXPM && bdata->option == BOPT_NONE )
       {
-	// setting default repeats...
-	if (bdata->type == BTYPE_EXPM &&
-	    bdata->option == BOPT_NONE)
-	  bdata->repeat = TRUE;
-	break;
-      }
-    case BARG_ALL:
-      {
-	for (i = 1; i < MAX_BARG; i++)
-	  if (retval = validate_boon_data(bdata, i))
-	  {
-	    sprintf(buff, "%02d%02d", i, retval);
-	    return (atoi(buff));
-	  }
+        bdata->repeat = TRUE;
         break;
       }
-    default:
+      break;
+
+    case BARG_ALL:
+      for( i = 1; i < MAX_BARG; i++ )
       {
-	return 1;
+        if( retval = validate_boon_data(bdata, i) )
+        {
+          return (i%100) * 100 + retval % 100;
+          /* Above does the same thing, but faster.
+          sprintf(buff, "%02d%02d", i, retval);
+            return (atoi(buff));
+           */
+        }
       }
+      break;
+
+    default:
+      return 1;
+      break;
   }
 
   // Data validates OK
@@ -697,274 +795,304 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
   char arg[MAX_STRING_LENGTH];
   int i, retval;
 
-    // Handle racewar argument
-    argument = one_argument(argument, arg);
-    if( !strcmp(arg, "all") )
+  // Handle racewar argument
+  argument = one_argument(argument, arg);
+  if( !strcmp(arg, "all") )
+  {
+    bdata->racewar = 0;
+  }
+  else if( !strcmp(arg, "good") )
+  {
+    bdata->racewar = RACEWAR_GOOD;
+  }
+  else if( !strcmp(arg, "evil") )
+  {
+    bdata->racewar = RACEWAR_EVIL;
+  }
+  else if( !strcmp(arg, "undead") )
+  {
+    bdata->racewar = RACEWAR_UNDEAD;
+  }
+  else if( !strcmp(arg, "neutral") )
+  {
+    bdata->racewar = RACEWAR_NEUTRAL;
+  }
+  else
+  {
+    send_to_char_f(ch, "&+W'%s' is not a valid racewar.&n\r\n", arg);
+    send_to_char("&+cAvailable Racewars:&n\r\nall\r\ngood\r\nevil\r\nundead\r\nneutral\r\n", ch);
+    return FALSE;
+  }
+
+  // Handle type (2nd) argument
+  argument = one_argument(argument, arg);
+  for( i = 1; i < MAX_BTYPE; i++ )
+  {
+    if (!strcmp(boon_types[i].type, arg))
     {
-      bdata->racewar = 0;
+      break;
     }
-    else if( !strcmp(arg, "good") )
+  }
+  bdata->type = i;
+
+  if( validate_boon_data(bdata, BARG_TYPE) )
+  {
+    send_to_char_f(ch, "&+W'%s' is not a valid boon type.&n\r\n", arg);
+    send_to_char("&+cAvailable Boon Types:&n\r\n", ch);
+    for( i = 1; i < MAX_BTYPE; i++ )
     {
-      bdata->racewar = RACEWAR_GOOD;
+      send_to_char_f(ch, "%s\r\n", boon_types[i].type);
     }
-    else if( !strcmp(arg, "evil") )
+    return FALSE;
+  }
+
+  // Handle bonus argument
+  argument = setbit_parseArgument(argument, arg);
+
+  // First we handle char type arguments
+  if (bdata->type == BTYPE_POWER)
+  {
+    if (!*arg)
     {
-      bdata->racewar = RACEWAR_EVIL;
+      send_to_char("&+WPlease enter an affect.&n\r\n", ch);
+      return FALSE;
     }
-    else if( !strcmp(arg, "undead") )
+    int aff = 0, bit = 0;
+    for (i = 0; affected1_bits[i].flagLong; i++)
     {
-      bdata->racewar = RACEWAR_UNDEAD;
+      if( !strcasecmp(arg, affected1_bits[i].flagLong)
+        || !strcasecmp(arg, affected1_bits[i].flagShort) )
+      {
+        aff = 1;
+        bit = i;
+        break;
+      }
+      else if( !strcasecmp(arg, affected2_bits[i].flagLong)
+        || !strcasecmp(arg, affected2_bits[i].flagShort) )
+      {
+        aff = 2;
+        bit = i;
+        break;
+      }
+      else if( !strcasecmp(arg, affected3_bits[i].flagLong)
+        || !strcasecmp(arg, affected3_bits[i].flagShort) )
+      {
+        aff = 3;
+        bit = i;
+        break;
+      }
+      else if( !strcasecmp(arg, affected4_bits[i].flagLong)
+        || !strcasecmp(arg, affected4_bits[i].flagShort) )
+      {
+        aff = 4;
+        bit = i;
+        break;
+      }
+      else if( affected5_bits[i].flagLong
+        && (!strcasecmp(arg, affected5_bits[i].flagLong)
+        || !strcasecmp(arg, affected5_bits[i].flagShort)) )
+      {
+        aff = 5;
+        bit = i;
+        break;
+      }
     }
-    else if( !strcmp(arg, "neutral") )
+    if (!bit || !aff)
     {
-      bdata->racewar = RACEWAR_NEUTRAL;
+      char flagbuff[MAX_STRING_LENGTH];
+
+      send_to_char_f(ch, "&+W'%s' is not a valid affect.  Valid options are:&n\r\n", arg);
+      *flagbuff = '\0';
+      concat_which_flagsde("Aff1", affected1_bits, flagbuff);
+      concat_which_flagsde("Aff2", affected2_bits, flagbuff);
+      concat_which_flagsde("Aff3", affected3_bits, flagbuff);
+      concat_which_flagsde("aff4", affected4_bits, flagbuff);
+      concat_which_flagsde("aff5", affected5_bits, flagbuff);
+      page_string(ch->desc, flagbuff, 1);
+      return FALSE;
+    }
+    bdata->bonus = aff;
+    bdata->bonus2 = bit;
+  }
+  else if( bdata->type == BTYPE_SPELL )
+  {
+    if( !*arg )
+    {
+      send_to_char("&+WPlease enter a spell name.&n\r\n", ch);
+      return FALSE;
+    }
+    if( isdigit(*arg) )
+    {
+      send_to_char("&+WThat's not a valid spell name.  Use single quotes (') if necessesary.&n\r\n", ch);
+      return FALSE;
+    }
+    for( i = 1; i <= LAST_SPELL; i++ )
+    {
+      if( is_abbrev(skills[i].name, arg) )
+      {
+        break;
+      }
+    }
+    if( i > LAST_SPELL )
+    {
+      send_to_char_f(ch, "&+W'%s' is not a valid spell name.  Try using single quotes (') if needed.&n\r\n", arg);
+      return FALSE;
+    }
+    bdata->bonus = i;
+  }
+  else if( bdata->type == BTYPE_STAT )
+  {
+    if( !*arg )
+    {
+      send_to_char("&+WPlease enter an attribute.&n\r\n", ch);
+      return FALSE;
+    }
+    if( isdigit(*arg) )
+    {
+      send_to_char("&+WThat bonus is not a valid stat, please choose from: str, dex, agi, con, pow, int, wis, cha, karma, and luck.&n\r\n", ch);
+      return FALSE;
+    }
+
+    for( i = 1; i < MAX_ATTRIBUTES; i++ )
+    {
+      if( is_abbrev(arg, attr_names[i].abrv) || is_abbrev(arg, attr_names[i].name) )
+      {
+        bdata->bonus = i;
+        break;
+      }
+    }
+    if( !bdata->bonus )
+    {
+      send_to_char("The bonus is not a valid stat, please choose from: str, dex, agi, con, pow, int, wis, cha, karma, and luck.\r\n", ch);
+      return FALSE;
+    }
+  }
+  else if( bdata->type == BTYPE_ITEM )
+  {
+    i = atoi(arg);
+    if( i <= 0 || real_object(i) < 0 )
+    {
+      send_to_char_f(ch, "&+W'%s' is not a valid item vnum.  Please enter a number.&n\r\n", arg);
+      return FALSE;
+    }
+    bdata->bonus = i;
+  }
+
+  // Then we handle the normal number type stats
+  if( !bdata->bonus && (!isdigit(*arg)) )
+  {
+    send_to_char_f(ch, "&+W'%s' is not a valid bonus.  Please enter a number.&n\r\n", arg);
+    return FALSE;
+  }
+  else if( !bdata->bonus )
+  {
+    bdata->bonus = atof(arg);
+  }
+
+  if( bdata->type == BTYPE_LEVEL )
+  {
+    argument = setbit_parseArgument(argument, arg);
+    if( *arg && !strcmp(arg, "yes") )
+    {
+      bdata->bonus2 = 1;
+    }
+    else if( *arg && !strcmp(arg, "no") )
+    {
+      bdata->bonus2 = 0;
+    }
+    else if( *arg && atoi(arg) == 0 )
+    {
+      bdata->bonus2 = 0;
+    }
+    else if( *arg && atoi(arg) == 1 )
+    {
+      bdata->bonus2 = 1;
     }
     else
     {
-      send_to_char_f(ch, "&+W'%s' is not a valid racewar.&n\r\n", arg);
-      send_to_char("&+cAvailable Racewars:&n\r\nall\r\ngood\r\nevil\r\nundead\r\nneutral\r\n", ch);
+      send_to_char("Invalid secondary bonus, please indicate whether or not to bypass epics (1 or yes, 0 or no).\r\n", ch);
       return FALSE;
     }
+  }
 
-    // Handle type argument
-    argument = one_argument(argument, arg);
-    for( i = 1; i < MAX_BTYPE; i++ )
+  if( (retval = validate_boon_data(bdata, BARG_BONUS)) )
+  {
+    switch( bdata->type )
     {
-      if (!strcmp(boon_types[i].type, arg))
-      {
+      case BTYPE_LEVEL:
+        if( retval == 1 )
+        {
+          send_to_char("That level cap is out of range, please choose a cap on what level you can achieve (56 means, you can gain a level up to level 56).", ch);
+        }
         break;
-      }
-    }
-    bdata->type = i;
-    if( validate_boon_data(bdata, BARG_TYPE) )
-    {
-      send_to_char_f(ch, "&+W'%s' is not a valid boon type.&n\r\n", arg);
-      send_to_char("&+cAvailable Boon Types:&n\r\n", ch);
-      for( i = 1; i < MAX_BTYPE; i++ )
-      {
-        send_to_char_f(ch, "%s\r\n", boon_types[i].type);
-      }
-      return FALSE;
-    }
-
-    // Handle bonus argument
-    argument = setbit_parseArgument(argument, arg);
-
-    // First we handle char type arguments
-    if (bdata->type == BTYPE_POWER)
-    {
-      if (!*arg)
-      {
-        send_to_char("&+WPlease enter an affect.&n\r\n", ch);
-        return FALSE;
-      }
-      int aff = 0, bit = 0;
-      for (i = 0; affected1_bits[i].flagLong; i++)
-      {
-        if( !strcasecmp(arg, affected1_bits[i].flagLong)
-          || !strcasecmp(arg, affected1_bits[i].flagShort) )
+      case BTYPE_SPELL:
+        if( retval == 1 )
         {
-          aff = 1;
-          bit = i;
-          break;
-	      }
-        else if( !strcasecmp(arg, affected2_bits[i].flagLong)
-          || !strcasecmp(arg, affected2_bits[i].flagShort) )
-        {
-          aff = 2;
-          bit = i;
-          break;
+          send_to_char("&+WThat spell is not an appropriate bonus, choose a non aggressive spell that doesn't interact with objects or other targets in the room (hint choose a spellup).&n\r\n", ch);
         }
-        else if( !strcasecmp(arg, affected3_bits[i].flagLong)
-          || !strcasecmp(arg, affected3_bits[i].flagShort) )
+        break;
+      case BTYPE_EXPM:
+      case BTYPE_EXP:
+      case BTYPE_EPIC:
+      case BTYPE_CASH:
+        if( retval == 1 )
         {
-          aff = 3;
-          bit = i;
-          break;
+          send_to_char("&+WNegative bonus? What's the point?&n\r\n", ch);
         }
-        else if( !strcasecmp(arg, affected4_bits[i].flagLong)
-          || !strcasecmp(arg, affected4_bits[i].flagShort) )
+        break;
+      case BTYPE_ITEM:
+        if( retval == 1 )
         {
-          aff = 4;
-          bit = i;
-          break;
+          send_to_char("&+WCould not find an item with that vnum.&n\r\n", ch);
         }
-        else if( affected5_bits[i].flagLong
-          && (!strcasecmp(arg, affected5_bits[i].flagLong)
-          || !strcasecmp(arg, affected5_bits[i].flagShort)) )
-        {
-          aff = 5;
-          bit = i;
-          break;
-        }
-      }
-      if (!bit || !aff)
-      {
-        char flagbuff[MAX_STRING_LENGTH];
-
-        send_to_char_f(ch, "&+W'%s' is not a valid affect.  Valid options are:&n\r\n", arg);
-        *flagbuff = '\0';
-        concat_which_flagsde("Aff1", affected1_bits, flagbuff);
-        concat_which_flagsde("Aff2", affected2_bits, flagbuff);
-        concat_which_flagsde("Aff3", affected3_bits, flagbuff);
-        concat_which_flagsde("aff4", affected4_bits, flagbuff);
-        concat_which_flagsde("aff5", affected5_bits, flagbuff);
-        page_string(ch->desc, flagbuff, 1);
-        return FALSE;
-      }
-      bdata->bonus = aff;
-      bdata->bonus2 = bit;
+else
+send_to_char_f(ch, "&+WUnknown error with boon item bonus '%d'.&n\r\n", retval);
+        break;
+      default:
+          send_to_char_f(ch, "&+WUnknown error with boon bonus '%d'.&n\r\n", retval);
+        break;
     }
+    return FALSE;
+  }
 
-    if( bdata->type == BTYPE_SPELL )
+  // Handle option argument
+  argument = one_argument(argument, arg);
+	// Keeping this here instead of the validation function because this is specific to manually
+  //   created boons.  Randomly created boons cannot generate anything requiring a level.
+  for( i = 0; i < MAX_BOPT; i++ )
+  {
+    if( !strcmp(boon_options[i].option, arg) )
     {
-      if( !*arg)
+      if( get_boon_level(bdata->type, i) > GET_LEVEL(ch) )
       {
-        send_to_char("&+WPlease enter a spell name.&n\r\n", ch);
+        send_to_char_f(ch, "That combination requires level %d to create.\r\n", get_boon_level(bdata->type, i));
         return FALSE;
       }
-      if( isdigit(*arg) )
-      {
-        send_to_char("&+WThat's not a valid spell name.  Use single quotes (') if necessesary.&n\r\n", ch);
-        return FALSE;
-      }
-      for( i = 1; i <= LAST_SPELL; i++ )
-      {
-        if( is_abbrev(skills[i].name, arg) )
-        {
-          break;
-        }
-      }
-      if( i > LAST_SPELL )
-      {
-        send_to_char_f(ch, "&+W'%s' is not a valid spell name.  Try using single quotes (') if needed.&n\r\n", arg);
-        return FALSE;
-      }
-      bdata->bonus = i;
+      // Found option, level requirement met: Everything's good, let's continue...
+      break;
     }
-    if( bdata->type == BTYPE_STAT )
-    {
-      if( !*arg )
-      {
-        send_to_char("&+WPlease enter an attribute.&n\r\n", ch);
-        return FALSE;
-      }
-      if( isdigit(*arg) )
-      {
-        send_to_char("&+WThat bonus is not a valid stat, please choose from: str, dex, agi, con, pow, int, wis, cha, karma, and luck.&n\r\n", ch);
-        return FALSE;
-      }
+  }
 
-      for( i = 1; i < MAX_ATTRIBUTES; i++ )
-      {
-        if( is_abbrev(arg, attr_names[i].abrv) || is_abbrev(arg, attr_names[i].name) )
-        {
-          bdata->bonus = i;
-          break;
-        }
-      }
-      if( !bdata->bonus )
-      {
-        send_to_char("The bonus is not a valid stat, please choose from: str, dex, agi, con, pow, int, wis, cha, karma, and luck.\r\n", ch);
-        return FALSE;
-      }
-    }
+  bdata->option = i;
+PENIS:
 
-    // Then we handle the normal number type stats
-    if (!bdata->bonus && (!isdigit(*arg)))
+    if( (retval = validate_boon_data(bdata, BARG_OPTION)) )
     {
-      send_to_char_f(ch, "&+W'%s' is not a valid bonus.  Please enter a number.&n\r\n", arg);
-      return FALSE;
-    }
-    else if (!bdata->bonus)
-      bdata->bonus = atof(arg);
-
-    if (bdata->type == BTYPE_LEVEL)
-    {
-      argument = setbit_parseArgument(argument, arg);
-      if( *arg && !strcmp(arg, "yes") )
+      if( retval == 3 )
       {
-        bdata->bonus2 = 1;
+        send_to_char("CTF boon's are not available when CTF_MUD is not enabled.\r\n", ch);
       }
-      else if( *arg && !strcmp(arg, "no") )
+      else if( retval == 2 )
       {
-        bdata->bonus2 = 0;
+        send_to_char("That is not a valid type and option combination.\r\n", ch);
       }
-      else if( *arg && atoi(arg) == 0 )
+      else if( retval == 1 )
       {
-        bdata->bonus2 = 0;
-      }
-      else if( *arg && atoi(arg) == 1 )
-      {
-        bdata->bonus2 = 1;
+        send_to_char_f(ch, "&+W'%s' is not a valid boon option.&n\r\n", arg);
       }
       else
       {
-        send_to_char("Invalid secondary bonus, please indicate whether or not to bypass epics (1 or yes, 0 or no).\r\n", ch);
-        return FALSE;
-      }
-    }
-    if ((retval = validate_boon_data(bdata, BARG_BONUS)))
-    {
-      switch (bdata->type)
-      {
-	case BTYPE_LEVEL:
-	  {
-	    if (retval == 1)
-	      send_to_char("That level cap is out of range, please choose a cap on what level you can achieve (56 means, you can gain a level up to level 56).", ch);
-	    break;
-	  }
-	case BTYPE_SPELL:
-	  {
-	    if (retval == 1)
-	      send_to_char("&+WThat spell is not an appropriate bonus, choose a non aggressive spell that doesn't interact with objects or other targets in the room (hint choose a spellup).&n\r\n", ch);
-	    break;
-	  }
-	case BTYPE_EXP:
-	case BTYPE_EXPM:
-	case BTYPE_EPIC:
-	case BTYPE_CASH:
-	  {
-	    if (retval == 1)
-	      send_to_char("&+WNegative bonus? What's the point?&n\r\n", ch);
-	    break;
-	  }
-	default:
-	  break;
-      }
-      return FALSE;
-    }
-
-    // Handle option argument
-    argument = one_argument(argument, arg);
-    for (i = 0; i < MAX_BOPT; i++)
-    {
-      if (!strcmp(boon_options[i].option, arg))
-      {
-	// Keeping this here instead of the validation function because this
-	// is specific to manually created boons.  Randomly created boons cannot
-	// generate anything requiring a level.
-	if (get_boon_level(bdata->type, i) > GET_LEVEL(ch))
-	{
-	  send_to_char_f(ch, "That combination requires level %d to create.\r\n", get_boon_level(bdata->type, i));
-	  return FALSE;
-	}
-	// Everything's good, let's continue...
-        break;
-      }
-    }
-    bdata->option = i;
-    if ((retval = validate_boon_data(bdata, BARG_OPTION)))
-    {
-      if (retval == 3)
-        send_to_char("CTF boon's are not available when CTF_MUD is not enabled.\r\n", ch);
-      if (retval == 2)
-      {
-	send_to_char("That is not a valid type and option combination.\r\n", ch);
-      }
-      if (retval == 1)
-      {
-	send_to_char_f(ch, "&+W'%s' is not a valid boon option.&n\r\n", arg);
+        send_to_char_f(ch, "&+WUnknown error with boon option '%s'.&n\r\n", arg);
       }
       send_to_char("&+cAvailable Boon Options:&n\r\n", ch);
       for (i = 0; i < MAX_BOPT; i++)
@@ -981,6 +1109,27 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
     // Handle criteria argument
     argument = setbit_parseArgument(argument, arg);
 
+/*
+These have a return 3 option:
+This is random code for retval 3 handling:
+  BARG_CRITERIA
+        case BOPT_NONE:
+        case BOPT_ZONE:
+          if( retval == 3 )
+          {
+            send_to_char("Could not find the zone.", ch);
+          }
+          break;
+
+  BOPT_MOB
+  BOPT_RACE
+        case BTYPE_EXPM:
+          if( retval == 3 )
+          {
+            send_to_char( "Set number of mobs to kill for boon completion to 1.\n\r", ch );
+          }
+          break;
+*/
     if (bdata->option == BOPT_NONE ||
 	bdata->option == BOPT_ZONE)
     {
@@ -1063,7 +1212,7 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
     }
 
     if( (bdata->option == BOPT_MOB || bdata->option == BOPT_RACE)
-      && bdata->type == BTYPE_EXPM && bdata->bonus > 1 )
+      && bdata->type == BTYPE_EXPM && bdata->bonus > 1 && bdata->criteria != 1 )
     {
       send_to_char("Exp modification is designed to work per mob, so defaulting your kills per completion criteria to 1.\r\n", ch);
       bdata->criteria = 1;
@@ -1146,7 +1295,7 @@ int parse_boon_args(P_char ch, BoonData *bdata, char *argument)
 	    if (retval == 1)
 	      send_to_char("&+WA negative vnum?&n\r\n", ch);
 	    if (retval == 2)
-	      send_to_char_f(ch, "&+WThere is no monster with vnum '%d'.&n\r\n", (int)bdata->criteria);
+	      send_to_char_f(ch, "&+WThere is no monster with vnum '%d'.&n\r\n", (int)bdata->criteria2);
 	    if (retval == 3)
 	      send_to_char("&+WMonster failed to load.&n\r\n", ch);
 	    if (retval == 4)
@@ -1420,19 +1569,19 @@ void do_boon(P_char ch, char *argument, int cmd)
     strcat(buff, "   &+co [option]&n show only boons of a specified option\r\n");
     strcat(buff, "     &+cp [name]&n show only boons specified for name\r\n");
     strcat(buff, "&+CAdd&n           add a new boon\r\n");
-    strcat(buff, "       &+Lsyntax&n boon add racewar type bonus [bonus2] option criteria [criteria2] duration -p playername\r\n");
+    strcat(buff, "       &+Lsyntax&n boon add racewar type bonus [bonus2] option criteria [criteria2] duration [repeat] -p playername\r\n");
     strcat(buff, "      &+cracewar&n [all|good|evil|undead|neutral]\r\n");
-    strcat(buff, "         &+ctype&n [exp|epic|cash|level|power|stat|point]\r\n");
-    strcat(buff, "       &+coption&n [none|zone|level|frag|guildhall|outpost|nexus|cargo|auction]\r\n");
-    strcat(buff, "     &+ccriteria&n zone number, level or frag requirement, outpost ID, etc\r\n");
-    strcat(buff, "        &+cbonus&n the boon type bonus\r\n");
+    strcat(buff, "         &+ctype&n [expm|exp|epic|cash|level|power|spell|stat|stats|point|item]\r\n");
+    strcat(buff, "        &+cbonus&n the amount of the boon type bonus (200 epics, 2000 copper, etc)\r\n");
+    strcat(buff, "       &+coption&n [none|zone|level|mob|race|frag|frags|guildhall|outpost|nexus|cargo|auction|ctf|ctfb]\r\n");
+    strcat(buff, "     &+ccriteria&n zone number, level, frag requirement, mob vnum, outpost ID, etc\r\n");
     strcat(buff, "     &+cduration&n time limit till boon expires in minutes (-1 for no expiration)\r\n");
     strcat(buff, "       &+crepeat&n designates the completing the boon is repeatable\r\n");
-    strcat(buff, "           &+c-p&n create boon for specified person only.\r\n");
+    strcat(buff, "           &+c-p&n create boon for specified person only (searches by name).\r\n");
     strcat(buff, "&+CRemove&n        remove an existing boon\r\n");
     strcat(buff, "       &+Lsyntax&n boon remove boon_id\r\n");
     strcat(buff, "&+CExtend&n        Extend an existing boon's duration, An * will show next to author name\r\n");
-    strcat(buff, "                   (extending an existing boon will reactivate the boon\r\n");
+    strcat(buff, "                   (extending an inactive boon will reactivate the boon\r\n");
     strcat(buff, "&+CRandom&n        replace existing random boons with new ones.\r\n");
     strcat(buff, "       &+Lsyntax&n boon random [optional boon_id]\r\n");
     strcat(buff, "      &+cboon_id&n You can select a specific random boon to replace instead\r\n");
@@ -2013,6 +2162,18 @@ int boon_display(P_char ch, char *argument)
 	  sprintf(bufftype, boon_types[type].desc, attr_names[(int)bonus].name);
 	  break;
 	}
+      case BTYPE_ITEM:
+  {
+    if( real_object((int)bonus) >= 0 )
+    {
+      sprintf( bufftype, boon_types[type].desc, obj_index[real_object((int)bonus)].desc2 );
+    }
+    else
+    {
+      sprintf( bufftype, boon_types[type].desc, "&+RBUGGY ITEM VNUM&n" );
+    }
+    break;
+  }
       default:
 	{
 	  if (type >= MAX_BTYPE)
@@ -2744,7 +2905,7 @@ void check_boon_completion(P_char ch, P_char victim, double data, int option)
     // This should never happen, but..
     if( bdata.option != option )
     {
-      debug("check_boon_completion(): bdata.option != option");
+      debug("check_boon_completion: bdata.option != option");
       continue;
     }
 
@@ -2822,7 +2983,7 @@ void check_boon_completion(P_char ch, P_char victim, double data, int option)
 
     // OK, if we've made it here, they successfully completed a boon
     // Apply bonuses
-    switch (bdata.type)
+    switch( bdata.type )
     {
       case BTYPE_EXPM:
         //boon_notify(id, BN_NOTCH);
@@ -3018,7 +3179,23 @@ void check_boon_completion(P_char ch, P_char victim, double data, int option)
           }
         }
         break;
+      case BTYPE_ITEM:
+        P_obj reward_item;
+        reward_item = read_object( (int)bdata.bonus, VIRTUAL );
+        if( reward_item == NULL )
+        {
+          debug("check_boon_completion: Failed loading object vnum %d for %s.", (int)bdata.bonus, J_NAME(ch) );
+          send_to_char_f(ch, "&+RCould not load item vnum %d! &+B:&+R(&n\r\n", (int)bdata.bonus);
+        }
+        else
+        {
+          obj_to_char( reward_item, ch );
+          send_to_char_f(ch, "&+WYou receive %s&+W! &+B:&+W)&n\r\n", reward_item->short_description );
+        }
+        break;
       default:
+          debug("check_boon_completion: Boon #%d: Unknown bonus type (%d) for %s.", bdata.id, bdata.type, J_NAME(ch) );
+          send_to_char_f(ch, "&+RCould not find a reward for boon #%d! &+B:&+R(&n\r\n", bdata.id);
         break;
     }
     if( bdata.type != BTYPE_EXPM )

@@ -80,19 +80,20 @@ struct boon_options_struct {
   int progress;
 };
 
-// Boon types			   BONUS
-#define BTYPE_NONE      0	// N/A
-#define BTYPE_EXPM	1	// Exp multiplier
-#define BTYPE_EXP	2	// Receive exp upon completion
-#define BTYPE_EPIC	3	// Receive a number of epics
-#define BTYPE_CASH	4	// Cash bonus in copper
-#define BTYPE_LEVEL	5	// Receive free level
-#define BTYPE_POWER	6	// Receive an affect for duration
-#define BTYPE_SPELL	7	// Receive a spell for a duration
-#define BTYPE_STAT	8	// Receive a stat point powerup in a specified attribute
-#define BTYPE_STATS     9       // Receive a # of stat powerups to apply to your choice
-#define BTYPE_POINT	10	// Receive boon points (for the boon shop)
-#define MAX_BTYPE	11	// Last + 1
+// Boon Reward Types    BONUS
+#define BTYPE_NONE   0  // N/A
+#define BTYPE_EXPM   1  // Exp multiplier
+#define BTYPE_EXP    2  // Receive exp upon completion
+#define BTYPE_EPIC   3  // Receive a number of epics
+#define BTYPE_CASH   4  // Cash bonus in copper
+#define BTYPE_LEVEL  5  // Receive free level
+#define BTYPE_POWER  6  // Receive an affect for duration
+#define BTYPE_SPELL  7  // Receive a spell for a duration
+#define BTYPE_STAT   8  // Receive a stat point powerup in a specified attribute
+#define BTYPE_STATS  9  // Receive a # of stat powerups to apply to your choice
+#define BTYPE_POINT 10  // Receive boon points (for the boon shop)
+#define BTYPE_ITEM  11  // Receive an item of vnum (criteria)
+#define MAX_BTYPE   12  // Last + 1
 
 // Boon type options		   CRITERIA
 #define BOPT_NONE	     0	// Zone # (for bonus exp)
@@ -124,12 +125,12 @@ struct boon_options_struct {
 #define BARG_CRITERIA2  8	//  bdata->criteria2 (optional)
 #define BARG_BONUS	9	//  bdata->bonus
 #define BARG_BONUS2	10	//  bdata->bonus2
-#define BARG_RANDOM	10	//  bdata->random
-#define BARG_AUTHOR	11	//  bdata->author
-#define BARG_ACTIVE	12	//  bdata->active
-#define BARG_PID	13	//  bdata->pid
-#define BARG_REPEAT	14	//  bdata->repeat
-#define MAX_BARG	15	// Last + 1
+#define BARG_RANDOM	11	//  bdata->random
+#define BARG_AUTHOR	12	//  bdata->author
+#define BARG_ACTIVE	13	//  bdata->active
+#define BARG_PID	14	//  bdata->pid
+#define BARG_REPEAT	15	//  bdata->repeat
+#define MAX_BARG	16	// Last + 1
 
 // Notify types for boon_notify()
 #define BN_NONE		0
