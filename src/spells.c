@@ -289,8 +289,7 @@ void cast_minor_creation(int level, P_char ch, char *arg, int type,
   spell_minor_creation(level, ch, 0, tar_obj);
 }
 
-void cast_channel(int level, P_char ch, char *arg, int type, P_char tar_ch,
-                  P_obj tar_obj)
+void cast_channel(int level, P_char ch, char *arg, int type, P_char tar_ch, P_obj tar_obj)
 {
   P_char   t_ch, is_head = get_linked_char(ch, LNK_CONSENT);
   P_obj    t_obj;
@@ -304,9 +303,7 @@ void cast_channel(int level, P_char ch, char *arg, int type, P_char tar_ch,
       return;
     if (ch->only.pc->pc_timer[3] + 7200 > curr_time)
     {
-      send_to_char
-        ("You have not built up enough energy to summon another diety.\r\n",
-         ch);
+      send_to_char("You have not built up enough energy to summon another diety.\r\n", ch);
       return;
     }
     if (!is_head)

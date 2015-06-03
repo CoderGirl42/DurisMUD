@@ -1731,40 +1731,41 @@ P_char get_char_ranged(const char *name, P_char ch, int distance, int dir)
 {
   P_char   vict = NULL;
   int      source_room, old_cord;
-  int      target_room, i;
+  int      target_room2, target_room, i;
   char     tmp[MAX_STRING_LENGTH];
 
   if (name)
     strcpy(tmp, name);
 
-  source_room = ch->in_room;
+  source_room = target_room = ch->in_room;
 
-  for (i = 0; i < distance; i++)
+  // For each room in range
+  for( i = 0; i < distance; i++ )
   {
-    if (VIRTUAL_EXIT(source_room, dir) &&
-        !(VIRTUAL_EXIT(source_room, dir)->
-          exit_info & (EX_CLOSED | EX_LOCKED | EX_SECRET | EX_BLOCKED)))
+    // If there's a good exit in that direction
+    if( VIRTUAL_EXIT(target_room, dir)
+      && !(VIRTUAL_EXIT(target_room, dir)->exit_info & (EX_CLOSED | EX_LOCKED | EX_SECRET | EX_BLOCKED)) )
     {
-      if (!check_wall(source_room, dir))
+      // If there's no wall in the way.
+      if( !check_wall(target_room, dir) )
       {
-        target_room = world[source_room].dir_option[dir]->to_room;
-        ch->in_room = target_room;
+        ch->in_room = target_room2 = VIRTUAL_EXIT(target_room, dir)->to_room;
         vict = get_char_room_vis(ch, tmp);
-        if (vict)
-          if (IS_AFFECTED3(vict, AFF3_COVER))
+        if( vict )
+        {
+          if( !IS_TRUSTED(ch) && IS_AFFECTED3(vict, AFF3_COVER) )
             vict = NULL;
           else
             break;
+        }
       }
-      else
-      if (check_wall(source_room, dir) && GET_CHAR_SKILL(ch, SKILL_INDIRECT_SHOT))
+      // Otherwise, if there is a wall and we can shoot over.
+      else if( check_wall(target_room, dir) && GET_CHAR_SKILL(ch, SKILL_INDIRECT_SHOT) )
       {
-        target_room = world[source_room].dir_option[dir]->to_room;
-        ch->in_room = target_room;
+        ch->in_room = target_room2 = world[source_room].dir_option[dir]->to_room;
         vict = get_char_room_vis(ch, tmp);
-      
-        if (vict)
-        { 
+        if( vict )
+        {
           if ((world[source_room].sector_type == SECT_INSIDE) ||
         (world[source_room].sector_type == SECT_UNDRWLD_WILD) ||
         (world[source_room].sector_type == SECT_UNDRWLD_CITY) ||
@@ -1794,7 +1795,7 @@ P_char get_char_ranged(const char *name, P_char ch, int distance, int dir)
           {
             vict = NULL;
           }
-          else if (IS_AFFECTED3(vict, AFF3_COVER))
+          else if( !IS_TRUSTED(ch) && IS_AFFECTED3(vict, AFF3_COVER))
           {
             vict = NULL;
           }
@@ -1804,11 +1805,14 @@ P_char get_char_ranged(const char *name, P_char ch, int distance, int dir)
           }
         }
       }
+      // Otherwise, we can't get over the wall.
       else
         break;
     }
+    // Otherwise, there no good exit in that direction.
     else
       break;
+    target_room = target_room2;
   }
 
   ch->in_room = source_room;

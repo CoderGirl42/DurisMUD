@@ -61,9 +61,12 @@
 #define SUN_VISIBLE 2
 #define WEATHER_CONTROLLED 4	/* Idea for expansion */
 
+// Days : 8am to 4pm
 #define IS_DAY ((time_info.hour >= 8) && (time_info.hour <= 16))
+// Twilight : 4am to 8am and 4pm to 7pm
 #define IS_TWILIGHT (((time_info.hour > 4) && (time_info.hour < 8)) || \
                      ((time_info.hour > 16) && (time_info.hour < 19)))
-#define IS_NIGHT (!IS_DAY)
+// Night: 8pm to 4am
+#define IS_NIGHT ((time_info.hour <= 4) || (time_info.hour > 19))
 
 #endif /* _SOJ_WEATHER_H_ */

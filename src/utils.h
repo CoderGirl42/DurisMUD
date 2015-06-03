@@ -63,6 +63,7 @@
       raise(SIGSEGV);                                                                       \
     }                                                                                       \
   }
+//" This is here to clean up the coloring in nano.  Something wrong with the backslash and quotes causes bleeding
 
 #define RECREATE(result, type, num)                                                                  \
   {                                                                                                  \
@@ -72,6 +73,7 @@
       raise(SIGSEGV);                                                                                \
     }                                                                                                \
   }
+//" This is here to clean up the coloring in nano.  Something wrong with the backslash and quotes causes bleeding
 
 #define FREE(i)                    \
   {                                \
@@ -83,9 +85,7 @@
 
 #define IS_SET(flag, bit)  ((flag) & (bit))
 
-#define SWITCH(a, b) { (a) ^= (b); \
-          (b) ^= (a); \
-          (a) ^= (b); }
+#define SWITCH(a, b) { (a) ^= (b); (b) ^= (a); (a) ^= (b); }
 
 /*
 #define CAN_CMD_PARALYSIS(cmd) ((cmd) == 8 || ((cmd) >= 15 && (cmd) <= 21) || (cmd) == 41 || \
@@ -218,7 +218,7 @@ SECS_PER_MUD_DAY)
 #define IS_SHIP_ROOM(r) (world[r].number >= 60000 && world[r].number <= 64999)
 
 #define IS_OCEAN_ROOM(r) ( world[r].sector_type == SECT_OCEAN )
-#define IS_FOREST_ROOM(r) ( world[r].sector_type == SECT_FOREST )
+#define IS_FOREST_ROOM(r) ( world[r].sector_type == SECT_FOREST || world[r].sector_type == SECT_SNOWY_FOREST)
 #define IS_SWAMP_ROOM(r) ( world[r].sector_type == SECT_SWAMP )
 
 #define IS_UNDERWATER(c) (world[c->in_room].sector_type == SECT_UNDERWATER \
@@ -267,10 +267,13 @@ SECS_PER_MUD_DAY)
 #define IS_MAGIC_LIGHT(r) ( IS_SET(world[r].room_flags, MAGIC_LIGHT) && !IS_SET(world[r].room_flags, MAGIC_DARK ) )
 #define IS_MAGIC_DARK(r) ( IS_SET(world[r].room_flags, MAGIC_DARK) && !IS_SET(world[r].room_flags, MAGIC_LIGHT ) )
 
-#define IS_SUNLIT(r) ( IS_DAY && !IS_TWILIGHT && !IS_ROOM(r, DARK | MAGIC_DARK | INDOORS) \
-                       && !IS_UD_MAP(r) && !IS_UNDERWORLD(r) )
+// For it to be sunlit, the sun must be out and bright, we must be outdoors,
+//   not under cover (ie forest) and not in a DARK or MAGIC_DARK room.
+#define IS_SUNLIT(r) ( IS_DAY && !IS_TWILIGHT && IS_OUTDOORS(r) \
+  && !IS_ROOM(r, DARK | MAGIC_DARK ) )
 
-int IS_TWILIGHT_ROOM(int r);
+bool IS_TWILIGHT_ROOM(int r);
+bool IS_OUTDOORS(int r);
 
 #define IS_ROOM( room, flag ) (IS_SET(world[room].room_flags, flag) )
 
@@ -336,6 +339,8 @@ int IS_TWILIGHT_ROOM(int r);
 
 #define GET_NAME1(ch)   (IS_DISGUISE((ch)) ? GET_DISGUISE_NAME((ch)) : GET_NAME((ch)))
 #define GET_NAME(ch)    ((ch)->player.name)
+#define GET_TRUE_NAME(ch)    (((ch)->desc && (ch)->desc->original) \
+  ? (ch)->desc->original->player.name : (ch)->player.name)
 #define GET_DISGUISE_NAME(ch) (IS_DISGUISE_PC(ch) ? (ch)->disguise.name : (ch)->disguise.title)
 #define GET_DISGUISE_LONG(ch) ((ch)->disguise.longname)
 #define GET_DISGUISE_SHORT(ch) ((ch)->disguise.short_descr)
@@ -501,6 +506,7 @@ int race_size(int race);
 #define GET_PLYR(a) (IS_MORPH(a) ? MORPH_ORIG(a) :               \
                      ((a)->desc && (a)->desc->original) ?        \
                      (a)->desc->original : (a))
+#define SWITCHED(a) ( (a)->desc && (a)->desc->original && (a) == (a)->desc->original )
 
 #define IS_SHOPKEEPER(a)  (IS_NPC(a) && ((mob_index[GET_RNUM(a)].qst_func == shop_keeper) || \
     (mob_index[GET_RNUM(a)].func.mob == shop_keeper)))

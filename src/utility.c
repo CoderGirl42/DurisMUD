@@ -78,6 +78,7 @@ extern void event_spellcast(P_char, P_char, P_obj, void *);
 int ship_obj_proc(P_obj obj, P_char ch, int cmd, char *arg);
 extern struct mm_ds *dead_mob_pool;
 extern struct mm_ds *dead_pconly_pool;
+extern const char *sector_types[];
 
 char     GS_buf1[MAX_STRING_LENGTH];
 
@@ -2322,10 +2323,11 @@ bool aggressive_to(P_char ch, P_char target)
       return FALSE;  // Liches are revered/feared by lower level undead - Jexni 8/18/08
 
     /* check if mob is nocturnal/diurnal/perpetually angry */
-
-    if (IS_AGGROFLAG(ch, AGGR_NIGHT_ONLY) && IS_DAY)
+    // During twilight times (4am to 8am and 4pm to 7pm) we want them to be aggro 'cause they can see.
+    //   This is because we are the land of Bloodlust! Rawr!
+    if (IS_AGGROFLAG(ch, AGGR_NIGHT_ONLY) && !IS_NIGHT)
       return FALSE;
-    if (IS_AGGROFLAG(ch, AGGR_DAY_ONLY) && IS_NIGHT)
+    if (IS_AGGROFLAG(ch, AGGR_DAY_ONLY) && !IS_DAY)
       return FALSE;
 
     if (has_innate(target, INNATE_ASTRAL_NATIVE) && 
@@ -5098,37 +5100,155 @@ bool is_hot_in_room(int room)
   return false;
 }
 
-int IS_TWILIGHT_ROOM(int r)
+// This function determines whether room real number r is currently twilight.
+// Checks for all cases where a room is twilight.  If it finds one, returns TRUE.
+//   If none found, it defaults to return FALSE.  The one exception is the room flag DARK.
+bool IS_TWILIGHT_ROOM(int r)
 {
-  // Twilight rooms are twilight unless magically darked.  Why not lit?
-  if( !IS_SET(world[r].room_flags, MAGIC_DARK) && IS_SET(world[r].room_flags, TWILIGHT) )
-    return TRUE;
+  int sect = world[r].sector_type;
+  int flags = world[r].room_flags;
 
-  // All UD rooms are Twilight?  What about magically darked/lit?
-  if( IS_UD_MAP(r) )
+  // Twilight rooms are twilight unless magically darkened or lit.
+  //   Twilight flag also overrides dark flag.
+  if( IS_SET(flags, TWILIGHT) && !IS_SET(flags, MAGIC_DARK | MAGIC_LIGHT) )
+  {
     return TRUE;
+  }
 
-  // No sunlight + not underworld/inside + no light/dark/inside flag -> Twilight.
-  if( !IS_SUNLIT(r) && !IS_UNDERWORLD(r) && (world[r].sector_type != SECT_INSIDE)
-    && !IS_SET(world[r].room_flags, INDOORS | MAGIC_LIGHT | MAGIC_DARK | DARK) )
+  // If it's lit and darked, it's twilight.
+  if( IS_SET(flags, MAGIC_LIGHT) && IS_SET(flags, MAGIC_DARK | DARK) )
+  {
     return TRUE;
+  }
 
-  // If it's lit and darked, it's Twilight.
-  if( IS_SET(world[r].room_flags, MAGIC_LIGHT) && IS_SET(world[r].room_flags, MAGIC_DARK | DARK) )
-    return TRUE;
+  // This should be the only return FALSE until the end default return.
+  //   If a room isn't flagged MAGIC_LIGHT, but is flagged DARK or MAGIC_DARK, it's not twilight.
+  //   Also, if a room isn't flagged DARK or MAGIC_DARK, but is flagged MAGIC_LIGHT, it's not twilight.
+  if( IS_SET(flags, DARK | MAGIC_DARK) || IS_SET(flags, MAGIC_LIGHT) )
+  {
+    return FALSE;
+  }
 
-  // If it's not lit/darkened and it's Swamp/Forest, it's Twilight.  What about darked?
-  if( !IS_ROOM(r, MAGIC_DARK | MAGIC_LIGHT) && ( IS_SWAMP_ROOM(r) || IS_FOREST_ROOM(r) ) )
+  // All UD map rooms are twilight unless magically darkened/lit.
+  // Underwater rooms and indoors, by default, are twilight, for now.
+  if( IS_UD_MAP(r) || IS_SET(flags, UNDERWATER | INDOORS) )
+  {
     return TRUE;
+  }
 
-  // Astral/Eth is all Twilight.
-  if( world[r].sector_type == SECT_ASTRAL || world[r].sector_type == SECT_ETHEREAL )
-    return TRUE;
+  // Twilight by sector type.
+  switch( sect )
+  {
+    // Sectors that are twilight if not magically lit/dark or regular room dark.
+    // These are in order of creation (add to bottom of list).
+    // Note the exceptions SWAMP & SNOWY_FOREST to get the extra check.
+    //   These are only twilight when the sun is shining.
+    case SECT_FOREST:
+    case SECT_SWAMP:
+    case SECT_SNOWY_FOREST:
+      if( IS_NIGHT )
+      {
+        break;
+      }
+    case SECT_UNDERWATER:
+    case SECT_UNDERWATER_GR:
+    case SECT_FIREPLANE:
+    case SECT_UNDRWLD_WILD:
+    case SECT_UNDRWLD_CITY:
+    case SECT_UNDRWLD_INSIDE:
+    case SECT_UNDRWLD_WATER:
+    case SECT_UNDRWLD_NOSWIM:
+    case SECT_UNDRWLD_NOGROUND:
+    case SECT_AIR_PLANE:
+    case SECT_WATER_PLANE:
+    case SECT_EARTH_PLANE:
+    case SECT_ETHEREAL:
+    case SECT_ASTRAL:
+    case SECT_UNDRWLD_MOUNTAIN:
+    case SECT_UNDRWLD_SLIME:
+    case SECT_UNDRWLD_LOWCEIL:
+    case SECT_UNDRWLD_LIQMITH:
+    case SECT_UNDRWLD_MUSHROOM:
+    case SECT_CASTLE:
+    case SECT_NEG_PLANE:
+    case SECT_PLANE_OF_AVERNUS:
+      return TRUE;
+      break;
+    // These sectors are also in order.  These are the ones exposed to the sunlight.
+    // These are only twilight during sunrise/sunset (dawn/dusk).
+    case SECT_INSIDE:
+    case SECT_CITY:
+    case SECT_FIELD:
+    case SECT_HILLS:
+    case SECT_MOUNTAIN:
+    case SECT_WATER_SWIM:
+    case SECT_WATER_NOSWIM:
+    case SECT_NO_GROUND:
+    case SECT_OCEAN:
+    case SECT_DESERT:
+    case SECT_ARCTIC:
+    case SECT_CASTLE_WALL:
+    case SECT_CASTLE_GATE:
+    case SECT_ROAD:
+    case SECT_LAVA:
+      // If time of day makes it twilight
+      if( IS_TWILIGHT )
+      {
+        return TRUE;
+      }
+      break;
+    default:
+      debug( "IS_TWILIGHT_ROOM: Sector '%s' (%d) not found in switch.", sector_types[sect],sect );
+      break;
+  }
 
-  // Indoors is now Twilight so everyone can see inside them (unless acted upon).
-  if( ((world[r].sector_type == SECT_INSIDE) || IS_SET(world[r].room_flags, INDOORS ))
-    && !IS_ROOM(r, MAGIC_LIGHT | MAGIC_DARK | DARK) )
-    return TRUE;
+  return FALSE;
+}
+
+// This function should probably be retired for a macro to speed things up,
+//   although I'm not sure if a bunch of tests on sector type would be faster via switch.
+// Returns TRUE iff the room, real num r, is an outdoors room not under cover (ie forest is under cover).
+// Note: This is intended for use with the IS_SUNLIT macro, so if the sun can't shine there,
+//   it's not outdoors, ok?
+bool IS_OUTDOORS(int r)
+{
+  int sect = world[r].sector_type;
+  int flags = world[r].room_flags;
+
+  // Rooms that are Lockers/Indoors/etc are not outside rooms.
+  // Note: The "HOUSE" bit was removed.  I dunno if it'll come back or not,
+  //   but should be in this list if it does.
+  if( IS_SET(flags, LOCKER | INDOORS | UNDERWATER | TUNNEL | PRIVATE | NO_PRECIP
+    | SINGLE_FILE | JAIL | GUILD_ROOM ) )
+  {
+    return FALSE;
+  }
+
+  // Outside by sector type.
+  switch( sect )
+  {
+    // Sectors that are outside.
+    // These are in order of creation (add to bottom of list).
+    // These sectors are in order.  These are the ones that can be exposed to sunlight.
+    case SECT_CITY:
+    case SECT_FIELD:
+    case SECT_HILLS:
+    case SECT_MOUNTAIN:
+    case SECT_WATER_SWIM:
+    case SECT_WATER_NOSWIM:
+    case SECT_NO_GROUND:
+    case SECT_OCEAN:
+    case SECT_DESERT:
+    case SECT_ARCTIC:
+    case SECT_CASTLE_WALL:
+    case SECT_CASTLE_GATE:
+    case SECT_ROAD:
+    case SECT_LAVA:
+      return TRUE;
+      break;
+    default:
+      break;
+  }
 
   return FALSE;
 }

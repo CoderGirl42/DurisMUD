@@ -362,38 +362,38 @@ typedef unsigned int uint;
 
 /* Bitvector For 'room_flags' */
 
-#define DARK        BIT_1       /* Need a light to look around here    */
-#define LOCKER      BIT_2       /* locker - flag set on storage lockers */
-#define NO_MOB      BIT_3       /* Mobiles are not permitted into here */
-#define INDOORS     BIT_4       /* Room is considered to be 'indoors'  */
-#define ROOM_SILENT BIT_5
-#define UNDERWATER  BIT_6
-#define NO_RECALL   BIT_7
-#define NO_MAGIC    BIT_8       /* Casting magic is not permitted.        */
-#define TUNNEL      BIT_9
-#define PRIVATE     BIT_10      /* No more than two ppl can move in here  */
-#define ARENA       BIT_11
-#define SAFE_ZONE   BIT_12      /* No steal, attacks permitted in room    */
-#define NO_PRECIP   BIT_13
-#define SINGLE_FILE BIT_14
-#define JAIL        BIT_15
-#define NO_TELEPORT BIT_16
-#define PRIV_ZONE   BIT_17      /* Currently unused     */
-#define HEAL        BIT_18      /* You regain stats twice as fast here    */
-#define NO_HEAL     BIT_19      /* Cannot regain hp/mv/ma within room     */
-#define ROOM_IS_INN BIT_20      /* Players can rent here                  */
-#define DOCKABLE    BIT_21      /* SHIP can dock in this room             */
-#define MAGIC_DARK  BIT_22
-#define MAGIC_LIGHT BIT_23
-#define NO_SUMMON   BIT_24      /* Cannot summon or be summoned to or from */
-#define GUILD_ROOM  BIT_25      /* for player guild rooms */
-#define TWILIGHT    BIT_26
-#define NO_PSI      BIT_27      /* can psis cast in here? */
-#define NO_GATE     BIT_28      /* disallow gate/planeshift? */
-#define ROOM_UNUSED  BIT_29     
-#define ROOM_ATRIUM BIT_30      /* (R) The door to a house      */
-#define BLOCKS_SIGHT BIT_31     /* can't scan/farsee through it, for fog, etc */
-#define BFS_MARK    BIT_32      /* used internally for find_the_path code */
+#define DARK          BIT_1       /* Need a light to look around here    */
+#define LOCKER        BIT_2       /* locker - flag set on storage lockers */
+#define NO_MOB        BIT_3       /* Mobiles are not permitted into here */
+#define INDOORS       BIT_4       /* Room is considered to be 'indoors'  */
+#define ROOM_SILENT   BIT_5
+#define UNDERWATER    BIT_6
+#define NO_RECALL     BIT_7
+#define NO_MAGIC      BIT_8       /* Casting magic is not permitted.        */
+#define TUNNEL        BIT_9
+#define PRIVATE       BIT_10      /* No more than two ppl can move in here  */
+#define ARENA         BIT_11
+#define SAFE_ZONE     BIT_12      /* No steal, attacks permitted in room    */
+#define NO_PRECIP     BIT_13
+#define SINGLE_FILE   BIT_14
+#define JAIL          BIT_15
+#define NO_TELEPORT   BIT_16
+#define PRIV_ZONE     BIT_17      /* Currently unused     */
+#define HEAL          BIT_18      /* You regain stats twice as fast here    */
+#define NO_HEAL       BIT_19      /* Cannot regain hp/mv/ma within room     */
+#define ROOM_IS_INN   BIT_20      /* Players can rent here                  */
+#define DOCKABLE      BIT_21      /* SHIP can dock in this room             */
+#define MAGIC_DARK    BIT_22
+#define MAGIC_LIGHT   BIT_23
+#define NO_SUMMON     BIT_24      /* Cannot summon or be summoned to or from */
+#define GUILD_ROOM    BIT_25      /* for player guild rooms */
+#define TWILIGHT      BIT_26
+#define NO_PSI        BIT_27      /* can psis cast in here? */
+#define NO_GATE       BIT_28      /* disallow gate/planeshift? */
+#define ROOM_UNUSED   BIT_29     /* This is the HOUSE bit whatever that was? */
+#define ROOM_ATRIUM   BIT_30      /* (R) The door to a house      */
+#define BLOCKS_SIGHT  BIT_31     /* can't scan/farsee through it, for fog, etc */
+#define BFS_MARK      BIT_32      /* used internally for find_the_path code */
 
 /* For 'dir_option' */
 

@@ -1769,9 +1769,7 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 spell_miracle, "You feel less vitalized.");
   SPELL_ADD(CLASS_CLERIC, 12);
 
-  SPELL_CREATE("channel", SPELL_CHANNEL, PULSE_SPELLCAST * 3,
-                TAR_IGNORE,
-                cast_channel);
+  SPELL_CREATE("channel", SPELL_CHANNEL, PULSE_SPELLCAST * 3, TAR_IGNORE, cast_channel);
 
 /* Divine fury currently does nothing due to poor coding */
   SPELL_CREATE_MSG("divine fury", SPELL_DIVINE_FURY, PULSE_SPELLCAST * 2,

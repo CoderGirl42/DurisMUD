@@ -8950,7 +8950,7 @@ void do_recall(P_char ch, char *argument, int cmd)
   char *pattern = 0;
   P_char victim = NULL;
 
-  argument = one_argument(argument, arg);
+  argument = skip_spaces(one_argument(argument, arg));
   if( *argument && IS_TRUSTED(ch) )
   {
     victim = get_char_vis(ch, argument);

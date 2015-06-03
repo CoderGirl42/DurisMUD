@@ -18,10 +18,8 @@
 #define UD_ALATORIN_START 120000
 #define UD_ALATORIN_END 123833
 
-#define IS_UD_MAP(r) ( \
-    (world[r].number >= UD_MAP_START && world[r].number <= UD_MAP_END) || \
-    (world[r].number >= UD_ALATORIN_START && world[r].number <= UD_ALATORIN_END) \
-    )
+#define IS_UD_MAP(r) ( (world[r].number >= UD_MAP_START && world[r].number <= UD_MAP_END) \
+   || (world[r].number >= UD_ALATORIN_START && world[r].number <= UD_ALATORIN_END) )
 
 #define IS_MAP_ZONE(r) (IS_SET(zone_table[r].flags, ZONE_MAP))
 #define IS_MAP_ROOM(r) (IS_SURFACE_MAP(r) || IS_UD_MAP(r) || IS_MAP_ZONE(world[r].zone))

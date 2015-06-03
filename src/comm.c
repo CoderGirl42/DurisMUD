@@ -2204,16 +2204,18 @@ int process_output(P_desc t)
   int      ibuf = 0;
   int      i, j, k, bg = 0;
   snoop_by_data *snoop_by_ptr;
+  P_char   realChar = t->original ? t->original : t->character;
 
-  if( !t->connected && IS_PC(t->character)
-    && ((t->prompt_mode == (IS_SET(t->character->specials.act, PLR_SMARTPROMPT))
-    || (t->prompt_mode != IS_SET(t->character->specials.act, PLR_OLDSMARTP)))) )
+  if( STATE(t) == CON_PLYNG && IS_PC(realChar)
+    && ((t->prompt_mode == (PLR_FLAGGED(realChar, PLR_SMARTPROMPT))
+    || (t->prompt_mode != PLR_FLAGGED(realChar, PLR_OLDSMARTP)))) )
   {
     if( write_to_descriptor(t->descriptor, "\r\n") < 0 )
+    {
       return (-1);
+    }
   }
-  if( (t->character != NULL) && IS_ANSI_TERM(t)
-    && GET_LEVEL(t->character) >= 1 && (STATE(t) != CON_TEXTED) )
+  if( realChar && IS_ANSI_TERM(t) && GET_LEVEL(t->character) >= 1 && (STATE(t) != CON_TEXTED) )
   {
     flg = TRUE;
   }
@@ -2226,12 +2228,12 @@ int process_output(P_desc t)
   while( get_from_q(&t->output, buf) )
   {
 #if 0
-    if (IS_SET(t->character->specials.act, PLR_SMARTPROMPT))
+    if( PLR_FLAGGED(realChar, PLR_SMARTPROMPT) )
       format_text(buf, 1, t, MAX_STRING_LENGTH);
 #endif
     snoop_by_ptr = t->snoop.snoop_by_list;
 
-    while (snoop_by_ptr)
+    while( snoop_by_ptr )
 /*    if (t->snoop.snoop_by) {*/
     {
 
@@ -2239,7 +2241,7 @@ int process_output(P_desc t)
 
 /*      if (snoop_by_ptr->snoop_by->desc)
       {*/
-      write_to_q("% ", &snoop_by_ptr->snoop_by->desc->output, 1);
+      write_to_q("&+C%&n ", &snoop_by_ptr->snoop_by->desc->output, 1);
       write_to_q(buf, &snoop_by_ptr->snoop_by->desc->output, 1);
 /*      }*/
 
@@ -2248,7 +2250,7 @@ int process_output(P_desc t)
     ibuf = strlen(buf);
 
     /* Go through and convert/strip color symbols -Ithor */
-    for (i = 0, j = 0; (i < ibuf) && (j < (sizeof(buffer))); i++)
+    for( i = 0, j = 0; (i < ibuf) && (j < (sizeof(buffer))); i++ )
     {
       if (buf[i] == '&')
       {
@@ -2641,13 +2643,13 @@ void coma(int s)
 static char send_to_char_f_buf[MAX_STRING_LENGTH];
 void send_to_char_f(P_char ch, const char *fmt, ... )
 {
-    va_list args;
+  va_list args;
 
-    va_start(args, fmt);
-    vsnprintf(send_to_char_f_buf, sizeof(send_to_char_f_buf) - 1, fmt, args);
-    va_end(args);
+  va_start(args, fmt);
+  vsnprintf(send_to_char_f_buf, sizeof(send_to_char_f_buf) - 1, fmt, args);
+  va_end(args);
 
-    send_to_char(send_to_char_f_buf, ch);
+  send_to_char(send_to_char_f_buf, ch);
 }
 
 void send_to_char(const char *messg, P_char ch)
@@ -2657,10 +2659,22 @@ void send_to_char(const char *messg, P_char ch)
 
 void send_to_char(const char *messg, P_char ch, int log)
 {
+  static bool bSwitched = FALSE;
+
   if (ch && ch->desc && messg)
   {
-    if (executing_ch != ch || !IS_SET(ch->specials.act, PLR_PAGING_ON))
+    if( executing_ch != ch || !IS_SET(ch->specials.act, PLR_PAGING_ON) )
+    {
+      if( SWITCHED(ch) && !bSwitched )
+      {
+        char buf[30];
+        sprintf( buf, "&+M@&+W%s&n: ", J_NAME(ch) );
+        bSwitched = TRUE;
+        write_to_q(buf, &ch->desc->output, 1);
+        bSwitched = FALSE;
+      }
       write_to_q(messg, &ch->desc->output, 1);
+    }
     else
     {
       static bool bWarningAdded = false;

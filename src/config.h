@@ -105,7 +105,7 @@
 /* limiting factors, some are arbitrary, some are not, change only after thourough checking! */
 
 #define OVERLORD              62  /* highest possible level */
-#define FORGER                61    
+#define FORGER                61
 #define GREATER_G             60
 #define LESSER_G              59
 #define IMMORTAL              58

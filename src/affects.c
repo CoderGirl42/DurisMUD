@@ -3407,7 +3407,6 @@ bool falling_char(P_char ch, const int kill_char, bool caller_is_event)
   }
 
   /* get here, it's a normal event call  */
-
   speed = (int) kill_char;
   i = ch->in_room;
 
@@ -3548,7 +3547,7 @@ bool falling_char(P_char ch, const int kill_char, bool caller_is_event)
 
       chr = get_linking_char(ch, LNK_RIDING);
 
-      if (kill_char && !chr)
+      if( kill_char && !chr )
       {
         if (damage(ch, ch, dam, DAMAGE_FALLING))
           return FALSE;
@@ -3582,7 +3581,7 @@ bool falling_char(P_char ch, const int kill_char, bool caller_is_event)
         if (chr->specials.z_cord > 0)
           chr->specials.z_cord = 0;
 
-        if (kill_char)
+        if( kill_char )
         {
           if (damage(chr, chr, dam, DAMAGE_FALLING))
             return FALSE;

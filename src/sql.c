@@ -984,136 +984,192 @@ void log_epic_gain(int pid, int type, int type_id, int epics)
 }
 
 
-
+/* The prepstatement_duris_sql table looks like:
++-------------+---------+------+-----+---------+----------------+
+| Field       | Type    | Null | Key | Default | Extra          |
++-------------+---------+------+-----+---------+----------------+
+| id          | int(11) | NO   | PRI | NULL    | auto_increment |
+| description | text    | YES  |     | NULL    |                |
+| sql_code    | text    | YES  |     | NULL    |                |
++-------------+---------+------+-----+---------+----------------+
+*/
 void do_sql(P_char ch, char *argument, int cmd)
 {
 
+  char     first[MAX_INPUT_LENGTH];
+  char     second[MAX_INPUT_LENGTH];
+  char     third[MAX_INPUT_LENGTH];
+  char     fourth[MAX_INPUT_LENGTH];
+  char    *rest;
+  char     buf[MAX_STRING_LENGTH];
+  int      limited_result = 0;
+  int      prep_statement;
+  int      num_fields, num_rows, i;
 
-  if (!IS_TRUSTED(ch))
+  char     result[MAX_STRING_LENGTH* 10];
+  char     tmp[MAX_STRING_LENGTH];
+
+  MYSQL_RES *db = 0;
+  MYSQL_ROW row;
+
+  if( !IS_TRUSTED(ch) )
   {
     send_to_char("A mere mortal can't do this!\r\n", ch);
     return;
   }
 
-
-  if (!*argument)
+  if( !*argument )
   {
-	  send_to_char("Sql is a command to let us gods, access database easy, it suport all kind of queries.\n &+Y=Make sure you understand what you do else this command is most likly not designed for you=&n \n", ch);
-	  send_to_char("Syntax: 'sql < query | prep <list | #> >'\n", ch);
+	  send_to_char("Sql is a command to let us gods, access database easy, it suport all kind of queries.\n"
+      "&=LY-=Make sure you understand what you do else this command is most likly not designed for you=-&n\n", ch);
+	  send_to_char("&+WSyntax: 'sql < query | prep <list | #> >'&n\n", ch);
 	  return;
   }
-  
-  wizlog(56, "SQL (%s): '%s'", GET_NAME(ch), argument);
-  logit(LOG_WIZ, "SQL (%s): '%s'" , GET_NAME(ch), argument);
-  sql_log(ch, WIZLOG, "SQL: '%s'" , argument);  
-	
-  char     first[MAX_INPUT_LENGTH];
-  char     second[MAX_INPUT_LENGTH];
-  char     third[MAX_INPUT_LENGTH];
-  char     fourth[MAX_INPUT_LENGTH];
-  char     rest[MAX_INPUT_LENGTH];
-  char     buf[MAX_STRING_LENGTH];
-  int limited_result = 0;
-  int  prepered_statement;
 
-    char     result[MAX_STRING_LENGTH* 10];
-	char     tmp[MAX_STRING_LENGTH];
+  wizlog(56, "SQL (%s): '%s'", GET_TRUE_NAME(ch), argument);
+  logit(LOG_WIZ, "SQL (%s): '%s'" , GET_TRUE_NAME(ch), argument);
+  sql_log(ch, WIZLOG, "SQL: '%s'" , argument);
 
-	MYSQL_RES *db = 0;
-	MYSQL_ROW row;
-   int num_fields;
-	int num_rows;
-   int i;
-  
-   half_chop(argument, first, rest);
-   half_chop(rest, second, rest);
+  rest = one_argument( argument, first );
+  rest = one_argument( rest, second );
 
   if( strstr(first, "prep") )
   {
-	 if( strstr(second, "list") || !second | !isdigit(*second))
-	 {
-		 do_sql(ch, "SELECT id, description from prepstatment_duris_sql", 0);	
-		 send_to_char("&+YTo add prep queries just check how the table 'prepstatment_duris_sql' (&+Wsql desc prepstatment_duris_sql&+Y) and add!&n\n", ch);
-		 return;
-	 }
-	 else
-	 {
-		prepered_statement = (int) atoi(second);
-		MYSQL_RES *db = db_query("SELECT prepered_sql from prepstatment_duris_sql where id = %d", prepered_statement);
-		  int returning_value = 0;
-		if (db)
-		{
-		MYSQL_ROW row = mysql_fetch_row(db);
-			if (NULL != row)
-			{
-				sprintf(tmp, "%s" ,row[0]);
+    if( strstr(second, "list") )
+    {
+      do_sql(ch, "SELECT id, description FROM prepstatement_duris_sql", 0);
+    }
+    if( !is_number(second) )
+    {
+//      send_to_char("\n\r&+YTo add prep queries just check how the table 'prepstatement_duris_sql' (&+Wsql desc prepstatement_duris_sql&+Y) and add!&n\n\r", ch);
+      send_to_char("&+YSyntax:&n sql prep < list | number > [ desc | sql | run | delete ] [ description | sql code ]\n\r", ch );
+      return;
+    }
+    else
+    {
+      prep_statement = (int) atoi(second);
+      rest = one_argument( rest, third );
+      rest = skip_spaces( rest );
+      if( !*third )
+      {
+        sprintf( third, "SELECT * FROM prepstatement_duris_sql WHERE id=%d", prep_statement );
+        do_sql( ch, third, cmd );
+/* This won't work due to the fact that we're trying a second sql command?
+        if( !qry( third ) )
+        {
+          send_to_char( "Row does not exist: attempting to create..\n\r", ch );
+          sprintf( buf, "INSERT INTO prepstatement_duris_sql (id, description) VALUES (%d, 'new')", prep_statement );
+          do_sql( ch, buf, cmd );
+        }
+        else
+        {
+          do_sql( ch, third, cmd );
+        }
+*/
+        return;
+      }
+      if( strstr(third, "run" ) )
+      {
+        MYSQL_RES *db = db_query("SELECT sql_code FROM prepstatement_duris_sql WHERE id=%d", prep_statement);
+        if( db )
+        {
+          MYSQL_ROW row = mysql_fetch_row(db);
 
-			}
-					
-		while ((row = mysql_fetch_row(db)));
-		}
-		if(tmp)
-			do_sql(ch, tmp, 0);		
-		return;
-	 }
-  
- 
-  return;
+          if( row != NULL )
+          {
+            sprintf(tmp, "%s", row[0]);
+          }
+          else
+          {
+            send_to_char("That prepped statement does not exist.\n\r", ch );
+            tmp[0] = '\0';
+          }
+          while( (row = mysql_fetch_row(db)) ) ;
+
+          do_sql(ch, tmp, 0);
+          return;
+        }
+        else
+        {
+          send_to_char( "Error no db created.\n\r", ch );
+        }
+        return;
+      }
+      if( strstr(third, "desc" ) )
+      {
+        sprintf(buf, "UPDATE prepstatement_duris_sql SET description = '%s' WHERE id='%d'", rest, prep_statement );
+        do_sql( ch, buf, 0);
+        return;
+      }
+      if( strstr(third, "sql" ) )
+      {
+        if( qry("UPDATE prepstatement_duris_sql SET sql_code = '%s' WHERE id='%d'", rest, prep_statement ) )
+        {
+          sprintf(buf, "Row %d sql_code set to '%s'.\n\r", prep_statement, rest );
+          send_to_char(buf, ch );
+        }
+        return;
+      }
+      if( strstr(third, "delete" ) )
+      {
+        if( qry("DELETE FROM prepstatement_duris_sql WHERE id=%d", prep_statement ) )
+        {
+          sprintf(buf, "Row %d deleted.\n\r", prep_statement);
+          send_to_char(buf, ch );
+        }
+        return;
+      }
+    }
   }
 
+  MYSQL_FIELD *fields;
+  result[0] = '\0';
 
-	MYSQL_FIELD *fields;
-	result[0] = '\0';
-    
-	if (mysql_real_query(DB, argument, strlen(argument))) {
-			sprintf(result, "%s", mysql_error(DB));
-            logit(LOG_DEBUG, "MySQL error(sql command): %s", mysql_error(DB));
-		    send_to_char(result, ch);
-			return;
-              
-        }
+  if( mysql_real_query(DB, argument, strlen(argument)) )
+  {
+    sprintf(result, "%s", mysql_error(DB));
+    logit(LOG_DEBUG, "MySQL error(sql command): %s", mysql_error(DB));
+    send_to_char(result, ch);
+    return;
+  }
+  db = mysql_use_result(DB);
+  if( db )
+  {
+    num_fields = mysql_num_fields(db);
 
-	db = mysql_use_result(DB);
-if (db)
-	{
-			
-			num_fields = mysql_num_fields(db);
+    fields = mysql_fetch_fields(db);
+    for( i = 0; i < num_fields; i++ )
+    {
+      sprintf(tmp, " | %-15s&n ", fields[i].name);
+      strcat(result, tmp);
+    }
+    strcat(result, " |\n\n");
 
-			fields = mysql_fetch_fields(db);
-			for(i = 0; i < num_fields; i++)
-			{
-				sprintf(tmp, " | %-15s &n\t ", fields[i].name);
-				strcat(result, tmp);
-				
+    int maxsize = 100;
+    while( (row = mysql_fetch_row(db)) )
+    {
+      maxsize--;
+      if( maxsize == 0 )
+      {
+        while( (row = mysql_fetch_row(db)) );
+        limited_result = 1;
+        break;
+      }
 
-			}
-			strcat(result, " &n| \n\n");
-			
-
-			int maxsize = 100;
-			while ((row = mysql_fetch_row(db))){
-				maxsize--;
-				if(maxsize == 0){
-					while ((row = mysql_fetch_row(db)));
-					limited_result = 1;
-			
-					break;
-				}
-
-				for(i = 0; i < num_fields; i++)
-				{
-					sprintf(tmp, " | %-15s &n\t ", row[i]);
-				    strcat(result, tmp);
-
-				}
-					strcat(result, " &n| \n\n");	
-			}
-	
-	 
-	}
-  send_to_char(result, ch);
-  if(limited_result)
-			  send_to_char("Result to big, pls use limit. 'select * from blah &+Ylimit 10&n' will show 10 results.\n", ch);
+      for( i = 0; i < num_fields; i++ )
+      {
+        sprintf(tmp, " | %-15s&n ", row[i]);
+        strcat(result, tmp);
+      }
+      strcat(result, " |\n\n");
+    }
+    send_to_char(result, ch);
+    if( limited_result )
+    {
+      send_to_char("Result to big, pls use limit. 'select * from blah &+Ylimit 10&n' will show 10 results.\n", ch);
+    }
+    return;
+  }
 }
 
 void update_zone_db()

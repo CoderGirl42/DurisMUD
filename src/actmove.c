@@ -24,6 +24,7 @@
 #include "map.h"
 #include "graph.h"
 #include "disguise.h"
+#include "weather.h"
 #include "siege.h"
 
 /*
@@ -34,6 +35,7 @@ extern P_desc descriptor_list;
 extern P_index obj_index;
 extern P_index mob_index;
 extern P_room world;
+extern struct time_info_data time_info;
 extern const char *command[];
 extern const char *dirs[];
 extern const char *short_dirs[];
@@ -1776,6 +1778,21 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
     }
   }
 
+  // Shade movement... only go vis if we hit a room without shadows.
+  if( IS_AFFECTED(ch, AFF_HIDE) && IS_AFFECTED5(ch, AFF5_SHADE_MOVEMENT) )
+  {
+    if( IS_SUNLIT(new_room) || IS_TWILIGHT_ROOM(new_room) )
+    {
+      send_to_char("&+LYou quickly step out of the shadow.&n\r\n", ch);
+      REMOVE_BIT(ch->specials.affected_by5, AFF5_SHADE_MOVEMENT);
+      REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
+    }
+    else
+    {
+      send_to_char("&+LYou walk with the shadows.&n\r\n", ch);
+    }
+  }
+
   char_from_room(ch);
   ch->specials.was_in_room = world[was_in].number;
   if( char_to_room(ch, new_room, exitnumb) )
@@ -1884,7 +1901,9 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
           act("You follow $N.", FALSE, k->follower, 0, ch, TO_CHAR);
           send_to_char("\n", k->follower);
           sprintf(amsg, "%s %s", command[cmd], dirs[exitnumb]);
+          set_short_affected_by( k->follower, TAG_FOLLOWING, 10 );
           command_interpreter(k->follower, amsg);
+          affect_from_char( k->follower, TAG_FOLLOWING );
           num_followed++;
         }
       }
@@ -2013,7 +2032,8 @@ int do_simple_move(P_char ch, int exitnumb, unsigned int flags)
   if( (exitnumb < 0) || (exitnumb >= NUM_EXITS))
     return FALSE;
 
-  if( special(ch, exitnumb_to_cmd(exitnumb), 0))        /* Check for special routines */
+  // Check for special routines
+  if( special(ch, exitnumb_to_cmd(exitnumb), 0) )
     return FALSE;
 
   if( grease_check(ch))
@@ -2084,15 +2104,13 @@ void do_move(P_char ch, char *argument, int cmd)
     }
   }
 
-  if( !IS_TRUSTED(ch) &&
-      !(GET_CLASS(ch, CLASS_DRUID) || 
-          (IS_MULTICLASS_PC(ch) && GET_SECONDARY_CLASS(ch, CLASS_DRUID))) &&
-      get_spell_from_room(&world[ch->in_room], SPELL_WANDERING_WOODS))
+  if( !IS_TRUSTED(ch) && !(GET_CLASS(ch, CLASS_DRUID)
+    || (IS_MULTICLASS_PC(ch) && GET_SECONDARY_CLASS(ch, CLASS_DRUID)))
+    && get_spell_from_room(&world[ch->in_room], SPELL_WANDERING_WOODS) )
   {
     if( number(1, (int) ((GET_C_INT(ch) - 100) / 20) + 100) < 61)
     {
-      send_to_char("You try to leave, but just end up going in circles!\n",
-                   ch);
+      send_to_char("You try to leave, but just end up going in circles!\n", ch);
       act("$n leaves one direction and enters from another!", FALSE, ch, 0, 0,
           TO_ROOM);
       return;
@@ -2108,16 +2126,15 @@ void do_move(P_char ch, char *argument, int cmd)
     if( distance > 1 )
     {
       // distance was specified, so warp forward
-     
       int to_room = ch->in_room;
 
       bfs_clear_marks();
-      
+
       for (i = 0; i < distance && VALID_RADIAL_EDGE(to_room, cmd); i++)
       {
         to_room = TOROOM(to_room, cmd);
       }
-      
+
       if( to_room != NOWHERE && to_room != ch->in_room )
       {
         act("$n's outline blurs and then streaks into the distance.", TRUE, ch, 0, 0, TO_ROOM);
@@ -2125,18 +2142,21 @@ void do_move(P_char ch, char *argument, int cmd)
         char_to_room(ch, to_room, -1);
         act("A blur streaks into the room, coalescing into $n.", TRUE, ch, 0, 0, TO_ROOM);
       }
-
       return;
     }
-  }  
-  
+  }
+
   if( do_simple_move(ch, cmd, MVFLG_DRAG_FOLLOWERS))
   {
     if( affected_by_spell(ch, SPELL_PATH_OF_FROST))
+    {
       make_ice(ch);
+    }
   }
   else
+  {
     REMOVE_BIT(ch->specials.affected_by3, AFF3_TRACKING);
+  }
 }
 
 int find_door(P_char ch, char *type, char *dir)

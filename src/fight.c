@@ -661,7 +661,7 @@ bool soul_trap(P_char ch, P_char victim)
   return true;
 }
 
-void appear(P_char ch)
+void appear(P_char ch, bool removeHide )
 {
   if( !ch )
   {
@@ -669,7 +669,11 @@ void appear(P_char ch)
     raise(SIGSEGV);
   }
 
-  REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
+  // CMD_FIRE (do_fire) handles its own hide stuff.
+  if( removeHide )
+  {
+    REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
+  }
 
   if( (!IS_SET(ch->specials.affected_by, AFF_INVISIBLE)
     && !IS_SET(ch->specials.affected_by2, AFF2_MINOR_INVIS)
@@ -5001,8 +5005,7 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
  * calculates vamping from melee damage and also resolves damage from fireshield type
  * spells to the attacker.
  */
-int melee_damage(P_char ch, P_char victim, double dam, int flags,
-    struct damage_messages *messages)
+int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_messages *messages)
 {
   struct damage_messages dummy_messages;
   unsigned int skin;
@@ -5646,7 +5649,8 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
       return DAM_VICTDEAD;
     }
 
-    appear(ch);
+    // CMD_FIRE (do_fire) handles its own hide removal.  This is important for shadow archery.
+    appear(ch, (flags & !PHSDAM_ARROW) );
     appear(victim);
 
     if(victim != ch)
@@ -5963,17 +5967,13 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
     }
     else if( messages->type & (DAMMSG_EFFECT_HIT | DAMMSG_EFFECT | DAMMSG_HIT_EFFECT) )
     {
-
       dam_message(dam, ch, victim, messages);
     }
     else
     {
-      act(messages->attacker, FALSE, ch, messages->obj, victim,
-          TO_CHAR | act_flag);
-      act(messages->victim, FALSE, ch, messages->obj, victim,
-          TO_VICT | act_flag);
-      act(messages->room, FALSE, ch, messages->obj, victim,
-          TO_NOTVICTROOM | act_flag);
+      act(messages->attacker, FALSE, ch, messages->obj, victim, TO_CHAR | act_flag);
+      act(messages->victim, FALSE, ch, messages->obj, victim, TO_VICT | act_flag);
+      act(messages->room, FALSE, ch, messages->obj, victim, TO_NOTVICTROOM | act_flag);
     }
 
     if( GET_STAT(victim) == STAT_SLEEPING && new_stat != STAT_DEAD )

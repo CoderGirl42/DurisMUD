@@ -174,10 +174,9 @@ void do_gather(P_char ch, char *argument, int cmd)
   }
 }
 
-void arrow_spell_fire(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+int arrow_spell_fire(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "&+RFlames &+rlick at $N's &+mwounds&+r as an arrow &+rcollides with $S &+Rflesh&+r!&n",
     "&+RFlames &+rlick at your &+mwounds&+r as an arrow &+rcollides with your &+Rflesh&+r!&n",
@@ -187,17 +186,14 @@ void arrow_spell_fire(int level, P_char ch, char *arg, int type,
     "&+rA burning feeling is $N's &+rfinal reward as an arrow rips through $S neck!&n", 0
   };
 
-  if( !ch || !victim ) return;
-  
-  dam = (int) (number(4, 16) * get_property("archery.enchantArrows.damage.mod", 2));
+  dam = number(4, 16) * get_property("archery.enchantArrows.damage.mod", 1);
 
-  spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_NODEFLECT, &messages);
+  return spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_NODEFLECT, &messages);
 }
 
-void arrow_spell_lightning(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+int arrow_spell_lightning(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "&+WArcs of &+yelec&+Ytri&+ycity &+Wleap from an arrow &+Ysearing &+W$N's &+Wflesh!&n",
     "&+WArcs of &+yelec&+Ytri&+ycity &+Wleap from an arrow &+Ysearing &+Wyour &+Wflesh!&n",
@@ -207,17 +203,14 @@ void arrow_spell_lightning(int level, P_char ch, char *arg, int type,
     "&+WArcing &+yelec&+Ytri&+ycity &+wstops &+W$N's &+Wheart, and $E falls to the ground, &+Ydead&+W.&n", 0
   };
 
-  if( !ch || !victim ) return;
-  
-  dam = (int) (number(4, 16) * get_property("archery.enchantArrows.DamageMod", 1));
+  dam = number(4, 16) * get_property("archery.enchantArrows.damage.mod", 1);
 
-  spell_damage(ch, victim, dam, SPLDAM_LIGHTNING, SPLDAM_NODEFLECT, &messages);
+  return spell_damage(ch, victim, dam, SPLDAM_LIGHTNING, SPLDAM_NODEFLECT, &messages);
 }
 
-void arrow_spell_cold(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+int arrow_spell_cold(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "&+CA bitter &+Bchill &+Cflows through $N &+Cas an arrow &+Bpenetrates &+C$S flesh!&n",
     "&+CA bitter &+Bchill &+Cflows through you as an arrow &+Bpenetrates &+Cyour flesh!&n",
@@ -227,17 +220,14 @@ void arrow_spell_cold(int level, P_char ch, char *arg, int type,
     "&+C$N's &+Cblood &+bfreezes&+C solid in $S veins as an arrow &+brips &+Cthrough $S neck!&n", 0
   };
 
-  if( !ch || !victim ) return;
-  
-  dam = (int) (number(4, 16) * get_property("archery.enchantArrows.DamageMod", 1));
+  dam = number(4, 16) * get_property("archery.enchantArrows.damage.mod", 1);
 
-  spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NODEFLECT, &messages);
+  return spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NODEFLECT, &messages);
 }
 
-void arrow_spell_acid(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+int arrow_spell_acid(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "&+GAcid&+g seeps into $N's &+mwounds&+g as an arrow &+Gpunctures &+g$S flesh!&n",
     "&+GAcid&+g seeps into your &+mwounds&+g as an arrow &+Gpunctures &+gyour flesh!&n",
@@ -247,11 +237,9 @@ void arrow_spell_acid(int level, P_char ch, char *arg, int type,
     "&+gThe &+Gsearing pain &+gfrom an arrow's &+Gacid &+gis the last thing $N feels.&n", 0
   };
 
-  if( !ch || !victim ) return;
-  
-  dam = (int) (number(4, 16) * get_property("archery.enchantArrows.DamageMod", 1));
+  dam = number(4, 16) * get_property("archery.enchantArrows.damage.mod", 1);
 
-  spell_damage(ch, victim, dam, SPLDAM_ACID, SPLDAM_NODEFLECT, &messages);
+  return spell_damage(ch, victim, dam, SPLDAM_ACID, SPLDAM_NODEFLECT, &messages);
 }
 
 void event_enchant_arrow(P_char ch, P_char victim, P_obj obj, void *data)
@@ -265,102 +253,108 @@ void event_enchant_arrow(P_char ch, P_char victim, P_obj obj, void *data)
   obj->timer[5] = ARROW_NONE;
 }
 
-void enchant_arrows(P_char ch, P_char vict, P_obj arrow, int cmd)
+int enchant_arrows(P_char ch, P_char vict, P_obj arrow, int cmd)
 {
   int duration;
   char buf[256], buf2[256];
 
-  if (!(ch) ||
-      !(vict) ||
-      !(arrow))
-    return;
-    
-  if(!IS_SET(arrow->extra2_flags, ITEM2_MAGIC) &&
-     arrow->condition > 70)
-    SET_BIT(arrow->extra2_flags, ITEM2_MAGIC);
-
-  switch (cmd)
+  if( !IS_ALIVE(ch) || !IS_ALIVE(vict) || !arrow )
   {
-  case ARROW_NONE:
-    break;
-  case ARROW_MARK:
-    if (arrow->timer[5] == ARROW_MARK)
-      return;
-    
-    sprintf(buf2, "&n of &+L%s&n", GET_NAME(ch));
-    sprintf(buf, "%s", arrow->short_description);
-    strcat(buf, buf2);
-    arrow->short_description = str_dup(buf);
-
-    sprintf(buf, "%s a%s", arrow->name, GET_NAME(ch));
-    arrow->name = str_dup(buf);
-    
-    arrow->timer[5] = ARROW_MARK;
-    duration = WAIT_SEC * (int)get_property("archery.enchantArrows.mark.duration", 300);
-    add_event(event_enchant_arrow, duration, 0, 0, arrow, 0, 0, 0);
-    break;
-  case 2:
-    if (GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(60, 180))
-    {
-      arrow_spell_fire(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
-    }
-    break;
-  case 3:
-    if (GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(60, 180))
-    {
-      arrow_spell_cold(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
-    }
-    break;
-  case 4:
-    if (GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(80, 180))
-    {
-      arrow_spell_lightning(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
-    }
-    break;
-  case 5:
-    if (GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(80, 190))
-    {
-      arrow_spell_acid(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
-    }
-    break;
-  case 6:
-    if (GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) > number(99, 199))
-    {
-      spell_major_paralysis(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
-    }
-    break;
-  default:
-    break;
+    return IS_ALIVE(ch) ? (IS_ALIVE(vict) ? DAM_NONEDEAD : DAM_VICTDEAD) :
+      IS_ALIVE(vict) ? DAM_CHARDEAD : DAM_BOTHDEAD;
   }
+
+  if( !IS_SET(arrow->extra2_flags, ITEM2_MAGIC) && arrow->condition > 70 )
+  {
+    SET_BIT(arrow->extra2_flags, ITEM2_MAGIC);
+  }
+
+  switch( cmd )
+  {
+    case ARROW_NONE:
+      break;
+    case ARROW_MARK:
+      if( arrow->timer[5] == ARROW_MARK )
+      {
+        return DAM_NONEDEAD;
+      }
+      sprintf(buf2, "&n of &+L%s&n", GET_NAME(ch));
+      sprintf(buf, "%s", arrow->short_description);
+      strcat(buf, buf2);
+      arrow->short_description = str_dup(buf);
+
+      sprintf(buf, "%s a%s", arrow->name, GET_NAME(ch));
+      arrow->name = str_dup(buf);
+
+      arrow->timer[5] = ARROW_MARK;
+      duration = WAIT_SEC * (int)get_property("archery.enchantArrows.mark.duration", 300);
+      add_event(event_enchant_arrow, duration, 0, 0, arrow, 0, 0, 0);
+      break;
+    case 2:
+      if( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(60, 180) )
+      {
+        return arrow_spell_fire(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
+      }
+      break;
+    case 3:
+      if( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(60, 180) )
+      {
+        return arrow_spell_cold(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
+      }
+      break;
+    case 4:
+      if( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(80, 180) )
+      {
+        return arrow_spell_lightning(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
+      }
+      break;
+    case 5:
+      if( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(80, 190) )
+      {
+        return arrow_spell_acid(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
+      }
+      break;
+    case 6:
+      if( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) > number(99, 199) )
+      {
+        spell_major_paralysis(GET_LEVEL(ch), ch, 0, SPELL_TYPE_SPELL, vict, 0);
+      }
+      break;
+    default:
+      break;
+  }
+
+  return IS_ALIVE(ch) ? (IS_ALIVE(vict) ? DAM_NONEDEAD : DAM_VICTDEAD) :
+    IS_ALIVE(vict) ? DAM_CHARDEAD : DAM_BOTHDEAD;
 }
 
 /*
  * weapon values:
- * 0 - speed
- * 1 - strength (max range = str / strPerRoomRange)
- * 2 - 
- * 3 - missile type 
+ * 0 - max speed
+ * 1 - max strength (max range = str / strPerRoomRange)
+ * 2 - bonus to damage
+ * 3 - missile type used
  * missile values:
- * 1 -  
- * 2 - 
+ * 1 -
+ * 2 -
  * 3 - missile type
  * quiver values:
- * 1 - 
- * 2 - 
+ * 1 -
+ * 2 -
  * 3 - number of missiles inside
  */
 // change properties archery.diceFactor to 1.0!!!
 void do_fire(P_char ch, char *argument, int cmd)
 {
   char tararg[256], dirarg[256];
-  P_char victim;
-  P_obj weapon, quiver, missile;
-  bool should_retaliate = false, is_fighting_check = false;
-  bool shield_blocked = false;
-  int i, j, dir = -1, to_hit, room, range;
-  int shots, dex_per_shot;
+  P_char victim, mount;
+  P_obj weapon, quiver, missile, shield;
+  bool should_retaliate = FALSE, is_fighting_check = FALSE;
+  bool shield_blocked = FALSE;
+  int i, j, dir = -1, to_hit, room, range, result;
+  int shots, speed_per_shot;
   double dam = 0;
-  int wallcheck = 0, hidecheck = 0, weight = 0;
+  int wallcheck = 0, weight = 0;
   int speed, strength, carrow, maxluck, actual;
   float delay;
   char buf[256];
@@ -370,9 +364,9 @@ void do_fire(P_char ch, char *argument, int cmd)
   char room_death_msg[256];
   struct damage_messages *messages;
   struct damage_messages room_messages = {
-   "Your $p's%s hit strikes $N!",
-   "$n's $p's%s hit strikes you!",//"$p fired by $n%s hits you!",
-   "$n's $p's%s hit strikes $N.",//$p fired by $n%s hits $N!",
+   "Your $p's hit strikes $N!",
+   "$n's $p's hit strikes you!",//"$p fired by $n hits you!",
+   "$n's $p's hit strikes $N.",//$p fired by $n hits $N!",
    "Your $p went right through $N's throat killing $M instantly.",
    "$p fired by $n pierces your throat killing you instantly.",
    "$p fired by $n went right through $N's throat killing $M instantly.",
@@ -386,21 +380,21 @@ void do_fire(P_char ch, char *argument, int cmd)
    room_death_msg,
   };
   struct damage_messages blocked_messages = {
-   "Your $p's%s hit strikes $N's shield!",
-   "$n's $p's%s hit strikes your shield!",
-   "$n's $p's%s hit strikes $N's shield.",
+   "Your $p's hit strikes $N's shield!",
+   "$n's $p's hit strikes your shield!",
+   "$n's $p's hit strikes $N's shield.",
    "Your $p went right through $N's throat killing $M instantly.",
    "$p fired by $n pierces your throat killing you instantly.",
    "$p fired by $n went right through $N's throat killing $M instantly.",
    0, 0
   };
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "%s: do_fire in range.c bogus parameters",
-         GET_NAME(ch));
+    logit(LOG_EXIT, "do_fire: bogus ch: '%s' %d.", (ch==NULL) ? "NULL" : J_NAME(ch),
+      (ch==NULL) ? -1 : (IS_NPC(ch)) ? GET_VNUM(ch) : GET_PID(ch) );
     raise(SIGSEGV);
-  }  
+  }
 
   if( IS_DESTROYING(ch) )
   {
@@ -408,47 +402,56 @@ void do_fire(P_char ch, char *argument, int cmd)
     return;
   }
 
-   weapon = ch->equipment[WIELD];
+  weapon = ch->equipment[WIELD];
 
-   if (!weapon)
-   {
-      sprintf(buf, "You must wield the ranged weapon you want to fire.\n");
-      send_to_char(buf, ch);
-      return;
-   }
+  if( !weapon )
+  {
+    send_to_char("You must wield the ranged weapon you want to fire.\n", ch);
+    return;
+  }
 
-   if (GET_ITEM_TYPE(weapon) != ITEM_FIREWEAPON)
-   {
-      send_to_char("You can't fire that!\n", ch);
-      return;
-   }
+  if( GET_ITEM_TYPE(weapon) != ITEM_FIREWEAPON )
+  {
+    act( "What?  Maybe you should try &+Wthrowing&n $p instead?", FALSE, ch, weapon, ch, TO_CHAR );
+    return;
+  }
 
-   for (i = 0, quiver = NULL; i < MAX_WEAR; i++)
-   {
+  // check quiver slot first...
+  quiver = ch->equipment[WEAR_QUIVER];
+  // If it exists, is a quiver, and has stuff in it, then we got a good one.
+  if( quiver && GET_ITEM_TYPE(quiver) == ITEM_QUIVER && quiver->contains )
+  {
+    ;
+  }
+  // Otherwise, search through worn eq for a quiver in a weird slot (like on back).
+  else
+  {
+    for( i = 0, quiver = NULL; i < MAX_WEAR; i++ )
+    {
       if (ch->equipment[i])
       {
-         if (GET_ITEM_TYPE(ch->equipment[i]) == ITEM_QUIVER &&
-               ch->equipment[i]->contains)
-         {
-            quiver = ch->equipment[i];
-            break;
-         }
+        if( GET_ITEM_TYPE(ch->equipment[i]) == ITEM_QUIVER && ch->equipment[i]->contains )
+        {
+          quiver = ch->equipment[i];
+          break;
+        }
       }
-   }
+    }
+  }
 
-   if (!quiver)
-   {
-      send_to_char("You need to be wearing something with missiles.\n", ch);
-      return;
-   }
+  if( !quiver )
+  {
+    send_to_char("You need to be wearing something with missiles.\n", ch);
+    return;
+  }
 
-   missile = quiver->contains;
-
-   if (missile->value[3] != weapon->value[3])
-   {
-      send_to_char("You dont seem to have the right missile for this weapon.\n", ch);
-      return;
-   }
+  missile = quiver->contains;
+  if( missile->value[3] != weapon->value[3] )
+  {
+    sprintf( buf, "%s doesn't fit right in $p.", missile->short_description );
+    act( buf, FALSE, ch, weapon, ch, TO_CHAR );
+    return;
+  }
 
    half_chop(argument, tararg, dirarg);
 // victim = ParseTarget(ch, argument);
@@ -457,581 +460,613 @@ void do_fire(P_char ch, char *argument, int cmd)
 //   send_to_char("Usage: fire <victim> [direction]\n", ch);
 //   return;
 // }
- 
-   if (*dirarg)
-   { // find target in range (by dir)
-      dir = dir_from_keyword(dirarg);
-      if (dir == -1)
-      {
-         send_to_char("This is not a valid direction.\n", ch);
-         return;
-      }
 
-      if (!(victim = get_char_ranged(tararg, ch, 10, dir)))
-      {
-         send_to_char("Your target doesn't seem to be there.\n", ch);
-         return;
-      }
-      // If passed, than there's no wall, or we're going to arc, so check for walls directly.
-      wallcheck = check_wall(ch->in_room, dir);
-   }
-   else if (!IS_FIGHTING(ch))
-   { // find target in room
-      victim = get_char_room_vis(ch, tararg);
-      if (!victim)
-      {
-         send_to_char("You don't see them here.\n", ch);
-         return;
-      }
-   }
-   else
-   { // target who is fighting shooter
-      victim = get_char_room_vis(ch, tararg);
-      if (!victim)
-      {
-         victim = GET_OPPONENT(ch);
-         if (!victim)
-         {
-            send_to_char("You don't see them here.\n", ch);
-            return;
-         }
-      }
-   }
-
-   if(ch == victim)
-   {
-     send_to_char("Your mother would be so sad... \n", ch);
-     return;
-   }
-
-   if( (world[victim->in_room].room_flags & SINGLE_FILE) &&
-       !AdjacentInRoom(ch, victim) )
-   {
-      if (victim->in_room != ch->in_room)
-         send_to_char("It's too cramped in there to find a target.\n", ch);
-      else
-         send_to_char("It's too cramped in here to fire accurately.\n", ch);
-      
+  // find target in range (by dir)
+  if( *dirarg )
+  {
+    dir = dir_from_keyword(dirarg);
+    if (dir == -1)
+    {
+      sprintf(buf, "'%s' is not a valid direction.\n", dirarg);
+      send_to_char( buf, ch );
       return;
-   }
+    }
 
-   if (GET_ZONE(victim) != GET_ZONE(ch))
-   {
-      send_to_char("You just can't seem to get a good shot in...\n", ch);
+    if( !(victim = get_char_ranged(tararg, ch, 10, dir)) )
+    {
+      sprintf(buf, "Could not find target '%s' to the %s.\n", tararg, dirs[dir]);
+      send_to_char( buf, ch );
       return;
-   }
-   //-------------------------------
-   // Lom: disabled mounted archery
-   if (P_char mount = get_linked_char(ch, LNK_RIDING))
-   {
-       if (!GET_CHAR_SKILL(ch, SKILL_MOUNTED_COMBAT) && !is_natural_mount(ch, mount))
-       {
-         send_to_char("I'm afraid you aren't quite up to mounted combat.\r\n", ch);
-         act("$n quickly slides off $N's back.", TRUE, ch, 0, mount, TO_NOTVICT);
-         stop_riding(ch);
-       }
-   }
-   //-------------------------------
+    }
 
-   if( IS_FIGHTING(ch))
-   {
-      if( notch_skill(ch, SKILL_POINT_BLANK_SHOT, 10) ||
-          number(1, 130) <= GET_CHAR_SKILL(ch, SKILL_POINT_BLANK_SHOT) )
+    // If passed, than there's no wall, or we're going to arc, so check for walls directly.
+    wallcheck = check_wall(ch->in_room, dir);
+  }
+  // Find target in room
+  else if( !IS_FIGHTING(ch) )
+  {
+    victim = get_char_room_vis(ch, tararg);
+    if( !victim )
+    {
+      send_to_char("You don't see them here.\n", ch);
+      return;
+    }
+  }
+  // Target who is fighting shooter
+  else
+  {
+    victim = get_char_room_vis(ch, tararg);
+    if( !victim )
+    {
+      if( !(victim = GET_OPPONENT(ch)) )
       {
-         send_to_char("You take aim, and fire upon your enemy!\n", ch);
-         is_fighting_check = true;
+        send_to_char("You don't see them here.\n", ch);
+        return;
       }
-      else
+    }
+  }
+
+  if( ch == victim )
+  {
+    send_to_char("Your mother would be so sad... \n", ch);
+    return;
+  }
+
+  if( (world[victim->in_room].room_flags & SINGLE_FILE) && !AdjacentInRoom(ch, victim) )
+  {
+    if( victim->in_room != ch->in_room )
+      send_to_char("It's too cramped in there to find a target.\n", ch);
+    else
+      send_to_char("It's too cramped in here to fire accurately.\n", ch);
+    return;
+  }
+
+  if( GET_ZONE(victim) != GET_ZONE(ch) )
+  {
+    send_to_char("You just can't seem to get a good shot in...\n", ch);
+    return;
+  }
+
+  // Lom: disabled mounted archery .. Umm... someone handled it actually, but ok.
+  if( (mount = get_linked_char(ch, LNK_RIDING)) )
+  {
+    if( !GET_CHAR_SKILL(ch, SKILL_MOUNTED_COMBAT) && !is_natural_mount(ch, mount) )
+    {
+      send_to_char("I'm afraid you aren't quite up to mounted combat.\r\n", ch);
+      act("$n quickly slides off $N's back.", TRUE, ch, 0, mount, TO_NOTVICT);
+      stop_riding(ch);
+    }
+  }
+
+  if( IS_FIGHTING(ch) )
+  {
+    // Max 100/130 -> about a 77% chance.
+    if( notch_skill(ch, SKILL_POINT_BLANK_SHOT, 10)
+      || number(1, 130) <= GET_CHAR_SKILL(ch, SKILL_POINT_BLANK_SHOT) )
+    {
+      send_to_char("You take aim, and fire upon your enemy!\n", ch);
+      is_fighting_check = TRUE;
+    }
+    else
+    {
+       send_to_char("You're too busy fighting to fire your weapon!\n", ch);
+       CharWait(ch, (int) (PULSE_VIOLENCE * 0.5));
+       return;
+    }
+  }
+
+  // Lets make firing arrows fraggable shall we?
+  victim = misfire_check(ch, victim, DISALLOW_SELF | DISALLOW_BACKRANK);
+
+  // Calculate number of shots and delay.
+  // When speed increases, you fire faster until you gain extra arrow, then you fire at base pulse etc.
+  // Value0 determines the fastest you can fire the weapon (where dex sets speed).
+  speed = MIN(weapon->value[0], (int)((float)GET_C_DEX(ch)*1.5));
+  // Skill can slow you down, but not speed you up past the dex/weapon limit.
+  speed = MIN(speed, 2 * GET_CHAR_SKILL(ch, SKILL_ARCHERY));
+  // Strength limit is value1.
+  strength = MIN(weapon->value[1], GET_C_STR(ch));
+
+  speed_per_shot = get_property("archery.speedPerShot", 30);
+
+  if( IS_AFFECTED(ch, AFF_HASTE) )
+  {
+    speed += 20;
+  }
+  if (IS_AFFECTED3(ch, AFF3_BLUR))
+  {
+    speed += 20;
+  }
+
+  // Sharpshooter spec bonuses.
+  if( GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) )
+  {
+    j = get_property("archery.speedBonusSharpshooter", 20);
+    i = GET_LEVEL(ch);
+    // This formula equates to lvl 31:1, 36:2, 41:3, 46:4, 51:5, 56:6, 61:7
+    //   Note: level 61 is an Imm level, but I wanted to include it just fyi.
+    i = (i - 26) / 5;
+    if( i > 0)
+    {
+      speed += i*j;
+    }
+    // At archery skill 70, we get another speed bonus.
+    if( GET_CHAR_SKILL(ch, SKILL_ARCHERY) > 69 )
+    {
+      speed += j;
+    }
+  }
+
+  if( IS_FIGHTING(ch) )
+  {
+    speed -=60;
+  }
+
+  // allow at least one shot total.
+  speed = MAX(speed, speed_per_shot);
+
+  // ok here we finally count number of shots in one fire action
+  shots = speed / speed_per_shot;
+
+  if( ch->in_room != victim->in_room )
+  {
+    if( dir == -1 )
+    {
+      send_to_char("You can't get a clear shot.\n", ch);
+      return;
+    }
+    // calculate chance to hit when ranged shooting
+    range = strength/get_property("archery.strPerRoomRange", 40);
+
+    for( i = 1, room = ch->in_room; i <= range; i++ )
+    {
+      room = world[room].dir_option[dir]->to_room;
+      if( room == victim->in_room )
       {
-         send_to_char("You're too busy fighting to fire your weapon!\n", ch);
-         CharWait(ch, (int) (PULSE_VIOLENCE * 0.5));
-         return;
-      }
-   }
-   
-   if (IS_AFFECTED(ch, AFF_HIDE))
-     hidecheck = TRUE;
-
-   // Lets make firing arrows fraggable shall we?
-   victim = misfire_check(ch, victim, DISALLOW_SELF | DISALLOW_BACKRANK);
-
-   // calculate number of shots and delay
-   // when speed increases, you fire faster until you gain extra arrow,
-   // then you fire at base pulse etc.
-   speed = MIN(weapon->value[0], (int)((float)GET_C_DEX(ch)*1.5));
-   speed = MIN(speed, 2 * GET_CHAR_SKILL(ch, SKILL_ARCHERY));
-   strength = MIN(weapon->value[1], GET_C_STR(ch));
-
-   dex_per_shot = get_property("archery.dexPerShot", 30);
-   speed = MAX(speed, dex_per_shot); // allow at least one shot!?
-
-   if (IS_AFFECTED(ch, AFF_HASTE))
-      speed += 20;
-
-   if (IS_AFFECTED3(ch, AFF3_BLUR))
-      speed += 20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 30)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 35)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 40)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 45)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 50)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_LEVEL(ch) > 55)
-      speed +=20;
-
-   if (GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER) && GET_CHAR_SKILL(ch, SKILL_ARCHERY) > 69)
-      speed +=20;
-
-   if (IS_FIGHTING(ch))
-      speed -=60;
-
-   // ok here we finally count number of shots in one fire action
-   shots = speed/dex_per_shot;
- 
-    if (ch->in_room != victim->in_room)
-    { 
-      if( dir == -1 )
-      {
-        send_to_char("You can't get a clear shot.\n", ch);
-        return;       
-      }
-     
-      // calculate chance to hit when ranged shooting
-      range = strength/get_property("archery.strPerRoomRange", 40);
-
-      for (i = 1, room = ch->in_room; i <= range; i++)
-      {
-       room = world[room].dir_option[dir]->to_room;
-       if (room == victim->in_room)
-         break;
-      }       
-
-      if (room != victim->in_room)
-      {
-         send_to_char("It's a long shot, but you try anyway!\n", ch);
-      }
-
-      to_hit = chance_to_hit(ch, victim, (int)(GET_CHAR_SKILL(ch, SKILL_ARCHERY) *
-                                            get_property("archery.hitPenalty", 0.7) -
-                                            i * get_property("archery.rangePenalty", 10)), 0);
-   }
-   else
-   {
-      room = victim->in_room;
-      to_hit = chance_to_hit(ch, victim, (int)(GET_CHAR_SKILL(ch, SKILL_ARCHERY) *
-                                          get_property("archery.hitPenalty", 0.7)), 0);
-   }
-
-   // ok give them bit exp for attempt 
-   //gain_exp(ch, victim, 0, EXP_DAMAGE);
-
-   // If this is deemed overpowered, let's make it so it randomly hits
-   //    someone else if it fails instead of just missing.
-   if (wallcheck)
-   {
-     sprintf(buf, "You aim high, arcing %s skyward.\r\n", ch->equipment[WIELD]->short_description);
-     send_to_char(buf, ch);
-     if( !notch_skill(ch, SKILL_INDIRECT_SHOT, 1) &&
-          GET_CHAR_SKILL(ch, SKILL_INDIRECT_SHOT) < number(1, 130) )
-     {
-       to_hit = 0;
-     }
-   }
-
-   actual = 0;
-
-   // and finally shooting begins
-   for (i = 0; i < shots; i++)
-   {
-      if(!(ch) ||
-         !(victim) ||
-         !IS_ALIVE(ch) ||
-         !IS_ALIVE(victim))
-      {
-        break;
-      }
-      
-      missile = quiver->contains;
-      if (!missile)
-      {
-         send_to_char("Looks like you're out of missiles.\n", ch);
          break;
       }
+    }
 
-      // cursed is auto return arrows
-      // now is max 50%, might add some luck mod too
-      if( notch_skill(ch, SKILL_CURSED_ARROWS, 10) ||
-          number(0, 100) < (int)((GET_CHAR_SKILL(ch, SKILL_CURSED_ARROWS)/2) *
-                                 get_property("archery.cursedArrows.mod", 1.0))
-        )
+    // This causes an automatic miss.
+    if( room != victim->in_room )
+    {
+      send_to_char("It's a long shot, but you try anyway!\n", ch);
+    }
+
+    to_hit = chance_to_hit(ch, victim, (int)(GET_CHAR_SKILL(ch, SKILL_ARCHERY) *
+      get_property("archery.hitSkill.percentage", 0.7) - i * get_property("archery.rangePenalty", 10)), 0);
+  }
+  else
+  {
+    room = victim->in_room;
+    to_hit = chance_to_hit(ch, victim, (int)(GET_CHAR_SKILL(ch, SKILL_ARCHERY) *
+      get_property("archery.hitSkill.percentage", 0.7)), 0);
+  }
+
+  // If this is deemed overpowered, let's make it hit someone else if it fails instead of just missing.
+  if( wallcheck )
+  {
+    act( "You aim high, arcing $p skyward.\r\n", FALSE, ch, weapon, ch, TO_CHAR );
+    // A 77% chance at 100 skill.
+    if( !notch_skill(ch, SKILL_INDIRECT_SHOT, 1)
+      && GET_CHAR_SKILL(ch, SKILL_INDIRECT_SHOT) < number(1, 130) )
+    {
+      to_hit = 0;
+    }
+  }
+  // Spell room effects that change accuracy (binding wind hurts, wind tunnel helps).
+  if( get_spell_from_room(&world[ch->in_room], SPELL_BINDING_WIND) )
+  {
+    to_hit = (to_hit * get_property("spell.bindingWind.archery", 0.7));
+  }
+  if( get_spell_from_room(&world[ch->in_room], SPELL_WIND_TUNNEL) )
+  {
+    to_hit = (to_hit * get_property("spell.windTunnel.archery", 1.3));
+  }
+
+
+  actual = 0;
+  // and finally shooting begins
+  for( i = 0; i < shots; i++ )
+  {
+    if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    {
+      break;
+    }
+
+    missile = quiver->contains;
+    if( !missile )
+    {
+      send_to_char("Looks like you ran out of missiles.\n", ch);
+      break;
+    }
+
+    // Cursed is auto return arrows
+    if( notch_skill(ch, SKILL_CURSED_ARROWS, 10) || number(1, 100)
+      <= (int)(GET_CHAR_SKILL(ch, SKILL_CURSED_ARROWS) * get_property("archery.cursedArrows.percentage", 0.5)) )
+    {
+      carrow = TRUE;
+    }
+    else
+    {
+      carrow = FALSE;
+    }
+
+    // For the gather command
+    if( IS_PC(ch) )
+    {
+      missile->timer[0] = GET_PID(ch);
+    }
+
+    // For get all.playername
+    if( number(1, 100) <= GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS)
+      || notch_skill(ch, SKILL_ENCHANT_ARROWS, 10) )
+    {
+       enchant_arrows(ch, victim, missile, ARROW_MARK);
+    }
+
+    if( !carrow )
+    {
+       //GET_CARRYING_W(ch) -= GET_OBJ_WEIGHT(quiver);
+       obj_from_obj(missile);
+       //GET_CARRYING_W(ch) += GET_OBJ_WEIGHT(quiver);
+       weight += GET_OBJ_WEIGHT(missile);
+       quiver->value[3]--;
+    }
+
+    // Immobile victims are guaranteed hits, if we have any chance (within range).
+    // If we hit!
+    if( room == victim->in_room && to_hit && (IS_IMMOBILE(victim)
+      || notch_skill( ch, SKILL_ARCHERY, get_property("skill.notch.offensive.auto", 4) )
+      || number(1, 100) <= to_hit) )
+    {
+      if( IS_PC(ch) && IS_PC(victim) )
       {
-        carrow = TRUE;
+        affect_from_char( ch, TAG_PVPDELAY );
+        set_short_affected_by(ch, TAG_PVPDELAY, WAIT_PVPDELAY);
+        affect_from_char( victim, TAG_PVPDELAY );
+        set_short_affected_by(victim, TAG_PVPDELAY, WAIT_PVPDELAY);
       }
-      else
+      if( !affected_by_spell(ch, TAG_FIRING) )
       {
-        carrow = FALSE;
-      }
-
-      // For the gather command
-      if (IS_PC(ch)) // crashes when we call with an npc
-        missile->timer[0] = GET_PID(ch);
-        
-      // For get all.aplayername
-      if ( GET_CHAR_SKILL(ch, SKILL_ENCHANT_ARROWS) >= number(1, 100) )
-      {
-         notch_skill(ch, SKILL_ENCHANT_ARROWS, 10);
-         enchant_arrows(ch, victim, missile, ARROW_MARK);
-      }
-
-      // For the arrow spell enchantments
-      if(!(shield_blocked))
-        enchant_arrows(ch, victim, missile, number(2, (GET_LEVEL(ch) == 56) ? 6 : 5));
-
-      if (!carrow)
-      {
-         //GET_CARRYING_W(ch) -= GET_OBJ_WEIGHT(quiver);
-         obj_from_obj(missile);
-         //GET_CARRYING_W(ch) += GET_OBJ_WEIGHT(quiver);
-         weight += GET_OBJ_WEIGHT(missile);
-         quiver->value[3]--;
-      }
-
-      if(room == victim->in_room &&
-        (IS_IMMOBILE(victim) ||
-        notch_skill(ch, SKILL_ARCHERY, get_property("skill.notch.offensive.auto", 4)/2) || 
-        to_hit >= number(1, 100)))
-      {
-        if (IS_PC(ch) && IS_PC(victim))
-        {
-          affect_from_char( ch, TAG_PVPDELAY );
-          set_short_affected_by(ch, TAG_PVPDELAY, WAIT_PVPDELAY);
-          affect_from_char( victim, TAG_PVPDELAY );
-          set_short_affected_by(victim, TAG_PVPDELAY, WAIT_PVPDELAY);
-        }
-        if (!affected_by_spell(ch, TAG_FIRING))
-          set_short_affected_by(ch, TAG_FIRING, 5 * WAIT_SEC);
+        set_short_affected_by(ch, TAG_FIRING, 5 * WAIT_SEC);
         // play_sound(SOUND_ARROW3, NULL, ch->in_room, TO_ROOM);
-        
-        P_obj shield = victim->equipment[WEAR_SHIELD];
+      }
 
-        if(shield &&
-           !IS_IMMOBILE(victim) &&
-           AWAKE(victim))
+      // Check for shield block.
+      shield = victim->equipment[WEAR_SHIELD];
+      if( shield && GET_ITEM_TYPE(shield) == ITEM_SHIELD && !IS_IMMOBILE(victim) && AWAKE(victim) )
+      {
+        // Maxxed out char with 100 stats => 100 + 50 + 50 + 20 + 20 = 240
+        int block_chance = (int)( GET_CHAR_SKILL(victim, SKILL_SHIELD_BLOCK) + (GET_C_AGI(victim) / 2)
+          + (GET_CHAR_SKILL(victim, SKILL_SHIELD_COMBAT) / 2) + (GET_C_DEX(victim) / 5) + (GET_C_LUK(victim) / 5) );
+
+        if( IS_FIGHTING(victim) )
         {
-          int s_blk = (int) (GET_CHAR_SKILL(victim, SKILL_SHIELD_BLOCK) +
-                       (GET_C_AGI(victim) / 2) + (GET_C_DEX(victim) / 5) +
-                       (GET_CHAR_SKILL(victim, SKILL_SHIELD_COMBAT) / 2) +
-                       (GET_C_LUK(victim) / 5));
-                       
-          debug("shield block value (%d).", s_blk);
-          
-          if(IS_FIGHTING(victim))
-            s_blk = (int) (s_blk * 0.25);
-          
-          if(s_blk > number(1, 2000))
+          block_chance /= 4;
+        }
+        debug("do_fire: shield block value %d.", block_chance);
+
+        // We want around a 15% chance for 100 agi/dex & 100 skills: 240 / .15 = 1600
+        if( number(1, 1600) <= block_chance )
+        {
+          shield_blocked = TRUE;
+
+          if( ch->in_room != victim->in_room )
           {
-            shield_blocked = true;
-            
-            if(ch->in_room != victim->in_room)
-            {
-              sprintf(vict_msg, "$p fired from %s%%s, but hits your shield!", dirs[rev_dir[dir]]);
-              sprintf(vict_death_msg, "$p fired from %s goes through your throat killing you instantly.",
-                      dirs[rev_dir[dir]]);
-              
-              sprintf(room_msg, "$n fires $p %s!", dirs[dir]);
-              act(room_msg, FALSE, ch, missile, ch, TO_NOTVICT | ACT_NOTTERSE);
-              
-              sprintf(room_msg, "$p fired from %s%%s, but hits $N's shield!", dirs[rev_dir[dir]]);
-              sprintf(room_death_msg, "$p fired from %s went right through $N's throat killing $M instantly.",
-                      dirs[rev_dir[dir]]);
-              
-              messages = &range_messages;
-            }
-            else
-            {
-              messages = &blocked_messages;
-            }
+            sprintf(vict_msg, "$p fired from %s%%s, but hits your shield!", dirs[rev_dir[dir]]);
+            sprintf(vict_death_msg, "$p fired from %s goes through your throat killing you instantly.",
+              dirs[rev_dir[dir]]);
+
+            sprintf(room_msg, "$n fires $p %s!", dirs[dir]);
+            act(room_msg, FALSE, ch, missile, ch, TO_NOTVICT | ACT_NOTTERSE);
+
+            sprintf(room_msg, "$p fired from %s%%s, but hits $N's shield!", dirs[rev_dir[dir]]);
+            sprintf(room_death_msg, "$p fired from %s went right through $N's throat killing $M instantly.",
+              dirs[rev_dir[dir]]);
+
+            messages = &range_messages;
+          }
+          else
+          {
+            messages = &blocked_messages;
           }
         }
-        
-        if (ch->in_room != victim->in_room &&
-            !shield_blocked)
+      }
+
+      // Ranged hit, no shield.
+      if( ch->in_room != victim->in_room && !shield_blocked )
+      {
+        //play_sound(SOUND_ARROW3, NULL, victim->in_room, TO_ROOM);
+        sprintf(room_msg, "$n fires $p %s!", dirs[dir]);
+        act(room_msg, FALSE, ch, missile, ch, TO_NOTVICT | ACT_NOTTERSE);
+
+        sprintf(vict_msg, "$p fired from %s%%s hits you!", dirs[rev_dir[dir]]);
+        sprintf(vict_death_msg, "$p fired from %s goes through your throat killing you instantly.",
+          dirs[rev_dir[dir]]);
+        sprintf(room_msg, "$p fired from %s%%s hits $N!", dirs[rev_dir[dir]]);
+        sprintf(room_death_msg, "$p fired from %s went right through $N's throat killing $M instantly.",
+          dirs[rev_dir[dir]]);
+
+        messages = &range_messages;
+      }
+      // Non-ranged hit.
+      else if( !shield_blocked )
+      {
+        messages = &room_messages;
+      }
+
+      messages->obj = missile;
+      messages->type = DAMMSG_TERSE | DAMMSG_HIT_EFFECT;
+
+      // initial damage calculation by arrow dice
+      dam = dice(missile->value[1], MAX(1, missile->value[2]));
+      dam *= get_property("archery.diceFactor", 1.000);
+      // aditional mods
+      // damroll bonus: 35% of damroll
+      dam += GET_DAMROLL(ch) * get_property("damroll.mod", 1.0) * get_property("archery.damrollFactor", 0.350);
+      // hitroll bonus: 1/4 of hitroll
+      dam += GET_HITROLL(ch) * get_property("archery.hitrollFactor", 0.250);
+      // Minor mods by luck and dex.
+      dam += number(0, GET_C_LUK(ch)/40) + number(0, GET_C_DEX(ch)/25);
+      // Weapon bonus
+      dam += weapon->value[2] * get_property("archery.weaponFactor", 0.500);
+      // +0-4 damage at 100 skill.
+      dam += number(0, GET_CHAR_SKILL(ch, SKILL_ARCHERY) / 25);
+
+      // Low skill might reduce damage by 0 to 70%.
+      if( GET_CHAR_SKILL(ch, SKILL_ARCHERY) < number(15, 40) )
+      {
+        dam = (dam * number(3, 10)) / 10.0;
+      }
+
+      // Apply damage mod for race/class/etc.
+      dam *= ch->specials.damage_mod;
+
+      // Binding wind decreases accuracy and damage done.
+      if( get_spell_from_room(&world[ch->in_room], SPELL_BINDING_WIND) )
+      {
+        dam *= (get_property("spell.bindingWind.archery", 0.7));
+      }
+      // Wind tunnel helps accuracy and damage done.
+      if( get_spell_from_room(&world[ch->in_room], SPELL_WIND_TUNNEL) )
+      {
+        dam *= (get_property("spell.windTunnel.archery", 1.3));
+      }
+
+      // High level well equipped archers can fire 7 shots a round. A high level halfling with good equipment
+      // has approximately 200 luck. The critical shot skill + (luck -100) results to around 200. 200 out of 1000
+      // is approximately 20 percent, which is incredibly high.
+      // I have lowered the critical chance to 7 percent and lowered the damage bonus from 75 percent to 50 percent.
+      // With maxxed skill and 200 luck:
+      // 200 >= 1..3000 -> 200/1..3000 >= 1 -> 200/1..200 vs 200/201..3000 -> 200/3000 possibilities = 6.67%
+      // 100 + (luck-100) -> luck / 1..3000 >= 1: (luck/30) / ((1..3000)/30) -> 1% for each 30 luck.
+      //   So, for 90 luck: 3%, 180 luck: 6%, 210 luck: 7%, 270 luck: 9%.  Seems reasonable..
+      if( GET_CHAR_SKILL(ch, SKILL_CRITICAL_SHOT) > 0
+        && (GET_CHAR_SKILL(ch, SKILL_CRITICAL_SHOT) + GET_C_LUK(ch) - 100) >= number(1, 3000) )
+      {
+        send_to_char("&=LWYou score a CRITICAL SHOT!!!&N\n", ch);
+        dam *= get_property("archery.crit.bonus", 1.500);
+        notch_skill(ch, SKILL_CRITICAL_SHOT, 5);
+      }
+
+      // Cursed arrows don't take damage and auto-return.
+      if( !carrow )
+      {
+        if( number(0, 1) )
         {
-          //play_sound(SOUND_ARROW3, NULL, victim->in_room, TO_ROOM);
-
-          sprintf(vict_msg, "$p fired from %s%%s hits you!", dirs[rev_dir[dir]]);
-          sprintf(vict_death_msg, "$p fired from %s goes through your throat killing you instantly.",
-                  dirs[rev_dir[dir]]);
-          
-          sprintf(room_msg, "$n fires $p %s!", dirs[dir]);
-          act(room_msg, FALSE, ch, missile, ch, TO_NOTVICT | ACT_NOTTERSE);
-          
-          sprintf(room_msg, "$p fired from %s%%s hits $N!", dirs[rev_dir[dir]]);
-          sprintf(room_death_msg, "$p fired from %s went right through $N's throat killing $M instantly.",
-                  dirs[rev_dir[dir]]);
-          
-          messages = &range_messages;
+          missile->condition -= number(1, 5);
+          if( missile->condition <= 0 )
+          {
+            MakeScrap(victim, missile);
+          }
+          else
+          {
+            obj_to_char(missile, victim);
+          }
         }
-        else if(!(shield_blocked))
+        else
         {
-          messages = &room_messages;
+          obj_to_char(missile, victim);
         }
-         
-        if(missile)
-          messages->obj = missile;
-        
-        messages->type = DAMMSG_TERSE | DAMMSG_HIT_EFFECT;
-         
-         // initial damage calculation by arrow dice
-         dam = dice(missile->value[1], MAX(1, missile->value[2]));
-         dam *= get_property("archery.diceFactor", 1.000);
-         // aditional mods
-         // damroll bonus: 2/3 of damroll + minor mod by dex 
-         dam += ((double)GET_DAMROLL(ch) * get_property("damroll.mod", 1.0))
-                * (get_property("archery.damrollFactor", 2.000) + (double)number(0, GET_C_DEX(ch))/1000);
-         // hitroll bonus: 1/3 of hitroll + minor mod by luck
-         dam += (double)GET_HITROLL(ch)
-                * (get_property("archery.hitrollFactor", 1.000) + (double)number(0, GET_C_LUK(ch))/1000);
-         // weapon bonus, 1/5 of val2 + minor mod by skill
-         dam += (double)weapon->value[2]
-                * (get_property("archery.weaponFactor", 0.500) + (double)number(0, (int)GET_CHAR_SKILL(ch, SKILL_ARCHERY))/1000);
+      }
 
-         // low skill might reduce damage
-         if((int)GET_CHAR_SKILL(ch, SKILL_ARCHERY) < number(1, 101))
-         {
-            dam = (dam * number(3, 10) / 10);
-         }
-         
-         dam *= ch->specials.damage_mod;
-         
-         // changed to *=, so damage gets modified, not just set to constant (lom)
-         if (get_spell_from_room(&world[ch->in_room], SPELL_BINDING_WIND))
-         {
-            dam *= (get_property("spell.bindingWind.archery", 0.7));
-         }
-
-         if (get_spell_from_room(&world[ch->in_room], SPELL_WIND_TUNNEL))
-         {
-            dam *= (get_property("spell.windTunnel.archery", 1.3));
-         }
-
-// High level well equipped archers can fire 7 shots a round. A high level halfling with good equipment
-// has approximately 200 luck. The critical shot skill + (luck -100) results to around 200. 200 out of 1000
-// is approximately 20 percent, which is incredibly high. I have lowered the critical chance to 7 percent and
-// lowered the damage bonus from 75 percent to 50 percent.
-         
-         if((GET_CHAR_SKILL(ch, SKILL_CRITICAL_SHOT) > 0 &&
-            GET_CHAR_SKILL(ch, SKILL_CRITICAL_SHOT) + (GET_C_LUK(ch) - 100)) > number(1, 3000))
-         {
-            send_to_char("&=LWYou score a CRITICAL SHOT!!!&N\n", ch);
-            dam *= get_property("archery.crit.bonus", 1.500);
-            notch_skill(ch, SKILL_CRITICAL_SHOT, 5);
-         }
-
-//         if(!CAN_HURT(ch, missile, victim) && 
-//            !GET_SPEC(ch, CLASS_ROGUE, SPEC_SHARPSHOOTER))
-         // lom: ever master if shooting !magic arrows, cannot hurt special magic beings
-         // lom: same as with weapons, so get magic arrows
-         if( !CAN_HURT(ch, missile, victim) ||
-             shield_blocked) 
-         {
-            dam = 1;
-         }
-
-         if (!carrow)
-         {
-            if (number(0, 1))
-            {
-               missile->condition -= number(1, 5);
-               if (missile->condition <= 0)
-                  MakeScrap(ch, missile);
-               else
-                  obj_to_char(missile, victim);
-            }
-            else
-            {
-               obj_to_char(missile, victim);
-            }
-         }
-         
-        if(shield_blocked &&
-           shield &&
-           !number(0, 3) &&
-           !IS_ARTIFACT(shield))
+      // How can it be shield blocked without a shield?  But ok.
+      // 10% chance to damage shield.
+      if( shield_blocked && shield && !number(0, 9) && !IS_ARTIFACT(shield) )
+      {
+        shield->condition -= number(1, 3);
+        send_to_char("Your shield is damaged!\r\n", victim);
+        if( shield->condition < 1 )
         {
-          shield->condition -= number(1, 3);
-          
-          send_to_char("Your shield is damaged!\r\n", victim);
-          
-          if(shield->condition < 1)
-            MakeScrap(ch, victim->equipment[WEAR_SHIELD]);
+          MakeScrap(ch, victim->equipment[WEAR_SHIELD]);
         }
-            
-         actual++;
+      }
 
-         dam = BOUNDED(1, (int) dam, (int)get_property("archery.arrow.max.damage", 500.000));
+      // lom: ever master if shooting !magic arrows, cannot hurt special magic beings
+      // lom: same as with weapons, so get magic arrows
+      if( CAN_HURT(ch, missile, victim) && !shield_blocked )
+      {
+        dam = BOUNDED(1, (int) dam, get_property("archery.arrow.max.damage", 100));
+        result = melee_damage(ch, victim, (int)dam, PHSDAM_NOENGAGE | PHSDAM_NOSHIELDS | PHSDAM_NOPOSITION | PHSDAM_ARROW, messages);
+      }
+      // If the person isn't hurt-able or uses shield, we show messages, and result none dead.
+      else
+      {
+        act(messages->attacker, FALSE, ch, messages->obj, victim, TO_CHAR | ACT_NOTTERSE);
+        act(messages->victim, FALSE, ch, messages->obj, victim, TO_VICT | ACT_NOTTERSE);
+        act(messages->room, FALSE, ch, messages->obj, victim, TO_NOTVICTROOM | ACT_NOTTERSE);
+        result = DAM_NONEDEAD;
+      }
+      actual++;
 
-         int result = melee_damage(ch, victim, dam,
-                                   PHSDAM_NOENGAGE | PHSDAM_NOSHIELDS | PHSDAM_NOPOSITION |
-                                   PHSDAM_ARROW,
-                                   messages);
+      // Wakes up if hit and alive.
+      if( result == DAM_NONEDEAD )
+      {
+        REMOVE_BIT(victim->specials.affected_by, AFF_SLEEP);
+        if( affected_by_spell(victim, SPELL_SLEEP) )
+        {
+          affect_from_char(victim, SPELL_SLEEP);
+        }
+        // At level 56, we have major para arrows.  Otherwise, they just have fire/cold/lightning/acid.
+        if( !shield_blocked )
+        {
+          result = enchant_arrows(ch, victim, missile, number(2, (GET_LEVEL(ch) >= MAXLVLMORTAL) ? 6 : 5));
+        }
+      }
 
-         if (result != DAM_NONEDEAD)
-         {// if victim died stop shooting
-            should_retaliate = false;
-            break;
-         }
-         else
-         {
-            should_retaliate = true;
-         }
-
-         // wakes up if hit
-         if (IS_AFFECTED(victim, AFF_SLEEP))
-            REMOVE_BIT(victim->specials.affected_by, AFF_SLEEP);
-         if (affected_by_spell(victim, SPELL_SLEEP))
-            affect_from_char(victim, SPELL_SLEEP);
+      if( result != DAM_NONEDEAD )
+      {
+        should_retaliate = FALSE;
+        break;
       }
       else
-      {// so we missed, let them all enjoy nice miss messages
-//         play_sound(SOUND_ARROW1, NULL, ch->in_room, TO_ROOM);
-         sprintf(buf, "You fire $p at $N and miss!");
-         act(buf, FALSE, ch, missile, victim, TO_CHAR | ACT_NOTTERSE);
-         
-         if ((ch->in_room != victim->in_room) && (room != victim->in_room))
-         {// 1. some room between ch and victim
-            sprintf(buf, "$n lets $p fly, but it falls far short of its target!", dirs[dir]);
-            act(buf, FALSE, ch, missile, 0, TO_ROOM | ACT_NOTTERSE);
-
-            if (world[room].people)
-            {
-               play_sound(SOUND_ARROW1, NULL, room, TO_ROOM);
-               if(room != ch->in_room)
-               {
-                  sprintf(buf, "$p fired from %s drops to the ground.\n", dirs[rev_dir[dir]]);
-                  act(buf, FALSE, world[room].people, missile, ch, TO_ROOM | ACT_NOTTERSE);
-               }
-            }
-         }
-         else if (ch->in_room != victim->in_room)
-         {// 2. ranged to victim room
-            play_sound(SOUND_ARROW1, NULL, victim->in_room, TO_ROOM);
-
-            sprintf(buf, "$n fires $p %s!", dirs[dir]);
-            act(buf, FALSE, ch, missile, 0, TO_ROOM | ACT_NOTTERSE);
-
-            sprintf(buf, "$p fired from %s misses you!", dirs[rev_dir[dir]]);
-            act(buf, FALSE, 0, missile, victim, TO_VICT | ACT_NOTTERSE);
-
-            sprintf(buf, "$p fired from %s misses $N!", dirs[rev_dir[dir]]);
-            act(buf, FALSE, ch, missile, victim, TO_NOTVICTROOM | ACT_NOTTERSE);
-         }
-         else
-         {// 3. ch and victim in same room
-            sprintf(buf, "$p fired by $n misses you!");
-            act(buf, FALSE, ch, missile, victim, TO_VICT | ACT_NOTTERSE);
-
-            sprintf(buf, "$p fired by $n misses $N!");
-            act(buf, FALSE, ch, missile, victim, TO_NOTVICT | ACT_NOTTERSE);
-         }
-         
-         if (!carrow)
-         {
-            obj_to_room(missile, room);
-         }
-      }// hit or miss
-      
-      if (carrow)
       {
-         sprintf(buf, "$p &+mhums&n briefly before returning to you.");
-         act(buf, FALSE, ch, missile, victim, TO_CHAR);
+        should_retaliate = TRUE;
       }
-   }// loop shots in this one fire action
+    }
+    // So we missed, let them all enjoy nice miss messages
+    else
+    {
+//      play_sound(SOUND_ARROW1, NULL, ch->in_room, TO_ROOM);
+      act("You fire $p at $N and miss!", FALSE, ch, missile, victim, TO_CHAR | ACT_NOTTERSE);
 
-   sprintf(buf, "%sYou fire at $N.%s [&+R%d&n hits]",
-     (IS_PC(ch) &&
-      IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G-=[&n" : "",
-     (IS_PC(ch) &&
-      IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G]=-&n" : "",
-     actual);
-   act(buf, FALSE, ch, 0, victim, TO_CHAR | ACT_TERSE);
-   sprintf(buf, "%s$n fires at you.%s [&+R%d&n hits]",
-     (IS_PC(victim) &&
-      IS_SET(victim->specials.act2, PLR2_BATTLEALERT)) ? "&+R-=[&n" : "",
-     (IS_PC(victim) &&
-      IS_SET(victim->specials.act2, PLR2_BATTLEALERT)) ? "&+R]=-&n" : "",
-     actual);
+      // Start with an arrow that was fired at an out of range target.
+      if( (ch->in_room != victim->in_room) && (room != victim->in_room))
+      {
+        sprintf(buf, "$n lets $p fly %sward, but it falls far short of a target!", dirs[dir]);
+        act(buf, FALSE, ch, missile, 0, TO_ROOM | ACT_NOTTERSE);
+
+        if( world[room].people )
+        {
+//          play_sound(SOUND_ARROW1, NULL, room, TO_ROOM);
+          if( room != ch->in_room )
+          {
+            sprintf(buf, "$p fired from %s drops to the ground.\n", dirs2[rev_dir[dir]]);
+            act(buf, FALSE, world[room].people, missile, ch, TO_ROOM | ACT_NOTTERSE);
+          }
+        }
+      }
+      // Missing a ranged shot at a target that's in range.
+      else if( ch->in_room != victim->in_room )
+      {
+//        play_sound(SOUND_ARROW1, NULL, victim->in_room, TO_ROOM);
+
+        sprintf(buf, "$n fires $p %sward!", dirs[dir]);
+        act(buf, FALSE, ch, missile, 0, TO_ROOM | ACT_NOTTERSE);
+
+        sprintf(buf, "$p fired from %s misses you!", dirs2[rev_dir[dir]]);
+        act(buf, FALSE, 0, missile, victim, TO_VICT | ACT_NOTTERSE);
+
+        sprintf(buf, "$p fired from %s misses $N!", dirs2[rev_dir[dir]]);
+        act(buf, FALSE, ch, missile, victim, TO_NOTVICTROOM | ACT_NOTTERSE);
+      }
+      // Missing with a shot at target in same room.
+      else
+      {
+        act("$p fired by $n misses you!", FALSE, ch, missile, victim, TO_VICT | ACT_NOTTERSE);
+        act("$p fired by $n misses $N!", FALSE, ch, missile, victim, TO_NOTVICT | ACT_NOTTERSE);
+      }
+
+      if( !carrow )
+      {
+        obj_to_room(missile, room);
+      }
+    }
+
+    if( carrow )
+    {
+         act("$p &+mhums&n briefly before returning to you.", FALSE, ch, missile, victim, TO_CHAR | ACT_NOTTERSE);
+    }
+  } // End of for loop: shots in this one fire action
+
+  sprintf(buf, "%sYou fire at $N.%s [&+R%d&n hits]",
+    (IS_PC(ch) && IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G-=[&n" : "",
+    (IS_PC(ch) && IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G]=-&n" : "", actual);
+  act(buf, FALSE, ch, 0, victim, TO_CHAR | ACT_TERSE);
+
+  sprintf(buf, "%s$n fires at you.%s [&+R%d&n hits]",
+    (IS_PC(victim) && IS_SET(victim->specials.act2, PLR2_BATTLEALERT)) ? "&+R-=[&n" : "",
+    (IS_PC(victim) && IS_SET(victim->specials.act2, PLR2_BATTLEALERT)) ? "&+R]=-&n" : "", actual);
    act(buf, FALSE, ch, 0, victim, TO_VICT | ACT_TERSE);
+
    sprintf(buf, "$n fires at $N. [&+R%d&n hits]", actual);
-   
-  if (victim->in_room != NOWHERE)
+
+  if( victim->in_room != NOWHERE )
   {
     act(buf, FALSE, ch, 0, victim, TO_NOTVICTROOM | ACT_TERSE);
-   
+
     if(victim->in_room != ch->in_room)
     {
       act(buf, FALSE, ch, 0, victim, TO_ROOM | ACT_TERSE);
     }
   }
-  
-   GET_CARRYING_W(ch) -= (int)((weight+(weight%2))/2);
 
-   if (should_retaliate && IS_NPC(victim))
-   {     
-      MobRetaliateRange(victim, ch);
-/* Lom: should we agro others when range?
- * maybe. and probably can have some epic skill that reduces chance to range agro others
-      if (ch->in_room != victim->in_room && (IS_PC(ch) || IS_PC_PET(ch)))
+  // WTH does this do?  Loss of weight of arrow?  What about cursed arrows?
+  GET_CARRYING_W(ch) -= (int)((weight+(weight%2))/2);
+
+  if( should_retaliate && IS_NPC(victim) )
+  {
+    MobRetaliateRange(victim, ch);
+    /* Lom: should we agro others when range?
+     * maybe. and probably can have some epic skill that reduces chance to range agro others
+     * Dunno why this is commented out, but ok..
+    if( ch->in_room != victim->in_room && (IS_PC(ch) || IS_PC_PET(ch)) )
+    {
+      P_char tmp_next;
+      for( P_char tmpch = world[victim->in_room].people; tmpch; tmpch = tmp_next )
       {
-         for (P_char tmpch = world[victim->in_room].people; tmpch; tmpch = tmpch->next_in_room)
-         {
-           if (IS_NPC(tmpch))
-             MobRetaliateRange(tmpch, ch);
-             justice_witness(ch, tmpch, CRIME_ATT_MURDER);
-             
-           if (!char_in_list(ch))
-             break;
-         }
+        tmp_next = tmpch->next_in_room;
+        if( IS_NPC(tmpch) )
+        {
+          MobRetaliateRange(tmpch, ch);
+        }
+        justice_witness(ch, tmpch, CRIME_ATT_MURDER);
+        if( !char_in_list(ch) )
+        {
+          break;
+        }
       }
+    }
+     */
+  }
+
+  // lag shooter (by number of shots done in this one fire action)
+  delay = i / get_property("archery.lag.per.arrow.mod", 3.000);
+/* I don't see a reason for this... why lag someone for a minimum amount?
+ * If they killed in 1/7 arrows, let it be a 1/7 pulse.
+  if( delay < 1 )
+  {
+    delay = 1;
+  }
 */
-   }
+  // aditional lag if shooting hidden
+  if( IS_AFFECTED(ch, AFF_HIDE) )
+  {
+    delay *= get_property("archery.lag.hiding.mod", 2.4);
+  }
+  // aditional lag if shooting when fighting
+  if( is_fighting_check )
+  {
+    delay *= get_property("archery.lag.isfighting.mod", 1.4);
+  }
 
-   // lag shooter (by number of shots done in this one fire action)
-   delay = (float)i / get_property("archery.lag.per.arrow.mod", 3.000);
-   
-   if (delay < .9)
-     delay = .9;
-   // aditional lag if shooting hidden
-   if (hidecheck)
-     delay *= get_property("archery.lag.hiding.mod", 2.4);
-   // aditional lag if shooting when fighting
-   if(is_fighting_check)
-      delay *= get_property("archery.lag.isfighting.mod", 1.4);
-   
-   CharWait(ch, (int)(delay * (4 + MAX(5, ch->points.combat_pulse))));
+  // Delay is a multiplier for the combat pulse of ch.
+  CharWait( ch, WAIT_SEC + delay * ch->specials.base_combat_round );
 
-   // Until we come up with a better way to solve issue of raw_damage calling
-   // appeari screwing up what we've done ni interp.c, we do this.
-   if (hidecheck)
-   {
-     if( notch_skill(ch, SKILL_SHADOW_ARCHERY, 17) ||
-         (GET_CHAR_SKILL(ch, SKILL_SHADOW_ARCHERY) / 2) > number(1, 105))
+  // Shadow archery allows one to stay hidden.
+  if( IS_AFFECTED(ch, AFF_HIDE) )
+  {
+    if( notch_skill(ch, SKILL_SHADOW_ARCHERY, 7)
+      || (GET_CHAR_SKILL(ch, SKILL_SHADOW_ARCHERY) / 2) > number(1, 105) )
      {
-       SET_BIT(ch->specials.affected_by, AFF_HIDE);
      }
      else
      {
+debug( "Skill %d.", GET_CHAR_SKILL(ch, SKILL_SHADOW_ARCHERY) );
+debug( "Skill %d.", GET_CHAR_SKILL(ch, SKILL_SHADOW_ARCHERY) / 2 );
        send_to_char("&+WOops, that wasn't too stealthy...\r\n&n", ch);
+       REMOVE_BIT(ch->specials.affected_by, AFF_HIDE);
      }
    }
 }

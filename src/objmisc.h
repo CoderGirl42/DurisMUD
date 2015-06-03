@@ -442,8 +442,8 @@
                       (obj)->value[0] == WEAPON_SHORTSWORD))
 
 #define CAN_HURT(ch, obj, mob) (!has_innate(mob, INNATE_WEAPON_IMMUNITY) ||\
-      ((obj) && IS_SET((obj)->extra2_flags, ITEM2_MAGIC)) ||\
-      (!(obj) && (GET_LEVEL(ch) >= 51)))
+      ((obj) && IS_SET((obj)->extra2_flags, ITEM2_MAGIC)) || (!(obj) && (GET_LEVEL(ch) >= 51)))
+
 #define IS_SLAYING(obj, mob) ((IS_SET((obj)->extra2_flags, ITEM2_SLAY_GOOD) && IS_GOOD(mob)) ||\
                               (IS_SET((obj)->extra2_flags, ITEM2_SLAY_EVIL) && IS_EVIL(mob)) ||\
                               (IS_SET((obj)->extra2_flags, ITEM2_SLAY_UNDEAD) && IS_UNDEAD(mob)) ||\

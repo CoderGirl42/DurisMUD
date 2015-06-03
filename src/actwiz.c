@@ -3826,48 +3826,59 @@ void do_nchat(P_char ch, char *argument, int cmd)
 void do_wizmsg(P_char ch, char *arg, int cmd)
 {
   P_desc   d;
+  P_char   realChar, toChar;
   char     Gbuf1[MAX_STRING_LENGTH], color[4];
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
-  int      min_level = 0, flag = 0;
+  char    *send_string;
+  int      min_level = 0;
 
-  if(!ch || IS_NPC(ch) || !IS_TRUSTED(ch))
-    return;
-
-  if(IS_SET(ch->specials.act, PLR_WIZMUFFED))
+  // Changed this to ch->desc from IS_NPC(ch) so that switched Imms still can wizchat.
+  if( !IS_ALIVE(ch) || !ch->desc || !IS_TRUSTED(ch))
   {
-    send_to_char("You can't hear wiz messages.\n", ch);
     return;
   }
-  if(!*arg)
+
+  if( ch->desc && ch->desc->original )
+  {
+    realChar = ch->desc->original;
+  }
+  else
+  {
+    realChar = ch;
+  }
+
+  if( IS_NPC(realChar) )
+  {
+    debug( "Please tell Lohrr, \"There's a NPC with a descriptor and no original.\"  He doesn't think it's possible" );
+    logit(LOG_STATUS, "Please tell Lohrr, \"There's a NPC with a descriptor and no original.\"" );
+  }
+
+  if(IS_SET(realChar->specials.act, PLR_WIZMUFFED))
+  {
+    send_to_char("You have the &+Wwiz&n channel toggled &+WOFF&n.\n", ch);
+    return;
+  }
+
+  if( !*arg )
   {
     send_to_char("Yes, yes, but WHAT do you want to tell them all?\n", ch);
     return;
   }
   half_chop(arg, Gbuf1, Gbuf2);
+  min_level = atoi(Gbuf1);
 
-  if(is_number(Gbuf1))
+  // If we have a valid level proceeded by a message.
+  if( is_number(Gbuf1) && *Gbuf2 && min_level >= MINLVLIMMORTAL && min_level <= MAXLVL )
   {
-    flag = 1;
-    min_level = atoi(Gbuf1);
-    if((min_level < AVATAR) || (min_level > 62))
-    {
-      min_level = AVATAR;
-      flag = 0;
-    }
-  }
-  if(!flag)
-  {
-    strcat(Gbuf1, " ");
-    strcat(Gbuf1, Gbuf2);
+    send_string = Gbuf2;
   }
   else
   {
-    if(Gbuf2)
-      strcpy(Gbuf1, Gbuf2);
+    min_level = MINLVLIMMORTAL;
+    send_string = arg;
   }
 
-  min_level = BOUNDED(AVATAR, min_level, 62);
-  if(min_level > AVATAR)
+  if( min_level > AVATAR )
   {
      sprintf(color, "&+R");
   }
@@ -3875,33 +3886,35 @@ void do_wizmsg(P_char ch, char *arg, int cmd)
   {
      sprintf(color, "&+r");
   }
-  /* FOR visible  */
 
-  sprintf(Gbuf2, "%s : (%s%d&n) [ ", GET_NAME(ch), color, min_level);
-  strcat(Gbuf2, Gbuf1);
-  strcat(Gbuf2, " &n]\n");
+  // If God is visible - Show real chars name, not the switched...
+  sprintf(Gbuf1, "%s : (%s%d&n) [ %s &n]\n\r", GET_NAME(realChar), color, min_level, send_string);
 
-  /* For invisible  */
+  // If God is invisible
+  sprintf(Gbuf3, "Someone : (%s%d&n) [ %s &n]\n\r", color, min_level, send_string);
 
-  sprintf(Gbuf3, "Someone : (%s%d&n) [ ", color, min_level);
-  strcat(Gbuf3, Gbuf1);
-  strcat(Gbuf3, " &n]\n");
-
-  for (d = descriptor_list; d; d = d->next)
+  for( d = descriptor_list; d; d = d->next )
   {
-    if((d->connected == CON_PLYNG) &&
-        (GET_LEVEL(d->character) >= min_level) &&
-        !IS_SET(d->character->specials.act, PLR_WIZMUFFED))
+    toChar = (d->original) ? d->original : d->character;
+    // For descriptors in game and of appropriate level and listening to wiz channel.
+    if( (d->connected == CON_PLYNG) && (GET_LEVEL(toChar) >= min_level)
+      && !PLR_FLAGGED(toChar, PLR_WIZMUFFED) )
     {
-
-      if(CAN_SEE(d->character, ch))
-        send_to_char(Gbuf2, d->character, LOG_PRIVATE);
+      // Check to make sure wizinvis Gods stay anonymous.
+      if( CAN_SEE(toChar, realChar) )
+      {
+        send_to_char(Gbuf1, toChar, LOG_PRIVATE);
+      }
       else
-        send_to_char(Gbuf3, d->character, LOG_PRIVATE);
+      {
+        send_to_char(Gbuf3, toChar, LOG_PRIVATE);
+      }
     }
   }
-  if(get_property("logs.chat.status", 0.000) && IS_PC(ch))
-    logit(LOG_CHAT, "%s wizmsg's '%s'", GET_NAME(ch), Gbuf1);
+  if( get_property("logs.chat.status", 0.000) )
+  {
+    logit(LOG_CHAT, "%s wizmsg's '%s'", GET_NAME(realChar), Gbuf1);
+  }
 }
 
 TimedShutdownData shutdownData = {0, -1, TimedShutdownData::NONE};
@@ -4315,77 +4328,100 @@ void do_switch(P_char ch, char *argument, int cmd)
   snoop_by_data *snoop_by_ptr, *next;
   P_char   victim;
 
-  if(IS_NPC(ch))
+  // If you're already switched, we un-switch you first.
+  if( ch->desc && ch->desc->original )
   {
-    send_to_char("Sorry, no mobs allowed.\n", ch);
+    do_return( ch, NULL, cmd );
+  }
+
+  if( IS_NPC(ch) || !ch->desc )
+  {
+    send_to_char("Sorry, no mobs or LD chars allowed.\n", ch);
     return;
   }
-  one_argument(argument, arg);
+  argument = one_argument(argument, arg);
 
-  if(!*arg)
+  if( !*arg )
   {
     send_to_char("Switch with who?\n", ch);
+    send_to_char("&+YSyntax: &+wswitch <target> [silent]&n\n"
+      "Where &+w<target>&n is the MOB / LD char you want to switch into.\n"
+      "And &+w[silent]&n is an option to turn off messages to your Imm while switched.\n\r", ch);
+    send_to_char("&+RPlease note that the &+w[silent]&+R option might cause crashes.&n\n", ch);
   }
   else
   {
-    if(!(victim = get_char_vis(ch, arg)))
+    if( !(victim = get_char_vis(ch, arg)) )
+    {
       send_to_char("They aren't here.\n", ch);
+    }
     else
     {
-      if(ch == victim)
+      if( ch == victim )
       {
         send_to_char("He he he... We are jolly funny today, eh?\n", ch);
         return;
       }
-      if(!ch->desc || ch->desc->snoop.snooping)
+      if( ch->desc->snoop.snooping )
       {
         send_to_char("Mixing snoop & switch is bad for your health.\n", ch);
         return;
       }
-      if(victim->desc ||
-          (IS_PC(victim) && (GET_LEVEL(ch) < GET_LEVEL(victim))))
+      // Can only switch into mobs and LD chars of lesser level.
+      if( victim->desc || (IS_PC(victim) && (GET_LEVEL(ch) < GET_LEVEL(victim))) )
       {
         send_to_char("You can't do that, the body is already in use!\n", ch);
         return;
       }
-      else if((GET_LEVEL(ch) < OVERLORD))
+      else if( (GET_LEVEL(ch) < OVERLORD) )
       {
-        wizlog(GET_LEVEL(ch), "%s has switched into '%s'",
-               GET_NAME(ch), GET_NAME(victim));
-        logit(LOG_WIZ, "%s has switched into '%s'", GET_NAME(ch),
-              GET_NAME(victim));
+        wizlog(GET_LEVEL(ch), "%s has switched into '%s'.", GET_NAME(ch), GET_NAME(victim));
+        logit(LOG_WIZ, "%s has switched into '%s'.", GET_NAME(ch), GET_NAME(victim));
       }
-      send_to_char("Ok.\n", ch);
 
-      if(ch->desc->snoop.snoop_by_list)
+      // We send this message to the descriptor since ch had its desc removed at the end of this fn.
+      SEND_TO_Q("Ok.\n", ch->desc);
+
+      if( ch->desc->snoop.snoop_by_list )
       {
         snoop_by_ptr = ch->desc->snoop.snoop_by_list;
-        while (snoop_by_ptr)
+        while( snoop_by_ptr )
         {
-          send_to_char
-            ("Your victim has switched into something, killing your snoop.\n",
-             snoop_by_ptr->snoop_by);
-          snoop_by_ptr->snoop_by->desc->snoop.snooping = 0;
+          send_to_char("Your victim has switched into something, killing your snoop.\n",
+            snoop_by_ptr->snoop_by);
+          snoop_by_ptr->snoop_by->desc->snoop.snooping = NULL;
 
           next = snoop_by_ptr->next;
           FREE(snoop_by_ptr);
 
           snoop_by_ptr = next;
         }
-
-        ch->desc->snoop.snoop_by_list = 0;
+        ch->desc->snoop.snoop_by_list = NULL;
       }
 
-      if(IS_TRUSTED(ch) && !IS_FIGHTING(ch) && !IS_DESTROYING(ch))
-        if(GET_WIZINVIS(ch) < GET_LEVEL(ch))
+      if( IS_TRUSTED(ch) && !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
+      {
+        if( GET_WIZINVIS(ch) < GET_LEVEL(ch) )
+        {
+          act("$n's &+Wyeyes&n slowly &+wglaze&n over, and then $n slowly fades out &+wof view&+L...&n",
+            FALSE, ch, 0, 0, TO_ROOM);
           GET_WIZINVIS(ch) = GET_LEVEL(ch);
+        }
+      }
 
+      // Almost the same as the blink social... Just slightly different color.
+      act("&+w$n&+w blinks in disbelief.&n", FALSE, victim, 0, 0, TO_ROOM);
       ch->desc->character = victim;
       ch->desc->original = ch;
       ch->only.pc->switched = victim;
 
       victim->desc = ch->desc;
-      ch->desc = 0;
+
+      one_argument(argument, arg);
+      if( !strcmp(arg, "silent") )
+      {
+        ch->desc = NULL;
+      }
     }
   }
 }
