@@ -37,7 +37,7 @@
 #include "map.h"
 #include "guard.h"
 
-#define ADD_RACIAL_INNATE(innate, race, level) (racial_innates[(innate)][(race)-1] = (level))
+#define ADD_RACIAL_INNATE(innate, race, level) (racial_innates[(innate)][(race)] = (level))
 #define ADD_CLASS_INNATE(innate, ch_class, level, spec) {(class_innates[(innate)][flag2idx(ch_class)-1][(spec)] = (level));SET_BIT(class_innates_at_all[(innate)], ch_class);}
 
 extern Skill skills[];
@@ -48,8 +48,8 @@ extern const char *dirs[];
 extern int rev_dir[];
 extern P_char character_list;
 extern struct time_info_data time_info;
-char     racial_innates[LAST_INNATE + 1][LAST_RACE];
-char     class_innates[LAST_INNATE + 2][CLASS_COUNT][5];
+char racial_innates[LAST_INNATE + 1][LAST_RACE + 1];
+char class_innates[LAST_INNATE + 2][CLASS_COUNT][5];
 unsigned int class_innates_at_all[LAST_INNATE + 2];
 extern const struct race_names race_names_table[];
 extern void event_immolate(P_char, P_char, P_obj, void *);
@@ -61,6 +61,7 @@ extern bool epic_summon(P_char, char *);
 extern void event_short_affect(P_char, P_char , P_obj , void *);
 extern const struct class_names class_names_table[];
 extern char *specdata[][MAX_SPEC];
+extern int racial_shrug_data[];
 
 typedef void cmd_func(P_char, char *, int);
 
@@ -433,7 +434,7 @@ string list_innates(int race, int cls, int spec)
   }
   for (innate = 0; innate <= LAST_INNATE; innate++)
   {
-    if ((race && racial_innates[innate][race - 1]) ||
+    if ((race && racial_innates[innate][race]) ||
 	(cls && class_innates[innate][cls - 1][spec]))
     {
       found = 1;
@@ -444,12 +445,12 @@ string list_innates(int race, int cls, int spec)
 
       return_str += "&+c";
       return_str += string(innates_data[innate].name);
-      if ((race && racial_innates[innate][race - 1] > 1) ||
+      if ((race && racial_innates[innate][race] > 1) ||
 	  (cls && class_innates[innate][cls - 1][spec] > 1))
       {
         return_str += " &n(obtained at level &+c";
         if (race)
-	  sprintf(level, "%d", racial_innates[innate][race - 1]);
+	  sprintf(level, "%d", racial_innates[innate][race]);
 	else if (cls)
           sprintf(level, "%d", class_innates[innate][cls - 1][spec]);
 	return_str += string(level);
@@ -508,8 +509,8 @@ bool has_innate(P_char ch, int innate)
     return FALSE;
   }
 
-  if (racial_innates[innate][race - 1])
-    return GET_LEVEL(ch) >= racial_innates[innate][race - 1];
+  if (racial_innates[innate][race])
+    return GET_LEVEL(ch) >= racial_innates[innate][race];
   else
     return FALSE;
 }
@@ -3854,16 +3855,13 @@ int get_innate_resistance(P_char ch)
   int      res, lvl = GET_LEVEL(ch);
   char     buf[128];
 
-  sprintf(buf, "innate.shrug.%s",
-          race_names_table[GET_RACE(ch)].no_spaces);
-  res = (int) get_property(buf, 10.);
+  if( !IS_ALIVE(ch) )
+    return 0;
+
+  res = racial_shrug_data[GET_RACE(ch)];
   res -= MIN(6, 56 - lvl);
   res = (int) (res * MIN(1., ((float) lvl) / 50));
   res = MAX(5, res);
-
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return 0;
 
   if( has_innate(ch, INNATE_RRAKKMA) && ch->group )
   {
@@ -3917,12 +3915,12 @@ bool resists_spell(P_char caster, P_char victim)
   {
     return FALSE;
   }
-
+/* PENIS: TEMP FOR TESTING
   if( IS_TRUSTED(caster) && !IS_TRUSTED(victim) )
   {
     return FALSE;
   }
-
+*/
   if( affected_by_spell(victim, SKILL_SPELL_PENETRATION) )
   {
     return FALSE;
@@ -4858,7 +4856,7 @@ void do_list_innates( P_char ch, char *args )
         continue;
       }
       // If the race has the innate.
-      if( racial_innates[i][j - 1] )
+      if( racial_innates[i][j] )
       {
         if( !racefound )
         {

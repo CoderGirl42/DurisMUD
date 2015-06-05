@@ -21,6 +21,7 @@
 #include "db.h"
 #include "events.h"
 #include "prototypes.h"
+#include "types.h"
 #include "interp.h"
 #include "spells.h"
 #include "structs.h"
@@ -148,6 +149,20 @@ extern int number_of_quests;
 extern struct quest_data quest_index[];
 extern const struct hold_data hold_index[];
 extern float spell_pulse_data[LAST_RACE + 1];
+extern int racial_shrug_data[LAST_RACE + 1];
+extern const struct racial_data_type racial_data[];
+extern int racial_values[LAST_RACE + 1][2];
+extern bool racial_innates[][LAST_RACE + 1];
+extern const struct innate_data innates_data[];
+extern float racial_exp_mods[LAST_RACE + 1];
+extern float racial_exp_mod_victims[LAST_RACE + 1];
+
+typedef void cmd_func(P_char, char *, int);
+extern const struct innate_data
+{
+  char    *name;
+  cmd_func *func;
+} innates_data[LAST_INNATE + 1];
 
 void apply_zone_modifier(P_char ch);
 static P_char load_locker_char(P_char ch, char *locker_name, int bValidateAccess);
@@ -155,6 +170,7 @@ void shopping_stat( P_char ch, P_char keeper, char *arg, int cmd );
 bool is_quested_item( P_obj obj );
 void do_setship( P_char ch, char *arg );
 void which_race( P_char ch, char *argument );
+void stat_race(P_char ch, char *arg);
 
 /*
  * Macros
@@ -1631,6 +1647,12 @@ void do_stat(P_char ch, char *argument, int cmd)
 
   if((*arg1 == 'r') || (*arg1 == 'R'))
   {
+    if( *(arg1+1) == 'a' || *(arg1+1) == 'A' )
+    {
+      // Skip the 'race' argument and any spaces following it.
+      stat_race( ch, skip_spaces(argument + strlen(arg1)) );
+      return;
+    }
     // TODO: add guildhall room stats?
     if(!*arg2)
       i = ch->in_room;
@@ -10487,6 +10509,41 @@ void do_setship( P_char ch, char *arg )
   }
 }
 
+int race_lookup( char *raceStr )
+{
+  int i;
+
+  // If the argument isn't a positive integer, check to see if it's a race name.
+  if( !is_number(raceStr) )
+  {
+    // Check for an exact match first...
+    for( i = 0; i < LAST_RACE; i++ )
+    {
+      // Check race, ignoring case
+      if( !strcasecmp(race_names_table[i].normal, raceStr) )
+      {
+        return i;
+      }
+    }
+    // Check for a short version of race name iff not found above. (i.e. just 'grey' instead of 'grey elf')
+    for( i = 0; i <= LAST_RACE; i++ )
+    {
+      // Mob should always load, but just in case...
+      if( is_abbrev(raceStr, race_names_table[i].normal) )
+      {
+        return i;
+      }
+    }
+  }
+  else
+  {
+    // If it's a number, return it as an integer
+    return atoi(raceStr);
+  }
+
+  return -1;
+}
+
 // Displays each type of mob with race corresponding to argument.
 // May be kinda slow since we're walking through the whole mob table and
 //   creating/destroying a mob of each type to find its race/zone/etc.
@@ -10511,43 +10568,13 @@ void which_race( P_char ch, char *argument )
     send_to_char( "i.e. 'which race < human | 1 >' for all mob types which are human.\n", ch );
     return;
   }
-  // If the argument isn't a positive integer, check to see if it's a race name.
-  if( !is_number(arg) )
-  {
-    // Check for an exact match first...
-    for( i = 0; i < LAST_RACE; i++ )
-    {
-      // Check race, ignoring case
-      if( !strcasecmp(race_names_table[i].normal, arg) )
-      {
-        raceIndex = i;
-        break;
-      }
-    }
-    // Check for a short version of race name iff not found above. (i.e. just 'grey' instead of 'grey elf')
-    if( raceIndex <= 0 )
-    {
-      for( i = 0; i <= LAST_RACE; i++ )
-      {
-        // Mob should always load, but just in case...
-        if( is_abbrev(arg, race_names_table[i].normal) )
-        {
-          raceIndex = i;
-          break;
-        }
-      }
-    }
-  }
-  else
-  {
-    // If it's a number, set raceIndex, bounds handling below.
-    raceIndex = atoi(arg);
-  }
+
+  raceIndex = race_lookup( arg );
 
   // If we couldn't identify the race to look for.. (allowing RACE_NONE since this is a Imm command).
   if( raceIndex < 0 || raceIndex > LAST_RACE )
   {
-    sprintf( buf, "Race '%s' not found.  Please enter a number between 1 and %d or a valid race name.\n\r",
+    sprintf( buf, "Race '%s' not found.  Please enter a number between 0 and %d or a valid race name.\n\r",
       arg, LAST_RACE );
     send_to_char( buf, ch );
     return;
@@ -10628,4 +10655,85 @@ void which_race( P_char ch, char *argument )
     sprintf( buf, "No mobs of race '%s' (%d) found.\n\r", race_names_table[raceIndex].ansi, raceIndex );
     send_to_char( buf, ch );
   }
+}
+
+void stat_single_race( P_char ch, int race )
+{
+  char buf[MAX_STRING_LENGTH];
+  bool first;
+  int  i;
+
+  sprintf( buf, "\n\rRace: %s (%2d) %15s %10s %2s\n\r",
+    pad_ansi(race_names_table[race].ansi, 15).c_str(), race, race_names_table[race].normal,
+    race_names_table[race].no_spaces, race_names_table[race].code );
+  send_to_char( buf, ch );
+
+  sprintf( buf, "Strength    : &+c%3d&n | Power       : &+c%3d&n\n\r"
+                "Dexterity   : &+c%3d&n | Intelligence: &+c%3d&n\n\r"
+                "Agility     : &+c%3d&n | Wisdom      : &+c%3d&n\n\r"
+                "Constitution: &+c%3d&n | Charisma    : &+c%3d&n\n\r"
+                "Luck        : &+c%3d&n | Karma       : &+c%3d&n\n\r"
+                "&+wCombatPulse : &+c%3.0f&+w | SpellPulse  : &+c%1.2f&n\n\r"
+                "&+wTotalDamMod : &+c%1.2f&+w| DamrollMod  : &+c%1.2f&n\n\r",
+    stat_factor[race].Str, stat_factor[race].Pow, stat_factor[race].Dex, stat_factor[race].Int,
+    stat_factor[race].Agi, stat_factor[race].Wis, stat_factor[race].Con, stat_factor[race].Cha,
+    stat_factor[race].Karma, stat_factor[race].Luck, combat_by_race[race][0], spell_pulse_data[race],
+    combat_by_race[race][1], combat_by_race[race][2] );
+  send_to_char( buf, ch );
+
+  sprintf( buf, "Base Age: &+c%3d&n, Max Age: &+c%4d&n, HP Bonus: &+c%2d&n\n\r"
+                "Base Moves: &+c%3d&n, Base Mana: &+c%3d&n, Max Mana: &+c%3d&n\n\r"
+                "Base Height: &+c%3d&n, Base Weight: &+c%3d&n\n\r",
+    racial_data[race].base_age, racial_data[race].max_age, racial_data[race].hp_bonus,
+    racial_data[race].base_vitality, racial_data[race].base_mana, racial_data[race].max_mana,
+    racial_values[race][0], racial_values[race][1] );
+  send_to_char( buf, ch );
+
+  sprintf( buf, "&+MShrug&n: &+c%2d&n, ExpFactor: &+c%1.3f&n, VictimExpFactor: &+c%1.3f&n\n\r",
+    racial_shrug_data[race], racial_exp_mods[race], racial_exp_mod_victims[race] );
+  send_to_char( buf, ch );
+
+  send_to_char( "&+CInnates&n: ", ch );
+  first = TRUE;
+  for( i = 0; i <= LAST_INNATE; i++ )
+  {
+    if( racial_innates[i][race] )
+    {
+      if( !first )
+      {
+        send_to_char( ", " , ch );
+      }
+      first = FALSE;
+      send_to_char( innates_data[i].name, ch );
+    }
+  }
+  send_to_char( "\n\r", ch );
+
+}
+
+void stat_race(P_char ch, char *arg)
+{
+  int race;
+  char buf[MAX_STRING_LENGTH];
+
+  if(!strcmp(arg, "all"))
+  {
+    for( race = 0;race < LAST_RACE;race++ )
+    {
+      stat_single_race( ch, race );
+    }
+    return;
+  }
+
+  race = race_lookup( arg );
+  // If we couldn't identify the race to look for.. (allowing RACE_NONE since this is a Imm command).
+  if( race < 0 || race > LAST_RACE )
+  {
+    sprintf( buf, "Race '%s' not found.  Please enter a number between 0 and %d or a valid race name.\n\r",
+      arg, LAST_RACE );
+    send_to_char( buf, ch );
+    return;
+  }
+
+  stat_single_race( ch, race );
 }

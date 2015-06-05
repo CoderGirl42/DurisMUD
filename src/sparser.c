@@ -53,6 +53,9 @@ extern const char *event_names[];
 extern const struct stat_data stat_factor[];
 extern const struct racial_data_type racial_data[];
 float spell_pulse_data[LAST_RACE + 1];
+int racial_shrug_data[LAST_RACE + 1];
+float racial_exp_mods[LAST_RACE + 1];
+float racial_exp_mod_victims[LAST_RACE + 1];
 extern int spl_table[TOTALLVLS][MAX_CIRCLE];
 extern struct zone_data *zone_table;
 extern struct time_info_data time_info;
@@ -2873,3 +2876,38 @@ void update_spellpulse_data()
   }
 }
 
+void update_racial_shrug_data()
+{
+  char     buf[128];
+  int      i;
+
+  for (i = 0; i <= LAST_RACE; i++)
+  {
+    sprintf(buf, "innate.shrug.%s", race_names_table[i].no_spaces);
+    racial_shrug_data[i] = get_property(buf, 0);
+  }
+}
+
+void update_racial_exp_mods()
+{
+  char     buf[128];
+  int      i;
+
+  for (i = 0; i <= LAST_RACE; i++)
+  {
+    sprintf(buf, "exp.factor.%s", race_names_table[i].no_spaces);
+    racial_exp_mods[i] = get_property(buf, 1.0);
+  }
+}
+
+void update_racial_exp_mod_victims()
+{
+  char     buf[128];
+  int      i;
+
+  for (i = 0; i <= LAST_RACE; i++)
+  {
+    sprintf(buf, "gain.exp.mod.victim.race.%s", race_names_table[i].no_spaces);
+    racial_exp_mod_victims[i] = get_property(buf, 1.0);
+  }
+}

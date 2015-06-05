@@ -56,6 +56,8 @@ extern int get_innate_regeneration(P_char);
 extern P_index mob_index;
 struct mm_ds *dead_trophy_pool = NULL;
 extern struct race_names race_names_table[];
+extern float racial_exp_mods[LAST_RACE + 1];
+extern float racial_exp_mod_victims[LAST_RACE + 1];
 
 long     new_exp_table[TOTALLVLS];
 long     global_exp_limit;
@@ -846,18 +848,14 @@ float gain_exp_modifiers_race_only(P_char ch, P_char victim, float XP)
      GET_RACE(ch) >= 1 &&
      GET_RACE(ch) <= LAST_RACE )
   {
-    prop_buf[0];
-    sprintf(prop_buf, "exp.factor.%s", race_names_table[GET_RACE(ch)].no_spaces);
-    XP = XP * get_property(prop_buf, 1.000);
+    XP = XP * racial_exp_mods[GET_RACE(ch)];
   }
 // debug("Gain exp ch (%d) Start.", (int)XP);  
   if(victim &&
      GET_RACE(victim) >= 1 &&
      GET_RACE(victim) <= LAST_RACE )
   {
-    prop_buf[0];
-    sprintf(prop_buf, "gain.exp.mod.victim.race.%s", race_names_table[GET_RACE(victim)].no_spaces);
-    XP = XP * get_property(prop_buf, 1.000);
+    XP = XP * racial_exp_mod_victims[GET_RACE(victim)];
   }
 // debug("Gain exp victim (%d) Start.", (int)XP);   
   prop_buf[0];
@@ -947,7 +945,7 @@ float gain_exp_modifiers(P_char ch, P_char victim, float XP)
     
     if(IS_ELITE(victim))
     {
-      XP = XP * get_property("gain.exp.mod.victim.race.elite", 1.00);
+      XP = XP * get_property("gain.exp.mod.victim.elite", 1.00);
     }
     
     if(IS_SET(victim->specials.act, ACT_HUNTER))
