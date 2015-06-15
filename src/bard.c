@@ -2001,6 +2001,7 @@ void do_play(P_char ch, char *arg, int cmd)
       send_to_char("You stop your song.\r\n", ch);
       act("$n stops singing abruptly.", FALSE, ch, 0, 0, TO_ROOM);
       stop_singing(ch);
+      CharWait(ch, PULSE_VIOLENCE);
       return;
     }
   }
