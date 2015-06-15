@@ -4199,6 +4199,7 @@ void do_shutdown(P_char ch, char *argument, int cmd)
     sprintf(buf, "Scheduled %s cancelled by %s", type, GET_NAME(ch));
     shutdownData.eShutdownType = TimedShutdownData::NONE;
     wizlog(60, buf);
+    sql_log( ch, WIZLOG, "Shutdown cancelled by %s", GET_NAME(ch) );
   }
 
   if( !*arg )
@@ -4258,6 +4259,7 @@ void do_shutdown(P_char ch, char *argument, int cmd)
   }
   else if(!str_cmp(arg, "segfault"))
   {
+    sql_log( ch, WIZLOG, "Shutdown - SIGSEGV by %s", GET_NAME(ch) );
     raise(SIGSEGV);
   }
   else
@@ -4275,6 +4277,7 @@ void do_shutdown(P_char ch, char *argument, int cmd)
   shutdownData.reboot_time = (time(0) + (mins_to_reboot * 60));
   sprintf(buf, "Scheduled %s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot);
   wizlog(60, buf);
+  sql_log( ch, WIZLOG, "%s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot );
   // calling the event will start the event
   timedShutdown(NULL, NULL, NULL, NULL);
 }
