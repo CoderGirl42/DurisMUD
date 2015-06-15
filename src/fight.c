@@ -2225,9 +2225,10 @@ void die(P_char ch, P_char killer)
     return;
   }
 
-  if( IS_PC(ch) && ( GET_CLASS(ch, CLASS_CONJURER) || GET_CLASS(ch, CLASS_SUMMONER) ) )
+  // Upon death, we want to kill followers.
+  if( IS_PC(ch) && ch->followers )
   {
-    do_dismiss(ch, NULL, 0);
+    do_dismiss(ch, NULL, CMD_DEATH);
   }
 
   int oldlev = GET_LEVEL(ch);
@@ -2255,9 +2256,7 @@ void die(P_char ch, P_char killer)
   clear_links(ch, LNK_PALADIN_AURA);
 
   /* switched god */
-  if(ch->desc &&
-      ch->desc->original &&
-      ch->desc->original->only.pc->switched)
+  if(ch->desc && ch->desc->original && ch->desc->original->only.pc->switched)
   {
     do_return(ch, 0, -4);
   }
@@ -2266,8 +2265,7 @@ void die(P_char ch, P_char killer)
   /* count xp gained by killer */
 
   /* make mirror images disappear */
-  if(IS_ALIVE(ch) && IS_NPC(ch) &&
-      GET_VNUM(ch) == 250)
+  if(IS_ALIVE(ch) && IS_NPC(ch) && GET_VNUM(ch) == 250)
   {
     act("Upon being struck, $n disappears into thin air.", TRUE, ch, 0, 0, TO_ROOM);
     extract_char(ch);
@@ -2355,19 +2353,13 @@ void die(P_char ch, P_char killer)
   soul_taking_check(killer, ch);
 
   // Changed the order on this to take advantage of C's lazy evaluation.
-  if( ch && killer
-      && (IS_NPC(ch) || ch->desc)
-      && (killer != ch)
-      && !IS_TRUSTED(killer) )
+  if( ch && killer && (IS_NPC(ch) || ch->desc) && (killer != ch) && !IS_TRUSTED(killer) )
   {
     kill_gain(killer, ch);
 
-    if(IS_NPC(ch) &&
-        IS_SET(ch->specials.act, ACT_ELITE) &&
-        GET_LEVEL(ch) > 49)
+    if(IS_NPC(ch) && IS_SET(ch->specials.act, ACT_ELITE) && GET_LEVEL(ch) > 49)
     {
-      group_gain_epic(killer, EPIC_ELITE_MOB, GET_VNUM(ch),
-          (GET_LEVEL(ch) - 49));
+      group_gain_epic(killer, EPIC_ELITE_MOB, GET_VNUM(ch), (GET_LEVEL(ch) - 49));
     }
   }
   /* victim is pc */
@@ -2421,9 +2413,7 @@ void die(P_char ch, P_char killer)
     }
   }
 
-  if(IS_NPC(killer) &&
-      CAN_ACT(killer) &&
-      killer != ch &&
+  if(IS_NPC(killer) && CAN_ACT(killer) && killer != ch &&
       MIN_POS(killer, POS_STANDING + STAT_RESTING))
   {
     add_event(retarget_event, PULSE_VIOLENCE - 1, killer, NULL, NULL, 0, NULL, 0);
@@ -2518,10 +2508,7 @@ void die(P_char ch, P_char killer)
     random_recipe(killer, ch);
 
   // object code - Normal kills.  Kvark
-  if((IS_PC(killer) ||
-        IS_PC_PET(killer)) &&
-      IS_NPC(ch) &&
-      IS_ALIVE(killer))
+  if((IS_PC(killer) || IS_PC_PET(killer)) && IS_NPC(ch) && IS_ALIVE(killer))
   {
 
     // if(GET_LEVEL(ch) < 30 || GET_LEVEL(killer) < 20)
@@ -2578,8 +2565,7 @@ void die(P_char ch, P_char killer)
   SET_POS(ch, GET_POS(ch) + STAT_DEAD);
   update_pos(ch);
 
-  if(!CHAR_IN_ARENA(ch) ||
-      IS_NPC(ch))
+  if(!CHAR_IN_ARENA(ch) || IS_NPC(ch))
   {
     //world quest hook
     if((IS_PC(killer) || IS_PC_PET(killer)) && killer->in_room >= 0 && !affected_by_spell(ch, TAG_CONJURED_PET))
@@ -2610,9 +2596,7 @@ void die(P_char ch, P_char killer)
       }
     }
 
-    if(IS_NPC(ch) &&
-        (ch->specials.act & ACT_SPEC_DIE) &&
-        (ch->specials.act & ACT_SPEC))
+    if(IS_NPC(ch) && (ch->specials.act & ACT_SPEC_DIE) && (ch->specials.act & ACT_SPEC))
     {
       if(!mob_index[GET_RNUM(ch)].func.mob)
       {
@@ -2632,27 +2616,26 @@ void die(P_char ch, P_char killer)
       corpse = make_corpse(ch, loss);
     }
 
-    if(corpse &&
-        killer != ch &&
-        ( has_innate(killer, INNATE_MUMMIFY) ||
-          has_innate(killer, INNATE_REQUIEM)))
+    if(corpse && killer != ch && ( has_innate(killer, INNATE_MUMMIFY) || has_innate(killer, INNATE_REQUIEM)))
     {
       mummify(killer, ch, corpse);
     }
 
-    if(corpse &&
-        killer != ch &&
-        ( affected_by_spell(killer, SPELL_SPAWN) ||
-          has_innate(killer, INNATE_SPAWN) || 
-          has_innate(killer, INNATE_ALLY))) 
+    if(corpse && killer != ch && ( affected_by_spell(killer, SPELL_SPAWN)
+      || has_innate(killer, INNATE_SPAWN) || has_innate(killer, INNATE_ALLY)))
     {
-      if((IS_NPC(ch) &&
-            !number(0, 2)) ||
-          !number(0, 3))
+      // Original: if((IS_NPC(ch) && !number(0, 2)) || !number(0, 3))
+      //   !0,2 -> 1/3 || !0,3 -> 1/4 --> 1/3 || 1/4 == 1/3 + 2/3 * 1/4 == 1/3 + 1/6 == 3 / 6 == 1/2
+      //   So, changing "!number(0, 2)) || !number(0, 3)" to "!number(0, 1)"
+      //   Below makes more sense 'cause 1/2 NPC and 1/4 PC.
+      //   But IS_PC check on NPCs 1/2 the time, and no longer 2 calls to number() for NPCs 1/2 the time.
+      //   Conclusion: IS_PC == 2 dereferences (->specials.act) + bit check VS number() == 3 nested function calls+
+      //     so should be same on NPC 1/2 the time and faster the other 1/2 and slower on a PC all the time.
+      //     A lot more NPCs die than PCs, and the slowdown is just the 2 dereferences on a PC 100% of the time,
+      //     so should be faster overall.
+      if( (IS_NPC(ch) && !number(0, 1)) || (IS_PC(ch) && !number(0, 3)) )
       {
-        if (IS_PC(killer) &&
-            !affected_by_spell(killer, SPELL_SPAWN) &&
-            !affected_by_spell(killer, TAG_SPAWN))
+        if( IS_PC(killer) && !affected_by_spell(killer, SPELL_SPAWN) && !affected_by_spell(killer, TAG_SPAWN) )
         {
           send_to_char("You are not willing to summon pets from death blows.\n", killer);
         }
@@ -2779,8 +2762,7 @@ void die(P_char ch, P_char killer)
 
   add_track(ch, NUM_EXITS);
 
-  if(!CHAR_IN_ARENA(ch) ||
-      IS_NPC(ch))
+  if(!CHAR_IN_ARENA(ch) || IS_NPC(ch))
   {
     if(IS_NPC(ch))
     {
@@ -8523,7 +8505,7 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
           TRUE, victim, 0, attacker, TO_CHAR);
       SET_POS(victim, POS_STANDING + GET_STAT(victim));
       // Clear the lag!
-      disarm_char_events(victim, event_wait);
+      disarm_char_nevents(victim, event_wait);
       set_short_affected_by(victim, SKILL_MARTIAL_ARTS, PULSE_VIOLENCE/2);
       REMOVE_BIT(victim->specials.act2, PLR2_WAIT);
       update_pos(victim);

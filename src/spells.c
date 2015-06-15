@@ -1530,8 +1530,7 @@ void finish_room_transmute(P_char ch, struct grow_data *data)
    // find an associated event and disarm it
    // also take original room sector/flags
    P_nevent e;
-   for (e = get_scheduled(ch, event_transmute_bye); e;
-        e = get_next_scheduled(e, event_transmute_bye))
+   for( e = get_scheduled(ch, event_transmute_bye); e; e = get_next_scheduled_char(e, event_transmute_bye) )
    {
      struct grow_data *tmp_data = (struct grow_data *) e->data;
      if( tmp_data->room == data->room)

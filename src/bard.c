@@ -36,7 +36,6 @@ extern bool has_skin_spell(P_char);
 #define INSTRUMENT_OFFSET (FIRST_INSTRUMENT-184)
 extern Skill skills[];
 void     event_bardsong(P_char, P_char, P_obj, void *);
-extern void disarm_char_events(P_char, event_func_type);
 
 #define IS_SONG(song) (song >= FIRST_SONG && song <= LAST_SONG)
 #define SONG_AGGRESSIVE           BIT_1
@@ -179,7 +178,7 @@ void stop_singing(P_char ch)
   }
   if(get_scheduled(ch, event_bardsong))
   {
-    disarm_char_events(ch, event_bardsong);
+    disarm_char_nevents(ch, event_bardsong);
   }
 }
 
@@ -2036,7 +2035,7 @@ void do_play(P_char ch, char *arg, int cmd)
     }
     else
     {
-      disarm_char_events(ch, event_bardsong);
+      disarm_char_nevents(ch, event_bardsong);
       REMOVE_BIT(ch->specials.affected_by3, AFF3_SINGING);
       send_to_char( "You change up your song...\n\r", ch );
     }

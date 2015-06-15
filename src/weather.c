@@ -529,11 +529,10 @@ void event_weather_change(P_char ch, P_char victim, P_obj obj, void *data)
   /* cause a performance hit. To get more specific  */
   /* or exacting would certainly not be "Diku..."   */
 
-  magic =
-    ((1240 - cond->pressure) * cond->humidity >> 4) + cond->temp +
-    old_precip * 2 + (cond->free_energy - 10000) / 100;
+  magic = ((1240 - cond->pressure) * cond->humidity >> 4) + cond->temp + old_precip * 2
+    + (cond->free_energy - 10000) / 100;
 
-  if (old_precip == 0)
+  if( old_precip == 0 )
   {
     if (magic > MAGIC_PRECIP_START)
     {
@@ -787,7 +786,8 @@ void event_weather_change(P_char ch, P_char victim, P_obj obj, void *data)
   }
   calc_light_zone(zon);
 
-  add_event(event_weather_change, 1500 + number(-90, 90), NULL, NULL, NULL, 0, &zon, sizeof(zon));
+  // About 5 ticks
+  add_event(event_weather_change, 5*PULSES_IN_TICK + number(-90, 90), NULL, NULL, NULL, 0, &zon, sizeof(zon));
   //AddEvent(EVENT_SPECIAL, 1500 + number(-90, 90), TRUE, weather_change, current_event->target.t_arg);
 }
 

@@ -830,6 +830,7 @@ void edit_start(P_desc desc, char *old_text, int max_lines,
 
 /* events.c */
 
+void clear_char_nevents(P_char, int, void*);
 void load_event_names();
 bool RemoveEvent(void);
 __attribute__((deprecated)) bool Schedule(int, long, int, void *, void *);
@@ -839,7 +840,6 @@ int Berserk(P_char, int);
 void CharWait(P_char, int);
 void ClearCharEvents(P_char);
 void ClearObjEvents(P_obj);
-void clear_char_events(P_char, int, void *);
 void clear_events_type(P_char, int);
 void Events(void);
 void ReSchedule(void);
@@ -851,12 +851,16 @@ void add_event(event_func, int, P_char, P_char, P_obj, int, void*, int);
 
 P_nevent get_scheduled(P_char, event_func_type);
 P_nevent get_scheduled(P_obj, event_func_type);
-P_nevent get_next_scheduled(P_nevent, event_func_type);
-void disarm_char_events(P_char, event_func_type);
-void disarm_obj_events(P_obj, event_func_type);
-void clear_char_events(P_char, int, void*);
+P_nevent get_next_scheduled_char(P_nevent, event_func_type);
+P_nevent get_next_scheduled_obj(P_nevent, event_func_type);
+void disarm_char_nevents(P_char, event_func_type);
+void disarm_obj_nevents(P_obj, event_func_type);
 int ne_event_time(P_nevent);
 void zone_purge(int);
+
+/* new_events.c */
+
+void check_nevents();
 
 /* fight.c */
 bool rapier_dirk(P_char, P_char);
@@ -1684,7 +1688,7 @@ int mobact_trapHandle(P_char);
 void remember(struct char_data *ch, struct char_data *victim);
 void remember(struct char_data *ch, struct char_data *victim, bool check_group_remember);
 void forget(struct char_data *ch, struct char_data *victim);
-int CheckForRemember(P_char ch);
+bool CheckForRemember(P_char ch);
 P_char FindDispelTarget(P_char, int);
 P_char FindJuiciestTarget(P_char);
 P_char PickTarget(P_char);

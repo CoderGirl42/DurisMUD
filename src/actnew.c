@@ -1542,7 +1542,7 @@ void stop_meditation(P_char ch)
 {
   affect_from_char(ch, SKILL_MEDITATE);
   REMOVE_BIT(ch->specials.affected_by, AFF_MEDITATE);
-  disarm_char_events(ch, event_meditation);
+  disarm_char_nevents(ch, event_meditation);
 }
 
 void do_meditate(P_char ch, char *arg, int cmd)

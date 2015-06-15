@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdio.h>
 #ifndef _LINUX_SOURCE
-#   include <sys/types.h>
+  #include <sys/types.h>
 #endif
 
 #include "comm.h"
@@ -27,9 +27,9 @@
 #include "epic.h"
 #include "profile.h"
 
-void     event_memorize(P_char, P_char, P_obj, void *);
-void disarm_char_events(P_char ch, event_func_type func);
-void disarm_obj_events(P_obj obj, event_func_type func);
+void event_memorize(P_char, P_char, P_obj, void *);
+void disarm_char_nevents(P_char ch, event_func_type func);
+void disarm_obj_nevents(P_obj obj, event_func_type func);
 P_nevent get_scheduled(P_char, event_func_type);
 void ne_init_events();
 int ne_event_time(P_nevent);
@@ -266,22 +266,25 @@ const char *get_event_name(P_event e)
   return event_names[(int) e->type];
 }
 
-void clear_char_events(P_char ch, int type, void *func)
+// The type is an artifact of old event code.  It's ignored now.
+void clear_char_nevents(P_char ch, int type, void *func)
 {
   P_event  e1, next_event, prev_event;
   P_char   tch;
   struct char_link_data *cld;
 
-  if (!ch)
+  if( !ch )
   {
-    logit(LOG_DEBUG, "ClearCharEvents called with NULL target");
+    logit(LOG_DEBUG, "clear_char_nevents: NULL ch");
     return;
   }
 
-  if (type == -1) {
-    disarm_char_events(ch, (event_func_type)func);
-    ch->nevents = NULL;
-  }
+  disarm_char_nevents(ch, (event_func_type)func);
+  ch->nevents = NULL;
+
+// This whole section is old event stuff.  We don't do this anymore.
+return;
+
   /*
    * ok, minor mod here, if a char dies, as a RESULT of event
    * processing, it is barely possible to whack up the event list.  So,
@@ -291,9 +294,15 @@ void clear_char_events(P_char ch, int type, void *func)
    * events themselves.  JAB
    */
 
+  if( type == -1 )
+  {
+//    disarm_char_events(ch, (event_func_type)func);
+    ch->nevents = NULL;
+  }
+
   prev_event = NULL;
 
-  for (e1 = ch->events; e1; e1 = next_event)
+  for( e1 = ch->events; e1; e1 = next_event )
   {
     next_event = e1->next;
 
@@ -341,7 +350,7 @@ void clear_char_events(P_char ch, int type, void *func)
 
 void clear_events_type(P_char ch, int type)
 {
-  clear_char_events(ch, type, NULL);
+  clear_char_nevents(ch, type, NULL);
 }
 
 /*
@@ -351,7 +360,7 @@ void clear_events_type(P_char ch, int type)
 
 void ClearCharEvents(P_char target)
 {
-  clear_char_events(target, -1, NULL);
+  clear_char_nevents(target, -1, NULL);
 }
 
 /*
@@ -372,7 +381,7 @@ void ClearObjEvents(P_obj target)
    * code copied from ClearCharEvents
    */
 
-  disarm_obj_events(target, 0);
+  disarm_obj_nevents(target, 0);
 
   while (target->events)
   {
@@ -655,7 +664,7 @@ void DelayCommune(P_char ch, int delay)
     if(e)
     {
       int old_time = ne_event_time(e);
-      disarm_char_events(ch, event_memorize);
+      disarm_char_nevents(ch, event_memorize);
       add_event(event_memorize, (old_time + delay), ch, 0, 0, 0, 0, 0);
     }
   }
@@ -663,47 +672,48 @@ void DelayCommune(P_char ch, int delay)
 
 void CharWait(P_char ch, int delay)
 {
-  P_nevent  e = NULL;
-  int i, old_time;
-  
-  if(!ch)
+  P_nevent e = NULL;
+  int      i, old_time;
+
+  if( !ch )
   {
     logit(LOG_EXIT, "CharWait called in events.c with no ch");
     raise(SIGSEGV);
   }
-  if(ch) // Just making sure.
-  {
-    if(!IS_ALIVE(ch))
-    {
-      if(ch->specials.act2, PLR2_WAIT)
-      {
-        REMOVE_BIT(ch->specials.act2, PLR2_WAIT);
-      }
-      return;
-    }
-    if(!CAN_ACT(ch))
-    {
-      e = get_scheduled(ch, event_wait);
-      if(e)
-      {
-        if(ne_event_time(e) >= delay)
-        {
-          return;
-        }
-        else
-        {
-          disarm_char_events(ch, event_wait);
-        }
-      }
-    }
 
-    if(IS_TRUSTED(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    REMOVE_BIT(ch->specials.act2, PLR2_WAIT);
+    debug( "CharWait: Dead char: %s", J_NAME(ch) );
+    return;
+  }
+
+  if( !CAN_ACT(ch) && !IS_TRUSTED(ch) )
+  {
+    // The event event_wait just turns off the PLR2_WAIT bit (and updates position).
+    e = get_scheduled(ch, event_wait);
+    if( e )
     {
-      REMOVE_BIT(ch->specials.act2, PLR2_WAIT);
-      return;
+      // If the new delay is shorter than the current, ignore new.
+      //   Note: If you want delays to stack, change this to to e->timer += delay (I think that'll work).
+      if( ne_event_time(e) >= delay )
+      {
+        return;
+      }
+      else
+      {
+        // Kill the shorter event and add a new one.. why not just update e->timer??
+        // Because we bucket-sort events and this is faster than moving the event to a new bucket.
+        disarm_char_nevents(ch, event_wait);
+        SET_BIT(ch->specials.act2, PLR2_WAIT);
+        add_event(event_wait, delay, ch, 0, 0, 0, 0, 0);
+      }
     }
-    SET_BIT(ch->specials.act2, PLR2_WAIT);
-    add_event(event_wait, delay, ch, 0, 0, 0, 0, 0);
+  }
+  else if( IS_TRUSTED(ch) )
+  {
+    REMOVE_BIT(ch->specials.act2, PLR2_WAIT);
+    return;
   }
 }
 
@@ -1137,9 +1147,7 @@ void init_events(void)
 
   avail_events = NULL;
 
-  dead_event_pool = mm_create("EVENTS",
-                              sizeof(struct event_data),
-                              offsetof(struct event_data, next), 11);
+  dead_event_pool = mm_create("EVENTS", sizeof(struct event_data), offsetof(struct event_data, next), 11);
 
   //logit(LOG_STATUS, "%d initial event elements allocated.\n",
   //      event_counter[LAST_EVENT + 1]);

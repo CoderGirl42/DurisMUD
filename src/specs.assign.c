@@ -140,24 +140,27 @@ void load_all_proc_libs(void)
 
 int mob_proc_stub(P_char ch, P_char pl, int cmd, char *arg)
 {
+  // All mobs are mundane, but not necessarily periodic.
   if (cmd == CMD_SET_PERIODIC)
-    return TRUE;
-  else
     return FALSE;
+
+  return FALSE;
 }
 
 int obj_proc_stub(P_obj obj, P_char ch, int cmd, char *arg)
 {
-  if (cmd == CMD_SET_PERIODIC)
-    return TRUE;
-  else
+  // All objs don't get a periodic.. that's dumb.
+  if( cmd == CMD_SET_PERIODIC )
     return FALSE;
+
+  return FALSE;
 }
 
 int room_proc_stub(int room, P_char ch, int cmd, char *arg)
 {
   return FALSE;
 }
+
 #endif /*
           SHLIB
         */

@@ -67,7 +67,7 @@ static char buf[MAX_INPUT_LENGTH];
 
 void     send_to_arena(char *msg, int race);
 extern void timedShutdown(P_char ch, P_char, P_obj, void *data);
-void disarm_obj_events(P_obj obj, event_func func);
+//void disarm_obj_events(P_obj obj, event_func func);
 int map_view_distance(P_char ch, int room);
 
 /*
@@ -2427,7 +2427,7 @@ void extract_obj(P_obj obj, int gone_for_good)
    * leaves nothing !
    */
   // clear New events as well as old ones!
-  disarm_obj_events(obj, 0);
+  disarm_obj_nevents(obj, 0);
   ClearObjEvents(obj);
 
   if (IS_ARTIFACT(obj) && gone_for_good)
@@ -2810,8 +2810,10 @@ void extract_char(P_char ch)
     if (IS_AFFECTED2(ch, AFF2_CASTING))
       StopCasting(ch);
   }
-  if (ch->followers || ch->following)
+  if( ch->followers || ch->following )
+  {
     die_follower(ch);
+  }
 
   if (ch->group)
     group_remove_member(ch);
@@ -2942,8 +2944,10 @@ void extract_char(P_char ch)
    */
   StopAllAttackers(ch);
 
-  if (current_event && current_event->actor.a_ch == ch)
+  /* Old event data. No longer in use.
+  if( current_event && current_event->actor.a_ch == ch )
     current_event = NULL;
+   */
 
   for (af = ch->affected; af; af = nextaf)
   {

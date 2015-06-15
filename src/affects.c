@@ -454,7 +454,7 @@ void event_balance_affects(P_char ch, P_char victim, P_obj obj, void *data)
 
 void balance_affects(P_char ch)
 {
-  if (get_scheduled(ch, event_balance_affects))
+  if( !IS_ALIVE(ch) || get_scheduled(ch, event_balance_affects) )
     return;
 
   add_event(event_balance_affects, 0, ch, 0, 0, 0, 0, 0);
@@ -2321,8 +2321,7 @@ void obj_affect_remove(P_obj obj, struct obj_affect *af)
 
   // find an assoicated event and disarm it
   P_nevent e;
-  for (e = get_scheduled(obj, event_obj_affect); e;
-       e = get_next_scheduled(e, event_obj_affect))
+  for( e = get_scheduled(obj, event_obj_affect); e; e = get_next_scheduled_obj(e, event_obj_affect))
   {
     if (*((struct obj_affect **)e->data) == af)
     {
@@ -2400,8 +2399,7 @@ void set_obj_affected(P_obj obj, int time, sh_int spell, sh_int data)
 int obj_affect_time(P_obj obj, struct obj_affect *af)
 {
   P_nevent e;
-  for (e = get_scheduled(obj, event_obj_affect); e;
-       e = get_next_scheduled(e, event_obj_affect))
+  for( e = get_scheduled(obj, event_obj_affect); e; e = get_next_scheduled_obj(e, event_obj_affect))
   {
     if (*((struct obj_affect **)e->data) == af)
       return ne_event_time(e);
@@ -3338,9 +3336,13 @@ bool falling_char(P_char ch, const int kill_char, bool caller_is_event)
   if (!caller_is_event)
   {
     /* if not already falling  */
-    LOOP_EVENTS(ev, ch->nevents)
-      if(ev->func == event_falling_char)
+    LOOP_EVENTS_CH(ev, ch->nevents)
+    {
+      if( ev->func == event_falling_char )
+      {
         return FALSE;
+      }
+    }
 
     /* If there is a ground, assume we are here due to fall_chance. Now, if
     they can't go, its prolly due to the down exit being closed/blocked.
@@ -3698,9 +3700,13 @@ bool falling_obj(P_obj obj, int start_speed, bool caller_is_event)
   if (!caller_is_event)
   {
     /* if not already falling */
-    LOOP_EVENTS(ev, obj->nevents)
+    LOOP_EVENTS_OBJ(ev, obj->nevents)
+    {
       if(ev->func == event_falling_obj)
+      {
         return FALSE;
+      }
+    }
 
     /* obj has just been dropped/moved into space, initiate the plunge */
 

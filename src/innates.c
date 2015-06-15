@@ -1235,8 +1235,8 @@ bool check_reincarnate(P_char ch)
       }
 
       GET_HIT(ch) = BOUNDED(10, GET_MAX_HIT(ch), 100);
-      CharWait(ch, dice(2, 2) * 4);
       update_pos(ch);
+      CharWait(ch, dice(2, 2) * 4);
 
       act
         ("&+M$n's broken body unexpectedly returns to life again!  The worst of $s wounds quickly knit themselves.&N",
@@ -4604,7 +4604,8 @@ void do_layhand(P_char ch, char *argument, int cmd)
 
 /*
   // calculate timer for informative messages :)
-  for (ne = ch->nevents; ne; ne = ne->next) {
+  LOOP_EVENTS_CH( ne, ch->nevents )
+  {
     if (ne->func == event_short_affect) {
       struct event_short_affect_data *esad =
         (struct event_short_affect_data *)ne->data;

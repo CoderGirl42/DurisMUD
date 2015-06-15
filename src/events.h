@@ -102,7 +102,10 @@
   for ((var) = event_list; (var); (var) = (var)->next_event) \
 		if ((var)->type == (etype))
 
-#define LOOP_EVENTS(var, e_list)  \
-  for ((var) = (e_list); (var); (var) = (var)->next)
+#define LOOP_EVENTS_CH( var, e_list )  \
+  for( (var) = (e_list); (var); (var) = (var)->next_char )
+
+#define LOOP_EVENTS_OBJ( var, e_list )  \
+  for( (var) = (e_list); (var); (var) = (var)->next_obj )
 
 #endif  /* _SOJ_EVENTS_H_ */

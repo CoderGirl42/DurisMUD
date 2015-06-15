@@ -2253,44 +2253,41 @@ void event_static_discharge(P_char ch, P_char victim, P_obj obj, void *data)
   }
 }
 
-void spell_static_discharge(int level, P_char ch, char *arg, int type, P_char victim,
-                     P_obj obj)
+void spell_static_discharge(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct static_discharge_data sdata;
   struct static_discharge_data *tmpsdata;
   struct affected_type af, afp;
   P_nevent e1 = 0;
-  int delay = 0; 
+  int delay = 0;
   int charges_active = 0;
-  
+
   sdata.level = GET_LEVEL(ch);
   sdata.intensity = 1;
   sdata.discharge_now = FALSE;
   sdata.caster = ch;
-    
-  bool found = FALSE;
 
-  for (e1 = victim->nevents; e1; e1 = e1->next)
+  bool found = FALSE;
+  LOOP_EVENTS_CH( e1, victim->nevents )
   {
       //wizlog(56, "victim: found event: %s", get_function_name((void*)e1->func));
-    if ( e1->func == event_static_discharge)
+    if( e1->func == event_static_discharge )
     {
       //wizlog(56, "found it");
       found = TRUE;
       break;
     }
   }
-  
-  if (found)
+
+  if( found )
   {
     tmpsdata = (struct static_discharge_data *) e1->data;
     sdata.level += tmpsdata->level;
     sdata.intensity += tmpsdata->intensity;
-    disarm_char_events(victim, event_static_discharge);
+    disarm_char_nevents(victim, event_static_discharge);
   }
-  
-  if (IS_AFFECTED5(victim, AFF5_WET) ||
-     IS_WATER_ROOM(victim->in_room))
+
+  if( IS_AFFECTED5(victim, AFF5_WET) || IS_WATER_ROOM(victim->in_room) )
   {
     act("&+BThe moisture around&n $n &+Bcauses the &+cli&+Cgh&+ctn&+Cin&+cgs &+Bto discharge immediately!",
       TRUE, victim, 0, 0, TO_ROOM);
@@ -2371,7 +2368,7 @@ void spell_razor_wind(int level, P_char ch, char *arg, int type, P_char victim, 
   }
 
   // Look for an event already going on.
-  for( e1 = victim->nevents; e1; e1 = e1->next )
+  LOOP_EVENTS_CH( e1, victim->nevents )
   {
     if( e1->func == event_razor_wind )
     {
@@ -2384,7 +2381,7 @@ void spell_razor_wind(int level, P_char ch, char *arg, int type, P_char victim, 
   if( found )
   {
     duration = *((int *) e1->data) + 2;
-    disarm_char_events(victim, event_razor_wind);
+    disarm_char_nevents(victim, event_razor_wind);
     act("&+cThe &+Ww&+wi&+Wn&+wd&+Ws&+wt&+Wo&+wr&+Wm &+csurrounding $N &+Cintensifies&+c!", TRUE, ch, 0, victim, TO_CHAR);
     act("&+cThe &+Ww&+wi&+Wn&+wd&+Ws&+wt&+Wo&+wr&+Wm &+csurrounding you &+Cintensifies&+c!", TRUE, ch, 0, victim, TO_VICT);
     act("&+cThe &+Ww&+wi&+Wn&+wd&+Ws&+wt&+Wo&+wr&+Wm &+csurrounding $N &+Cintensifies&+c!", TRUE, ch, 0, victim, TO_NOTVICT);
@@ -2824,7 +2821,7 @@ void spell_antimatter_collision(int level, P_char ch, char *arg, int type, P_cha
   }
 
   // Look for an event already going on.
-  for( e1 = victim->nevents; e1; e1 = e1->next )
+  LOOP_EVENTS_CH( e1, victim->nevents )
   {
     if( e1->func == event_antimatter_collision )
     {
@@ -2837,7 +2834,7 @@ void spell_antimatter_collision(int level, P_char ch, char *arg, int type, P_cha
   if( found )
   {
     duration = *((int *) e1->data) + 2;
-    disarm_char_events(victim, event_antimatter_collision);
+    disarm_char_nevents(victim, event_antimatter_collision);
 
     act("&+LMore small black orbs rush out of the rift crashing into $N!", TRUE, ch, 0, victim, TO_CHAR);
     act("&+LMore small black orbs come rushing out of the rift swarming you!", TRUE, ch, 0, victim, TO_VICT);
@@ -2903,7 +2900,7 @@ void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim
   }
 
   // Look for an event already going on.
-  for( e1 = victim->nevents; e1; e1 = e1->next )
+  LOOP_EVENTS_CH( e1, victim->nevents )
   {
     if( e1->func == event_arctic_blast )
     {
@@ -2916,7 +2913,7 @@ void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim
   if( found )
   {
     duration = *((int *) e1->data) + 2;
-    disarm_char_events(victim, event_arctic_blast);
+    disarm_char_nevents(victim, event_arctic_blast);
 
     act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround $N &+Wintensify!", TRUE, ch, 0, victim, TO_CHAR);
     act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround you &+Wintensify!", TRUE, ch, 0, victim, TO_VICT);

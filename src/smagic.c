@@ -3050,7 +3050,7 @@ void spell_purify_spirit(int level, P_char ch, char *arg, int type,
   if(get_scheduled(victim, event_torment_spirits))
   {
     send_to_char("&+LThe maligned spirits cease attacking your inner self.\r\n", victim);
-    disarm_char_events(victim, event_torment_spirits);
+    disarm_char_nevents(victim, event_torment_spirits);
   }
 }
 

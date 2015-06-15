@@ -1620,9 +1620,12 @@ int wh_janitor(P_char ch, P_char pl, int cmd, char *arg)
     if (ch->in_room == well_room)
       return FALSE;
 
-    LOOP_EVENTS(ev, ch->nevents) if (ev->func == mob_hunt_event)
+    LOOP_EVENTS_CH(ev, ch->nevents)
     {
-      return FALSE;
+      if (ev->func == mob_hunt_event)
+      {
+        return FALSE;
+      }
     }
     data.hunt_type = HUNT_ROOM;
     data.targ.room = well_room;

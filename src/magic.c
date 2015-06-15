@@ -18254,7 +18254,7 @@ bool has_scheduled_area_doom( P_char ch )
 {
   P_nevent e;
 
-  for( e = ch->nevents; e; e = e->next )
+  LOOP_EVENTS_CH( e, ch->nevents )
   {
     if( e->func == event_cdoom && ((CDoomData*)(e->data))->area )
     {

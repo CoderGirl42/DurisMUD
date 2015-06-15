@@ -13019,7 +13019,7 @@ int random_set(P_char ch, P_obj obj, int count, int cmd, char *arg)
     return TRUE;
   }
 
-  if( cmd != CMD_PERIODIC )
+  if( cmd != CMD_PERIODIC || !IS_ALIVE(ch) )
   {
     return FALSE;
   }
@@ -13046,7 +13046,7 @@ int random_set(P_char ch, P_obj obj, int count, int cmd, char *arg)
   zone_name = strstr(obj->short_description, " &+rfrom") + 9;
 
   // This right here creates the argument between sets of two different zones being on one char.
-  disarm_char_events(ch, event_random_set_proc);
+  disarm_char_nevents(ch, event_random_set_proc);
   rdata.af = afp;
   strcpy(rdata.zone_name, zone_name);
   // Event to remove rdata.af from ch. PULSE_MOBILE + 5 = 35 pulses = 9 sec??
@@ -13127,7 +13127,7 @@ int set_proc(P_obj obj, P_char ch, int cmd, char *arg)
     if( !c )
     {
       // If not, remove the periodic timer.
-      disarm_obj_events(obj, event_object_proc);
+      disarm_obj_nevents(obj, event_object_proc);
       return FALSE;
     }
   }
@@ -13866,7 +13866,7 @@ int mentality_mace(P_obj obj, P_char ch, int cmd, char *arg)
 
         obj->timer[0] = curr_time;
 
-        disarm_obj_events(obj, event_mentality_mace_vibrate);
+        disarm_obj_nevents(obj, event_mentality_mace_vibrate);
         add_event(event_mentality_mace_vibrate, 300 * WAIT_SEC, 0, 0, obj, 0, 0, 0);
 
         return TRUE;
@@ -14529,7 +14529,7 @@ int moonstone(P_obj obj, P_char ch, int cmd, char *argument)
     if( aff )
     {
       // Find decay event.
-      for (e = get_scheduled(obj, event_obj_affect); e; e = get_next_scheduled(e, event_obj_affect))
+      for( e = get_scheduled(obj, event_obj_affect); e; e = get_next_scheduled_obj(e, event_obj_affect) )
       {
         // If event found, set it's timer to 1 min.
         if( *((struct obj_affect **)e->data) == aff )

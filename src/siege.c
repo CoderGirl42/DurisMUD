@@ -825,9 +825,15 @@ P_obj get_siege_room( P_char ch, char *arg )
 // See if someone already started a reload event.
 bool is_loading_siege( P_obj siege )
 {
-  for( P_nevent e = siege->nevents; e; e = e->next )
+  P_nevent e;
+
+  LOOP_EVENTS_OBJ( e, siege->nevents )
+  {
     if( e->func == event_load_engine )
+    {
       return TRUE;
+    }
+  }
   return FALSE;
 }
 

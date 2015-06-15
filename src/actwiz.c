@@ -2416,7 +2416,7 @@ void do_stat(P_char ch, char *argument, int cmd)
                 event_time(e1, T_SECS),
                 event_names[(int) e1->type],
                 (e1->one_shot) ? "" : "&+Y(&N&+RR&+Y)");
-      for (ne = j->nevents; ne; ne = ne->next)
+      LOOP_EVENTS_OBJ( ne, j->nevents )
       {
         sprintf(o_buf + strlen(o_buf),
                 "%6d&+Y seconds,&n %s&+Y.\n",
@@ -3068,7 +3068,7 @@ void do_stat(P_char ch, char *argument, int cmd)
                 "%6d&+Y seconds,&n %s&+Y.\n",
                 event_time(e1, T_SECS), get_event_name(e1));
       }
-      for (ne = k->nevents; ne; ne = ne->next)
+      LOOP_EVENTS_CH( ne, k->nevents )
       {
         sprintf(o_buf + strlen(o_buf),
                 "%6d&+Y seconds,&n %s&+Y.\n",

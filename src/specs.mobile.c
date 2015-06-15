@@ -2295,9 +2295,12 @@ int guild_guard(P_char ch, P_char pl, int cmd, char *arg)
   {
     P_nevent  ev;
 
-    LOOP_EVENTS(ev, pl->nevents) if (ev->func == mob_hunt_event)
+    LOOP_EVENTS_CH(ev, pl->nevents)
     {
-      break;
+      if (ev->func == mob_hunt_event)
+      {
+        break;
+      }
     }
     if ((ev) &&
         ((hunt_data*)(ev->data))->hunt_type == HUNT_ROOM &&
@@ -12177,27 +12180,20 @@ int elemental_swarm_water(P_char ch, P_char pl, int cmd, char *arg)
 }
 int shadow_monster(P_char ch, P_char pl, int cmd, char *arg)
 {
-  P_char   tch, next, fury;
-  char     didit = FALSE;
-  char     buf[256];
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return TRUE;
+  }
 
-  if (cmd == CMD_SET_PERIODIC && ch->specials.fighting)
-    return FALSE;
-
-  if (!ch)
-    return FALSE;
-  //let's junk it on anything if not fighitng!
-  if (cmd && ch->specials.fighting)
-    return FALSE;
-
-
-  if (!number(0, GET_LEVEL(ch) / 3) || !ch->specials.fighting)
+  if( cmd == CMD_DEATH || (cmd == CMD_PERIODIC && (!number(0, GET_LEVEL(ch) / 3) || !ch->specials.fighting)) )
   {
     act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
     act("$n &+rdisappears as &+Lquickly&+r as it came!", TRUE, ch, 0, 0,
         TO_ROOM);
     extract_char(ch);
+    return TRUE;
   }
+
   return FALSE;
 }
 
@@ -12218,7 +12214,7 @@ int insects(P_char ch, P_char pl, int cmd, char *arg)
   {
     act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
     act("$n &+rdisappears as &+Lquickly&+r as it came!", TRUE, ch, 0, 0, TO_ROOM);
-    if( cmd != CMD_DEATH )
+//    if( cmd != CMD_DEATH )
     {
       extract_char(ch);
     }
@@ -12254,42 +12250,40 @@ int insects(P_char ch, P_char pl, int cmd, char *arg)
 
 int illus_dragon(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == CMD_SET_PERIODIC)
-    return FALSE;
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return TRUE;
+  }
 
-  if (!ch)
-    return FALSE;
-
-  if (cmd != CMD_DEATH && (cmd || ch->specials.fighting))
-    return FALSE;
-
-
-  act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
-  act("$n &+rdisappears as &+Lquickly&+r as it came!", TRUE, ch, 0, 0,
-      TO_ROOM);
-  if (cmd != CMD_DEATH)
+  if( cmd == CMD_DEATH || (cmd == CMD_PERIODIC && (!number(0, GET_LEVEL(ch) / 3) || !ch->specials.fighting)) )
+  {
+    act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
+    act("$n &+rdisappears as &+Lquickly&+r as it came!", TRUE, ch, 0, 0,
+        TO_ROOM);
     extract_char(ch);
-  return TRUE;
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 int illus_titan(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == CMD_SET_PERIODIC)
-    return FALSE;
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return TRUE;
+  }
 
-  if (!ch)
-    return FALSE;
-
-  if (cmd != CMD_DEATH && (cmd || IS_FIGHTING(ch)))
-    return FALSE;
-
-
-  act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
-  act("$n &+Ldisappears as &+rquickly&+L as it came!", TRUE, ch, 0, 0,
-      TO_ROOM);
-  if (cmd != CMD_DEATH)
+  if( cmd == CMD_DEATH || (cmd == CMD_PERIODIC && (!number(0, GET_LEVEL(ch) / 3) || !ch->specials.fighting)) )
+  {
+    act("$n &+Lquickly fades into the thin air!", TRUE, ch, 0, 0, TO_ROOM);
+    act("$n &+rdisappears as &+Lquickly&+r as it came!", TRUE, ch, 0, 0,
+        TO_ROOM);
     extract_char(ch);
-  return TRUE;
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 int greater_living_stone(P_char ch, P_char pl, int cmd, char *arg)

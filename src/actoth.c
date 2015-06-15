@@ -1306,17 +1306,18 @@ void do_quit(P_char ch, char *argument, int cmd)
   int      i, l;
   P_obj    obj;
 
-  if (IS_NPC(ch) || !ch->desc)
-    return;
-
-  if (!command_confirm)
+  if( IS_NPC(ch) || !ch->desc )
   {
+    return;
+  }
 
+  if( !command_confirm )
+  {
     /* check if they can currently do a quit at all */
     if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
     {
       send_to_char("No way! You are fighting.\r\n", ch);
-      if (ch->desc)
+      if( ch->desc )
         ch->desc->confirm_state = CONFIRM_NONE;
       return;
     }
@@ -1333,8 +1334,8 @@ void do_quit(P_char ch, char *argument, int cmd)
     if( !IS_TRUSTED(ch) )
       return;                   /* don't let em quit, dammit */
   }
-  /* confirmed quit! */
 
+  /* confirmed quit! */
   if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
   {
     send_to_char("No way! You are fighting.\r\n", ch);
@@ -1343,21 +1344,21 @@ void do_quit(P_char ch, char *argument, int cmd)
   act("Goodbye, friend.. Come back soon!", FALSE, ch, 0, 0, TO_CHAR);
   act("$n has quit the game.", TRUE, ch, 0, 0, TO_ROOM);
   /* ugly, could get stuck in wraithform. JAB */
-  if (IS_AFFECTED(ch, AFF_WRAITHFORM))
+  if( IS_AFFECTED(ch, AFF_WRAITHFORM) )
     BackToUsualForm(ch);
   i = ch->in_room;
-  loginlog(ch->player.level, "%s has quit in [%d].", GET_NAME(ch),
-           world[ch->in_room].number);
+  loginlog( ch->player.level, "%s has quit in [%d].", GET_NAME(ch), world[ch->in_room].number);
   sql_log(ch, CONNECTLOG, "Quit game");
 
   /*
    * Mortals: drop everything but nodrop items, write char, then extract
-   * Imps: write char, extract
+   * Imms: write char, extract
    */
-
+  // Right now, mortals can't quit, but ok.
   if( GET_LEVEL(ch) < MINLVLIMMORTAL )
   {
     for (l = 0; l < MAX_WEAR; l++)
+    {
       if (ch->equipment[l])
       {
         obj = unequip_char(ch, l);
@@ -1369,6 +1370,7 @@ void do_quit(P_char ch, char *argument, int cmd)
         else                    /* if (!IS_SET (obj->extra_flags, ITEM_NODROP)) */
           obj_to_room(obj, ch->in_room);
       }
+    }
     if (ch->carrying)
     {
       P_obj    next_obj;
@@ -1389,17 +1391,16 @@ void do_quit(P_char ch, char *argument, int cmd)
       }
     }
     ch->desc->connected = CON_PWDDCNF;
-    extract_char(ch);
-    ch = NULL;
   }
   else
   {
     ch->specials.was_in_room = world[i].number;
     ch->in_room = i;
     writeCharacter(ch, 3, i);
-    extract_char(ch);
-    ch = NULL;
   }
+
+  extract_char(ch);
+  ch = NULL;
 }
 
 void event_autosave(P_char ch, P_char victim, P_obj obj, void *data)
@@ -1522,11 +1523,10 @@ void do_save(P_char ch, char *argument, int cmd)
 
   if (IS_NPC(ch) && !IS_MORPH(ch))
   {
-    if (!ch->following || !IS_PC(ch->following))
+    if( !ch->following || !IS_PC(ch->following) )
     {
-      wizlog(OVERLORD,
-             "%s attempted to save in room %d, but was not a real pet.",
-             GET_NAME(ch), world[ch->in_room].number);
+      wizlog(OVERLORD, "%s attempted to save in room %d, but was not a real pet.",
+        GET_NAME(ch), world[ch->in_room].number);
       return;
     }
 

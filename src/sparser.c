@@ -538,14 +538,20 @@ void stop_follower(P_char ch)
     logit(LOG_DEBUG, "assert: bogus parms (stop_follower - ch or ch->following is NULL)");
 		return;
   }
-  if (GET_MASTER(ch))
+
+  // If ch is a charmie who has charmies?
+  // IE Charm person on a necro with pets.
+  if( GET_MASTER(ch) )
   {
     clear_links(ch, LNK_PET);
     /* clearing a charm/pet link might have stopped the following already... */
-    if (!ch->following)
+    // In fact, this should always be true.
+    if( !ch->following )
+    {
       return;
-    
-    if (IS_NPC(ch))
+    }
+
+    if( IS_NPC(ch) )
     {
       REMOVE_BIT(ch->specials.act, ACT_STAY_ZONE);
       REMOVE_BIT(ch->specials.act, ACT_SENTINEL);
@@ -609,13 +615,13 @@ void stop_all_followers(P_char ch)
 /*
    Called when a character that follows/is followed dies
  */
-
+// We want ch's followers to die.
 void die_follower(P_char ch)
 {
-  if (ch->following)
-    stop_follower(ch);
-
-  stop_all_followers(ch);
+  while( ch->followers )
+  {
+    die( ch->followers->follower, ch->followers->follower);
+  }
 }
 
 #if 0
@@ -1093,6 +1099,7 @@ char    *skip_spaces(char *string)
 void show_abort_casting(P_char ch)
 {
   struct spellcast_datatype *data;
+  P_nevent e1;
 
   if (IS_SET(ch->specials.affected_by2, AFF2_CASTING))
   {
@@ -1115,16 +1122,19 @@ void show_abort_casting(P_char ch)
       send_to_char("&+rYou abort your prayer before it's done!\n", ch);
       act("$n&n&+r stops chanting abruptly!", TRUE, ch, 0, 0, TO_ROOM);
     }
-    for (P_nevent e1 = ch->nevents; e1; e1 = e1->next) {
-      if ( e1->func == event_spellcast) {
+    LOOP_EVENTS_CH( e1, ch->nevents )
+    {
+      if ( e1->func == event_spellcast)
+      {
         data = (struct spellcast_datatype*)e1->data;
-        if (data && data->arg) {
+        if (data && data->arg)
+        {
           FREE(data->arg);
           data->arg = NULL;
         }
       }
     }
-    disarm_char_events(ch, event_spellcast);
+    disarm_char_nevents(ch, event_spellcast);
     REMOVE_BIT(ch->specials.affected_by2, AFF2_CASTING);
   }
 }
@@ -2534,8 +2544,7 @@ void event_spellcast(P_char ch, P_char victim, P_obj obj, void *data)
     i = MIN(arg->timeleft, 4);
     arg->timeleft -= i;
     DelayCommune(ch, i);
-    add_event(event_spellcast, BOUNDED(1, i, 4), ch, tar_char, 0, 0, arg,
-        sizeof(struct spellcast_datatype));
+    add_event(event_spellcast, BOUNDED(1, i, 4), ch, tar_char, 0, 0, arg, sizeof(struct spellcast_datatype));
     return;
   }
 

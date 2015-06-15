@@ -40,7 +40,7 @@
 
 extern P_desc descriptor_list;
 extern P_event current_event;
-extern P_event event_list;
+extern P_nevent ne_schedule[];
 extern const char *equipment_types[];
 extern const char *town_name_list[];
 extern const int min_stats_for_class[][8];
@@ -64,6 +64,7 @@ P_nevent get_scheduled(P_obj obj, event_func func);
 void     proclib_obj_event(P_char, P_char, P_obj obj, void*);
 int proclibObj_add(P_obj obj, char *procName, char *args);
 extern void event_mob_mundane(P_char, P_char, P_obj, void*);
+extern void event_mob_proc(P_char, P_char, P_obj, void*);
 extern void event_random_exit(P_char, P_char, P_obj, void*);
 extern void event_artifact_poof(P_char, P_char, P_obj, void*);
 extern int teacher(P_char ch, P_char pl, int cmd, char *arg);
@@ -1943,7 +1944,7 @@ P_char read_mobile(int nr, int type)
   clear_char(mob);
   CREATE(mob->only.npc, npc_only_data, 1, MEM_TAG_NPCONLY);
 
-  if (!mob->only.npc)
+  if( !mob->only.npc )
   {
     wizlog(56, "mob has no only.npc struct!");
     logit(LOG_DEBUG, "mob %s has no only.npc struct!", GET_NAME(mob));
@@ -1956,7 +1957,7 @@ P_char read_mobile(int nr, int type)
   mob->next = character_list;
   character_list = mob;
   mob->only.npc->R_num = nr;
-  mob->desc = 0;
+  mob->desc = NULL;
   mob_index[nr].number++;
   idnum++;
   mob->only.npc->idnum = idnum;
@@ -1966,7 +1967,7 @@ P_char read_mobile(int nr, int type)
   {
     mob->only.npc->value[i] = 0;
   }
-  
+
 /***** String data *** */
 
   /*
@@ -2126,9 +2127,9 @@ P_char read_mobile(int nr, int type)
 
       /* defaults to RACE_NONE */
       for (i = 0; (i <= LAST_RACE) && !mob->player.race; i++)
-	if (!str_cmp(race_names_table[i].code, Gbuf1))
-	  mob->player.race = i;
-      
+        if (!str_cmp(race_names_table[i].code, Gbuf1))
+          mob->player.race = i;
+
       GET_HOME(mob) = stmp;
       mob->player.m_class = utmp2;
       mob->player.size = stmp3;
@@ -2151,7 +2152,7 @@ P_char read_mobile(int nr, int type)
 
     if (IS_SET(mob->specials.act, ACT_ELITE))
       mob->player.level -= number(10, 20);
-    
+
     if (IS_SET(mob->specials.act, ACT_TEACHER) ||
 	IS_SET(mob->specials.act, ACT_SPEC_TEACHER))
       mob->player.level = 56;
@@ -2170,10 +2171,7 @@ P_char read_mobile(int nr, int type)
 
     fscanf(mob_f, " %ld ", &tmp);
     /* was warping things.  Tempy fix til everything changes.  JAB */
-    if(IS_WARRIOR(mob) ||
-      IS_GREATER_RACE(mob) ||
-      IS_ELITE(mob) ||
-      IS_GIANT(mob))
+    if(IS_WARRIOR(mob) || IS_GREATER_RACE(mob) || IS_ELITE(mob) || IS_GIANT(mob))
     {
       mob->points.base_hitroll = BOUNDED(2, (GET_LEVEL(mob) >> 1), 25);
     }
@@ -2566,10 +2564,7 @@ P_char read_mobile(int nr, int type)
     mob->points.damnodice = tmp;
     mob->points.damsizedice = tmp2;
     /* was warping things.  Tempy fix til everything changes.  JAB */
-    if(IS_WARRIOR(mob) ||
-      IS_GREATER_RACE(mob) ||
-      IS_GIANT(mob) ||
-      IS_ELITE(mob))
+    if(IS_WARRIOR(mob) || IS_GREATER_RACE(mob) || IS_GIANT(mob) || IS_ELITE(mob))
     {
       mob->points.base_hitroll = BOUNDED(2, (GET_LEVEL(mob) >> 1), 25);
     }
@@ -2581,8 +2576,7 @@ P_char read_mobile(int nr, int type)
 
     /* read in amount of money the mob is carrying */
     fgets(buf, sizeof(buf) - 1, mob_f);
-    if (sscanf(buf, " %ld.%ld.%ld.%ld %ld", &tmp1, &tmp2, &tmp3, &tmp4, &tmp)
-        == 5)
+    if (sscanf(buf, " %ld.%ld.%ld.%ld %ld", &tmp1, &tmp2, &tmp3, &tmp4, &tmp) == 5)
     {
       GET_COPPER(mob) = tmp1;
       GET_SILVER(mob) = tmp2;
@@ -2610,8 +2604,7 @@ P_char read_mobile(int nr, int type)
 
   foo = GET_DAMROLL(mob);
   foo += mob->points.damnodice * ((1 + mob->points.damsizedice) >> 1);
-  if(IS_GREATER_RACE(mob) ||
-    IS_ELITE(mob))
+  if(IS_GREATER_RACE(mob) || IS_ELITE(mob))
   {
     bar = MIN(foo, 100);
   }
@@ -2624,11 +2617,8 @@ P_char read_mobile(int nr, int type)
   {
     foo = bar;
     logit(LOG_MOB, "FYI - no changes made to MOB: %d has _RIDICULOUS_ damage. %dd%d + %d (%d to %d) check mob code, stats and racial stats.",
-          mob_index[nr].virtual_number, mob->points.damnodice,
-          mob->points.damsizedice, GET_DAMROLL(mob),
-          GET_DAMROLL(mob) + mob->points.damnodice,
-          GET_DAMROLL(mob) +
-          (mob->points.damnodice * mob->points.damsizedice));
+      mob_index[nr].virtual_number, mob->points.damnodice, mob->points.damsizedice, GET_DAMROLL(mob),
+      GET_DAMROLL(mob) + mob->points.damnodice, GET_DAMROLL(mob) + (mob->points.damnodice * mob->points.damsizedice));
   }
 
   mob->curr_stats = mob->base_stats;
@@ -2664,8 +2654,22 @@ P_char read_mobile(int nr, int type)
 
   setCharPhysTypeInfo(mob);
 
+  if( mob->nevents )
+  {
+    raise(SIGSEGV);
+  }
+
   /* init a periodic event for each mob */
+  // All mobs do mundane things.
   add_event(event_mob_mundane, PULSE_MOBILE + number(-4, 4), mob, 0, 0, 0, 0, 0);
+  // ACT_SPEC mobs with specials proc check CMD_SET_PERIODIC.
+  if( IS_SET( mob->specials.act, ACT_SPEC ) )
+  {
+    if( (mob_index[mob->only.npc->R_num].func.mob)(mob, NULL, CMD_SET_PERIODIC, NULL) )
+      add_event(event_mob_proc, PULSE_MOBILE + number(-4, 4), mob, 0, 0, 0, 0, 0);
+    else
+      REMOVE_BIT(mob->specials.act, ACT_SPEC);
+  }
   if (IS_ACT(mob, ACT_PATROL))
     add_event(event_patrol_move, WAIT_SEC, mob, 0,0,0,0,0);
 
@@ -2673,7 +2677,7 @@ P_char read_mobile(int nr, int type)
 
   if (IS_AFFECTED(mob, AFF_STONE_SKIN | AFF_BIOFEEDBACK))
     add_event(event_mob_skin_spell, number(1,5), mob, 0, 0, 0, 0, 0);
-  
+
   return (mob);
 }
 
@@ -2998,8 +3002,8 @@ P_obj read_object(int nr, int type)
 
   if (obj_index[nr].func.obj)
   {
-    if ((*obj_index[nr].func.obj) (obj, 0, CMD_SET_PERIODIC, 0))
-      add_event(event_object_proc, PULSE_MOBILE + number(-4,4), 0, 0, obj, 0, 0, 0);    
+    if( (*obj_index[nr].func.obj) (obj, 0, CMD_SET_PERIODIC, 0) )
+      add_event(event_object_proc, PULSE_MOBILE + number(-4,4), 0, 0, obj, 0, 0, 0);
   }
 
   if (isname("random_exit", obj->name))
@@ -3968,7 +3972,7 @@ void free_char(P_char ch)
     affect_remove(ch, af);
   }
 
-  clear_char_events(ch, -1, NULL);
+  clear_char_nevents(ch, -1, NULL);
 
   if (IS_PC(ch))
     delete_knownShapes(ch);
@@ -4063,7 +4067,7 @@ void free_char(P_char ch)
     ch->only.pc = NULL;
   }
   SET_POS(ch, GET_POS(ch) + STAT_DEAD);
-  add_event(release_mob_mem, 40, ch, 0, 0, 0, 0, 0);
+  add_event(release_mob_mem, 10*WAIT_SEC, ch, 0, 0, 0, 0, 0);
   //release_mob_mem(ch);
   return;
 }

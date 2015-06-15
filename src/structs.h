@@ -1842,14 +1842,15 @@ struct nevent_data {
   P_obj obj;
   P_char ch;
   P_char victim;
-  event_func_type func;
-  void *data;
-  unsigned int timer;
-  unsigned int element;
+  event_func_type func;           // What function is called when event fires.
+  void *data;                     // Data argument to func
+  unsigned int timer;             // How much time in the row.
+  unsigned int element;           // Which row of ne_schedule array
   struct char_link_data *cld;
-  struct nevent_data *next;
-  struct nevent_data *prev_sched;
-  struct nevent_data *next_sched;
+  P_nevent next_char;
+  P_nevent next_obj;
+  P_nevent prev_sched;
+  P_nevent next_sched;
 };
 
 /* data structure for justice witness record as held in memory.  This

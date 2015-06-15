@@ -37,15 +37,14 @@ static inline void *__constant_c_memset(void *s, unsigned long c,
   return (s);
 }
 
-struct mm_ds *mm_create(const char *name, size_t size, size_t next_off,
-                        unsigned pages)
+struct mm_ds *mm_create(const char *name, size_t size, size_t next_off, unsigned pages)
 {
   struct mm_ds *mmds;
   struct mm_ds_list *list_entry;
 
   CREATE(mmds, mm_ds, 1, MEM_TAG_MEMMAN);
 
-  if (!mmds)
+  if( !mmds )
   {
     logit(LOG_EXIT, "Unable to create memory management data structure!");
     raise(SIGSEGV);
@@ -75,11 +74,8 @@ void mm_release(struct mm_ds *mmds, void *mem)
 {
   *((char **) ((char *) mem + mmds->next_off)) = NULL;
 
-  /*
-     then put it in the list  
-   */
-
-  if (mmds->tail)
+  // Then put it at the end of the list.
+  if( mmds->tail )
   {
     *((char **) (mmds->tail + mmds->next_off)) = (char *) mem;
     mmds->tail = (char *) mem;
@@ -94,12 +90,15 @@ void mm_release(struct mm_ds *mmds, void *mem)
 #endif
 }
 
-void    *mm_get(struct mm_ds *mmds)
+void *mm_get(struct mm_ds *mmds)
 {
   char    *mem;
 
-  if (!mmds->head)
+  // If we're outta memory, get more.
+  if( !mmds->head )
+  {
     mm_alloc_chunk(mmds);
+  }
 
   mem = mmds->head;
   mmds->head = *((char **) (mem + mmds->next_off));

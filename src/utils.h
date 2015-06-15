@@ -295,7 +295,6 @@ bool IS_OUTDOORS(int r);
 #define PLR3_TOG_CHK(ch, flag)  ((TOGGLE_BIT(PLR3_FLAGS(ch), (flag))) & (flag))
 
 /* Can subject see character "obj"? */
-
 #define IS_NOSHOW(obj)    (IS_SET(obj->extra_flags, ITEM_NOSHOW))
 
 #define CAN_SEE(sub, obj)       (ac_can_see((sub), (obj), TRUE))
@@ -330,6 +329,7 @@ bool IS_OUTDOORS(int r);
 #define GET_RNUM(ch) ( !IS_NPC(ch) ? raise(SIGSEGV) : (ch)->only.npc->R_num )
 #define GET_VNUM(ch) ( !IS_NPC(ch) ? raise(SIGSEGV) : mob_index[(ch)->only.npc->R_num].virtual_number )
 #define NPC_SPEC(ch, index) ( !IS_NPC(ch) ? raise(SIGSEGV) : (ch)->only.npc->spec[index] )
+#define GET_ID(ch) (IS_ALIVE(ch) ? (IS_NPC(ch) ? (mob_index[(ch)->only.npc->R_num].virtual_number) : ((ch)->only.pc->pid)) : -2 )
 
 #define GET_IDNUM(ch)   (ch->only.npc->idnum)
 
@@ -526,6 +526,7 @@ int race_size(int race);
 #define CAN_WEAR(obj, part) (IS_SET((obj)->wear_flags, part))
 
 #define GET_OBJ_VNUM(obj) ( !obj ? raise(SIGSEGV) : obj_index[obj->R_num].virtual_number )
+#define OBJ_SHORT(obj) ((obj)->short_description)
 #define GET_OBJ_PROC(obj) ( !obj ? raise(SIGSEGV) : obj_index[obj->R_num].func.obj )
 
 #define OBJ_MAGIC(obj) ( IS_SET(obj->extra2_flags, ITEM2_MAGIC) )
@@ -573,7 +574,7 @@ int race_size(int race);
 
 #define OUTSIDE(ch)  (!IS_SET(world[(ch)->in_room].room_flags, INDOORS) && !IS_UNDERWORLD(ch->in_room))
 
-#define ROOM_VNUM(rroom_id) ( world[rroom_id].number )
+#define ROOM_VNUM(rroom_id) ( (rroom_id >= 0) ? world[rroom_id].number : rroom_id )
 
 #define EXIT(ch, door)  (world[(ch)->in_room].dir_option[door])
 #define _2ND_EXIT(ch, door) (world[EXIT(ch, door)->to_room].dir_option[door])

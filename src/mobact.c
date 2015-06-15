@@ -3,7 +3,7 @@
  * *  File: mobact.c                                           Part of Duris *
  * *  Usage: Procedures generating 'intelligent' behavior in the mobiles.
  * * *  Copyright  1990, 1991 - see 'license.doc' for complete information.
- *  * *  Copyright 1994 - 2008 - Duris Systems Ltd.
+ * * *  Copyright 1994 - 2008 - Duris Systems Ltd.
  * *
  * ***************************************************************************
  */
@@ -44,7 +44,6 @@
 
 extern Skill skills[];
 extern P_desc descriptor_list;
-extern P_event current_event;
 extern P_event event_list;
 extern P_index mob_index;
 extern P_index obj_index;
@@ -66,12 +65,14 @@ extern struct potion potion_data[];
 extern bool can_banish(P_char ch, P_char victim);
 extern bool has_skin_spell(P_char);
 extern bool has_wind_blade_wielded(P_char);
+extern void event_wait(P_char ch, P_char victim, P_obj obj, void *data);
 
-int      CheckFor_remember(P_char ch, P_char victim);
-int      count_potions(P_char ch);
+int CheckFor_remember(P_char ch, P_char victim);
+int count_potions(P_char ch);
 void try_wield_weapon(P_char ch);
 int empty_slot_for_weapon(P_char ch);
 int very_angry_npc(P_char, P_char, int, char *);
+bool check_ch_nevents( P_char ch );
 
 #define UNDEAD_TYPES 6
 
@@ -628,8 +629,7 @@ bool MobCastSpell(P_char ch, P_char victim, P_obj object, int spl, int lvl)
     return TRUE;                 /* if already in the process of casting one. */
   }
 
-  if( (world[ch->in_room].room_flags & SINGLE_FILE)
-    && !AdjacentInRoom(ch, victim) )
+  if( (world[ch->in_room].room_flags & SINGLE_FILE) && !AdjacentInRoom(ch, victim) )
   {
     return FALSE;
   }
@@ -876,20 +876,30 @@ bool MobCastSpell(P_char ch, P_char victim, P_obj object, int spl, int lvl)
  * checks, e.g. at the beginning of this function and in NewMobAct() disallow
  * various actions while character chants a spell. - SKB 24 Mar 1995
  */
+  if( !IS_ALIVE(ch) )
+  {
+    debug( "Mob '%s' died while trying to cast.", J_NAME(ch) );
+    return TRUE;
+  }
 
   SET_BIT(ch->specials.affected_by2, AFF2_CASTING);
 
   if((duration <= 4) || (lvl >= 60))
     event_spellcast(ch, victim, object, &castdata);
-  else {
-    add_event(event_spellcast, 4, ch, victim, 0, 0, &castdata,
-        sizeof(struct spellcast_datatype));
+  else
+  {
+    add_event(event_spellcast, 4, ch, victim, 0, 0, &castdata, sizeof(struct spellcast_datatype));
     if(victim)
-      if(IS_SET(skills[spl].targets, TAR_CHAR_WORLD) ||
-          IS_SET(skills[spl].targets, TAR_CHAR_RANGE))
+    {
+      if(IS_SET(skills[spl].targets, TAR_CHAR_WORLD) || IS_SET(skills[spl].targets, TAR_CHAR_RANGE))
+      {
         link_char(ch, victim, LNK_CAST_WORLD);
+      }
       else
+      {
         link_char(ch, victim, LNK_CAST_ROOM);
+      }
+    }
   }
 
   return (TRUE);
@@ -2864,10 +2874,11 @@ bool CastShamanSpell(P_char ch, P_char victim, int helping)
    */
   int sect, dam = 0, lvl = 0, spl = 0;
 
-  // Return TRUE on dead ch to stop it's actions (hopefully preventing a crash).
+  // Return FALSE because dead people don't cast.
   if( !IS_ALIVE(ch) )
   {
-    return TRUE;
+    debug( "CastShamanSpell: ch '%s' is not alive.", ch ? J_NAME(ch) : "NULL" );
+    return FALSE;
   }
 
   lvl = GET_LEVEL(ch);
@@ -6632,8 +6643,7 @@ void MobCombat( P_char ch )
     return;
   }
 
-  if( (number(1, 400) <= (GET_C_INT(ch) / 4 + GET_LEVEL(ch)))
-    && CAN_ACT(ch) && !IS_ANIMAL(ch) )
+  if( (number(1, 400) <= (GET_C_INT(ch) / 4 + GET_LEVEL(ch))) && CAN_ACT(ch) && !IS_ANIMAL(ch) )
   {
     tch = PickTarget(ch);
 
@@ -7718,35 +7728,44 @@ int handle_npc_assist(P_char ch)
 bool MobSpellUp(P_char ch)
 {
     bool is_multiclass = IS_MULTICLASS_NPC(ch); // about 15% are multiclass
+
+    // If they're a mage, and not multi or a multi mage and 2/3 of the time.
     if(GET_CLASS(ch, CLASS_SORCERER | CLASS_CONJURER | CLASS_NECROMANCER | CLASS_THEURGIST | CLASS_SUMMONER) && (is_multiclass ? number(0, 2) : 1))
     {
+      // If they start a mage spell
       if(CastMageSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      // If they're not a multiclass
+      if( !is_multiclass )
+        return FALSE;
     }
-    if(GET_CLASS(ch, CLASS_CLERIC) && (is_multiclass ? number(0, 2) : 1))
+    if( GET_CLASS(ch, CLASS_CLERIC) && (is_multiclass ? number(0, 2) : 1) )
     {
       if(CastClericSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_SHAMAN) && (is_multiclass ? number(0, 2) : 1))
     {
       if(CastShamanSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_PSIONICIST | CLASS_MINDFLAYER) && (is_multiclass ? number(0, 2) : 1))
     {
       if(WillPsionicistSpell(ch, ch))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_WARLOCK) && (is_multiclass ? number(0, 1) : 1))
     {
       if(CastWarlockSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_ANTIPALADIN) && (is_multiclass ? number(0, 1) : 1))
     {
@@ -7754,7 +7773,8 @@ bool MobSpellUp(P_char ch)
         return TRUE;
       if(CastMageSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_RANGER) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
@@ -7762,25 +7782,29 @@ bool MobSpellUp(P_char ch)
         return TRUE;
       if(CastMageSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_DRUID) && (is_multiclass ? number(0, 1) : 1))
     {
       if(CastDruidSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_BLIGHTER) && (is_multiclass ? number(0, 1) : 1))
     {
       if(CastBlighterSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_PALADIN) && (is_multiclass ? number(0, 1) : 1))
     {
       if(CastPaladinSpell(ch, ch, FALSE) )
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_ILLUSIONIST) && (is_multiclass ? number(0, 2) : 1))
     {
@@ -7794,7 +7818,8 @@ bool MobSpellUp(P_char ch)
     {
       if(CastEtherSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_REAVER) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
@@ -7802,19 +7827,22 @@ bool MobSpellUp(P_char ch)
         return TRUE;
       if(CastMageSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_ALCHEMIST) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
       if(MobAlchemist(ch))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_BERSERKER) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
       if(MobBerserker(ch))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_BARD) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
@@ -7822,13 +7850,15 @@ bool MobSpellUp(P_char ch)
         return TRUE;
       if(CastMageSpell(ch, ch, FALSE))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     if(GET_CLASS(ch, CLASS_MONK) && (is_multiclass ? !number(0, 3) : !number(0, 1)))
     {
       if(MobMonk(ch))
         return TRUE;
-      if (!is_multiclass) return FALSE;
+      if (!is_multiclass)
+        return FALSE;
     }
     return FALSE;
 }
@@ -7880,7 +7910,7 @@ void event_mob_mundane(P_char ch, P_char victim, P_obj object, void *data)
     goto normal; // 0%
   }
 
-  if(ch->in_room == NOWHERE)
+  if( ch->in_room == NOWHERE )
   {
     char_to_room(ch, 0, -2);
     return;
@@ -7946,12 +7976,12 @@ PROFILE_END(mundane_quest);
 PROFILE_START(mundane_autoinvis);
   if(GET_RACE(ch) == RACE_A_ELEMENTAL || IS_WRAITH(ch) || IS_BRALANI(ch))
   { // 2%
-    if(!IS_SET(ch->specials.affected_by, AFF_INVISIBLE) && !IS_FIGHTING(ch) && !IS_CASTING(ch))  
-    {  
-       act("$n fades from your mortal viewing...", TRUE, ch, 0, 0, TO_ROOM);  
-       SET_BIT(ch->specials.affected_by, AFF_INVISIBLE);  
-    }  
-  }  
+    if(!IS_SET(ch->specials.affected_by, AFF_INVISIBLE) && !IS_FIGHTING(ch) && !IS_CASTING(ch))
+    {
+       act("$n fades from your mortal viewing...", TRUE, ch, 0, 0, TO_ROOM);
+       SET_BIT(ch->specials.affected_by, AFF_INVISIBLE);
+    }
+  }
 PROFILE_END(mundane_autoinvis);
 
   /* If we are a vehicle navigator, lets get moving */
@@ -8023,6 +8053,7 @@ PROFILE_END(mundane_autostand);
 PROFILE_END(mundane_autostand);
 
   /* Examine call for special procedure */
+/* We now use a different event event_mob_proc to call mob procs.
 PROFILE_START(mundane_specproc);
   if(IS_SET(ch->specials.act, ACT_SPEC) && !no_specials )
   { // 8%
@@ -8039,14 +8070,16 @@ PROFILE_END(mundane_specproc);
     }
   }
 PROFILE_END(mundane_specproc);
+*/
   if(!MIN_POS(ch, POS_STANDING + STAT_NORMAL))
   { // 3%
     goto normal;                /* not much we can do, if they can't stand */
   }
 
 PROFILE_START(mundane_mobcast);
-  if(!(IS_SET(ch->specials.act, ACT_SENTINEL) && CHAR_IN_SAFE_ZONE(ch)) &&
-      !(IS_PC_PET(ch) && (ch->in_room == GET_MASTER(ch)->in_room)))
+  // If they're not a sentinel in a safe zone? and they're not a pet with master in room.
+  if( !(IS_SET(ch->specials.act, ACT_SENTINEL) && CHAR_IN_SAFE_ZONE(ch))
+    && !(IS_PC_PET(ch) && (ch->in_room == GET_MASTER(ch)->in_room)) )
   { // 100%
     if (GET_CLASS(ch,
         CLASS_CLERIC | CLASS_SHAMAN | CLASS_ETHERMANCER | CLASS_DRUID |
@@ -8058,6 +8091,7 @@ PROFILE_START(mundane_mobcast);
         CLASS_ALCHEMIST | CLASS_BARD |
         CLASS_BERSERKER | CLASS_MONK))
     {
+        // If they start to spellup, goto normal
         if (MobSpellUp(ch))
         {
 PROFILE_END(mundane_mobcast);
@@ -8099,9 +8133,9 @@ PROFILE_END(mundane_track_2);
     if (GET_MEMORY(ch) != NULL) // guardcheck (no real action will happen in either function if mob has no memory) -Odorf
     {
 PROFILE_START(mundane_track_3);
-      CheckForRemember(ch);
+      if( CheckForRemember(ch) )
 PROFILE_END(mundane_track_3);
-      if(/*!ch - no need -Odorf ||*/ !CAN_ACT(ch)) //  do we really need to check CAN_ACT here? -Odorf
+//      if(/*!ch - no need -Odorf ||*/ !CAN_ACT(ch)) //  do we really need to check CAN_ACT here? -Odorf
       {
 PROFILE_END(mundane_track);
         goto normal;
@@ -9070,10 +9104,12 @@ bool TryToGetHome(P_char ch)
   /*
    * don't allow duplicate hunt events!
    */
-
-  LOOP_EVENTS(ev, ch->nevents) if(ev->func == mob_hunt_event)
+  LOOP_EVENTS_CH(ev, ch->nevents)
   {
-    return FALSE;
+    if( ev->func == mob_hunt_event )
+    {
+      return FALSE;
+    }
   }
   data.hunt_type = HUNT_ROOM;
   data.targ.room = rr_birth;
@@ -9310,31 +9346,23 @@ void SetRememberArray(void)
       AddToRememberArray(a->character, world[a->character->in_room].zone);
 }
 
-int CheckForRemember(P_char ch)
+bool CheckForRemember(P_char ch)
 {
   struct remember_data *a;
   P_char   b = NULL, c = NULL, tmpch;
   int      real_birthroom;
 
-  if(!ch /*|| !(ch->only.npc) */ )
+  if( !IS_ALIVE(ch) || !IS_NPC(ch) )
   {
     return FALSE;
   }
 
-  if(IS_PC(ch) ||
-    !IS_ALIVE(ch))
+  if( GET_MASTER(ch) )
   {
     return FALSE;
   }
 
-  if(GET_MASTER(ch))
-  {
-    return FALSE;
-  }
-
-  if(IS_NPC(ch) &&
-    (!HAS_MEMORY(ch) ||
-    (GET_MEMORY(ch) == NULL)))
+  if(IS_NPC(ch) && (!HAS_MEMORY(ch) || (GET_MEMORY(ch) == NULL)))
   {
     return FALSE;
   }
@@ -9354,8 +9382,7 @@ int CheckForRemember(P_char ch)
       TryToGetHome(ch);
     }
     
-    if(!CAN_ACT(ch) ||
-       IS_IMMOBILE(ch))
+    if( !CAN_ACT(ch) || IS_IMMOBILE(ch) )
     {
       add_event(event_mob_mundane, PULSE_VIOLENCE, ch, NULL, NULL, 0, NULL, 0);
       //AddEvent(current_event->type, PULSE_VIOLENCE, TRUE, ch, 0);
@@ -9501,9 +9528,12 @@ bool InitNewMobHunt(P_char ch)
    * check for existing hunt events.  If any exist, return false
    */
 
-  LOOP_EVENTS(ev, ch->nevents) if(ev->func == mob_hunt_event)
+  LOOP_EVENTS_CH(ev, ch->nevents)
   {
-    return FALSE;
+    if(ev->func == mob_hunt_event)
+    {
+      return FALSE;
+    }
   }
   /*
    * if a mob is injured too badly, don't bother hunting
@@ -10387,10 +10417,13 @@ void MobRetaliateRange(P_char ch, P_char vict)
     /* try to charge them */
 
     /* Are they hunting already? */
-    LOOP_EVENTS(ev, ch->nevents) if(ev->func == mob_hunt_event)
-      break;
-    if(ev)
-      return;
+    LOOP_EVENTS_CH(ev, ch->nevents)
+    {
+      if(ev->func == mob_hunt_event)
+      {
+        return;
+      }
+    }
 
     /* Can they even get there? (rivers, etc) */
     if(find_first_step(ch->in_room, vict->in_room,
@@ -11121,3 +11154,36 @@ bool CastBlighterSpell(P_char ch, P_char victim, bool helping)
   return FALSE;
 }
 
+// Should just be called during a periodic event.
+void event_mob_proc(P_char mob, P_char victim, P_obj object, void *data)
+{
+  P_nevent e;
+
+  if( !IS_ALIVE(mob) )
+  {
+    debug("event_mob_proc: NULL/Dead mob: %s.", mob ? J_NAME(mob) : "NULL" );
+    return;
+  }
+
+  // If mob is lagged, we re-schedule for after the lag wears off.
+  if( !CAN_ACT(mob) )
+  {
+    if( (e = get_scheduled(mob, event_wait)) != NULL )
+    {
+      add_event(event_mob_proc, ne_event_time(e) + 1, mob, victim, object, 0, NULL, 0 );
+      return;
+    }
+    else
+    {
+      REMOVE_BIT(mob->specials.act2, PLR2_WAIT);
+    }
+  }
+  // Proc on PERIODIC.
+  (*mob_index[GET_RNUM(mob)].func.mob) (mob, victim, CMD_PERIODIC, 0);
+
+  // Add another event... should check SPEC_ACT and CMD_SET_PERIODIC, but *shrug* supposedly done it once.
+  if( IS_ALIVE(mob) )
+  {
+    add_event(event_mob_proc, PULSE_MOBILE + number(-4,4), mob, victim, object, 0, NULL, 0 );
+  }
+}

@@ -522,7 +522,7 @@ void stop_memorizing(P_char ch)
   if (IS_PC(ch) && IS_AFFECTED2(ch, AFF2_MEMORIZING))
   {
     show_stop_memorizing(ch);
-    disarm_char_events(ch, event_memorize);
+    disarm_char_nevents(ch, event_memorize);
   }
 }
 
@@ -2403,7 +2403,7 @@ void event_scribe(P_char ch, P_char victim, P_obj obj, void *data)
        ch->equipment[HOLD]->type != ITEM_PEN) || (!s_data || !(s_data->book)) ||
       ((s_data->book != ch->equipment[HOLD]) && (s_data->book != ch->equipment[WIELD])))
   {
-    disarm_char_events(ch, event_scribe);
+    disarm_char_nevents(ch, event_scribe);
     send_to_char("So much for that scribing effort!\n", ch);
     REMOVE_BIT(ch->specials.affected_by2, AFF2_SCRIBING);
     return;

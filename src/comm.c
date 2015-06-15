@@ -826,9 +826,12 @@ void game_loop(int s)
     /* handle heartbeat stuff */
     /* Note: pulse now changes every 1/4 sec  */
     after_events_call = TRUE;
-    if (schedule[pulse]) {
+    /* Not using old events anymore.
+    if (schedule[pulse])
+    {
       Events();
     }
+    */
     ne_events();
 
     PROFILE_START(activities);

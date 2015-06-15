@@ -1063,7 +1063,7 @@ int storage_locker_room_hook(int room, P_char ch, int cmd, char *arg)
   if( IS_AFFECTED2(ch, AFF2_MEMORIZING) || get_scheduled(ch, event_memorize) )
   {
     REMOVE_BIT( ch->specials.affected_by2, AFF2_MEMORIZING );
-    disarm_char_events(ch, event_memorize);
+    disarm_char_nevents(ch, event_memorize);
     send_to_char( "\n\r", ch );
     display_no_mem( ch );
     CharWait(ch, WAIT_SEC * 3);

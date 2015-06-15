@@ -83,7 +83,7 @@ save_profile_data(#var, var##_profile_total_inside, var##_profile_total_outside,
 #define PROFILE_REGISTER_CALL(func, time) { if (do_profile) { \
 register_func_call((void*)(func), (double) (time)); \
 }}
-    
+
 extern void save_profile_data(const char* name, double total_inside, double total_outside, unsigned total);
 extern bool do_profile;
 

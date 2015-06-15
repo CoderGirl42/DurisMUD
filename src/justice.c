@@ -569,7 +569,7 @@ return FALSE;
          hunted! */
       P_nevent  ev;
 
-      LOOP_EVENTS(ev, ch->nevents)
+      LOOP_EVENTS_CH(ev, ch->nevents)
       {
         if (ev->func == mob_hunt_event) /* ah!  good..  */
           return FALSE;
@@ -2475,11 +2475,14 @@ int shout_and_hunt(P_char ch, int max_distance, const char *shout_str, int (*loc
 
 //debug( "shout_and_hunt: NPC vnum %d.", mob_index[GET_RNUM(target)].virtual_number );
 
-      LOOP_EVENTS(ev, target->nevents) if (ev->func == mob_hunt_event)
+      LOOP_EVENTS_CH(ev, target->nevents)
       {
-        break;
+        if (ev->func == mob_hunt_event)
+        {
+          break;
+        }
       }
-      if (ev)
+      if( ev )
         continue;
 
       has_help = TRUE;

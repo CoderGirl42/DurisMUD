@@ -5515,20 +5515,20 @@ bool is_natural_creature(P_char ch)
 bool is_casting_aggr_spell(P_char ch)
 {
     struct spellcast_datatype *data;
+    P_nevent e1;
 
-    if(!ch ||
-      !IS_ALIVE(ch))
+    if( !IS_ALIVE(ch) || !IS_CASTING(ch) )
     {
-      return false;
-    }
-    
-    if (!IS_CASTING(ch))
       return FALSE;
+    }
 
-    for (P_nevent e1 = ch->nevents; e1; e1 = e1->next) {
-      if ( e1->func == event_spellcast) {
+    LOOP_EVENTS_CH( e1, ch->nevents )
+    {
+      if ( e1->func == event_spellcast )
+      {
         data = (struct spellcast_datatype*)e1->data;
-        if (IS_AGG_SPELL(data->spell)) {
+        if (IS_AGG_SPELL(data->spell))
+        {
           return TRUE;
         }
         else

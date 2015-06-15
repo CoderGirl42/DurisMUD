@@ -48,6 +48,7 @@ using namespace std;
 
 /* * external variables */
 
+extern bool debug_event_list;
 extern float spell_pulse_data[LAST_RACE + 1];
 extern char *target_locs[];
 extern char *set_master_text[];
@@ -122,6 +123,7 @@ extern const char *get_function_name(void *);
 extern void show_world_events(P_char ch, const char* arg);
 extern struct quest_data quest_index[];
 extern struct epic_bonus_data ebd[];
+extern long ne_event_counter;
 void display_map(P_char ch, int n, int show_map_regardless);
 extern void event_short_affect(P_char, P_char , P_obj , void *);
 
@@ -3566,18 +3568,20 @@ void show_vnums(P_char ch)
   send_to_char(buff, ch);
 }
 
-#define WORLD_STATS 0
-#define WORLD_ZONES 1
-#define WORLD_EVENTS 2
-#define WORLD_ROOMS 3
-#define WORLD_OBJECTS 4
-#define WORLD_MOBILES 5
-#define WORLD_DEBUG 6
-#define WORLD_VNUMS 7
-#define WORLD_QUESTS 9
-#define WORLD_CARGO 10
+#define WORLD_STATS    0
+#define WORLD_ZONES    1
+#define WORLD_EVENTS   2
+#define WORLD_ROOMS    3
+#define WORLD_OBJECTS  4
+#define WORLD_MOBILES  5
+#define WORLD_DEBUG    6
+#define WORLD_VNUMS    7
+#define WORLD_QUESTS   9
+#define WORLD_CARGO   10
+#define WORLD_DEBUG_E 11
+#define MAX_WORLD     11
 
-const char *world_keywords[] = {
+const char *world_keywords[MAX_WORLD+2] = {
   "stats",
   "zones",
   "events",
@@ -3588,6 +3592,7 @@ const char *world_keywords[] = {
   "vnums",
   "quests",
   "cargo",
+  "debug_events",
   "\n"
 };
 
@@ -3602,6 +3607,7 @@ const int world_values[] = {
   WORLD_VNUMS,
   WORLD_QUESTS,
   WORLD_CARGO,
+  WORLD_DEBUG_E,
   -1
 };
 
@@ -3610,8 +3616,8 @@ extern const char *get_function_name(void *);
 
 void do_world(P_char ch, char *argument, int cmd)
 {
-  char     buf[MAX_STRING_LENGTH], buff[MAX_STRING_LENGTH], buff2[MAX_STRING_LENGTH],
-    arg[MAX_INPUT_LENGTH];
+  char     buf[MAX_STRING_LENGTH], buff[MAX_STRING_LENGTH], buff2[MAX_STRING_LENGTH];
+  char     arg[MAX_INPUT_LENGTH];
   long     ct, diff_time;
   char    *tmstr;
   int      count, i, tmp, choice, zone_count, world_index, room_count, length;
@@ -3620,21 +3626,20 @@ void do_world(P_char ch, char *argument, int cmd)
   P_char   t_mob;
 
 
-  if (IS_NPC(ch))
+  if( IS_NPC(ch) )
     return;
-  if (!(!*argument || !argument))
+  if( argument && *argument )
   {
     argument = one_argument(argument, arg);
     world_index = search_block(arg, world_keywords, FALSE);
   }
   else
     world_index = -1;
-  if (world_index == -1 ||
-      (!IS_TRUSTED(ch) && (choice = world_values[world_index]) > WORLD_ZONES))
+
+  if (world_index == -1 || (!IS_TRUSTED(ch) && (choice = world_values[world_index]) > WORLD_ZONES) )
   {
     sprintf(buff, "Syntax: world < ");
-    for (i = 0; world_values[i] != (IS_TRUSTED(ch) ? -1 : WORLD_ZONES + 1);
-         i++)
+    for (i = 0; world_values[i] != (IS_TRUSTED(ch) ? -1 : WORLD_ZONES + 1); i++)
     {
       if (i)
         sprintf(buff + strlen(buff), ", ");
@@ -3643,8 +3648,7 @@ void do_world(P_char ch, char *argument, int cmd)
     sprintf(buff + strlen(buff), " >\n");
     send_to_char(buff, ch);
     if (!argument || !*argument)
-      send_to_char("This server compiled at " __TIME__ " " __DATE__ ".\n",
-                   ch);
+      send_to_char("This server compiled at " __TIME__ " " __DATE__ ".\n", ch);
     return;
   }
   switch (world_values[world_index])
@@ -3704,11 +3708,13 @@ void do_world(P_char ch, char *argument, int cmd)
 
     if (IS_TRUSTED(ch))
     {
-      sprintf(buf, "Total allocated events:                  %5d\n",
-              event_counter[LAST_EVENT] + event_counter[LAST_EVENT + 1]);
+/* Didn't do this.. guess needs to be handled in mmc somehow.
+      sprintf(buf, "Total allocated events:                  %5ld\n",
+              ne_event_counter );
+*/
       send_to_char(buf, ch);
-      sprintf(buf, "Total number of pending events:          %5d\n\n",
-              event_counter[LAST_EVENT]);
+      sprintf(buf, "Total number of pending events:          %5ld\n\n",
+              ne_event_counter );
       send_to_char(buf, ch);
 
       sprintf(buf, "Number of active sockets:              %5d\n",
@@ -3894,13 +3900,6 @@ void do_world(P_char ch, char *argument, int cmd)
     page_string(ch->desc, buff, 1);
     break;
 
-  case WORLD_DEBUG:
-
-/*
- * sprintf(buff + strlen(buff), "Pulses: deficit:  %ld seconds.\n",
- * (long)time_deficit.tv_sec);
- */
-    break;
   case WORLD_VNUMS:
     show_vnums(ch);
     break;
@@ -3984,7 +3983,36 @@ void do_world(P_char ch, char *argument, int cmd)
             count);
     page_string(ch->desc, buff, 1);
     break;
-    
+  case WORLD_DEBUG:
+
+/*
+ * sprintf(buff + strlen(buff), "Pulses: deficit:  %ld seconds.\n",
+ * (long)time_deficit.tv_sec);
+ */
+  case WORLD_DEBUG_E:
+    one_argument(argument, arg);
+    if( *arg )
+    {
+      if( !strcmp(arg, "once") )
+      {
+        check_nevents();
+        return;
+      }
+      else
+      {
+        send_to_char( "&+YValid options are 'world debug_events' and 'world debug_events once'.&n\n\r", ch );
+        return;
+      }
+    }
+    debug_event_list = !debug_event_list;
+    if( debug_event_list )
+      send_to_char( "&+YTurned event list debugging on!\n\r", ch );
+    else
+      send_to_char( "&+YTurned event list debugging off!\n\r", ch );
+    break;
+  default:
+    send_to_char( "&=LRYou should never see this!\n\r", ch );
+    break;
   }
 }
 
@@ -5585,7 +5613,7 @@ void do_score(P_char ch, char *argument, int cmd)
           if(IS_SET(aff->flags, AFFTYPE_SHORT))
           {
             secs = 0;
-            for (ne = ch->nevents; ne; ne = ne->next)
+            LOOP_EVENTS_CH( ne, ch->nevents )
             {
               if (ne->func == event_short_affect)
               {
@@ -7469,6 +7497,11 @@ void do_where(P_char ch, char *argument, int cmd)
   while( *argument == ' ' )
   {
     argument++;
+  }
+
+  if( strcmp( argument, "?" ) )
+  {
+    send_to_char( "&+YValid arguments: &+Wevils, goods, undeads, neutrals, <vnum>, zone, trap, stat.\n\r", ch );
   }
 
   if( !*argument )

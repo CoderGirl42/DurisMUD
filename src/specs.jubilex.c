@@ -286,7 +286,7 @@ int flow_amulet(P_obj obj, P_char ch, int cmd, char *arg)
         }
         obj->timer[0] = curr_time;
         REMOVE_BIT(obj->extra_flags, ITEM_HUM);
-        disarm_obj_events(obj, event_flow_amulet_vibrate);
+        disarm_obj_nevents(obj, event_flow_amulet_vibrate);
         add_event(event_flow_amulet_vibrate, 350 * WAIT_SEC, 0, 0, obj, 0, 0, 0);
         return TRUE;
       }

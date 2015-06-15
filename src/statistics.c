@@ -83,7 +83,7 @@ void event_write_statistic(P_char ch, P_char victim, P_obj obj, void *data)
 
 
     if (t_ch && !IS_TRUSTED(t_ch))
-    {       
+    {
       if (world[t_ch->in_room].zone == 50)
         inhalls++;
 
@@ -108,7 +108,7 @@ void event_write_statistic(P_char ch, P_char victim, P_obj obj, void *data)
         illithids++;
         illithids_lvl = illithids_lvl + GET_LEVEL(t_ch);
       }
-      
+
       vector<const char *>::iterator it;
       for( it = seen_ips.begin(); it != seen_ips.end(); it++ )
       {
@@ -119,7 +119,7 @@ void event_write_statistic(P_char ch, P_char victim, P_obj obj, void *data)
       {
         seen_ips.push_back(d->host);
         unique_ips++;
-      }      
+      }
     }
     else if (t_ch && IS_TRUSTED(t_ch))
       gods++;
@@ -141,7 +141,6 @@ void event_write_statistic(P_char ch, P_char victim, P_obj obj, void *data)
          goodies, evils, illithids, undeads, gods, inhalls, goodies_lvl, evils_lvl, undeads_lvl, illithids_lvl, unique_ips
     );
 #endif
-
 
   add_event(event_write_statistic, PULSES_IN_TICK, NULL, NULL, NULL, 0, NULL, 0);
   //AddEvent(EVENT_SPECIAL, 500, TRUE, write_statistic, NULL);

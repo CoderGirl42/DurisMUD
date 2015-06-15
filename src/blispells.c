@@ -424,7 +424,7 @@ void spell_waves_fatigue(int level, P_char ch, char *arg, int type, P_char victi
   for( link = victim->linked; link; link = link->next_linked )
   {
     // Look through master's events for the waves_fatigue event.
-    for( e = link->linking->nevents; e; e = e->next )
+    LOOP_EVENTS_CH( e, link->linking->nevents )
     {
       // If master has a waves of fatigue event on victim already..
       if( e->func == event_waves_fatigue && e->victim == victim )
@@ -518,7 +518,7 @@ bool has_scheduled_area_acid_rain( P_char ch )
 {
   P_nevent e;
 
-  for( e = ch->nevents; e; e = e->next )
+  LOOP_EVENTS_CH( e, ch->nevents )
   {
     if( e->func == event_acid_rain && !(e->victim) )
     {

@@ -230,74 +230,58 @@ int inn(int room, P_char ch, int cmd, char *arg)
   struct zone_data *zone;
   P_char   tch, next_ch;
 
-  if(!ch)
+  /* check for periodic event calls */
+  if(cmd == CMD_SET_PERIODIC)
   {
-    return false;
+    return FALSE;
   }
 
-  if(IS_NPC(ch))
+  if( !ch || IS_NPC(ch) || cmd != CMD_RENT )
   {
-    return false;
+    return FALSE;
   }
-  
-  if(room &&
-    IS_PC(ch))
+
+  if( room > 0 && room < top_of_world )
   {
-  /* check for periodic event calls */
-    if(cmd == CMD_SET_PERIODIC)
+    if( IS_SET(ch->specials.affected_by, AFF_KNOCKED_OUT) )
     {
+      send_to_char("Being knocked out, renting is not really an option for you.\r\n", ch);
       return FALSE;
     }
-    if(ch == NULL)
-    {
-      return (FALSE);
-    }
-    if(IS_MORPH(ch))
-    {
-      return (FALSE);
-    }
-    if(cmd != CMD_RENT)
-    {
-      return (FALSE);
-    }
-    if (IS_SET(ch->specials.affected_by, AFF_KNOCKED_OUT))
-    {
-      send_to_char
-        ("Being knocked out, renting is not really an option for you.\r\n", ch);
-      return FALSE;
-    }
-    if (IS_STUNNED(ch))
+    if( IS_STUNNED(ch) )
     {
       send_to_char("You're too stunned to think of renting!\r\n", ch);
       return FALSE;
     }
-    if (IS_AFFECTED2(ch, AFF2_FLURRY))
+    if( IS_MORPH(ch) )
+    {
+      send_to_char( "&+YNot in this form!\n\r", ch );
+      return TRUE;
+    }
+
+    if( IS_AFFECTED2(ch, AFF2_FLURRY) )
     {
       send_to_char("You are too deep in battle madness!\r\n", ch);
       return FALSE;
     }
-    if ((PC_JUSTICE_FLAGS(ch) == JUSTICE_IS_OUTCAST) ||
-        justice_is_criminal(ch) || IS_AFFECTED4(ch, AFF4_LOOTER))
+    if( (PC_JUSTICE_FLAGS(ch) == JUSTICE_IS_OUTCAST) || justice_is_criminal(ch) || IS_AFFECTED4(ch, AFF4_LOOTER) )
     {
-      send_to_char
-        ("The innkeeper says 'I don't serve outlaws like you! Begone!'\r\n",
-         ch);
+      send_to_char("The innkeeper says 'I don't serve outlaws like you! Begone!'\r\n", ch);
       return TRUE;
     }
-    if (IS_NOTWELCOME(ch) || GET_RACE(ch) == RACE_ILLITHID)
+    if( IS_NOTWELCOME(ch) || GET_RACE(ch) == RACE_ILLITHID )
     {
       send_to_char("You are NOT welcome here!\r\n", ch);
       return TRUE;
     }
 
-    if(cmd == CMD_RENT)
+    Guildhall *gh = Guildhall::find_by_vnum(world[ch->in_room].number);
+    if( gh && (!IS_MEMBER(GET_A_BITS(ch)) || GET_A_NUM(ch) != gh->assoc_id) )
     {
-      Guildhall *gh = Guildhall::find_by_vnum(world[ch->in_room].number);
-      if( gh && (!IS_MEMBER(GET_A_BITS(ch)) || GET_A_NUM(ch) != gh->assoc_id) )
-      {
-        send_to_char("You're just a guest here, so you should probably stay awake!\r\n", ch);
-        return TRUE;
-      }
+      send_to_char("You're just a guest here, so you should probably stay awake!\r\n", ch);
+      return TRUE;
+    }
+
 // old guildhalls (deprecated)
 //      for(tch = world[ch->in_room].people; tch; tch = next_ch)
 //      {
@@ -311,100 +295,92 @@ int inn(int room, P_char ch, int cmd, char *arg)
 //          return true;
 //        }
 //      }
-      if(IS_FIGHTING(ch))
-      {
-        send_to_char
-          ("The innkeeper is too busy hiding behind the counter to help.\r\n",
-           ch);
-        return TRUE;
-      }
-      if(IS_IMMOBILE(ch))
-      {
-        send_to_char("&+WNo can do!&n Try back when you can move.\r\n", ch);
-        return TRUE;
-      }
-      
-      if(GET_STAT(ch) == STAT_SLEEPING)
-      {
-        send_to_char
-          ("Why go to an inn? You are plenty comfortable right here.\r\n", ch);
-        return TRUE;
-      }
-      
-      if(IS_BLIND(ch))
-      {
-        send_to_char
-          ("You bump into stuff... Where the heck is everyone?\r\n", ch);
-        return TRUE;
-      }
-      
-      if(affected_by_spell(ch, TAG_PVPDELAY))
-      {
-        send_to_char
-          ("There is too much adrenaline pumping through your body right now.\r\n",
-           ch);
-        return FALSE;
-      }
-
-       zone = &zone_table[world[ch->in_room].zone];
-       if (zone->status > ZONE_NORMAL && (GET_LEVEL(ch) > 25) &&
-           (zone_table[world[ch->in_room].zone].number != WINTERHAVEN))
-       {
-         send_to_char("The receptionist turns and says, '&+RThe town is under attack!&n'\n", ch);
-         send_to_char("  '&+WTry to get a portal out of here, or run to another exit!&n'\n", ch);
-         send_to_char("  '&+WPlease hurry great adventurer, the town needs you.&n'\n", ch);
-         send_to_char("The receptionist wishes you good luck. \n", ch);
-
-         add_event(event_justice_raiding, 200, ch, 0, 0, 0, &room, sizeof(room));
-         return FALSE;
-       }
-
-      send_to_char
-        ("The innkeeper stores your stuff in the safe and shows you to your room.\r\n",
-         ch);
-      act
-        ("The innkeeper stores $n&n's stuff in the safe and shows $m to $s room.",
-         TRUE, ch, 0, 0, TO_ROOM);
-
-      if(IS_AFFECTED4(ch, AFF4_TUPOR))
-      {
-        REMOVE_BIT(ch->specials.affected_by4, AFF4_TUPOR);
-      }
-      
-	if(GET_CLASS(ch, CLASS_CONJURER) || GET_CLASS(ch, CLASS_SUMMONER))
-       do_dismiss(ch, NULL, 0);
-      
-      GET_HOME(ch) = world[ch->in_room].number;
-      
-      if (!writeCharacter(ch, 1, ch->in_room))
-      {
-        send_to_char
-          ("Failed to save this character, most likely too much eq.\r\n", ch);
-        wizlog(56, "%s was unable to rent [specs.room.c()].", GET_NAME(ch));
-        return (TRUE);
-      }
-      else
-      {
-        writeCharacter(ch, 3, ch->in_room);
-      }
-      
-      if(!(ch))
-      {
-        send_to_char
-          ("You are unable to rent for some strange reason. Contact the imms.\r\n", ch);
-        wizlog(56, "%s was unable to rent [specs.room.c()].", GET_NAME(ch));
-        return (TRUE);
-      }
-      
-      loginlog(ch->player.level, "%s [%s] has rented out in [%d].",
-               GET_NAME(ch), (ch->desc) ? ch->desc->host : "LINKDEAD",
-               world[ch->in_room].number);
-      sql_log(ch, CONNECTLOG, "Rented out.");
-      extract_char(ch);
-      ch = NULL;
+    if( IS_FIGHTING(ch) )
+    {
+      send_to_char("The innkeeper is too busy hiding behind the counter to help.\r\n", ch);
+      return TRUE;
     }
-  return (TRUE);
+    if( IS_IMMOBILE(ch) )
+    {
+      send_to_char("&+WNo can do!&n Try back when you can move.\r\n", ch);
+      return TRUE;
+    }
+
+    if( GET_STAT(ch) == STAT_SLEEPING )
+    {
+      send_to_char("Why go to an inn? You are plenty comfortable right here.\r\n", ch);
+      return TRUE;
+    }
+
+    if( IS_BLIND(ch) )
+    {
+      send_to_char("You bump into stuff... Where the heck is everyone?\r\n", ch);
+      return TRUE;
+    }
+
+    if(affected_by_spell(ch, TAG_PVPDELAY))
+    {
+      send_to_char("There is too much adrenaline pumping through your body right now.\r\n", ch);
+      return FALSE;
+    }
+
+    zone = &zone_table[world[ch->in_room].zone];
+    if( zone->status > ZONE_NORMAL && (GET_LEVEL(ch) > 25)
+      && (zone_table[world[ch->in_room].zone].number != WINTERHAVEN) )
+    {
+      send_to_char("The receptionist turns and says, '&+RThe town is under attack!&n'\n", ch);
+      send_to_char("  '&+WTry to get a portal out of here, or run to another exit!&n'\n", ch);
+      send_to_char("  '&+WPlease hurry great adventurer, the town needs you.&n'\n", ch);
+      send_to_char("The receptionist wishes you good luck. \n", ch);
+
+      add_event(event_justice_raiding, 200, ch, 0, 0, 0, &room, sizeof(room));
+      return FALSE;
+    }
+
+    if( IS_AFFECTED4(ch, AFF4_TUPOR) )
+    {
+      send_to_char( "&+cYour mind ceases its trance.&n\n\r", ch );
+      REMOVE_BIT(ch->specials.affected_by4, AFF4_TUPOR);
+    }
+
+    send_to_char("The innkeeper stores your stuff in the safe and shows you to your room.\r\n", ch);
+    act("The innkeeper stores $n&n's stuff in the safe and shows $m to $s room.", TRUE, ch, 0, 0, TO_ROOM);
+
+    if( ch->following )
+    {
+      do_dismiss(ch, NULL, cmd);
+    }
+
+    GET_HOME(ch) = world[ch->in_room].number;
+
+    if( !writeCharacter(ch, 1, ch->in_room) )
+    {
+      send_to_char("Failed to save this character, most likely too much eq.\r\n", ch);
+      wizlog(56, "%s was unable to rent [specs.room.c()].", GET_NAME(ch));
+      return TRUE;
+    }
+    else
+    {
+      writeCharacter(ch, 3, ch->in_room);
+    }
+
+    if( !(ch) )
+    {
+      /* HTF is the mud supposed to send a message or get the name of a char that doesn't exist?!?
+      send_to_char("You are unable to rent for some strange reason. Contact the imms.\r\n", ch);
+      wizlog(56, "%s was unable to rent [specs.room.c()].", GET_NAME(ch));
+      */
+      return TRUE;
+    }
+    loginlog( ch->player.level, "%s [%s] has rented out in [%d].",
+      GET_NAME(ch), (ch->desc) ? ch->desc->host : "LINKDEAD", world[ch->in_room].number);
+    sql_log(ch, CONNECTLOG, "Rented out.");
+    extract_char(ch);
+    ch = NULL;
+
+    return TRUE;
   }
+  return FALSE;
 }
 
 int undead_inn(int room, P_char ch, int cmd, char *arg)

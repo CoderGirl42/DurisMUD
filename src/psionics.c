@@ -2425,7 +2425,7 @@ void event_psionic_wave_blast(P_char ch, P_char victim, P_obj obj, void *data)
       REMOVE_BIT((ch)->specials.affected_by2, AFF2_CASTING);
     
     if(get_scheduled(ch, event_psionic_wave_blast))
-       disarm_char_events(ch, event_psionic_wave_blast);
+       disarm_char_nevents(ch, event_psionic_wave_blast);
        
     if(affected_by_spell(victim, SPELL_PSIONIC_WAVE_BLAST))
       affect_from_char(victim, SPELL_PSIONIC_WAVE_BLAST);

@@ -1859,7 +1859,7 @@ void do_dismiss(P_char ch, char *argument, int cmd)
   P_char   victim, next_vict;
   int i, j, count = 0, desired = 0;
 
-  if(GET_CLASS(ch, CLASS_BARD))
+  if( GET_CLASS(ch, CLASS_BARD) && cmd != CMD_DEATH )
   {
     for (k = ch->followers; k; k = x)
     {
@@ -1882,26 +1882,33 @@ void do_dismiss(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if(!argument || !*argument)
+  if( !argument || !*argument )
   {
-    for (k = ch->followers; k; k = x)
+    for( k = ch->followers; k; k = x )
     {
       x = k->next;
 
-      if(!IS_PC(k->follower))
+      if( !IS_PC(k->follower) )
       {
-        act("$n makes a &+Mmagical &+mgesture&n, sending $N back to the &+Lnether plane&n.", TRUE, ch, 0,
-            k->follower, TO_ROOM);
-        act("You make a &+Mmagical &+mgesture&n, sending $N back to the &+Lnether plane&n.", TRUE, ch, 0,
-            k->follower, TO_CHAR);
-        extract_char(k->follower);
+        if( cmd != CMD_DEATH )
+        {
+          act("$n makes a &+Mmagical &+mgesture&n, sending $N back to the &+Lnether plane&n.", TRUE, ch, 0,
+              k->follower, TO_ROOM);
+          act("You make a &+Mmagical &+mgesture&n, sending $N back to the &+Lnether plane&n.", TRUE, ch, 0,
+              k->follower, TO_CHAR);
+        }
+        else
+        {
+          act("&+mThe magic surrounding $N&+m disperses.&n", TRUE, NULL, 0, k->follower, TO_ROOM);
+        }
+        extract_char( k->follower );
         count++;
       }
     }
+    if( count == 0 )
+      send_to_char( "You wave your hands wildly to no avail.\n\r", ch );
     return;
   }
-
-
 
   victim = parse_victim(ch, argument, 0);
   if(!victim)
@@ -1909,8 +1916,7 @@ void do_dismiss(P_char ch, char *argument, int cmd)
     send_to_char("Who?\r\n", ch);
     return;
   }
-  if(ch->in_room != victim->in_room ||
-      ch->specials.z_cord != victim->specials.z_cord)
+  if(ch->in_room != victim->in_room || ch->specials.z_cord != victim->specials.z_cord)
   {
     send_to_char("Who?\r\n", ch);
     return;
@@ -1923,13 +1929,6 @@ void do_dismiss(P_char ch, char *argument, int cmd)
         victim, TO_CHAR);
     extract_char(victim);
   }
-
-
-
-
-  if(count == 0)
-    return;
-
 
 }
 

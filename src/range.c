@@ -2146,7 +2146,7 @@ void return_home(P_char ch, P_char victim, P_obj obj, void *data)
  if (world[ch->in_room].number == GET_BIRTHPLACE(ch))
    return;
 
- LOOP_EVENTS(ev, ch->nevents)
+ LOOP_EVENTS_CH(ev, ch->nevents)
  {
    if (ev->func == mob_hunt_event)
    {

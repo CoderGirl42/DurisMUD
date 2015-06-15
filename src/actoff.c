@@ -76,7 +76,6 @@ extern Skill skills[];
 extern void kick_messages(P_char, P_char, bool, struct damage_messages *);
 extern P_char misfire_check(P_char ch, P_char spell_target, int flag);
 extern void event_mob_mundane(P_char, P_char, P_obj, void *);
-extern void disarm_char_events(P_char, event_func);
 extern P_char make_mirror(P_char);
 
 struct failed_takedown_messages
@@ -2527,15 +2526,15 @@ void do_flee(P_char ch, char *argument, int cmd)
   if( IS_DESTROYING(ch) )
     stop_destroying(ch);
 
-  if(was_fighting && IS_NPC(was_fighting))
+  if( was_fighting && IS_NPC(was_fighting) )
   {
     /*
      * rather than instant response, reschedule next event
      * call .5 seconds from now, that will allow fast, but not
      * impossible chases
      */
-    disarm_char_events(was_fighting, event_mob_mundane);
-    add_event(event_mob_mundane, 2, was_fighting, 0, 0, 0, 0, 0);
+    disarm_char_nevents(was_fighting, event_mob_mundane);
+    add_event(event_mob_mundane, WAIT_SEC/2, was_fighting, 0, 0, 0, 0, 0);
   }
 }
 
