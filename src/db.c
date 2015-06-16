@@ -2667,8 +2667,6 @@ P_char read_mobile(int nr, int type)
   {
     if( (mob_index[mob->only.npc->R_num].func.mob)(mob, NULL, CMD_SET_PERIODIC, NULL) )
       add_event(event_mob_proc, PULSE_MOBILE + number(-4, 4), mob, 0, 0, 0, 0, 0);
-    else
-      REMOVE_BIT(mob->specials.act, ACT_SPEC);
   }
   if (IS_ACT(mob, ACT_PATROL))
     add_event(event_patrol_move, WAIT_SEC, mob, 0,0,0,0,0);

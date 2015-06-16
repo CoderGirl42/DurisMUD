@@ -4449,87 +4449,102 @@ int lancer_gift(P_obj obj, P_char ch, int cmd, char *arg)
 
 int cerberus_load(P_char ch, P_char pl, int cmd, char *arg)
 {
-  if (cmd == -1)
+  if( cmd == CMD_DEATH )
   {
     P_obj    obj;
 
+    // 50% chance to drop one of below (50%*1/8 == 1/16 chance each).
     switch(number(0,15))
     {
       case 0:
         obj = read_object(22031, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 1:
         obj = read_object(22049, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 2:
         obj = read_object(22036, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 3:
         obj = read_object(22053, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 4:
         obj = read_object(22050, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 5:
         obj = read_object(22056, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 6:
         obj = read_object(22035, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22035, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22035, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22035, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 7:
         obj = read_object(22037, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
     }
 
+    // 100% chance to drop 1 of below (1/8 chance each).
     switch(number(8,15))
     {
       case 8:
         obj = read_object(22063, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 9:
         obj = read_object(22054, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 10:
         obj = read_object(22057, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 11:
         obj = read_object(22066, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 12:
         obj = read_object(22058, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 13:
         obj = read_object(22051, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 14:
         obj = read_object(22032, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
       case 15:
         obj = read_object(22065, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22065, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22064, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22064, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         obj = read_object(22035, VIRTUAL);
+        obj_to_room(obj, ch->in_room);
         break;
     }
 
-    if (!(obj))
-    {
-      logit(LOG_EXIT, "cerberus_object: death object for mob %d doesn't exist",
-            GET_VNUM(ch));
-      raise(SIGSEGV);
-    }
+    act("&+yA HUGE rockworm gasps and begins to turn to dust.&n", FALSE, ch, NULL, NULL, TO_ROOM);
+    extract_char(ch);
 
-    obj_to_room(obj, ch->in_room);
-
-    act("&+yA HUGE rockworm gasps and begins to turn to dust.&n", FALSE, ch, obj, obj, TO_ROOM);
-
-    obj->value[0] = SECS_PER_MUD_DAY / PULSE_MOBILE * WAIT_SEC;
-
-    return FALSE;
+    return TRUE;
   }
   return FALSE;
 }
