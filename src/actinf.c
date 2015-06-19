@@ -6188,7 +6188,7 @@ void do_who(P_char ch, char *argument, int cmd)
       send_to_char("Usage:\n", ch);
       send_to_char("&+Ywho &+W[<level> | <minlevel> <maxlevel>] [<pattern>] [s]&n\n\r", ch);
       send_to_char("where pattern is matched against class, race, name, of visible players.\n\r", ch );
-      send_to_char("Other options include hardcore, spec, multi, newbie, guide, and god.\n\r", ch );
+      send_to_char("Other options include hardcore, spec, multi, newbie, guide, short, and god.\n\r", ch );
       return;
     }
     else

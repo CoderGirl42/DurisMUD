@@ -14604,7 +14604,8 @@ int witch_doctor(P_char ch, P_char customer, int cmd, char *arg)
           af.type = TAG_WITCHSPELL;
 
           af.flags = AFFTYPE_NOSHOW | AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
-          af.duration = 2000;
+          // 1 rl week = 7 * 24 * 60.
+          af.duration = 10080;
 
           if (elixir_list[i].affect_vector == 1)
             af.bitvector = elixir_list[i].affect_flag;

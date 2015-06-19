@@ -3524,11 +3524,11 @@ void enter_game(P_desc d)
   }
 
   // Add well-rested or rested bonus, if applicable.
-  // 24 hrs -> 2h well-rested bonus.
+  // 22 hrs -> 2h well-rested bonus.
   if( nobonus )
   {
   }
-  else if( rest / 3600 >= 24 )
+  else if( rest / 3600 >= 22 )
   {
     affect_from_char(ch, TAG_WELLRESTED);
     affect_from_char(ch, TAG_RESTED);
