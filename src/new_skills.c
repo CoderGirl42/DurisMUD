@@ -55,119 +55,110 @@ extern P_char character_list;
 
 int CanDoFightMove(P_char ch, P_char victim)
 {
-  if(!(ch) || !(victim))
-    return false;
+  if( !ch || !victim )
+    return FALSE;
 
-  if(victim == ch)
+  if( victim == ch )
   {
     send_to_char("Aren't we funny today...\r\n", ch);
     return FALSE;
   }
-  
-  if(!IS_ALIVE(victim))
+
+  if( !IS_ALIVE(victim) )
   {
     debug("CanDoFightMove in new_skills.c called on dead victim '%s'.", victim ? J_NAME(victim) : "NULL" );
     send_to_char("What?  Dead isn't good enough?  Leave that corpse alone!\r\n", ch);
     return FALSE;
   }
-  
-  if(!IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     debug("CanDoFightMove in new_skills.c called on by dead ch '%s'.", ch ? J_NAME(ch) : "NULL" );
     return FALSE;
   }
-  
-  if(!AWAKE(ch))
+
+  if( !AWAKE(ch) )
   {
     send_to_char("You can't do that if you're not awake!\r\n", ch);
     return FALSE;
   }
-  
-  if(affected_by_spell(ch, SONG_PEACE))
+
+  if( affected_by_spell(ch, SONG_PEACE) )
   {
-    send_to_char
-      ("You feel way too peaceful to consider doing anything offensive!\r\n",
-       ch);
+    send_to_char("You feel way too peaceful to consider doing anything offensive!\r\n", ch);
     return FALSE;
   }
-  
+
   if(CHAR_IN_SAFE_ZONE(ch))
   {
-    send_to_char
-      ("You feel ashamed trying to disrupt the tranquility of this place.\r\n",
-       ch);
+    send_to_char("You feel ashamed trying to disrupt the tranquility of this place.\r\n", ch);
     return FALSE;
   }
-  
-  if(GET_MASTER(ch) == victim &&
-    GET_MASTER(ch))
+
+  if( GET_MASTER(ch) == victim && GET_MASTER(ch) )
   {
-    act("$N is just such a good friend, you simply can't harm $M.",
-        FALSE, ch, 0, victim, TO_CHAR);
+    act("$N is just such a good friend, you simply can't harm $M.", FALSE, ch, 0, victim, TO_CHAR);
     return FALSE;
   }
-  
-  if (P_char mount = get_linked_char(ch, LNK_RIDING))
+
+  if( P_char mount = get_linked_char(ch, LNK_RIDING) )
   {
-    if (!GET_CHAR_SKILL(ch, SKILL_MOUNTED_COMBAT) /*&& !is_natural_mount(ch, mount)*/)
+    if( !GET_CHAR_SKILL(ch, SKILL_MOUNTED_COMBAT ) /*&& !is_natural_mount(ch, mount)*/)
     {
       send_to_char("While mounted? I don't think so...\r\n", ch);
       return FALSE;
     }
   }
-  
-  if(get_linking_char(ch, LNK_RIDING) == victim)
+
+  if( get_linking_char(ch, LNK_RIDING) == victim )
   {
     send_to_char("You can't harm your rider.\r\n", ch);
     return FALSE;
   }
-  
-  if((world[ch->in_room].room_flags & SINGLE_FILE) &&
-    !AdjacentInRoom(ch, victim))
+
+  if( (world[ch->in_room].room_flags & SINGLE_FILE) && !AdjacentInRoom(ch, victim) )
   {
-    act("$N seems to be just a BIT out of reach.",
-        FALSE, ch, 0, victim, TO_CHAR);
+    act("$N seems to be just a BIT out of reach.", FALSE, ch, 0, victim, TO_CHAR);
     return FALSE;
   }
-  
-  if(!CAN_SEE(ch, victim))
+
+  if( !CAN_SEE(ch, victim) )
   {
     send_to_char("Um.. you don't see any such target here?\r\n", ch);
     return FALSE;
   }
-  
-  if(affected_by_spell(ch, SKILL_GAZE))
+
+  if( affected_by_spell(ch, SKILL_GAZE) )
   {
     send_to_char("You are too petrified with fear to try that.\r\n", ch);
     return FALSE;
   }
-  
-  if(IS_AFFECTED2(ch, AFF2_STUNNED))
+
+  if( IS_AFFECTED2(ch, AFF2_STUNNED) )
   {
     send_to_char("You're too stunned to contemplate that!\r\n", ch);
     return FALSE;
   }
-  
-  if(IS_AFFECTED(ch, AFF_KNOCKED_OUT))
+
+  if( IS_AFFECTED(ch, AFF_KNOCKED_OUT) )
   {
     send_to_char("You can't do much of anything while knocked out!\r\n", ch);
     return FALSE;
   }
-  
-  if(IS_AFFECTED2(ch, AFF2_MINOR_PARALYSIS) ||
-    IS_AFFECTED2(ch, AFF2_MAJOR_PARALYSIS))
+
+  if( IS_AFFECTED2(ch, AFF2_MINOR_PARALYSIS) || IS_AFFECTED2(ch, AFF2_MAJOR_PARALYSIS) )
   {
     send_to_char("It's tough to do anything while paralyzed.\r\n", ch);
     return FALSE;
   }
-  
-  if(IS_AFFECTED(ch, AFF_BOUND))
+
+  if( IS_AFFECTED(ch, AFF_BOUND) )
   {
     send_to_char("You're too bound to do that.\r\n", ch);
     return FALSE;
   }
 
-  if(IS_AFFECTED5(ch, AFF5_NOT_OFFENSIVE))
+  if( IS_AFFECTED5(ch, AFF5_NOT_OFFENSIVE) )
   {
     send_to_char("Since you are not being offensive... try something else.\r\n", ch);
     return false;

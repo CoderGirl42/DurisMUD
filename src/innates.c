@@ -103,9 +103,9 @@ void     do_foundry(P_char, char *, int);
 void     do_webwrap(P_char, char *, int);
 void     do_summon_imp(P_char, char *, int);
 void     do_innate_gaze(P_char, char *, int);
-void       do_innate_embrace_death(P_char, char *, int);
-void       do_lifedrain(P_char, char *, int);
-void       do_immolate(P_char, char *, int);
+void     do_innate_embrace_death(P_char, char *, int);
+void     do_lifedrain(P_char, char *, int);
+void     do_immolate(P_char, char *, int);
 void     do_summon_warg(P_char, char *, int);
 void     do_shift_ethereal(P_char, char *, int);
 void     do_fade(P_char, char *, int);
@@ -125,7 +125,9 @@ void       class_has_innate( int, int );
 int        get_relic_num(P_char ch);
 int        fight_in_room(P_char ch);
 
-int        bite_poison(P_char, P_char, int); 
+int        bite_poison(P_char, P_char, int);
+
+bool GOOD_FOR_GAZING(P_char ch, P_char victim);
 
 extern const struct innate_data innates_data[];
 const struct innate_data
@@ -762,6 +764,8 @@ void assign_innates()
   ADD_RACIAL_INNATE(INNATE_MAGIC_RESISTANCE, RACE_VAMPIRE, 1);
   ADD_RACIAL_INNATE(INNATE_VULN_SUN, RACE_VAMPIRE, 1);
   ADD_RACIAL_INNATE(INNATE_SACRILEGIOUS_POWER, RACE_VAMPIRE, 46);
+  ADD_RACIAL_INNATE(INNATE_GAZE, RACE_VAMPIRE, 1);
+  ADD_RACIAL_INNATE(INNATE_GAZE, RACE_BRALANI, 1);
   ADD_RACIAL_INNATE(INNATE_ULTRAVISION, RACE_PSBEAST, 1);
   ADD_RACIAL_INNATE(INNATE_STRENGTH, RACE_PSBEAST, 1);
   ADD_RACIAL_INNATE(INNATE_UD_SNEAK, RACE_PSBEAST, 1);
@@ -1849,21 +1853,41 @@ void innate_gaze(P_char ch, P_char victim)
 {
   P_char   tch;
 
-  tch = get_random_char_in_room(ch->in_room, victim,
-      DISALLOW_UNGROUPED | DISALLOW_SELF);
+  tch = get_random_char_in_room(ch->in_room, victim, DISALLOW_UNGROUPED | DISALLOW_SELF);
 
-  if (!tch)
+  if( !tch )
+  {
     tch = victim;
+  }
 
-  act("$n directs $s &+Lcold&N gaze in your direction..", TRUE, ch, 0, tch,
-      TO_VICT);
-  act("$n's &+reyes&n glow &+Rred&N as $e gazes at $N!", TRUE, ch, 0, tch,
-      TO_NOTVICT);
+  act("You direct your &+Lcold&N gaze in $N's direction..", TRUE, ch, 0, tch, TO_CHAR);
+  act("$n directs $s &+Lcold&N gaze in your direction..", TRUE, ch, 0, tch, TO_VICT);
+  act("$n's &+reyes&n glow &+Rred&N as $e gazes at $N!", TRUE, ch, 0, tch, TO_NOTVICT);
 
-  if (saves_spell(tch, SAVING_FEAR) || tch == victim)
+  if( !GOOD_FOR_GAZING(ch, tch) )
+  {
+    act("&+w$N&+w laughs at your &+Leyelashes&+w.&n", TRUE, ch, 0, tch, TO_CHAR );
+    act("&+wYou laugh at $s pretty &+Leyelashes&+w.&n", TRUE, ch, 0, tch, TO_VICT );
+    act("&+w$N&+w laughs at $s pretty &+Leyelashes&+w.&n", TRUE, ch, 0, tch, TO_NOTVICT );
+  }
+  else if( saves_spell(tch, SAVING_FEAR) )
+  {
+    act("&+w$N&+w avoids your gaze.&n", TRUE, ch, 0, tch, TO_CHAR );
     act("You avert your eyes!", TRUE, ch, 0, tch, TO_VICT);
+  }
   else
-    attack(tch, victim);
+  {
+    if( tch != victim )
+    {
+      attack( victim, tch );
+    }
+    else
+    {
+      stop_fighting( victim );
+      CharWait( victim, PULSE_VIOLENCE );
+      act("&+MOooh, the pretty &+Rflames&+M.&n", TRUE, ch, 0, victim  , TO_VICT);
+    }
+  }
 }
 
 void do_innate_gaze(P_char ch, char *arg, int cmd)

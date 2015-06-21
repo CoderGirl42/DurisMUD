@@ -352,7 +352,7 @@ P_char parse_victim(P_char, char *, unsigned int);
 P_char ParseTarget(P_char, char *);
 bool instantkill(P_char, P_char);
 bool is_in_safe(P_char ch);
-char isBashable(P_char, P_char);
+bool isBashable(P_char ch, P_char victim, bool ignoreImmaterial = FALSE);
 char isSpringable(P_char, P_char);
 bool MobShouldFlee(P_char);
 bool nokill(P_char, P_char);

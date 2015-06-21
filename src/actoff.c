@@ -5397,68 +5397,47 @@ bool isKickable(P_char ch, P_char victim)
    to bash victim */
 
 // Expanding this function to check basher status, race, etc... Jan08 -Lucrot
-char isBashable(P_char ch, P_char victim)
+bool isBashable(P_char ch, P_char victim, bool ignoreImmaterial)
 {
   int vrace, crace, vsize, csize;
 
-  if(!(ch) ||
-    !(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return FALSE;
   }
 
-  if(!IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( ch->in_room != victim->in_room )
   {
-    return false;
-  }
-
-  if(GET_CHAR_SKILL(ch, SKILL_BASH) < 1)
-  {
-    return false;
-  }
- 
-  if(ch->in_room != victim->in_room)
-  {
-    return false;
+    return FALSE;
   }
 
   // non-size checks
-  
-  if(IS_IMMATERIAL(victim) ||
-    IS_ELEMENTAL(victim) ||
-    IS_WATERFORM(victim) ||
-    IS_IMMATERIAL(ch) ||
-    IS_DRAGON(victim) ||
-    IS_DRAGON(ch) ||
-    (IS_NPC(victim) && IS_SET(victim->specials.act, ACT_NO_BASH)) ||
-    ((ch->specials.z_cord == 0) && !HAS_FOOTING(ch)) ||
-    !CanDoFightMove(ch, victim) ||
-    GET_POS(ch) != POS_STANDING ||
-    IS_STUNNED(ch))
+  if( IS_IMMATERIAL(victim) || IS_ELEMENTAL(victim) || IS_WATERFORM(victim)
+    || (IS_IMMATERIAL(ch) && !ignoreImmaterial) || IS_DRAGON(victim) || IS_DRAGON(ch)
+    || (IS_NPC(victim) && IS_SET(victim->specials.act, ACT_NO_BASH))
+    || ((ch->specials.z_cord == 0) && !HAS_FOOTING(ch)) || !CanDoFightMove(ch, victim)
+    || GET_POS(ch) != POS_STANDING || IS_STUNNED(ch) )
   {
     return FALSE;
   }
 
   // size checks
-
   csize = get_takedown_size(ch);
   vsize = get_takedown_size(victim);
 
-  if(has_innate(victim, INNATE_HORSE_BODY) &&
-    csize <= vsize)
+  if( has_innate(victim, INNATE_HORSE_BODY) && csize <= vsize )
   {
     return FALSE;
   }
 
-  if(vsize > csize +1)
+  if( vsize > csize +1 )
   {
-    return false;
+    return FALSE;
   }
-  
-  if(vsize < csize - 1)
+
+  if( vsize < csize - 1 )
   {
-    return false;
+    return FALSE;
   }
   return TRUE;
 }

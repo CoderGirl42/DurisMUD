@@ -65,6 +65,8 @@ const char demon_types[] [16] = {
    "vrock",
 };
 
+bool GOOD_FOR_GAZING(P_char ch, P_char victim);
+
 void ZombieCombat(P_char ch, P_char victim)
 {
   int random = 0, dam = 0;
@@ -408,8 +410,11 @@ int UndeadCombat(P_char ch)
   if((IS_WRAITH(ch) || IS_BRALANI(ch)) && !IS_PC_PET(ch))
     WraithCombat(ch, victim);
 
-  if (GET_RACE(ch) == RACE_VAMPIRE && victim && number(0,1))
-    innate_gaze(ch, GET_OPPONENT(ch));
+  if( GET_RACE(ch) == RACE_VAMPIRE && victim && number(0,1)
+    && GOOD_FOR_GAZING(ch, victim) )
+  {
+    innate_gaze(ch, victim);
+  }
 
   return FALSE;
 }
@@ -459,8 +464,11 @@ int AngelCombat(P_char ch)
   if(IS_BRALANI(ch) && !IS_PC_PET(ch))
     BralaniCombat(ch, victim);
 
-  if (GET_RACE(ch) == RACE_BRALANI && victim && number(0,1))
-    innate_gaze(ch, GET_OPPONENT(ch));
+  if (GET_RACE(ch) == RACE_BRALANI && victim && number(0,1)
+    && GOOD_FOR_GAZING(ch, victim) )
+  {
+    innate_gaze(ch, victim);
+  }
 
   return FALSE;
 }

@@ -5737,39 +5737,31 @@ bool MobMonk(P_char ch)
 // Lucrot Oct08
 bool GOOD_FOR_GAZING(P_char ch, P_char victim)
 {
-  if(!(ch) ||
-     !(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
-    return false;
+    return FALSE;
   }
 
-  if(!GET_CHAR_SKILL(ch, SKILL_GAZE) &&
-      GET_CHAR_SKILL(ch, SKILL_GAZE) < 1)
+  if( GET_CHAR_SKILL(ch, SKILL_GAZE) < 1 && !has_innate(ch, INNATE_GAZE) )
   {
-    return false;
-  }
-  
-  if(isBashable(ch, victim) &&
-    !has_innate(victim, INNATE_EYELESS) &&
-    !IS_AFFECTED(victim, AFF_BLIND) &&
-    GET_POS(ch) == POS_STANDING &&
-    !affected_by_spell(ch, SKILL_BASH) &&
-    !affected_by_spell(victim, SKILL_GAZE))
-  {
-    if(get_takedown_size(victim) > get_takedown_size(ch) + 1)
-    {
-      return false;
-    }
-    
-    if(get_takedown_size(victim) < get_takedown_size(ch) - 2)
-    {
-      return false;
-    }
-    
-    return true;
+    return FALSE;
   }
 
-  return false;
+  if( isBashable(ch, victim, TRUE) && !has_innate(victim, INNATE_EYELESS) && !IS_AFFECTED(victim, AFF_BLIND)
+    && GET_POS(ch) == POS_STANDING && !affected_by_spell(ch, SKILL_BASH) && !affected_by_spell(victim, SKILL_GAZE) )
+  {
+    if( get_takedown_size(victim) > get_takedown_size(ch) + 1 )
+    {
+      return FALSE;
+    }
+    if( get_takedown_size(victim) < get_takedown_size(ch) - 2 )
+    {
+      return FALSE;
+    }
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 // AI function that allows mobs to check target before attempting to flank.
@@ -5856,9 +5848,9 @@ bool MobBerserker(P_char ch)
       return TRUE;
     }
 
-    if(isBashable(ch, ch->specials.fighting) && !number(0, 1))
+    if( isBashable(ch, GET_OPPONENT(ch)) && !number(0, 1) && (GET_CHAR_SKILL(ch, SKILL_MAUL) > 0) )
     {
-      do_maul(ch, GET_NAME(ch->specials.fighting), CMD_MAUL);
+      maul( ch, GET_OPPONENT(ch) );
       return TRUE;
     }
   }
@@ -5992,71 +5984,57 @@ bool MobWarrior(P_char ch)
   P_char tch, next_ch;
   int n_atkr;
 
-  if(!(ch) ||
-    !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
-    return false;
+    return FALSE;
   }
-  
+
   n_atkr = NumAttackers(ch);
 
-  if(n_atkr > 1 &&
-    !number(0, 1))
+  if( n_atkr > 1 && !number(0, 1) )
   {
-    for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
+    for( tch = world[ch->in_room].people; tch; tch = tch->next_in_room )
     {
-      if((ch == tch->specials.fighting) &&
-        (IS_MAGE(tch) || IS_CLERIC(tch)) &&
-        (GET_POS(ch) == POS_STANDING) &&
-        number(0, 1))
+      if( (ch == tch->specials.fighting) && (IS_MAGE(tch) || IS_CLERIC(tch))
+        && (GET_POS(ch) == POS_STANDING) && number(0, 1) )
       {
         break;
       }
     }
-    
-    if((ch && tch) &&
-      (ch->in_room == tch->in_room) &&
-      isBashable(ch, tch) &&
-      (GET_POS(tch) == POS_STANDING) &&
-      !IS_IMMATERIAL(ch))
+
+    if( (ch && tch) && (ch->in_room == tch->in_room) && isBashable(ch, tch)
+      && (GET_POS(tch) == POS_STANDING) && !IS_IMMATERIAL(ch) )
     {
-      if(ch != tch->specials.fighting &&
-        !number(0, 1))
-      { // Switch to target instead of bashing.
+      // Switch to target instead of bashing.
+      if( ch != tch->specials.fighting && number(0, 1))
+      {
         attack(ch, tch);
       }
       else
       {
         bash(ch, tch);
       }
-      return (TRUE);
+      return TRUE;
     }
   }
-  
-  if(isKickable(ch, ch->specials.fighting) &&
-     number(0, 2))
+
+  if( isKickable(ch, ch->specials.fighting) && number(0, 2) )
   {
     do_kick(ch, 0, 0);
     return TRUE;
   }
-  else if(!number(0, 3) &&
-           ch->specials.fighting &&
-           (GET_POS(ch->specials.fighting) == POS_STANDING) &&
-           isBashable(ch, ch->specials.fighting))
+  else if( !number(0, 3) && ch->specials.fighting
+    && (GET_POS(GET_OPPONENT(ch)) == POS_STANDING) && isBashable(ch, GET_OPPONENT(ch)) )
   {
     do_bash(ch, 0, 0);
-    
-    if(!ch ||
-      !ch->specials.fighting ||
-      (GET_POS(ch) < POS_STANDING) ||
-      (GET_POS(ch->specials.fighting) < POS_STANDING))
-      {
-        return TRUE;
-      }
+
+    if( !IS_ALIVE(ch) || !IS_ALIVE(GET_OPPONENT(ch)) || (GET_POS(ch) < POS_STANDING)
+      || (GET_POS(GET_OPPONENT(ch)) < POS_STANDING))
+    {
+      return TRUE;
+    }
   }
-  else if((n_atkr > 2) &&
-         (GET_LEVEL(ch) > 14) &&
-         number(0, 2))
+  else if( (n_atkr > 2) && (GET_LEVEL(ch) > 14) && number(0, 2) )
   {
     /*
      * psuedo hitall func, takes a swing at all chars fighting 'ch'
@@ -7203,7 +7181,7 @@ void MobStartFight(P_char ch, P_char vict)
     bodyslam(ch, vict);
     return;
   }
-  if( !fudge_flag && IS_WARRIOR(ch) && !IS_IMMATERIAL(ch)
+  if( !fudge_flag && IS_WARRIOR(ch) && !IS_IMMATERIAL(ch) && (GET_CHAR_SKILL(ch, SKILL_BASH) > 0)
     && (GET_POS(ch) == POS_STANDING) && (GET_POS(vict) == POS_STANDING)
     && isBashable(ch, vict) && !number(0, 2) )
   {
@@ -10598,13 +10576,11 @@ void event_agg_attack(P_char ch, P_char victim, P_obj obj, void *data)
                 number(0, 2))
         {
           do_kneel(ch, 0, CMD_KNEEL);
-          do_springleap(ch, GET_NAME(victim), 0); 
-        }        
-        else if(isBashable(ch, victim) &&
-                GET_CHAR_SKILL(ch, SKILL_BASH) > 40 &&
-                number(0, 2))
+          do_springleap(ch, GET_NAME(victim), 0);
+        }
+        else if( isBashable(ch, victim) && GET_CHAR_SKILL(ch, SKILL_BASH) > 40 && number(0, 2) )
         {
-          do_bash(ch, GET_NAME(victim), CMD_BASH);
+          bash(ch, victim);
         }
         else if(GET_CHAR_SKILL(ch, SKILL_SWITCH_OPPONENTS))
         {
