@@ -4805,9 +4805,13 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
   if( (IS_AFFECTED(victim, AFF_AWARE) && ( (GET_RACE(ch) != RACE_MOUNTAIN) && (GET_RACE(ch) != RACE_DUERGAR) ))
     || affected_by_spell(victim, SKILL_BACKSTAB) )
   {
-    int chance = GET_C_INT(victim);
-    int opportunity = number(1, (GET_C_AGI(ch) + GET_CHAR_SKILL(ch, SKILL_BACKSTAB)));
-    if(chance < opportunity || affected_by_spell(victim, SKILL_BACKSTAB) )
+    // A little higher than just int.
+    int chance = (5 * GET_C_INT(victim)) / 4;
+    // Opportunity max around 150 for 100 skill and 100 agi, +2 agi -> +1 opportunity.
+    int opportunity = GET_C_AGI(ch) / 2 + GET_CHAR_SKILL(ch, SKILL_BACKSTAB);
+    // Pick a random number between 50 and 150 (for 100 agi 100 skill) to compare against victim's int (125 at 100 int).
+    opportunity = number( opportunity / 3, opportunity );
+    if( chance >= opportunity || affected_by_spell(victim, SKILL_BACKSTAB) )
     {
       send_to_char("&+LSince your victim is &+raware&+L of your presence, you are unable to take full advantage of them...\r\n", ch);
       quarter = affected_by_spell(victim, SKILL_BACKSTAB);
