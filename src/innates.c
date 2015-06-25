@@ -2479,8 +2479,7 @@ void do_dimension_door(P_char ch, char *arg, int cmd)
   }
 
 
-  bits = generic_find(arg, (FIND_CHAR_WORLD | FIND_OBJ_WORLD), ch,
-                      &victim, &obj);
+  bits = generic_find(arg, FIND_CHAR_WORLD, ch, &victim, &obj);
 
   if (!*arg || !victim || !CAN_SEE(ch, victim))
   {

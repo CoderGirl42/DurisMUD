@@ -41,7 +41,7 @@ void do_slip(P_char ch, char *argument, int cmd)
     send_to_char("You don't know how.\r\n", ch);
     return;
   }
-  
+
   // Are we targeting a person or object?
   bits = generic_find(vict_name, FIND_OBJ_INV, ch, &t_ch, &container);
   bits2 = generic_find(obj_name, FIND_OBJ_INV, ch, &t_ch, &obj);

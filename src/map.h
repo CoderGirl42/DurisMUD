@@ -73,6 +73,8 @@
 #define MAP_USE_TOGGLE    1
 #define MAP_AUTOMAP       2
 
+#define VNUM_TRACKS       1276
+
 typedef struct _mapSymbolInfo
 {
   const char *colorStrn;        // ansi code string, sans &

@@ -1122,7 +1122,7 @@ void money_to_inventory(P_char ch);
 P_obj get_obj(char *);
 P_obj get_obj_in_list(char *, P_obj);
 P_obj get_obj_in_list_num(int num, P_obj);
-P_obj get_obj_in_list_vis(P_char, char *, P_obj);
+P_obj get_obj_in_list_vis(P_char ch, char *name, P_obj list, bool no_tracks = TRUE);
 P_obj get_obj_num(int);
 P_obj get_obj_vis(P_char ch, char *name, int zrange = 0);
 P_obj unequip_char(P_char, int);
@@ -2835,7 +2835,7 @@ void track_move(P_char);
 void add_track(P_char, int);
 void do_track(P_char, char *, int);
 void nuke_track(struct trackrecordtype *);
-void show_tracks(P_char);
+void show_tracks(P_char ch, int room);
 void show_tracking_map(P_char);
 
 /* trap.c */

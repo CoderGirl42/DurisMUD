@@ -218,6 +218,7 @@ SECS_PER_MUD_DAY)
 #define IS_SHIP_ROOM(r) (world[r].number >= 60000 && world[r].number <= 64999)
 
 #define IS_OCEAN_ROOM(r) ( world[r].sector_type == SECT_OCEAN )
+#define IS_SECT(room, sect) ( world[room].sector_type == sect )
 #define IS_FOREST_ROOM(r) ( world[r].sector_type == SECT_FOREST || world[r].sector_type == SECT_SNOWY_FOREST)
 #define IS_SWAMP_ROOM(r) ( world[r].sector_type == SECT_SWAMP )
 #define IS_CASTLE(r) ( world[r].sector_type == SECT_CASTLE_WALL || world[r].sector_type == SECT_CASTLE_GATE \

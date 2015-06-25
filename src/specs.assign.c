@@ -1335,7 +1335,7 @@ void assign_objects(void)
   /* Mossi Mods:  General Items  */
   obj_index[real_object0(4)].func.obj = blood_stains;
   obj_index[real_object0(50)].func.obj = ice_shattered_bits;
-  obj_index[real_object0(1276)].func.obj = tracks;
+  obj_index[real_object0(VNUM_TRACKS)].func.obj = tracks;
   obj_index[real_object0(99)].func.obj = frost_beacon;
   obj_index[real_object0(110)].func.obj = ice_block;
 

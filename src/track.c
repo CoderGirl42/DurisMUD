@@ -225,7 +225,7 @@ void do_track_not_in_use(P_char ch, char *arg, int cmd)
   
   for (obj = world[ch->in_room].contents; obj; obj = obj->next_content)
   {
-    if (obj->R_num == real_object(1276))
+    if (obj->R_num == real_object(VNUM_TRACKS))
     {
       if (skill >= number(90, 100))
       {
@@ -416,7 +416,7 @@ void add_track(P_char ch, int dir)
   P_obj track, obj, next_obj;
   int     counter, found, dura, zon;
   char    buf1[MAX_STRING_LENGTH];
-  char    buf2[MAX_STRING_LENGTH];
+//  char    buf2[MAX_STRING_LENGTH];
   char    buf3[MAX_STRING_LENGTH];
   struct extra_descr_data *ed;
 
@@ -554,7 +554,7 @@ void add_track(P_char ch, int dir)
   for (obj = world[ch->in_room].contents; obj; obj = next_obj)
   {
      next_obj = obj->next_content;
-     if (obj->R_num == real_object(1276))
+     if (obj->R_num == real_object(VNUM_TRACKS))
        counter++;
   }
 
@@ -566,7 +566,7 @@ void add_track(P_char ch, int dir)
       if (counter >= track_limit[world[ch->in_room].sector_type])
       {
         // Remove one set of tracks.
-        if (obj->R_num == real_object(1276))
+        if (obj->R_num == real_object(VNUM_TRACKS))
       	{
           extract_obj(obj, TRUE);
   	      obj = NULL;
@@ -577,10 +577,10 @@ void add_track(P_char ch, int dir)
     }
   }
 
-  track = read_object(1276, VIRTUAL);
+  track = read_object(VNUM_TRACKS, VIRTUAL);
 
   strcpy(buf1, "");
-  strcpy(buf2, "");
+//  strcpy(buf2, "");
   strcpy(buf3, "");
 
   if (IS_DISGUISE_SHAPE(ch))
@@ -601,13 +601,14 @@ void add_track(P_char ch, int dir)
   //sprintf(buf1, "There are tracks here going %s.", dirs[dir]);
 
   set_long_description(track, buf1);  
+
   /*
   sprintf(buf2, "These appear to be the track of %s", buf3);
   set_short_description(track, buf2); 
-  */
-
   ed = track->ex_description;
   ed->description = str_dup(buf2);
+  */
+
 
 /* ch in NOWHERE already checked for with return.
   if (ch->in_room == NOWHERE)
@@ -723,40 +724,67 @@ char    *sickprocess(const char *arg)
   return hmm;
 }
 
-void show_tracks(P_char ch)
+// Shows tracks / messages when appropriate to ch for tracks in room room.
+void show_tracks(P_char ch, int room)
 {
   P_obj    obj, next_obj;
   char     Gbuf3[MAX_STRING_LENGTH], Gbuf4[MAX_STRING_LENGTH];
-  int      roll, chance, percent, skill, level, outside;
+  int      chance, percent, skill, level, race;
+  bool     outside, forest_check;
 
-  if (IS_NPC(ch))
+  // Changed this from IS_NPC for the sake of switched Immortals.
+  if( !ch->desc )
+  {
     return;
-  if (ch->in_room == NOWHERE)
-    return;
-  if (!CAN_SEE(ch, ch))
-    return;
+  }
 
-  skill = GET_CHAR_SKILL(ch, SKILL_TRACK);
+  if( room < 0 || room > top_of_world )
+  {
+    return;
+  }
+
+  if( !CAN_SEE(ch, ch) )
+  {
+    return;
+  }
+
+  skill = GET_CHAR_SKILL(ch, SKILL_IMPROVED_TRACK);
   percent = number(1, 100);
   level = GET_LEVEL(ch);
-  outside = 0; // set for shaman/druid presence detection
+  race = GET_RACE(ch);
+  outside = FALSE; // set for shaman/druid presence detection
+  forest_check = GET_SPEC(ch, CLASS_DRUID, SPEC_WOODLAND) && IS_SECT(room, SECT_FOREST);
 
-  if (!skill)
-   skill = -20;
+  // If they don't have the skill, make it impossible to use it.
+  if( skill == 0 )
+  {
+    skill = -1000;
+  }
 
-  if (has_innate(ch, INNATE_PERCEPTION)) {
+  // If we're using farsee or such
+  if( room != ch->in_room )
+  {
+    skill -= 25;
+  }
+
+  if( has_innate(ch, INNATE_PERCEPTION) )
+  {
     skill += 30;
   }
 
-  if (IS_AFFECTED(ch, AFF_FLY))
-    percent += 30;
-
-  if (IS_FIGHTING(ch) || IS_DESTROYING(ch))
-    return;
-
-  switch (GET_POS(ch))
+  if( IS_AFFECTED(ch, AFF_FLY) )
   {
-	case POS_PRONE:	
+    percent += 30;
+  }
+
+  if( IS_FIGHTING(ch) || IS_DESTROYING(ch) )
+  {
+    return;
+  }
+
+  switch( GET_POS(ch) )
+  {
+	case POS_PRONE:
 	  percent -= 20;
     break;
   case POS_KNEELING:
@@ -770,79 +798,74 @@ void show_tracks(P_char ch)
     break;
   }
 
-  if (IS_AFFECTED(ch, AFF_FARSEE))
+  if( IS_AFFECTED(ch, AFF_FARSEE) )
   {
     percent -= 10;
   }
-  if (IS_AFFECTED4(ch, AFF4_HAWKVISION)) {
+  if( IS_AFFECTED4(ch, AFF4_HAWKVISION))
+  {
     percent -= 10;
   }
 
-  if (affected_by_spell(ch, SPELL_MOLEVISION)) {
+  if( affected_by_spell(ch, SPELL_MOLEVISION) )
+  {
     percent += 20;
   }
 
-  switch (world[ch->in_room].sector_type)
+  switch( world[room].sector_type )
   {
     case SECT_CITY:
-      if(GET_CLASS(ch, CLASS_ROGUE) || 
-        GET_CLASS(ch, CLASS_ASSASSIN) ||
-        GET_SPEC(ch, CLASS_ROGUE, SPEC_ASSASSIN) ||
-        GET_CLASS(ch, CLASS_THIEF) ||
-        GET_CLASS(ch, CLASS_MERCENARY))
+      if( GET_CLASS(ch, CLASS_ROGUE | CLASS_ASSASSIN | CLASS_THIEF | CLASS_MERCENARY)
+        || GET_SPEC(ch, CLASS_ROGUE, SPEC_ASSASSIN) )
       {
         skill += 15;
       }
 
-      if (GET_CLASS(ch, CLASS_RANGER))
+      if( GET_CLASS(ch, CLASS_RANGER) )
       {
         skill -= 20;
       }
 
-      if((GET_RACE(ch) != RACE_HUMAN) ||
-        (GET_RACE(ch) != RACE_BARBARIAN) ||
-        (GET_RACE(ch) != RACE_ORC) ||
-        (GET_RACE(ch) != RACE_HALFELF))
-        {
-          skill -=15;
-        }
+      if( race != RACE_HUMAN && race != RACE_BARBARIAN && race != RACE_ORC && race != RACE_HALFELF )
+      {
+        skill -=15;
+      }
       break;
     case SECT_FIELD:
     case SECT_ROAD:
-      outside = 1;
+      outside = TRUE;
       break;
     case SECT_FOREST:
-      if (GET_CLASS(ch, CLASS_RANGER))
+      if( GET_CLASS(ch, CLASS_RANGER) )
+      {
         skill += 15;
+      }
 
-      if( (GET_RACE(ch) == RACE_GREY) ||
-        (GET_RACE(ch) == RACE_CENTAUR) ||
-        (GET_RACE(ch) == RACE_HALFELF) )
+      if( race == RACE_GREY || race == RACE_CENTAUR )
         skill += 10;
-      else if (GET_RACE(ch) == RACE_HALFELF)
+      else if( race == RACE_HALFELF )
         skill += 5;
       else
         skill -=20;
-      outside = 1;
+      outside = TRUE;
       break;
     case SECT_HILLS:
-      if (GET_RACE(ch) == RACE_HALFLING)
+      if( race == RACE_HALFLING )
         skill += 20;
-      else if (GET_RACE(ch) == RACE_MOUNTAIN)
+      else if( race == RACE_MOUNTAIN )
         skill += 10;
       else
         skill -= 10;
-      outside = 1;
+      outside = TRUE;
       break;
     case SECT_MOUNTAIN:
-      if( (GET_RACE(ch) == RACE_MOUNTAIN) ||
-        (GET_RACE(ch) == RACE_DUERGAR) )
+      if( race == RACE_MOUNTAIN || race == RACE_DUERGAR )
         skill += 30;
       else
         skill -= 20;
       break;
     case SECT_SWAMP:
-      if (GET_RACE(ch) == RACE_TROLL)
+      if( race == RACE_TROLL )
         skill += 20;
       else
         skill -= 30;
@@ -851,7 +874,7 @@ void show_tracks(P_char ch)
       percent -= 20;
       break;
     case SECT_ARCTIC:
-      if (GET_RACE(ch) == RACE_BARBARIAN)
+      if( race == RACE_BARBARIAN )
         skill += 10;
       percent -= 10;
       break;
@@ -862,126 +885,118 @@ void show_tracks(P_char ch)
     case SECT_UNDRWLD_LOWCEIL:
     case SECT_UNDRWLD_LIQMITH:
     case SECT_UNDRWLD_MUSHROOM:
-      if((GET_RACE(ch) == RACE_DROW) ||
-        (GET_RACE(ch) == RACE_DUERGAR) )
+      if( race == RACE_DROW || race == RACE_DUERGAR )
         skill += 30;
       else
         skill -= 30;
       break;
     case SECT_INSIDE:
-    case SECT_UNDRWLD_INSIDE: 
+    case SECT_UNDRWLD_INSIDE:
       skill -= 40;
       break;
     default:
       break;
   }
+  if( IS_INSIDE(room) )
+  {
+    outside = FALSE;
+  }
 
-      /* for special cases only, people with the tracking
-       * skill use the skill/percent caculations
-       * special cases get a a 50% chance at 46 and a 90% chance
-       * at 56 for detecting the presence of the track (as per below)
-       */
-  chance = 90 - (4 * (56 - GET_LEVEL(ch)));
-  roll = number(1, 100);
+  /* For special cases only, people with the tracking skill use the skill/percent caculations
+   *   Special cases get a a 10% chance up to 46 and a 30% chance at 56 for detecting the track (as per below).
+   * Now we have a skill, percent, & chance...
+   */
+  chance = 10 + (GET_LEVEL(ch) > 46) ? (2 * (GET_LEVEL(ch) - 46)) : 0;
 
-  for (obj = world[ch->in_room].contents; obj; obj = next_obj)	
+  for( obj = world[room].contents; obj; obj = next_obj )
   {
     next_obj = obj->next_content;
 
-    if (obj->R_num == real_object(1276))
+    if( obj->R_num == real_object(VNUM_TRACKS) )
     {
-      if (!strcmp(GET_NAME(ch), "Duris"))
+      if( affected_by_spell(ch, SPELL_AURA_SIGHT) )
       {
-        sprintf(Gbuf3, "%s\n", obj->description);
-        //send_to_char(Gbuf3, ch);
-      }
-      else if (affected_by_spell(ch, SPELL_AURA_SIGHT))
-      {
-        if (chance > roll && !number(0,4))
+        if( chance > number(1, 100) )
         {
           send_to_char("&+LThere are residual brain waves in the area.\n", ch);
-          return;
         }
       }
-      else if (affected_by_spell(ch, SPELL_BLOODHOUND))
+      if( affected_by_spell(ch, SPELL_BLOODHOUND) )
       {
-        chance += 50;
-        if (chance > roll)
+        if( chance + 50 > number(1, 100) )
         {
           //sprintf(Gbuf3, "%s\n", obj->description);
           //send_to_char(Gbuf3, ch);
           send_to_char("&+rYou smell a scent in the area.\n", ch);
         }
       }
-      else if ( (GET_CLASS(ch, CLASS_DRUID) || (IS_MULTICLASS_PC(ch) && GET_SECONDARY_CLASS(ch, CLASS_DRUID))) && 
-        !(GET_CLASS(ch, CLASS_RANGER))
-        /* && !(GET_SPEC(ch, CLASS_DRUID, SPEC_WOODLAND))*/ )
+      /*
+       * Most druids will get the disturbance.
+       * Forest druids do not see disturbance in forest rooms; they can see tracks.
+       * Tweaked this such that we only skip if we're in a forest room.
+       */
+      // All druids except Ranger/Druids (They get better).
+      if( !GET_PRIME_CLASS(ch, CLASS_RANGER) && GET_CLASS(ch, CLASS_DRUID)
+        && !forest_check )
       {
-        if (outside == 1)
+        if( outside )
         {
-          if (chance > roll && !number(0,4))
+          if( chance > number(1, 100) )
           {
             send_to_char("&+gThere is a slight disturbance in nature.\n", ch);
           }
         }
-        return;
-        /*
-         * Most durids will get the disturbance, while forest druids do not, they can see tracks 
-         * but only in the forest.
-         *
-         */
       }
-      else if ( (GET_CLASS(ch, CLASS_SHAMAN)) )
+      // shamans get the straight chance for all of the outside terrains
+      if( GET_CLASS(ch, CLASS_SHAMAN) )
       {
-        if (outside == 1)
+        if( outside )
         {
-          if (chance > roll && !number(0,4))
+          if (chance > number(1, 100) )
           {
             send_to_char("&+mThere is a slight disturbance in the spirit realm here.\n", ch);
           }
         }
-        // shamans get the straight chance for all of the outside terrains
-        return;
       }
-      else if (skill > percent || GET_SPEC(ch, CLASS_DRUID, SPEC_WOODLAND))
+      if( skill > percent || forest_check )
       {
         if (percent < 0)
         {
           percent = 0;
         }
-        if( number(0,2) && (skill - percent > 30
-          || ( (GET_SPEC(ch, CLASS_DRUID, SPEC_WOODLAND))
-          && (world[ch->in_room].sector_type == SECT_FOREST) ) ) )
+        // 2/3 chance for ppl with 30 greater skill than necessary & 1/2 for forest druids in forest.
+        if( (number(0, 2) && skill - percent > 30) || (number(0,1) && forest_check) )
         {
-            sprintf(Gbuf3, "%s\n", obj->description);
-            if( number(1,100) < GET_CHAR_SKILL(ch, SKILL_IMPROVED_TRACK) )
-              send_to_char(Gbuf3, ch);
+          sprintf(Gbuf3, "%s\n", obj->description);
+          send_to_char(Gbuf3, ch);
         }
         else
         {
-          if (GET_SPEC(ch, CLASS_DRUID, SPEC_WOODLAND))
+          // I guess forest druids don't see race-less tracks.
+          if( forest_check )
           {
-            return;
+            continue;
           }
           sprintf(Gbuf3, "There are some tracks");
 
-          if (strstr(obj->description, "north"))
+          if( strstr(obj->description, "north") )
             strcat(Gbuf3, " heading north.\n");
-          else if (strstr(obj->description, "south"))
+          else if( strstr(obj->description, "south") )
             strcat(Gbuf3, " heading south.\n");
-          else if (strstr(obj->description, "west"))
+          else if( strstr(obj->description, "west") )
             strcat(Gbuf3, " heading west.\n");
-          else if (strstr(obj->description, "east"))
+          else if( strstr(obj->description, "east") )
             strcat(Gbuf3, " heading east.\n");
           else
             strcat(Gbuf3, ".\n");
-          if( number(1,100) < GET_CHAR_SKILL(ch, SKILL_IMPROVED_TRACK) )
-            send_to_char(Gbuf3, ch);
+
+          send_to_char(Gbuf3, ch);
         }
       }
     }
   }
 
+  /* I guess skill notching is done elsewhere.
   if (GET_CLASS(ch, CLASS_RANGER) ||
       GET_CLASS(ch, CLASS_DRUID) ||
       GET_CLASS(ch, CLASS_THIEF) ||
@@ -989,12 +1004,14 @@ void show_tracks(P_char ch)
       GET_CLASS(ch, CLASS_ASSASSIN) ||
       GET_SPEC(ch, CLASS_ROGUE, SPEC_ASSASSIN))
   {
-    //notch_skill(ch, SKILL_TRACK, 10);
+    notch_skill(ch, SKILL_TRACK, 10);
   }
   else
   {
-    //notch_skill(ch, SKILL_TRACK, 20);
+    notch_skill(ch, SKILL_TRACK, 20);
   }
+  */
+
   return;
 }
 

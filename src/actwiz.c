@@ -9846,7 +9846,7 @@ void do_echot(P_char ch, char *argument, int cmd)
   {
     if(IS_SET(ch->specials.act, PLR_ECHO))
     {
-      sprintf(Gbuf1, "&+WYou echot %s '%s'\n", GET_NAME(vict), message);
+      sprintf(Gbuf1, "&+WYou echot %s '&n%s&+W'.&n\n", GET_NAME(vict), message);
       send_to_char(Gbuf1, ch);
     }
     else

@@ -2244,7 +2244,7 @@ int find_door(P_char ch, char *type, char *dir)
 
 void do_open(P_char ch, char *argument, int cmd)
 {
-  int      door, other_room;
+  int      door, other_room, retval;
   struct room_direction_data *back;
   P_obj    obj;
   P_char   victim;
@@ -2269,7 +2269,8 @@ void do_open(P_char ch, char *argument, int cmd)
 
   argument_interpreter(argument, Gbuf2, Gbuf3);
 
-  if( IS_FIGHTING(ch) && number(0, 5))
+  // Lowered this from 5/6 chance to 3/4 chance.
+  if( IS_FIGHTING(ch) && number(0, 3))
   {
     send_to_char("That's tough to do in battle, but still you try...\n", ch);
     return;
@@ -2277,9 +2278,20 @@ void do_open(P_char ch, char *argument, int cmd)
   if( !*Gbuf2 )
   {
     send_to_char("Open what?\n", ch);
+    return;
   }
+
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+
   // This is an object
-  else if( generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj) )
+  if( retval != 0 )
   {
     if( (obj->type != ITEM_CONTAINER) && (obj->type != ITEM_STORAGE) && (obj->type != ITEM_QUIVER) )
     {
@@ -2431,11 +2443,9 @@ send_to_char(buf, ch);
       return;
     }
   }
+  // Perhaps it is a door
   else if( (door = find_door(ch, Gbuf2, Gbuf3)) >= 0)
-    /*
-     * perhaps it is a door
-     */
-
+  {
     if( !IS_SET(EXIT(ch, door)->exit_info, EX_ISDOOR))
       send_to_char("That's impossible, I'm afraid.\n", ch);
 
@@ -2476,11 +2486,12 @@ send_to_char(buf, ch);
                            EXIT(ch, door)->to_room);
           }
     }
+  }
 }
 
 void do_close(P_char ch, char *argument, int cmd)
 {
-  int      door, other_room;
+  int      door, other_room, retval;
   struct room_direction_data *back;
   P_obj    obj;
   P_char   victim;
@@ -2506,14 +2517,22 @@ void do_close(P_char ch, char *argument, int cmd)
 
   argument_interpreter(argument, Gbuf2, Gbuf3);
 
-  if( !*Gbuf2)
+  if( !*Gbuf2 )
+  {
     send_to_char("Close what?\n", ch);
-  else if( generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM,
-                        ch, &victim, &obj))
-    /*
-     * this is an object
-     */
+    return;
+  }
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
 
+  // This is an object
+  if( retval != 0 )
     if( (obj->type != ITEM_CONTAINER) &&
         (obj->type != ITEM_STORAGE) && (obj->type != ITEM_QUIVER))
       send_to_char("That's not a container.\n", ch);
@@ -2583,7 +2602,7 @@ P_obj has_key(P_char ch, int key)
 }
 void do_lock(P_char ch, char *argument, int cmd)
 {
-  int      door, other_room;
+  int      door, other_room, retval;
   struct room_direction_data *back;
   P_obj    obj, key_obj;
   P_char   victim;
@@ -2608,14 +2627,23 @@ void do_lock(P_char ch, char *argument, int cmd)
 
   argument_interpreter(argument, Gbuf2, Gbuf3);
 
-  if( !*Gbuf2)
+  if( !*Gbuf2 )
+  {
     send_to_char("Lock what?\n", ch);
-  else if( generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM,
-                        ch, &victim, &obj))
-    /*
-     * this is an object
-     */
+    return;
+  }
 
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+
+  // This is an object
+  if( retval != 0 )
     if( (obj->type != ITEM_CONTAINER) &&
         (obj->type != ITEM_STORAGE) && (obj->type != ITEM_QUIVER))
       send_to_char("That's not a container.\n", ch);
@@ -2671,7 +2699,7 @@ void do_lock(P_char ch, char *argument, int cmd)
 
 void do_unlock(P_char ch, char *argument, int cmd)
 {
-  int      door, other_room;
+  int      door, other_room, retval;
   struct room_direction_data *back;
   P_obj    obj, key_obj = NULL;
   P_char   victim;
@@ -2696,14 +2724,23 @@ void do_unlock(P_char ch, char *argument, int cmd)
 
   argument_interpreter(argument, Gbuf2, Gbuf3);
 
-  if( !*Gbuf2)
+  if( !*Gbuf2 )
+  {
     send_to_char("Unlock what?\n", ch);
-  else if( generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM,
-                        ch, &victim, &obj))
-    /*
-     * this is an object
-     */
+    return;
+  }
 
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+
+  // This is an object
+  if( retval != 0 )
     if( (obj->type != ITEM_CONTAINER) &&
         (obj->type != ITEM_STORAGE) && (obj->type != ITEM_QUIVER))
       send_to_char("That's not a container.\n", ch);
@@ -2845,7 +2882,7 @@ void do_unlock(P_char ch, char *argument, int cmd)
 
 void do_pick(P_char ch, char *argument, int cmd)
 {
-  int      percent, door, other_room, chance;
+  int      percent, door, other_room, chance, retval;
   struct room_direction_data *back;
   P_obj    obj, pick;
   P_char   victim;
@@ -2897,15 +2934,23 @@ void do_pick(P_char ch, char *argument, int cmd)
   chance = GET_CHAR_SKILL(ch, SKILL_PICK_LOCK) + pick->value[0];
   percent = number(1, 100);
 
-  if( !*Gbuf2)
+  if( !*Gbuf2 )
+  {
     send_to_char("Pick what?\n", ch);
-  else
-    if( generic_find
-        (argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj))
-    /*
-     * this is an object
-     */
+    return;
+  }
 
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+
+  // This is an object
+  if( retval != 0 )
     if( (obj->type != ITEM_CONTAINER) &&
         (obj->type != ITEM_STORAGE) && (obj->type != ITEM_QUIVER))
       send_to_char("That's not a container.\n", ch);

@@ -2932,7 +2932,7 @@ void yank_make_item(P_char ch, P_obj obj)
 
 void make_lock(P_char ch, char *arg)
 {
-  int      door, other_room;
+  int      door, other_room, retval;
   struct room_direction_data *back;
   P_obj    obj, templ;
   P_char   victim;
@@ -2945,14 +2945,24 @@ void make_lock(P_char ch, char *arg)
 
   if (!(templ = has_key(ch, OBJ_TEMPLATE_LOCK)))
   {
-    send_to_char("You don't seem to have a lock template to work with.\r\n",
-        ch);
+    send_to_char("You don't seem to have a lock template to work with.\r\n", ch);
     return;
   }
-  if (!*Gbuf2)
+  if( !*Gbuf2 )
+  {
     send_to_char(MAKE_FORMAT, ch);
-  else if (generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj))
-    /* this is an object */
+    return;
+  }
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+  /* this is an object */
+  if( retval != 0 )
     if ((obj->type != ITEM_CONTAINER) && (obj->type != ITEM_STORAGE))
       send_to_char("That's not a lockable container.\r\n", ch);
     else if (!IS_SET(obj->value[1], CONT_CLOSED))
@@ -3002,7 +3012,7 @@ void make_lock(P_char ch, char *arg)
 
 void make_key(P_char ch, char *arg)
 {
-  int      door;
+  int      door, retval;
   P_obj    obj, templ, template2;
   P_char   victim;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
@@ -3017,16 +3027,26 @@ void make_key(P_char ch, char *arg)
   template2 = ch->equipment[HOLD];
   if (!template2 || (template2->type != ITEM_PICK))
   {
-    send_to_char
-      ("You need to be able to pick a lock, before you can fashion a key.\r\n",
-       ch);
+    send_to_char("You need to be able to pick a lock, before you can fashion a key.\r\n", ch);
     return;
   }
   if (!*Gbuf2)
-    send_to_char(MAKE_FORMAT, ch);
-  else if (generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj))
   {
-    /* this is an object */
+    send_to_char(MAKE_FORMAT, ch);
+    return;
+  }
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &obj);
+  }
+  else
+  {
+    retval = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+  }
+
+  /* this is an object */
+  if( retval != 0 )
+  {
     if ((obj->type != ITEM_CONTAINER) && (obj->type != ITEM_STORAGE))
       send_to_char("You fail to find a proper lock on that.\r\n", ch);
     else
@@ -4496,10 +4516,17 @@ void do_throw_potion(P_char ch, char *argument, int cmd)
 
     if (bits == 0)
     {
-      bits = generic_find(argument, FIND_OBJ_ROOM, ch, &victim, &obj);
+      if( IS_TRUSTED(ch) )
+      {
+        bits = generic_find(argument, FIND_OBJ_ROOM, ch, &victim, &obj);
+      }
+      else
+      {
+        bits = generic_find(argument, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &obj);
+      }
     }
 
-    if (bits == 0)
+    if( bits == 0 )
       bits = generic_find(argument, FIND_OBJ_INV, ch, &victim, &obj);
 
     if (bits && obj && GET_ITEM_TYPE(obj) == ITEM_CORPSE)

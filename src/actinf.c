@@ -2568,9 +2568,17 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
     }
     if( *arg2 )
     {
-      /* Item carried */
-      bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP, ch, &tmp_char, &tmp_object);
-      if( bits )
+      /* Item carried or in room */
+      if( IS_TRUSTED(ch) )
+      {
+        bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP, ch, &tmp_char, &tmp_object);
+      }
+      else
+      {
+        bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_NO_TRACKS,
+          ch, &tmp_char, &tmp_object);
+      }
+      if( bits != 0 )
       {                         /* Found something */
         if (GET_ITEM_TYPE(tmp_object) == ITEM_DRINKCON)
         {
@@ -2633,7 +2641,16 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
     }
     if( *arg2 )
     {
-      bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM, ch, &tmp_char, &found_object);
+      if( IS_TRUSTED(ch) )
+      {
+        bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM,
+          ch, &tmp_char, &found_object);
+      }
+      else
+      {
+        bits = generic_find(arg2, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM | FIND_NO_TRACKS,
+          ch, &tmp_char, &found_object);
+      }
       if( tmp_char )
       {
         show_char_to_char(tmp_char, ch, 1);
@@ -2711,7 +2728,7 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
             if( CAN_SEE_OBJ(ch, tmp_object) || IS_OBJ_STAT(tmp_object, ITEM_NOSHOW) )
             {
               /* can't look at tracks */
-						  if( tmp_object->R_num != real_object(1276) )
+						  if( tmp_object->R_num != real_object(VNUM_TRACKS) )
               {
               	tmp_desc = find_ex_description(arg2, tmp_object->ex_description);
               	if( tmp_desc )
@@ -2872,7 +2889,7 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
 
     list_char_to_char(world[room_no].people, ch, 0);
 
-    show_tracks(ch);
+    show_tracks(ch, room_no);
 
     break;
 
@@ -3291,8 +3308,18 @@ void do_examine(P_char ch, char *argument, int cmd)
   do_look(ch, buf, -4);
 
   // This needs to match the generic find in new_look, switch(keyword_no) case 7,
-  //   so that we are dealing with the same char/obj.
-  bits = generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM, ch, &tmp_char, &tmp_object);
+  //   so that we are dealing with the same char/obj.  This is really bad form, since we should do the
+  //   lookup once and have a function to display what we found called in each case (here and new_look).
+  if( IS_TRUSTED(ch) )
+  {
+    bits = generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM,
+      ch, &tmp_char, &tmp_object);
+  }
+  else
+  {
+    bits = generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_OBJ_EQUIP | FIND_CHAR_ROOM | FIND_NO_TRACKS,
+      ch, &tmp_char, &tmp_object);
+  }
 
   // check legend lore
   if( tmp_object && (GET_CHAR_SKILL(ch, SKILL_LEGEND_LORE) > number(0, 110)) &&

@@ -102,8 +102,16 @@ void do_gather(P_char ch, char *argument, int cmd)
     type = 1;
   }
   else
-  {    
-    bits = generic_find(name, FIND_OBJ_ROOM, ch, &tmp_char, &corpse);
+  {
+    if( IS_TRUSTED(ch) )
+    {
+      bits = generic_find(name, FIND_OBJ_ROOM, ch, &tmp_char, &corpse);
+    }
+    else
+    {
+      bits = generic_find(name, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &tmp_char, &corpse);
+    }
+
     if (!corpse)
     {
       send_to_char("You don't see that here.\n", ch);

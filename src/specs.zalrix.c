@@ -74,7 +74,8 @@ int drowcrusher(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
   if (!arg || !*arg)
     return FALSE;
-  generic_find(arg, FIND_OBJ_ROOM, ch, &ch2, &obj2);
+  // Not looking for tracks, so skipping them
+  generic_find(arg, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &ch2, &obj2);
 
   if (!obj2)
     return FALSE;

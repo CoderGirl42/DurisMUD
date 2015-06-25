@@ -107,6 +107,7 @@ typedef struct combat_data *P_combat;
 #define FIND_OBJ_EQUIP     BIT_6
 #define FIND_IGNORE_ZCOORD BIT_7  // bit 7 and 8 not currently imped
 #define FIND_MORT_ZCOORD   BIT_8  // mort zcoord == can get target if no more than 2 z diff, or any targ in room if hawkvision
+#define FIND_NO_TRACKS     BIT_9  // Ignore object vnum VNUM_TRACKS (tracks left by players).
 
 #define AFFTYPE_SHORT      BIT_1  // duration is in pulses instead of ticks
 #define AFFTYPE_NOSHOW     BIT_2  // affect wont show up on score

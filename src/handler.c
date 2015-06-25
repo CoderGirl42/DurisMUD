@@ -3217,7 +3217,7 @@ P_char get_char_vis(P_char ch, const char *name)
   return (0);
 }
 
-P_obj get_obj_in_list_vis(P_char ch, char *name, P_obj list)
+P_obj get_obj_in_list_vis(P_char ch, char *name, P_obj list, bool no_tracks )
 {
   P_obj    i;
   int      j, k;
@@ -3233,16 +3233,35 @@ P_obj get_obj_in_list_vis(P_char ch, char *name, P_obj list)
   {
     return (0);
   }
-  for (i = list, j = 1; i && (j <= k); i = i->next_content)
+  if( no_tracks )
   {
-    if( isname(tmp, i->name)
-      || (IS_PC(ch) && IS_TRUSTED(ch) && atoi(name) > 0 && atoi(name) == GET_OBJ_VNUM(i)) )
+    for (i = list, j = 1; i && (j <= k); i = i->next_content)
     {
-      if (CAN_SEE_OBJ(ch, i) || IS_NOSHOW(i))
+      if( isname(tmp, i->name)
+        || (IS_PC(ch) && IS_TRUSTED(ch) && atoi(name) > 0 && atoi(name) == GET_OBJ_VNUM(i)) )
       {
-        if (j == k)
-          return (i);
-        j++;
+        if( CAN_SEE_OBJ(ch, i) || IS_NOSHOW(i) && GET_OBJ_VNUM(i) != VNUM_TRACKS )
+        {
+          if (j == k)
+            return (i);
+          j++;
+        }
+      }
+    }
+  }
+  else
+  {
+    for (i = list, j = 1; i && (j <= k); i = i->next_content)
+    {
+      if( isname(tmp, i->name)
+        || (IS_PC(ch) && IS_TRUSTED(ch) && atoi(name) > 0 && atoi(name) == GET_OBJ_VNUM(i)) )
+      {
+        if (CAN_SEE_OBJ(ch, i) || IS_NOSHOW(i))
+        {
+          if (j == k)
+            return (i);
+          j++;
+        }
       }
     }
   }
@@ -3363,6 +3382,132 @@ P_obj get_obj_vis(P_char ch, char *name, int zrange )
       if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
       {
         if( CAN_SEE_OBJZ(ch, t_obj, zrange) || IS_NOSHOW(t_obj) )
+        {
+          if( ++j == k )
+          {
+            return t_obj;
+          }
+        }
+      }
+    }
+  }
+
+  return NULL;
+}
+
+/* Search the entire world for an object not including any tracks, and return a pointer.
+ * zrange is the distance above/below char.
+ */
+P_obj get_obj_vis_no_tracks(P_char ch, char *name, int zrange )
+{
+  P_obj    t_obj;
+  int      i, j, k, vnum = 0;
+  char     tmpname[MAX_STRING_LENGTH];
+  char    *tmp;
+
+  // Without an argument, no idea what to look for.
+  if( !name || !*name )
+    return NULL;
+
+  strcpy(tmpname, name);
+  tmp = tmpname;
+
+  // If we have just a vnum hunted for by an Imm
+  if( is_number(name) && IS_TRUSTED(ch) )
+  {
+    vnum = atoi(name);
+    k = 1;
+  }
+  // In format xxx.yyy, k = atoi(xxx) & tmp = yyy.
+  else if( !(k = get_number(&tmp)) )
+  {
+    return NULL;
+  }
+  // If we have xxx.yyy where xxx is quantity, and yyy is vnum
+  if( !vnum && is_number(tmp) && IS_TRUSTED(ch) )
+  {
+    vnum = atoi(tmp);
+  }
+
+  // Check equipment first, this was ancient glitch
+  for (i = 0, j = 0; (i < MAX_WEAR) && (j <= k); i++)
+  {
+    if( (t_obj = ch->equipment[i]) )
+    {
+      if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
+      {
+        if( CAN_SEE_OBJ(ch, t_obj) || IS_NOSHOW(t_obj) && GET_OBJ_VNUM(t_obj) != VNUM_TRACKS )
+        {
+          if( ++j == k )
+          {
+            return t_obj;
+          }
+        }
+      }
+    }
+  }
+
+  // Scan items carried
+  t_obj = ch->carrying;
+  while( t_obj )
+  {
+    if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
+    {
+      if( CAN_SEE_OBJ(ch, t_obj) || IS_NOSHOW(t_obj) && GET_OBJ_VNUM(t_obj) != VNUM_TRACKS )
+      {
+        if( ++j == k )
+        {
+          return t_obj;
+        }
+      }
+    }
+    t_obj = t_obj->next_content;
+  }
+
+  // Scan room
+  t_obj = world[ch->in_room].contents;
+  while( t_obj )
+  {
+    if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
+    {
+      if( CAN_SEE_OBJ(ch, t_obj) || IS_NOSHOW(t_obj) && GET_OBJ_VNUM(t_obj) != VNUM_TRACKS )
+      {
+        if( ++j == k )
+        {
+          return t_obj;
+        }
+      }
+    }
+    t_obj = t_obj->next_content;
+  }
+
+  // Ok.. no luck yet. scan the entire obj list (restart counter).
+  if( zrange <= 0 )
+  {
+    for( t_obj = object_list, j = 0; t_obj && (j < k); t_obj = t_obj->next )
+    {
+      if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
+      {
+        // If you can see it, or it's flagged noshow... then you can see it?
+        //   Yes, the NOSHOW flag means you can't see it when you look in room,
+        //   but it shows when you try to interact with it (ie push button / touch flowers / l <extra desc> etc).
+        if( CAN_SEE_OBJ(ch, t_obj) || IS_NOSHOW(t_obj) && GET_OBJ_VNUM(t_obj) != VNUM_TRACKS )
+        {
+          if( ++j == k )
+          {
+            return t_obj;
+          }
+        }
+      }
+    }
+  }
+  else
+  {
+    for( t_obj = object_list, j = 0; t_obj && (j <= k); t_obj = t_obj->next )
+    {
+      if( (vnum && vnum == GET_OBJ_VNUM(t_obj)) || isname(tmp, t_obj->name) )
+      {
+        if( CAN_SEE_OBJZ(ch, t_obj, zrange) || IS_NOSHOW(t_obj) && GET_OBJ_VNUM(t_obj) != VNUM_TRACKS )
         {
           if( ++j == k )
           {
@@ -3572,9 +3717,7 @@ int generic_find(char *arg, int bitvector, P_char ch, P_char * tar_ch, P_obj * t
   *tar_ch = 0;
   *tar_obj = 0;
 
-  /*
-   * * Eliminate spaces and "ignore" words
-   */
+  // Eliminate spaces and "ignore" words
   while( *arg && !found )
   {
     while( *arg == ' ' )
@@ -3605,26 +3748,20 @@ int generic_find(char *arg, int bitvector, P_char ch, P_char * tar_ch, P_obj * t
    *tar_obj = 0;
  */
 
-  /*
-   * * local people
-   */
-
+  // Local people
+  // Find person in room
   if (IS_SET(bitvector, FIND_CHAR_ROOM))
-  {                             /*
-                                 * * Find person in room
-                                 */
+  {
     if ((*tar_ch = get_char_room_vis(ch, name)))
     {
       return (FIND_CHAR_ROOM);
     }
   }
-  /*
-   * * local objects
-   */
 
-  if (IS_SET(bitvector, FIND_OBJ_INV) && ch->carrying)
+  // Local objects
+  if( IS_SET(bitvector, FIND_OBJ_INV) && ch->carrying )
   {
-    if ((*tar_obj = get_obj_in_list_vis(ch, name, ch->carrying)))
+    if( (*tar_obj = get_obj_in_list_vis(ch, name, ch->carrying, IS_SET(bitvector, FIND_NO_TRACKS))) )
     {
       return (FIND_OBJ_INV);
     }
@@ -3644,15 +3781,13 @@ int generic_find(char *arg, int bitvector, P_char ch, P_char * tar_ch, P_obj * t
   }
   if (IS_SET(bitvector, FIND_OBJ_ROOM) && world[ch->in_room].contents)
   {
-    if( (*tar_obj = get_obj_in_list_vis(ch, name, world[ch->in_room].contents)) )
+    if( (*tar_obj = get_obj_in_list_vis(ch, name, world[ch->in_room].contents, IS_SET(bitvector, FIND_NO_TRACKS))) )
     {
       return (FIND_OBJ_ROOM);
     }
   }
-  /*
-   * check for both sorts of global searches
-   */
 
+  // Check for both sorts of global searches
   if (IS_SET(bitvector, FIND_CHAR_WORLD))
   {
     if ((*tar_ch = get_char_vis(ch, name)))
@@ -3660,11 +3795,21 @@ int generic_find(char *arg, int bitvector, P_char ch, P_char * tar_ch, P_obj * t
       return (FIND_CHAR_WORLD);
     }
   }
-  if (IS_SET(bitvector, FIND_OBJ_WORLD))
+  if( IS_SET(bitvector, FIND_OBJ_WORLD) )
   {
-    if ((*tar_obj = get_obj_vis(ch, name, (bitvector & FIND_IGNORE_ZCOORD) ? MAX_ALTITUDE : 0)))
+    if( !IS_SET(bitvector, FIND_NO_TRACKS) )
     {
-      return (FIND_OBJ_WORLD);
+      if( (*tar_obj = get_obj_vis(ch, name, (bitvector & FIND_IGNORE_ZCOORD) ? MAX_ALTITUDE : 0)) )
+      {
+        return (FIND_OBJ_WORLD);
+      }
+    }
+    else
+    {
+      if( (*tar_obj = get_obj_vis_no_tracks(ch, name, (bitvector & FIND_IGNORE_ZCOORD) ? MAX_ALTITUDE : 0)) )
+      {
+        return (FIND_OBJ_WORLD);
+      }
     }
   }
   return (0);

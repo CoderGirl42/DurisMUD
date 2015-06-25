@@ -2031,7 +2031,7 @@ void do_hide(P_char ch, char *argument, int cmd)
       for (tobj = world[ch->in_room].contents; tobj; tobj = next_tobj)
       {
         next_tobj = tobj->next_content;
-        if (tobj->R_num == real_object(1276))
+        if (tobj->R_num == real_object(VNUM_TRACKS))
         {
           extract_obj(tobj, TRUE);
           tobj = NULL;

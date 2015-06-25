@@ -11462,9 +11462,7 @@ bool check_item_teleport(P_char ch, char *arg, int cmd)
   }
   else
   {
-    bits =
-      generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM, ch,
-                   &dummy, &obj);
+    bits = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM, ch, &dummy, &obj);
   }
   if(!obj)
     return FALSE;
@@ -16823,7 +16821,7 @@ void spell_tree(int level, P_char ch, char *arg, int type, P_char victim, P_obj 
                 for (tobj = world[ch->in_room].contents; tobj; tobj = next_tobj)
                 {
                         next_tobj = tobj->next_content;
-                        if(tobj->R_num == real_object(1276))
+                        if(tobj->R_num == real_object(VNUM_TRACKS))
                         {
                                 extract_obj(tobj, TRUE);
                                 tobj = NULL;
@@ -19529,10 +19527,9 @@ int parse_chaos_shield(P_char victim, P_char ch)
   return TRUE;
 }
 
-void spell_knock(int cmd, P_char ch, char *argument, int type,
-                          P_char victim, P_obj obj)
+void spell_knock(int cmd, P_char ch, char *argument, int type, P_char victim, P_obj obj)
 {
-  int      percent, door, other_room, chance;
+  int      percent, door, other_room, chance, retval;
   struct room_direction_data *back;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
   P_obj    found_obj;
@@ -19543,13 +19540,22 @@ void spell_knock(int cmd, P_char ch, char *argument, int type,
   chance = GET_LEVEL(ch);
   percent = number(1, 100);
 
-  if(!Gbuf2 || !*Gbuf2)
+  if( !Gbuf2 || !*Gbuf2 )
   {
     send_to_char("What requires unlocking here again?\n", ch);
     return;
   }
-  
-  if(generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &found_char, &found_obj))
+
+  if( IS_TRUSTED(ch) )
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &found_char, &found_obj);
+  }
+  else
+  {
+    retval = generic_find(argument, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &found_char, &found_obj);
+  }
+
+  if( retval != 0)
   {
      if((found_obj->type != ITEM_CONTAINER) &&
            (found_obj->type != ITEM_STORAGE) && (found_obj->type != ITEM_QUIVER))

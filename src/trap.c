@@ -189,7 +189,8 @@ void do_trapset(P_char ch, char *argument, int cmd)
     send_to_char("        Object, open, room> no values\r\n", ch);
     return;
   }
-  if( !(bits = generic_find(arg1, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &dummy, &obj)) )
+  // Just not allowing tracks to be trapped. by anyone.
+  if( !(bits = generic_find(arg1, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &obj)) )
   {
     send_to_char("Nothing like that here!\r\n", ch);
     return;

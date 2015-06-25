@@ -370,8 +370,7 @@ void do_get(P_char ch, char *argument, int cmd)
 {
   P_char   hood = NULL, owner = NULL;
   P_obj    s_obj = NULL, o_obj = NULL, next_obj;
-  bool     found = FALSE, fail = FALSE, corpse_flag = FALSE, alldot = FALSE,
-    carried;
+  bool     found = FALSE, fail = FALSE, corpse_flag = FALSE, alldot = FALSE, carried;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
   char     Gbuf4[MAX_STRING_LENGTH], buf[MAX_STRING_LENGTH];
   char     arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
@@ -386,7 +385,7 @@ void do_get(P_char ch, char *argument, int cmd)
       36, 8, 38, -1
   };
 
-  if( !(ch) || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -569,8 +568,7 @@ void do_get(P_char ch, char *argument, int cmd)
     found = FALSE;
     fail = FALSE;
 
-    o_obj = get_obj_in_list_vis(ch, arg1, world[ch->in_room].contents);
-    if (o_obj)
+    if( (o_obj = get_obj_in_list_vis(ch, arg1, world[ch->in_room].contents, !IS_TRUSTED(ch))) )
     {
       /*
        * was object disarmed?  did PC still manage to get it? if so,
@@ -1721,13 +1719,12 @@ void do_put(P_char ch, char *argument, int cmd)
 {
   P_obj    o_obj = NULL, s_obj = NULL, tmp_obj, next_obj;
   P_char   t_ch;
-  int      bits, amount, ctype, count = 0;
+  int      bits, amount, ctype, count = 0, attempted = 0;
   int      plat = 0, gold = 0, silv = 0, copp = 0;
   int      p, g, s, c, type = 0;
   char     buf[MAX_STRING_LENGTH];
   char     obj_name[MAX_STRING_LENGTH];
   char     cont_name[MAX_STRING_LENGTH];
-  bool     attempted = FALSE;
 
   if( IS_ANIMAL(ch) )
   {
@@ -1799,7 +1796,15 @@ void do_put(P_char ch, char *argument, int cmd)
     return;
   }
 
-  bits = generic_find(cont_name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &t_ch, &s_obj);
+  if( IS_TRUSTED(ch) )
+  {
+    bits = generic_find(cont_name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &t_ch, &s_obj);
+  }
+  else
+  {
+    bits = generic_find(cont_name, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &t_ch, &s_obj);
+  }
+
   if (!s_obj)
   {
     send_to_char("Into what?\r\n", ch);
@@ -1851,7 +1856,7 @@ void do_put(P_char ch, char *argument, int cmd)
   if (type == PUT_ITEM)
   {
     attempted = generic_find(obj_name, FIND_OBJ_INV, ch, &t_ch, &o_obj);
-    if( attempted )
+    if( attempted != 0 )
     {
       count = put(ch, o_obj, s_obj, TRUE);
     }
@@ -1867,12 +1872,12 @@ void do_put(P_char ch, char *argument, int cmd)
         continue;
       if (type == PUT_ALLDOT && !isname(obj_name, o_obj->name))
         continue;
-      attempted = TRUE;
-      if (put(ch, o_obj, s_obj, FALSE))
+      attempted = 1;
+      if( put(ch, o_obj, s_obj, FALSE) )
         count++;
     }
   }
-  if (!attempted)
+  if( attempted == 0 )
   {
     if (type != PUT_ITEM)
     {
@@ -6400,7 +6405,15 @@ void do_search(P_char ch, char *argument, int cmd)
   }
   else
   {
-    generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &dummy, &k);
+    if( IS_TRUSTED(ch) )
+    {
+      generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &dummy, &k);
+    }
+    else
+    {
+      generic_find(name, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &k);
+    }
+
     if (!k)
     {
       send_to_char("You don't find anything you didn't see before.\r\n", ch);

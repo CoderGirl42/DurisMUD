@@ -1462,7 +1462,8 @@ int item_switch(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
   }
 
-  bits = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM, ch, &dummy, &object);
+  // Tracks are never a switch.
+  bits = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &object);
   if( obj != object )
   {
     return FALSE;
@@ -1736,9 +1737,9 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
     "[&+L     BLANK     &N]",   //
     "[&+L     BLANK     &N]",   //105
     "[&+L     BLANK     &N]"    //
-      "[&+L     BLANK     &N]"  //
-      "[&+L     BLANK     &N]"  //
-      "[&+L     BLANK     &N]"  //109
+    "[&+L     BLANK     &N]"  //
+    "[&+L     BLANK     &N]"  //
+    "[&+L     BLANK     &N]"  //109
   };
 
   int      bits, coins, type, wheela, wheelb, wheelc, greywheel, count;
@@ -1771,7 +1772,8 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
 
   type = coin_type(Gbuf2);
   coinamt = atoi(Gbuf1);
-  bits = generic_find(Gbuf3, FIND_OBJ_ROOM, ch, &dummy, &object);
+  // Don't include tracks with slot machine.
+  bits = generic_find(Gbuf3, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &object);
 
 //  wizlog(MINLVLIMMORTAL, "%s played %s %s on %s in [%d]", GET_NAME(ch),
 //                              Gbuf1, Gbuf2, Gbuf3, world[ch->in_room].number);
@@ -1797,7 +1799,7 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
     return TRUE;
   }
 
-//  bits = generic_find(Gbuf2, FIND_OBJ_ROOM, ch, &dummy, &object);
+//  bits = generic_find(Gbuf2, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &object);
 
   if (obj != object)
     return FALSE;
@@ -5395,9 +5397,7 @@ int skeleton_key(P_obj obj, P_char ch, int cmd, char *arg)
   P_obj    target_o;
   P_char   victim;
 
-  /*
-     check for periodic event calls
-   */
+  // Check for periodic event calls
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
@@ -5407,9 +5407,7 @@ int skeleton_key(P_obj obj, P_char ch, int cmd, char *arg)
   if ((!obj) || (!ch) || (cmd != CMD_UNLOCK) || !AWAKE(ch))
     return (FALSE);
 
-  /*
-     must be equipped
-   */
+  // Must be equipped
   if (!OBJ_WORN(obj))
     return (FALSE);
 
@@ -5434,9 +5432,8 @@ int skeleton_key(P_obj obj, P_char ch, int cmd, char *arg)
   argument_interpreter(arg, type, dir);
   if (!*type)
     return (FALSE);
-  else
-    if (generic_find
-        (arg, FIND_OBJ_INV | FIND_OBJ_ROOM, ch, &victim, &target_o))
+  // Don't include tracks.
+  else if (generic_find(arg, FIND_OBJ_INV | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &target_o))
   {
 
     /*
@@ -6342,8 +6339,8 @@ int automaton_lever(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
   }
 
-  bits = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM, ch,
-                      &tempch, &tempobj);
+  // No tracks are autmaton levers.
+  bits = generic_find(arg, FIND_OBJ_INV | FIND_OBJ_EQUIP | FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &tempch, &tempobj);
   if( tempobj != obj )
   {
     return FALSE;
@@ -6409,7 +6406,8 @@ int llyms_altar(P_obj obj, P_char ch, int cmd, char *arg)
     return FALSE;
   }
 
-  bits = generic_find(altar_name, FIND_OBJ_ROOM, ch, &tempchar, &tempobj);
+  // Skip tracks when looking for altar.
+  bits = generic_find(altar_name, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &tempchar, &tempobj);
   bits = generic_find(treas_name, FIND_OBJ_EQUIP, ch, &tempchar, &treasure);
   if( tempobj != obj || !treasure )
   {
@@ -13647,8 +13645,7 @@ int portal_etherportal(P_obj obj, P_char ch, int cmd, char *arg)
 // general portal actions: dispel,look in, enter
 // (msg comes from portal hooks)
 //---------------------------------------------------------
-int portal_general_internal( P_obj obj, P_char ch, int cmd, char *arg,
-		            		 struct portal_action_messages *msg )
+int portal_general_internal( P_obj obj, P_char ch, int cmd, char *arg, struct portal_action_messages *msg )
 {
    int      bits;
    int      to_room;
@@ -13687,14 +13684,10 @@ int portal_general_internal( P_obj obj, P_char ch, int cmd, char *arg,
      arg += 3;
    }
 
-   /*
-     get the portal object, since there may be more than one
-   */
-  bits = generic_find(arg, FIND_OBJ_ROOM, ch, &dummy, &obj2);
+  // Get the portal object, since there may be more than one (skipping tracks)
+  bits = generic_find(arg, FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &dummy, &obj2);
 
-  /*
-     if the object is not the one we seek then return false
-   */
+  // If the object is not the one we seek then return false
   if (obj2 != obj)
     return FALSE;
 

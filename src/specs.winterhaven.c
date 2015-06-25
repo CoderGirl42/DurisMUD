@@ -1465,7 +1465,8 @@ int welfare_well(int room, P_char ch, int cmd, char *arg)
     one_argument(arg, buf);
     if (!buf)
       return FALSE;
-    bits = generic_find("well", FIND_OBJ_ROOM, ch, &victim, &well);
+    // We're looking for a well, so skip tracks.
+    bits = generic_find("well", FIND_OBJ_ROOM | FIND_NO_TRACKS, ch, &victim, &well);
     if (bits && (well->type == ITEM_STORAGE))
     {
       obj = get_obj_in_list(buf, well->contains);
