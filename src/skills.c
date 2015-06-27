@@ -3323,8 +3323,8 @@ SPELL_ADD(CLASS_SUMMONER, 11);
                 spell_detect_illusion, "Unseen things and illusion vanish from your sight.");
   SPELL_ADD(CLASS_ILLUSIONIST, 9);
 
-  SPELL_CREATE("dream travel", SPELL_SHADOW_RIFT, PULSE_SPELLCAST * 4,
-                TAR_CHAR_WORLD | TAR_NOCOMBAT, spell_shadow_rift);
+  SPELL_CREATE("dream travel", SPELL_DREAM_TRAVEL, PULSE_SPELLCAST * 4,
+                TAR_CHAR_WORLD | TAR_NOCOMBAT, spell_dream_travel);
   SPELL_ADD(CLASS_ILLUSIONIST, 9);
 
   SPELL_CREATE("clone form", SPELL_CLONE_FORM, PULSE_SPELLCAST * 4,

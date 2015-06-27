@@ -125,98 +125,84 @@ void do_nothing_spell(int level, P_char ch, char *arg, int type,
 bool can_relocate_to(P_char ch, P_char victim)
 {
   int location = victim->in_room;
-  
-  if(!(victim) ||
-     !(location) ||
-     racewar(ch, victim) ||
-     IS_NPC(victim) ||
-     !can_enter_room(ch, location, FALSE) ||
-     IS_SET(world[ch->in_room].room_flags, SINGLE_FILE) ||
-     IS_SET(world[victim->in_room].room_flags, SINGLE_FILE))
+
+  if( !(victim) || !(location) || !can_enter_room(ch, location, FALSE)
+    || (( racewar(ch, victim) || IS_NPC(victim)
+    || IS_SET(world[ch->in_room].room_flags, SINGLE_FILE)
+    || IS_SET(world[victim->in_room].room_flags, SINGLE_FILE) ) && !IS_TRUSTED(ch)) )
   {
     send_to_char("&+CYou failed.\n", ch);
-    return false;
+    return FALSE;
   }
 
-  if(IS_NPC(ch) && IS_PC_PET(ch))
-   return false;
+  if( IS_NPC(ch) && IS_PC_PET(ch) )
+  {
+    return FALSE;
+  }
 
-  if(!IS_TRUSTED(ch) &&
-     IS_TRUSTED(victim))
+  if( !IS_TRUSTED(ch) && IS_TRUSTED(victim) )
   {
     send_to_char("&+CYou failed.\n", ch);
-    return false;
+    return FALSE;
   }
-  
-  if(IS_AFFECTED3(victim, AFF3_NON_DETECTION) ||
-     ((IS_SET(victim->specials.act2, PLR2_NOLOCATE)) &&
-      !is_linked_to(ch, victim, LNK_CONSENT)))
+
+  if( IS_AFFECTED3(victim, AFF3_NON_DETECTION) || (IS_PC(victim) && IS_SET(victim->specials.act2, PLR2_NOLOCATE)
+    && !is_linked_to(ch, victim, LNK_CONSENT)  && !IS_TRUSTED(ch)) )
   {
     send_to_char("&+CYou failed.\n", ch);
-    return false;
+    return FALSE;
   }
-  
-  if(IS_PC(victim) &&
-     IS_SET(victim->specials.act2, PLR2_NOLOCATE) &&
-     !is_introd(victim, ch))
+
+  if( IS_PC(victim) && IS_SET(victim->specials.act2, PLR2_NOLOCATE) && !is_introd(victim, ch) && !IS_TRUSTED(ch) )
   {
     send_to_char("&+CYou failed.\n", ch);
-    return false;
+    return FALSE;
   }
-  
-  if(IS_SET(world[ch->in_room].room_flags, NO_TELEPORT) ||
-     IS_HOMETOWN(ch->in_room))
+
+  if( IS_SET(world[ch->in_room].room_flags, NO_TELEPORT) || IS_HOMETOWN(ch->in_room) )
   {
     send_to_char("The magic in this room prevents you from leaving.\n", ch);
-    return false;
-  }
-  
-  if(IS_PC_PET(ch) &&
-     IS_PC(victim))
-  {
-    send_to_char("&+CYou failed.\n", ch);
-    return false;
-  }
-  
-  if(IS_SET(world[location].room_flags, NO_TELEPORT) ||
-     IS_HOMETOWN(location) ||
-     world[location].sector_type == SECT_OCEAN)
-  {
-    send_to_char("&+CYou failed.\n", ch);
-    return false;
+    return FALSE;
   }
 
-  if(ch &&
-     !is_Raidable(ch, 0, 0))
+  if( IS_PC_PET(ch) && IS_PC(victim) )
+  {
+    send_to_char("&+CYou failed.\n", ch);
+    return FALSE;
+  }
+
+  if( IS_SET(world[location].room_flags, NO_TELEPORT) || IS_HOMETOWN(location)
+    || world[location].sector_type == SECT_OCEAN )
+  {
+    send_to_char("&+CYou failed.\n", ch);
+    return FALSE;
+  }
+
+  if( !is_Raidable(ch, 0, 0) )
   {
     send_to_char("&+WYou are not raidable. The spell fails!\r\n", ch);
-    return false;
-  }
-  
-  if(victim &&
-     IS_PC(ch) &&
-     IS_PC(victim) &&
-     !is_Raidable(victim, 0, 0))
-  {
-    send_to_char("&+WYour target is not raidable. The spell fails!\r\n", ch);
-    return false;
+    return FALSE;
   }
 
-  if(ch->specials.z_cord > 0 ||
-     ch->specials.z_cord < 0)
+  if( IS_PC(ch) && IS_PC(victim) && !is_Raidable(victim, 0, 0) )
+  {
+    send_to_char("&+WYour target is not raidable. The spell fails!\r\n", ch);
+    return FALSE;
+  }
+
+  if( ch->specials.z_cord > 0 || ch->specials.z_cord < 0 )
   {
     send_to_char("You must be firmly on the ground.\r\n", ch);
-    return false;
+    return FALSE;
   }
-    
-  if(victim->specials.z_cord > 0 ||
-     victim->specials.z_cord < 0)
+
+  if( victim->specials.z_cord > 0 || victim->specials.z_cord < 0 )
   {
     send_to_char("Your target is either swimming or flying too high.\r\n", ch);
-    return false;
+    return FALSE;
   }
-  
-  return true;
+
+  return TRUE;
 }
 
 bool has_air_staff_arti(P_char ch)

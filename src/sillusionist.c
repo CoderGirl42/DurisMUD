@@ -388,12 +388,12 @@ void spell_shadow_travel(int level, P_char ch, char *arg, int type,
     return;
   }
   P_char rider = get_linking_char(victim, LNK_RIDING);
-  if(IS_NPC(victim) && rider)
+  if( IS_NPC(victim) && rider && !IS_TRUSTED(ch) )
   {
     send_to_char("&+CYou failed.\n", ch);
     return;
   }
-  
+
   distance = (int)(level * 1.35);
 
   if(GET_SPEC(ch, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER))
@@ -1341,76 +1341,58 @@ void spell_detect_illusion(int level, P_char ch, char *arg, int type,
 
 }
 
-void spell_shadow_rift(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_dream_travel(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int      location;
   P_char   targ;
   P_desc   i;
+  struct group_list *group;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
-
-  if(GET_SPEC(ch, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER))
-    CharWait(ch, number(15, 25));
-  else if(IS_PC(ch))
-    CharWait(ch, 50);
-  else
-    CharWait(ch, 20);
-
-  if(!can_relocate_to(ch, victim))
+  if( !IS_ALIVE(ch) || ch->in_room < 1)
+  {
     return;
+  }
+
+  if( GET_SPEC(ch, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER) )
+    CharWait( ch, number(4*WAIT_SEC, 6*WAIT_SEC) );
+  else if( IS_PC(ch) )
+    CharWait(ch, 12*WAIT_SEC);
+  else
+    CharWait(ch, 5*WAIT_SEC);
+
+  if( !can_relocate_to(ch, victim) )
+  {
+    return;
+  }
 
   if(victim == ch)
   {
     location = ch->in_room;
 
-    for (i = descriptor_list; i; i = i->next)
+    for( group = ch->group; group; group = group->next )
     {
-      if((i->character != ch) &&
-         !i->connected &&
-         CAN_SEE(ch, i->character))
+      targ = group->ch;
+
+      if( IS_ALIVE(targ) && CAN_SEE(ch, targ) )
       {
-        targ = i->character;
-        if(is_linked_to(ch, targ, LNK_CONSENT) &&
-          (targ->group && (targ->group == ch->group)))
+
+        if( IS_NPC(targ) || is_linked_to(ch, targ, LNK_CONSENT) )
         {
-          if((IS_SET(world[targ->in_room].room_flags, NO_TELEPORT) || IS_HOMETOWN(targ->in_room) ) &&
-              !IS_TRUSTED(ch))
+          if( (IS_SET(world[targ->in_room].room_flags, NO_TELEPORT) || IS_HOMETOWN(targ->in_room) ) && !IS_TRUSTED(ch) )
           {
             send_to_char("You feel slightly sleepy, but shake it off.\r\n", ch);
             continue;
           }
-          
-          if (IS_FIGHTING(targ))
+
+          if( IS_FIGHTING(targ) )
           {
-            send_to_char
-              ("You feel slightly drowsy, but it's too noisy to sleep!\r\n", targ);
+            send_to_char("You feel slightly drowsy, but it's too noisy to sleep!\r\n", targ);
             continue;
           }
 
-          act
-            ("&+LYou &+Wblink&+L and $n &+Lis gone! &+CIt was just a &+Wdream&+C; $e &+Cwas never here to begin with.&N",
+          act("&+LYou &+Wblink&+L and $n &+Lis gone! &+CIt was just a &+Wdream&+C; $e &+Cwas never here to begin with.&N",
              FALSE, targ, 0, 0, TO_ROOM);
 
-          send_to_char
-            ("&+WTh&Ne &+Lworld becomes surreal, everything becomes a &Nblur&+L and you cannot tell\r\n",
-             targ);
-          send_to_char
-            ("&+Lthe difference between reality and dreams.  You are &+Wflying&N, &+rc&+Ro&+Yl&+Wo&+Cr&+Bs&+b f&+Bl&+Co&+Ww p&Na&+Lst\r\n",
-             targ);
-          send_to_char
-            ("&+Lyou like paint in a river.  Then, as if something &+wchanged&+L, you feel a sense of urgency\r\n", targ);
-          send_to_char
-            ("&+Las you begin &+Wfalling &+Lrapidly towards the ground below.  You close your eyes as the &+Gground\r\n", targ);
-          send_to_char
-            ("&+Lrushes towards you...&n\r\n", targ);
-          if (GET_STAT(targ) == STAT_SLEEPING)
-             SET_POS(targ, GET_POS(targ) + STAT_NORMAL);
-          send_to_char
-            ("&+WYou open your eyes and see:&N\r\n", targ);
 #if defined(CTF_MUD) && (CTF_MUD == 1)
     if (ctf_carrying_flag(targ) == CTF_PRIMARY)
     {
@@ -1418,20 +1400,30 @@ void spell_shadow_rift(int level, P_char ch, char *arg, int type,
       drop_ctf_flag(targ);
     }
 #endif
+
+          send_to_char("&+WTh&Ne &+Lworld becomes surreal, everything becomes a &Nblur&+L and you cannot tell\r\n", targ);
+          send_to_char("&+Lthe difference between reality and dreams.  You are &+Wflying&N, &+rc&+Ro&+Yl&+Wo&+Cr&+Bs&+b f&+Bl&+Co&+Ww p&Na&+Lst\r\n", targ);
+          send_to_char("&+Lyou like paint in a river.  Then, as if something &+wchanged&+L, you feel a sense of urgency\r\n", targ);
+          send_to_char("&+Las you begin &+Wfalling &+Lrapidly towards the ground below.  You close your eyes as the &+Gground\r\n", targ);
+          send_to_char("&+Lrushes towards you...&n\r\n", targ);
+
+          if( GET_STAT(targ) == STAT_SLEEPING )
+             SET_POS(targ, GET_POS(targ) + STAT_NORMAL);
+          send_to_char("&+WYou open your eyes and see:&N\r\n", targ);
+
           char_from_room(targ);
           char_to_room(targ, location, -1);
-          if (GET_STAT(targ) > STAT_SLEEPING)
+          if( GET_STAT(targ) > STAT_SLEEPING )
+          {
              SET_POS(targ, GET_POS(targ) + STAT_SLEEPING);
-          send_to_char
-            ("&+WAre you really here?  It must be a dream, you must be sleeping.&N\r\n",
-             targ);
-         
+          }
+          send_to_char("&+WAre you really here?  It must be a dream, you must be sleeping.&N\r\n", targ);
           act("$n falls asleep.", FALSE, targ, 0, 0, TO_ROOM);
-          
-          if(GET_SPEC(ch, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER))
-            CharWait(targ, 25);
+
+          if( GET_SPEC(ch, CLASS_ILLUSIONIST, SPEC_DARK_DREAMER) )
+            CharWait(targ, 6*WAIT_SEC);
           else
-            CharWait(targ, 50);
+            CharWait(targ, 12*WAIT_SEC);
         }
       }
     }
@@ -1440,11 +1432,6 @@ void spell_shadow_rift(int level, P_char ch, char *arg, int type,
   {
     location = victim->in_room;
 
-    act("&+LYou &+Wblink&+L and $n &+Lis gone! &+CIt was just a &+Wdream&+C, $e &+Cwas never here to begin with.&N",
-       FALSE, ch, 0, 0, TO_ROOM);
-    act("&+LYou drift into the world of dreams...&N",
-       FALSE, ch, 0, 0, TO_CHAR);
-
 #if defined(CTF_MUD) && (CTF_MUD == 1)
     if (ctf_carrying_flag(ch) == CTF_PRIMARY)
     {
@@ -1452,12 +1439,17 @@ void spell_shadow_rift(int level, P_char ch, char *arg, int type,
       drop_ctf_flag(ch);
     }
 #endif
+
+    act("&+LYou &+Wblink&+L and $n &+Lis gone! &+CIt was just a &+Wdream&+C, $e &+Cwas never here to begin with.&N",
+       FALSE, ch, 0, 0, TO_ROOM);
+    act("&+LYou drift into the world of dreams...&N",
+       FALSE, ch, 0, 0, TO_CHAR);
+
     char_from_room(ch);
-    
-    if(GET_STAT(ch) > STAT_SLEEPING &&
-       !IS_TRUSTED(ch))
-          SET_POS(ch, GET_POS(ch) + STAT_SLEEPING);
-    
+    if( GET_STAT(ch) > STAT_SLEEPING && !IS_TRUSTED(ch) )
+    {
+      SET_POS(ch, GET_POS(ch) + STAT_SLEEPING);
+    }
     char_to_room(ch, location, -1);
 
     act("$n falls asleep.", FALSE, ch, 0, 0, TO_ROOM);

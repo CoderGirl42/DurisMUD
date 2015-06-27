@@ -2802,7 +2802,7 @@ void spell_shadow_shield(int, P_char, char*, int, P_char, P_obj);
 void spell_vanish(int, P_char, char*, int, P_char, P_obj);
 void spell_hammer(int, P_char, char*, int, P_char, P_obj);
 void spell_detect_illusion(int, P_char, char*, int, P_char, P_obj);
-void spell_shadow_rift(int, P_char, char*, int, P_char, P_obj);
+void spell_dream_travel(int, P_char, char*, int, P_char, P_obj);
 void spell_clone_form(int, P_char, char*, int, P_char, P_obj);
 void spell_imprison(int, P_char, char*, int, P_char, P_obj);
 void spell_nonexistence(int, P_char, char*, int, P_char, P_obj);
