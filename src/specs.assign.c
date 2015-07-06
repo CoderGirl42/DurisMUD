@@ -855,6 +855,7 @@ void assign_mobiles(void)
 
   /* Ixarkon */
   mob_index[real_mobile0(96449)].func.mob = money_changer;
+  world[real_room0(96549)].funct = pet_shops;
 
   /* Bloodstone */
   mob_index[real_mobile0(74073)].func.mob = bs_boss;

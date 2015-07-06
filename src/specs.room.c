@@ -22,6 +22,7 @@
 #include "specs.prototypes.h"
 #include "structs.h"
 #include "utils.h"
+#include "utility.h"
 #include "damage.h"
 #include "files.h"
 #include "sql.h"
@@ -811,7 +812,7 @@ int pet_shops(int room, P_char ch, int cmd, char *arg)
 {
   char     buf[MAX_INPUT_LENGTH];
   char     name[MAX_STRING_LENGTH], master[MAX_STRING_LENGTH];
-  int      pet_room, val, temp, count = 0;
+  int      pet_room, val, temp, count;
   P_char   pet = NULL, mount = NULL;
   P_obj    ticket;
 
@@ -827,12 +828,10 @@ int pet_shops(int room, P_char ch, int cmd, char *arg)
   if (cmd == CMD_LIST)
   {                             /* List */
     send_to_char("Available hirelings are:\r\n", ch);
-    for (pet = world[pet_room].people; pet; pet = pet->next_in_room)
+    for (pet = world[pet_room].people, count = 0; pet; pet = pet->next_in_room)
     {
-      count++;
       temp = 8 * GET_EXP(pet);
-      sprintf(buf, "[%d] %-25s for %s.\r\n", count, (pet->player.short_descr),
-              coin_stringv(temp));
+      sprintf(buf, "[%d] %s for %s.\r\n", ++count, pad_ansi(pet->player.short_descr, 25, TRUE).c_str(), coin_stringv(temp));
       send_to_char(buf, ch);
     }
     return (TRUE);
