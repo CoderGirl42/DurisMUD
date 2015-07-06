@@ -863,12 +863,12 @@ void AddFrags(P_char ch, P_char victim)
           epic_frag(tch, GET_PID(victim), frag_gain);
         }
 
-        if( GET_RACE(ch) == RACE_HALFLING || GET_CLASS(ch, CLASS_MERCENARY) )
+        if( GET_RACE(tch) == RACE_HALFLING || GET_CLASS(tch, CLASS_MERCENARY) )
         {
           char     tmp[1024];
           sprintf(tmp, "You get %s in blood money.\r\n", coin_stringv(10000 * real_gain));
-          send_to_char(tmp, ch);
-          ADD_MONEY(ch, 10000 * real_gain);
+          send_to_char(tmp, tch);
+          ADD_MONEY(tch, 10000 * real_gain);
         }
 
         if( (tch->only.pc->frags / 100) > (tch->only.pc->oldfrags / 100) )
