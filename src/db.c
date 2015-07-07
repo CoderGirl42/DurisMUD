@@ -3333,6 +3333,15 @@ void reset_zone(int zone, int force_item_repop)
               }
               if( obj )
               {
+                if( IS_ARTIFACT(obj) && get_artifact_data_sql(obj_index[ZCMD.arg1].virtual_number, &artidata) )
+                {
+                  // If the artifact is owned, then it's timer is ticking somwhere, so we don't need to load another.
+                  if( artidata.owned )
+                  {
+                    extract_obj(obj);
+                    break;
+                  }
+                }
                 if( IS_ARTIFACT(obj) && (respawn == 0 || (respawn == 1 && force_item_repop != 2)) )
                 {
                   extract_obj(obj);
