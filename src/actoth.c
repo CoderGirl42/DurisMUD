@@ -786,10 +786,9 @@ void do_infuriate(P_char ch, char *argument, int cmd)
 {
   struct affected_type af;
   P_char victim;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
+
+  if( !IS_ALIVE(ch) )
+    return;
 
   if (!affected_by_spell(ch, SKILL_BERSERK))
   {
@@ -802,16 +801,15 @@ void do_infuriate(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if(!CAN_ACT(ch) ||
-     IS_IMMOBILE(ch))
-        return;
+  if( !CAN_ACT(ch) || IS_IMMOBILE(ch) )
+    return;
 
   if(IS_AFFECTED3(ch, AFF3_ENLARGE))
   {
     send_to_char("You would burst!\r\n", ch);
     return;
   }
-  
+
   if (IS_AFFECTED5(ch, AFF5_TITAN_FORM))
   {
     send_to_char("Hrmm, lets not do that, shall we?\r\n", ch);
@@ -820,34 +818,33 @@ void do_infuriate(P_char ch, char *argument, int cmd)
 
   if (GET_CHAR_SKILL(ch, SKILL_INFURIATE) < number(70, 100))
   {
-      bzero(&af, sizeof(af));
-      af.type = SKILL_INFURIATE;
-      af.duration = 3;
-      af.bitvector3 = AFF3_ENLARGE;
-      affect_to_char(ch, &af);
+    bzero(&af, sizeof(af));
+    af.type = SKILL_INFURIATE;
+    af.duration = 3;
+    af.bitvector3 = AFF3_ENLARGE;
+    affect_to_char(ch, &af);
 
-      af.bitvector3 = 0;
-      af.modifier = (ch->base_stats.Str / 12);
-      af.location = APPLY_STR_MAX;
-      affect_to_char(ch, &af);
+    af.bitvector3 = 0;
+    af.modifier = (ch->base_stats.Str / 12);
+    af.location = APPLY_STR_MAX;
+    affect_to_char(ch, &af);
 
-      af.modifier = (ch->base_stats.Con / 7);
-      af.location = APPLY_CON_MAX;
-      affect_to_char(ch, &af);
+    af.modifier = (ch->base_stats.Con / 7);
+    af.location = APPLY_CON_MAX;
+    affect_to_char(ch, &af);
 
-      af.modifier = -(ch->base_stats.Agi / 3);
-      af.location = APPLY_AGI;
-      affect_to_char(ch, &af);
+    af.modifier = -(ch->base_stats.Agi / 3);
+    af.location = APPLY_AGI;
+    affect_to_char(ch, &af);
 
-      af.modifier = -(ch->base_stats.Dex / 3);
-      af.location = APPLY_DEX;
-      affect_to_char(ch, &af);
-  send_to_char("Your &+rblood boils&n and you feel bigger in size!\r\n", ch);
-  act
-    ("$n is overwhelmed with &+RANGER&n, and starts to increase in size!\r\n",
-     FALSE, ch, 0, 0, TO_ROOM);
-  notch_skill(ch, SKILL_INFURIATE, 17);
-  CharWait(ch, PULSE_VIOLENCE);
+    af.modifier = -(ch->base_stats.Dex / 3);
+    af.location = APPLY_DEX;
+    affect_to_char(ch, &af);
+
+    send_to_char("Your &+rblood boils&n and you feel bigger in size!\r\n", ch);
+    act("$n is overwhelmed with &+RANGER&n, and starts to increase in size!\r\n", FALSE, ch, 0, 0, TO_ROOM);
+    notch_skill(ch, SKILL_INFURIATE, 17);
+    CharWait(ch, PULSE_VIOLENCE);
   }
   else
   {

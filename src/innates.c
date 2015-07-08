@@ -2198,10 +2198,15 @@ void do_enlarge(P_char ch, char *arg, int cmd)
     return;
   }
 
-  if (GET_SIZE(ch) == SIZE_MAXIMUM)
+  if( IS_AFFECTED3(ch, AFF3_ENLARGE) || IS_AFFECTED5(ch, AFF5_TITAN_FORM) )
+  {
+    act("You try to grow, but, alas, you're already as big as you're going to get.", TRUE, ch, 0, 0, TO_CHAR);
+    act("$N screws up $S face trying to grow!", TRUE, ch, 0, 0, TO_ROOM);
+    CharWait(ch, PULSE_VIOLENCE);
     return;
+  }
 
-  if (!affected_by_spell(ch, SPELL_ENLARGE))
+  if( !affected_by_spell(ch, SPELL_ENLARGE) )
   {
     bzero(&af, sizeof(af));
     af.type = SPELL_ENLARGE;
@@ -2210,8 +2215,7 @@ void do_enlarge(P_char ch, char *arg, int cmd)
     affect_to_char(ch, &af);
 
     act("You grow to about twice your normal size!", TRUE, ch, 0, 0, TO_CHAR);
-    act("$N grows to about twice $S normal size!", TRUE, ch, 0, ch,
-        TO_NOTVICT);
+    act("$N grows to about twice $S normal size!", TRUE, ch, 0, ch, TO_NOTVICT);
   }
   CharWait(ch, PULSE_VIOLENCE);
 }
