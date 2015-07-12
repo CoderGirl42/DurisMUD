@@ -2112,8 +2112,8 @@ void spell_create_greater_dracolich(int level, P_char ch, char *arg, int type, P
     // 6d7 at level 56.
     mob->points.damnodice = (level + 9)/10;
     mob->points.damsizedice = (level + 4)/10 + 1;
-    // 40 - 48 at 56.
-    mob->points.base_damroll = mob->points.damroll = (3 * level) / 4 + number( -2, 6 );
+    // 41 - 51 at 56.
+    mob->points.base_damroll = mob->points.damroll = (3 * level) / 4 + number( -2, 6 ) + dice(4, 3);
   }
 
   if( GET_C_STR(mob) < 95 || GET_C_DEX(mob) < 95 )
