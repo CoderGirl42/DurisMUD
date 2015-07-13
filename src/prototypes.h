@@ -634,6 +634,7 @@ void concat_which_flagsde(const char *flagType, const flagDef flagNames[], char 
 
 /* artifact.c */
 void addOnGroundArtis_sql();
+void addOnMobArtis_sql();
 void artifact_feed_blood_sql(P_char ch, P_obj arti, int frag_gain);
 void artifact_feed_sql(P_char owner, P_obj arti, int feed_seconds, bool soulCheck = FALSE);
 void artifact_feed_to_min_sql( P_obj arti, int min_minutes );

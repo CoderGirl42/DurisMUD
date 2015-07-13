@@ -731,6 +731,7 @@ void boot_db(int mini_mode)
   logit(LOG_STATUS, "Setting up player-side artifact list.");
   setupMortArtiList_sql();
   addOnGroundArtis_sql();
+  addOnMobArtis_sql();
 
   fprintf(stderr, "-- Continents\n");
   assign_continents();

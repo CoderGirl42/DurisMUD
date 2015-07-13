@@ -96,6 +96,7 @@ void nuke_eq( P_char ch );
           owned     = 'Y' -> artifat is owned, 'N' artifact has yet to be acquired since last poof.
                       If the artifact is owned, then it's timer is set and ticking (sorta).
           locType   = enum('NotInGame', 'OnNPC', 'OnPC', 'OnGround', 'OnCorpse')  (OnCorpse -> PC Corpse)
+                    = ARTIFACT_ {NOTINGAME | ON_NPC | ON_PC | ONGROUND | ONCORPSE}
           location  = PID of PC / vnum of NPC / vnum of room.
           timer     = when the arti is due to poof.
           type      = full artifact -> ARTIFACT_MAIN, unique -> ARTIFACT_UNIQUE, ioun -> ARTIFACT_IOUN
@@ -463,10 +464,9 @@ void setupMortArtiList_sql()
   qry( "INSERT INTO artifacts_mortal SELECT * FROM artifacts WHERE locType='OnPC' OR locType='OnCorpse'" );
 }
 
-// Loads the artis that were on the ground and owned back into the a boot.
+// Loads the artis that were on the ground and owned back into the boot.
 void addOnGroundArtis_sql()
 {
-  long unsigned current_time = time(NULL);
   P_obj arti;
   int   room;
   MYSQL_RES *res;
@@ -3211,11 +3211,12 @@ void event_artifact_check_bind_sql( P_char ch, P_char vict, P_obj obj, void * ar
           }
         }
       }
-      // Don't display artis that are on the corpse of owner.
-      else if( artidata.locType =! ARTIFACT_ONCORPSE || artidata.location != list->owner_pid )
+      // Display artis that are on the corpse of new owner.
+      else if( artidata.locType == ARTIFACT_ONCORPSE && artidata.location != list->owner_pid )
       {
-        debug( "%3d: artifact '%s&n'%6d is not on a player atm.",
-          ++counter, pad_ansi( arti ? OBJ_SHORT(arti) : "NULL", 35, TRUE).c_str(), list->vnum );
+        debug( "%3d: artifact '%s&n'%6d on corpse of '%s' %d.",
+          ++counter, pad_ansi( arti ? OBJ_SHORT(arti) : "NULL", 35, TRUE).c_str(), list->vnum,
+          get_player_name_from_pid(artidata.location), artidata.location );
       }
     }
     else if( list->owner_pid > 0 )
@@ -3363,4 +3364,66 @@ void arti_reset_sql( P_char ch, char *arg )
       send_to_char( "Update operation failed.\n\r", ch );
     }
   }
+}
+
+// Returns the first mob in the game with said vnum.
+P_char find_mob_in_game( int vnum )
+{
+  P_char mob;
+
+  for( mob = character_list; mob; mob = mob->next )
+  {
+    if( IS_NPC(mob) && GET_VNUM(mob) == vnum )
+    {
+      return mob;
+    }
+  }
+
+  return NULL;
+}
+
+// Loads the artis that were on a random mob and owned back into the boot.
+void addOnMobArtis_sql()
+{
+  P_obj      arti;
+  P_char     mob;
+  MYSQL_RES *res;
+  MYSQL_ROW  row;
+
+  logit( LOG_ARTIFACT, "addOnMobArtis_sql: Beginning." );
+
+  qry("SELECT vnum, location FROM artifacts WHERE owned='Y' AND locType='OnNPC'" );
+
+  if( (res = mysql_store_result(DB)) != NULL )
+  {
+    if( mysql_num_rows(res) < 1 )
+    {
+      logit( LOG_ARTIFACT, "addOnMobArtis_sql: No owned artifacts found on NPCs." );
+    }
+    else
+    {
+      while( (row = mysql_fetch_row(res)) )
+      {
+        if( !(arti = read_object( atoi(row[0]), VIRTUAL )) )
+        {
+          logit( LOG_ARTIFACT, "addOnMobArtis_sql: Could not load object vnum %d.", atoi(row[0]) );
+          continue;
+        }
+        if( !(mob = find_mob_in_game( atoi(row[1]) )) )
+        {
+          logit( LOG_ARTIFACT, "addOnMobArtis_sql: Could not find mob vnum %d.", atoi(row[1]) );
+          extract_obj( arti );
+          continue;
+        }
+        obj_to_char( arti, mob );
+      }
+    }
+    mysql_free_result(res);
+  }
+  else
+  {
+    logit( LOG_ARTIFACT, "addOnMobArtis_sql: Could not pull on mob arti list." );
+  }
+
+  logit( LOG_ARTIFACT, "addOnMobArtis_sql: Ending." );
 }
