@@ -609,40 +609,39 @@ void balance_affects(P_char ch)
   add_event(event_balance_affects, 0, ch, 0, 0, 0, 0, 0);
 }
 
-int add_racial_stat_bonus(P_char ch, struct hold_data *affs)
+void add_racial_stat_bonus(P_char ch, struct hold_data *affs)
 {
-  if (!affs || !ch)
-    raise(SIGSEGV);
-
-  if( !IS_PC(ch) || GET_RACE(ch) != RACE_HUMAN )
-    return FALSE;
-  
   char buf[256];
+  int  bonus;
+
+  if( !affs || !ch )
+  {
+    raise(SIGSEGV);
+  }
 
   sprintf(buf, "stats.bonus.%s", race_names_table[ch->player.race].no_spaces);
 
-  int i = get_property(buf, 0);
+  bonus = get_property(buf, 0);
 
-  affs->c_Str += i;
-  affs->m_Str += i;
-  affs->c_Dex += i;
-  affs->m_Dex += i;
-  affs->c_Agi += i;
-  affs->m_Agi += i;
-  affs->c_Con += i;
-  affs->m_Con += i;
-  affs->c_Pow += i;
-  affs->m_Pow += i;
-  affs->c_Int += i;
-  affs->m_Int += i;
-  affs->c_Wis += i;
-  affs->m_Wis += i;
-  affs->c_Cha += i;
-  affs->m_Cha += i;
-  affs->c_Luc += i;
-  affs->m_Luc += i;
+  affs->c_Str += bonus;
+  affs->m_Str += bonus;
+  affs->c_Dex += bonus;
+  affs->m_Dex += bonus;
+  affs->c_Agi += bonus;
+  affs->m_Agi += bonus;
+  affs->c_Con += bonus;
+  affs->m_Con += bonus;
+  affs->c_Pow += bonus;
+  affs->m_Pow += bonus;
+  affs->c_Int += bonus;
+  affs->m_Int += bonus;
+  affs->c_Wis += bonus;
+  affs->m_Wis += bonus;
+  affs->c_Cha += bonus;
+  affs->m_Cha += bonus;
+  affs->c_Luc += bonus;
+  affs->m_Luc += bonus;
 
-  return TRUE;
 }
 
 /*
@@ -815,7 +814,11 @@ void apply_affs(P_char ch, int mode)
   if( mode )
   {
     add_racewar_stat_mods(ch, &TmpAffs);
-    add_racial_stat_bonus(ch, &TmpAffs);
+    // Only human PCs have racial bonuses atm.  This saves time.
+    if( IS_PC(ch) && GET_RACE(ch) == RACE_HUMAN )
+    {
+      add_racial_stat_bonus(ch, &TmpAffs);
+    }
   }
 
   t1 = (!mode || !TmpAffs.r_Str) ? (int) GET_RACE(ch) : TmpAffs.r_Str;

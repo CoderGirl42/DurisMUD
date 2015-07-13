@@ -4267,26 +4267,26 @@ void do_attributes(P_char ch, char *argument, int cmd)
   i2 -= i * 12;
 
   sprintf(buf, "&+YStr: &n%3d&+Y (&n%3d&+Y)    Pow: &n%3d&+Y (&n%3d&+Y)\n",
-    GET_C_STR(ch), (int)(GET_C_STR(ch) * 100 / racial_stats.Str + .55),
-    GET_C_POW(ch), (int)(GET_C_POW(ch) * 100 / racial_stats.Pow + .55));
+    GET_C_STR(ch), (int)(GET_C_STR(ch) * 100. / racial_stats.Str + .55),
+    GET_C_POW(ch), (int)(GET_C_POW(ch) * 100. / racial_stats.Pow + .55));
   strcat(o_buf, buf);
 
   sprintf(buf, "&+YDex: &n%3d&+Y (&n%3d&+Y)    Int: &n%3d&+Y (&n%3d&+Y)   \n",
-    GET_C_DEX(ch), (int)(GET_C_DEX(ch) * 100 / racial_stats.Dex + .55),
-    GET_C_INT(ch), (int)(GET_C_INT(ch) * 100 / racial_stats.Int + .55));
+    GET_C_DEX(ch), (int)(GET_C_DEX(ch) * 100. / racial_stats.Dex + .55),
+    GET_C_INT(ch), (int)(GET_C_INT(ch) * 100. / racial_stats.Int + .55));
   strcat(o_buf, buf);
 
   sprinttype(GET_ALT_SIZE(ch), size_types, buf2);
   sprintf(buf, "&+YAgi: &n%3d&+Y (&n%3d&+Y)    Wis: &n%3d&+Y (&n%3d&+Y)\n",
-    GET_C_AGI(ch), (int)(GET_C_AGI(ch) * 100 / racial_stats.Agi + .55),
-    GET_C_WIS(ch), (int)(GET_C_WIS(ch) * 100 / racial_stats.Wis + .55));
+    GET_C_AGI(ch), (int)(GET_C_AGI(ch) * 100. / racial_stats.Agi + .55),
+    GET_C_WIS(ch), (int)(GET_C_WIS(ch) * 100. / racial_stats.Wis + .55));
   strcat(o_buf, buf);
 
   sprintf(buf, "&+YCon: &n%3d&+Y (&n%3d&+Y)    Cha: &n%3d&+Y (&n%3d&+Y)   Luk: &n%3d&+Y (&n%3d&+Y)\n"
                "&+cEquipped Items: &n%3d&+Y     &+cCarried weight:&n%5d\n\n",
-    GET_C_CON(ch), (int)(GET_C_CON(ch) * 100 / racial_stats.Con + .55),
-    GET_C_CHA(ch), (int)(GET_C_CHA(ch) * 100 / racial_stats.Cha + .55),
-    GET_C_LUK(ch), (int)(GET_C_LUK(ch) * 100 / racial_stats.Luk + .55),
+    GET_C_CON(ch), (int)(GET_C_CON(ch) * 100. / racial_stats.Con + .55),
+    GET_C_CHA(ch), (int)(GET_C_CHA(ch) * 100. / racial_stats.Cha + .55),
+    GET_C_LUK(ch), (int)(GET_C_LUK(ch) * 100. / racial_stats.Luk + .55),
     i3, IS_CARRYING_W(ch));
   strcat(o_buf, buf);
 
