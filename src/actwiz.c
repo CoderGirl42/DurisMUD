@@ -172,6 +172,7 @@ void do_setship( P_char ch, char *arg );
 void which_race( P_char ch, char *argument );
 void stat_race(P_char ch, char *arg);
 void event_mob_mundane(P_char, P_char, P_obj, void *);
+void which_stat(P_char ch, char *argument);
 
 /*
  * Macros
@@ -8257,8 +8258,9 @@ void do_inroom(P_char ch, char *args, int cmd)
   }
 }
 
-#define WHICH_SYNTAX "Syntax:\n   which room <zone flag>\n   which zone <zone flag>\n   which char|mob <mobact flag>\n"\
-  "which race <race name|race number>\nwhich obj|item <wear, extra(2), anti(2) or aff(2-6) flag>\n"
+#define WHICH_SYNTAX "&+WSyntax:&n\n&+w   which room <zone flag>\n&+w   which zone <zone flag>\n" \
+  "&+w   which char|mob <mobact flag>\n&+w   which race <race name|race number>\n" \
+  "&+w   which obj|item <wear, extra(2), anti(2) or aff(2-6) flag>\n&+w   which stat <flag> <amount>&n\n"
 
 /*
  * this is 'where' based on flags, so we can find all the 'peace' rooms,
@@ -8359,7 +8361,7 @@ void do_which(P_char ch, char *args, int cmd)
 
   P_char   t_ch = NULL;
   P_obj    t_obj = NULL;
-  char     arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
+  char     arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH], *rest;
   char     arg3[MAX_INPUT_LENGTH], arg4[MAX_INPUT_LENGTH];
   int      sc_min, sc_max = 0;
   char     o_buf[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH];
@@ -8368,9 +8370,10 @@ void do_which(P_char ch, char *args, int cmd)
   whichObjFlagsEnum whichObjFlags;
   uint     w_bit = 0;
 
-  args = setbit_parseArgument(args, arg1);      /* this is one_argument(),
-                                                   but allows 'two word'
-                                                   args  */
+  // setbit_parseArgument is the same as one_argument(), but allows 'two word' args.
+  // rest and args = the rest of the arguments after arg1 without any leading spaces.
+  rest = args = skip_spaces(setbit_parseArgument(args, arg1));
+  // Here skip_spaces isn't necessary.
   args = setbit_parseArgument(args, arg2);
   args = one_argument(args, arg3);
   one_argument(args, arg4);
@@ -8389,7 +8392,7 @@ void do_which(P_char ch, char *args, int cmd)
   o_len = 50;                   /* saves us a bunch of strlen() calls */
   buf1[0] = '\0';
 
-  if((*arg1 == 'r') || (*arg1 == 'R'))
+  if( (*arg1 == 'r') || (*arg1 == 'R') )
   {
     if( LOWER(arg1[1]) == 'a' )
     {
@@ -8418,6 +8421,7 @@ void do_which(P_char ch, char *args, int cmd)
     }
     w_bit = 1 << i;
     for (room_nr = 0; room_nr < top_of_world; room_nr++)
+    {
       if(world[room_nr].room_flags & w_bit)
       {
         sprintf(buf1, "&+Y[&n%5d&+Y](&n%5d&+Y)&n %s\n", world[room_nr].number,
@@ -8433,12 +8437,12 @@ void do_which(P_char ch, char *args, int cmd)
           strcat(o_buf, buf1);
         }
       }
+    }
   }
   else if((*arg1 == 'z') || (*arg1 == 'Z'))
   {
-
-    for (i = 0; str_cmp(zone_bits[i], arg2) && (zone_bits[i][0] != '\n');
-         i++) ;
+    for( i = 0; str_cmp(zone_bits[i], arg2) && (zone_bits[i][0] != '\n'); i++ )
+      ;
     if(zone_bits[i][0] == '\n')
     {
       send_to_char("Unknown flag, valid options are:\n", ch);
@@ -8472,8 +8476,7 @@ void do_which(P_char ch, char *args, int cmd)
         }
       }
   }
-  else if((*arg1 == 'o') || (*arg1 == 'O') || (*arg1 == 'i') ||
-           (*arg1 == 'I'))
+  else if( (*arg1 == 'o') || (*arg1 == 'O') || (*arg1 == 'i') || (*arg1 == 'I') )
   {
 
     /*
@@ -8576,13 +8579,12 @@ void do_which(P_char ch, char *args, int cmd)
         break;
 
       case apply:
-	for (j = 0; j < 3; j++)
-	{
-	  if(found = (t_obj->affected[j].location == i))
-	    break;
-	}
-	break;
-	
+        for (j = 0; j < 3; j++)
+        {
+          if(found = (t_obj->affected[j].location == i))
+            break;
+        }
+        break;
       default:
         found = FALSE;          // shrug
       }
@@ -8611,7 +8613,7 @@ void do_which(P_char ch, char *args, int cmd)
           char temp[MAX_STRING_LENGTH];
           char temp2[MAX_STRING_LENGTH];
           for(t = 0; t < MAX_OBJ_AFFECT; t++)
-          {            
+          {
             if(t_obj->affected[t].location != APPLY_NONE)
             {
                sprinttype(t_obj->affected[t].location, apply_types, temp2);
@@ -8638,8 +8640,7 @@ void do_which(P_char ch, char *args, int cmd)
       }
     }
   }
-  else if((*arg1 == 'c') || (*arg1 == 'C') || (*arg1 == 'm') ||
-           (*arg1 == 'M'))
+  else if( (*arg1 == 'c') || (*arg1 == 'C') || (*arg1 == 'm') || (*arg1 == 'M') )
   {
 
     /*
@@ -8723,6 +8724,11 @@ void do_which(P_char ch, char *args, int cmd)
         }
       }
     }
+  }
+  else if( (*arg1 == 's') || (*arg1 == 'S') )
+  {
+    which_stat( ch, rest );
+    return;
   }
   if(!*o_buf)
     send_to_char("No matches.\n", ch);
@@ -10924,3 +10930,428 @@ void do_offlinemsg(P_char ch, char *arg, int cmd)
   send_to_char( buf, ch );
   send_to_pid_offline( message, pid );
 }
+
+// We don't want this as a global since we have an adjust of 1 for the one we loaded.
+#define OBJ_COLOR(rnum) ( (obj_index[rnum].number <= 1) ? "+L" : \
+  (obj_index[rnum].number - 1 > obj_index[rnum].limit) ? "+W" : \
+  (obj_index[rnum].number - 1 == obj_index[rnum].limit) ? "n" : "+w" )
+
+// This looks through each item type for the supplied flag/amounts.
+void which_stat(P_char ch, char *argument)
+{
+  char   arg1[MAX_STRING_LENGTH];
+  char   arg2[MAX_STRING_LENGTH];
+  char   buf[MAX_STRING_LENGTH];
+  int    amount;
+  int    flags;
+  int    i;
+  bool   greater, lesser;
+  P_obj  obj;
+
+  argument_interpreter(argument, arg1, arg2);
+
+  if( arg1[0] == '\0' || arg2[0] == '\0' )
+  {
+    if( !strcmp( arg1, "options" ) )
+    {
+      send_to_char( "&=LWHardcoded options&n&+W:&+w strength&+W,&+w dexterity&+W,&+w intelligence&+W,&+w wisdom&+W,&+w"
+        " constitution&+W,&+w sex&+W,&+w class&+W,&+w level&+W,&+w age&+W,&+w weight&+W,&+w height&+W,&+w mana&+W,&+w"
+        " hitpoints&+W,&+w moves&+W,&+w gold&+W,&+w exp&+W,&+w armor&+W|&+wac&+W,&+w hitroll&+W,&+w damroll&+W,&+w"
+        " para&+W,&+w rod&+W,&+w fear&+W,&+w breath&+W,&+w spell&+W,&+w pff&+W|&+wfire&+W,&+w agility&+W,&+w,"
+        " power&+W,&+w charisma&+W,&+w karma&+W,&+w luck&+W,&+w maxstr&+W|&+wmax_str&+W,&+w"
+        " maxdex&+W|&+wmax_dex&+W,&+w maxint&+W|&+wmax_int&+W,&+w maxwis&+W|&+wmax_wis&+W,&+w"
+        " maxcon&+W|&+wmax_con&+W,&+w maxagi&+W|&+wmax_agi&+W,&+w maxpow&+W|&+wmax_pow&+W,&+w"
+        " maxcha&+W|&+wmax_cha&+W,&+w maxkarma&+W|&+wmax_kar&+W,&+w maxluck&+W|&+wmaxluk&+W|&+wmax_luk&+W,&+w"
+        " racestr&+W,&+w racedex&+W,&+w raceint&+W,&+w racewis&+W,&+w racecon&+W,&+w raceagi&+W,&+w racepow&+W,&+w"
+        " racecha&+W,&+w racekarma&+W,&+w raceluck&+W|&+wraceluk&+W,&+w curse&+W,&+w skillgrant&+W,&+w"
+        " skilladd&+W,&+w hitreg&+W,&+w movereg&+W,&+w manareg&+W,&+w pulsecombat&+W|&+wcombatpulse&+W,&+w"
+        " pulsespell&+W|&+wspellpulse&+W.&n\n", ch );
+
+      sprintf( buf, "&=LWList options&n&+W:&+w " );
+      lesser = FALSE;
+      for( flags = 0; *(apply_types[flags]) != '\n'; flags++ )
+      {
+        if( lesser )
+        {
+          strcat( buf, "&+W,&+w " );
+        }
+        else
+        {
+          lesser = TRUE;
+        }
+        strcat( buf, apply_types[flags] );
+      }
+      strcat( buf, "&+W.&n\n" );
+      send_to_char( buf, ch );
+    }
+    else
+    {
+      send_to_char( "&+WFormat: &+wwhich stat <flag> <amount>&+W.&n\n", ch );
+      send_to_char( "i.e. '&+wwhich stat maxint 5&n' for all items with exactly 5maxint.\n", ch );
+      send_to_char( "Note: You can add a '+' or '-' immediately after <amount> for all"
+        " items with <amount> or {greater|lesser} of <flag>.\n\r", ch );
+      send_to_char( "i.e. '&+wwhich stat str 15+&n' for all items with 15 or more str.\n", ch );
+      send_to_char( "i.e. '&+wwhich stat str -15-&n' for all items with -15 or less str.\n", ch );
+      send_to_char( "For a full list of options (omg), use '&+wwhich stat options&n'.\n", ch );
+      send_to_char( "This command lists the types of objects that fall under the given options.\n", ch );
+    }
+    return;
+  }
+  if( (amount = atoi(arg2)) == 0 )
+  {
+    send_to_char( "The second argument must be a non-zero number.\n", ch );
+    return;
+  }
+
+  if( is_abbrev( arg1, "strength" ) )
+  {
+    flags = APPLY_STR;
+  }
+  else if( is_abbrev( arg1, "dexterity" ) )
+  {
+    flags = APPLY_DEX;
+  }
+  else if( is_abbrev( arg1, "intelligence" ) )
+  {
+    flags = APPLY_INT;
+  }
+  else if( is_abbrev( arg1, "wisdom" ) )
+  {
+    flags = APPLY_WIS;
+  }
+  else if( is_abbrev( arg1, "constitution" ) )
+  {
+    flags = APPLY_CON;
+  }
+  else if( is_abbrev( arg1, "sex" ) )
+  {
+    flags = APPLY_SEX;
+  }
+  else if( is_abbrev( arg1, "class" ) )
+  {
+    flags = APPLY_CLASS;
+  }
+  else if( is_abbrev( arg1, "level" ) )
+  {
+    flags = APPLY_LEVEL;
+  }
+  else if( is_abbrev( arg1, "age" ) )
+  {
+    flags = APPLY_AGE;
+  }
+  else if( is_abbrev( arg1, "weight" ) )
+  {
+    flags = APPLY_CHAR_WEIGHT;
+  }
+  else if( is_abbrev( arg1, "height" ) )
+  {
+    flags = APPLY_CHAR_HEIGHT;
+  }
+  else if( is_abbrev( arg1, "mana" ) )
+  {
+    flags = APPLY_MANA;
+  }
+  else if( is_abbrev( arg1, "hitpoints" ) )
+  {
+    flags = APPLY_HIT;
+  }
+  else if( is_abbrev( arg1, "moves" ) )
+  {
+    flags = APPLY_MOVE;
+  }
+  else if( is_abbrev( arg1, "gold" ) )
+  {
+    flags = APPLY_GOLD;
+  }
+  else if( is_abbrev( arg1, "exp" ) )
+  {
+    flags = APPLY_EXP;
+  }
+  else if( is_abbrev( arg1, "armor" ) || is_abbrev( arg1, "ac" ) )
+  {
+    flags = APPLY_AC;
+  }
+  else if( is_abbrev( arg1, "hitroll" ) )
+  {
+    flags = APPLY_HITROLL;
+  }
+  else if( is_abbrev( arg1, "damroll" ) )
+  {
+    flags = APPLY_DAMROLL;
+  }
+  else if( is_abbrev( arg1, "para" ) )
+  {
+    flags = APPLY_SAVING_PARA;
+  }
+  else if( is_abbrev( arg1, "rod" ) )
+  {
+    flags = APPLY_SAVING_ROD;
+  }
+  else if( is_abbrev( arg1, "fear" ) )
+  {
+    flags = APPLY_SAVING_FEAR;
+  }
+  else if( is_abbrev( arg1, "breath" ) )
+  {
+    flags = APPLY_SAVING_BREATH;
+  }
+  else if( is_abbrev( arg1, "spell" ) )
+  {
+    flags = APPLY_SAVING_SPELL;
+  }
+  else if( is_abbrev( arg1, "pff" ) || is_abbrev( arg1, "fire" ) )
+  {
+    flags = APPLY_FIRE_PROT;
+  }
+  else if( is_abbrev( arg1, "agility" ) )
+  {
+    flags = APPLY_AGI;
+  }
+  else if( is_abbrev( arg1, "power" ) )
+  {
+    flags = APPLY_POW;
+  }
+  else if( is_abbrev( arg1, "charisma" ) )
+  {
+    flags = APPLY_CHA;
+  }
+  else if( is_abbrev( arg1, "karma" ) )
+  {
+    flags = APPLY_KARMA;
+  }
+  else if( is_abbrev( arg1, "luck" ) )
+  {
+    flags = APPLY_LUCK;
+  }
+  else if( is_abbrev( arg1, "maxstr" ) || is_abbrev( arg1, "max_str" ) )
+  {
+    flags = APPLY_STR_MAX;
+  }
+  else if( is_abbrev( arg1, "maxdex" ) || is_abbrev( arg1, "max_dex" ) )
+  {
+    flags = APPLY_DEX_MAX;
+  }
+  else if( is_abbrev( arg1, "maxint" ) || is_abbrev( arg1, "max_int" ) )
+  {
+    flags = APPLY_INT_MAX;
+  }
+  else if( is_abbrev( arg1, "maxwis" ) || is_abbrev( arg1, "max_wis" ) )
+  {
+    flags = APPLY_WIS_MAX;
+  }
+  else if( is_abbrev( arg1, "maxcon" ) || is_abbrev( arg1, "max_con" ) )
+  {
+    flags = APPLY_CON_MAX;
+  }
+  else if( is_abbrev( arg1, "maxagi" ) || is_abbrev( arg1, "max_agi" ) )
+  {
+    flags = APPLY_AGI_MAX;
+  }
+  else if( is_abbrev( arg1, "maxpow" ) || is_abbrev( arg1, "max_pow" ) )
+  {
+    flags = APPLY_POW_MAX;
+  }
+  else if( is_abbrev( arg1, "maxcha" ) || is_abbrev( arg1, "max_cha" ) )
+  {
+    flags = APPLY_CHA_MAX;
+  }
+  else if( is_abbrev( arg1, "maxkarma" ) || is_abbrev( arg1, "max_kar" ) )
+  {
+    flags = APPLY_KARMA_MAX;
+  }
+  else if( is_abbrev( arg1, "maxluck" ) || is_abbrev( arg1, "maxluk" ) || is_abbrev( arg1, "max_luk" ) )
+  {
+    flags = APPLY_LUCK_MAX;
+  }
+  else if( is_abbrev( arg1, "racestr" ) )
+  {
+    flags = APPLY_STR_RACE;
+  }
+  else if( is_abbrev( arg1, "racedex" ) )
+  {
+    flags = APPLY_DEX_RACE;
+  }
+  else if( is_abbrev( arg1, "raceint" ) )
+  {
+    flags = APPLY_INT_RACE;
+  }
+  else if( is_abbrev( arg1, "racewis" ) )
+  {
+    flags = APPLY_WIS_RACE;
+  }
+  else if( is_abbrev( arg1, "racecon" ) )
+  {
+    flags = APPLY_CON_RACE;
+  }
+  else if( is_abbrev( arg1, "raceagi" ) )
+  {
+    flags = APPLY_AGI_RACE;
+  }
+  else if( is_abbrev( arg1, "racepow" ) )
+  {
+    flags = APPLY_POW_RACE;
+  }
+  else if( is_abbrev( arg1, "racecha" ) )
+  {
+    flags = APPLY_CHA_RACE;
+  }
+  else if( is_abbrev( arg1, "racekarma" ) )
+  {
+    flags = APPLY_KARMA_RACE;
+  }
+  else if( is_abbrev( arg1, "raceluck" ) || is_abbrev( arg1, "raceluk" ) )
+  {
+    flags = APPLY_LUCK_RACE;
+  }
+  else if( is_abbrev( arg1, "curse" ) )
+  {
+    flags = APPLY_CURSE;
+  }
+  else if( is_abbrev( arg1, "skillgrant" ) )
+  {
+    flags = APPLY_SKILL_GRANT;
+  }
+  else if( is_abbrev( arg1, "skilladd" ) )
+  {
+    flags = APPLY_SKILL_ADD;
+  }
+  else if( is_abbrev( arg1, "hitreg" ) )
+  {
+    flags = APPLY_HIT_REG;
+  }
+  else if( is_abbrev( arg1, "movereg" ) )
+  {
+    flags = APPLY_MOVE_REG;
+  }
+  else if( is_abbrev( arg1, "manareg" ) )
+  {
+    flags = APPLY_MANA_REG;
+  }
+  else if( is_abbrev( arg1, "combatpulse" ) || is_abbrev( arg1, "pulsecombat" ) )
+  {
+    flags = APPLY_COMBAT_PULSE;
+  }
+  else if( is_abbrev( arg1, "spellpulse" ) || is_abbrev( arg1, "pulsespell" ) )
+  {
+    flags = APPLY_SPELL_PULSE;
+  }
+  else
+  {
+    for( flags = 0; *(apply_types[flags]) != '\n'; flags++ )
+    {
+      if( is_abbrev( arg1, apply_types[flags] ) )
+      {
+        break;
+      }
+    }
+    if( *(apply_types[flags]) == '\n' )
+    {
+      send_to_char( "Could not find flag.  :(\n", ch );
+      return;
+    }
+  }
+
+  if( arg2[strlen(arg2)-1] == '+' )
+  {
+    greater = TRUE;
+    lesser = FALSE;
+  }
+  else
+  {
+    greater = FALSE;
+    if( arg2[strlen(arg2)-1] == '-' )
+    {
+      lesser = TRUE;
+    }
+    else
+    {
+      lesser = FALSE;
+    }
+  }
+
+  // Header for list: shows the flag and amount to ch.
+  sprintf( buf, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
+    "\n&-L( AMT)&n  &-LINGAME&n   &-LVNUM&n &-LOBJ-SHORT&n\n",
+    apply_types[flags], amount, greater ? '+' : ( lesser ? '-' : '=') );
+  send_to_char( buf, ch );
+
+  if( greater )
+  {
+    // For each real object..
+    for( int r_num = 0; r_num <= top_of_objt; r_num++ )
+    {
+      // Load a copy of object.
+      obj = read_object(r_num, REAL);
+
+      // Check flags for match.
+      for (i = 0; i < MAX_OBJ_AFFECT; i++)
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier >= amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
+            obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+
+      // Free up the object copy.
+      extract_obj( obj, FALSE );
+    }
+  }
+  else if( lesser )
+  {
+    // For each real object..
+    for( int r_num = 0; r_num <= top_of_objt; r_num++ )
+    {
+      // Load a copy of object.
+      obj = read_object(r_num, REAL);
+
+      // Check flags for match.
+      for (i = 0; i < MAX_OBJ_AFFECT; i++)
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier <= amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
+            obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+
+      // Free up the object copy.
+      extract_obj( obj, FALSE );
+    }
+  }
+  else
+  {
+    // For each real object..
+    for( int r_num = 0; r_num <= top_of_objt; r_num++ )
+    {
+      // Load a copy of object.
+      obj = read_object(r_num, REAL);
+
+      // Check flags for match.
+      for (i = 0; i < MAX_OBJ_AFFECT; i++)
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier == amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
+            obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+
+      // Free up the object copy.
+      extract_obj( obj, FALSE );
+    }
+  }
+}
+#undef OBJ_COLOR

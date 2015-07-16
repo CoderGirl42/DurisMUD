@@ -1666,6 +1666,7 @@ int count_classes( P_char mob )
 bool valid_conjure(P_char ch, P_char victim)
 {
   int maxclasses = IS_MULTICLASS_PC(ch) ? 1 : 3;
+  int race;
 
   if( !victim || !ch )
     return FALSE;
@@ -1677,10 +1678,12 @@ bool valid_conjure(P_char ch, P_char victim)
   if( GET_LEVEL(victim) > GET_LEVEL(ch) || IS_MULTICLASS_NPC(victim) )
     return FALSE;
 */
+  race = GET_RACE(victim);
 
   if(GET_VNUM(victim) != 400003)
   {
-    if(GET_SPEC(ch, CLASS_SUMMONER, SPEC_CONTROLLER) && !IS_HUMANOID(victim) || IS_UNDEADRACE(victim))
+    // Humanoid includes vampires/zombies.
+    if(GET_SPEC(ch, CLASS_SUMMONER, SPEC_CONTROLLER) && !IS_CONTROLLER_RACE(race) )
     {
       return FALSE;
     }

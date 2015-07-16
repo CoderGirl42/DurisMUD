@@ -824,6 +824,7 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
            (GET_RACE(ch) == RACE_HUMANOID)  || \
            (GET_RACE(ch) == RACE_HALFORC)   || \
            (GET_RACE(ch) == RACE_FAERIE)    || \
+           (GET_RACE(ch) == RACE_PVAMPIRE)  || \
            (GET_RACE(ch) == RACE_VAMPIRE)   || \
            (GET_RACE(ch) == RACE_RAKSHASA)  || \
            (GET_RACE(ch) == RACE_ANGEL)     || \
@@ -843,6 +844,11 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
            (GET_RACE(ch) == RACE_BRALANI)   || \
            (GET_RACE(ch) == RACE_INCUBUS)   || \
            (GET_RACE(ch) == RACE_SUCCUBUS))
+
+#define IS_CONTROLLER_RACE(race) ( (race >= RACE_HUMAN && race <= RACE_PLAYER_MAX && race != RACE_ILLITHID) \
+  || race == RACE_AGATHINON || race == RACE_HUMANOID || race == RACE_HALFORC ||  race == RACE_FAERIE \
+  || race == RACE_VAMPIRE || race == RACE_RAKSHASA || race == RACE_ANGEL || race == RACE_SNOW_OGRE \
+  || race == RACE_LYCANTH || race == RACE_ZOMBIE || race == RACE_PRIMATE || race == RACE_ELADRIN )
 
 #define IS_MULTICLASS_NPC(ch) (IS_NPC(ch) && IS_AFFECTED4(ch, AFF4_MULTI_CLASS))
 

@@ -2486,7 +2486,7 @@ void die(P_char ch, P_char killer)
 
     // if(GET_LEVEL(ch) < 30 || GET_LEVEL(killer) < 20)
     //   {
-    if(check_random_drop(killer, ch, 1))
+    if(check_random_drop(killer, ch, TRUE))
     {
       if(!number(0, 25))// &&
         // (GET_LEVEL(ch) > 51))
@@ -2514,7 +2514,7 @@ void die(P_char ch, P_char killer)
         obj_to_char(tempobj, ch);
       }
     }
-    if(check_random_drop(killer, ch, 0))
+    if(check_random_drop(killer, ch, FALSE))
     {
       if(!number(0, 25))// &&
         // (GET_LEVEL(ch) > 51))

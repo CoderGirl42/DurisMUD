@@ -125,6 +125,7 @@ extern long ne_event_counter;
 extern int map_normal_modifier;
 extern int map_ultra_modifier;
 extern int map_dayblind_modifier;
+extern const char *apply_types[];
 
 void display_map(P_char ch, int n, int show_map_regardless);
 
@@ -9094,6 +9095,12 @@ void unmulti(P_char ch, P_obj obj)
   ch->only.pc->epics -= 100;
 }
 
+// We don't want this as a global since we have it defined differently in actwiz.c
+#define OBJ_COLOR(rnum) ( (obj_index[rnum].number <= 0) ? "+L" : \
+  (obj_index[rnum].number > obj_index[rnum].limit) ? "+W" : \
+  (obj_index[rnum].number == obj_index[rnum].limit) ? "n" : "+w" )
+
+// Looks through the list of objects in game for those with supplied stats.
 void where_stat(P_char ch, char *argument)
 {
   char   arg1[MAX_STRING_LENGTH];
@@ -9102,28 +9109,63 @@ void where_stat(P_char ch, char *argument)
   int    amount;
   int    flags;
   int    i;
+  bool   greater, lesser;
   P_obj  obj;
 
-  argument_interpreter(argument, arg1, arg2);    
+  argument_interpreter(argument, arg1, arg2);
 
   if( arg1[0] == '\0' || arg2[0] == '\0' )
   {
-    send_to_char( "Format: where stat <flag> <amount>\n", ch );
-    send_to_char( "i.e. 'where stat maxint 5' for all items with 5maxint.\n", ch );
-    return;
-  }
-  if( (amount = atoi(arg2)) <= 0 )
-  {
-    send_to_char( "The second argument must be a number > 0.\n", ch );
-    return;
-  }
+    if( !strcmp( arg1, "options" ) )
+    {
+      send_to_char( "&=LWHardcoded options&n&+W:&+w strength&+W,&+w dexterity&+W,&+w intelligence&+W,&+w wisdom&+W,&+w"
+        " constitution&+W,&+w sex&+W,&+w class&+W,&+w level&+W,&+w age&+W,&+w weight&+W,&+w height&+W,&+w mana&+W,&+w"
+        " hitpoints&+W,&+w moves&+W,&+w gold&+W,&+w exp&+W,&+w armor&+W|&+wac&+W,&+w hitroll&+W,&+w damroll&+W,&+w"
+        " para&+W,&+w rod&+W,&+w fear&+W,&+w breath&+W,&+w spell&+W,&+w pff&+W|&+wfire&+W,&+w agility&+W,&+w,"
+        " power&+W,&+w charisma&+W,&+w karma&+W,&+w luck&+W,&+w maxstr&+W|&+wmax_str&+W,&+w"
+        " maxdex&+W|&+wmax_dex&+W,&+w maxint&+W|&+wmax_int&+W,&+w maxwis&+W|&+wmax_wis&+W,&+w"
+        " maxcon&+W|&+wmax_con&+W,&+w maxagi&+W|&+wmax_agi&+W,&+w maxpow&+W|&+wmax_pow&+W,&+w"
+        " maxcha&+W|&+wmax_cha&+W,&+w maxkarma&+W|&+wmax_kar&+W,&+w maxluck&+W|&+wmaxluk&+W|&+wmax_luk&+W,&+w"
+        " racestr&+W,&+w racedex&+W,&+w raceint&+W,&+w racewis&+W,&+w racecon&+W,&+w raceagi&+W,&+w racepow&+W,&+w"
+        " racecha&+W,&+w racekarma&+W,&+w raceluck&+W|&+wraceluk&+W,&+w curse&+W,&+w skillgrant&+W,&+w"
+        " skilladd&+W,&+w hitreg&+W,&+w movereg&+W,&+w manareg&+W,&+w pulsecombat&+W|&+wcombatpulse&+W,&+w"
+        " pulsespell&+W|&+wspellpulse&+W.&n\n", ch );
 
-  // Header for list: shows the flag and amount to ch.
-  send_to_char( "Flag: '", ch);
-  send_to_char( arg1, ch);
-  send_to_char( "', Amount: '", ch);
-  send_to_char( arg2, ch);
-  send_to_char( "'\n", ch);
+      sprintf( buf, "&=LWList options&n&+W:&+w " );
+      lesser = FALSE;
+      for( flags = 0; *(apply_types[flags]) != '\n'; flags++ )
+      {
+        if( lesser )
+        {
+          strcat( buf, "&+W,&+w " );
+        }
+        else
+        {
+          lesser = TRUE;
+        }
+        strcat( buf, apply_types[flags] );
+      }
+      strcat( buf, "&+W.&n\n" );
+      send_to_char( buf, ch );
+    }
+    else
+    {
+      send_to_char( "&+WFormat: &+wwhere stat <flag> <amount>&+W.&n\n", ch );
+      send_to_char( "i.e. '&+wwhere stat maxint 5&n' for all items with exactly 5maxint.\n", ch );
+      send_to_char( "Note: You can add a '+' or '-' immediately after <amount> for all"
+        " items with <amount> or {greater|lesser} of <flag>.\n\r", ch );
+      send_to_char( "i.e. '&+wwhere stat str 15+&n' for all items with 15 or more str.\n", ch );
+      send_to_char( "i.e. '&+wwhere stat str -15-&n' for all items with -15 or less str.\n", ch );
+      send_to_char( "This command lists each of objects in game that fall under the given options.\n", ch );
+      send_to_char( "For a full list of options (omg), use '&+wwhere stat options&n'.\n", ch );
+    }
+    return;
+  }
+  if( (amount = atoi(arg2)) == 0 )
+  {
+    send_to_char( "The second argument must be a non-zero number.\n", ch );
+    return;
+  }
 
   if( is_abbrev( arg1, "strength" ) )
   {
@@ -9177,7 +9219,7 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_HIT;
   }
-  else if( is_abbrev( arg1, "move" ) )
+  else if( is_abbrev( arg1, "moves" ) )
   {
     flags = APPLY_MOVE;
   }
@@ -9189,8 +9231,7 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_EXP;
   }
-  else if(  is_abbrev( arg1, "armor" )
-         || is_abbrev( arg1, "ac" ) )
+  else if( is_abbrev( arg1, "armor" ) || is_abbrev( arg1, "ac" ) )
   {
     flags = APPLY_AC;
   }
@@ -9222,8 +9263,7 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_SAVING_SPELL;
   }
-  else if( is_abbrev( arg1, "pff" )
-         || is_abbrev( arg1, "fire" ) )
+  else if( is_abbrev( arg1, "pff" ) || is_abbrev( arg1, "fire" ) )
   {
     flags = APPLY_FIRE_PROT;
   }
@@ -9247,53 +9287,43 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_LUCK;
   }
-  else if(  is_abbrev( arg1, "maxstr" )
-    || is_abbrev( arg1, "max_str" ) )
+  else if( is_abbrev( arg1, "maxstr" ) || is_abbrev( arg1, "max_str" ) )
   {
     flags = APPLY_STR_MAX;
   }
-  else if(  is_abbrev( arg1, "maxdex" )
-    || is_abbrev( arg1, "max_dex" ) )
+  else if( is_abbrev( arg1, "maxdex" ) || is_abbrev( arg1, "max_dex" ) )
   {
     flags = APPLY_DEX_MAX;
   }
-  else if(  is_abbrev( arg1, "maxint" )
-    || is_abbrev( arg1, "max_int" ) )
+  else if( is_abbrev( arg1, "maxint" ) || is_abbrev( arg1, "max_int" ) )
   {
     flags = APPLY_INT_MAX;
   }
-  else if(  is_abbrev( arg1, "maxwis" )
-    || is_abbrev( arg1, "max_wis" ) )
+  else if( is_abbrev( arg1, "maxwis" ) || is_abbrev( arg1, "max_wis" ) )
   {
     flags = APPLY_WIS_MAX;
   }
-  else if(  is_abbrev( arg1, "maxcon" )
-    || is_abbrev( arg1, "max_con" ) )
+  else if( is_abbrev( arg1, "maxcon" ) || is_abbrev( arg1, "max_con" ) )
   {
     flags = APPLY_CON_MAX;
   }
-  else if(  is_abbrev( arg1, "maxagi" )
-    || is_abbrev( arg1, "max_agi" ) )
+  else if( is_abbrev( arg1, "maxagi" ) || is_abbrev( arg1, "max_agi" ) )
   {
     flags = APPLY_AGI_MAX;
   }
-  else if(  is_abbrev( arg1, "maxpow" )
-    || is_abbrev( arg1, "max_pow" ) )
+  else if( is_abbrev( arg1, "maxpow" ) || is_abbrev( arg1, "max_pow" ) )
   {
     flags = APPLY_POW_MAX;
   }
-  else if(  is_abbrev( arg1, "maxcha" )
-    || is_abbrev( arg1, "max_cha" ) )
+  else if( is_abbrev( arg1, "maxcha" ) || is_abbrev( arg1, "max_cha" ) )
   {
     flags = APPLY_CHA_MAX;
   }
-  else if(  is_abbrev( arg1, "maxkarma" )
-    || is_abbrev( arg1, "max_karma" ) )
+  else if( is_abbrev( arg1, "maxkarma" ) || is_abbrev( arg1, "max_kar" ) )
   {
     flags = APPLY_KARMA_MAX;
   }
-  else if(  is_abbrev( arg1, "maxluck" )
-    || is_abbrev( arg1, "max_luck" ) )
+  else if( is_abbrev( arg1, "maxluck" ) || is_abbrev( arg1, "maxluk" ) || is_abbrev( arg1, "max_luk" ) )
   {
     flags = APPLY_LUCK_MAX;
   }
@@ -9333,7 +9363,7 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_KARMA_RACE;
   }
-  else if( is_abbrev( arg1, "raceluck" ) )
+  else if( is_abbrev( arg1, "raceluck" ) || is_abbrev( arg1, "raceluk" ) )
   {
     flags = APPLY_LUCK_RACE;
   }
@@ -9361,42 +9391,119 @@ void where_stat(P_char ch, char *argument)
   {
     flags = APPLY_MANA_REG;
   }
-  else if( is_abbrev( arg1, "pulsecombat" ) )
+  else if( is_abbrev( arg1, "combatpulse" ) || is_abbrev( arg1, "pulsecombat" ) )
   {
     flags = APPLY_COMBAT_PULSE;
   }
-  else if( is_abbrev( arg1, "pulsespell" ) )
+  else if( is_abbrev( arg1, "spellpulse" ) || is_abbrev( arg1, "pulsespell" ) )
   {
     flags = APPLY_SPELL_PULSE;
   }
   else
   {
-    send_to_char( "Could not find flag.  :(\n", ch );
-    return;
-  }
-
-  // For each real object..
-  for( int r_num = 0; r_num <= top_of_objt; r_num++ )
-  {
-    // Load a copy of object.
-    obj = read_object(r_num, REAL);
-
-    // Check flags for match.
-    for (i = 0; i < MAX_OBJ_AFFECT; i++)
+    for( flags = 0; *(apply_types[flags]) != '\n'; flags++ )
     {
-      if( obj->affected[i].location == flags
-        && obj->affected[i].modifier == amount )
+      if( is_abbrev( arg1, apply_types[flags] ) )
       {
-        sprintf( buf, "%d: '%s'\n", obj_index[r_num].virtual_number, 
-          obj->short_description );
-        send_to_char( buf, ch );
+        break;
       }
     }
+    if( *(apply_types[flags]) == '\n' )
+    {
+      send_to_char( "Could not find flag.  :(\n", ch );
+      return;
+    }
+  }
 
-    // Free up the object copy.
-    extract_obj( obj, FALSE );
+  if( arg2[strlen(arg2)-1] == '+' )
+  {
+    greater = TRUE;
+    lesser = FALSE;
+  }
+  else
+  {
+    greater = FALSE;
+    if( arg2[strlen(arg2)-1] == '-' )
+    {
+      lesser = TRUE;
+    }
+    else
+    {
+      lesser = FALSE;
+    }
+  }
+
+  // Header for list: shows the flag and amount to ch.
+  sprintf( buf, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
+    "\n&-L( AMT)&n  &-LINGAME&n   &-LVNUM&n &-LOBJ-SHORT&n\n",
+    apply_types[flags], amount, greater ? '+' : ( lesser ? '-' : '=') );
+  send_to_char( buf, ch );
+
+  if( greater )
+  {
+    // For each object in the game..
+    for( obj = object_list; obj; obj = obj->next )
+    {
+      // Check flags for match.
+      for( i = 0; i < MAX_OBJ_AFFECT; i++ )
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier >= amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
+            obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
+            obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+    }
+  }
+  else if( lesser )
+  {
+    // For each object in the game..
+    for( obj = object_list; obj; obj = obj->next )
+    {
+      // Check flags for match.
+      for (i = 0; i < MAX_OBJ_AFFECT; i++)
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier <= amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
+            obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
+            obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+    }
+  }
+  else
+  {
+    // For each object in the game..
+    for( obj = object_list; obj; obj = obj->next )
+    {
+      // Check flags for match.
+      for (i = 0; i < MAX_OBJ_AFFECT; i++)
+      {
+        if( obj->affected[i].location == flags
+          && obj->affected[i].modifier == amount )
+        {
+          // As if things could be easier to read...
+          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+            obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
+            obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
+            obj->short_description );
+          send_to_char( buf, ch );
+        }
+      }
+    }
   }
 }
+#undef OBJ_COLOR
 
 // Making ships visible 24-7 to dayblind/nightblind.
 void list_ships_to_char( P_char ch, int room_no )

@@ -82,47 +82,49 @@ struct randomeq_prefix
   int      weight;
 };
 
-
-const int highdrop_mobs[64] = {
-  19700, // Tiamat
-  25040, // Brass Sultan
-  25700, // Bahamut
-  81454, // Chronomancer
-  35523, // Dark Knight
-  38317, // Lady Death
-  44172, // King Arkan'non
-  26642, // the Dark
-  3524,  // Tyrlos
-  45565, // Malevolence
-  36856, // Kyeril
-  25110, // Brass Padashaw
-  21672, // King of Aravne
-  98959, // Bard Faust
-  87741, // snogres pit fiend
-  87700, // snogres berserker
-  87709, // snogres champion
-  87729, // snogres chieftain
-  38737, // Ny'Neth
-  70941, // Kithron
-  88316, // Kossuth
-  87561, // Zuggtmoy
-  87544, // Jubilex
-  87613, // Graz'zt
-  87612, // Lolth
-  32637, // Aramus
-  16205, // Aceralde
-  43576, // Eligoth
-  32420, // Bel
-  58835, // Chenovog
-  71259, // Yeenoghu
-  78439, // Kyzastaxkasis
-  58379, // Obox-ob
-  58383, // Strahd
-  2435,  // Llamanby
-  15113, // Dranum
-  91031, // Doru
-  80538, // Skrentherlog
-  8746,  // Crymson
+// Going with the terminator -1 for searches.  Just in case someone f's up the count.
+#define NUM_HIGHDROP_MOBS 39
+const int highdrop_mobs[NUM_HIGHDROP_MOBS+1] = {
+  19700, //  0 Tiamat
+  25040, //  1 Brass Sultan
+  25700, //  2 Bahamut
+  81454, //  3 Chronomancer
+  35523, //  4 Dark Knight
+  38317, //  5 Lady Death
+  44172, //  6 King Arkan'non
+  26642, //  7 the Dark
+  3524,  //  8 Tyrlos
+  45565, //  9 Malevolence
+  36856, // 10 Kyeril
+  25110, // 11 Brass Padashaw
+  21672, // 12 King of Aravne
+  98959, // 13 Bard Faust
+  87741, // 14 snogres pit fiend
+  87700, // 15 snogres berserker
+  87709, // 16 snogres champion
+  87729, // 17 snogres chieftain
+  38737, // 18 Ny'Neth
+  70941, // 19 Kithron
+  88316, // 20 Kossuth
+  87561, // 21 Zuggtmoy
+  87544, // 22 Jubilex
+  87613, // 23 Graz'zt
+  87612, // 24 Lolth
+  32637, // 25 Aramus
+  16205, // 26 Aceralde
+  43576, // 27 Eligoth
+  32420, // 28 Bel
+  58835, // 29 Chenovog
+  71259, // 30 Yeenoghu
+  78439, // 31 Kyzastaxkasis
+  58379, // 32 Obox-ob
+  58383, // 33 Strahd
+  2435,  // 34 Llamanby
+  15113, // 35 Dranum
+  91031, // 36 Doru
+  80538, // 37 Skrentherlog
+  8746,  // 38 Crymson
+  -1     // 39 == NUM_HIGHDROP_MOBS + 1
 };
 
 const char *stone_list[] = {
@@ -630,14 +632,14 @@ P_obj create_stones(P_char ch)
 
 }
 
-
-bool check_random_drop(P_char ch, P_char mob, int piece)
+// Returns TRUE iff a random item should be created from ch killing the mob.
+bool check_random_drop(P_char ch, P_char mob, bool piece)
 {
-  int      dropprocent = 0;
-  int      x, i = 0;
-  int      trophy_mod, char_lvl, mob_lvl;
-  struct trophy_data *tr;
+  int i;
+  // Normally, we'd do char_lvl and mob_lvl as ints, but that would require a lot of casting.
+  float char_lvl, mob_lvl, chance, char_mob_lvl_div, luck_divisor;
 
+// int trophy_mod;
 
   if( !ch || !mob )
   {
@@ -654,72 +656,177 @@ bool check_random_drop(P_char ch, P_char mob, int piece)
     return FALSE;
   }
 
-  char_lvl = GET_LEVEL(ch);
-  mob_lvl = GET_LEVEL(mob);
+  char_lvl = (float)GET_LEVEL(ch);
+  mob_lvl = (float)GET_LEVEL(mob);
 
   if( CHAR_IN_TOWN(ch) && (mob_lvl > 25) )
   {
     return FALSE;
   }
 
-  if( (char_lvl - mob_lvl) > 10 )
+  if( (char_lvl - mob_lvl) > 10. )
   {
     return FALSE;
   }
-/*  while (i < 15)
+
+/* Not worth the time to calculate.
+  for( i = 0; highdrop_mobs[i] != -1; i++ )
   {
-    if (highdrop_mobs[i] == GET_VNUM(mob))
+    if( highdrop_mobs[i] == GET_VNUM(mob) )
     {
-      if (!number(0, 5))
+      // 20% drop + reg chance.
+      if( !number(0, 4) )
       {
         return TRUE;
       }
+      break;
     }
     i++;
-  }*/
+  }
+*/
 
-//  if (!IS_TRUSTED(ch) && !IS_NPC(ch))
-//    for (tr = ch->only.pc->trophy; tr; tr = tr->next)
-//    {
-//      if (tr && GET_VNUM(mob) == tr->vnum)
-//      {
-//        trophy_mod = tr->kills > 0 ? tr->kills / 100 : 0;
-//        break;
-//      }
-//      else
-//        trophy_mod = 0;
-//    }
-//  else
-    trophy_mod = 0;
+/* Modifier for trophy.  Since is no trophy atm, disabled.
+  trophy_mod = 0;
+  if (!IS_TRUSTED(ch) && !IS_NPC(ch))
+  {
+    for( tr = ch->only.pc->trophy; tr; tr = tr->next )
+    {
+      if( tr && GET_VNUM(mob) == tr->vnum )
+      {
+        trophy_mod = tr->kills > 0 ? tr->kills / 100 : 0;
+        break;
+      }
+    }
+  }
+*/
 
-  int luck = (int) GET_C_LUK(ch);
-  int chance;
-  int charmobdiv = (mob_lvl / char_lvl);
+  // Since extremely low lvl characters can easily get a high multiplier.
+  // Note: 1x = base 50% chance, 2x = base 75% chance, 3x = base 100% chance.
+  switch( (int)char_lvl )
+  {
+    case 1:
+      // Requires lvl 5 mob for 1x multiplier, 8 for 2x, 11 for 3x
+      char_mob_lvl_div = (mob_lvl - 2.) / 3.;
+      break;
+    case 2:
+      // Requires lvl 7 mob for 1x multiplier, 11 for 2x, 15 for 3x
+      char_mob_lvl_div = (mob_lvl - 3.) / 4.;
+      break;
+    case 3:
+      // Requires lvl 9 mob for 1x multiplier, 14 for 2x, 19 for 3x
+      char_mob_lvl_div = (mob_lvl - 4.) / 5.;
+      break;
+    case 4:
+      // Requires lvl 10 mob for 1x multiplier, 16 for 2x and 22 for 3x
+      char_mob_lvl_div = (mob_lvl - 4.) / 6.;
+      break;
+    case 5:
+      // Requires lvl 11 mob for 1x multiplier, 17 for 2x and 23 for 3x
+      char_mob_lvl_div = (mob_lvl - 5.) / 6.;
+      break;
+    case 6:
+      // Requires lvl 12 mob for 1x multiplier, 19 for 2x, 26 for 3x
+      char_mob_lvl_div = (mob_lvl - 5.) / 7.;
+      break;
+    case 7:
+      // Requires lvl 12 mob for 1x multiplier, 20 for 2x, 28 for 3x
+      char_mob_lvl_div = (mob_lvl - 4.) / 8.;
+      break;
+    case 8:
+      // Requires lvl 13 mob for 1x multiplier, 22 for 2x, 31 for 3x
+      char_mob_lvl_div = (mob_lvl - 4.) / 9.;
+      break;
+    case 9:
+      // Requires lvl 13 mob for 1x multiplier, 23 for 2x, 33 for 3x
+      char_mob_lvl_div = (mob_lvl - 3.) / 10.;
+      break;
+    case 10:
+      // Requires lvl 13 mob for 1x multiplier, 24 for 2x, 35 for 3x
+      char_mob_lvl_div = (mob_lvl - 2.) / 11.;
+      break;
+    case 11:
+      // Requires lvl 14 mob for 1x multiplier, 26 for 2x, 38 for 3x
+      char_mob_lvl_div = (mob_lvl - 2.) / 12.;
+      break;
+    case 12:
+      // Requires lvl 14 mob for 1x multiplier, 27 for 2x, 40 for 3x
+      char_mob_lvl_div = (mob_lvl - 1.) / 13.;
+      break;
+    case 13:
+      // Requires lvl 14 mob for 1x multiplier, 28 for 2x, 42 for 3x
+      char_mob_lvl_div = mob_lvl / 14.;
+      break;
+    case 14:
+      // Requires lvl 14 mob for 1x multiplier, 29 for 2x, 44 for 3x
+      char_mob_lvl_div = (mob_lvl + 1.) / 15.;
+      break;
+    default:
+      // Note: Since MAXLVL = 62, and 3 ~~ 62 / 20, the highest level you can score 100% base via level
+      //   is ch at level 20 vs a level 60 or higher mob.  Highest likely is level 16 ch vs level 48 mob.
+      char_mob_lvl_div = mob_lvl / char_lvl;
+      break;
+  }
+  // Minimum of 1/10th - equivalent of a lvl 50 fighting a lvl 5 mob.
+  if( char_mob_lvl_div < .1 )
+  {
+    char_mob_lvl_div = .1;
+  }
+  luck_divisor = get_property("random.drop.luck.divisor", 4.);
 
- /* nix this for now for a more lenient formula - Jexni 07/12/08 // put the luck on a curve
-  chance -= 50;
-  chance *= 2;
-  // but no more then 175!
-  if (chance > 175.0)
-    chance = 175.0;
+  /* Start with a 50% chance for even levels and 100 luck.
+   * All of below assumes luck_divisor == 4.000:
+   * To start with a 100% chance with equal levels, you need 300 luck = (50 * luck_divisor + 100).
+   *   So, to make it 400 luck for 100% chance with equal levels, set luck_divisor = 6 (+1. for every +50 luck).
+   * To start with a 100% chance with 100 luck, you need a level multiplier of 3.0.
+   *   Due to the multiplier not being a straight division at low lvls (for 100% base chance):
+   *     @lvl 1 ch, mob lvl >= 12, @lvl 2 ch, mob lvl >= 14, @lvl 3 ch, mob lvl >= 21, @lvl 4 ch, mob lvl >= 24.
+   *   At lvl 5 ch, mob lvl >= 15... hrm
+   * Note: To change the 50% base chance, do not change the format of the function below,
+   *   just change the 50 near the end to whatever base % you want.
+   * You can change the random.drop.luck.divisor to whatever without changing the base chance
+   *   with the equation in this format.
    */
+  chance = (GET_C_LUK(ch) / luck_divisor) * char_mob_lvl_div + (50. - 100./luck_divisor);
+send_to_char_f( ch, "char_lvl: %.0f, mob_lvl: %.0f, ", char_lvl, mob_lvl ); // PENIS
+send_to_char_f( ch, "char_mob_lvl_div: %.2f, chance = %.2f, ", char_mob_lvl_div, chance ); // PENIS
+  // Add up to or subtract up to 5 percentage points (rl luck).
+  chance += (float)number(-5, 5);
 
-    chance = (int) ((luck / get_property("random.drop.luck.divisor", 10)) * charmobdiv);
-    chance += number(0, 20);
-    if(char_lvl < get_property("random.drop.increase.for.below.lvl", 20))
-     chance += number(0, get_property("random.drop.increase.for.below.lvl.perc", 30));
-  if(IS_ELITE(mob)) //another boost for elite npcs
-    chance += number(5, 35);
+  // Add up to 10% for low lvl chars.
+  if( char_lvl < get_property("random.drop.increase.for.below.lvl", 26.) )
+  {
+     chance += (float)number(0, get_property("random.drop.increase.for.below.lvl.perc", 10));
+  }
 
-  if (piece)
-    chance *= (get_property("random.drop.piece.percentage", 20.0f) / 100.0);
+  // Boost for elite npcs
+  if( IS_ELITE(mob) )
+    chance += (float)number(5, 15);
+
+  // Multiplier for hardcore
+  if( IS_HARDCORE(ch) )
+  {
+    chance *= get_property("random.drop.modifier.hardcore", 1.500f);
+  }
+
+send_to_char_f( ch, "Chance2: %.2f\n", chance ); // PENIS
+  // chance currently somewhere around 45-80% (% = min for 100 luck equal lvls above 25 non-elite,
+  //   and 80% = max for 100 luck equal lvls below 26 elite mob).
+  // 45-80% * {10|3} / 100 = {4.5-8% for piece|1.35-2.4% for equipment}
+  if( piece )
+  {
+    chance *= get_property("random.drop.piece.percentage", 10.0f) / 100.0;
+  }
   else
-    chance *= (get_property("random.drop.equip.percentage", 2.0f) / 100.0);
+  {
+    chance *= get_property("random.drop.equip.percentage", 3.0f) / 100.0;
+  }
 
-  if (IS_HARDCORE(ch))
-    chance = chance * (get_property("random.drop.modifier.hardcore", 150.0f) / 100.0);
-
-  if (chance > number(0, 100 + (trophy_mod * 2)))
+/* Disabled since no trophy atm.
+  if (chance >= number(1, 100 + (trophy_mod * 2)))
+*/
+send_to_char_f( ch, "final percentage: %.2f ~~ %d.\n", chance + .5, (int)(chance + .5) ); // PENIS
+  // Add .5 for rounding fix to floor-function type-casting.
+  if( (int)(chance + .5) >= number(1, 100) )
     return TRUE;
 
   return FALSE;
