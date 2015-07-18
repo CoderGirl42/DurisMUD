@@ -2857,8 +2857,7 @@ int name_rank(P_char leader, char *level, char *new_name)
   /* deputies or higher only */
   if (!GT_DEPUTY(temp))
   {
-    send_to_char("You would need to be at the top of your association!\r\n",
-                 leader);
+    send_to_char("You would need to be at the top of your association!\r\n", leader);
     return (0);
   }
   sign = LOWER(*level);
@@ -2885,7 +2884,7 @@ int name_rank(P_char leader, char *level, char *new_name)
   case 'l':
     rank_number = 6;            /* leader */
     break;
-  case 'g':
+  case 'k':
     rank_number = 7;            /* god */
     break;
   default:
