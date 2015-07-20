@@ -5676,7 +5676,7 @@ marg d'ghor hooded figure trog troglodyte witch doctor witchdoctor~
 &+Wreverred with such 'graces' among the other troglodytes, as he
 &+Wclearly has an otherwordly intellect and presence.
 ~
-1359497224 1 0 0 939524248 14528 524416 4194816 -1000 S
+1359497224 1 0 0 939597976 14556 134742144 37750272 -1000 S
 up 0 289 0 -1
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -5694,7 +5694,7 @@ black smoke monster~
 ~
 1074790408 1 0 0 134217752 0 524288 537657344 -1000 S
 SW 0 64 0 -1
-25 0 0 1d1+1 1d1+1
+51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
 #83457
