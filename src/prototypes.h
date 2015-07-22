@@ -909,7 +909,6 @@ bool damage(P_char, P_char, double, int);
 int raw_damage(P_char ch, P_char vict, double dam, uint flags, struct damage_messages *messages);
 int spell_damage(P_char ch, P_char vict, double dam, int type, uint flags, struct damage_messages *messages);
 int melee_damage(P_char ch, P_char vict, double dam, int type, struct damage_messages *messages);
-char *replace_string(const char *, const char *, const char *, const char *, const char *);
 int PartySizeMod(int, int, int, int);
 int TryRiposte(P_char, P_char);
 int vamp(P_char, double, double);

@@ -27,27 +27,27 @@ public:
 
   // basically, deletes everything IN the list without deleting the list
   //  object itself.
-  void NukeLockerChests(void);  
-  
+  void NukeLockerChests(void);
+
   // parses 'args' and creates needed chests
-  bool MakeChests(P_char ch, const char *args);
-  
+  bool MakeChests(P_char ch, char *args);
+
   // figures out where 'obj' belongs and puts it there.  If
   //  it doesn't belong anyplace, return false;
   bool PutInProperChest(P_obj obj);
-  
+
   P_char GetLockerChar(void) {return m_chLocker;};
   P_char GetLockerUser(void) {return m_chUser;};
-  
+
   void LockerToPFile(void);
   void PFileToLocker(void);
   void SortIValues(void);
-  
+
   static void event_resortLocker(P_char chLocker, P_char ch, P_obj obj, void *data);
    int m_itemCount;
 
 protected:
-  
+
   LockerChest *AddLockerChest(LockerChest *p);
   LockerChest *m_pChestList;
   int m_realRoom;

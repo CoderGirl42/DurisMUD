@@ -128,8 +128,7 @@ char    *replace(char *g_string, char *replace_from, char *replace_to)
 
 
 
-int replace_str(char **string, char *pattern, char *replacement, int rep_all,
-                int max_size)
+int replace_str(char **string, char *pattern, char *replacement, int rep_all, int max_size)
 {
   char    *replace_buffer = NULL;
   char    *flow = NULL, *jetsam = NULL, temp;
