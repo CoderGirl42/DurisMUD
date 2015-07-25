@@ -1758,49 +1758,54 @@ bool circle(P_char ch, P_char victim)
 {
   P_char   tch;
   P_char   t;
-  int      found;
+  int      found, skill;
 
-  if(get_linked_char(ch, LNK_CIRCLING))
+  if( get_linked_char(ch, LNK_CIRCLING) )
   {
     send_to_char("You are already circling someone!\n", ch);
     return FALSE;
   }
 
-  if(affected_by_spell(ch, SKILL_CIRCLE))
+  if( affected_by_spell(ch, SKILL_CIRCLE) )
   {
     send_to_char("You aren't quite ready for another attempt.\n", ch);
     return 0;
   }
 
-  if(ch == victim)
+  if( ch == victim )
   {
-    send_to_char
-      ("You run in circles, attempting to stab yourself; your comrades stare at you in awe.\n", ch);
+    send_to_char("You run in circles, attempting to stab yourself; your comrades stare at you in awe.\n", ch);
     return FALSE;
   }
 
-  /*
-   * Are they tanking?
-   */
-  for (t = world[ch->in_room].people, found = FALSE; t; t = t->next_in_room)
-    if(GET_OPPONENT(t) == ch)
-    {
-      found = TRUE;
-      break;
-    }
-  
-  if(found && !IS_TRUSTED(ch) )
+  // Are they tanking?
+  if( !IS_TRUSTED(ch) )
   {
-    send_to_char("It is a bit hard to circle someone when you are being beaten upon!\n",
-                 ch);
-    return FALSE;
+    for (t = world[ch->in_room].people, found = FALSE; t; t = t->next_in_room)
+    {
+      if( GET_OPPONENT(t) == ch )
+      {
+        send_to_char("It is a bit hard to circle someone when you are being beaten upon!\n", ch);
+        return FALSE;
+      }
+    }
   }
 
   set_short_affected_by(ch, SKILL_CIRCLE, PULSE_VIOLENCE * 4);
   CharWait(ch, PULSE_VIOLENCE / 2);
+  skill = GET_CHAR_SKILL(ch, SKILL_CIRCLE);
+  // Old school assassin mobs learn circle faster.
+  if( GET_CLASS(ch, CLASS_ASSASSIN) )
+  {
+    skill *= 2;
+    if( skill > 100 )
+    {
+      skill = 100;
+    }
+  }
 
   if(!notch_skill(ch, SKILL_CIRCLE, get_property("skill.notch.offensive", 7))
-    && GET_CHAR_SKILL(ch, SKILL_CIRCLE) < number(0, 100))
+    && skill < number(1, 100))
   {
     act("Damn! You weren't quite stealthy enough, and $N noticed your attempt to circle $M!",
         FALSE, ch, 0, victim, TO_CHAR);
@@ -4354,7 +4359,7 @@ void event_garroteproc(P_char ch, P_char victim, P_obj obj, void *data)
   int count = *((int*)data);
   int rand1 = number(1, 100);
 
-  dam = dice(3, 4);
+  dam = dice(GET_LEVEL(ch) / 18, 4);
 
   if( GET_HIT(ch) - dam > 0 )
   {
@@ -4780,6 +4785,16 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
     return FALSE;
   }
 
+  // Old school assassin mobs learn backstab faster.
+  if( GET_CLASS(ch, CLASS_ASSASSIN) )
+  {
+    skill *= 2;
+    if( skill > 100 )
+    {
+      skill = 100;
+    }
+  }
+
   dice_mod = get_property("backstab.diceMultiplier", 1.000);
   final_mult = get_property("backstab.finalMultiplier", 1.000);
   damroll_mult = get_property("backstab.DamrollMultiplier", 0.500);
@@ -4795,7 +4810,8 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
 
   dice_mult = (int) (weapon->value[1] + (weapon->value[2] / 2)) / 2;
   dice_mult += weapon->value[1] + (weapon->value[1] / 2);
-  level_mult = (float) GET_LEVEL(ch) / 56;
+  // Range from .50 at lvl 1 to 1.00 at 56.
+  level_mult = .50 + (float) GET_LEVEL(ch) / 112.;
 
   dam = (int) dam * (dice_mult * dice_mod);
   dam = (int) dam * level_mult;
@@ -5102,6 +5118,16 @@ bool backstab(P_char ch, P_char victim)
   victim = misfire_check(ch, victim, DISALLOW_SELF | DISALLOW_BACKRANK);
 
   percent_chance = (int) (0.95 * GET_CHAR_SKILL(ch, SKILL_BACKSTAB));
+
+  // Old school assassin mobs learn backstab faster.
+  if( GET_CLASS(ch, CLASS_ASSASSIN) )
+  {
+    percent_chance *= 2;
+    if( percent_chance > 95 )
+    {
+      percent_chance = 95;
+    }
+  }
 
   if( GET_C_LUK(ch) / 2 > number(0, 100) )
   {
@@ -10246,6 +10272,15 @@ void do_garrote(P_char ch, char *argument, int cmd)
   }
 
   int success = GET_CHAR_SKILL(ch, SKILL_GARROTE);
+  // Old school assassin mobs learn garrote faster.
+  if( GET_CLASS(ch, CLASS_ASSASSIN) )
+  {
+    success *= 2;
+    if( success > 100 )
+    {
+      success = 100;
+    }
+  }
   notch_skill(ch, SKILL_GARROTE, 6.67);
   if( number(1, 105) > success )
   {
@@ -10270,8 +10305,9 @@ void do_garrote(P_char ch, char *argument, int cmd)
   {
     StopCasting(victim);
   }
-  set_short_affected_by(ch, SKILL_GARROTE, PULSE_VIOLENCE);
-	int	numb = number(5, 8);
+  set_short_affected_by(ch, SKILL_GARROTE, PULSE_VIOLENCE * 2);
+  // @lvl 30: 2-4, @lvl 34: 3-5, @lvl 56: 5-7.
+	int	numb = (GET_LEVEL(ch)-1) / 11 + number(0, 2);
   CharWait(ch, (WAIT_SEC * 3) / 2);
   if( !IS_FIGHTING(ch) )
   {

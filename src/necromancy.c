@@ -581,6 +581,13 @@ void raise_undead(int level, P_char ch, P_char victim, P_obj obj, int which_type
   undead->base_stats.Dex = BOUNDED(74, undead->base_stats.Dex, 100);
   undead->base_stats.Int = BOUNDED(84, undead->base_stats.Int, 100);
   undead->base_stats.Wis = BOUNDED(84, undead->base_stats.Int, 100);
+  // Spectres get good stats for backstab (necromancers get str spell, so 90 str).
+  if( which_type == NECROPET_SPECTRE )
+  {
+    undead->base_stats.Str = 90;
+    undead->base_stats.Agi = 100;
+    undead->base_stats.Dex = 100;
+  }
 
   /* max hp: 800 - really lucky lich.  */
   GET_HIT(undead) = GET_MAX_HIT(undead) = undead->points.base_hit =
