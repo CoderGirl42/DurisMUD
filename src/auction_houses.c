@@ -523,7 +523,7 @@ bool auction_list(P_char ch, char *args)
 
     for( int i = 0; i < list_args.size(); i++ )
     {
-      sprintf(buff, " and id_keywords like '%%%s,%%'", list_args[i].c_str() );
+      sprintf(buff, " and id_keywords like '%% %s,%%'", list_args[i].c_str() );
       strcat( where_str, buff );
     }
 
@@ -1323,7 +1323,7 @@ EqSort::EqSort()
   flags.push_back(new EqExtra2Flag("crafted", "that were crafted", ITEM2_CRAFTED));
 
 	flags.push_back(new EqAffFlag("blind", "that make the wearer blind", AFF_BLIND));
-  flags.push_back(new EqAffFlag("invisible", "that make the wearer invisible", AFF_INVISIBLE));
+  flags.push_back(new EqAffFlag("invisibility", "that make the wearer invisible", AFF_INVISIBLE));
   flags.push_back(new EqAffFlag("farsee", "that grant farsee", AFF_FARSEE));
   flags.push_back(new EqAffFlag("det_invis", "that detect invisible", AFF_DETECT_INVISIBLE));
   flags.push_back(new EqAffFlag("haste", "that grant haste", AFF_HASTE));
