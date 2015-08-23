@@ -1393,8 +1393,11 @@ char *CRYPT2( char *passwd, char *name );
 
 // Good spell pulse is negative.
 #define SPELL_PULSE(ch) (1.0 + (.03 * ch->points.spell_pulse))
-// Pulse percentage modifier for ch: base 100%, decreases by 5% for each -1 pulse eq.
-#define COMBAT_PULSE(ch) (1.0 + (.05 * ch->points.combat_pulse))
+// Derived this via 1.3 for slow, 1.0 for normal and .5 for fast pulsers:
+//   Base + Modifier * ( (.08/3) Base^2 - (2.20/3) Base + 5.46 )
+#define COMBAT_PULSE(ch) (ch->specials.base_combat_round \
+  + ch->points.combat_pulse * ( (.08/3) * ch->specials.base_combat_round * ch->specials.base_combat_round \
+  - (2.20/3) * ch->specials.base_combat_round + 5.46 ))
 
 // New effects of attributes:
 // Vamp multiplier for ch: value between 1.1 and 2.2.

@@ -1832,12 +1832,14 @@ char affect_total(P_char ch, int kill_ch)
   }
 
 /* For testing.. just displays the base/mod/new for combat pulse.
+ * This is old.. We just now do Base and New:
   if( IS_PC(ch) ) debug( "Base: %.2f, Mod: %.2f, New: %.2f, Final: %d.",
     ch->specials.base_combat_round, COMBAT_PULSE(ch), ch->specials.base_combat_round * COMBAT_PULSE(ch),
     (int)(ch->specials.base_combat_round * COMBAT_PULSE(ch) + .5) );
+  if( IS_PC(ch) ) debug( "Base: %.2f, New: %.2f", ch->specials.base_combat_round, COMBAT_PULSE(ch) );
 */
   // Multiply it by the pulse modifier (and add .5 for the rounding).
-  ch->specials.base_combat_round = ch->specials.base_combat_round * COMBAT_PULSE(ch) + .5;
+  ch->specials.base_combat_round = COMBAT_PULSE(ch);
   /* Original:
   ch->specials.base_combat_round += ch->points.combat_pulse;
   */
