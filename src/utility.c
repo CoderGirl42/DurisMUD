@@ -4707,39 +4707,40 @@ bool should_area_hit(P_char ch, P_char victim)
   P_char   c_leader = NULL, v_leader = NULL;
   struct affected_type *af;
 
-  if (!ch || !victim)
+  if( !ch || !victim )
     return FALSE;
 
-  if (victim->specials.z_cord != ch->specials.z_cord)
+  if( victim->specials.z_cord != ch->specials.z_cord )
     return FALSE;
 
-  if (ch == victim)
+  if( ch == victim )
     return FALSE;
 
-  if (CHAR_IN_SAFE_ZONE(victim))
+  if( CHAR_IN_SAFE_ZONE(victim) )
     return FALSE;
 
-  if (GET_STAT(victim) == STAT_DEAD)
+  if( GET_STAT(victim) == STAT_DEAD )
     return FALSE;
 
-  if ((ch->specials.fighting == victim) || (victim->specials.fighting == ch))
+  if( (ch->specials.fighting == victim) || (victim->specials.fighting == ch) )
     return TRUE;
 
-  if (IS_AFFECTED(victim, AFF_WRAITHFORM))
+  if( IS_AFFECTED(victim, AFF_WRAITHFORM) )
     return FALSE;
 
-  if (IS_NPC(GET_PLYR(ch)) && IS_NPC(GET_PLYR(victim)) &&
-      !(GET_PLYR(victim)->following && IS_PC(GET_PLYR(victim)->following)))
+  if( IS_NPC(GET_PLYR(ch)) && IS_NPC(GET_PLYR(victim))
+    && !(GET_PLYR(victim)->following && IS_PC(GET_PLYR(victim)->following))
+    && !(GET_PLYR(ch)->following && IS_PC(GET_PLYR(ch)->following)) )
     return FALSE;
 
   if (IS_TRUSTED(victim) && (victim->specials.fighting != ch))
     return FALSE;
 
-  if ((world[ch->in_room].room_flags & SINGLE_FILE) &&
-      !AdjacentInRoom(ch, victim))
+  if( (world[ch->in_room].room_flags & SINGLE_FILE) && !AdjacentInRoom(ch, victim) )
     return FALSE;
 
-  if (af = get_spell_from_char(victim, TAG_IMMUNE_AREA)) {
+  if( af = get_spell_from_char(victim, TAG_IMMUNE_AREA) )
+  {
     affect_remove(victim, af);
     return FALSE;
   }
@@ -4853,20 +4854,16 @@ void cast_as_area(P_char ch, int spl, int level, char *arg)
 /*
  * Used by damage area spells
  */
-int cast_as_damage_area(P_char ch,
-                        void (*spell_func) (int, P_char, char *, int, P_char,
-                                            P_obj), int level, P_char victim,
-                        float min_chance, float chance_step,
-                        bool (*select_func) (P_char, P_char))
+int cast_as_damage_area(P_char ch, void (*spell_func) (int, P_char, char *, int, P_char, P_obj), int level,
+  P_char victim, float min_chance, float chance_step, bool (*select_func) (P_char, P_char))
 {
   P_char   tch, *vict_array;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return 0;
   }
-  
+
   int ch_room = ch->in_room;
 
   ////////////
@@ -4880,65 +4877,66 @@ int cast_as_damage_area(P_char ch,
   int count = 0;
   for(tch = world[ch_room].people; tch; tch = tch->next_in_room)
   {
-    if(IS_ALIVE(tch))
+    if( IS_ALIVE(tch) )
       count++;
   }
 
-  if (count <= 0)
-      return 0;
+  if( count <= 0 )
+  {
+    return 0;
+  }
 
   CREATE(vict_array, P_char, count + 1, MEM_TAG_ARRAY);
 
-  
   count = 0;
   int pc_count = 0;
   for(tch = world[ch_room].people; tch; tch = tch->next_in_room)
   {
-    if(IS_ALIVE(tch) && select_func(ch, tch))
+    if( IS_ALIVE(tch) && select_func(ch, tch) )
     {
       vict_array[count++] = tch;
-      if(IS_PC(tch)) pc_count++;
+      if( IS_PC(tch) )
+        pc_count++;
     }
   }
 
-  if (pc_count > 0)
+  if( pc_count > 0 )
   {
-      float median = (float)pc_count / 2.0 + 5.0 / (float)pc_count;
-      float range = 1.5;
-      int pc_hit = number((int)((median - range / 2.0) * 1000.0), (int)((median + range / 2.0) * 1000.0)) / 1000;
-      pc_hit = MAX((int)(pc_count * min_chance / 100), pc_hit);
-      pc_hit = MIN(pc_hit, pc_count);
-      int pc_skip = pc_count - pc_hit;
-      if (pc_skip > 0)
+    float median = (float)pc_count / 2.0 + 5.0 / (float)pc_count;
+    float range = 1.5;
+    int pc_hit = number((int)((median - range / 2.0) * 1000.0), (int)((median + range / 2.0) * 1000.0)) / 1000;
+    pc_hit = MAX((int)(pc_count * min_chance / 100), pc_hit);
+    pc_hit = MIN(pc_hit, pc_count);
+    int pc_skip = pc_count - pc_hit;
+    if( pc_skip > 0 )
+    {
+      for( int i = number(0, count - 1); pc_skip; i = (i + 1) % count )
       {
-          for (int i = number(0, count - 1); pc_skip; i = (i + 1) % count)
-          {
-              if (!vict_array[i])
-                  continue;
-              if (!IS_PC(vict_array[i]))
-                  continue;
-              if (vict_array[i] == victim)
-                  continue;
-              if (!number(0, 1))
-                  continue;
-              vict_array[i] = 0;
-              pc_skip--;
-          }
+        if( !vict_array[i] )
+          continue;
+        if( !IS_PC(vict_array[i]) )
+          continue;
+        if( vict_array[i] == victim )
+          continue;
+        if( !number(0, 1) )
+          continue;
+        vict_array[i] = 0;
+        pc_skip--;
       }
+    }
   }
- 
+
   int hit = 0;
   for (int i = 0; i < count; i++)
   {
     P_char tch = vict_array[i];
-    if (!tch)
+    if( !tch )
       continue;
-    if (!is_char_in_room(tch, ch_room))
+    if( !is_char_in_room(tch, ch_room) )
       continue;
-    if (!is_char_in_room(ch, ch_room))
+    if( !is_char_in_room(ch, ch_room) )
       break;
-    if (has_innate(tch, INNATE_EVASION) &&
-	GET_SPEC(tch, CLASS_MONK, SPEC_WAYOFSNAKE))
+    if( has_innate(tch, INNATE_EVASION) && GET_SPEC(tch, CLASS_MONK, SPEC_WAYOFSNAKE) )
     {
       if ((GET_LEVEL(tch) - ((int) get_property("innate.evasion.removechance", 15.000))) > number(1,100))
       {
@@ -4946,7 +4944,7 @@ int cast_as_damage_area(P_char ch,
         act ("$n twists out of the way avoiding the harmful magic!", FALSE, tch, 0, ch, TO_ROOM);
         continue;
       }
-    }    
+    }
     spell_func(level, ch, (char *) &hit, 0, tch, NULL);
     hit++;
   }
@@ -5018,13 +5016,10 @@ int cast_as_damage_area(P_char ch,
 }
 
 
-int cast_as_damage_area(P_char ch,
-                        void (*spell_func) (int, P_char, char *, int, P_char,
-                                            P_obj), int level, P_char victim,
-                        float min_chance, float chance_step)
+int cast_as_damage_area(P_char ch, void (*spell_func) (int, P_char, char *, int, P_char, P_obj),
+  int level, P_char victim, float min_chance, float chance_step)
 {
-  return cast_as_damage_area(ch, spell_func, level, victim,
-      min_chance, chance_step, should_area_hit);
+  return cast_as_damage_area(ch, spell_func, level, victim, min_chance, chance_step, should_area_hit);
 }
 
 void hummer(P_obj obj)

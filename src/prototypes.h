@@ -1334,6 +1334,27 @@ void lose_practices(P_char);
 void point_update(void);
 void set_title(P_char);
 
+/* breath_weapons.c */
+void breath_weapon_fire(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_lightning(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_frost(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_acid(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_poison(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_sleep(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_fear(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_paralysis(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_shadow_1(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_shadow_2(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_blind(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_crimson(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_jasper(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_azure(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_basalt(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_crimson_2(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_azure_2(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_jasper_2(int, P_char, char *, int, P_char, P_obj);
+void breath_weapon_basalt_2(int, P_char, char *, int, P_char, P_obj);
+
 /* magic.c */
 
 /* commented out declarations before have been "cleaned up", and are temporarily
@@ -2609,7 +2630,6 @@ void spell_resurrect(int, P_char, char *, int, P_char, P_obj);
 void spell_lesser_resurrect(int, P_char, char *, int, P_char, P_obj);
 void spell_sense_life(int, P_char, char *, int, P_char, P_obj);
 void spell_sense_follower(int, P_char, char *, int, P_char, P_obj);
-void spell_sleep(int, P_char, char *, int, P_char, P_obj);
 void spell_slow(int, P_char, char *, int, P_char, P_obj);
 void spell_stone_skin(int, P_char, char *, int, P_char, P_obj);
 void spell_ironwood(int, P_char, char *, int, P_char, P_obj);

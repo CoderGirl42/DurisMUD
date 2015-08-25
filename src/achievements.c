@@ -153,10 +153,10 @@ void do_achievements(P_char ch, char *arg, int cmd)
   //-----Achievement: Full Base Stats 100 - gellz
   if(affected_by_spell(ch, ACH_DEATHSDOOR))
     sprintf(buf2, "  &+L%-55s&+L%-45s&+L%s\r\n",
-        "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+BGet 100 in all stats(help toughen up)", "&+BAbililty to use &+LDea&+wths&+L Do&+wor&n");
+        "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+BGet 100 in all stats(help toughen up)", "&+BAbility to use &+LDea&+wths&+L Do&+wor&n");
   else
     sprintf(buf2, "  &+L%-55s&+L%-45s&+L%s\r\n",
-        "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+wGet 100 in all stats(help toughen up)", "&+wAbililty to use &+LDea&+wths&+L Do&+wor&n");
+        "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+wGet 100 in all stats(help toughen up)", "&+wAbility to use &+LDea&+wths&+L Do&+wor&n");
   strcat(buf, buf2);
   //-----END Achievement: Full Base Stats 100
 

@@ -3529,12 +3529,27 @@ void do_breathe(P_char ch, char *arg, int cmd)
       }
       if( !strcmp( buf, "fire" ) )
       {
-        spell_fire_breath( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
+        breath_weapon_fire( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
+        return;
+      }
+      if( !strcmp( buf, "lightning" ) )
+      {
+        breath_weapon_lightning( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
         return;
       }
       if( !strcmp( buf, "frost" ) )
       {
-        spell_frost_breath( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
+        breath_weapon_frost( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
+        return;
+      }
+      if( !strcmp( buf, "acid" ) )
+      {
+        breath_weapon_acid( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
+        return;
+      }
+      if( !strcmp( buf, "poison" ) )
+      {
+        breath_weapon_poison( GET_LEVEL(ch), ch, arg, 0, victim, NULL );
         return;
       }
     }

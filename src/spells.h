@@ -1193,6 +1193,9 @@
 #define SAVING_BREATH 3
 #define SAVING_SPELL  4
 
+#define BREATH_WEAPON_SAVE( ch, vict ) \
+  GET_LEVEL(ch) + get_property("dragon.Breath.SavingThrowMod", 0) - GET_LEVEL(vict)
+
 #define TAR_IGNORE        BIT_1
 #define TAR_CHAR_ROOM     BIT_2
 #define TAR_CHAR_WORLD    BIT_3

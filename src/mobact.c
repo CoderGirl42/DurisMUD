@@ -74,6 +74,7 @@ int empty_slot_for_weapon(P_char ch);
 int very_angry_npc(P_char, P_char, int, char *);
 bool check_ch_nevents( P_char ch );
 bool check_disruptive_blow(P_char ch);
+char *get_function_name(void *func);
 
 #define UNDEAD_TYPES 6
 
@@ -93,13 +94,10 @@ static char *mem_str_dup(char *);
 extern bool execute_quest_routine(P_char, int);
 extern void event_spellcast(P_char, P_char, P_obj, void *);
 
-extern int      cast_as_damage_area(P_char,
-                             void (*func) (int, P_char, char *, int, P_char,
-                                           P_obj), int, P_char, float, float);
-extern int      cast_as_damage_area(P_char,
-                             void (*func) (int, P_char, char *, int, P_char,
-                                           P_obj), int, P_char, float, float,
-                             bool (*s_func) (P_char, P_char));
+extern int cast_as_damage_area(P_char, void (*func) (int, P_char, char *, int, P_char, P_obj), int, P_char, float,
+  float);
+extern int cast_as_damage_area(P_char, void (*func) (int, P_char, char *, int, P_char, P_obj), int, P_char, float,
+  float, bool (*s_func) (P_char, P_char));
 
 
 struct remember_data
@@ -4849,270 +4847,331 @@ bool WillPsionicistSpell(P_char ch, P_char victim)
   return (FALSE);
 }
 
-
+#define BREATH_FIRE       BIT_1
+#define BREATH_LIGHTNING  BIT_2
+#define BREATH_FROST      BIT_3
+#define BREATH_ACID       BIT_4
+#define BREATH_GAS_POISON BIT_5
+#define BREATH_GAS_SLEEP  BIT_6
+#define BREATH_GAS_FEAR   BIT_7
+#define BREATH_GAS_PARA   BIT_8
+#define BREATH_SHADOW     BIT_9
+#define BREATH_GAS_BLIND  BIT_10
+#define BREATH_CRIMSON    BIT_11
+#define BREATH_AZURE      BIT_12
+#define BREATH_JASPER     BIT_13
+#define BREATH_BASALT     BIT_14
+#define BREATH_CRIMSON_2  BIT_15
+#define BREATH_AZURE_2    BIT_16
+#define BREATH_JASPER_2   BIT_17
+#define BREATH_BASALT_2   BIT_18
+#define NUM_BREATHS       18
 void BreathWeapon(P_char ch, int dir)
 {
-  int      i = 0, room, orig_room = ch->in_room, distance;
+  int      breath_possibilities, breath_type, attempts, room, orig_room, i, distance;
   char     buf[MAX_STRING_LENGTH], waited = FALSE;
   P_char   tchar1 = NULL, tchar2 = NULL;
   void     (*funct) (int, P_char, char *, int, P_char, P_obj);
   P_char victim;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
 
-  distance = BOUNDED(2, GET_LEVEL(ch) / 10, 6);
-
-  if(isname("gold", GET_NAME(ch)))
-    if(number(0, 1) == 0)
-      i = 1;                    /* fire */
-    else
-      i = 5;                    /* gas */
-  if(isname("brass", GET_NAME(ch)))    /* gas: sleep or fear    */
-    if(number(0, 1) == 0)
-      i = 6;                    /* sleep gas */
-    else
-      i = 7;                    /* fear gas */
-  if(isname("bronze", GET_NAME(ch)))
-    if(number(0, 1) == 0)
-      i = 2;                    /* lightning */
-    else
-      i = 7;                    /* repulsion gas */
-  if(isname("silver", GET_NAME(ch)))
-    if(number(0, 1) == 0)
-      i = 3;                    /* cold */
-    else
-      i = 8;                    /* para gas */
-  if(isname("copper", GET_NAME(ch)))
-    if(number(0, 1) == 0)
-      i = 4;                    /* acid */
-    else
-      i = 5;                    /* gas */
-  if(IS_ACT(ch, ACT_BREATHES_FIRE) || 
-    isname("red", GET_NAME(ch)))     // || isname("br_f", GET_NAME(ch)))
-      i = 1;                      /* fire */
-  if(IS_ACT(ch, ACT_BREATHES_LIGHTNING) || 
-    isname("blue", GET_NAME(ch)))       // || isname("br_l", GET_NAME(ch)))
-      i = 2;                      /* lightning */
-  if(IS_ACT(ch, ACT_BREATHES_FROST) ||
-    isname("white", GET_NAME(ch)))  // || isname("br_c", GET_NAME(ch)))
-      i = 3;                      /* cold */
-  if(IS_ACT(ch, ACT_BREATHES_ACID) || 
-    isname("black", GET_NAME(ch)))   // || isname("br_a", GET_NAME(ch)))
-      i = 4;                      /* acid */
-  if(IS_ACT(ch, ACT_BREATHES_GAS) || 
-    isname("green", GET_NAME(ch)))    // || isname("br_g", GET_NAME(ch)))
-      i = 5;                      /* gas */
-  if(IS_ACT(ch, ACT_BREATHES_SHADOW) || 
-    isname("shadow", GET_NAME(ch)))        // || isname("br_s", GET_NAME(ch)))
-    if(number(1, 10) < 7)
-      i = 9;
-    else
-      i = 10;
-  if(IS_ACT(ch, ACT_BREATHES_BLIND_GAS))       // || isname("br_b", GET_NAME(ch)))
-    i = 11;                     /* blinding gas */
-  if(isname("crimson", GET_NAME(ch)))
-      i = 12;                    /* crimson */
-  if(isname("azure", GET_NAME(ch)))   
-      i = 13;                    /* azure */
-  if(isname("jasper", GET_NAME(ch)))
-      i = 14;                    /* jasper */
-  if(isname("basalt", GET_NAME(ch)))
-      i = 15;                    /* basalt */
-  if(isname("judgement", GET_NAME(ch)))
-      i = 16;                    /* war */
-  if(isname("justice", GET_NAME(ch)))
-      i = 17;                    /* judgement */
-  if(isname("war", GET_NAME(ch)))
-      i = 18;                    /* vengeance */
-  if(isname("vengeance", GET_NAME(ch)))
-      i = 19;                    /* justice */
-  if(i == 0)
-    i = number(1, 5);
-
-  switch (i)
+  if( !IS_ALIVE(ch) )
   {
-  case 1:
-    act("$n breathes &+Rfire&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+Rfire&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A blast of &+Rfire&n shoots in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_fire_breath;
-    break;
-  case 2:
-    act("$n breathes &=LBlightning&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &=LBlightning&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A bolt of &=LBlightning&n crackles from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_lightning_breath;
-    break;
-  case 3:
-    act("$n breathes &+Wfrost&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+Wfrost&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A sudden &+Wfreezing gale&n blasts from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_frost_breath;
-    break;
-  case 4:
-    act("$n breathes &+Lacid&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+Lacid&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Lfrothing liquid&n streams in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_acid_breath;
-    break;
-  case 5:
-    act("$n breathes &+gpoison gas&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+gpoison gas&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_gas_breath;
-    break;
-  case 6:
-    act("$n breathes &+wgas&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+wgas&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_sleep;
-    break;
-  case 7:
-    act("$n breathes &+rgas&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+rgas&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_fear;
-    break;
-  case 8:
-    act("$n breathes &+Mgas&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+Mgas&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_minor_paralysis;
-    break;
-  case 9:
-    act("&+LA billowing cloud of darkness erupts from $n&+L's mouth!&n", 1,
-        ch, 0, 0, TO_ROOM);
-    act("&+LA billowing cloud of darkness erupts from your mouth!&n", 0, ch,
-        0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf,
-              "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_shadow_breath_1;
-    break;
-  case 10:
-    act("&+LA black beam shoots out of $n&+L's mouth!&n", 1, ch, 0, 0,
-        TO_ROOM);
-    act("&+LA black beam shoots out of your mouth!&n", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf,
-              "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_shadow_breath_2;
-    break;
-  case 11:
-    act("$n breathes &+Lgas&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You breathe &+Lgas&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A blast of &+ggas&n shoots in from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_blinding_breath;
-    break;
-  case 12:
-    act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_crimson_light;
-    break;
-  case 13:
-    act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_jasper_light;
-    break;
-  case 14:
-    act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_azure_light;
-    break;
-  case 15:
-    act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_basalt_light;
-    break;
-  case 16:
-    act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_crimson_light_2;
-    break;
-  case 17:
-    act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_azure_light_2;
-    break;
-  case 18:
-    act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_jasper_light_2;
-    break;
-  case 19:
-    act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
-    act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
-    if(dir != -1)
-      sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n",
-              dirs[(int) rev_dir[dir] - 1]);
-    funct = spell_basalt_light_2;
-    break;
+    return;
   }
 
+  // Breathing a direction must be buggy?
   dir = -1;
 
-  if(dir == -1)
-  { 
-    if(IS_FIGHTING(ch))
-        victim = ch->specials.fighting;
-        
-   /* cast_as_damage_area(ch, funct, GET_LEVEL(ch), victim,*/
-	cast_as_damage_area(ch, funct, BOUNDED(1, GET_LEVEL(ch), 20), victim,
-        get_property("dragon.Breath.area.minChance", 60),
-        get_property("dragon.Breath.area.chanceStep", 20));
-    
-    CharWait(ch, PULSE_VIOLENCE * 2.5);
-    if(GET_MASTER(ch))
+  orig_room = ch->in_room;
+  distance = BOUNDED(2, GET_LEVEL(ch) / 10, 6);
+
+  // Figure out what breath types are possible.
+  breath_possibilities = 0;
+  if( isname("gold", GET_NAME(ch)) )
+  {
+    // Add Fire and Poison gas.
+    breath_possibilities += BREATH_FIRE + BREATH_GAS_POISON;
+  }
+  if( isname("brass", GET_NAME(ch)) )
+  {
+    // Add Sleep and Fear gas.
+    breath_possibilities += BREATH_GAS_SLEEP + BREATH_GAS_FEAR;
+  }
+  if( isname("bronze", GET_NAME(ch)) )
+  {
+    // Add Lightning and Fear gas.
+    breath_possibilities += BREATH_LIGHTNING + BREATH_GAS_FEAR;
+  }
+  if( isname("silver", GET_NAME(ch)) )
+  {
+    // Add Frost and Para gas.
+    breath_possibilities += BREATH_FROST + BREATH_GAS_PARA;
+  }
+  if( isname("copper", GET_NAME(ch)) )
+  {
+    // Add Acid and Poison gas.
+    breath_possibilities += BREATH_ACID + BREATH_GAS_POISON;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_FIRE) || isname("red", GET_NAME(ch)) )
+//    || isname("br_f", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_FIRE;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_LIGHTNING) || isname("blue", GET_NAME(ch)) )
+//    || isname("br_l", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_LIGHTNING;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_FROST) || isname("white", GET_NAME(ch)) )
+//    || isname("br_c", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_FROST;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_ACID) || isname("black", GET_NAME(ch)) )
+//    || isname("br_a", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_ACID;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_GAS) || isname("green", GET_NAME(ch)) )
+//    || isname("br_g", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_GAS_POISON;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_SHADOW) || isname("shadow", GET_NAME(ch)) )
+//    || isname("br_s", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_SHADOW;
+  }
+  if( IS_ACT(ch, ACT_BREATHES_BLIND_GAS) )
+//    || isname("br_b", GET_NAME(ch)))
+  {
+    breath_possibilities += BREATH_GAS_BLIND;
+  }
+  if( isname("crimson", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_CRIMSON;
+  }
+  if( isname("azure", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_AZURE;
+  }
+  if( isname("jasper", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_JASPER;
+  }
+  if( isname("basalt", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_BASALT;
+  }
+  // Avatar of Judgement - Mob vnum 83.  Why aren't we just checking the vnum?
+  if( isname("judgement", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_CRIMSON_2;
+  }
+  // Avatar of Justice - Mob vnum 85.  Why aren't we just checking the vnum?
+  // Includes others tho.... but should it?
+  if( isname("justice", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_AZURE_2;
+  }
+  // Avatar of War - Mob vnum 82.  Why aren't we just checking the vnum?
+  // Includes others tho.... but should it?
+  if( isname("war", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_JASPER_2;
+  }
+  // Avatar of Vengeance - Mob vnum 84.  Why aren't we just checking the vnum?
+  // Includes others tho.... but should it?
+  if( isname("vengeance", GET_NAME(ch)) )
+  {
+    breath_possibilities += BREATH_BASALT_2;
+  }
+  // If we failed to find any possibilities for breath type, pick one of the first 5.
+  if( breath_possibilities == 0 )
+  {
+    breath_possibilities = BREATH_FIRE + BREATH_LIGHTNING + BREATH_FROST + BREATH_ACID + BREATH_GAS_POISON;
+  }
+
+  // Find a random breath type that is a possibility.
+  attempts = 0;
+  while( !((breath_type = 1 << number( 0, NUM_BREATHS-1 )) & breath_possibilities) )
+  {
+    // If we fail 2000 times, then we just get a random breath type of whatever was last checked.
+    if( ++attempts >= 2000 )
+    {
+      break;
+    }
+  }
+
+  switch( breath_type )
+  {
+    // Default to fire breath, just in case.
+    default:
+    case BREATH_FIRE:
+      act("$n breathes &+Rfire&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+Rfire&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A blast of &+Rfire&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_fire;
+      break;
+    case BREATH_LIGHTNING:
+      act("$n breathes &=LBlightning&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &=LBlightning&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A bolt of &=LBlightning&n crackles from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_lightning;
+      break;
+    case BREATH_FROST:
+      act("$n breathes &+Wfrost&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+Wfrost&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A sudden &+Wfreezing gale&n blasts from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_frost;
+      break;
+    case BREATH_ACID:
+      act("$n breathes &+Lacid&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+Lacid&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Lfrothing liquid&n streams in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_acid;
+      break;
+    case BREATH_GAS_POISON:
+      act("$n breathes &+gpoison gas&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+gpoison gas&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_poison;
+      break;
+    case BREATH_GAS_SLEEP:
+      act("$n breathes &+wgas&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+wgas&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A cloud of &+wgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_sleep;
+      break;
+    case BREATH_GAS_FEAR:
+      act("$n breathes &+rgas&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+rgas&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A cloud of &+rgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_fear;
+      break;
+    case BREATH_GAS_PARA:
+      act("$n breathes &+Mgas&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+Mgas&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A cloud of &+Mgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_paralysis;
+      break;
+    case BREATH_SHADOW:
+      if(number(1, 10) < 7)
+      {
+        act("&+LA billowing cloud of darkness erupts from $n&+L's mouth!&n", 1, ch, 0, 0, TO_ROOM);
+        act("&+LA billowing cloud of darkness erupts from your mouth!&n", 0, ch, 0, 0, TO_CHAR);
+        if( dir != -1 )
+          sprintf(buf, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        funct = breath_weapon_shadow_1;
+      }
+      else
+      {
+        act("&+LA black beam shoots out of $n&+L's mouth!&n", 1, ch, 0, 0, TO_ROOM);
+        act("&+LA black beam shoots out of your mouth!&n", 0, ch, 0, 0, TO_CHAR);
+        if( dir != -1 )
+          sprintf(buf, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        funct = breath_weapon_shadow_2;
+      }
+      break;
+    case BREATH_GAS_BLIND:
+      act("$n breathes &+Lgas&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You breathe &+Lgas&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A blast of &+ggas&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_blind;
+      break;
+    case BREATH_CRIMSON:
+      act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_crimson;
+      break;
+    case BREATH_JASPER:
+      act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_jasper;
+      break;
+    case BREATH_AZURE:
+      act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_azure;
+      break;
+    case BREATH_BASALT:
+      act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_basalt;
+      break;
+    case BREATH_CRIMSON_2:
+      act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_crimson_2;
+      break;
+    case BREATH_AZURE_2:
+      act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_azure_2;
+      break;
+    case BREATH_JASPER_2:
+      act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_jasper_2;
+      break;
+    case BREATH_BASALT_2:
+      act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
+      act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
+      if( dir != -1 )
+        sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+      funct = breath_weapon_basalt_2;
+      break;
+  }
+
+  if( dir == -1 )
+  {
+    if( IS_FIGHTING(ch) )
+    {
+      victim = ch->specials.fighting;
+    }
+    else
+    {
+      victim = NULL;
+    }
+
+    /* cast_as_damage_area(ch, funct, GET_LEVEL(ch), victim,*/
+    cast_as_damage_area(ch, funct, GET_LEVEL(ch), victim,
+      get_property("dragon.Breath.area.minChance", 60),
+      get_property("dragon.Breath.area.chanceStep", 20));
+
+    if( GET_MASTER(ch) )
       CharWait(ch, PULSE_VIOLENCE * 4);
+    else
+      CharWait(ch, PULSE_VIOLENCE * 2.5);
     waited = TRUE;
   }
   else
   {
     /* begin looking in current room */
-    if(VIRTUAL_CAN_GO(ch->in_room, dir))
+    if( VIRTUAL_CAN_GO(ch->in_room, dir) )
       room = world[ch->in_room].dir_option[dir]->to_room;
     else
     {
@@ -5120,29 +5179,33 @@ void BreathWeapon(P_char ch, int dir)
       return;
     }
 
-    for (i = 0; i < distance; i++)
+    for( i = 0; i < distance; i++ )
     {
-      if(room != ch->in_room)
+      if( room != ch->in_room )
         send_to_room(buf, room);
-        
+
       cast_as_damage_area(ch, funct, GET_LEVEL(ch), NULL,
-          get_property("dragon.Breath.area.minChance", 60),
-          get_property("dragon.Breath.area.chanceStep", 20));
-          
-      if(VIRTUAL_CAN_GO(room, dir))
+        get_property("dragon.Breath.area.minChance", 60),
+        get_property("dragon.Breath.area.chanceStep", 20));
+
+      if( VIRTUAL_CAN_GO(room, dir) )
         room = world[room].dir_option[dir]->to_room;
       else
       {
-        if(GET_MASTER(ch))
+        if( GET_MASTER(ch) )
           CharWait(ch, PULSE_VIOLENCE * 4);
         return;
       }
     }
   }
 
-  if(!waited)
-    if(GET_MASTER(ch))
+  if( !waited )
+  {
+    if( GET_MASTER(ch) )
+    {
       CharWait(ch, PULSE_VIOLENCE * 4);
+    }
+  }
 }
 
 void StompAttack(P_char ch)

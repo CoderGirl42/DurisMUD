@@ -73,6 +73,7 @@ OBJS	=  \
          blispells.o \
 				 boards.o \
 				 boon.o \
+				 breath_weapons.o \
 				 buildings.o \
          cardgames.o \
 				 comm.o \
