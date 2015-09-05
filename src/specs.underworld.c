@@ -1761,7 +1761,8 @@ int magic_map_pool(P_obj obj, P_char ch, int cmd, char *arg)
 
   while( world[target_room].sector_type == SECT_MOUNTAIN
     || world[target_room].sector_type == SECT_INSIDE
-    || world[target_room].sector_type == SECT_OCEAN )
+    || world[target_room].sector_type == SECT_OCEAN
+    || IS_SET(world[target_room].room_flags, NO_GATE) )
   {
     target_room = real_room(random_map_room());
   }
