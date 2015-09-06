@@ -1106,10 +1106,10 @@ struct char_point_data {
 
   byte damnodice;               /* The number of damage dice               */
   byte damsizedice;             /* The size of the damage dice             */
-  byte base_hitroll;            /* base hit roll, 0 for PCs    */
-  byte base_damroll;            /* base damage roll, 0 for PCs */
-  byte hitroll;                 /* Any bonus or penalty to the hit roll    */
-  byte damroll;                 /* Any bonus or penalty to the damage roll */
+  ubyte base_hitroll;           /* base hit roll, 0 for PCs    */
+  ubyte base_damroll;           /* base damage roll, 0 for PCs */
+  ubyte hitroll;                /* Any bonus or penalty to the hit roll    */
+  ubyte damroll;                /* Any bonus or penalty to the damage roll */
   sh_int hit_reg;               /* bonus added to basic regen rate */
   sh_int move_reg;              /* bonus added to basic regen rate */
   sh_int mana_reg;              /* bonus added to basic regen rate */
