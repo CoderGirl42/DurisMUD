@@ -93,6 +93,7 @@ int shabo_caran(P_char ch, P_char tch, int cmd, char *arg);
 int shabo_palle(P_char ch, P_char vict, int cmd, char *arg);
 
 int tower_summoning(P_obj obj, P_char ch, int cmd, char *arg);
+int shabo_trap_north(P_obj obj, P_char ch, int cmd, char *arg);
 int shabo_trap_north_two(P_obj obj, P_char ch, int cmd, char *arg);
 int shabo_trap_up_two(P_obj obj, P_char ch, int cmd, char *arg);
 int shabo_trap_up(P_obj obj, P_char ch, int cmd, char *arg);

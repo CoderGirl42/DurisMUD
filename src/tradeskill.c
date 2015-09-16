@@ -18,6 +18,7 @@
 #include "comm.h"
 #include "db.h"
 #include "events.h"
+#include "guildhall.h"
 #include "interp.h"
 #include "mm.h"
 #include "new_combat_def.h"
@@ -80,6 +81,11 @@ extern struct zone_data *zone_table;
 extern void material_restrictions(P_obj);
 extern int find_map_place();
 extern struct forge_item forge_item_list[];
+
+int cards_object(P_obj obj, P_char ch, int cmd, char *argument);
+int magic_deck(P_obj obj, P_char ch, int cmd, char *argument);
+int unmulti_altar(P_obj obj, P_char ch, int cmd, char *arg);
+int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument);
 
 void     set_keywords(P_obj t_obj, const char *newKeys);
 void     set_short_description(P_obj t_obj, const char *newShort);
@@ -4068,6 +4074,7 @@ int get_mincircle( int spell )
 // New object proc?  Add it here with a value associated with it.
 int get_ival_from_proc( obj_proc_type proc )
 {
+
   // Procs stoneskin on 1 min timer.
   if( proc == artifact_stone )
   {
@@ -4833,11 +4840,6 @@ int get_ival_from_proc( obj_proc_type proc )
   {
     return 125;
   }
-  // Switch proc: unblocks passageways (invaluable in zones).
-  if( proc == item_switch )
-  {
-    return 500;
-  }
   // 1/20 chance to proc lightning bolt on hit.
   if( proc == hammer )
   {
@@ -4986,7 +4988,7 @@ int get_ival_from_proc( obj_proc_type proc )
   // 1/30 chance to proc disarm.
   if( proc == iron_flindbar )
   {
-    return 135;
+    return 100;
   }
   // 1/20 chance to proc parry
   if( proc == generic_parry_proc )
@@ -5253,6 +5255,40 @@ int get_ival_from_proc( obj_proc_type proc )
   {
     return 200;
   }
+
+  // Will make itemvalue(P_obj) return 1 (hopefully).
+  // This is important since we want these items to always load. (load % based on itemvalue for 2015-6 wipe).
+  if( proc == teleporting_map_pool || proc == storage_locker_obj_hook || proc == guildhall_door
+    || proc == guildhall_heartstone || proc == tharnrifts_portal || proc == olympus_portal
+    || proc == vecna_deathportal || proc == portal_door || proc == portal_wormhole || proc == verzanan_portal
+    || proc == newbie_portal || proc == no_kill_priest_obj || proc == magic_pool || proc == moonstone_fragment
+    || proc == treasure_chest || proc == cards_object || proc == artifact_monolith || proc == burbul_map_obj
+    || proc == chyron_search_obj || proc == blood_stains || proc == ice_shattered_bits || proc == tracks
+    || proc == frost_beacon || proc == ice_block || proc == charon_ship || proc == moonstone || proc == nexus
+    || proc == pesky_imp_chest || proc == tower_summoning || proc == shabo_trap_north || proc == shabo_trap_north_two
+    || proc == shabo_trap_south || shabo_trap_south_two || proc == shabo_trap_up || proc == shabo_trap_down
+    || proc == shabo_trap_up_two || proc == slot_machine || proc == unspec_altar || proc == epic_stone
+    || proc == stat_pool_str || proc == stat_pool_dex || proc == stat_pool_agi || proc == stat_pool_con
+    || proc == stat_pool_pow || proc == stat_pool_int || proc == stat_pool_wis || proc == stat_pool_cha
+    || proc == stat_pool_luc || proc == spell_pool || proc == druid_spring || proc == blighter_pond
+    || proc == flying_citadel || proc == trap_razor_hooks || proc == trap_tower1_para || proc == trap_tower2_sleep
+    || proc == hoa_plat || proc == vecna_deathportal || proc == vecna_deathaltar || proc == vecna_stonemist
+    || proc == vecna_ghosthands || proc == vecna_torturerroom || proc == vecna_gorge || proc == mob_vecna_procs
+    || proc == arenaobj_proc || proc == burn_touch_obj || proc == drowcrusher || proc == hewards_mystical_organ
+    || proc == mir_fire || proc == board || proc == random_tomb || proc == random_glass || proc == random_slab
+    || proc == refreshing_fountain || proc == magical_fountain || proc == changelog || proc == wall_generic
+    || proc == huntsman_ward || proc == item_switch || proc == clock_tower || proc == jailtally
+    || proc == verzanan_portal || proc == die_roller || proc == elfgate || proc == guildwindow || proc == guildhome
+    || proc == automaton_lever || proc == illithid_teleport_veil || proc == teleporting_pool || proc == llyms_altar
+    || proc == newbie_sign1 || proc == newbie_sign2 || proc == vareena_statue || proc == wh_corpse_decay
+    || proc == dragon_heart_decay || proc == ravenloft_bell || proc == toe_chamber_switch || proc == flesh_golem_repop
+    || proc == unmulti_altar || proc == jubilex_grid_mob_generator || proc == eth2_tree_obj || proc == magic_deck
+    || proc == blackjack_table )
+  {
+    return -100000;
+  }
+
+  // Default.. tough call here, but 100 guarentees it's not craftable.
   return 100;
 }
 

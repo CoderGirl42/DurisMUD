@@ -3080,7 +3080,7 @@ void reset_zone(int zone, int force_item_repop)
 {
   const int respawn = get_property("artifact.respawn", 0);
   int      cmd_no, last_cmd = 1, last_mob_load = 0;
-  int      temp, room;
+  int      temp, room, ival;
   P_char   mob = NULL, last_mob = NULL, tmp_mob = NULL, last_mob_followable = NULL;
   P_obj    obj, obj_to;
   P_event  e1 = NULL;
@@ -3173,6 +3173,14 @@ void reset_zone(int zone, int force_item_repop)
             extract_obj(obj);
             break;
           }
+
+          ival = itemvalue(obj);
+          if( !ITEM_LOAD_CHECK(ival) )
+          {
+            extract_obj(obj);
+            break;
+          }
+
           obj_to = get_obj_num(ZCMD.arg3);
           if( !obj_to )
           {
@@ -3228,6 +3236,13 @@ void reset_zone(int zone, int force_item_repop)
           break;
         }
 
+        ival = itemvalue(obj);
+        if( !ITEM_LOAD_CHECK(ival) )
+        {
+          extract_obj(obj);
+          break;
+        }
+
         obj_to_room(obj, ZCMD.arg3);
         // Artifact poof timer to BLOOD_DAYS * secs in a day.
         obj->timer[3] = time(NULL);
@@ -3264,6 +3279,12 @@ void reset_zone(int zone, int force_item_repop)
           // Remove the artifact unless artifact.respawn == 0
           //   or artifact.respawn == 1 and we are not booting.
           if( IS_ARTIFACT(obj) && (respawn == 0 || (respawn == 1 && force_item_repop != 2)) )
+          {
+            extract_obj(obj);
+            break;
+          }
+          ival = itemvalue(obj);
+          if( !ITEM_LOAD_CHECK(ival) )
           {
             extract_obj(obj);
             break;
@@ -3348,6 +3369,12 @@ void reset_zone(int zone, int force_item_repop)
                   extract_obj(obj);
                   break;
                 }
+                ival = itemvalue(obj);
+                if( !ITEM_LOAD_CHECK(ival) )
+                {
+                  extract_obj(obj);
+                  break;
+                }
                 obj_to_room(obj, ZCMD.arg3);
                 last_cmd = 1;
                 break;
@@ -3400,6 +3427,12 @@ void reset_zone(int zone, int force_item_repop)
                   extract_obj(obj);
                   break;
                 }
+                ival = itemvalue(obj);
+                if( !ITEM_LOAD_CHECK(ival) )
+                {
+                  extract_obj(obj);
+                  break;
+                }
             		obj_to_obj(obj, obj_to);
                 last_cmd = 1;
                 break;
@@ -3442,6 +3475,12 @@ void reset_zone(int zone, int force_item_repop)
                 }
               }
               if( IS_ARTIFACT(obj) && (respawn == 0 || (respawn == 1 && force_item_repop != 2)) )
+              {
+                extract_obj(obj);
+                break;
+              }
+              ival = itemvalue(obj);
+              if( !ITEM_LOAD_CHECK(ival) )
               {
                 extract_obj(obj);
                 break;
@@ -3504,6 +3543,12 @@ void reset_zone(int zone, int force_item_repop)
                 }
               }
               if( IS_ARTIFACT(obj) && (respawn == 0 || (respawn == 1 && force_item_repop != 2)) )
+              {
+                extract_obj(obj);
+                break;
+              }
+              ival = itemvalue(obj);
+              if( !ITEM_LOAD_CHECK(ival) )
               {
                 extract_obj(obj);
                 break;
