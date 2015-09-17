@@ -2780,7 +2780,6 @@ void add_bloodlust(P_char ch, P_char victim)
         findaf->duration = dur;
       }
     }
-
   }
 }
 

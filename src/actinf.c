@@ -4394,7 +4394,7 @@ void do_attributes(P_char ch, char *argument, int cmd)
         next_af = findaf->next;
         if( findaf && findaf->type == TAG_BLOODLUST )
         {
-          bloodlust = ((findaf->modifier * 10));
+          bloodlust = ((findaf->modifier * 1));
           break;
         }
       }

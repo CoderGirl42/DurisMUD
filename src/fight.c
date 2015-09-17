@@ -5661,7 +5661,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
             dammod = findaf->modifier;
           }
         }
-        dam = (int) (dam * (1 + (dammod * .1)));
+        dam = (int) (dam * (1 + (dammod * .01)));
       }
 
       if (IS_HARDCORE(ch))
