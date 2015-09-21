@@ -477,6 +477,8 @@ void do_gcc(P_char ch, char *argument, int cmd)
   P_char   to_ch;
   ush_int  from_guild, to_guild;
   char     Gbuf1[MAX_STRING_LENGTH];
+  char     guild_name[1024];
+  FILE    *f;
 
   from_guild = GET_A_NUM(ch);
 
@@ -554,6 +556,19 @@ void do_gcc(P_char ch, char *argument, int cmd)
         logit(LOG_CHAT, "%s gcc's '%s'", GET_NAME(ch), argument);
       }
     }
+
+    sprintf(Gbuf1, "%sasc.%u", ASC_DIR, from_guild);
+    if( (f = fopen(Gbuf1, "r")) )
+    {
+      fgets(guild_name, MAX_STR_NORMAL, f);
+      fclose(f);
+      sprintf(guild_name + strlen(guild_name) - 1, "&n");
+    }
+    else
+    {
+      sprintf( guild_name, "Unknown Guild" );
+    }
+
     for( i = descriptor_list; i; i = i->next )
     {
       if( !(to_ch = i->character) )
@@ -591,8 +606,8 @@ void do_gcc(P_char ch, char *argument, int cmd)
       {
         continue;
       }
-      sprintf(Gbuf1, "&+c%s&n&+c tells your guild '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
-        language_CRYPT(ch, to_ch, argument));
+      sprintf(Gbuf1, "&+c%s&n&+c tells %s '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
+        guild_name, language_CRYPT(ch, to_ch, argument));
       send_to_char(Gbuf1, to_ch, LOG_PRIVATE);
     }
   }

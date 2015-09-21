@@ -493,8 +493,16 @@ void do_acc(P_char ch, char *argument, int cmd)
       {
         continue;
       }
-      sprintf(Gbuf1, "&+y%s&+y tells your alliance '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
-        language_CRYPT(ch, to_ch, argument));
+      if( IS_TRUSTED(to_ch) )
+      {
+        sprintf(Gbuf1, "&+y%s&+y tells the alliance (%d %d) '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
+          alliance->forging_assoc_id, alliance->joining_assoc_id, argument);
+      }
+      else
+      {
+        sprintf(Gbuf1, "&+y%s&+y tells your alliance '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
+          language_CRYPT(ch, to_ch, argument));
+      }
       send_to_char(Gbuf1, to_ch, LOG_PRIVATE);
     }
   }
