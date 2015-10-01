@@ -2508,7 +2508,7 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
 
     if( !IS_TRUSTED(ch) && !has_innate(ch, INNATE_EYELESS) )
     {
-      if( has_innate(ch, INNATE_DAYBLIND) && IS_SUNLIT(temp) )
+      if( has_innate(ch, INNATE_DAYBLIND) && !CAN_NIGHTPEOPLE_SEE(temp) )
       {
         send_to_char("&+YThe sunlight! &+WIt's too bright to see!&n\n", ch);
         return;
