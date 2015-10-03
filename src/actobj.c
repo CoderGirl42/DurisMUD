@@ -2816,33 +2816,37 @@ void do_eat(P_char ch, char *argument, int cmd)
       af.modifier = mov_reg;
       affect_to_char(ch, &af);
 
-      af.location = APPLY_STR;
-      af.modifier = temp->value[4];
-      affect_to_char(ch, &af);
-      af.location = APPLY_CON;
-      af.modifier = temp->value[4];
-      affect_to_char(ch, &af);
+      if( (af.modifier = temp->value[4]) != 0 )
+      {
+        af.location = APPLY_STR;
+        affect_to_char(ch, &af);
+        af.location = APPLY_CON;
+        affect_to_char(ch, &af);
+      }
 
-      af.location = APPLY_AGI;
-      af.modifier = temp->value[5];
-      affect_to_char(ch, &af);
-      af.location = APPLY_DEX;
-      af.modifier = temp->value[5];
-      affect_to_char(ch, &af);
+      if( (af.modifier = temp->value[5]) != 0 )
+      {
+        af.location = APPLY_AGI;
+        affect_to_char(ch, &af);
+        af.location = APPLY_DEX;
+        affect_to_char(ch, &af);
+      }
 
-      af.location = APPLY_INT;
-      af.modifier = temp->value[6];
-      affect_to_char(ch, &af);
-      af.location = APPLY_WIS;
-      af.modifier = temp->value[6];
-      affect_to_char(ch, &af);
+      if( (af.modifier = temp->value[6]) != 0 )
+      {
+        af.location = APPLY_INT;
+        affect_to_char(ch, &af);
+        af.location = APPLY_WIS;
+        affect_to_char(ch, &af);
+      }
 
-      af.location = APPLY_DAMROLL;
-      af.modifier = temp->value[7];
-      affect_to_char(ch, &af);
-      af.location = APPLY_HITROLL;
-      af.modifier = temp->value[7];
-      affect_to_char(ch, &af);
+      if( (af.modifier = temp->value[7]) != 0 )
+      {
+        af.location = APPLY_DAMROLL;
+        affect_to_char(ch, &af);
+        af.location = APPLY_HITROLL;
+        affect_to_char(ch, &af);
+      }
     }
     else
     {

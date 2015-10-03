@@ -5168,6 +5168,7 @@ void create_tags()
 
   
 
+  TAG_CREATE("eaten food", TAG_EATING);
   TAG_CREATE("recent frag obj", TAG_OBJ_RECENT_FRAG);
   TAG_CREATE_WITH_MESSAGES("phantasmal form", TAG_PHANTASMAL_FORM,
                            "&+WYou feel yourself return to normal as you leave your phantasmal form.&n",
