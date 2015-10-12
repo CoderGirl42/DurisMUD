@@ -1035,7 +1035,7 @@ void bard_revelation(int level, P_char ch, P_char victim, int song)
   }
 }
 
-void bard_harming(int l, P_char ch, P_char victim, int song)
+void bard_harming(int lvl, P_char ch, P_char victim, int song)
 {
   struct affected_type af;
   struct damage_messages messages = { 0, 0, 0, 0, 0, 0, 0 };
@@ -1047,55 +1047,45 @@ void bard_harming(int l, P_char ch, P_char victim, int song)
     logit(LOG_EXIT, "bard_harming called in bard.c with no ch");
     raise(SIGSEGV);
   }
-  
-  if(ch &&
-     victim) // Just making sure...
-  {
-    if(!IS_ALIVE(ch) ||
-      !IS_ALIVE(victim))
-    {
-      return;
-    }
-    
-    if(IS_NPC(ch))
-    {
-      empower += 100;
-    }
-    
-    if(resists_spell(ch, victim)) // Added. Nov08 -Lucrot
-    {
-      return;
-    }
-    
-    dam = (int) (l * 3 + empower / 4 + number(-4, 4)); // Adjusted. Nov08 -Lucrot
-    dam = (int) dam * get_property("song.bard.harming.mod", 1.000);
-    if(spell_damage(ch, victim, dam, SPLDAM_SOUND,
-       SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD)
-    {
-      return;
-    }
 
-    if(GET_LEVEL(ch) > 40 &&
-      !NewSaves(victim, SAVING_SPELL, 0) &&
-      !IS_AFFECTED(victim, AFF_BLIND) &&
-      !EYELESS(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+
+  if( IS_NPC(ch) )
+  {
+    empower += 100;
+  }
+
+  if(resists_spell(ch, victim)) // Added. Nov08 -Lucrot
+  {
+    return;
+  }
+
+  dam = (int) (lvl * 3 + empower / 4 + number(-4, 4)); // Adjusted. Nov08 -Lucrot
+  dam = (int) dam * get_property("song.bard.harming.mod", 1.000);
+  if( spell_damage(ch, victim, dam, SPLDAM_SOUND, SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages) != DAM_NONEDEAD )
+  {
+    return;
+  }
+
+  if( GET_LEVEL(ch) > 40 && !NewSaves(victim, SAVING_SPELL, 0) && !IS_AFFECTED(victim, AFF_BLIND)
+    && !EYELESS(victim))
+  {
+    blind(ch, victim, (int) (lvl / 12 * WAIT_SEC));
+  }
+
+  if( (GET_LEVEL(ch) > 50) && (!IS_AFFECTED2(victim, AFF2_POISONED)) )
+  {
+    spell_poison(lvl - 5, ch, 0, 0, victim, 0);
+  }
+
+  if( GET_SPEC(ch, CLASS_BARD, SPEC_MINSTREL) )
+  {
+    if( (GET_CHAR_SKILL(ch, SONG_HARMING) >= 70) && !affected_by_spell(victim, SPELL_WITHER) )
     {
-      blind(ch, victim, (int) (l / 12 * WAIT_SEC));
-    }
-    
-    if((GET_LEVEL(ch) > 50) &&
-      (!IS_AFFECTED2(victim, AFF2_POISONED)))
-    {
-      spell_poison(l, ch, 0, 0, victim, 0);
-    }
-    
-    if(GET_SPEC(ch, CLASS_BARD, SPEC_MINSTREL))
-    {
-      if((GET_CHAR_SKILL(ch, SONG_HARMING) >= 70) &&
-        !affected_by_spell(victim, SPELL_WITHER)) 
-      {
-        spell_wither(l , ch, 0, 0, victim, 0);
-      }
+      spell_wither(lvl - number(5,10), ch, 0, 0, victim, 0);
     }
   }
 }
@@ -1794,7 +1784,7 @@ void event_echosong(P_char ch, P_char victim, P_obj obj, void *data)
 
 void event_bardsong(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  int    echoChance = 0, song, l, room, i, terrainType = SECT_INSIDE, song_chance;
+  int    echoChance = 0, song, l, room, i, terrainType = SECT_INSIDE, song_chance, aggr_chance;
   P_obj  instrument = NULL;
   struct affected_type *af, *af2;
   struct char_link_data *cld, *next_cld;
@@ -1894,6 +1884,12 @@ void event_bardsong(P_char ch, P_char victim, P_obj obj, void *data)
   }
   room = ch->in_room;
 
+  // Chance for an aggressive bard song to hit someone in the room.
+  if( IS_SET(sd->flags, SONG_AGGRESSIVE) )
+  {
+    aggr_chance = get_property("spell.area.minChance.aggroBardSong", 75);
+  }
+
   for( tch = world[room].people; tch; tch = next )
   {
     next = tch->next_in_room;
@@ -1917,7 +1913,14 @@ void event_bardsong(P_char ch, P_char victim, P_obj obj, void *data)
       }
       if( IS_ALIVE(ch) && is_char_in_room(tch, room) )
       {
-        (sd->funct) (l, ch, tch, song);
+        if( !IS_SET(sd->flags, SONG_AGGRESSIVE) || number(1, 100) <= aggr_chance )
+        {
+          (sd->funct) (l, ch, tch, song);
+        }
+      }
+      else
+      {
+        break;
       }
     }
   }

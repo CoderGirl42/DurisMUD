@@ -1353,38 +1353,36 @@ void spell_energy_drain(int level, P_char ch, char *arg, int type, P_char victim
 // }
 
 
-void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
-                  P_obj obj)
+void spell_wither(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
+  int percent, dam;
+  struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-        
-  if(victim == ch)
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+
+  if( victim == ch )
   {
     send_to_char("You may not wither yourself.", ch);
     return;
   }
 
-  if (IS_CONSTRUCT(victim))
+  if( IS_CONSTRUCT(victim) )
   {
     act("&+LBeing an artificial construct, $E &+Lis &+Wimmune&+L to your spell!", TRUE, ch, 0, victim, TO_CHAR);
-    return;  
+    return;
   }
 
-  if (IS_UNDEADRACE(victim))
+  if( IS_UNDEADRACE(victim) )
   {
-  
-    if(!number(0, 1) &&
-       resists_spell(ch,victim))
-       {
-	 send_to_char("Your victim resisted your &+Lwither&n attempt!\r\n", ch);
-          return;
-	}
-      
+    if( !number(0, 1) && resists_spell(ch,victim) )
+    {
+      send_to_char("Your victim resisted your &+Lwither&n attempt!\r\n", ch);
+      return;
+    }
+
     struct damage_messages wither_undead = {
       "$N &+Lwavers under the power of your will, as $S &+Lundead flesh withers away!",
       "$n's &+Lpure will causes your undead flesh to wither away!",
@@ -1393,61 +1391,57 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
       "$n's &+Lorders your flesh to wither away - and it obeys $m! &+LYou return into the cold sleep of death...",
       "$N&+L is completely withered away by&n $n's &+Lraw will!", 0
     };
-  
-    int dam = dice(MIN(level, 46), 10);
-  
-    spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NOSHRUG |
-      SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &wither_undead);
+
+    dam = dice(MIN(level, 46), 10);
+    spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NOSHRUG | SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &wither_undead);
     return;
   }
-  
+
  /* if(resists_spell(ch,victim))
     return;*/
-    
-  int save = victim->specials.apply_saving_throw[SAVING_SPELL];
 
-  int percent = (int) (GET_C_POW(ch) - GET_C_POW(victim));
-  
+  percent = victim->specials.apply_saving_throw[SAVING_SPELL] * number(1, 5);
+
+  percent += (int) (GET_C_POW(ch) - GET_C_POW(victim));
   percent += (int) (GET_LEVEL(ch) - GET_LEVEL(victim));
 
-  if(NewSaves(victim, SAVING_FEAR, 0))
-    percent = (int) percent * .75;
+  if( NewSaves(victim, SAVING_FEAR, 0) )
+  {
+    percent = (3 * percent) / 4;
+  }
 
   percent = BOUNDED(0, percent, 100);
 
-  if(IS_TRUSTED(victim) || percent < 1)
+  if( IS_TRUSTED(victim) || percent < 1 )
   {
     send_to_char("They are too powerful to wither this way!\n", ch);
     return;
   }
-  
-  if(affected_by_spell(victim, SPELL_WITHER))
+
+  if( affected_by_spell(victim, SPELL_WITHER) )
   {
     send_to_char("If you withered them any more, they'd be some sort of filthy prune.\n", ch);
     return;
   }
-  
-  if(affected_by_spell(victim, SPELL_RAY_OF_ENFEEBLEMENT))
+
+  if( affected_by_spell(victim, SPELL_RAY_OF_ENFEEBLEMENT) )
   {
     act("$E is already a &+ywithered prune.&n Enfeebling $M is not possible.", TRUE, ch, 0, victim, TO_CHAR);
     act("&+LLuckily for you, you cannot possibly get more feeble!&n", TRUE, ch, 0, victim, TO_VICT);
     return;
   }
 
-  if(percent > 0 &&
-    (IS_AFFECTED4(victim, AFF4_NEG_SHIELD) ||
-     IS_AFFECTED2(victim, AFF2_SOULSHIELD)) ||
-     IS_UNDEADRACE(victim) ||
-     IS_GREATER_RACE(victim))
-        percent = (int)(percent * 0.75);
-  
-  struct affected_type af;
+  if( percent > 0 && (IS_AFFECTED4(victim, AFF4_NEG_SHIELD) || IS_AFFECTED2(victim, AFF2_SOULSHIELD))
+    || IS_UNDEADRACE(victim) || IS_GREATER_RACE(victim) )
+  {
+    percent = (int)(percent * 0.75);
+  }
+
   bzero(&af, sizeof(af));
 
-  if(percent > 90)
+  if( percent > 90 )
   {
-    act("$N is &+Lwithered&n COMPLETELY by $n's touch!",
-        TRUE, ch, 0, victim, TO_NOTVICT);
+    act("$N is &+Lwithered&n COMPLETELY by $n's touch!", TRUE, ch, 0, victim, TO_NOTVICT);
     act("$n &+Lwithers&n you with his touch. You feel your muscles COMPLETELY shrink!", FALSE, ch, 0, victim, TO_VICT);
     act("$N is &+Lwithered&n COMPLETELY by your touch!", FALSE, ch, 0, victim, TO_CHAR);
     af.type = SPELL_WITHER;
@@ -1463,7 +1457,7 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
     af.location = APPLY_AC;
     affect_to_char(victim, &af);
   }
-  else if(percent > 70)
+  else if( percent > 70 )
   {
     act("$N is &+Lwithered&n and starts to FADE with $n's touch!", FALSE, ch, 0, victim, TO_NOTVICT);
     act("$n &+Lwithers&n you with his touch. You feel your body FADE!", FALSE, ch, 0, victim, TO_VICT);
@@ -1480,7 +1474,7 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
     af.location = APPLY_AC;
     affect_to_char(victim, &af);
   }
-  else if(percent > 40)
+  else if( percent > 40 )
   {
     act("$N is &+Lwithered&n and starts to DIMINISH with $n's touch!", FALSE, ch, 0, victim, TO_NOTVICT);
     act("$n &+Lwithers&n you with his touch. You feel your body DIMINISH!", FALSE, ch, 0, victim, TO_VICT);
@@ -1498,7 +1492,7 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
     af.location = APPLY_AC;
     affect_to_char(victim, &af);
   }
-  else if(percent > 10)
+  else if( percent > 10 )
   {
     act("$N is &+Lwithered&n and starts to decrease in size with $n's touch!", FALSE, ch, 0, victim, TO_NOTVICT);
     act("$n &+Lwithers&n you with his touch. You begin to DECREASE in size!", FALSE, ch, 0, victim, TO_VICT);
@@ -1516,8 +1510,9 @@ void spell_wither(int level, P_char ch, char *arg, int type, P_char victim,
     affect_to_char(victim, &af);
   }
   else
+  {
     act("$N &+Lseems unaffected by your attempt to wither.", FALSE, ch, 0, victim, TO_CHAR);
-
+  }
 }
 
 P_char make_mirror (P_char);
@@ -7392,55 +7387,50 @@ void spell_disease(int level, P_char ch, char *arg, int type, P_char victim,
 
 }
 
-void spell_poison(int level, P_char ch, char *arg, int type, P_char victim,
-                  P_obj obj)
+void spell_poison(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  bool     was_poisoned;
+  bool was_poisoned;
 
-  if(victim)
+  if( victim )
   {
-    if(GET_STAT(victim) == STAT_DEAD)
+    if( !IS_ALIVE(victim) || IS_TRUSTED(victim) || resists_spell(ch, victim) )
+    {
       return;
+    }
 
-    if(IS_TRUSTED(victim))
+    if( (level > 0) && NewSaves(victim, SAVING_SPELL, (level - GET_LEVEL(victim) )/3) )
+    {
       return;
-
-    if(resists_spell(ch, victim))
-      return;
-
-    if((level > 0) && NewSaves(victim, SAVING_SPELL, 0))
-      return;
+    }
 
     was_poisoned = IS_SET(victim->specials.affected_by2, AFF2_POISONED);
 
-    if(!IS_TRUSTED(victim) && !IS_UNDEADRACE(victim))
+    if( !IS_TRUSTED(victim) && !IS_UNDEADRACE(victim) )
     {
-
       level = abs(level);
-      (skills[number(FIRST_POISON, LAST_POISON)].spell_pointer) (level, ch, 0,
-                                                                 0, victim,
-                                                                 0);
+      (skills[number(FIRST_POISON, LAST_POISON)].spell_pointer) (level, ch, 0, 0, victim, 0);
 
       act("&+G$n shivers slightly.", TRUE, victim, 0, 0, TO_ROOM);
-      if(was_poisoned)
+      if( was_poisoned )
         send_to_char("&+GYou feel even more ill.\n", victim);
       else
         send_to_char("&+GYou feel very sick.\n", victim);
 
     }
-    if(IS_AFFECTED(ch, AFF_INVISIBLE) || IS_AFFECTED2(ch, AFF2_MINOR_INVIS))
-      appear(ch);
+    appear(ch);
 
-    if(IS_NPC(victim) && CAN_SEE(victim, ch))
+    if( IS_NPC(victim) && CAN_SEE(victim, ch) )
     {
       remember(victim, ch);
-      if(!IS_FIGHTING(victim) && !IS_DESTROYING(victim))
+      if( !IS_FIGHTING(victim) && !IS_DESTROYING(victim) )
+      {
         MobStartFight(victim, ch);
+      }
     }
   }
   else
   {                             /* Object poison */
-    if((obj->type == ITEM_DRINKCON) || (obj->type == ITEM_FOOD))
+    if( (obj->type == ITEM_DRINKCON) || (obj->type == ITEM_FOOD) )
     {
       obj->value[3] = number(1, MAX(1, GET_LEVEL(ch) / 10));
     }
