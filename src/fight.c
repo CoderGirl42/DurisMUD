@@ -5003,8 +5003,8 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_
       BOUNDED(-100, BOUNDED(-100, GET_AC(victim), 100),
       100))) / 800), (int) ((dam - 1)));
       */
-    // If they have fist up, the have a 20% chance of hitting through ac.
-    if( get_spell_from_char(ch, SKILL_FIST_OF_DRAGON) && !number(0,4) )
+    // If they have fist up, the have a 33% chance of hitting through ac.
+    if( get_spell_from_char(ch, SKILL_FIST_OF_DRAGON) && !number(0,2) )
     {
       dragonfist = TRUE;
       dam = dam  + (dam * (0.10 * MAX( 0, calculate_ac(victim)) / 100.00));
@@ -8950,6 +8950,11 @@ int calculate_attacks(P_char ch, int attacks[])
 {
   int number_attacks = 0;
 
+  if(IS_AFFECTED5(ch, AFF5_NOT_OFFENSIVE))
+  {
+    return 0;
+  }
+
   if (GET_CLASS(ch, CLASS_MONK))
   {
     int num_atts = MonkNumberOfAttacks(ch);
@@ -9110,11 +9115,8 @@ int calculate_attacks(P_char ch, int attacks[])
             ADD_ATTACK(PRIMARY_WEAPON);
             break;
         }
-      }  
-
+      }
     }
-
-
 
     if(GET_CLASS(ch, CLASS_PSIONICIST) &&
         affected_by_spell(ch, SPELL_COMBAT_MIND))
@@ -9182,9 +9184,6 @@ int calculate_attacks(P_char ch, int attacks[])
   double wpnpct = wpnweight / currstr;
   int actpct = (100 * wpnpct);
 
-
-
-
   if(actpct <= 5)
   {
     if(GET_C_DEX(ch) >= 155)
@@ -9227,7 +9226,6 @@ int calculate_attacks(P_char ch, int attacks[])
       }
     }
   }
-
   else if(actpct <= 10)
   {
     if(GET_C_DEX(ch) >= 155)
@@ -9250,10 +9248,8 @@ int calculate_attacks(P_char ch, int attacks[])
         send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
         ADD_ATTACK(PRIMARY_WEAPON);
       }
-
     }
   }
-
   else if(actpct <= 20)
   {
     if(GET_C_DEX(ch) >= 155)
@@ -9265,7 +9261,6 @@ int calculate_attacks(P_char ch, int attacks[])
       }
     }
   }
-
 
   if(GET_CLASS(ch, CLASS_CLERIC) &&
       affected_by_spell(ch, SPELL_DIVINE_FURY))
@@ -9349,26 +9344,23 @@ int calculate_attacks(P_char ch, int attacks[])
       number_attacks = (int)(number_attacks - (number_attacks / 2));
   }
 
-
-  if(IS_AFFECTED5(ch, AFF5_NOT_OFFENSIVE))
-  {
-    number_attacks = 0;
-  }
-
-
   return number_attacks;
 }
 #   undef ADD_ATTACK
 
+// ATTACK_DIVISOR is the amount of attacks lost due to inert barrier, armlock, etc.
+//   ie 2 -> loss of 1/2 of attacks, 3 -> loss of 2/3 of attacks, etc.
+// Note: The current limit for one round of battle is 256 attacks for one character.
+#define ATTACK_DIVISOR   2
+#define MAX_ATTACKS    256
 void perform_violence(void)
 {
   P_char   ch, opponent;
   char     GBuf1[MAX_STRING_LENGTH];
   struct affected_type *af, *next_af;
   struct affected_type aff;
-  int      attacks[256];
-  int      number_attacks;
-  int      real_attacks;
+  int      attacks[MAX_ATTACKS];
+  int      number_attacks, real_attacks, div_attacks;
   int      num_hits;
   long     time_now;
   int      i, room, skill;
@@ -9507,17 +9499,25 @@ void perform_violence(void)
     }
 
     number_attacks = calculate_attacks(ch, attacks);
+    if( number_attacks > MAX_ATTACKS )
+      number_attacks = MAX_ATTACKS;
+    if( number_attacks <= 0 )
+    {
+      send_to_char("You can't seem to get a single swing in.\n", ch);
+      continue;
+    }
 
-    /*   (!GET_CLASS(ch, CLASS_PSIONICIST) &&
-         IS_AFFECTED3(ch, AFF3_INERTIAL_BARRIER) ) ||*/
-
+    /*   (!GET_CLASS(ch, CLASS_PSIONICIST) && IS_AFFECTED3(ch, AFF3_INERTIAL_BARRIER) ) ||*/
     if(IS_AFFECTED3(opponent, AFF3_INERTIAL_BARRIER) || IS_ARMLOCK(ch) || affected_by_spell(ch, TAG_INTERCEPT))
     {
-      real_attacks = number_attacks - (int) (number_attacks / 2);
+      // We add one because we don't want to drop to 0 attacks: 1:1, 2:1, 3:2, 4:2, 5:3 ...
+      real_attacks = (number_attacks + ATTACK_DIVISOR - 1) / ATTACK_DIVISOR;
+      div_attacks = ATTACK_DIVISOR;
     }
     else
     {
       real_attacks = number_attacks;
+      div_attacks = 1;
     }
 
     if(!affected_by_spell(opponent, SKILL_BATTLE_SENSES) && GET_CHAR_SKILL(opponent, SKILL_BATTLE_SENSES)
@@ -9579,7 +9579,7 @@ void perform_violence(void)
       {
         break;
       }
-      if(pv_common(ch, opponent, ch->equipment[attacks[i * number_attacks / real_attacks]]))
+      if(pv_common(ch, opponent, ch->equipment[attacks[i / div_attacks]]))
       {
         num_hits++;
       }
