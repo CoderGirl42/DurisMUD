@@ -1401,78 +1401,77 @@ void do_string(P_char ch, char *arg, int cmd)
   }
 }
 
-/* Like string, but used for changing bogus names. Strings name, kills old
-   pfile. */
+// Like string, but used for changing bogus names. Strings name, kills old pfile.
 void do_rename(P_char ch, char *arg, int cmd)
 {
-   char rest[MAX_INPUT_LENGTH];
-   char type[MAX_STRING_LENGTH];
-   char who_to_rename[MAX_STRING_LENGTH], new_name[MAX_STRING_LENGTH];
-   bool has_wrong_arg = FALSE;
+  char rest[MAX_INPUT_LENGTH];
+  char type[MAX_STRING_LENGTH];
+  char who_to_rename[MAX_STRING_LENGTH], new_name[MAX_STRING_LENGTH];
+  bool has_wrong_arg = FALSE;
 
-   arg = one_argument(arg, type);
-   if( !type || !*type || !arg || !*arg ||
-       !(is_abbrev(type, "char") || is_abbrev(type, "ship")) )
-   {
+  arg = one_argument(arg, type);
+  if( !type || !*type || !arg || !*arg || !(is_abbrev(type, "char") || is_abbrev(type, "ship")) )
+  {
+    has_wrong_arg = TRUE;
+  }
+
+  if( !has_wrong_arg )
+  {
+    // get name of char whos name/ship will be renamed
+    arg = one_argument(arg, who_to_rename);
+    if( !who_to_rename || !*who_to_rename || !*arg || !arg )
+    {
       has_wrong_arg = TRUE;
-   }
+    }
+  }
 
-   if( !has_wrong_arg )
-   {
-      // get name of char whos name/ship will be renamed
-      arg = one_argument(arg, who_to_rename);
-      if( !who_to_rename || !*who_to_rename || !*arg || !arg )
+  if( !has_wrong_arg )
+  {
+    if( is_abbrev(type, "char") )
+    {
+      // get new name, drop anything after the new name since names only accept one word.
+      half_chop(arg, new_name, rest);
+      if( !new_name || !*new_name )
       {
         has_wrong_arg = TRUE;
       }
-   }
-   if( is_abbrev(type, "char") )
-   {
-      if( !has_wrong_arg )
+      else
       {
-         // get new name, drop anything after the new name since names only accept one word.
-         half_chop(arg, new_name, rest);
-         if( !new_name || !*new_name )
+        strcpy(new_name, strip_ansi(new_name).c_str());
+
+        if( rename_character(ch, who_to_rename, new_name) == TRUE )
         {
-          has_wrong_arg = TRUE;
+           send_to_char("Name changed, old one deleted. Good job!\r\n", ch);
+        }
+        else
+        {
+          send_to_char("Character name change failed!\r\n", ch);
         }
       }
-
-      if( has_wrong_arg )
-      {
-        send_to_char("Syntax:\nrename <char | ship> <char/owner name> <new name>.\n", ch);
-        return;
-      }
-
-      strcpy(new_name, strip_ansi(new_name).c_str());
-
-      if( rename_character(ch, who_to_rename, new_name) == TRUE )
-      {
-         send_to_char("Name changed, old one deleted. Good job!\r\n", ch);
-      }
-   }
-   else if( is_abbrev(type, "ship") )
-   {
-      if( has_wrong_arg )
-      {
-        send_to_char("Syntax:\nrename <char | ship> <char/owner name> <new name>.\n", ch);
-        return;
-      }
-
+    }
+    else if( is_abbrev(type, "ship") )
+    {
       // renaming the ship.
       if( rename_ship(ch, who_to_rename, skip_spaces(arg)) == TRUE )
       {
          send_to_char("Ship name changed. Good job!\r\n", ch);
       }
-   }
-   else
-   {
-      // If they've gotten here, they obviously are not using ship or char as the first
-      // argument, so let's re-educate them.
-      send_to_char("Syntax:\nrename <char | ship> <char/owner name> <new name>.\n", ch);
-   }
+      else
+      {
+         send_to_char("Ship name change failed!\r\n", ch);
+      }
+    }
+    else
+    {
+      send_to_char("You should never see this.\n", ch);
+      has_wrong_arg = TRUE;
+    }
+  }
 
-   return;
+  if( has_wrong_arg )
+  {
+    send_to_char("Syntax:\nrename <char | ship> <char/owner name> <new name>.\n", ch);
+  }
 }
 
 int mob_do_rename_hook(P_char npc, P_char ch, int cmd, char *arg)
@@ -1703,7 +1702,7 @@ bool rename_character(P_char ch, char *old_name, char *new_name)
     }
 
     /* if failed rename ship owner - then dont rename */
-    if( !rename_ship_owner(old_name, new_name) )
+    if( get_ship_from_char(doofus) && !rename_ship_owner(old_name, new_name) )
     {
       return FALSE;
     }
