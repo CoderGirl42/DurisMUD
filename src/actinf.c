@@ -3761,22 +3761,17 @@ void do_world(P_char ch, char *argument, int cmd)
     }
     else
     {
-      send_to_char
-        ("Zone        Name                                       First vnum  Age  AvgLevel\n",
-         ch);
-      send_to_char
-        ("&+W----------------------------------------------------------------------------------\n", ch);
+      send_to_char("Zone        Name                                            First     Age   Avg Diff\n"
+                   "                                                             Vnum         Level\n", ch);
+      send_to_char("&+W-------------------------------------------------------------------------------------\n", ch);
       for (zone_count = 1; zone_count <= top_of_zone_table; zone_count++)
       {
         sprintf(buff,
-                "[%4d](%3d) %-40s %7d %3d/%3d %2d\n",
-                zone_table[zone_count].number,
-                zone_count, 
-                pad_ansi(zone_table[zone_count].name, 45).c_str(),
-                world[zone_table[zone_count].real_bottom].number,
-                zone_table[zone_count].age,
-                zone_table[zone_count].lifespan,
-                zone_table[zone_count].avg_mob_level);
+                "[%4d](%3d) %-40s %7d %3d/%3d   %3d  %3d\n",
+                zone_table[zone_count].number, zone_count, pad_ansi(zone_table[zone_count].name, 45).c_str(),
+                world[zone_table[zone_count].real_bottom].number, zone_table[zone_count].age,
+                zone_table[zone_count].lifespan, zone_table[zone_count].avg_mob_level,
+                zone_table[zone_count].difficulty);
         send_to_char(buff, ch);
       }
     }
