@@ -12887,14 +12887,14 @@ void apply_zone_spell(P_char ch, int count, const char *zone_name, P_obj obj, in
       }
       break;
     case SPELL_BARKSKIN:
-      if( !affected_by_spell(ch, SPELL_BARKSKIN) )
+      if( !IS_AFFECTED(ch, AFF_BARKSKIN) )
       {
         spell_barkskin(count * 5, ch, 0, 0, ch, 0);
         message = SETMSG_PROTECT;
       }
       break;
     case SPELL_ARMOR:
-      if( !affected_by_spell(ch, SPELL_ARMOR) )
+      if( !IS_AFFECTED(ch, AFF_ARMOR) )
       {
         spell_armor(MIN(56, count * 10), ch, 0, 0, ch, 0);
         message = SETMSG_PROTECT;
