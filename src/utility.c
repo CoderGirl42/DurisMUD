@@ -147,8 +147,8 @@ int get_vis_mode(P_char ch, int room)
     return 2;
   }
 
-  // Ok, they don't have ultra .. if it's dark and they have infra.
-  if( IS_AFFECTED(ch, AFF_INFRAVISION) && !CAN_DAYPEOPLE_SEE(room) )
+  // If they have infra, they use it here; we failed at regular vision.
+  if( IS_AFFECTED(ch, AFF_INFRAVISION) )
   {
     return 3;
   }
@@ -1208,9 +1208,10 @@ int exist_in_equipment(P_char ch, int bitflag)
  * this function is called about a billion times a minute (ok, so I exaggerated a little), don't even
  * THINK about doing anything to it that would make it slower, even a LITTLE bit.  JAB
  */
-int ac_can_see(P_char sub, P_char obj, bool check_z)
+bool ac_can_see(P_char sub, P_char obj, bool check_z)
 {
-  bool   globe, flame;
+  bool   globe, flame, dayblind;
+  int    sroom, oroom, race;
   P_char tmp_char;
 
   if( !sub )
@@ -1221,30 +1222,31 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
 
   // No idea what happened, but let's hack this until we figure it out.
   if( sub->in_room == -1 )
-    return 0;
+    return FALSE;
 
   /* minor detail, sleeping chars can't see squat! */
   if( !AWAKE(sub) )
-    return 0;
+    return FALSE;
 
   // Determine visibility by "vis" command
   if( WIZ_INVIS(sub, obj) )
-    return 0;
+    return FALSE;
 
   // This shouldn't make too much of a difference since not many lvl 57+ mobs/chars.
   // Had to add these checks for toggle fog?  Also, NPCs 57+ see all?
   // Most common fail: NPC, second: mortal, third: fog set.
   if( IS_TRUSTED(sub) )
   {
-      return 1;
+      return TRUE;
   }
 
   /* Flyers */
 /* Just commented this out.  Should be at least as fast if not faster than if( 0 ||...
-  if( check_z )
+  if( check_z && (abs(sub->specials.z_cord - obj->specials.z_cord) > 2)
+    && !IS_AFFECTED4(sub, AFF4_HAWKVISION) )
   {
     if (sub->specials.z_cord != obj->specials.z_cord)
-      return 0;
+      return FALSE;
   }
 */
 
@@ -1260,13 +1262,13 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
     /* if the fellow is non-detectable you ain't gonna see jack */
     if(IS_AFFECTED3(obj, AFF3_NON_DETECTION))
     {
-      return 0;
+      return FALSE;
     }
 
     if( !IS_AFFECTED(sub, AFF_DETECT_INVISIBLE)
       && !(IS_NPC(obj) && (obj->following == sub) && IS_AFFECTED4(sub, AFF4_SENSE_FOLLOWER)) )
     {
-      return 0;
+      return FALSE;
     }
 
 /* NPCs can't be non-detected?  why? */
@@ -1275,14 +1277,14 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
         (!IS_NPC(sub) &&
           IS_AFFECTED (sub, AFF_DETECT_INVISIBLE)
           && IS_AFFECTED3(obj, AFF3_NON_DETECTION)))
-          return 0;
+          return FALSE;
 */
   }                             /* end sub invis */
 
   /* Subject is blinded */
   if( IS_BLIND(sub) )
   {
-    return 0;
+    return FALSE;
   }
 
 #if defined(CTF_MUD) && (CTF_MUD == 1)
@@ -1291,150 +1293,179 @@ int ac_can_see(P_char sub, P_char obj, bool check_z)
   if( IS_AFFECTED(obj, AFF_HIDE) )
 #endif
   {
-    return 0;
+    return FALSE;
   }
 
   // As wraithform is kind of kludge, semi-godsight.
   if( IS_AFFECTED(sub, AFF_WRAITHFORM) || IS_AFFECTED4(sub, AFF4_VAMPIRE_FORM) )
   {
-      return 1;
+      return TRUE;
   }
 
   // As wraithform is kind of kludge, it is shown nowhere.
   if( IS_AFFECTED(obj, AFF_WRAITHFORM) )
   {
-    return 0;
+    return FALSE;
   }
 
-  if( IS_TWILIGHT_ROOM(obj->in_room) )
+  // NPCs don't suffer day/night blindness.
+  if( IS_NPC(sub) )
   {
-    return 1;
+    return TRUE;
   }
 
-  globe = FALSE;
-  flame = FALSE;
-  // No need to search for these until they're used.
-  for( tmp_char = world[sub->in_room].people; tmp_char; tmp_char = tmp_char->next_in_room )
+  // First, we need to see if the subject can see anything or is dayblind / nightblind in the room their in.
+  dayblind = has_innate(sub, INNATE_DAYBLIND);
+  sroom = sub->in_room;
+  // Check for dayblind: Light room with dayblind subject.
+  if( dayblind && !CAN_NIGHTPEOPLE_SEE(sroom) )
   {
-    if (IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME))
+    globe = FALSE;
+    // Anyone with globe of dark overrides room to twilight.
+    for( tmp_char = world[sroom].people; tmp_char; tmp_char = tmp_char->next_in_room )
     {
-      flame = TRUE;
-      if( globe )
+      if( IS_AFFECTED4(tmp_char, AFF4_GLOBE_OF_DARKNESS) )
       {
+        globe = TRUE;
         break;
       }
     }
-    if (IS_AFFECTED4(tmp_char, AFF4_GLOBE_OF_DARKNESS))
+    // If no globe of darkness in room, they are dayblind.
+    if( !globe )
     {
-      globe = TRUE;
-      if( flame )
+      // Here we check sub's infra vs obj's race (some races are invis to infravision).
+      if( IS_AFFECTED(sub, AFF_INFRAVISION) )
       {
+        // We use GET_RACE2 becaue of shape shifters.
+        race = GET_RACE2(obj);
+        if( INFRA_INVIS_RACE(race) )
+        {
+          return FALSE;
+        }
+      }
+      else
+      {
+        return FALSE;
+      }
+    }
+  }
+  // Else check for nightblind: Dark room with no ultra subject.
+  else if( !IS_AFFECTED2(sub, AFF2_ULTRAVISION) && !CAN_DAYPEOPLE_SEE(sroom) )
+  {
+    flame = FALSE;
+    // Anyone with mage flame overrides room to twilight.
+    for( tmp_char = world[sroom].people; tmp_char; tmp_char = tmp_char->next_in_room )
+    {
+      if( IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME) )
+      {
+        flame = TRUE;
         break;
+      }
+    }
+    // If no mage flame in room, they are night blind.
+    if( !flame )
+    {
+      // Here we check sub's infra vs obj's race (some races are invis to infravision).
+      if( IS_AFFECTED(sub, AFF_INFRAVISION) )
+      {
+        // We use GET_RACE2 becaue of shape shifters.
+        race = GET_RACE2(obj);
+        if( INFRA_INVIS_RACE(race) )
+        {
+          return FALSE;
+        }
+      }
+      else
+      {
+        return FALSE;
       }
     }
   }
 
-  // Room is magically dark & viewer has no infra/ultra & no mage flames.
-  if( IS_SET(world[obj->in_room].room_flags, MAGIC_DARK) && IS_PC(sub)
-    && world[obj->in_room].light <= 0
-    && !IS_AFFECTED(sub, AFF_INFRAVISION)
-    && !IS_AFFECTED2(sub, AFF2_ULTRAVISION) && !flame )
+  // Now, we need to look at the room obj is in too see if sub can see anything in it.
+  oroom = obj->in_room;
+  // Check for dayblind: Light room with dayblind subject.
+  if( dayblind && !CAN_NIGHTPEOPLE_SEE(oroom) )
   {
-    return 0;
+    globe = FALSE;
+    // Anyone with globe of dark overrides room to twilight.
+    for( tmp_char = world[oroom].people; tmp_char; tmp_char = tmp_char->next_in_room )
+    {
+      if( IS_AFFECTED4(tmp_char, AFF4_GLOBE_OF_DARKNESS) )
+      {
+        globe = TRUE;
+        break;
+      }
+    }
+    // If no globe of darkness in room, then sub can not see in obj's room.
+    if( !globe )
+    {
+      if( IS_AFFECTED(sub, AFF_INFRAVISION) )
+      {
+        // We use GET_RACE2 becaue of shape shifters.
+        race = GET_RACE2(obj);
+        if( INFRA_INVIS_RACE(race) )
+        {
+          return FALSE;
+        }
+      }
+      else
+      {
+        return FALSE;
+      }
+    }
+  }
+  // Else check for nightblind: Dark room with no infra/ultra subject.
+  else if( !IS_AFFECTED(sub, AFF_INFRAVISION) && !IS_AFFECTED2(sub, AFF2_ULTRAVISION) && !CAN_DAYPEOPLE_SEE(oroom) )
+  {
+    flame = FALSE;
+    // Anyone with mage flame overrides room to twilight.
+    for( tmp_char = world[sroom].people; tmp_char; tmp_char = tmp_char->next_in_room )
+    {
+      if( IS_AFFECTED4(tmp_char, AFF4_MAGE_FLAME) )
+      {
+        flame = TRUE;
+        break;
+      }
+    }
+    // If no mage flame in room, then sub can not see in obj's room.
+    if( !flame )
+    {
+      if( IS_AFFECTED(sub, AFF_INFRAVISION) )
+      {
+        // We use GET_RACE2 becaue of shape shifters.
+        race = GET_RACE2(obj);
+        if( INFRA_INVIS_RACE(race) )
+        {
+          return FALSE;
+        }
+      }
+      else
+      {
+        return FALSE;
+      }
+    }
   }
 
-//int r = obj->in_room;
-//if( IS_PC(sub) ) debug( "IS_LIT: %s, IS_DAYBLIND: %s, globe: %s.", IS_SET(world[r].room_flags, MAGIC_LIGHT) ? "YES" : "NO", has_innate(sub, INNATE_DAYBLIND) ? "YES" : "NO", globe ? "YES" : "NO" );
-  // Room is magically lit & viewer is blind to light and no globe.
-  if( IS_SET(world[obj->in_room].room_flags, MAGIC_LIGHT) && IS_PC(sub)
-    && has_innate(sub, INNATE_DAYBLIND) && !globe )
-  {
-    return 0;
-  }
+  return TRUE;
 
-  /* Dunno why these aren't just removed.  We don't have any super-eyed races.
-  if (RACE_EVIL(sub))
-    return 1;
-
-  if ((GET_RACE(sub) == RACE_ORC) || IS_THRIKREEN(sub) ||
-      IS_MINOTAUR(sub) || IS_UNDEAD(sub) || (GET_RACE(sub) == RACE_ILLITHID))
-    return 1;
-  */
-
+/* This is no longer necessary I don't think.
   if( IS_SURFACE_MAP(obj->in_room) || IS_UD_MAP(obj->in_room) )
   {
-    return 1;
+    return TRUE;
   }
 
-  // if (IS_UNDERWORLD(obj->in_room) && IS_AFFECTED(sub, AFF_UD_VISION))
   if( IS_UNDERWORLD(obj->in_room) )
   {
-    return 1;
+    return TRUE;
   }
 
   // Barring all the above checks, allow pets to see their owners
   if( GET_MASTER(sub) == obj )
   {
-    return 1;
+    return TRUE;
   }
-
-/*
-  if( IS_PC(sub) && IS_AFFECTED2(sub, AFF2_ULTRAVISION) )
-  {
-    if( (IS_SUNLIT(obj->in_room) || (IS_SET(world[obj->in_room].room_flags, MAGIC_LIGHT)
-      && !IS_TWILIGHT_ROOM(obj->in_room))) && !globe)
-    {
-      return 1;
-    }
-    else
-    {
-      return 1;
-    }
-  }
-  else if(IS_LIGHT(obj->in_room))
-  {
-    return 1;
-  }
-*/
-
-  if( IS_NPC(sub) )
-  {
-    return 1;
-  }
-
-  // Dayvision.
-  if( (CAN_DAYPEOPLE_SEE(obj->in_room) || flame) && !has_innate(sub, INNATE_DAYBLIND) )
-  {
-    return 1;
-  }
-
-  // Normal nightvision
-  if( (CAN_NIGHTPEOPLE_SEE(obj->in_room) || globe)
-    && (IS_AFFECTED(sub, AFF_INFRAVISION) || IS_AFFECTED2(sub, AFF2_ULTRAVISION)) )
-  {
-    return 1;
-  }
-
-  // room is dark - do infra checks
-  if(IS_AFFECTED((sub), AFF_INFRAVISION))
-  {
-    if(IS_UNDEAD(obj) || IS_INSECT(obj) ||
-      (IS_ELEMENTAL(obj) && (GET_RACE(obj) != RACE_F_ELEMENTAL)) ||
-      (GET_RACE(obj) == RACE_GOLEM) ||
-      (GET_RACE(obj) == RACE_SNAKE) ||
-      (GET_RACE(obj) == RACE_ARACHNID) ||
-      (GET_RACE(obj) == RACE_AQUATIC_ANIMAL) ||
-      (GET_RACE(obj) == RACE_PLANT) ||
-      (GET_RACE(obj) == RACE_PARASITE) || (GET_RACE(obj) == RACE_SLIME))
-        return 1;                 /*
-                                 * invis to infravision
-                                 */
-    else
-      return 1;                 /*
-                                 * will see 'red shape'
-                                 */
-  }
-  return 0;
+ */
 }
 
 /*
@@ -1540,7 +1571,7 @@ bool ac_can_see_obj(P_char sub, P_obj obj, int zrange )
   }
   else
   {
-    return IS_TRUSTED(sub) ? 1 : 0;
+    return IS_TRUSTED(sub) ? TRUE : FALSE;
   }
 
   if( IS_NPC(sub) )
@@ -2712,13 +2743,56 @@ char *PERS(P_char ch, P_char vict, int short_d)
 // This is kinda backwards: how does vict see ch?
 char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
 {
-  if( !CAN_SEE_Z_CORD(vict, ch) || ((abs(ch->specials.z_cord - vict->specials.z_cord) > 2)
-    && !IS_AFFECTED4(vict, AFF4_HAWKVISION) && !IS_TRUSTED(vict)) )
+  // If vict can't see ch.
+  if( !CAN_SEE_Z_CORD(vict, ch) )
   {
     strcpy(GS_buf1, "someone");
     return GS_buf1;
   }
 
+  // We can assume here that vict can see ch in some way.
+
+  // Handle infravision during dayblind / nightblind.
+  // If they have infra, then it's a red shape..
+  if( IS_AFFECTED(vict, AFF_INFRAVISION) )
+  {
+    if( has_innate(vict, INNATE_DAYBLIND) && !CAN_NIGHTPEOPLE_SEE(ch->in_room) )
+    {
+      bool globe = FALSE;
+      for( P_char rch = world[ch->in_room].people; rch; rch = rch->next_in_room )
+      {
+        if( IS_AFFECTED4(rch, AFF4_GLOBE_OF_DARKNESS) )
+        {
+          globe = TRUE;
+          break;
+        }
+      }
+      if( !globe )
+      {
+        strcpy(GS_buf1, noansi ? "a red shape" : "&+ra red shape&n");
+        return GS_buf1;
+      }
+    }
+    else if( !IS_AFFECTED2(vict, AFF2_ULTRAVISION) && !CAN_DAYPEOPLE_SEE(ch->in_room) )
+    {
+      bool flame = FALSE;
+      for( P_char rch = world[ch->in_room].people; rch; rch = rch->next_in_room )
+      {
+        if( IS_AFFECTED4(rch, AFF4_MAGE_FLAME) )
+        {
+          flame = TRUE;
+          break;
+        }
+      }
+      if( !flame )
+      {
+        strcpy(GS_buf1, noansi ? "a red shape" : "&+ra red shape&n");
+        return GS_buf1;
+      }
+    }
+  }
+
+  // If it's across racewar sides.
 #if 0
   if( (racewar(vict, ch) /* && !IS_ILLITHID(vict)) */  || !is_introd(ch, vict) )
 #else
@@ -2727,15 +2801,8 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
   {
     if( IS_DISGUISE_PC(ch) )
     {
-      sprintf(GS_buf1, noansi ? "%s" : "%s %s",
-        noansi ? race_names_table[GET_DISGUISE_RACE(ch)].normal :
-        ((GET_DISGUISE_RACE(ch) == RACE_ILLITHID) ||
-        (GET_DISGUISE_RACE(ch) == RACE_PILLITHID) ||
-        (GET_DISGUISE_RACE(ch) == RACE_ORC) ||
-        (GET_DISGUISE_RACE(ch) == RACE_OGRE) ||
-        (GET_DISGUISE_RACE(ch) == RACE_AGATHINON) ||
-        (GET_DISGUISE_RACE(ch) == RACE_ELADRIN)) ? "An" : "A",
-        race_names_table[GET_DISGUISE_RACE(ch)].ansi);
+      sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_DISGUISE_RACE(ch)].normal
+        : ANA(*(race_names_table[GET_DISGUISE_RACE(ch)].normal)), race_names_table[GET_DISGUISE_RACE(ch)].ansi );
     }
     else if( IS_DISGUISE_NPC(ch) )
     {
@@ -2743,36 +2810,8 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
     }
     else
     {
-      // If daypeople are blind..
-      if( !CAN_DAYPEOPLE_SEE(ch->in_room) )
-      {
-        // And vict is a day person or infravision.
-        if( !(IS_TRUSTED(vict) || IS_AFFECTED2(vict, AFF2_ULTRAVISION) || IS_AFFECTED(vict, AFF_WRAITHFORM)) )
-        {
-          // If they have infra, then it's a red shape..
-          if( IS_AFFECTED(vict, AFF_INFRAVISION) )
-          {
-            strcpy(GS_buf1, "a red shape");
-            return GS_buf1;
-          }
-          // Otherwise it's a someone.
-          else
-          {
-            strcpy(GS_buf1, "someone");
-            return GS_buf1;
-          }
-        }
-      }
-      sprintf(GS_buf1, noansi ? "%s" : "%s %s",
-        noansi ?  race_names_table[GET_RACE(ch)].normal :
-        ((GET_RACE(ch) == RACE_ILLITHID) ||
-        (GET_RACE(ch) == RACE_PILLITHID) ||
-        (GET_RACE(ch) == RACE_ORC) ||
-        (GET_RACE(ch) == RACE_OROG) ||
-        (GET_RACE(ch) == RACE_OGRE) ||
-        (GET_RACE(ch) == RACE_AGATHINON) ||
-        (GET_RACE(ch) == RACE_ELADRIN)) ? "An" : "A",
-      race_names_table[GET_RACE(ch)].ansi);
+      sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
+        : ANA(*(race_names_table[GET_RACE(ch)].normal)), race_names_table[GET_RACE(ch)].ansi );
     }
     return GS_buf1;
   }
@@ -2783,82 +2822,30 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
     return vict->player.name;
   }
 
-//if( IS_PC(vict) ) debug( "IS_DARK: %s, IS_TWILIGHT: %s.", IS_DARK(ch->in_room) ? "YES" : "NO", IS_TWILIGHT_ROOM(ch->in_room) ? "YES" : "NO" );
-  if( !CAN_DAYPEOPLE_SEE(ch->in_room) )
+  if( IS_NPC(ch) )
   {
-    if( IS_TRUSTED(vict) || IS_AFFECTED2(vict, AFF2_ULTRAVISION)
-      || IS_AFFECTED(vict, AFF_WRAITHFORM) )
-    {
-      if( IS_NPC(ch) )
-      {
-        return ch->player.short_descr;
-      }
-      else if( IS_DISGUISE_PC(ch) )
-      {
-        return GET_DISGUISE_NAME(ch);
-      }
-      else if( IS_DISGUISE_NPC(ch) )
-      {
-        sprintf(GS_buf1, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
-        return GS_buf1;
-      }
-      else
-      {
-        if( is_introd(ch, vict) )
-        {
-          return ch->player.name;
-        }
-        if( short_d )
-        {
-          return ch->player.short_descr;
-        }
-        sprintf(GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
-          : ((GET_RACE(ch) == RACE_ILLITHID) || (GET_RACE(ch) == RACE_PILLITHID)
-          || (GET_RACE(ch) == RACE_ORC) || (GET_RACE(ch) == RACE_OROG) || (GET_RACE(ch) == RACE_OGRE)
-          || (GET_RACE(ch) == RACE_AGATHINON) || (GET_RACE(ch) == RACE_ELADRIN)) ? "An" : "A",
-          race_names_table[GET_RACE(ch)].ansi);
-        return GS_buf1;
-      }
-    }
-    if( IS_AFFECTED(vict, AFF_INFRAVISION) )
-    {
-      strcpy(GS_buf1, "a red shape");
-      return GS_buf1;
-    }
-    else
-    {
-      strcpy(GS_buf1, "someone");
-      return GS_buf1;
-    }
+    return ch->player.short_descr;
   }
-  if (IS_NPC(ch))
-    return (ch->player.short_descr);
-  else if (IS_DISGUISE_PC(ch))
-    return (GET_DISGUISE_NAME(ch));
-  else if (IS_DISGUISE_NPC(ch))
+  if( IS_DISGUISE_PC(ch) )
   {
-      sprintf(GS_buf1, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str()
-                                     : (ch->disguise.name)) );
-      return GS_buf1;
+    return GET_DISGUISE_NAME(ch);
   }
-  else
+  if( IS_DISGUISE_NPC(ch) )
   {
-    if (is_introd(ch, vict))
-      return (ch->player.name);
-    if (short_d)
-      return ch->player.short_descr;
-    sprintf(GS_buf1, noansi ? "%s" : "%s %s", 
-        noansi ?  race_names_table[GET_RACE(ch)].normal :
-        ((GET_RACE(ch) == RACE_ILLITHID) ||
-	 (GET_RACE(ch) == RACE_PILLITHID) ||
-         (GET_RACE(ch) == RACE_ORC) ||
-         (GET_RACE(ch) == RACE_OROG) ||
-         (GET_RACE(ch) == RACE_OGRE) ||
-         (GET_RACE(ch) == RACE_AGATHINON) ||
-         (GET_RACE(ch) == RACE_ELADRIN)) ? "An" : "A",
-        race_names_table[GET_RACE(ch)].ansi);
+    sprintf(GS_buf1, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
     return GS_buf1;
   }
+  if( is_introd(ch, vict) )
+  {
+    return ch->player.name;
+  }
+  if( short_d )
+  {
+    return ch->player.short_descr;
+  }
+  sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
+    : ANA(*(race_names_table[GET_RACE(ch)].normal)), race_names_table[GET_RACE(ch)].ansi );
+  return GS_buf1;
 }
 
 /*

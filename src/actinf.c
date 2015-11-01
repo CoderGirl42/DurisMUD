@@ -1960,9 +1960,10 @@ void list_char_to_char(P_char list, P_char ch, int mode)
     // CAN_SEE returns TRUE for infravision sight.
     if( CAN_SEE(ch, i) )
     {
-      // Infravision: Too dark for day people, has infra, no ultra.
-      if( !IS_TRUSTED(ch) && IS_AFFECTED(ch, AFF_INFRAVISION) && !IS_AFFECTED2(ch, AFF2_ULTRAVISION)
-        && !CAN_DAYPEOPLE_SEE(i->in_room) && !flame )
+      // Infravision: Too dark for day people or too bright for night people, but has infra.
+      if( !IS_TRUSTED(ch) && IS_AFFECTED(ch, AFF_INFRAVISION)
+        && (( !IS_AFFECTED2(ch, AFF2_ULTRAVISION) && !CAN_DAYPEOPLE_SEE(i->in_room) && !flame )
+        || ( has_innate(ch, INNATE_DAYBLIND) && !CAN_NIGHTPEOPLE_SEE(i->in_room) && !globe )) )
       {
         sprintf(buf, "&+rYou see the red shape of a %s living being %shere.\n",
           size_types[GET_ALT_SIZE(i)], higher ? "above you " : lower ? "below you " : "");

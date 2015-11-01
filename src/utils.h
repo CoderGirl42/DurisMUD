@@ -318,7 +318,7 @@ bool IS_OUTDOORS(int r);
 #define HMHR(ch) ((ch)->player.sex ?                                    \
   (((ch)->player.sex == 1) ? "him" : "her") : "it")
 
-#define ANA(obj) (index("aeiouyAEIOUY", *(obj)->name) ? "An" : "A")
+#define ANA(letter) (index("aeiouyAEIOUY", letter) ? "An" : "A")
 
 #define SANA(obj) (index("aeiouyAEIOUY", *(obj)->name) ? "an" : "a")
 
@@ -1391,6 +1391,17 @@ char *CRYPT2( char *passwd, char *name );
                       (GET_RACE(ch) == RACE_BRALANI) || \
                       (GET_RACE(ch) == RACE_DEVA) || \
                        IS_ANGELIC(ch))
+
+#define INFRA_INVIS_RACE(race)   (race == RACE_UNDEAD      || race == RACE_GHOST       || race == RACE_VAMPIRE       \
+  || race == RACE_PLICH        || race == RACE_PDKNIGHT    || race == RACE_ZOMBIE      || race == RACE_SPECTRE       \
+  || race == RACE_SKELETON     || race == RACE_WRAITH      || race == RACE_SHADOW      || race == RACE_DRACOLICH     \
+  || race == RACE_PVAMPIRE     || race == RACE_SHADE       || race == RACE_REVENANT    || race == RACE_PSBEAST       \
+  || race == RACE_WIGHT        || race == RACE_GARGOYLE    || race == RACE_PHANTOM     || race == RACE_AQUATIC_ANIMAL\
+  || race == RACE_PARASITE     || race == RACE_GOLEM       || race == RACE_SNAKE       || race == RACE_ARACHNID      \
+  || race == RACE_PLANT        || race == RACE_SLIME       || race == RACE_A_ELEMENTAL || race == RACE_INSECT        \
+  || race == RACE_W_ELEMENTAL  || race == RACE_V_ELEMENTAL || race == RACE_I_ELEMENTAL || race == RACE_E_ELEMENTAL   \
+  || (IS_AFFECTED4(obj, AFF4_VAMPIRE_FORM) && !GET_CLASS(obj, CLASS_THEURGIST)) || RACE_PUNDEAD(obj) )
+
 
 // Good spell pulse is negative.
 #define SPELL_PULSE(ch) (1.0 + (.03 * ch->points.spell_pulse))

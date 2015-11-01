@@ -2977,7 +2977,7 @@ int STAT_INDEX_DAMAGE_PULSE(float);
 int STAT_INDEX_SPELL_PULSE(float);
 int SUB_MONEY(P_char, int, int);
 int SUB_BALANCE(P_char, int, int);
-int ac_can_see(P_char, P_char, bool);
+bool ac_can_see(P_char, P_char, bool);
 bool ac_can_see_obj(P_char sub, P_obj obj, int zrange = 0);
 int get_vis_mode(P_char, int);
 int coin_type(char *);

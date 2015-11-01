@@ -1846,6 +1846,29 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
   }
   if( (flags & MVFLG_DRAG_FOLLOWERS) && ch->followers )
   {
+    if( IS_AFFECTED4(ch, AFF4_GLOBE_OF_DARKNESS) && IS_PC(ch) && !CAN_NIGHTPEOPLE_SEE(was_in) )
+    {
+      struct room_affect  af;
+
+      memset(&af, 0, sizeof(struct room_affect));
+      af.type = SPELL_GLOBE_OF_DARKNESS;
+      af.duration = 1;
+      af.room_flags = MAGIC_DARK;
+      af.ch = ch;
+      affect_to_room(was_in, &af);
+    }
+    else if( IS_AFFECTED4(ch, AFF4_MAGE_FLAME) && IS_PC(ch) && !CAN_DAYPEOPLE_SEE(was_in) )
+    {
+      struct room_affect  af;
+
+      memset(&af, 0, sizeof(struct room_affect));
+      af.type = SPELL_GLOBE_OF_DARKNESS;
+      af.duration = 1;
+      af.room_flags = MAGIC_LIGHT;
+      af.ch = ch;
+      affect_to_room(was_in, &af);
+    }
+
     /*  this is a little lag when you have many tch following you
        if( !ch->following) {
        count = 0;
