@@ -27,6 +27,8 @@ extern P_desc descriptor_list;
 extern int count_classes( P_char mob );
 extern long new_exp_table[];
 extern const char *spells[];
+extern float exp_mods[EXPMOD_MAX+1];
+extern const struct class_names class_names_table[];
 extern struct zone_random_data {
   int zone;
   int races[10];
@@ -286,6 +288,33 @@ void do_test(P_char ch, char *arg, int cmd)
 
   arg = one_argument(arg, buff);
 
+  if( isname("exp_mods", buff) )
+  {
+    // Last updated 10/31/2015
+    char *exp_mod_names[EXPMOD_MAX+1] =
+    {
+      "NONE", "CLS_WARRIOR", "CLS_RANGER", "CLS_PSIONICIST", "CLS_PALADIN", "CLS_ANTIPALADIN", "CLS_CLERIC",
+      "CLS_MONK", "CLS_DRUID", "CLS_SHAMAN", "CLS_SORCERER", "CLS_NECROMANCER", "CLS_CONJURER", "CLS_ROGUE",
+      "CLS_ASSASSIN", "CLS_MERCENARY", "CLS_BARD", "CLS_THIEF", "CLS_WARLOCK", "CLS_MINDFLAYER", "CLS_ALCHEMIST",
+      "CLS_BERSERKER", "CLS_REAVER", "CLS_ILLUSIONIST", "CLS_BLIGHTER", "CLS_DREADLORD", "CLS_ETHERMANCER",
+      "CLS_AVENGER", "CLS_THEURGIST", "CLS_SUMMONER", "CLS_NEWCLASS1", "CLS_NEWCLASS2", "CLS_NEWCLASS3",
+      "LVL_31_UP", "LVL_41_UP", "LVL_51_UP", "LVL_55_UP", "RES_EVIL", "RES_NORMAL", "VICT_BREATHES", "VICT_ACT_AGGRO",
+      "VICT_ACT_HUNTER", "VICT_ELITE", "VICT_HOMETOWN", "VICT_NOMEMORY", "PVP", "GLOBAL", "GOOD", "EVIL", "UNDEAD",
+      "NEUTRAL", "DAMAGE", "HEAL_NONHEALER", "HEAL_PETS", "HEALING", "MELEE", "TANK", "KILL", "PALADIN_VS_GOOD",
+      "PALADIN_VS_EVIL", "ANTIPALADIN_VS_GOOD"
+    };
+
+    for( int i = 0;i <= EXPMOD_MAX;i++ )
+    {
+      sprintf( buff, "%3d) %20s %2.3f %s\n", i, exp_mod_names[i], exp_mods[i],
+      (i <= CLASS_COUNT) ? class_names_table[i].ansi : "" );
+      send_to_char( buff, ch );
+    }
+    sprintf( buff, "WARRIOR: %d %d, CLERIC: %d %d.\n", flag2idx(CLASS_WARRIOR), EXPMOD_CLS_WARRIOR,
+      flag2idx(CLASS_CLERIC), EXPMOD_CLS_CLERIC );
+    send_to_char( buff, ch );
+    return;
+  }
   if( isname("shield", buff) )
   {
     int rnum, count, count2, afnum, currac, maxac, minac;
