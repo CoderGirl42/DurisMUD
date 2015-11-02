@@ -1558,14 +1558,15 @@ void do_conjure(P_char ch, char *argument, int cmd)
     }
 
     t_ch->only.npc->aggro_flags = 0;
+    duration = setup_pet(t_ch, ch, 400 / STAT_INDEX(GET_C_INT(t_ch)), PET_NOCASH);
+    SET_POS(t_ch, POS_STANDING + STAT_NORMAL);
+    char_to_room(t_ch, ch->in_room, 0);
+
     act("$n utters a quick &+mincantation&n, calling forth $N who softly says 'Your wish is my command, $n!'", TRUE, ch, 0,
         t_ch, TO_ROOM);
     act("You utter a quick &+mincantation&n, calling forth $N who softly says 'Your wish is my command, master!'", TRUE, ch, 0,
         t_ch, TO_CHAR);
 
-    duration = setup_pet(t_ch, ch, 400 / STAT_INDEX(GET_C_INT(t_ch)), PET_NOCASH);
-    char_to_room(t_ch, ch->in_room, 0);
-    SET_POS(t_ch, POS_STANDING + STAT_NORMAL);
     add_follower(t_ch, ch);
     if(duration >= 0)
     {
