@@ -1909,10 +1909,12 @@ void strToLower(char *s1)
 
 bool SanityCheck(P_char ch, const char *calling)
 {
-  if (!ch)
+  // Rules here: If no ch, "Null -1", If ch has no only data "<name> -1"
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "Call to SanityCheck from %s() with NULL ch", calling);
-    raise(SIGSEGV);
+    logit( LOG_DEBUG, "%s: ch is not alive: %s %d.", calling, (ch == NULL) ? ("Null", -1)
+      : (GET_NAME(ch), (ch->only.npc != NULL) ? (IS_NPC(ch) ? ch->only.npc->idnum : ch->only.pc->pid) : -1) );
+    return FALSE;
   }
 
   if (ch->in_room && ch->in_room == NOWHERE)
@@ -2510,11 +2512,7 @@ bool is_aggr_to(P_char ch, P_char target)
   int      tmp_race = 0;
   register int chance;
 
-  if(!(ch) ||
-     !(target) ||
-     ch == target ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(target))
+  if( ch == target || !IS_ALIVE(ch) || !IS_ALIVE(target) )
   {
     return FALSE;
   }

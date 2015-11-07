@@ -2607,11 +2607,9 @@ void event_tempus(P_char ch, P_char victim, P_obj obj, void *args)
   char     buf[256];
   int level, dura, room;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
-        
+  if( !IS_ALIVE(ch) || ch->in_room == NOWHERE )
+    return;
+
   if(affected_by_spell(ch, SPELL_DIVINE_FURY))
   {
     send_to_char("You are already divinely furious!\n", ch);
@@ -4078,13 +4076,9 @@ void branch(P_char ch, P_char victim)
     "$n lifts you lightly and &+rsmashes&n you against the &+yground!&n",
     "$n lifts $N lightly and &+rsmashes&n $M against the &+yground!&n",
   };
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim) ||
-     ch->in_room != victim->in_room);
-        return;
-        
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room);
+    return;
+
   victim = guard_check(ch, victim); 
 
   act("One of $n's branches reaches towards $N.", FALSE, ch, 0, victim, TO_NOTVICT);
@@ -4187,9 +4181,8 @@ void do_summon_imp(P_char ch, char *argument, int cmd)
   P_char imp, foe;
   struct char_link_data *cld;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
+  if( !IS_ALIVE(ch) )
+    return;
 
   if(IS_NPC(ch))
   {
@@ -4316,8 +4309,7 @@ void do_immolate(P_char ch, char *argument, int cmd)
   P_char   victim = NULL;
   struct affected_type *afp;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -4360,8 +4352,7 @@ void do_immolate(P_char ch, char *argument, int cmd)
 
 void event_halfling_check(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  if (!ch->equipment[WEAR_FEET] && !
-      affected_by_spell(ch, TAG_BAREFEET))
+  if( !ch->equipment[WEAR_FEET] && !affected_by_spell(ch, TAG_BAREFEET) )
   {
     struct affected_type af;
     memset(&af, 0, sizeof(af));

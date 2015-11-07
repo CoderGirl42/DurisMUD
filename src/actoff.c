@@ -1,4 +1,3 @@
-
 /*
  * ***************************************************************************
  * *  File: actoff.c                                           Part of Duris *
@@ -728,6 +727,16 @@ void do_hit(P_char ch, char *argument, int cmd)
 {
   P_char   victim;
 
+  if( !IS_ALIVE(ch) )
+  {
+    // This is complex because more info and multiple cmd possibilities (CMD_HIT/CMD_MURDER/etc).
+    logit(LOG_EXIT, "do_hit: bogus params: ch not alive: %s %d, cmd = %s %d.",
+      (ch != NULL) ? (J_NAME(ch), IS_NPC(ch) ? mob_index[ch->only.npc->R_num].virtual_number
+      : ch->only.pc->pid ) : ("unknown", -1), (cmd > 0 && cmd < MAX_CMD) ? command[cmd] : "unknown" );
+    raise(SIGSEGV);
+    return;
+  }
+
   victim = ParseTarget(ch, argument);
 
   if(!*argument && has_innate(ch, INNATE_SENSE_WEAKNESS))
@@ -759,13 +768,6 @@ void do_hit(P_char ch, char *argument, int cmd)
   {
     victim = get_linked_char(ch, LNK_BATTLE_ORDERS);
     clear_links(ch, LNK_BATTLE_ORDERS);
-  }
-
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "assert: bogus params (do_hit)");
-    raise(SIGSEGV);
-    return;
   }
 
   if(!victim)
@@ -812,13 +814,6 @@ void do_murder(P_char ch, char *argument, int cmd)
    * and 'attack' do not work for pkill. JAB
    */
 
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "assert: bogus params (do_murder)");
-    raise(SIGSEGV);
-    return;
-  }
-
   do_hit(ch, argument, CMD_MURDER);
 }
 
@@ -833,9 +828,12 @@ void lance_charge(P_char ch, char *argument)
 
   half_chop(argument, arg1, arg2);
 
-  if(!(ch) || 
-     !IS_ALIVE(ch))
-      return;
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
+  }
 
   if(!SanityCheck(ch, "lance_charge"))
     return;
@@ -1687,10 +1685,11 @@ void do_kill(P_char ch, char *argument, int cmd)
   int      loss;
   char     Gbuf1[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_kill)");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
   }
 
   if( GET_LEVEL(ch) < MINLVLIMMORTAL || IS_NPC(ch) || ch->equipment[WIELD] ||
@@ -1760,10 +1759,11 @@ void do_backstab(P_char ch, char *argument, int cmd)
 {
   P_char   victim;
 
-  if( !(ch) )
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_backstab)");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
   }
 
   // Toggle debugging on / off
@@ -1789,18 +1789,13 @@ void do_circle(P_char ch, char *argument, int cmd)
   P_char   victim = NULL;
   char     target[128];
 
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "assert: bogus params (do_circle)");
-    raise(SIGSEGV);
-  }
-
   if(!IS_ALIVE(ch))
   {
-    send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
-  
+
   if(GET_CHAR_SKILL(ch, SKILL_CIRCLE) <= 0)
   {
     send_to_char("You twist around in a circle! Wheee!!!\r\n", ch);
@@ -2053,10 +2048,13 @@ void do_order(P_char ch, char *argument, int comd)
   P_char   victim, ch_inroom[CH_INROOM_SIZE], tmp_ch;
   P_char   k = NULL;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-      return;
-  
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
+  }
+
   half_chop(argument, name, message);
   half_chop(message, cmd, temp);
 
@@ -2337,10 +2335,13 @@ void do_flee(P_char ch, char *argument, int cmd)
   P_char   mount = get_linked_char(ch, LNK_RIDING);
   P_char   mount_opponent = mount ? GET_OPPONENT(mount) : NULL;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-      return;
-  
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
+  }
+
   if(IS_NPC(ch))
     if(mob_index[GET_RNUM(ch)].virtual_number == 11002 ||
        mob_index[GET_RNUM(ch)].virtual_number == 11003 ||
@@ -3201,9 +3202,13 @@ void do_buck(P_char ch, char *argument, int cmd)
 
 void rush(P_char ch, P_char victim)
 {
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
- 
+  }
+
   if(!CanDoFightMove(ch, victim))
   {
     return;
@@ -3264,9 +3269,13 @@ void do_rush(P_char ch, char *argument, int cmd)
   P_char   target = NULL;
   char     target_name[MAX_INPUT_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
-    
+  }
+
   if(GET_CHAR_SKILL(ch, SKILL_RUSH) < 1)
   {
     send_to_char("&+GYou don't know how to rush.\n", ch);
@@ -3357,8 +3366,8 @@ void do_rescue(P_char ch, char *argument, int cmd)
 bool isMaulable(P_char ch, P_char victim)
 {
 
-  if(!(ch) ||
-    !(victim) ||
+  if(!IS_ALIVE(ch) ||
+    !IS_ALIVE(victim) ||
     !CanDoFightMove(ch, victim) ||
     !GET_CHAR_SKILL(ch, SKILL_MAUL) ||
     GET_CHAR_SKILL(ch, SKILL_MAUL) < 1 ||
@@ -3400,14 +3409,12 @@ void do_maul(P_char ch, char *argument, int cmd)
 {
   P_char   victim = NULL;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_maul) in actoff.c");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch))
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(GET_CHAR_SKILL(ch, SKILL_MAUL) < 1)
   {
@@ -3430,14 +3437,10 @@ void do_restrain(P_char ch, char *argument, int cmd)
 {
   P_char   victim = NULL;
 
-  if( !(ch) )
-  {
-    logit(LOG_EXIT, "do_restrain: bogus params - null ch in actoff.c");
-    raise(SIGSEGV);
-  }
-
   if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 
@@ -3712,10 +3715,11 @@ void do_kick(P_char ch, char *argument, int cmd)
 {
   P_char   victim;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_kick) in actoff.c");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
   }
 
   if(IS_IMMOBILE(ch))
@@ -3761,14 +3765,7 @@ int chance_roundkick(P_char ch, P_char victim)
 {
   int percent_chance, dam;
 
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "chance_roundkick called in actoff.c with no ch");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return 0;
   }
@@ -3868,15 +3865,7 @@ bool roundkick(P_char ch, P_char victim)
     "$n neatly kicks $N's head into pieces -- YUMMY!", 0
   };
 
-  if(!(ch) ||
-    !(victim))
-  {
-    logit(LOG_EXIT, "assert: bogus params (roundkick) in actoff.c");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return false;
   }
@@ -3964,14 +3953,10 @@ void do_roundkick(P_char ch, char *argument, int cmd)
   P_char   victim = NULL;
   int      dam;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_roundkick) in actoff.c");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch))
-  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 
@@ -4082,11 +4067,13 @@ void knock_out(P_char ch, int duration)
 {
   struct affected_type af;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "knock_out called in actoff.c without ch");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
   }
+
   if(ch)
   {
     act("&+RCRASSSHHHH!&n  Your head is pulsating, the world around you "
@@ -5532,7 +5519,7 @@ void attack(P_char ch, P_char victim)
 bool isKickable(P_char ch, P_char victim)
 {
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return false;
   }
@@ -6165,8 +6152,12 @@ void do_tackle(P_char ch, char *arg, int cmd)
   struct affected_type af;
   int i, door, target_room, percent_chance;
 
-  if(!(ch) || !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(IS_CENTAUR(ch) ||  GET_RACE(ch) == RACE_QUADRUPED || GET_RACE(ch) == RACE_DRIDER)
   {
@@ -6827,10 +6818,11 @@ void rescue(P_char ch, P_char rescuee, bool rescue_all)
 {
   P_char   t_ch;
   bool     found = FALSE;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 
@@ -6987,12 +6979,19 @@ void maul(P_char ch, P_char victim)
     "$n's maul grasps $N shredding $S flesh and sending blood splattering into the wind.",
     0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
+  }
+
+  if( !IS_ALIVE(victim) )
+  {
+    send_to_char( "Your victim seems to be quite dead.\n", ch );
+    return;
+  }
 
   if(!affected_by_spell(ch, SKILL_BERSERK))
   {
@@ -7213,11 +7212,17 @@ void shieldpunch(P_char ch, P_char victim)
     "The world explodes in pain as $n smashes your face with $s shield, but the pain is brief...",
     "Bones crunching is heard as $n slams $s shield into $N's face."
   };
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim)) // Something bad happened. 
+
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
+  }
+
+  if( !IS_ALIVE(victim) )
+  {
+    send_to_char( "Your victim seems to be quite dead.\n", ch );
     return;
   }
 
@@ -7434,11 +7439,13 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
     0
   };
 
-  if(!(ch) || !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
-  
+
   if(GET_CHAR_SKILL(ch, SKILL_SWEEPING_THRUST) < 1) // Need the skill.
   {
     send_to_char("You don't know how to do this.\n", ch);
@@ -8030,9 +8037,13 @@ void do_trample(P_char ch, char *argument, int cmd)
     "$n shifts $s weight and viciously slams $s rear hooves into $N's chest which collapses with a loud CRUNCH.",
     0, 0
   };
-  
-  if(!(ch) || !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(!SanityCheck(ch, "trample"))
     return;
@@ -8438,8 +8449,12 @@ void do_springleap(P_char ch, char *argument, int cmd)
   int      dir = -1;
   int      a;
 
-  if(!(ch) || !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(!GET_CHAR_SKILL(ch, SKILL_SPRINGLEAP))
   {
@@ -8808,8 +8823,12 @@ void do_trip(P_char ch, char *argument, int cmd)
   char     name[MAX_INPUT_LENGTH];
   int      percent_chance;
 
-  if(!(ch) || !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(GET_CHAR_SKILL(ch, SKILL_TRIP) < 1)
   {
@@ -8988,9 +9007,13 @@ void do_flank(P_char ch, char *argument, int cmd)
 {
   P_char   victim = NULL;
   char     target[128];
-  
-  if(!(ch) || !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
+  {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
+  }
 
   if(!GET_CHAR_SKILL(ch, SKILL_FLANK))
   {
@@ -9275,10 +9298,10 @@ void do_battle_orders(P_char ch, char *argument, int cmd)
 
   one_argument(argument, target);
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (do_battle_orders)");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 
@@ -9374,15 +9397,10 @@ void do_gaze(P_char ch, char *argument, int cmd)
   P_char   victim = NULL;
   char     target[128];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "do_gaze called in actoff.c with no ch");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch))
-  {
-    act("You are dead. Lay still!", FALSE, ch, 0, victim, TO_CHAR);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 
@@ -9391,7 +9409,7 @@ void do_gaze(P_char ch, char *argument, int cmd)
     act("You stare at $p.", FALSE, ch, ch->specials.destroying_obj, victim, TO_CHAR);
     return;
   }
-  
+
   if(GET_CHAR_SKILL(ch, SKILL_GAZE) < 1)
   {
     act("You stare deep into $N's eyes... Fascinating.",
@@ -9424,10 +9442,11 @@ void gaze(P_char ch, P_char victim)
   bool death_door;
   P_char temp_ch;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "gaze called in actoff.c with no ch");
-    raise(SIGSEGV);
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
+    return;
   }
 
   if(ch == victim)
@@ -10089,8 +10108,8 @@ void do_shriek(P_char ch, char *argument, int cmd)
 char isSpringable(P_char ch, P_char victim)
 {
 
-  if(!(ch) ||
-    !(victim) ||
+  if(!IS_ALIVE(ch) ||
+    !victim ||
     IS_IMMATERIAL(victim) ||
     affected_by_spell(ch, SKILL_BASH) ||
     IS_ELEMENTAL(victim) ||
@@ -10163,18 +10182,17 @@ bool MobShouldFlee(P_char ch)
 bool CheckMultiProcTiming(P_char ch)
 {
   return true; //disabling multiproc check
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     affected_by_spell(ch, TAG_STOP_PROC))
+
+  if( !IS_ALIVE(ch) || affected_by_spell(ch, TAG_STOP_PROC) )
   {
     return false;
   }
-  
+
   set_short_affected_by(ch, TAG_STOP_PROC, 1);
-  
+
   return true;
 }
-  
+
 void do_dreadnaught(P_char ch, char *, int)
 {
   struct affected_type af;
@@ -10305,8 +10323,10 @@ void do_garrote(P_char ch, char *argument, int cmd)
   P_char victim = NULL;
   int    chsize, victsize;
 
-  if( !(ch) || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 

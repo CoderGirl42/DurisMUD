@@ -489,9 +489,9 @@ void spell_locate_object(int level, P_char ch, char *arg)
   bool flag = FALSE;
   char Gbuf1[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
 
-  if (!(ch)) {
-    logit(LOG_EXIT, "assert: bogus parms");
-    raise(SIGSEGV);
+  if( !IS_ALIVE(ch) )
+  {
+    return;
   }
   while (*arg == ' ')
     arg++;

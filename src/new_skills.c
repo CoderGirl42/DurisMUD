@@ -213,9 +213,8 @@ int CountNumGreaterElementalFollowersInSameRoom(P_char ch)
   struct char_link_data *cld;
   P_char follower;
   int i = 0;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return 0;
   }
@@ -1963,11 +1962,7 @@ void mount_summoning_thing(P_char ch, P_char victim, P_obj obj, void *data)
   int      factor, align, in_room;
   struct follow_type *fol;
 
-  if(!(ch) || (ch->in_room == NOWHERE) || !IS_ALIVE(ch))  /*
-                                           They died in the meantime. Events
-                                           should have been pulled for them,
-                                           but why trust that
-                                         */
+  if( (ch->in_room == NOWHERE) || !IS_ALIVE(ch) )
     return;
 
   if(IS_SET(world[ch->in_room].room_flags, LOCKER))

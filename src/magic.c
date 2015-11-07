@@ -393,19 +393,16 @@ void spell_single_prismatic_ray(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_prismatic_ray(int level, P_char ch, char *arg, int type,
-                         P_char victim, P_obj obj)
+void spell_prismatic_ray(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int      dam, rays, ray_type, room, i = 0;
   uint     ray_flag;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(room = ch->in_room))
+
+  if( !IS_ALIVE(ch) || (room = ch->in_room) == NOWHERE )
   {
     return;
   }
- 
+
   spell_single_prismatic_ray(level, ch, 0, 0, victim, 0);
 
   for (rays = 2, ray_flag = 0; rays;)
@@ -503,10 +500,9 @@ void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
     "You feel your very soul ceasing to be, as $n's &+Yray&n saps the last of the magic from your body.",
     "$N turns &+wpale&n, and suddenly collapses as $n's &+Yray&n saps the remainder of their lifeforce!", 0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
+
+  if( !IS_ALIVE(ch) )
+    return;
 
   temp = MIN(46, (level + 1));
   dam = dice(5 * temp, 10);
@@ -794,8 +790,7 @@ void spell_invoke_negative_energy(int level, P_char ch, char *arg, int type,
   spell_damage(ch, victim, dam, SPLDAM_NEGATIVE, SPLDAM_GLOBE, &messages);
 }
 
-void spell_restore_spirit(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj tar_obj)
+void spell_restore_spirit(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   int result, dam;
 
@@ -810,11 +805,7 @@ void spell_restore_spirit(int level, P_char ch, char *arg, int type,
 
   bool saved = FALSE;
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim) ||
-     victim == ch)
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || victim == ch )
   {
     return;
   }
@@ -1028,11 +1019,7 @@ void spell_life_leech(int level, P_char ch, char *arg, int type,
     "$n &+Lsucks the last bit of &+rlife &+Lout of &n$N &+Lwho falls to the &+yground &+Llifeless."
   };
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim) ||
-     victim == ch)
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || victim == ch )
   {
     return;
   }
@@ -1238,8 +1225,7 @@ void spell_energy_drain(int level, P_char ch, char *arg, int type, P_char victim
 /*
  * Drain XP, MANA, HP - caster gains HP and MANA
  */
-// void spell_energy_drain(int level, P_char ch, char *arg, int type,
-                        // P_char victim, P_obj obj)
+// void spell_energy_drain(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 // {
   // int xp, mana, dam;
   // struct damage_messages messages = {
@@ -1251,11 +1237,7 @@ void spell_energy_drain(int level, P_char ch, char *arg, int type, P_char victim
     // "$n drains the energy of $N who crumbles into a lifeless husk."
   // };
 
-  // if(!(ch) ||
-     // !(victim) ||
-     // !IS_ALIVE(ch) ||
-     // !IS_ALIVE(victim) ||
-     // victim == ch)
+  // if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || victim == ch )
   // {
     // return;
   // }
@@ -2138,12 +2120,11 @@ void spell_living_stone(int level, P_char ch, char *arg, int type, P_char victim
   P_char   mob;
   int      lvl;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
-  
+
   if(CHAR_IN_SAFE_ZONE(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
@@ -2213,8 +2194,7 @@ void spell_greater_living_stone(int level, P_char ch, char *arg, int type,
   P_char   mob;
   int      lvl;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -3117,8 +3097,9 @@ void spell_bigbys_crushing_hand(int level, P_char ch, char *arg, int type, P_cha
   spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages);
 }
 
-int spell_solbeeps_single_missile(int level, P_char ch, char *arg, int type, P_char victim,
-                    P_obj tar_obj)
+// Return true for next missile if available.
+// Return false to stop barrage.
+bool spell_solbeeps_single_missile(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   struct damage_messages fulldam_messages = {
     "A &+Yhuge&n missile of &+Wforce&n departs from your fingertips, making a loud &+Lthud&n as it hits $N.",
@@ -3140,16 +3121,11 @@ int spell_solbeeps_single_missile(int level, P_char ch, char *arg, int type, P_c
     0
   };
 
-  // Return true for next missile if available.
-  // Return false to stop barrage.
-  if(!(ch) &&
-     !(victim) &&
-     !IS_ALIVE(ch) &&
-     !IS_ALIVE(victim)) // Just making sure.
-        return false;
-        
-  if(resists_spell(ch, victim))
-    return true;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return FALSE;
+
+  if( resists_spell(ch, victim) )
+    return TRUE;
 
   int dam = dice (30, 11); // average ~45 per missile, so from 135+ at 51 to 180 at 55 plus 25% chance of 225 at 56
                            // made damage level-independent, since average number of missiles grows with level
@@ -3158,7 +3134,7 @@ int spell_solbeeps_single_missile(int level, P_char ch, char *arg, int type, P_c
   if(!NewSaves(victim, SAVING_SPELL, 0))
   {
     dam = (int) (dam * 1.5);
-    saved = false;
+    saved = FALSE;
   }
 
   if(spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NOSHRUG, saved ? &halfdam_messages : &fulldam_messages) == DAM_NONEDEAD)
@@ -3209,18 +3185,16 @@ int spell_solbeeps_single_missile(int level, P_char ch, char *arg, int type, P_c
         }
     }
   */
-    return true;
+    return TRUE;
   }
-  return false;
+  return FALSE;
 }
 
 
-void spell_solbeeps_missile_barrage(int level, P_char ch, char *arg, int type, P_char victim,
-                  P_obj tar_obj)
+void spell_solbeeps_missile_barrage(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
+  if( !IS_ALIVE(ch) )
+    return;
 
   int num_missiles = 3, i = 0;
 
@@ -6201,20 +6175,16 @@ void AgeChar(P_char ch, int years)
     ch->player.time.birth = curr_time;
 }
 
-void spell_age(int level, P_char ch, char *arg, int type, P_char victim,
-               P_obj obj)
+void spell_age(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   char     Gbuf1[MAX_STRING_LENGTH];
-  
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
-      return;
 
-  if(IS_NPC(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
     return;
-  
+
+  if( IS_NPC(victim) )
+    return;
+
   if((IS_PC(ch) ||
       IS_PC_PET(ch))  &&
       IS_PC(victim))
@@ -6234,16 +6204,12 @@ void spell_age(int level, P_char ch, char *arg, int type, P_char victim,
   send_to_char("You feel a bit older all of a sudden!\n", victim);
 }
 
-void spell_rejuvenate_major(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj tar_obj)
+void spell_rejuvenate_major(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   char     Gbuf1[MAX_STRING_LENGTH];
-  
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
-      return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   if(IS_NPC(victim))
     return;
@@ -7201,19 +7167,16 @@ void spell_dispel_invisible(int level, P_char ch, char *arg, int type, P_char vi
   }
 }
 
-void spell_shadow_projection(int level, P_char ch, char *arg, int type, P_char victim,
-                    P_obj obj)
+void spell_shadow_projection(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
-    
+  if( !IS_ALIVE(ch) )
+    return;
+
   if(affected_by_spell(ch, SPELL_FAERIE_FIRE))
   {
-    act("&+MThe magical fire surrounding you negates the spell!&n",
-      FALSE, ch, 0, 0, TO_CHAR);
+    act("&+MThe magical fire surrounding you negates the spell!&n", FALSE, ch, 0, 0, TO_CHAR);
     return;
   }
 
@@ -7287,8 +7250,7 @@ void spell_invisibility(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_improved_invisibility(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+void spell_improved_invisibility(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
@@ -8086,23 +8048,20 @@ void spell_dexterity(int level, P_char ch, char *arg, int type, P_char victim,
   affect_join(victim, &af, TRUE, FALSE);
 }
 
-void spell_agility(int level, P_char ch, char *arg, int type, P_char victim,
-                     P_obj obj)
+void spell_agility(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-      return;
-      
-  if(affected_by_spell(victim, SPELL_AGILITY))
+
+  if( !IS_ALIVE(ch) )
+    return;
+
+  if( affected_by_spell(victim, SPELL_AGILITY) )
   {
     send_to_char("&+BYou can't get more agile than this!\n", victim);
     return;
   }
-  
-  act("&+BYou feel more agile.&n",
-    FALSE, victim, 0, 0, TO_CHAR);
+
+  act("&+BYou feel more agile.&n", FALSE, victim, 0, 0, TO_CHAR);
 
   bzero(&af, sizeof(af));
 
@@ -8763,14 +8722,12 @@ void spell_sense_life(int level, P_char ch, char *arg, int type,
 
 }
 
-void spell_blur(int level, P_char ch, char *arg, int type, P_char victim,
-                P_obj obj)
+void spell_blur(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   struct affected_type *af1;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -8806,8 +8763,7 @@ void spell_blur(int level, P_char ch, char *arg, int type, P_char victim,
 }
 
 
-void spell_lodestone_vision(int level, P_char ch, char *arg, int type, P_char victim,
-                 P_obj obj)
+void spell_lodestone_vision(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   if (IS_AFFECTED5(ch, AFF5_MINE))
   {
@@ -9007,16 +8963,12 @@ void spell_vigorize_light(int level, P_char ch, char *arg, int type,
 void spell_invigorate(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int movepoints, in_room;
-  
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim) ||
-     ch->in_room != victim->in_room)  
-      return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room )
+    return;
 
   movepoints = dice(3, level);
-  
+
   if(GET_CLASS(ch, CLASS_CLERIC))
     movepoints = (int)(movepoints * 1.5);
   else if(GET_CLASS(ch, CLASS_RANGER))
@@ -9267,14 +9219,12 @@ void spell_vitality(int level, P_char ch, char *arg, int type, P_char victim,
 {
   struct affected_type af;
   int  healpoints = 4 * level, duration = 1;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-      return;
-  
-  if(IS_NPC(victim) &&
-     GET_VNUM(victim) == IMAGE_REFLECTION_VNUM)
-      return;
+
+  if( !IS_ALIVE(ch) )
+    return;
+
+  if( IS_NPC(victim) && GET_VNUM(victim) == IMAGE_REFLECTION_VNUM )
+    return;
 
   if(affected_by_spell(victim, SPELL_MIELIKKI_VITALITY))
   {
@@ -13076,15 +13026,12 @@ void spell_single_obtenebration(int level, P_char ch, char *arg, int type,
     "&+LA wave of blackness utterly consumes you.&n",
     "&+LA pitch-darkness consumes $N!&n"
   };
-  
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
+
   dam = 100 + level * 6 + number(1, 40);
   dam = dam * get_property("spell.area.damage.factor.obtenebration", 1.000);
 
@@ -13571,12 +13518,8 @@ void spell_acid_blast(int level, P_char ch, char *arg, int type,
     "$n turns $N into a &+Gsticky puddle.&n", 0
   };
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim) ||
-     ch->in_room != victim->in_room)
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room )
+    return;
 
   int dam = dice(MIN(level, 21), 10) + level/2;
 
@@ -13846,8 +13789,7 @@ void spell_pword_kill(int level, P_char ch, char *arg, int type,
     "$N hears $n's word of power, and nothing more."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
     return;
 
 // The spell no longer functions against the undead races.
@@ -14102,7 +14044,7 @@ void spell_summon_ghasts(int level, P_char ch, char *arg, int type, P_char victi
 void single_unholy_word(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int in_room, lev;
-  
+
   struct damage_messages messages = {
     "You send $N reeling with your word of power.",
     "You are sent reeling by $n's unholy word.",
@@ -14111,19 +14053,13 @@ void single_unholy_word(int level, P_char ch, char *arg, int type, P_char victim
     "You hear a word of power, and die instantly.",
     "$N hears $n's word of power, and nothing more.", 0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room )
   {
     return;
   }
-  
-  if(ch->in_room != victim->in_room)
-    return;
-  
-if(IS_NPC(victim) && IS_AFFECTED4(victim, AFF4_HELLFIRE))
+
+  if(IS_NPC(victim) && IS_AFFECTED4(victim, AFF4_HELLFIRE))
 	{
 	  int rand1 = (number(1, 100));
 	  if (rand1 > victim->base_stats.Pow)
@@ -14180,12 +14116,11 @@ if(IS_NPC(victim) && IS_AFFECTED4(victim, AFF4_HELLFIRE))
 
 void spell_unholy_word(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
-  
+
   if(GET_LEVEL(ch) < MINLVLIMMORTAL)
   {
     if(GET_ALIGNMENT(ch) > 0 && IS_PC(ch))
@@ -14216,7 +14151,7 @@ void spell_unholy_word(int level, P_char ch, char *arg, int type, P_char victim,
 void single_voice_of_creation(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int in_room, lev;
-  
+
   struct damage_messages messages = {
     "&n&+bR&n&+cec&n&+Cit&n&+cin&n&+bg&n a &n&+Wholy &n&+Yprayer&n, you send $N reeling with &n&+Cr&n&+ci&n&+Cght&n&+ceou&n&+Cs &n&+Rpower&n.",
     "You are sent reeling by the &n&+Cr&n&+ci&n&+Cght&n&+ceou&n&+Cs &n&+Rpower&n of $n's &n&+Wholy &n&+Yprayer&n.",
@@ -14225,18 +14160,15 @@ void single_voice_of_creation(int level, P_char ch, char *arg, int type, P_char 
     "You hear a word of power, and die instantly.",
     "$N hears $n's word of power, and nothing more.", 0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
-  if(ch->in_room != victim->in_room)
+
+  if( ch->in_room != victim->in_room )
     return;
-    
+
   if(GET_ALIGNMENT(victim) > 0 && !(IS_PC(victim) && opposite_racewar(victim, ch)))
   {
     act("$N is not evil enough to be affected!", TRUE, ch, 0, victim, TO_CHAR);
@@ -14267,7 +14199,7 @@ void single_voice_of_creation(int level, P_char ch, char *arg, int type, P_char 
 void single_holy_word(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int in_room, lev;
-  
+
   struct damage_messages messages = {
     "You send $N reeling with your word of power.",
     "You are sent reeling by $n's holy word.",
@@ -14276,15 +14208,12 @@ void single_holy_word(int level, P_char ch, char *arg, int type, P_char victim, 
     "You hear a word of power, and die instantly.",
     "$N hears $n's word of power, and nothing more.", 0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
+
   if(ch->in_room != victim->in_room)
     return;
 
@@ -14343,12 +14272,11 @@ void single_holy_word(int level, P_char ch, char *arg, int type, P_char victim, 
 
 void spell_voice_of_creation(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
-  
+
   if(GET_LEVEL(ch) < MINLVLIMMORTAL)
   {
     if(GET_ALIGNMENT(ch) < 0 && IS_PC(ch))
@@ -14383,8 +14311,7 @@ void spell_voice_of_creation(int level, P_char ch, char *arg, int type, P_char v
 
 void spell_holy_word(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -14458,19 +14385,14 @@ void spell_sunray(int level, P_char ch, char *arg, int type, P_char victim, P_ob
     "$N&+Y is struck by a blinding light from&n $n, &+Yand is utterly destroyed!",
       0
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     ch->in_room != victim->in_room)
-        return;
-  
- 
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room )
+    return;
+
 // A little more than iceball and does less damage when not outside.
 // However, has a chance to blind victim for a while.
   int dam = dice((int)(level * 3), 6) - number(0, 40);
-  
+
   if(IS_AFFECTED(victim, AFF_BLIND))
         dam = (int)(dam * 0.85);
   else if(!IS_OUTSIDE(victim->in_room))
@@ -14756,12 +14678,11 @@ void spell_feeblemind(int level, P_char ch, char *arg, int type, P_char victim, 
 }
 // end spell_feeblemind
 
-void spell_pword_blind(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_pword_blind(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int percent = 0, save;
 
-  if(!(ch) || !(victim) || !IS_ALIVE(ch) || !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
@@ -14843,13 +14764,12 @@ void spell_pword_blind(int level, P_char ch, char *arg, int type,
 
 /* rocking spell now, stun is extremely unpleasant */
 
-void spell_pword_stun(int level, P_char ch, char *arg, int type,
-                      P_char victim, P_obj obj)
+void spell_pword_stun(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   //int percent = 50;
   int percent;
 
-  if(!(ch) || !(victim) || !IS_ALIVE(victim) || GET_HIT(victim) < 1
+  if( !IS_ALIVE(victim) || GET_HIT(victim) < 1
     || !IS_ALIVE(ch) || IS_TRUSTED(victim) || IS_ZOMBIE(victim)
     || GET_RACE(victim) == RACE_GOLEM || GET_RACE(victim) == RACE_PLANT
     || GET_RACE(victim) == RACE_CONSTRUCT || IS_GREATER_RACE(victim))
@@ -16427,17 +16347,14 @@ void spell_charm_animal(int level, P_char ch, char *arg, int type,
   charm_generic(level, ch, victim);
 }
 
-void spell_divine_fury(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_divine_fury(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   char     strn[256];
   int room;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
+
+  if( !IS_ALIVE(ch) || ch->in_room == NOWHERE )
+    return;
 
   if(affected_by_spell(ch, SPELL_DIVINE_FURY))
   {
@@ -16509,15 +16426,12 @@ void spell_soulshield(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_holy_sacrifice(int level, P_char ch, char *arg, int type,
-                          P_char victim, P_obj obj)
+void spell_holy_sacrifice(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "spell_holy_sacrifice in magic.c no ch");
-    raise(SIGSEGV);
     return;
   }
 
@@ -16554,15 +16468,9 @@ void spell_holy_sacrifice(int level, P_char ch, char *arg, int type,
     send_to_char( "&+YYou are already holy enough.&n\n\r", ch );
   }
 }
-void spell_battle_ecstasy(int level, P_char ch, char *arg, int type,
-                          P_char victim, P_obj obj)
+void spell_battle_ecstasy(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
-
-  if(!(ch))
-  {
-    return;
-  }
 
   if(!IS_ALIVE(ch))
   {
@@ -17254,9 +17162,8 @@ void spell_oldjudgement(int level, P_char ch, P_char victim, P_obj obj)
   P_char   t, t_next;
   int lev, k, /*minalign, maxalign, dam, */ door, target_room, temp_coor,
     the_room, new_room, i, max_affected;
-    
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -17416,9 +17323,8 @@ void event_judgement(P_char ch, P_char victim, P_obj obj, void *data)
     "&+WYour &+wd&+Lar&+wk &+Wsoul screams out in pain as all &+wyour deeds &+Ware revealed!",
     "$N falls to $S knees screaming in pain and begging everyone to forgive $M.",
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -17686,9 +17592,8 @@ void spell_judgement(int level, P_char ch, char *arg, int type, P_char vict, P_o
 {
   struct judgement_data j;
   P_char tch;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -17931,18 +17836,15 @@ void event_dread_wave(P_char ch, P_char vict, P_obj obj, void *data)
   }  
 }
 
-void spell_dread_wave(int level, P_char ch, char *arg, int type, P_char vict,
-                      P_obj obj)
+void spell_dread_wave(int level, P_char ch, char *arg, int type, P_char vict, P_obj obj)
 {
   struct affected_type *af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(vict))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(vict) )
   {
     return;
   }
-  
+
   act("A &+Ldark, &+Cfreezing cold &+bwave&N sent by $n slowly covers $N making $M &+Lch&Nok&+Le &Nand freeze.",
     TRUE, ch, 0, vict, TO_NOTVICT);
   act("A &+Ldark, &+Cfreezing cold &+bwave&N sent by $n slowly covers you making it hard to &+Lbr&Nea&+Lth&Ne.",
@@ -18571,12 +18473,11 @@ void event_apocalypse(P_char ch, P_char victim, P_obj obj, void *data)
     "$N's dies screaming as a &+Gs&+gi&+Gc&+gk&+Gl&+gy &+gc&+Ll&+go&+Lu&+gd&n descends upon $M."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
-  
+
   if(d->next_affect == 4 ||
      ch->in_room != d->room)
   {
@@ -18874,9 +18775,8 @@ void spell_apocalypse(int level, P_char ch, char *arg, int type, P_char vict, P_
 {
   struct apoc_data d;
   P_char tch;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -19096,12 +18996,9 @@ void spell_accel_healing(int level, P_char ch, char *arg, int type,
 {
   struct affected_type af;
   int skl_lvl = (int) (MAX(41, ((level / 2) - 1)));
-  
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-        return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   if(affected_by_spell(victim, SKILL_REGENERATE) ||
     affected_by_spell(victim, SPELL_REGENERATION))
@@ -19332,15 +19229,13 @@ void spell_command(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
-void spell_group_heal(int level, P_char ch, char *arg, int type,
-                      P_char victim, P_obj obj)
+void spell_group_heal(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int healpoints = 70 + number(0, 10);
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
-        
+  if( !IS_ALIVE(ch) )
+    return;
+
   if(GET_SPEC(ch, CLASS_CLERIC, SPEC_HEALER))
     healpoints = 120 + number(0, 20);
 
@@ -21505,7 +21400,7 @@ void event_electrical_execution(P_char ch, P_char vict, P_obj obj, void *data)
 void spell_electrical_execution(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int fry = 0;
-  
+
   struct damage_messages messages = {
     "A huge shower of &=LBarcing electricity&n engulfs $N.",
     "A huge shower of &=LBarcing electricity&n from $n engulfs you.",
@@ -21515,42 +21410,25 @@ void spell_electrical_execution(int level, P_char ch, char *arg, int type, P_cha
     "$N twitches and jerks violently to death from $n's shower of &=LBarcing electricity&n!",
       0
   };
-  
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "spell_electrical_execution called in magic.c with no ch");
-    raise(SIGSEGV);
-  }
-  
-  if(!(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
-  if(ch &&
-    victim)
-  {
-    engage(ch, victim);
-  }
 
-  if(IS_ALIVE(victim) &&
-    spell_damage(ch, victim, (int) GET_LEVEL(ch) * 4 + number(4, 60),
-      SPLDAM_LIGHTNING, SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD);
+  engage(ch, victim);
+
+  if( IS_ALIVE(victim) && spell_damage(ch, victim, (int) GET_LEVEL(ch) * 4 + number(4, 60),
+      SPLDAM_LIGHTNING, SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD)
   {
-    if(ch &&
-      IS_ALIVE(victim))
+    if( IS_ALIVE(ch) && IS_ALIVE(victim) )
     {
-      //gain_exp(ch, victim, 0, EXP_DAMAGE);
-      add_event(event_electrical_execution, (int) (0.5 * PULSE_VIOLENCE), ch, victim,
-        NULL, 0, &fry, sizeof(fry));
+      add_event(event_electrical_execution, (int) (0.5 * PULSE_VIOLENCE), ch, victim, NULL, 0, &fry, sizeof(fry));
     }
   }
 }
 
-void spell_life_bolt(int level, P_char ch, char *arg, int type,
-                             P_char victim, P_obj obj)
+void spell_life_bolt(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct damage_messages holy_messages = {
   "&+WYou sacrifice part of your lifeforce and send a pure white beam of &+Yholy energy&+W at $N&+W!",

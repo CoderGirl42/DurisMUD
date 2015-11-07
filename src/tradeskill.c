@@ -2167,7 +2167,7 @@ struct bandage_data {
   int healed;
   int maxheal;
 };
-	 
+
 void event_bandage_check(P_char ch, P_char victim, P_obj, void *data)
 {
   struct bandage_data *mdata = (struct bandage_data*)data;

@@ -45,10 +45,8 @@ bool execute_quest_routine(P_char ch, int cmd)
   int arg;
   int qi = find_quester_id(GET_RNUM(ch));
   struct quest_msg_data *qdata = quest_index[qi].quest_message;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     IS_IMMOBILE(ch))
+
+  if( !IS_ALIVE(ch) || IS_IMMOBILE(ch) )
     return false;
 
   for (qdata = quest_index[qi].quest_message; qdata; qdata = qdata->next) {

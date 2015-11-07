@@ -89,7 +89,7 @@ struct command_info cmd_info[MAX_CMD_LIST];
  * list of #define's in interp.h.
  */
 
-const char *command[] = {
+const char *command[MAX_CMD] = {
   "north",                      // 1
   "east",
   "south",
@@ -1045,7 +1045,7 @@ const char *command[] = {
   "battlerager", // For the battlerager proc room
   "petition_block",
   "area",
-  "whitelist",
+  "whitelist",             /* 800 */
   "epicreset",
   "focus",
   "boon",
@@ -1055,7 +1055,7 @@ const char *command[] = {
   "newbsa",
   "salvage",
   "restrain",
-  "barrage",
+  "barrage",               /* 810 */
   "blade",
   "consume",
   "riff",
@@ -1065,7 +1065,7 @@ const char *command[] = {
   "salvation",
   "refine",
   "dreadnaught",
-  "dice",
+  "dice",                  /* 820 */
   "shadowstep",
   "garrote",
   "conjure",
@@ -1075,10 +1075,10 @@ const char *command[] = {
   "deploy",
   "blood",
   "deforest",
-  "beep",
+  "beep",                 /* 830 */
   "deathsdoor",
   "offlinemsg",
-  "\n"                          /* MAX_CMD_LIST is now 1000 */
+  "\n"                          /* MAX_CMD = 833, MAX_CMD_LIST = 1000 */
 };
 
 const char *fill_words[] = {
@@ -2067,9 +2067,8 @@ bool special(P_char ch, int cmd, char *arg)
   register P_obj i;
   register P_char k;
   int      j;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return false;
   }

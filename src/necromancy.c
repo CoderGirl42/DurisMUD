@@ -980,18 +980,17 @@ void spell_call_titan(int level, P_char ch, char *arg, int type, P_char victim, 
     81, "&+LThe corpse summons the spirit of &+wa &+Lbasalt &+wtitan&n!"}
   };
 
-  if (!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus parms");
-    raise(SIGSEGV);
+    return;
   }
-  
+
   if(IS_IMMOBILE(ch))
   {
     send_to_char("But you can barely move!\r\n", ch);
     return;
   }
-  
+
   if (CHAR_IN_SAFE_ZONE(ch))
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
@@ -1000,8 +999,7 @@ void spell_call_titan(int level, P_char ch, char *arg, int type, P_char victim, 
 
   if (obj->value[CORPSE_LEVEL] < 46)
   {
-    send_to_char
-      ("This spell requires the corpse of a more powerful being!\r\n", ch);
+    send_to_char("This spell requires the corpse of a more powerful being!\r\n", ch);
     return;
   }
   
@@ -2775,9 +2773,8 @@ void spell_taint(int level, P_char ch, char *arg, int type,
 void spell_eyes_death(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }

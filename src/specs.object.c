@@ -2734,11 +2734,11 @@ int dragonlord_plate_oldold(P_obj obj, P_char ch, int cmd, char *arg)
 
   if (cmd == CMD_PERIODIC)
   {
-    if(!(ch))
+    if( !IS_ALIVE(ch) )
     {
       return false;
     }
-    
+
     if (OBJ_WORN(obj))
     {
       temp_ch = obj->loc.wearing;

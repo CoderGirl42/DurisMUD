@@ -794,7 +794,7 @@ void char_from_room(P_char ch)
 {
   P_char   i;
 
-  if(!(ch))
+  if( !ch )
   {
     return;
   }
@@ -803,9 +803,9 @@ void char_from_room(P_char ch)
   {
     return;
   }
-/*  
+/*
   logit(LOG_DEBUG, "call to char_from_room() when already NOWHERE (%s)", GET_NAME(ch));
-    
+
     if(IS_NPC(ch))
     {
       logit(LOG_DEBUG, "continued: call to char_from_room() mob vnum (%d)",
@@ -816,7 +816,7 @@ void char_from_room(P_char ch)
       logit(LOG_DEBUG, "continued: call to char_from_room() PC name (%s)",
         GET_NAME(ch));
     }
-    
+
     return;
   }
 */

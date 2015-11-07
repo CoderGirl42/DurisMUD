@@ -458,10 +458,9 @@ int vamp(P_char ch, double fhits, double fcap)
   struct group_list *gl;
   int hits = (int) fhits, cap = (int) fcap, blocked;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "vamp called in fight.c without ch");
-    raise(SIGSEGV);
+    return 0;
   }
 
   if(affected_by_spell(ch, TAG_BUILDING))
@@ -547,11 +546,10 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   P_char   victim;
   int exp;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "heal called in fight.c without ch");
-    raise(SIGSEGV);
-  }  
+    return;
+  }
 
   if(IS_HARDCORE(healer))
   {
@@ -4716,7 +4714,7 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
     "$N is &+rscratched&n to death by $n's hide.",
   };
 
-  if(!(ch) || !(victim) || !IS_ALIVE(ch) || !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return 0;
   }
@@ -4976,7 +4974,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_
 
   // float    f_cur_hit, f_max_hit, f_skill = 0;  <-- ill use those for max_str later
 
-  if(!(ch) || !(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return 0;
   }
@@ -9387,15 +9385,12 @@ void perform_violence(void)
     }
   }
 
-  for (ch = combat_list; ch; ch = combat_next_ch)
+  for( ch = combat_list; ch; ch = combat_next_ch )
   {
-    if(!(ch))
+    if( !IS_ALIVE(ch) )
     {
       continue;
     }
-
-    if(!IS_ALIVE(ch))
-      return;
 
     room_rnums.insert( ch->in_room );
     combat_next_ch = ch->specials.next_fighting;
@@ -9723,13 +9718,12 @@ int pv_common(P_char ch, P_char opponent, const P_obj wpn)
   P_obj item;
   struct proc_data data;
 
-  if( !(ch) || !(opponent) )
+  if( !IS_ALIVE(ch) || !IS_ALIVE(opponent) )
   {
     return FALSE;
   }
 
-  if(!SanityCheck(ch, "pv_common") ||
-      !SanityCheck(opponent, "pv_common"))
+  if( !SanityCheck(ch, "pv_common") || !SanityCheck(opponent, "pv_common") )
   {
     return FALSE;
   }
@@ -9982,8 +9976,7 @@ void DestroyStuff(P_char victim, int type)
 
 bool fear_check(P_char ch)
 {
-  if(!(ch) ||
-      !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return TRUE;
   }
@@ -10040,11 +10033,7 @@ bool critical_attack(P_char ch, P_char victim, int msg)
   char room_msg[MAX_STRING_LENGTH];
   int random;
 
-  if(!(ch) ||
-      !(victim) ||
-      !IS_ALIVE(ch) ||
-      !IS_ALIVE(victim) ||
-      GET_RACE(victim) == RACE_CONSTRUCT)
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || GET_RACE(victim) == RACE_CONSTRUCT )
   {
     return FALSE;
   }

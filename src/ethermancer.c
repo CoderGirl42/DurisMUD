@@ -612,16 +612,12 @@ void spell_frost_beacon(int level, P_char ch, char *arg, int type,
   SET_BIT(beacon->extra_flags, ITEM_SECRET);
 }
 
-void spell_vapor_strike(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj tar_obj)
+void spell_vapor_strike(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   struct affected_type af;
-    
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   bzero(&af, sizeof(af));
 
@@ -1064,8 +1060,7 @@ void spell_arcane_whirlwind(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_purge(int level, P_char ch, char *arg, int type, P_char victim,
-                 P_obj tar_obj)
+void spell_purge(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   int      dam;
   struct damage_messages messages = {
@@ -1076,13 +1071,9 @@ void spell_purge(int level, P_char ch, char *arg, int type, P_char victim,
     "$N is simply overwhelmed by the incredible power of $n's purge, and vanishes.",
     ""
   };
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     ch == victim)
-        return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch == victim )
+    return;
 
   if (!GET_MASTER(victim) || GET_EXP(victim))
   {
@@ -1121,31 +1112,23 @@ void event_tupor_wake(P_char ch, P_char victim, P_obj obj, void *data)
   do_alert(victim, NULL, CMD_ALERT);
 }
 
-void spell_induce_tupor(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj tar_obj)
+void spell_induce_tupor(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
+
   if(ch == victim)
   {
     send_to_char("No can do!\r\n", ch);
     return;
   }
-  
-  if(!IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-  {
-    return;
-  }
-  
-  act
-    ("&+WYou whisper a musical incantation attempting to induce a deep sleep upon $N.",
-      TRUE, ch, 0, victim, TO_CHAR);
-  
+
+  act("&+WYou whisper a musical incantation attempting to induce a deep sleep upon $N.",
+    TRUE, ch, 0, victim, TO_CHAR);
+
   if(IS_AFFECTED4(victim, AFF4_TUPOR))
   {
     send_to_char("Your victim is already in a tupor!\r\n", ch);
@@ -1387,16 +1370,13 @@ int door, target_room;
   }
 }
 
-void spell_tempest(int level, P_char ch, char *arg, int type, P_char victim,
-                   P_obj tar_obj)
+void spell_tempest(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   int room = ch->in_room;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(room))
-      return;
-      
+
+  if( !IS_ALIVE(ch) || room == NOWHERE )
+    return;
+
   act("&+yYou raise your hands to the sky calling on the winds of the north to send forth a &+cfreezing&+y squall!", FALSE, ch, 0, 0, TO_CHAR);
   act("$n &+Wraises &+y$s hands to the sky calling forth a &+cfreezing &+ysquall.", FALSE, ch, 0, 0, TO_NOTVICT);
 
@@ -1415,15 +1395,14 @@ void spell_tempest(int level, P_char ch, char *arg, int type, P_char victim,
   CharWait(ch, (int) (PULSE_SPELLCAST * 1));
 }
 
-void spell_wind_rage(int level, P_char ch, char *arg, int type, P_char victim,
-                     P_obj tar_obj)
+void spell_wind_rage(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   if (affected_by_spell(ch, SPELL_WIND_RAGE))
   {
     send_to_char("&+cYou are already infused with the fury of the wind!\n", ch);
     return;
   }
-  
+
   struct affected_type af;
 
   bzero(&af, sizeof(af));
@@ -2696,11 +2675,9 @@ void spell_etheric_gust(int level, P_char ch, char *arg, int type, P_char victim
   P_char  t_ch;
   int tries = 0, to_room, dir;
   int range = get_property("spell.ethericgust.range", 5);
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
+
+  if( !IS_ALIVE(ch) || ch->in_room == NOWHERE )
+    return;
 
   if((IS_SET(world[ch->in_room].room_flags, NO_TELEPORT) ||
       IS_HOMETOWN(ch->in_room) ||

@@ -5595,13 +5595,12 @@ bool MobMonk(P_char ch)
   P_char   victim = NULL;
   P_char   tch;
   int      n_atkr = 0;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
-    return false;
+    return FALSE;
   }
-  
+
   if(CAN_SPEAK(ch))
   {
     if(GET_LEVEL(ch) >= 21 &&
@@ -5811,26 +5810,15 @@ bool GOOD_FOR_GAZING(P_char ch, P_char victim)
 // Lucrot Oct08
 bool GOOD_FOR_FLANKING(P_char ch)
 {
-  if(!(ch))
+
+  if( IS_ALIVE(ch) && !IS_IMMOBILE(ch) && GET_CHAR_SKILL(ch, SKILL_FLANK) && GET_CHAR_SKILL(ch, SKILL_FLANK) > 0
+    && GET_POS(ch) == POS_STANDING && !IS_AFFECTED2(ch, AFF2_STUNNED) && !get_linked_char(ch, LNK_FLANKING)
+    && !affected_by_spell(ch, SKILL_FLANK))
   {
-    logit(LOG_EXIT, "GOOD_FOR_FLANKING called in mobact.c with no ch");
-    raise(SIGSEGV);
-    return false;
+    return TRUE;
   }
-  
-  if(IS_ALIVE(ch) &&
-    !IS_IMMOBILE(ch) &&
-    GET_CHAR_SKILL(ch, SKILL_FLANK) &&
-    GET_CHAR_SKILL(ch, SKILL_FLANK) > 0 &&
-    GET_POS(ch) == POS_STANDING &&
-    !IS_AFFECTED2(ch, AFF2_STUNNED) &&
-    !get_linked_char(ch, LNK_FLANKING) &&
-    !affected_by_spell(ch, SKILL_FLANK))
-  {
-    return true;
-  }
-  
-  return false;
+
+  return FALSE;
 }
 
 bool MobDreadlord(P_char ch)
@@ -5838,17 +5826,16 @@ bool MobDreadlord(P_char ch)
   char buf[MAX_INPUT_LENGTH];
   P_char tch;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
-    return false;
+    return FALSE;
   }
-  
-  if(IS_PC(ch))
+
+  if( IS_PC(ch) )
   {
-    return false;
+    return FALSE;
   }
-  
+
   if(IS_SET(ch->only.npc->aggro_flags, AGGR_ALL))
   {
     for(tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
@@ -6157,9 +6144,8 @@ bool MobRanger(P_char ch)
   int      n_atkr;
 
   n_atkr = NumAttackers(ch);
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return false;
   }
@@ -10564,20 +10550,12 @@ void event_agg_attack(P_char ch, P_char victim, P_obj obj, void *data)
 {
   int door;
 
-  if(!(ch) ||
-     !(victim) ||
-     victim->in_room == NOWHERE ||
-     GET_STAT(victim) == STAT_DEAD ||
-     ch->in_room == NOWHERE ||
-     !MIN_POS(ch, POS_STANDING + STAT_RESTING) ||
-     !is_aggr_to(ch, victim) ||
-     IS_IMMOBILE(ch) ||
-     !AWAKE(ch) ||
-     IS_STUNNED(ch))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || victim->in_room == NOWHERE || ch->in_room == NOWHERE || !AWAKE(ch)
+    || !MIN_POS(ch, POS_STANDING + STAT_RESTING) || !is_aggr_to(ch, victim) || IS_IMMOBILE(ch) || IS_STUNNED(ch) )
   {
     return;
   }
-  
+
   if(ch->specials.z_cord != victim->specials.z_cord)
   {
     return;
@@ -10711,11 +10689,9 @@ void event_mob_skin_spell(P_char ch, P_char vict, P_obj obj, void *data)
 
 void try_wield_weapon(P_char ch)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     IS_PC_PET(ch))
-        return;
-  
+  if( !IS_ALIVE(ch) || IS_PC_PET(ch) )
+    return;
+
   if(empty_slot_for_weapon(ch) == -1)
     return;
 

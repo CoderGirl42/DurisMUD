@@ -3505,7 +3505,7 @@ void do_sack(P_char ch, char *arg, int cmd)
   struct house_sack_rec *sack_rec;
   char     buf[256];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
     return;
 
   arg = one_argument(arg, buf);

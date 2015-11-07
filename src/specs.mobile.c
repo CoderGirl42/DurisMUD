@@ -11715,13 +11715,14 @@ int Malevolence(P_char ch, P_char pl, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (cmd)
+  if( cmd != CMD_PERIODIC )
     return FALSE;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
+  {
      return false;
-    
+  }
+
   if (!IS_FIGHTING(ch))
     return FALSE;
 

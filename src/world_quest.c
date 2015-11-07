@@ -797,13 +797,11 @@ void show_map_at(P_char ch, int room)
 
 int quest_buy_map(P_char ch)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     IS_NPC(ch))
+  if( !IS_ALIVE(ch) || IS_NPC(ch) )
   {
     return 0;
   }
-  
+
   if(ch->only.pc->quest_map_bought == 1)
   {
     send_to_char("Your memory is bad, you dont have to pay me for this, you can just type 'quest'\r\n.", ch);

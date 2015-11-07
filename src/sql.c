@@ -1277,10 +1277,10 @@ void sql_log(P_char ch, char * kind, char * format, ...)
 {
   static char buff[MAX_STRING_LENGTH];
 	buff[0] = '\0';
-  
-  if(!(ch))
+
+  if( !ch )
   {
-    debug("sql_log called for invalid ch!");    
+    debug("sql_log called for non-existent ch!");
     return;
   }
 

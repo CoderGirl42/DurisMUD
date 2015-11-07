@@ -1769,7 +1769,7 @@ void use_spell(P_char ch, int spell)
   char buf[128];
   int spatial = GET_CHAR_SKILL(ch, SKILL_SPATIAL_FOCUS);
 
-  if( !(ch) || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
     return;
 
   if(IS_TRUSTED(ch))

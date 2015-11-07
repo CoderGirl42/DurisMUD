@@ -297,9 +297,8 @@ void spell_ilienzes_flame_sword(int level, P_char ch, char *arg, int type, P_cha
 {
   struct affected_type af;
   bool weapon = false;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -365,12 +364,7 @@ bool ilienze_sword(P_char ch, P_char victim, P_obj wpn)
     DAMMSG_TERSE
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !FLAME_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !FLAME_REAVER_WEAPONS(wpn) )
   {
     return false;
   }
@@ -452,14 +446,12 @@ void ilienze_sword_proc_messages(struct damage_messages *messages, const char *s
           "&+rUnholy &+Rflames&n &+rflow down $n's &+rblade and shoot in a %s &+rtowards $N&+r.&n", sub);
 }
 
-void spell_cegilunes_searing_blade(int level, P_char ch, char *arg, int type,
-                                   P_char victim, P_obj obj)
+void spell_cegilunes_searing_blade(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   bool weapon = false;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -560,12 +552,7 @@ bool cegilune_blade(P_char ch, P_char victim, P_obj wpn)
     DAMMSG_TERSE}
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !FLAME_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !FLAME_REAVER_WEAPONS(wpn) )
   {
     return false;
   }
@@ -669,11 +656,7 @@ void event_cegilune_searing(P_char ch, P_char vict, P_obj wpn, void *data)
     "&+L$N suddenly begins thrashing around violently. Several chunks of smoldering &+rflesh&+L fall from his body, and he topples to the ground, screaming violently--then is suddenly silent!&n", 0
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(vict) ||
-     !IS_ALIVE(vict) ||
-     !FLAME_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(vict) || !FLAME_REAVER_WEAPONS(wpn) )
   {
     return;
   }
@@ -704,8 +687,7 @@ void spell_thryms_icerazor(int level, P_char ch, char *arg, int type, P_char vic
 {
   bool weapon = false;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -764,12 +746,7 @@ bool thryms_icerazor(P_char ch, P_char victim, P_obj wpn)
     DAMMSG_TERSE
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !FROST_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !FROST_REAVER_WEAPONS(wpn) )
   {
     return false;
   }
@@ -815,9 +792,8 @@ void spell_lliendils_stormshock(int level, P_char ch, char *arg, int type, P_cha
 {
   struct affected_type af;
   bool weapon = false;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -874,12 +850,7 @@ bool lliendils_stormshock(P_char ch, P_char victim, P_obj wpn)
     DAMMSG_TERSE
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !SHOCK_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !SHOCK_REAVER_WEAPONS(wpn) )
   {
     return false;
   }
@@ -909,8 +880,7 @@ void spell_stormcallers_fury(int level, P_char ch, char *arg, int type, P_char v
   struct affected_type af;
   bool weapon = false;
   
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -963,12 +933,7 @@ bool stormcallers_fury(P_char ch, P_char victim, P_obj wpn)
   int pid;
   struct affected_type *afp, af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !SHOCK_REAVER_WEAPONS(wpn))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !SHOCK_REAVER_WEAPONS(wpn) )
   {
     return false;
   }
@@ -1055,11 +1020,8 @@ void spell_kostchtchies_implosion(int level, P_char ch, char *arg, int type, P_c
 {
   struct affected_type af;
   bool weapon = false;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
@@ -1110,13 +1072,8 @@ bool kostchtchies_implosion(P_char ch, P_char victim, P_obj wpn)
 {
   int pid;
   struct affected_type *afp, af;
-  
-    if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !(wpn) ||
-     !FROST_REAVER_WEAPONS(wpn))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || !(wpn) || !FROST_REAVER_WEAPONS(wpn) )
   {
     return false;
   }

@@ -2006,13 +2006,12 @@ static void free_locker(int roomNum)
   }
 }
 
-static P_char load_locker_char(P_char ch, char *locker_name,
-                               int bValidateAccess)
+static P_char load_locker_char(P_char ch, char *locker_name, int bValidateAccess)
 {
   P_char vict = NULL;
   int tmp;
 
-  if(!(ch))
+  if( !ch )
   {
     wizlog(56, "load_locker_char() in storage_lockers.c without ch : locker %s!", locker_name);
     logit(LOG_WIZ, "load_locker_char() in storage_lockers.c without ch : locker %s!", locker_name);

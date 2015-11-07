@@ -2531,7 +2531,7 @@ void do_close(P_char ch, char *argument, int cmd)
   char     Gbuf1[MAX_STRING_LENGTH], Gbuf2[MAX_STRING_LENGTH];
   char     Gbuf3[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -2641,7 +2641,7 @@ void do_lock(P_char ch, char *argument, int cmd)
   P_char   victim;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -2738,7 +2738,7 @@ void do_unlock(P_char ch, char *argument, int cmd)
   P_char   victim;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -2921,7 +2921,7 @@ void do_pick(P_char ch, char *argument, int cmd)
   P_char   victim;
   char     Gbuf2[MAX_STRING_LENGTH], Gbuf3[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -3126,7 +3126,7 @@ void do_enter(P_char ch, char *argument, int cmd)
   int      door;
   char     Gbuf1[MAX_STRING_LENGTH], Gbuf4[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -3219,7 +3219,7 @@ void do_leave(P_char ch, char *argument, int cmd)
   int      door;
   char     Gbuf1[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -3254,7 +3254,7 @@ void do_follow(P_char ch, char *argument, int cmd)
 
   one_argument(argument, name);
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -3369,7 +3369,7 @@ void do_drag(P_char ch, char *argument, int cmd)
   char     Gbuf4[MAX_STRING_LENGTH];
   int      dragCommand;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }
@@ -4344,7 +4344,7 @@ void do_wake(P_char ch, char *argument, int cmd)
 
   one_argument(argument, Gbuf1);
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }

@@ -1850,49 +1850,39 @@ bool handle_imprison_damage(P_char ch, P_char victim, int dam)
 void spell_nonexistence(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int room;
-  if (!(ch))
+
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus parms");
-    raise(SIGSEGV);
+    return;
   }
 
-  act
-    ("&+LYou shimmer in and out of view as the &+millusion&+L begins to cover you.",
-     0, ch, 0, victim, TO_CHAR);
-  LOOP_THRU_PEOPLE(victim,
-                   ch)
-    act
-    ("&+L$N shimmers in and out of view as $n's &+millusion&+L starts to cover $M.",
-     0, ch, 0, victim, TO_NOTVICT);
-  LOOP_THRU_PEOPLE(victim,
-                   ch)
-    act
-    ("&+LYou shimmer in and out of existence as $n's &+millusion&+L starts to cover you.",
-     0, ch, 0, victim, TO_VICT);
-
+  act("&+LYou shimmer in and out of view as the &+millusion&+L begins to cover you.", 0, ch, 0, victim, TO_CHAR);
 
   LOOP_THRU_PEOPLE(victim, ch)
+  {
+    act("&+L$N shimmers in and out of view as $n's &+millusion&+L starts to cover $M.", 0, ch, 0, victim, TO_NOTVICT);
+    act("&+LYou shimmer in and out of existence as $n's &+millusion&+L starts to cover you.", 0, ch, 0, victim, TO_VICT);
     spell_improved_invisibility(level, ch, 0, 0, victim, 0);
-    
-  if(IS_WATER_ROOM(ch->in_room) ||
-     world[ch->in_room].sector_type == SECT_OCEAN)
+  }
+
+  if( IS_WATER_ROOM(ch->in_room) || world[ch->in_room].sector_type == SECT_OCEAN )
   {
     send_to_char("It's far too wet here for hide to take hold...\r\n", ch);
   }
   else
   {
     LOOP_THRU_PEOPLE(victim, ch)
+    {
       SET_BIT(victim->specials.affected_by, AFF_HIDE);
-    LOOP_THRU_PEOPLE(victim, ch)
-      SET_BIT(ch->specials.affected_by, AFF_HIDE);
+    }
   }
-
-  // for (obj = world[ch->in_room].contents; obj; obj = obj->next_content)
-  // {
-    // if (IS_SET(obj->wear_flags, ITEM_TAKE))
-      // spell_improved_invisibility(level, ch, 0, 0, 0, obj);
-
-  // }
+  /* Guess this was too much?
+  for (obj = world[ch->in_room].contents; obj; obj = obj->next_content)
+  {
+    if( IS_SET(obj->wear_flags, ITEM_TAKE) )
+      spell_improved_invisibility(level, ch, 0, 0, 0, obj);
+  }
+  */
 }
 
 void spell_dragon(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
@@ -2348,10 +2338,8 @@ void spell_shadow_burst(int level, P_char ch, char *arg, int type, P_char victim
 {
   struct sbb_data sbbdata;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "spell_shadow_burst called in sillusionist.c without ch");
-    raise(SIGSEGV);
     return;
   }
 
@@ -2430,14 +2418,7 @@ void spell_shadow_spawn(int level, P_char ch, char *arg, int type, P_char victim
     0
   };
 
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "spell_shadow_spawn called in sillusionist.c without ch");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }

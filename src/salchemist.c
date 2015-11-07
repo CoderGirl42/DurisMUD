@@ -604,10 +604,9 @@ void do_spellbind (P_char ch, char *argument, int cmd)
   int bonus;
   int skill = GET_CHAR_SKILL(ch, SKILL_SPELLBIND);
   int total = 0;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-      return;
+
+  if( !IS_ALIVE(ch) )
+    return;
 
   if(!GET_CHAR_SKILL(ch, SKILL_SPELLBIND))
   {
@@ -1460,155 +1459,132 @@ void do_enchant(P_char ch, char *argument, int cmd)
   common_target_data.t_obj = 0;
   common_target_data.t_char = 0;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "do_enchant called in alchemist.c without ch");
-    raise(SIGSEGV);
-  }
-  if(ch) // Just making sure.
-  {
-    if(!IS_ALIVE(ch))
-    {
+    if( ch )
       act("The dead do not enchant things!", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-    if(!GET_CHAR_SKILL(ch, SKILL_ENCHANT))
-    {
-      act("Leave this to a real artisan.", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-
-    skill = GET_CHAR_SKILL(ch, SKILL_ENCHANT);
-    argument = one_argument(argument, arg);
-
-    if(!*arg)
-    {
-      act("Which item do you want to enchant?", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-    
-    item = get_obj_in_list_vis(ch, arg, ch->carrying);
-    //Add a check if this is a encrustable item...
-    if(!item)
-    {
-      act("Which item do you want to enchant?", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-    
-    if(IS_ARTIFACT(item))
-    {
-      act("You are unable to enchant an artifact.", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-
-    if(!*argument)
-    {
-      act("Syntax is 'enchant sword 'bless'", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-
-    argument = skip_spaces(argument);
-
-    if(*argument != '\'')
-    {
-      send_to_char("Don't forget 'apostrophes'.\r\n", ch);
-      return;
-    }
-
-    /*
-    Locate the last quote && lowercase the magic words (if any)
-    */
-
-    for (qend = 1; *(argument + qend) && (*(argument + qend) != '\''); qend++)
-      *(argument + qend) = LOWER(*(argument + qend));
-
-    if(*(argument + qend) != '\'')
-    {
-      send_to_char("Don't forget 'apostrophes'.\r\n", ch);
-      return;
-    }
-    spl =
-      old_search_block(argument, 1, (uint) (MAX(0, (qend - 1))),
-      (const char **) spells, 0);
-
-    if(spl != -1)
-    {
-      spl--;
-    }
-    if((IS_AGG_SPELL(spl) != -1) &&
-      (skills[spl].spell_pointer == 0))
-    {
-      send_to_char("Sorry, this magic has not yet been implemented.\r\n", ch);
-      return;
-    }
-    if(IS_AGG_SPELL(spl))
-    {
-      send_to_char("A harmful spell is not a good idea.\r\n", ch);
-      return;
-    }
-    if(!affected_by_spell(ch, spl))
-    {
-      send_to_char("You are not affected by that spell are you? \r\n", ch);
-      return;
-    }
-
-    if(IS_SET(skills[spl].targets, TAR_CHAR_ROOM) &&
-      !IS_SET(skills[spl].targets, TAR_SELF_ONLY))
-      ;                           //do nothing
-    else
-    {
-      send_to_char
-        ("Sorry, this items cannot be enchanted with a spell such as this. \r\n",
-        ch);
-      return;
-    }
-
-    while (i < CLASS_COUNT)
-    {
-      t_circle = skills[(spl)].m_class[i].rlevel[0];
-      if(t_circle > circle)
-      {
-        circle = t_circle;
-      }
-      i++;
-    }
-    if(circle > (skill / 10) ||
-      circle == 0)
-    {
-      send_to_char("That spell is too complicated for you! \r\n", ch);
-      return;
-    }
-    if(GET_PLATINUM(ch) < (circle * 10))
-    {
-      send_to_char("You do not have enough platinum on you.! \r\n", ch);
-      return;
-    }
-    if(item->condition < get_property("skill.enchant.minItemCondition", 30))
-    {
-      send_to_char
-        ("No true alchemist would do something with a weapon in that condition. Repair it!! \r\n",
-        ch);
-      return;
-    }
-
-    GET_PLATINUM(ch) = GET_PLATINUM(ch) - (circle * 10);
-    //notch_skill(ch, SKILL_ENCHANT, 7.7);
-
-    act
-      ("&+L$n melts some &+Wplatinum &+Lcoins in a vial of &+gacid &+Land then&n &L&+Lproceeds to carefully pour it over $s $q.&n",
-      TRUE, ch, item, 0, TO_ROOM);
-    act
-      ("&+LYou melt some &+Wplatinum &+Lcoins in a vial of &+gacid &+Land then&n&L&+Lproceed to carefully pour it over your $q.&n",
-      TRUE, ch, item, 0, TO_CHAR);
-
-    // cant add_event with both ch and item so item/spell has to be passed in data
-    // add_event(event_enchant, 1 * PULSE_VIOLENCE, ch, 0, item, 0, &spl, sizeof(spl));
-
-    common_target_data.ttype = spl;
-    common_target_data.t_obj = item;
-    add_event(event_enchant, 1 * PULSE_VIOLENCE, ch, 0, 0, 0, &common_target_data, sizeof(common_target_data));
-    CharWait(ch, PULSE_VIOLENCE * 1);
+    return;
   }
+  if(!GET_CHAR_SKILL(ch, SKILL_ENCHANT))
+  {
+    act("Leave this to a real artisan.", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  skill = GET_CHAR_SKILL(ch, SKILL_ENCHANT);
+  argument = one_argument(argument, arg);
+
+  if(!*arg)
+  {
+    act("Which item do you want to enchant?", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  item = get_obj_in_list_vis(ch, arg, ch->carrying);
+  //Add a check if this is a encrustable item...
+  if(!item)
+  {
+    act("Which item do you want to enchant?", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  if(IS_ARTIFACT(item))
+  {
+    act("You are unable to enchant an artifact.", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  if(!*argument)
+  {
+    act("Syntax is 'enchant sword 'bless'", FALSE, ch, 0, 0, TO_CHAR);
+    return;
+  }
+
+  argument = skip_spaces(argument);
+
+  if(*argument != '\'')
+  {
+    send_to_char("Don't forget 'apostrophes'.\r\n", ch);
+    return;
+  }
+
+  // Locate the last quote && lowercase the magic words (if any)
+  for (qend = 1; *(argument + qend) && (*(argument + qend) != '\''); qend++)
+    *(argument + qend) = LOWER(*(argument + qend));
+
+  if(*(argument + qend) != '\'')
+  {
+    send_to_char("Don't forget 'apostrophes'.\r\n", ch);
+    return;
+  }
+  spl = old_search_block(argument, 1, (uint) (MAX(0, (qend - 1))), (const char **) spells, 0);
+
+  if(spl != -1)
+  {
+    spl--;
+  }
+  if( (IS_AGG_SPELL(spl) != -1) && (skills[spl].spell_pointer == 0) )
+  {
+    send_to_char("Sorry, this magic has not yet been implemented.\r\n", ch);
+    return;
+  }
+  if(IS_AGG_SPELL(spl))
+  {
+    send_to_char("A harmful spell is not a good idea.\r\n", ch);
+    return;
+  }
+  if(!affected_by_spell(ch, spl))
+  {
+    send_to_char("You are not affected by that spell are you? \r\n", ch);
+    return;
+  }
+
+  if( !IS_SET(skills[spl].targets, TAR_CHAR_ROOM) || IS_SET(skills[spl].targets, TAR_SELF_ONLY) )
+  {
+    send_to_char("Sorry, this item cannot be enchanted with a spell such as this. \r\n", ch);
+    return;
+  }
+
+  while (i < CLASS_COUNT)
+  {
+    t_circle = skills[(spl)].m_class[i].rlevel[0];
+    if(t_circle > circle)
+    {
+      circle = t_circle;
+    }
+    i++;
+  }
+  if(circle > (skill / 10) || circle == 0)
+  {
+    send_to_char("That spell is too complicated for you! \r\n", ch);
+    return;
+  }
+  if(GET_PLATINUM(ch) < (circle * 10))
+  {
+    send_to_char("You do not have enough platinum on you.! \r\n", ch);
+    return;
+  }
+  if(item->condition < get_property("skill.enchant.minItemCondition", 30))
+  {
+    send_to_char("No true alchemist would do something with a weapon in that condition. Repair it!! \r\n", ch);
+    return;
+  }
+
+  GET_PLATINUM(ch) = GET_PLATINUM(ch) - (circle * 10);
+  //notch_skill(ch, SKILL_ENCHANT, 7.7);
+
+  act("&+L$n melts some &+Wplatinum &+Lcoins in a vial of &+gacid &+Land then&n &L&+Lproceeds to carefully pour it over $s $q.&n",
+    TRUE, ch, item, 0, TO_ROOM);
+  act("&+LYou melt some &+Wplatinum &+Lcoins in a vial of &+gacid &+Land then&n&L&+Lproceed to carefully pour it over your $q.&n",
+    TRUE, ch, item, 0, TO_CHAR);
+
+  // cant add_event with both ch and item so item/spell has to be passed in data
+  // add_event(event_enchant, 1 * PULSE_VIOLENCE, ch, 0, item, 0, &spl, sizeof(spl));
+
+  common_target_data.ttype = spl;
+  common_target_data.t_obj = item;
+  add_event(event_enchant, 1 * PULSE_VIOLENCE, ch, 0, 0, 0, &common_target_data, sizeof(common_target_data));
+  CharWait(ch, PULSE_VIOLENCE * 1);
 }
 
 void event_enchant(P_char ch, P_char victim, P_obj item, void *data)
@@ -1621,93 +1597,79 @@ void event_enchant(P_char ch, P_char victim, P_obj item, void *data)
   spll = tmp.ttype;
   item = tmp.t_obj;
 
-  if(!(ch))
+  if(!IS_ALIVE(ch))
   {
-    logit(LOG_EXIT, "event_enchant called in alchemist.c without ch");
-    raise(SIGSEGV);
-  }
-  if(ch) // Just making sure.
-  {
-    if(!IS_ALIVE(ch))
-    {
+    if( ch )
       act("The dead do not enchant things!", FALSE, ch, 0, 0, TO_CHAR);
-      return;
-    }
-    if(!item || ch != item->loc.carrying)
-    {
-      act("You lost the item! Where is it?", FALSE, ch, 0, 0, TO_CHAR);
-      act("$n suddenly stops abruptly, looking around in anger.", TRUE, ch, 0,
-        0, TO_ROOM);
-      CharWait(ch, PULSE_VIOLENCE * 1);
-      return;
-    }
-    if(IS_ARTIFACT(item))
-    {
-      act("Your attempt to enchant an artifact fails!!!", FALSE, ch, 0, 0, TO_CHAR);
-      act("$n sighs and mutters about something under $s breathe.", TRUE, ch, 0,
-        0, TO_ROOM);
-      CharWait(ch, PULSE_VIOLENCE * 1);
-      return;
-    }
-    skill = GET_CHAR_SKILL(ch, SKILL_ENCHANT);
-    if(!number(0, skill - 10))
-    {
-      act("$n utters a foul curse as $e pours too much acid on $q.&L$n's $q was damaged as the acid eats into it!",
-        FALSE, ch, item, 0, TO_ROOM);
-      act("You utter a foul curse as you pour too much acid on the $q.&LYour $q was damaged as the acid eats into it!",
-        FALSE, ch, item, 0, TO_CHAR);
-      item->condition = item->condition - number(5, 10);
-
-      if(item->condition < 1)
-      {
-        act("$n has destroyed $p!", TRUE, ch, item, 0, TO_ROOM);
-        act("You have destroyed $p!", TRUE, ch, item, 0, TO_CHAR);
-        extract_obj(item, TRUE); // Not an arti, but ok.
-        item = NULL;
-        return;
-      }
-
-      if(!number(0, 5))
-      {
-        act("$q &+yglows bright and eerie!&n", FALSE, ch, item, 0, TO_ROOM);
-        act("$q &+yglows bright and eerie!&n", FALSE, ch, item, 0, TO_CHAR);
-        SET_BIT(item->extra_flags, ITEM_NOREPAIR);
-      }
-      return;
-    }
-    act
-      ("$n's $q starts to heat up and then turns &+Wwhite hot before&n&Lslowly &+bcooling down&n and turning back to normal.&n",
+    return;
+  }
+  if(!item || ch != item->loc.carrying)
+  {
+    act("You lost the item! Where is it?", FALSE, ch, 0, 0, TO_CHAR);
+    act("$n suddenly stops abruptly, looking around in anger.", TRUE, ch, 0, 0, TO_ROOM);
+    CharWait(ch, PULSE_VIOLENCE * 1);
+    return;
+  }
+  if(IS_ARTIFACT(item))
+  {
+    act("Your attempt to enchant an artifact fails!!!", FALSE, ch, 0, 0, TO_CHAR);
+    act("$n sighs and mutters about something under $s breathe.", TRUE, ch, 0, 0, TO_ROOM);
+    CharWait(ch, PULSE_VIOLENCE * 1);
+    return;
+  }
+  skill = GET_CHAR_SKILL(ch, SKILL_ENCHANT);
+  if(!number(0, skill - 10))
+  {
+    act("$n utters a foul curse as $e pours too much acid on $q.&L$n's $q was damaged as the acid eats into it!",
       FALSE, ch, item, 0, TO_ROOM);
-    act
-      ("Your $q starts to heat up and then turns &+Wwhite hot&n before&n&Lslowly &+bcooling down&n and turning back to normal.",
-      TRUE, ch, item, 0, TO_CHAR);
+    act("You utter a foul curse as you pour too much acid on the $q.&LYour $q was damaged as the acid eats into it!",
+      FALSE, ch, item, 0, TO_CHAR);
+    item->condition = item->condition - number(5, 10);
 
-    logit(LOG_DEBUG, "%s enchanted %s with %s.", GET_NAME(ch),
-      item->short_description, skills[spll].name);
-
-    if(get_obj_affect(item, SKILL_ENCHANT))
+    if(item->condition < 1)
     {
-      affect_from_obj(item, SKILL_ENCHANT);
-    }
-    
-    if(CAN_WEAR(item, ITEM_ATTACH_BELT))
-    {
-      REMOVE_BIT(item->wear_flags, ITEM_ATTACH_BELT);
-    }
-    
-    if(CAN_WEAR(item, ITEM_WEAR_BACK))
-    {
-      REMOVE_BIT(item->wear_flags, ITEM_WEAR_BACK);
+      act("$n has destroyed $p!", TRUE, ch, item, 0, TO_ROOM);
+      act("You have destroyed $p!", TRUE, ch, item, 0, TO_CHAR);
+      extract_obj(item, TRUE); // Not an arti, but ok.
+      item = NULL;
+      return;
     }
 
-    if(ch && 
-       item)
+    if(!number(0, 5))
     {
-      set_obj_affected(item, (skill / 2) * WAIT_MIN, SKILL_ENCHANT, spll);
+      act("$q &+yglows bright and eerie!&n", FALSE, ch, item, 0, TO_ROOM);
+      act("$q &+yglows bright and eerie!&n", FALSE, ch, item, 0, TO_CHAR);
+      SET_BIT(item->extra_flags, ITEM_NOREPAIR);
     }
+    return;
+  }
+  act("$n's $q starts to heat up and then turns &+Wwhite hot before&n&Lslowly &+bcooling down&n and turning back to normal.&n",
+    FALSE, ch, item, 0, TO_ROOM);
+  act("Your $q starts to heat up and then turns &+Wwhite hot&n before&n&Lslowly &+bcooling down&n and turning back to normal.",
+    TRUE, ch, item, 0, TO_CHAR);
+
+  logit(LOG_DEBUG, "%s enchanted %s with %s.", GET_NAME(ch), item->short_description, skills[spll].name);
+
+  if(get_obj_affect(item, SKILL_ENCHANT))
+  {
+    affect_from_obj(item, SKILL_ENCHANT);
+  }
+
+  if(CAN_WEAR(item, ITEM_ATTACH_BELT))
+  {
+    REMOVE_BIT(item->wear_flags, ITEM_ATTACH_BELT);
+  }
+
+  if(CAN_WEAR(item, ITEM_WEAR_BACK))
+  {
+    REMOVE_BIT(item->wear_flags, ITEM_WEAR_BACK);
+  }
+
+  if(ch && item)
+  {
+    set_obj_affected(item, (skill / 2) * WAIT_MIN, SKILL_ENCHANT, spll);
   }
 }
-
 
 void spell_napalm(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {

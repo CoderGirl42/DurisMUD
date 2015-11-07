@@ -59,7 +59,7 @@ void mobPatrol_SetupNew(P_char ch);
 
 int berserker_proc_room(int room, P_char ch, int cmd, char *arg)
 {
-  if( (cmd == CMD_SET_PERIODIC) || !(ch) || IS_NPC(ch)
+  if( (cmd == CMD_SET_PERIODIC) || !IS_ALIVE(ch) || IS_NPC(ch)
     || IS_MORPH(ch) || !((cmd == CMD_BATTLERAGER)) )
   {
     return FALSE;
@@ -369,7 +369,7 @@ int inn(int room, P_char ch, int cmd, char *arg)
       writeCharacter(ch, RENT_INN, ch->in_room);
     }
 
-    if( !(ch) )
+    if( !ch )
     {
       /* HTF is the mud supposed to send a message or get the name of a char that doesn't exist?!?
       send_to_char("You are unable to rent for some strange reason. Contact the imms.\r\n", ch);

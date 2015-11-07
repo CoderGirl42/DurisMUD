@@ -472,12 +472,6 @@ void spell_awe(int level, P_char ch, char *arg, int type, P_char victim, P_obj o
   struct affected_type af;
   struct follow_type *followers;
 
-  if( !(ch) )
-  {
-    logit(LOG_EXIT, "assert: bogus parms");
-    raise(SIGSEGV);
-  }
-
   if( !victim )
   {
     send_to_char("You must have a target!\r\n", ch);
@@ -1726,15 +1720,13 @@ spell_enhanced_agility(int level, P_char ch, char *arg, int type,
   return;
 }
 
-void spell_enhanced_constitution(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj obj)
+void spell_enhanced_constitution(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
-  
-  if(!(ch))
+
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus params (enhanced constitution)");
-    raise(SIGSEGV);
+    return;
   }
 
   if (affected_by_spell(victim, SPELL_ENHANCED_CON))
@@ -1752,20 +1744,12 @@ void spell_enhanced_constitution(int level, P_char ch, char *arg, int type,
   affect_to_char(victim, &af);
 
   send_to_char("You feel more vitalized.\r\n", victim);
-
-  return;
 }
 
 void spell_flesh_armor(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   bool shown;
-
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "assert: bogus params (flesh armor)");
-    raise(SIGSEGV);
-  }
 
   if(!IS_ALIVE(ch))
   {
@@ -1966,14 +1950,12 @@ void spell_confuse(int level, P_char ch, char *arg, int type, P_char victim,
   P_char   cht, next_ch;
 
 
-/*  struct affected_type af; */
-  if (!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "assert: bogus parms in confuse");
-    raise(SIGSEGV);
+    return;
   }
 
-  if (victim == ch)
+  if( victim == ch )
   {
     send_to_char("You suddenly decide against that, oddly enough.\r\n", ch);
     return;
@@ -2075,12 +2057,9 @@ void spell_pyrokinesis(int level, P_char ch, char *arg, int type, P_char victim,
     "&+RBl&+wa&+Wz&+wi&+Rn&+rg i&+Rn&+rf&+Re&+rr&+Rn&+ro &+mgrows from within and &+Lscorches &+myour whole body dead.",
     "&+RRa&+rgi&+Rng &+rf&+Rla&+rme&+Rs &+Wb&+wu&+Wr&+ws&+Wt &+mfrom within and &+We&+wn&+Wg&+wu&+Wl&+wf &N$N's &+mwhole body, leaving nothing but &+Lscorched &+mremains.", 0
   };
-  
-  if(!(ch) || 
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-      return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
 // 40% harder to shrug, same as crush
   if(number(1, 100) < 60 && resists_spell(ch, victim))
@@ -2157,15 +2136,12 @@ void spell_pyrokinesis(int level, P_char ch, char *arg, int type, P_char victim,
   CharWait(ch, 2*WAIT_SEC);
 }
 
-void spell_celerity(int level, P_char ch, char *arg, int type,
-                         P_char victim, P_obj obj)
+void spell_celerity(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int movepoints;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
+  if( !IS_ALIVE(ch) || ch->in_room == NOWHERE )
+    return;
 
   movepoints = dice(3, level/2);
 
@@ -2199,11 +2175,9 @@ void spell_depart(int level, P_char ch, char *arg, int type, P_char victim, P_ob
   P_char  t_ch;
   int tries = 0, to_room, dir;
   int range = get_property("spell.depart.range", 5);
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(ch->in_room))
-        return;
+
+  if( !IS_ALIVE(ch) || ch->in_room == NOWHERE )
+    return;
 
   if((IS_SET(world[ch->in_room].room_flags, NO_TELEPORT) ||
       IS_HOMETOWN(ch->in_room) ||
@@ -2308,16 +2282,13 @@ void spell_psionic_wave_blast(int level, P_char ch, char *arg, int type, P_char 
     "",
     "", 0
   };
-  
+
   int dam;
   struct affected_type *af;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-      return;
-  
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
  /* if(IS_BRAINLESS(victim))
   {
     send_to_char("You probe your victim only to discover the lack of intelligence.\r\n", ch);

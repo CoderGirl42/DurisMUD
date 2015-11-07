@@ -3084,38 +3084,34 @@ void update_damage_data()
 }
 
 //---------------------------------------------------------------------------------
-int blind(P_char ch, P_char victim, int duration)
+// This function returns TRUE if the victim is blinded, and FALSE otherwise.
+//   The victim is not blinded if it's !blind.
+bool blind(P_char ch, P_char victim, int duration)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
-    return false;
+    return FALSE;
   }
-  if(IS_SET(victim->specials.affected_by5, AFF5_NOBLIND))
+  if( IS_SET(victim->specials.affected_by5, AFF5_NOBLIND) )
   {
     return FALSE;
   }
 
-  if (IS_AFFECTED(victim, AFF_BLIND))
+  if( IS_AFFECTED(victim, AFF_BLIND) )
   {
     act("&+L$N &+Lis already blind as a bat!", TRUE, ch, 0, victim, TO_CHAR);
     send_to_char("Your eyes hurt briefly, but the feeling dissipates.\r\n", victim);
     return FALSE;
   }
-// Parasites and slime are immune to blindness. Nov08 -Lucrot
-  if(GET_RACE(victim) == RACE_PARASITE ||
-     GET_RACE(victim) == RACE_SLIME)
+  // Parasites and slime are immune to blindness. Nov08 -Lucrot
+  if( GET_RACE(victim) == RACE_PARASITE || GET_RACE(victim) == RACE_SLIME )
   {
-    return false;
+    return FALSE;
   }
 
-  if (!has_innate(victim, INNATE_EYELESS) &&
-      !isname("_noblind_", GET_NAME(victim)) &&
-      !IS_TRUSTED(victim))
+  if( !has_innate(victim, INNATE_EYELESS) && !isname("_noblind_", GET_NAME(victim)) && !IS_TRUSTED(victim) )
   {
     act("&+L$n &+Lseems to be blinded!", TRUE, victim, 0, 0, TO_ROOM);
     send_to_char("&+LYou have been blinded!\r\n", victim);
@@ -3129,7 +3125,7 @@ int blind(P_char ch, P_char victim, int duration)
     affect_to_char(victim, &af);
     return TRUE;
   }
-  
+
   return FALSE;
 }
 

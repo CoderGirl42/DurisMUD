@@ -1320,51 +1320,46 @@ int newbie_spellup_mob(P_char ch, P_char victim, int cmd, char *arg)
     SPELL_SLOW_POISON, SPELL_PROTECT_FROM_GAS, SPELL_PROTECT_FROM_EVIL,
     SPELL_PROTECT_FROM_GOOD, SPELL_PROTECT_FROM_ACID,
     SPELL_PROTECT_FROM_LIGHTNING, 0};
-  
+
   int      ShamBeneSpells[] = {SPELL_SPIRIT_ARMOR, SPELL_PANTHERSPEED, SPELL_HAWKVISION, SPELL_FIRE_WARD,
     SPELL_COLD_WARD, SPELL_GREATER_RAVENFLIGHT,0};
-  
+
   int      DruidBeneSpells[] = {SPELL_BARKSKIN, SPELL_FORTITUDE, SPELL_AID,
     SPELL_PROTECT_FROM_ANIMAL, SPELL_REGENERATION, 0};
-  
+
   int      SorcBeneSpells[] = {SPELL_DETECT_MAGIC, SPELL_STRENGTH, SPELL_AGILITY, SPELL_LEVITATE, 0};
-  
+
   if(cmd == CMD_SET_PERIODIC)
   {
     return TRUE;
   }
-  
-  if (!(ch) ||
-      !IS_ALIVE(ch) ||
-      IS_IMMOBILE(ch) ||
-      IS_CASTING(ch) ||
-      IS_FIGHTING(ch))
+
+  if( !IS_ALIVE(ch) || IS_IMMOBILE(ch) || IS_CASTING(ch) || IS_FIGHTING(ch) )
   {
     return FALSE;
   }
-  
+
   if( cmd != CMD_PERIODIC)
   {
     return FALSE;
   }
-  
+
   // everything after here is in the periodic event
-  
+
   /* make sure I'm even able to cast in this room! */
-  if (IS_SET(world[ch->in_room].room_flags,  SAFE_ZONE | NO_MAGIC | ROOM_SILENT) ||
-      affected_by_spell(ch, SPELL_FEEBLEMIND) ||  
-      IS_AFFECTED2(ch, AFF2_SILENCED))
+  if( IS_SET(world[ch->in_room].room_flags,  SAFE_ZONE | NO_MAGIC | ROOM_SILENT)
+    || affected_by_spell(ch, SPELL_FEEBLEMIND) || IS_AFFECTED2(ch, AFF2_SILENCED) )
   {
     return FALSE;
-  } 
-  
-  // find what class the mob is. a bit of randomness 
+  }
+
+  // find what class the mob is. a bit of randomness
   // so that multiclass mobs will cast from all of their spells
   if(number(0, 3))
   {
     if( GET_CLASS(ch, CLASS_CLERIC) && !number(0, 1) )
     {
-      spells = ClerBeneSpells;      
+      spells = ClerBeneSpells;
     }
     else if( GET_CLASS(ch, CLASS_SHAMAN) && !number(0, 1) )
     {
@@ -1379,12 +1374,12 @@ int newbie_spellup_mob(P_char ch, P_char victim, int cmd, char *arg)
       spells = SorcBeneSpells;
     }
   }
-  
+
   // go through room, find someone who needs a spell
   for(P_char tch = world[ch->in_room].people; tch; tch = tch->next )
   {
     // return if its an npc, too high level, fighting, with a bit of randomness thrown in
-    
+
     if(!IS_PC(tch) ||
         GET_LEVEL(tch) > 35 ||
         !number(0, 2) ||

@@ -91,8 +91,7 @@ void do_offensive(P_char ch, char *arg, int cmd)
 
   char Gbuf2[MAX_STRING_LENGTH];
 
-  if(!(ch) ||
-      IS_NPC(ch))
+  if( !IS_ALIVE(ch) || IS_NPC(ch) )
   {
     return;
   }
@@ -604,8 +603,7 @@ int do_roar_of_heroes(P_char ch)
   struct group_list *gl;
   struct affected_type af;
 
-  if(!(ch) ||
-      !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return 0;
   }
@@ -3152,8 +3150,7 @@ void do_throat_crush(P_char ch, char *arg, int cmd)
     "$n lunges at $N, crushing $S windpipe totally!"
   };
 
-  if(!(ch) ||
-      !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }

@@ -603,11 +603,11 @@ int reliance_pegasus(P_obj obj, P_char ch, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-  if (!(ch) ||
-      !(obj) ||
- 	  !OBJ_WORN_BY(obj, ch))
-    return (FALSE);
-	
+  if( IS_ALIVE(ch) || !(obj) || !OBJ_WORN_BY(obj, ch) )
+  {
+    return FALSE;
+  }
+
   if (arg && (cmd == CMD_SAY))
   {
     if (strstr(arg, "reliance"))

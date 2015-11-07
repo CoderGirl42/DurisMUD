@@ -959,7 +959,7 @@ void SpellCastShow(P_char ch, int spl)
   int      idok, detharm;
   char     Gbuf1[MAX_STRING_LENGTH];
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
     return;
   }

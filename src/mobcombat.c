@@ -70,10 +70,7 @@ void ZombieCombat(P_char ch, P_char victim)
 {
   int random = 0, dam = 0;
 
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
@@ -147,10 +144,7 @@ void SkeletonCombat(P_char ch, P_char victim)
 
   int random = 0, dam = 0;
 
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
@@ -208,10 +202,7 @@ void SpectreCombat(P_char ch, P_char victim)
 {
   int random = 0;
 
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
@@ -830,14 +821,8 @@ int GenMobCombat(P_char ch)
 bool Mob_Furious(P_char ch, P_char victim, int chance)
 {
   int random = number(1, 100);
-  
-  if(!(ch))
-  {
-    return false;
-  }
-  
-  if(!IS_ALIVE(ch) ||
-     IS_PC(ch))
+
+  if( !IS_ALIVE(ch) || IS_PC(ch) )
   {
     return false;
   }

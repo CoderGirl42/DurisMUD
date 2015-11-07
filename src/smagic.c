@@ -530,11 +530,8 @@ void spell_ice_missile(int level, P_char ch, char *arg, int type, P_char victim,
     "A small chunk of ice flies from $n&n's fingertips, instantly killing $N&n."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
@@ -559,12 +556,9 @@ void spell_corrosive_blast(int level, P_char ch, char *arg, int type,
     "&+G$n's&+G corrosive blast coats you in searing agony. Suddenly, the pain is no more.",
     "&+G$n's&+G corrosive blast leaves nothing of $N&+G, but a melted husk.",
      0};
-     
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-      return;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
   
@@ -608,13 +602,10 @@ void spell_restoration(int level, P_char ch, char *arg, int type,
                                 P_char victim, P_obj obj)
 {
   int gain;
- 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
- 
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   gain = (int) (level * 5 + number(0, 40));
 
 // Non-spiritualist
@@ -726,12 +717,9 @@ void spell_flameburst(int level, P_char ch, char *arg, int type,
     "A sudden burst of &+rflame&n flies from $n&n's fingertips, burning $N&n to a crisp."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   int num_dice = (level / 10);
   dam = (dice((num_dice+4), 6) * 5);
   dam = BOUNDED(1, dam, 200);
@@ -764,12 +752,9 @@ void spell_scalding_blast(int level, P_char ch, char *arg, int type,
     "A scalding column of acid, sent by $n&n, melts $N&n's flesh until nothing but a steaming puddle of blood remains."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   int num_dice = (level / 10);
   dam = (dice((num_dice+4), 6) * 7);
   dam = BOUNDED(1, dam, 240);
@@ -809,16 +794,12 @@ void spell_scorching_touch(int level, P_char ch, char *arg, int type,
     "$n&n's outstretched palm burns away whatever remained of $N&n."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   dam = dice(level, 2) * 4;
 
-  spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_GLOBE | SPLDAM_GRSPIRIT,
-               &messages);
+  spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_GLOBE | SPLDAM_GRSPIRIT, &messages);
 }
 
 
@@ -876,11 +857,8 @@ void spell_soul_disturbance(int level, P_char ch, char *arg, int type,
     "With a gasp, $N&n realizes $S soul will disturb $M no more."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
   
@@ -914,11 +892,8 @@ void spell_greater_soul_disturbance(int level, P_char ch, char *arg, int type,
     "With a gasp, $N&n realizes $S soul will disturb $M no more."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
   
@@ -1012,12 +987,9 @@ void spell_spirit_anguish(int level, P_char ch, char *arg, int type,
     "Screaming in pure anguish, $N&n collapses under the pain delivered by $n&n."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(IS_SOULLESS(victim))
@@ -1050,11 +1022,8 @@ void spell_gaseous_cloud(int level, P_char ch, char *arg, int type,
     "$n&+G, with a wave of the hand, creates a &+ggaseous cloud &+Gand directs it at $N, killing $M - perhaps $E should have held $S breath?"
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim))
+    return;
 
   int dam = dice(level * 3, 6);
   
@@ -1089,11 +1058,10 @@ void spell_gaseous_cloud(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_arieks_shattering_iceball(int level, P_char ch, char *arg,
-                                     int type, P_char victim, P_obj object)
+void spell_arieks_shattering_iceball(int level, P_char ch, char *arg, int type, P_char victim, P_obj object)
 {
   int room;
-  P_obj    obj;
+  P_obj obj;
   struct damage_messages messages = {
     "Your &+Ciceball&n shatters upon impacting $N&n, rending flesh and sending blood flying.",
     "You reel in pain as $n&n's &+Ciceball&n shatters upon impacting you.",
@@ -1103,32 +1071,25 @@ void spell_arieks_shattering_iceball(int level, P_char ch, char *arg,
     "The force of $n&n's &+Ciceball&n shatters any hopes $N&n had of living a long and happy life."
   };
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     ch->in_room != victim->in_room)
-      return;
-  
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || ch->in_room != victim->in_room )
+    return;
+
 // A little less than sunray but without the blinding + larger damage fork
   int dam = dice(level * 3, 5) + number(1, 80); 
 
   int mod = BOUNDED(0, (GET_LEVEL(ch) - GET_LEVEL(victim)), 20);
-  
+
   if(!NewSaves(victim, SAVING_SPELL, mod))
     dam = (int) (dam * 1.30);
 
   do_point(ch, victim);
-  
+
   if(spell_damage(ch, victim, dam, SPLDAM_COLD, 0, &messages) != DAM_NONEDEAD)
     return;
-    
-  if(!(ch) ||
-    !(room = ch->in_room) ||
-    (room == NOWHERE))
-      return;
-  
+
+  if( !IS_ALIVE(ch) || (room = ch->in_room) == NOWHERE )
+    return;
+
   if(world[room].contents)
   {
     for (obj = world[room].contents; obj; obj = obj->next_content)
@@ -1548,10 +1509,9 @@ void spell_greater_pythonsting(int level, P_char ch, char *arg, int type,
 {
   P_char   tch, next;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
-  
+  if( !IS_ALIVE(ch) )
+    return;
+
   if(victim == ch)
   {
     send_to_char("You suddenly decide against that, oddly enough.\n", ch);
@@ -1563,16 +1523,12 @@ void spell_greater_pythonsting(int level, P_char ch, char *arg, int type,
                       get_property("spell.area.chanceStep.gPythonSting", 20));
 }
 
-void spell_bloodhound(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_bloodhound(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim))
+    return;
 
   if(!affected_by_spell(victim, SPELL_BLOODHOUND))
   {
@@ -1655,8 +1611,7 @@ void spell_spirit_armor(int level, P_char ch, char *arg, int type, P_char victim
   }
 }
 
-void spell_transfer_wellness(int level, P_char ch, char *arg, int type,
-                             P_char victim, P_obj obj)
+void spell_transfer_wellness(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int      to, from, pos;
   P_obj    corpse, t_obj, next_obj, money;
@@ -1664,11 +1619,8 @@ void spell_transfer_wellness(int level, P_char ch, char *arg, int type,
   int      char_number;
   bool     explode = FALSE;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
   
@@ -1785,15 +1737,11 @@ void spell_transfer_wellness(int level, P_char ch, char *arg, int type,
 
 }
 
-void spell_sustenance(int level, P_char ch, char *arg, int type,
-                      P_char victim, P_obj obj)
+void spell_sustenance(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
   /* add level / 2 hours to full, level / 4 to thirst, no higher than
      level hours full and level / 2 thirsty total */
 
@@ -1813,14 +1761,10 @@ void spell_sustenance(int level, P_char ch, char *arg, int type,
 }
 
 
-void spell_greater_sustenance(int level, P_char ch, char *arg, int type,
-                              P_char victim, P_obj obj)
+void spell_greater_sustenance(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   LOOP_THRU_PEOPLE(victim, ch)
   {
@@ -1835,12 +1779,9 @@ void spell_wolfspeed(int level, P_char ch, char *arg, int type, P_char victim,
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-     
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(IS_ANIMALIST(ch))
@@ -1889,18 +1830,14 @@ void spell_wolfspeed(int level, P_char ch, char *arg, int type, P_char victim,
   affect_to_char(victim, &af);
 }
 
-void spell_snailspeed(int level, P_char ch, char *arg, int type,
-                      P_char victim, P_obj obj)
+void spell_snailspeed(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int percent = 0, maxpoints;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
 
   if(SHAMAN_MOVE_SPELL(victim))
@@ -2027,17 +1964,13 @@ void spell_snailspeed(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_pantherspeed(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_pantherspeed(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-        
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(IS_ANIMALIST(ch))
@@ -2096,17 +2029,13 @@ void spell_pantherspeed(int level, P_char ch, char *arg, int type,
   affect_to_char(victim, &af);
 }
 
-void spell_molevision(int level, P_char ch, char *arg, int type,
-                      P_char victim, P_obj obj)
+void spell_molevision(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int percent = 0, hitroll = 0;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   if(ch == victim)
   {
@@ -2227,18 +2156,14 @@ void spell_molevision(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_mousestrength(int level, P_char ch, char *arg, int type,
-                         P_char victim, P_obj obj)
+void spell_mousestrength(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int percent = 0;
   int base_str, mod, curr_str;
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-      return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
@@ -2387,11 +2312,8 @@ void spell_hawkvision(int level, P_char ch, char *arg, int type,
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
   
@@ -2615,19 +2537,15 @@ void spell_elephantstrength(int level, P_char ch, char *arg, int type,
 }
 
 
-void spell_shrewtameness(int level, P_char ch, char *arg, int type,
-                         P_char victim, P_obj obj)
+void spell_shrewtameness(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int percent = 0;
   int curr_str, base_str, mod;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-      
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
 
   if((affected_by_spell(victim, SPELL_LIONRAGE)) ||
@@ -2841,17 +2759,13 @@ void spell_lionrage(int level, P_char ch, char *arg, int type, P_char victim,
 }
 
 
-void spell_ravenflight(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_ravenflight(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   if(IS_ANIMALIST(ch))
     level += number(10, (int)(GET_LEVEL(ch) / 2));
     
@@ -2888,38 +2802,30 @@ void spell_ravenflight(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_greater_ravenflight(int level, P_char ch, char *arg, int type,
-                               P_char victim, P_obj obj)
+void spell_greater_ravenflight(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
-        
+  if( !IS_ALIVE(ch) )
+    return;
+
   LOOP_THRU_PEOPLE(victim, ch)
     spell_ravenflight(level, ch, NULL, SPELL_TYPE_SPELL, victim, 0);
 }
 
 
-void spell_call_of_the_wild(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj obj)
+void spell_call_of_the_wild(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   P_char   new_vict;
   int      mob_num;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
-  if(IS_TRUSTED(victim) || resists_spell(ch, victim) ||
-      affected_by_spell(victim, SPELL_CALL_OF_THE_WILD) || IS_NPC(victim) ||
-      IS_MORPH(victim) || (!IS_TRUSTED(ch) &&
-                           !is_linked_to(ch, victim, LNK_CONSENT) &&
-                           NewSaves(victim, SAVING_FEAR, 2)))
+  if( (IS_TRUSTED(victim) && GET_LEVEL(victim) < GET_LEVEL(ch)) || resists_spell(ch, victim)
+    || affected_by_spell(victim, SPELL_CALL_OF_THE_WILD) || IS_NPC(victim) || IS_MORPH(victim)
+    || (!IS_TRUSTED(ch) && !is_linked_to(ch, victim, LNK_CONSENT) && NewSaves(victim, SAVING_FEAR, 2)) )
   {
     send_to_char("Nothing seems to happen.\n", ch);
 
@@ -2965,16 +2871,12 @@ void spell_call_of_the_wild(int level, P_char ch, char *arg, int type,
   affect_to_char(new_vict, &af);
 }
 
-void spell_malison(int level, P_char ch, char *arg, int type, P_char victim,
-                   P_obj obj)
+void spell_malison(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   if(affected_by_spell(victim, SPELL_MALISON))
   {
@@ -3020,16 +2922,12 @@ void spell_malison(int level, P_char ch, char *arg, int type, P_char victim,
 }
 
 
-void spell_purify_spirit(int level, P_char ch, char *arg, int type,
-                         P_char victim, P_obj obj)
+void spell_purify_spirit(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type *af, *next;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
@@ -3068,17 +2966,13 @@ void spell_purify_spirit(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_spirit_sight(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_spirit_sight(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
 
   if(affected_by_spell(victim, SPELL_SPIRIT_SIGHT))
@@ -3122,17 +3016,15 @@ void spell_spirit_sight(int level, P_char ch, char *arg, int type,
 }
 
 
-void spell_greater_spirit_sight(int level, P_char ch, char *arg, int type,
-                                P_char victim, P_obj obj)
+void spell_greater_spirit_sight(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !(victim))
-      return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
-    
+
   if(affected_by_spell(victim, SPELL_GREATER_SPIRIT_SIGHT))
   {
     struct affected_type *af1;
@@ -3170,18 +3062,14 @@ void spell_greater_spirit_sight(int level, P_char ch, char *arg, int type,
      victim);
 }
 
-void spell_sense_spirit(int level, P_char ch, char *arg, int type,
-                        P_char victim, P_obj obj)
+void spell_sense_spirit(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int duration;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-          
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(!(GET_CLASS(ch, CLASS_SHAMAN)))
@@ -3787,16 +3675,12 @@ void spell_wellness(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
-void spell_lesser_mending(int level, P_char ch, char *arg, int type,
-                          P_char victim, P_obj obj)
+void spell_lesser_mending(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int gain;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   gain = (int) (level / 2 + number(0, 5));
 
@@ -3869,22 +3753,18 @@ void spell_mending(int level, P_char ch, char *arg, int type, P_char victim,
   update_pos(victim);
 }
 
-void spell_greater_mending(int level, P_char ch, char *arg, int type,
-                           P_char victim, P_obj obj)
+void spell_greater_mending(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int gain;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-      
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
 
   gain = (int) (level * 5 / 1.75 + number(-40, 40));
 
-// Spiritualists
+  // Spiritualists - Huh?
   if(has_innate(ch, INNATE_IMPROVED_HEAL))
   {
     gain += (int) (number((int) (level / 2), (int) (level)));
@@ -3943,18 +3823,14 @@ void spell_greater_mending(int level, P_char ch, char *arg, int type,
     FALSE, ch, 0, victim, TO_NOTVICT);
 }
 
-void spell_spirit_ward(int level, P_char ch, char *arg, int type,
-                       P_char victim, P_obj obj)
+void spell_spirit_ward(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int duration;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(IS_SPIRITUALIST(ch))
@@ -3997,14 +3873,13 @@ void spell_spirit_ward(int level, P_char ch, char *arg, int type,
   affect_to_char(victim, &af);
 }
 
-void spell_greater_spirit_ward(int level, P_char ch, char *arg, int type,
-                               P_char victim, P_obj obj)
+void spell_greater_spirit_ward(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
   int duration;
-  
+
   do_point(ch, victim);
-  
+
   if(IS_SPIRITUALIST(ch))
     duration = level + 10;
   else if(GET_CLASS(ch, CLASS_SHAMAN))
@@ -4043,15 +3918,13 @@ void spell_greater_spirit_ward(int level, P_char ch, char *arg, int type,
   affect_to_char(victim, &af);
 }
 
-void spell_reveal_true_form(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj obj)
+void spell_reveal_true_form(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   P_char   tmp_victim;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
-  
+  if( !IS_ALIVE(ch) )
+    return;
+
   act("$n&n raises $s arms high into the air, motionless.",
     TRUE, ch, 0, 0, TO_ROOM);
   act("A dim white aura fills the area briefly, centered on $n&n.",
@@ -4095,17 +3968,13 @@ void spell_reveal_true_form(int level, P_char ch, char *arg, int type,
 }
 
 
-void spell_cold_ward(int level, P_char ch, char *arg, int type, P_char victim,
-                     P_obj obj)
+void spell_cold_ward(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(!affected_by_spell(victim, SPELL_COLD_WARD))
@@ -4132,17 +4001,13 @@ void spell_cold_ward(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
-void spell_fire_ward(int level, P_char ch, char *arg, int type, P_char victim,
-                     P_obj obj)
+void spell_fire_ward(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
-  
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   do_point(ch, victim);
   
   if(!affected_by_spell(victim, SPELL_FIRE_WARD))
@@ -4169,17 +4034,13 @@ void spell_fire_ward(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
-void spell_reveal_spirit_essence(int level, P_char ch, char *arg, int type,
-                                 P_char victim, P_obj obj)
+void spell_reveal_spirit_essence(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int      align;
   char     buff[256], buff2[256], buff3[256];
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
@@ -4427,11 +4288,8 @@ void spell_beastform(int level, P_char ch, char *arg, int type, P_char victim,
   P_char   new_vict;
   int      mob_num;
 
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim))
-        return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   if(affected_by_spell(ch, SPELL_CALL_OF_THE_WILD))
   {
@@ -4672,10 +4530,8 @@ void spell_cascading_elemental_beam(int level, P_char ch, char *arg, int type, P
   "&+WP&+wu&+Wr&+we &+Rel&+rem&+yen&+Ltal en&+yer&+rgy&n disects $N into symmetrical pieces.", 0
   };
 
-  if(!(ch) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
-      return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   do_point(ch, victim);
 
@@ -4800,11 +4656,8 @@ void event_torment_spirits(P_char ch, P_char victim, P_obj obj, void *data)
     "$N &+rcollapses in a heap, $E is as dead as a doornail!&n",
     0};
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-      return;
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
 
   ts = *((int *) data);
    
@@ -4850,24 +4703,20 @@ void event_torment_spirits(P_char ch, P_char victim, P_obj obj, void *data)
   return;
 }
 
-void spell_torment_spirits(int level, P_char ch, char *arg, int type,
-          P_char victim, P_obj object)
+void spell_torment_spirits(int level, P_char ch, char *arg, int type, P_char victim, P_obj object)
 {
   int ts = 0;
-  
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(ch) ||
-     !IS_ALIVE(victim))
-      return;
-    
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+    return;
+
   act("You lock your &+rstare&n upon $N&n, close your eyes, and call upon the &+Wspirits of the &+Lother realms!&N",
     TRUE, ch, 0, victim, TO_CHAR);
   act("$n looks at you, then closes $s eyes, and &+Wbegins to chant...!&N",
     FALSE, ch, 0, victim, TO_VICT);
   act("$n gives $N a stern look, then $n closes $s eyes, and &+Wbegins to chant..&N",
     FALSE, ch, 0, victim, TO_NOTVICT);
-  
+
   engage(ch, victim);
 
   add_event(event_torment_spirits, PULSE_VIOLENCE, ch, victim, NULL, 0, &ts, sizeof(ts));

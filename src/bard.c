@@ -195,15 +195,12 @@ void bard_aggro(P_char ch, P_char victim)
 {
   char     Gbuf1[MAX_STRING_LENGTH];
   int in_room;
-  
-  if(!(ch) ||
-    !(victim) ||
-    !IS_ALIVE(ch) ||
-    !IS_ALIVE(victim))
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
   {
     return;
   }
-  
+
   appear(ch);
 
   if(!CAN_SEE(ch, victim) ||
@@ -628,9 +625,8 @@ void bard_drifting(int l, P_char ch, P_char victim, int song)
   struct affected_type af;
   int empower = GET_CHAR_SKILL(ch, SKILL_EMPOWER_SONG);
 
-  if(!(ch) ||
-     !IS_ALIVE(ch))
-        return;
+  if( !IS_ALIVE(ch) )
+    return;
 
   if(IS_NPC(ch))
   {
@@ -1375,10 +1371,7 @@ void bard_chaos(int l, P_char ch, P_char victim, int song)
 {
   int room = ch->in_room, random;
 
-  if(!(ch) ||
-     !(victim) ||
-     !IS_ALIVE(victim) ||
-     !IS_ALIVE(ch))
+  if( !IS_ALIVE(victim) || !IS_ALIVE(ch) )
   {
     return;
   }
@@ -1445,11 +1438,9 @@ void bard_dragons(int l, P_char ch, P_char victim, int song)
   int x = GET_LEVEL(ch);
   int empower = GET_CHAR_SKILL(ch, SKILL_EMPOWER_SONG);
 
-  if(!(ch) ||
-     !IS_ALIVE(victim) ||
-     !IS_ALIVE(ch))
-        return;
-  
+  if( !IS_ALIVE(victim) || !IS_ALIVE(ch) )
+    return;
+
   if(IS_NPC(ch))
   {
     empower += 100;
@@ -1677,13 +1668,7 @@ void sing_verses(P_char ch, int song)
 {
   int      i;
 
-  if(!(ch))
-  {
-    logit(LOG_EXIT, "sing_verses called in bard.c without ch");
-    raise(SIGSEGV);
-  }
-  if(ch &&
-    IS_ALIVE(ch))
+  if( IS_ALIVE(ch) )
   {
     for (i = 0; songwords[i].num; i++)
     {
@@ -2162,7 +2147,7 @@ void do_riff(P_char ch, char *arg, int cmd)
   struct song_description *sd;
   P_char tch, next;
 
-  if( !(ch) || !IS_ALIVE(ch) )
+  if( !IS_ALIVE(ch) )
     return;
 
   if( affected_by_spell(ch, SKILL_RIFF) )

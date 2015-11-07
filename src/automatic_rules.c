@@ -64,21 +64,20 @@ extern struct minor_create_struct minor_create_name_list[];
 
 int is_Raidable(P_char ch, char *argument, int cmd)
 {
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    return false;
+    return FALSE;
   }
-  else if(IS_TRUSTED(ch) ||
-          IS_NPC(ch))
+  else if( IS_TRUSTED(ch) || IS_NPC(ch) )
   {
-    return true;
+    return TRUE;
   }
-  else if(hasRequriedSlots(ch))
+  else if( hasRequiredSlots(ch) )
   {
-    return true;
+    return TRUE;
   }
 
-  return false;
+  return FALSE;
 }
 
 void do_raid(P_char ch, char *argument, int cmd)
@@ -97,7 +96,7 @@ void do_raid(P_char ch, char *argument, int cmd)
         send_to_char("Why you a npc care about raidable or not?!", ch);
       return;
     }
-    if(hasRequriedSlots(ch))
+    if(hasRequiredSlots(ch))
       send_to_char("&+GRaidable you are, slay enemies you can!\n", ch);
     else
       send_to_char("&+RYou do not have enough equipment to be raidable.\n", ch);
@@ -134,7 +133,7 @@ void do_raid(P_char ch, char *argument, int cmd)
 
 	if (tch && IS_PC(tch) && !IS_TRUSTED(tch))
         {
-          if (hasRequriedSlots(tch))
+          if (hasRequiredSlots(tch))
           {  
             if (!str_cmp(arg2, "bad"))
               continue;
@@ -159,56 +158,62 @@ void do_raid(P_char ch, char *argument, int cmd)
     return;
   }
 }
-int hasRequriedSlots(P_char ch)
+
+bool hasRequiredSlots(P_char ch)
 {
-  if(!ch)
-    return 0;
-  int      wear_order[] =
-        { 41, 24, 40, 6, 19, 21, 22, 20, 39, 3, 4, 5, 35, 37, 12, 27, 23, 13,
-          10, 31, 11, 14, 15, 33, 34, 9, 32, 1, 2, 16, 17, 25, 26, 18, 7,
-          36, 8, 38, -1
-        };
+  if( !IS_ALIVE(ch) )
+    return FALSE;
+
+  int wear_order[] =
+    {
+      41, 24, 40, 6, 19, 21, 22, 20, 39, 3, 4, 5, 35, 37, 12, 27, 23, 13,
+      10, 31, 11, 14, 15, 33, 34, 9, 32, 1, 2, 16, 17, 25, 26, 18, 7,
+      36, 8, 38, -1
+    };
   int found = 0, mod = 0, lvl;
+  bool minor_created;
   P_obj t_obj;
 
-  for ( int j = 0; wear_order[j] != -1; j++)
+  for( int j = 0; wear_order[j] != -1; j++ )
   {
-    int should_break_outer = 0;
-    if (ch->equipment[wear_order[j]]){
-       t_obj = ch->equipment[wear_order[j]];
-       
-       if(!t_obj){
-            continue;
-          }
-       
-       if (IS_SET(t_obj->extra_flags, ITEM_TRANSIENT))
-       continue;  
-       
-          for (int i = 0; minor_create_name_list[i].keyword[0]; i++) {
-              if(obj_index[t_obj->R_num].virtual_number  == minor_create_name_list[i].obj_number)
-              {
-                should_break_outer = 1;
-                break;
-              }
-          }
-          if(should_break_outer)
-            continue;
-          found++;
+    if( (t_obj = ch->equipment[wear_order[j]]) != NULL )
+    {
+      if( IS_SET(t_obj->extra_flags, ITEM_TRANSIENT) )
+      {
+        continue;
+      }
+
+      minor_created = FALSE;
+      for( int i = 0; minor_create_name_list[i].keyword[0]; i++ )
+      {
+        if( obj_index[t_obj->R_num].virtual_number  == minor_create_name_list[i].obj_number )
+        {
+          minor_created = TRUE;
+          break;
+        }
+      }
+      if( !minor_created )
+      {
+        found++;
+      }
     }
-          
   }
-  
-  lvl = GET_LEVEL(ch);  
-                        //  Added some slightly more intelligent 
+
+  lvl = GET_LEVEL(ch);
+                        //  Added some slightly more intelligent
   if(lvl >= 41)          //  rules to the equation figuring on how much
     mod = 0;            //  equipment a character must be wearing to
   else if(lvl >= 36)     //  be raidable based upon level.  It is somewhat
     mod = 4;            //  foolish to believe a level 30 character is
   else if(lvl >= 31)     //  going to have more than 1-1.5 sets of eq
     mod = 6;            //  on hand for CR's or such - Jexni  6/1/09
+  else
+    mod = 8;
 
-  if(found + mod > (int) (get_property("raid.min.slots", 12) - 1))
-    return 1;
+  if( found + mod >= get_property("raid.min.slots", 12) )
+  {
+    return TRUE;
+  }
 
-  return 0;
+  return FALSE;
 }

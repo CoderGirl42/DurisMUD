@@ -679,27 +679,19 @@ void cast_nether_gate(int level, P_char ch, char *arg, int type,
 int char_is_on_plane(P_char ch)
 {
   int      i;
-  
-  if(!(ch))
+
+  if( IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "char_is_on_plane called in spells.c without ch");
-    raise(SIGSEGV);
-  }
-  if(ch)
-  {
-    if(IS_ALIVE(ch))
+    for (i = 0; i < 9; i++)
     {
-      for (i = 0; i < 9; i++)
+      // Skip Prime plane.
+      if( i == 6 )
       {
-        if (i == 6)
-        {
-          continue;
-        }
-        if(world[ch->in_room].zone ==
-            world[MAX(0, real_room(planes_room_num[i]))].zone)
-        {
-          return TRUE;
-        }
+        continue;
+      }
+      if( world[ch->in_room].zone == world[MAX(0, real_room(planes_room_num[i]))].zone )
+      {
+        return TRUE;
       }
     }
   }
@@ -711,15 +703,10 @@ void cast_plane_shift(int level, P_char ch, char *arg, int type, P_char tar_ch, 
   char     Gbuf4[MAX_STRING_LENGTH];
   int      to_room, plane_id, from_zone, from_room;
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
-    logit(LOG_EXIT, "cast_plane_shift called in spells.c without ch");
-    raise(SIGSEGV);
-  }
-
-  if(!IS_ALIVE(ch))
-  {
-    send_to_char("The dead do not shift!\r\n", ch);
+    if( ch )
+      send_to_char("The dead do not shift!\r\n", ch);
     return;
   }
 
@@ -1286,16 +1273,13 @@ void cast_web(int level, P_char ch, char *arg, int type, P_char tar_ch,
 }
 
 
-void cast_prismatic_cube(int level, P_char ch, char *arg, int type,
-                         P_char tar_ch, P_obj tar_obj)
+void cast_prismatic_cube(int level, P_char ch, char *arg, int type, P_char tar_ch, P_obj tar_obj)
 {
   char     buf1[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH];
   int      dir, room, in_room;
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch) ||
-     !(room = ch->in_room))
-        return;
+
+  if( !IS_ALIVE(ch) || (room = ch->in_room) == NOWHERE )
+    return;
 
   for (dir = 0; dir < NUM_EXITS; dir++)
   {

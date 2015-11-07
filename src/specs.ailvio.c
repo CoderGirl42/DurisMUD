@@ -17,10 +17,12 @@ using namespace std;
 #include "utils.h"
 #include "tradeskill.h"
 #include "spells.h"
+#include "vnum.mob.h"
 
 extern P_room world;
 extern P_nevent get_scheduled(P_char ch, event_func func);
 extern void event_bandage_check(P_char ch, P_char victim, P_obj, void *data);
+extern P_index mob_index;
 
 int burbul_map_obj(P_obj obj, P_char ch, int cmd, char *arg)
 {
@@ -112,53 +114,68 @@ int chyron_search_obj(P_obj obj, P_char ch, int cmd, char *arg)
 int bandage_mob(P_char ch, P_char pl, int cmd, char *arg)
 {
 
-  if (cmd == CMD_SET_PERIODIC)
+  // Start him off incapacitated.
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    GET_HIT(ch) = -3;
+    SET_POS(ch, POS_PRONE + STAT_INCAP);
     return TRUE;
-  
-  if(!(ch) || IS_PC(ch))
+  }
+
+  if( cmd != CMD_PERIODIC || GET_STAT(ch) == STAT_DEAD )
     return FALSE;
 
-  if ((GET_STAT(ch) > STAT_INCAP) && !IS_FIGHTING(ch) && !IS_DESTROYING(ch))
+  // If he's not dead, we need to make him bandage-able.
+  GET_HIT(ch) = -3;
+  // We keep him incap'd until someone saves him.  Or kills him.
+  if( GET_STAT(ch) != STAT_INCAP && !IS_FIGHTING(ch) && !IS_DESTROYING(ch) )
   {
     SET_POS(ch, POS_PRONE + STAT_INCAP);
-    GET_HIT(ch) = 0;
-    affect_from_char(ch, SKILL_BANDAGE);
-    return false;
   }
 
   return FALSE;
 }
 
-/*int bandage_reward_mob(P_char ch, P_char tch, int cmd, char *arg)
+int bandage_reward_mob(P_char ch, P_char tch, int cmd, char *arg)
 {
-   P_char next;
+  P_char man;
+  P_nevent nev;
 
-   if(!ch)
-   {
-     return FALSE;
-   }
-   
-   if(cmd == CMD_SET_PERIODIC)
-   {
-     return TRUE;
-   }
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return TRUE;
+  }
 
-   for(tch = world[tch->in_room].people; tch; tch = tch->next_in_room)
-   {
-     if (!tch)
-     {
-       return FALSE;
-     }
-     if(IS_NPC(tch))
-     {
-       return FALSE;
-     }
-     if (IS_PC(tch) && get_scheduled(tch, event_bandage_check))
-     {
-        act("$n&+w's eyes well up with &+Ctears&N &+wat your generosity.\n&+W'&N&+wTHANK YOU!!!&+W'&N&+w, $e sobs.\n&+wAs $e composes $mself, you find a &+Lpackage&n &+wat your feet.&N", FALSE, tch, 0, NULL, TO_VICT);
-        act("$n&+w's eyes well up with &+Ctears&N &+wat $N's generosity.\n&+W'&N&+wTHANK YOU!!!&+W'&N&+w, $e sobs.\n&+wAs $e composes $mself, $e gives a &+Lpackage&n &+wto $N&+w.&N", TRUE, ch, 0, NULL, TO_NOTVICT);
-        act("&+wOverwhelmed by the act of selflessness, you sob openly.  You compose yourself and\n&+wreward $N &+was best you can.&n", FALSE, ch, 0, NULL, TO_CHAR);
-     }
-   }
+  if( cmd != CMD_PERIODIC )
+  {
+    return FALSE;
+  }
+
+  for( tch = world[ch->in_room].people; tch; tch = tch->next_in_room )
+  {
+    if( IS_NPC(tch) )
+    {
+     continue;
+    }
+    if( IS_PC(tch) && (nev = get_scheduled(tch, event_bandage_check)) )
+    {
+      if( (man = nev->victim) != NULL && IS_NPC(man) && GET_VNUM(man) == VMOB_AILVIO_INCAPACITATED )
+      {
+        act("$n&+w's eyes well up with &+Ctears&N &+wat your generosity.\n&+W'&N&+wTHANK YOU!!!&+W'&N&+w, $e sobs.",
+          FALSE, ch, 0, tch, TO_VICT);
+        act("$n&+w's eyes well up with &+Ctears&N &+wat $N's generosity.\n&+W'&N&+wTHANK YOU!!!&+W'&N&+w, $e sobs.",
+          FALSE, ch, 0, tch, TO_NOTVICT);
+        act("&+wOverwhelmed by the act of selflessness, you sob openly.  Then you say, 'THANK YOU!!!'",
+          FALSE, ch, 0, tch, TO_CHAR);
+
+        do_stand( man, "", CMD_STAND );
+        do_say( man, "Thank you for reviving me.", CMD_SAY );
+        gain_exp(tch, NULL, 1000, EXP_QUEST);
+        do_say( man, "Time for us to go.", CMD_SAY );
+        act("$N and $n disappear deeper into the woods.", TRUE, ch, 0, man, TO_NOTVICT);
+        extract_char( man );
+        extract_char( ch );
+      }
+    }
+  }
 }
-*/

@@ -610,8 +610,10 @@ void do_emote(P_char ch, char *argument, int cmd)
    }
  */
 
-  if(!(ch))
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 

@@ -1844,10 +1844,11 @@ void do_sneak(P_char ch, char *argument, int cmd)
   byte     percent;
   int      skl_lvl = 0;
   char     Gbuf1[MAX_STRING_LENGTH];
-  
-  if(!(ch) ||
-     !IS_ALIVE(ch))
+
+  if( !IS_ALIVE(ch) )
   {
+    if( ch )
+      send_to_char("Lay still, you seem to be dead.\r\n", ch);
     return;
   }
 

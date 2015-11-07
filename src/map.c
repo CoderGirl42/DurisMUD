@@ -1019,8 +1019,7 @@ bool is_in_line_of_sight_dir(P_char ch, P_char target, int current_room)
 {
   int      start, end, x, x2, temp, count, where, which_dir;
 
-  if(!(ch) ||
-    !IS_ALIVE(ch))
+  if( !IS_ALIVE(ch) )
   {
     return false;
   }
