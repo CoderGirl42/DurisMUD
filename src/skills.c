@@ -31,16 +31,6 @@ int currentSkill = 0;
 #if defined(_DE_) || defined(_PFILE_)
 extern "C" void initialize_skills(void);
 
-struct skill_data
-{
-  const char *name;
-  // 0-56 for a skill, and 0-12 for a spell.
-  int minLevel[CLASS_COUNT+1];
-#if defined (_PFILE_)
-  struct ClassSkillInfo m_class[CLASS_COUNT];     /* info for each class */
-#endif
-};
-typedef struct skill_data Skill;
 int flag2idx(int);
 #else
 #include "prototypes.h"

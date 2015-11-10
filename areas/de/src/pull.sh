@@ -8,6 +8,8 @@ echo Pulling files from main code...
 echo
 
 echo Testing differences in files...
+echo
+
 if( ! diff spells.h ../../../src/spells.h > /dev/null ); then
   tput setaf 6
   cp -v -f ../../../src/spells.h .
@@ -55,6 +57,8 @@ if( ! diff -q common.c ../../../src/common.c > /dev/null ); then
 else
   echo '   common.c is the same, not pulling.'
 fi
+
+read -p "Press [Enter] key to start compiling..."
 
 make clean
 make

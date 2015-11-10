@@ -31,16 +31,6 @@ int currentSkill = 0;
 #if defined(_DE_) || defined(_PFILE_)
 extern "C" void initialize_skills(void);
 
-struct skill_data
-{
-  const char *name;
-  // 0-56 for a skill, and 0-12 for a spell.
-  int minLevel[CLASS_COUNT+1];
-#if defined (_PFILE_)
-  struct ClassSkillInfo m_class[CLASS_COUNT];     /* info for each class */
-#endif
-};
-typedef struct skill_data Skill;
 int flag2idx(int);
 #else
 #include "prototypes.h"
@@ -230,8 +220,6 @@ void initialize_skills()
   //needed by setbit
   skills[MAX_AFFECT_TYPES].name = "\n";
 
-  SKILL_CREATE("establish camp", SKILL_CAMP, 0);
-
   // Alchemist
   // Brawler
 
@@ -258,8 +246,7 @@ void initialize_skills()
   SKILL_CREATE("disruptive blow", SKILL_DISRUPTIVE_BLOW, TAR_PHYS);
   SPEC_SKILL_ADD(CLASS_MERCENARY, 46, 100, SPEC_BRIGAND);
 
-  SKILL_CREATE("crippling strike", SKILL_CRIPPLING_STRIKE,
-               TAR_PHYS);
+  SKILL_CREATE("crippling strike", SKILL_CRIPPLING_STRIKE, TAR_PHYS);
   SPEC_SKILL_ADD(CLASS_MERCENARY, 41, 100, SPEC_BRIGAND);
 
   SKILL_CREATE("ambush", SKILL_AMBUSH, TAR_PHYS);
@@ -760,7 +747,7 @@ void initialize_skills()
                 TAR_SELF_ONLY,
                 spell_endurance, "Your endurance fades away.");
   SPELL_ADD(CLASS_DRUID, 6);
-  SPEC_SPELL_ADD(CLASS_RANGER, 8, SPEC_WOODSMAN);
+  SPEC_SPELL_ADD(CLASS_RANGER, 8, SPEC_HUNTSMAN);
   SPEC_SPELL_ADD(CLASS_CLERIC, 7, SPEC_HEALER);
 
   SPELL_CREATE_MSG("sap nature", SPELL_SAP_NATURE, PULSE_SPELLCAST * 3 / 2,
@@ -1891,7 +1878,7 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
   SPELL_ADD(CLASS_ILLUSIONIST, 9);
 
 
-  SPELL_CREATE("weapon enchantment", SPELL_ENCHANT_WEAPON, PULSE_SPELLCAST * 8,
+  SPELL_CREATE("enchant weapon", SPELL_ENCHANT_WEAPON, PULSE_SPELLCAST * 8,
                 TAR_OBJ_INV | TAR_OBJ_EQUIP | TAR_NOCOMBAT, spell_enchant_weapon);
   SPELL_ADD(CLASS_CONJURER, 4);
   SPELL_ADD(CLASS_SUMMONER, 4);
@@ -2160,7 +2147,7 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 TAR_SELF_ONLY,
                 spell_pass_without_trace, "The forest close in around you.");
   SPELL_ADD(CLASS_DRUID, 8);
-  //SPEC_SPELL_ADD(CLASS_RANGER, 10, SPEC_WOODSMAN);
+  //SPEC_SPELL_ADD(CLASS_RANGER, 10, SPEC_HUNTSMAN);
 
 
   SPELL_CREATE_MSG("sanctuary", SPELL_SANCTUARY, PULSE_SPELLCAST,
@@ -2296,10 +2283,8 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SPELL_ADD(CLASS_BARD, 7);
   SPELL_ADD(CLASS_WARLOCK, 6);
 
-  SPELL_CREATE("shambler", SPELL_SHAMBLER, PULSE_SPELLCAST * 4,
-                TAR_IGNORE,
-                spell_shambler);
-  SPELL_ADD(CLASS_BLIGHTER, 11 );
+  SPELL_CREATE("shambler", SPELL_SHAMBLER, PULSE_SPELLCAST * 4, TAR_IGNORE, spell_shambler);
+  SPEC_SPELL_ADD(CLASS_BLIGHTER, 11, SPEC_SCOURGE);
 
   SPELL_CREATE("conjure elemental", SPELL_CONJURE_ELEMENTAL, PULSE_SPELLCAST * 4,
                 TAR_IGNORE,
@@ -3326,8 +3311,8 @@ SPELL_ADD(CLASS_SUMMONER, 11);
                 spell_detect_illusion, "Unseen things and illusion vanish from your sight.");
   SPELL_ADD(CLASS_ILLUSIONIST, 9);
 
-  SPELL_CREATE("dream travel", SPELL_SHADOW_RIFT, PULSE_SPELLCAST * 4,
-                TAR_CHAR_WORLD | TAR_NOCOMBAT, spell_shadow_rift);
+  SPELL_CREATE("dream travel", SPELL_DREAM_TRAVEL, PULSE_SPELLCAST * 4,
+                TAR_CHAR_WORLD | TAR_NOCOMBAT, spell_dream_travel);
   SPELL_ADD(CLASS_ILLUSIONIST, 9);
 
   SPELL_CREATE("clone form", SPELL_CLONE_FORM, PULSE_SPELLCAST * 4,
@@ -4472,7 +4457,7 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SPEC_SKILL_ADD(CLASS_ROGUE, 1, 100, SPEC_THIEF);
   SKILL_ADD(CLASS_MERCENARY, 1, 80);
   SKILL_ADD(CLASS_BARD, 1, 70);
-  SPEC_SKILL_ADD(CLASS_RANGER, 41, 80, SPEC_WOODSMAN);
+  SPEC_SKILL_ADD(CLASS_RANGER, 41, 80, SPEC_HUNTSMAN);
   SPEC_SKILL_ADD(CLASS_BARD, 1, 90, SPEC_SCOUNDREL);
 
   SKILL_CREATE("steal", SKILL_STEAL, TAR_PHYS);
@@ -4496,7 +4481,8 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SPEC_SKILL_ADD(CLASS_ROGUE, 1, 90, SPEC_THIEF);
 
   SKILL_CREATE("garrote", SKILL_GARROTE, TAR_PHYS);
-  SPEC_SKILL_ADD(CLASS_ROGUE, 1, 100, SPEC_ASSASSIN);
+  SPEC_SKILL_ADD(CLASS_ROGUE, 30, 100, SPEC_ASSASSIN);
+  SKILL_ADD(CLASS_ASSASSIN, 20, 100);
 
   SKILL_CREATE("critical stab", SKILL_CRITICAL_STAB, TAR_PHYS);
   SKILL_ADD(CLASS_ASSASSIN, 51, 100);
@@ -4538,7 +4524,7 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SKILL_ADD(CLASS_BLIGHTER, 1, 40);
   SKILL_ADD(CLASS_REAVER, 1, 40);
   SKILL_ADD(CLASS_ETHERMANCER, 1, 40);
-  
+
   SKILL_CREATE("roundkick", SKILL_ROUNDKICK, TAR_PHYS);
   SKILL_ADD(CLASS_MONK, 1, 100);
 
@@ -4550,8 +4536,9 @@ SPELL_ADD(CLASS_SUMMONER, 11);
 // Creating this bogus skill so only the person being throat crushed receives the wear off message.
 //   This needs a good name for 'stat c George' where George is on cooldown.
   SKILL_CREATE("throat crush cooldown.", SKILL_THROAT_CRUSHER, TAR_PHYS);
+  // Added this so we can see what the affect is (same as above).
+  SKILL_CREATE("charge cooldown.", SKILL_CHARGE, TAR_PHYS);
 
-  
   SKILL_CREATE("guard", SKILL_GUARD, TAR_PHYS);
   //SKILL_ADD(CLASS_ANTIPALADIN, 20, 90);
   //SKILL_ADD(CLASS_PALADIN, 20, 90);
@@ -4590,21 +4577,21 @@ SPELL_ADD(CLASS_SUMMONER, 11);
 
 
   SKILL_CREATE("trap", SKILL_TRAP, TAR_PHYS);
-  SPEC_SKILL_ADD(CLASS_RANGER, 31, 100, SPEC_WOODSMAN);
+  SPEC_SKILL_ADD(CLASS_RANGER, 31, 100, SPEC_HUNTSMAN);
   SPEC_SKILL_ADD(CLASS_MERCENARY, 51, 100, SPEC_BOUNTY);
   SKILL_ADD(CLASS_THIEF, 51, 100);
   SPEC_SKILL_ADD(CLASS_ROGUE, 51, 100, SPEC_THIEF);
 
   SKILL_CREATE("track", SKILL_TRACK, TAR_MENTAL);
-  SKILL_ADD(CLASS_RANGER, 1, 100);
+  SKILL_ADD(CLASS_RANGER, 1, 90);
   SKILL_ADD(CLASS_THIEF, 1, 95);
   SKILL_ADD(CLASS_ASSASSIN, 1, 95);
   SKILL_ADD(CLASS_ROGUE, 1, 75);
   SKILL_ADD(CLASS_REAVER, 1, 55);
-  SKILL_ADD(CLASS_MERCENARY, 1, 95);
+  SKILL_ADD(CLASS_MERCENARY, 1, 90);
   SPEC_SKILL_ADD(CLASS_MERCENARY, 1, 100, SPEC_BOUNTY);
   SPEC_SKILL_ADD(CLASS_ROGUE, 1, 100, SPEC_ASSASSIN);
-  SPEC_SKILL_ADD(CLASS_ROGUE, 1, 100, SPEC_THIEF);
+  SPEC_SKILL_ADD(CLASS_RANGER, 1, 100, SPEC_HUNTSMAN);
 
   SKILL_CREATE("listen", SKILL_LISTEN, TAR_MENTAL);
   SKILL_ADD(CLASS_THIEF, 15, 100);
@@ -4630,7 +4617,7 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SKILL_ADD(CLASS_BARD, 1, 80);
   SKILL_ADD(CLASS_DRUID, 1, 75);
   SKILL_ADD(CLASS_ALCHEMIST, 11, 75);
-  SKILL_ADD(CLASS_BERSERKER, 11, 95);
+  SKILL_ADD(CLASS_BERSERKER, 11, 100);
   SKILL_ADD(CLASS_REAVER, 1, 95);
   SKILL_ADD(CLASS_DREADLORD, 1, 100);
   SKILL_ADD(CLASS_AVENGER, 1, 100);
@@ -4666,6 +4653,7 @@ SPELL_ADD(CLASS_SUMMONER, 11);
   SKILL_ADD(CLASS_MERCENARY, 1, 100);
   SKILL_ADD(CLASS_BERSERKER, 11, 90);
   SKILL_ADD(CLASS_REAVER, 1, 80);
+  SPEC_SKILL_ADD(CLASS_BERSERKER, 30, 100, SPEC_RAGELORD);
   SPEC_SKILL_ADD(CLASS_WARRIOR, 31, 100, SPEC_SWASHBUCKLER);
   SPEC_SKILL_ADD(CLASS_WARRIOR, 0, 0, SPEC_GUARDIAN);
   SPEC_SKILL_ADD(CLASS_ROGUE, 1, 90, SPEC_ASSASSIN);
@@ -5103,9 +5091,11 @@ void create_poisons()
 void create_tags()
 {
   TAG_CREATE("decay", TAG_OBJ_DECAY);
-  TAG_CREATE("orig", TAG_ALTERED_EXTRA2);
+  TAG_CREATE("alt_extra2", TAG_ALTERED_EXTRA2);
   TAG_CREATE("no misfire", TAG_NOMISFIRE);
-  TAG_CREATE("witch spell", TAG_WITCHSPELL);
+  TAG_CREATE_WITH_MESSAGES("witch spell", TAG_WITCHSPELL,
+                           "&+GYou feel somehow weaker.&n",
+                           "");
   TAG_CREATE("racial skills (deprecated)", TAG_RACIAL_SKILLS);
   TAG_CREATE("soulbind", TAG_SOULBIND);
 
@@ -5116,9 +5106,9 @@ void create_tags()
   TAG_CREATE("ach - serial killer", ACH_SERIALKILLER); //static, 10.00 frags
 
   //PVE
-  TAG_CREATE("ach - level achievement", ACH_LEVELACHIEVEMENT); //static, gain 1.0 levels
+  TAG_CREATE("aip - level achievement", AIP_LEVELACHIEVEMENT); //static, gain 1.0 levels
   TAG_CREATE("aip - free sloop", AIP_FREESLOOP);
-  TAG_CREATE("ach - cargo count", ACH_CARGOCOUNT);
+  TAG_CREATE("aip - cargo count", AIP_CARGOCOUNT);
   TAG_CREATE("aip - arachnophobia", AIP_ARACHNOPHOBIA);
   TAG_CREATE("ach - arachnophobia", ACH_ARACHNOPHOBIA);
   TAG_CREATE("aip - Trollin", AIP_TROLLIN);
@@ -5168,6 +5158,7 @@ void create_tags()
 
   
 
+  TAG_CREATE("eaten food", TAG_EATEN);
   TAG_CREATE("recent frag obj", TAG_OBJ_RECENT_FRAG);
   TAG_CREATE_WITH_MESSAGES("phantasmal form", TAG_PHANTASMAL_FORM,
                            "&+WYou feel yourself return to normal as you leave your phantasmal form.&n",
@@ -5246,9 +5237,20 @@ void create_tags()
   TAG_CREATE_WITH_MESSAGES("broken leg", TAG_LEGLOCK, "&+WYour leg has healed.&n", "$n's leg has healed.&n");
   TAG_CREATE_WITH_MESSAGES("arrow bleed", TAG_ARROW_BLEED, "&+WYour bleeding wound has healed.&n", "$n's bleeding wound has healed.&n");
   TAG_CREATE("summon spawn/ally", TAG_SPAWN);
+
   TAG_CREATE("rested bonus", TAG_RESTED);
   TAG_CREATE("well-rested bonus", TAG_WELLRESTED);
+
   TAG_CREATE("total epics gained", TAG_EPICS_GAINED);
+
+  TAG_CREATE("regaining composure", TAG_BARDSONG_FAILURE );
+
+  TAG_CREATE("invisibility from object", TAG_PERMINVIS );
+  TAG_CREATE("establish camp", TAG_CAMP );
+
+  TAG_CREATE("old newbie zone tag", TAG_LIFESTREAMNEWBIE );
+
+  TAG_CREATE("times recently suicided", TAG_SUICIDE_COUNT );
 }
 
 #ifdef SKILLPOINTS
@@ -5517,8 +5519,6 @@ void initialize_skills_new()
   SKILL_DEPEND( SKILL_PROTECT_FROM_EVIL, SKILL_NATURESPROTECTIONS, WHITE_SKILL );
   skills[SKILL_PROTECT_FROM_EVIL].maxtrainwarr = 100;
 
-// YOU ARE HERE.
-// 
   SKILL_CREATE( "Natures Senses", SKILL_NATURESSENSES, TAR_IGNORE );
   SKILL_DEPEND( SKILL_NATURESSENSES, SKILL_NATURESPROTECTIONS, 100 );
   skills[SKILL_NATURESSENSES].maxtrainwarr = 100;

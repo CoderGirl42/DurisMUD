@@ -53,12 +53,6 @@ extern bool g_madeChanges;
 extern char *g_exitnames[];
 extern room *g_currentRoom;
 
-struct skill_data
-{
-  char    *name;
-  int      minLevel[CLASS_COUNT+1];
-};
-typedef struct skill_data Skill;
 extern Skill skills[MAX_AFFECT_TYPES];
 
 //

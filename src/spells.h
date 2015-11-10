@@ -1255,4 +1255,18 @@
 #define GOOD_AVATAR_OBJ 950
 #define EVIL_AVATAR_OBJ 951
 
+#ifdef _DE_
+struct skill_data
+{
+  const char *name;
+  // 0-56 for a skill, and 0-12 for a spell.
+  int minLevel[CLASS_COUNT+1];
+#if defined (_PFILE_)
+  struct ClassSkillInfo m_class[CLASS_COUNT];     /* info for each class */
+#endif
+};
+
+typedef struct skill_data Skill;
+#endif
+
 #endif /* _SOJ_SPELLS_H_ */

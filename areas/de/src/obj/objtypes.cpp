@@ -60,7 +60,7 @@ extern flagDef g_armorMiscFlagDef[], g_contFlagDef[], g_totemSphereFlagDef[],
                g_objCraftsmanshipList[], g_objTrapDamList[];
 
 extern "C" const char *apply_types[];
-extern "C" const char *skills[MAX_SKILLS + 1];
+extern "C" Skill skills[MAX_AFFECT_TYPES+1];
 extern "C" struct material_data materials[];
 
 extern char *g_apply_types_low[APPLY_LAST + 1];
@@ -187,7 +187,7 @@ const char *getSkillTypeStrn(const int skillType)
   if ((skillType > LAST_SKILL) || (skillType < FIRST_SKILL))
     return "out of range";
 
-  return skills[skillType];
+  return skills[skillType].name;
 }
 
 
@@ -203,7 +203,7 @@ const char *getSpellTypeStrn(const int spellType)
   if ((spellType > LAST_SPELL) || (spellType < 1))
     return "out of range";
 
-  return skills[spellType];
+  return skills[spellType].name;
 }
 
 

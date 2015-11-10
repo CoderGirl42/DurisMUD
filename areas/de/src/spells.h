@@ -420,33 +420,33 @@
 
 /* ILLUSIONIST SPELLS */
 
-#define SPELL_PHANTOM_ARMOR		400
-#define SPELL_SHADOW_MONSTER		401
-#define SPELL_INSECTS			402
-#define SPELL_ILLUSIONARY_WALL		403
-#define SPELL_BOULDER			404
-#define SPELL_SHADOW_TRAVEL		405
-#define SPELL_STUNNING_VISIONS		406
-#define SPELL_REFLECTION		407
-#define SPELL_MASK			408
-#define SPELL_WATCHING_WALL		409
-#define SPELL_NIGHTMARE			410
-#define SPELL_SHADOW_SHIELD		411
-#define SPELL_VANISH			412
-#define SPELL_HAMMER			413
-#define SPELL_DETECT_ILLUSION		414
-#define SPELL_SHADOW_RIFT		415
-#define SPELL_MAGIC_BARRIER		416
-#define SPELL_CLONE_FORM		417
-#define SPELL_DELIRIUM			418
-#define SPELL_IMPRISON			419
-#define SPELL_NONEXISTENCE	  	420
-#define SPELL_TITAN			421
-#define SPELL_DRAGON			422
+#define SPELL_PHANTOM_ARMOR     400
+#define SPELL_SHADOW_MONSTER    401
+#define SPELL_INSECTS           402
+#define SPELL_ILLUSIONARY_WALL  403
+#define SPELL_BOULDER           404
+#define SPELL_SHADOW_TRAVEL     405
+#define SPELL_STUNNING_VISIONS  406
+#define SPELL_REFLECTION        407
+#define SPELL_MASK              408
+#define SPELL_WATCHING_WALL     409
+#define SPELL_NIGHTMARE         410
+#define SPELL_SHADOW_SHIELD     411
+#define SPELL_VANISH            412
+#define SPELL_HAMMER            413
+#define SPELL_DETECT_ILLUSION   414
+#define SPELL_DREAM_TRAVEL      415
+#define SPELL_MAGIC_BARRIER     416
+#define SPELL_CLONE_FORM        417
+#define SPELL_DELIRIUM          418
+#define SPELL_IMPRISON          419
+#define SPELL_NONEXISTENCE      420
+#define SPELL_TITAN             421
+#define SPELL_DRAGON            422
 
-#define SPELL_CONJURE_WATER		423
-#define SPELL_DREAD_WAVE		424
-#define SPELL_GREATER_LIVING_STONE		425
+#define SPELL_CONJURE_WATER     423
+#define SPELL_DREAD_WAVE        424
+#define SPELL_GREATER_LIVING_STONE  425
 
 #define SPELL_ETHEREAL_GROUNDS		426
 #define SPELL_SPAWN	427
@@ -1000,6 +1000,7 @@
 #define SKILL_GARROTE                1300
 #define SKILL_LEGSWEEP               1301
 #define SKILL_NATURES_RUIN           1302
+// Slots SKILL_ ...  1045 and 1186 are unused.
 
 #define LAST_SKILL                   SKILL_NATURES_RUIN
 
@@ -1067,9 +1068,6 @@
 #define POISON_HEART_TOXIN           (FIRST_POISON+3)
 #define LAST_POISON                  (POISON_HEART_TOXIN)
 
-#define SKILL_CAMP                   (LAST_POISON+1)
-#define SKILL_PERMINVIS              (LAST_POISON+2)
-
 /* everything below does not make part of players skill data */
 #define FIRST_TAG                    2001
 #define TAG_OBJ_DECAY                2001
@@ -1088,7 +1086,7 @@
 #define TAG_DECREPIFY                2014
 #define TAG_HATRED                   2015
 #define TAG_PRESSURE_POINTS          2016
-#define TAG_EATING                   2017
+#define TAG_EATEN                    2017
 #define TAG_OBJ_RECENT_FRAG          2018
 #define TAG_KNOWN_SHAPE              2019
 #define TAG_UNUSED                   2020
@@ -1145,7 +1143,7 @@
 #define ACH_UNSTOPPABLE              2071
 #define ACH_LETSGETDIRTY             2072
 #define ACH_SERIALKILLER             2073
-#define ACH_LEVELACHIEVEMENT         2074
+#define AIP_LEVELACHIEVEMENT         2074
 #define AIP_ARACHNOPHOBIA            2075
 #define ACH_ARACHNOPHOBIA            2076
 #define ACH_TROLLIN                  2077
@@ -1181,16 +1179,23 @@
 #define TAG_RESTED                   2107
 #define TAG_WELLRESTED               2108
 #define TAG_EPICS_GAINED             2109
-#define ACH_CARGOCOUNT               2110
+#define AIP_CARGOCOUNT               2110
 #define ACH_DEATHSDOOR               2111
 #define TAG_DEATHSDOOR               2112
-#define TAG_FOLLOWING                2113
+#define TAG_BARDSONG_FAILURE         2113
+#define TAG_CAMP                     2114
+#define TAG_PERMINVIS                2115
+#define TAG_LIFESTREAMNEWBIE         2116
+#define TAG_SUICIDE_COUNT            2117
 
 #define SAVING_PARA   0
 #define SAVING_ROD    1
-#define SAVING_FEAR  2
+#define SAVING_FEAR   2
 #define SAVING_BREATH 3
 #define SAVING_SPELL  4
+
+#define BREATH_WEAPON_SAVE( ch, vict ) \
+  GET_LEVEL(ch) + get_property("dragon.Breath.SavingThrowMod", 0) - GET_LEVEL(vict)
 
 #define TAR_IGNORE        BIT_1
 #define TAR_CHAR_ROOM     BIT_2
@@ -1249,5 +1254,19 @@
 #define EVIL_AVATAR_MOB 951
 #define GOOD_AVATAR_OBJ 950
 #define EVIL_AVATAR_OBJ 951
+
+#ifdef _DE_
+struct skill_data
+{
+  const char *name;
+  // 0-56 for a skill, and 0-12 for a spell.
+  int minLevel[CLASS_COUNT+1];
+#if defined (_PFILE_)
+  struct ClassSkillInfo m_class[CLASS_COUNT];     /* info for each class */
+#endif
+};
+
+typedef struct skill_data Skill;
+#endif
 
 #endif /* _SOJ_SPELLS_H_ */
