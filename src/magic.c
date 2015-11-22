@@ -6132,7 +6132,7 @@ void spell_ray_of_enfeeblement( int level, P_char ch, char *arg, int type, P_cha
 
       af.modifier = -1 * level / 10 - number(1, 6);
       // Don't go below 0 or it'll jump up to 255 'cause damroll is an unsigned byte.
-      if( af.modifier < 0 - victim->points.damroll )
+      if( af.modifier < 0 - victim->points.damroll || victim->points.damroll - af.modifier > victim->points.damroll )
         af.modifier = 0 - victim->points.damroll;
       af.location = APPLY_DAMROLL;
       affect_to_char(victim, &af);
