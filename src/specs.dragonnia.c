@@ -894,9 +894,10 @@ void call_protector(P_char ch, P_char tmp_ch, int nprotector, int type)
   if( protector->in_room != tmp_ch->in_room )
     return;
 
-  if( !damage(protector, tmp_ch, number((GET_LEVEL(protector) >> 1), (GET_LEVEL(protector) * 2)), TYPE_UNDEFINED) )
+  // Removing these to stop a crash bug.
+//  if( !damage(protector, tmp_ch, number((GET_LEVEL(protector) >> 1), (GET_LEVEL(protector) * 2)), TYPE_UNDEFINED) )
   {
-    if( !damage(protector, tmp_ch, number((GET_LEVEL(protector) >> 1), (GET_LEVEL(protector) * 2)), TYPE_UNDEFINED) )
+//    if( !damage(protector, tmp_ch, number((GET_LEVEL(protector) >> 1), (GET_LEVEL(protector) * 2)), TYPE_UNDEFINED) )
     {
       damage(protector, tmp_ch, number((GET_LEVEL(protector) >> 1), (GET_LEVEL(protector) * 2)), TYPE_UNDEFINED);
     }
@@ -1047,7 +1048,7 @@ int baby_dragon(P_char ch, P_char pl, int cmd, char *arg)
               }
               if( !IS_ALIVE(tmp_ch) )
               {
-                return;
+                return TRUE;
               }
             }
           }
