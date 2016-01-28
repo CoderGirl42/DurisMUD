@@ -30,7 +30,7 @@ S
 D2
 ~
 wall~
-7 6701 6835
+7 6862 6835
 S
 #6803
 &+yOutside the City of Dragonnia&n~
@@ -479,7 +479,7 @@ S
 D0
 ~
 ~
-7 6704 6832
+7 6865 6832
 D1
 ~
 ~
@@ -594,11 +594,11 @@ S
 D0
 ~
 door~
-3 6703 6833
+3 6864 6833
 D2
 ~
 ~
-3 6704 6826
+3 6865 6826
 S
 #6833
 &+WOutside the Palace of Dragonnia&n~
@@ -615,7 +615,7 @@ stone stonegate~
 D2
 ~
 door~
-3 6703 6832
+3 6864 6832
 E
 stone stonegate~
 This gate is well built and perfectly balanced.
@@ -631,7 +631,7 @@ S
 D0
 ~
 wall~
-3 6702 6835
+3 6863 6835
 D2
 ~
 stone stonegate~
@@ -653,11 +653,11 @@ S
 D0
 ~
 wall~
-7 6701 6801
+7 6862 6801
 D2
 ~
 wall~
-3 6703 6834
+3 6864 6834
 S
 #6836
 &+rRoom of Intense Fire&n~

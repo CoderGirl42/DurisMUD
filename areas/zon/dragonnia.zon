@@ -100,7 +100,7 @@ P 1 6829 2 6838 100 0 0 0          *   a golden treasure
 P 1 6834 2 6838 100 0 0 0          *   a fine emerald
 P 1 6835 2 6838 100 0 0 0          *   a shining sapphire
 P 1 6836 2 6838 100 0 0 0          *   a shiny diamond
-P 1 6704 1 6838 100 0 0 0          *   a white and blue key
+P 1 6865 1 6838 100 0 0 0          *   a white and blue key
 O 0 6859 1 6841 100 0 0 0          * the Teviros sacred sanctum
 P 1 6844 1 6859 100 0 0 0          *   a Teviros Chalice
 P 1 6845 1 6859 100 0 0 0          *   a Teviros Ciborium
@@ -203,7 +203,7 @@ M 0 6830 12 6834 100 0 0 0         * an elite Dragonnian guard
 M 0 6830 12 6834 100 0 0 0         * an elite Dragonnian guard
 M 0 6816 1 6835 100 0 0 0          * Dragonnia
 E 1 6831 2 2 100 0 0 0             *   a gleaming platinum ring
-E 1 6701 1 18 100 0 0 0            *   a yellow and red key
+E 1 6862 1 18 100 0 0 0            *   a yellow and red key
 G 1 6826 1 0 100 0 0 0             *    the mystic axe of the dragonkind
 G 1 910 1 0 100 0 0 0              *    (object type not in this .obj file)
 M 0 6830 12 6835 100 0 0 0         * an elite Dragonnian guard
@@ -216,7 +216,7 @@ M 0 6817 1 6839 100 0 0 0          * a dragon deacon
 E 1 6832 100 16 100 0 0 0          *   a black hammer
 M 0 6818 1 6840 100 0 0 0          * a gargoyle
 G 1 4050 80 0 100 0 0 0            *    (object type not in this .obj file)
-G 1 6703 1 0 100 0 0 0             *    a black and white key
+G 1 6864 1 0 100 0 0 0             *    a black and white key
 M 0 6814 30 6842 100 0 0 0         * a Dragonnian guard
 M 0 6814 30 6842 100 0 0 0         * a Dragonnian guard
 M 0 6819 1 6843 100 0 0 0          * the chaplain dragon
@@ -224,8 +224,8 @@ E 1 6811 1 16 100 0 0 0            *   a dragon tooth trident
 M 0 6820 1 6844 100 0 0 0          * the priest dragon
 E 1 6828 6 16 100 0 0 0            *   a dull black mace
 M 0 6821 1 6845 100 0 0 0          * a dragon statue
-E 1 6863 1 18 10 0 0 0             *   a glowing magical stone
-G 1 6702 1 0 100 0 0 0             *    a black and blue key
+E 1 6860 1 18 10 0 0 0             *   a glowing magical stone
+G 1 6863 1 0 100 0 0 0             *    a black and blue key
 M 0 6822 1 6848 100 0 0 0          * the Sacristan dragon
 E 1 6830 2 16 100 0 0 0            *   a strange warhammer
 E 1 6848 1 18 100 0 0 0            *   a green key

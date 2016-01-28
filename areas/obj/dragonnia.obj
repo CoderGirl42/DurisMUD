@@ -1,4 +1,4 @@
-#6700
+#6800
 nothing~
 &+La nothing&n~
 &+LA nothing is lying here.&n~
@@ -9,66 +9,6 @@ nothing~
 E
 nothing~
    This looks like a whole lot of nothing.
-~
-#6701
-key red yello~
-a &+Yyellow &nand &+rred &nkey~
-A key with red and yellow ornamentations has been dropped here.~
-~
-18 16 1 1 7 0 8392744 16385 0 0 0
-2 0 0 0 0 0 0 0
-3 1000 100
-E
-key red green~
-It looks like an old heavy key with beautiful ornaments on it.
-~
-#6702
-key black blue~
-a &+Lblack &nand &+Bblue &nkey~
-A key with black and blue ornamentations has been dropped here.~
-~
-18 16 1 1 7 0 8392744 16385 0 0 0
-2 0 0 0 0 0 0 0
-3 1000 100
-E
-key red green~
-It looks like an old heavy key with beautiful ornaments on it.
-~
-#6703
-key black white~
-a &+Lblack &nand &+Wwhite &nkey~
-A key with black and white ornamentations has been dropped here.~
-~
-18 16 1 1 7 0 8392744 16385 0 0 0
-2 0 0 0 0 0 0 0
-3 1000 100
-E
-key red green~
-It looks like an old heavy key with beautiful ornaments on it.
-~
-#6704
-key white blue~
-a &+Wwhite &nand &+Bblue &nkey~
-A key with white and blue ornamentations has been dropped here.~
-~
-18 16 1 1 7 0 8392744 16385 0 0 0
-2 0 0 0 0 0 0 0
-3 1000 100
-E
-key red green~
-It looks like an old heavy key with beautiful ornaments on it.
-~
-#6705
-key black blue~
-a &+Lblack &nand &+Bblue &nkey~
-A key with black and blue ornamentations has been dropped here.~
-~
-18 16 1 1 7 0 8392744 16385 0 0 0
-2 0 0 0 0 0 0 0
-3 1000 100
-E
-key red green~
-It looks like an old heavy key with beautiful ornaments on it.
 ~
 #6801
 plate dragon scale~
@@ -1011,6 +951,22 @@ This is the container where the most sacred items for the dragons are kept.
 It is made of platinum with a mystic lock and has the symbol of the god
 Teviros carved on it.
 ~
+#6860
+stone magical glowing~
+a &+Wglowing &+Ymagical &nstone~
+A small unremarkable stone has been dropped here.~
+~
+25 11 0 50 7 0 4096 16385 66 0 0
+6836 259 1 0 0 0 0 0
+18 10 100
+E
+stone magical glowing~
+This is a small stone that irradiates a strong magical aura.
+~
+A
+37 5
+A
+12 80
 #6861
 tree~
 &+ya tree&n~
@@ -1035,19 +991,63 @@ inscription~
                      * *
                       *
 ~
-#6863
-stone magical glowing~
-a &+Wglowing &+Ymagical &nstone~
-A small unremarkable stone has been dropped here.~
+#6862
+key red yello~
+a &+Yyellow &nand &+rred &nkey~
+A key with red and yellow ornamentations has been dropped here.~
 ~
-25 11 0 50 7 0 4096 16385 66 0 0
-6836 259 1 0 0 0 0 0
-18 10 100
+18 16 1 1 7 0 8392744 16385 0 0 0
+2 0 0 0 0 0 0 0
+3 1000 100
 E
-stone magical glowing~
-This is a small stone that irradiates a strong magical aura.
+key red green~
+It looks like an old heavy key with beautiful ornaments on it.
 ~
-A
-37 5
-A
-12 80
+#6863
+key black blue~
+a &+Lblack &nand &+Bblue &nkey~
+A key with black and blue ornamentations has been dropped here.~
+~
+18 16 1 1 7 0 8392744 16385 0 0 0
+2 0 0 0 0 0 0 0
+3 1000 100
+E
+key red green~
+It looks like an old heavy key with beautiful ornaments on it.
+~
+#6864
+key black white~
+a &+Lblack &nand &+Wwhite &nkey~
+A key with black and white ornamentations has been dropped here.~
+~
+18 16 1 1 7 0 8392744 16385 0 0 0
+2 0 0 0 0 0 0 0
+3 1000 100
+E
+key red green~
+It looks like an old heavy key with beautiful ornaments on it.
+~
+#6865
+key white blue~
+a &+Wwhite &nand &+Bblue &nkey~
+A key with white and blue ornamentations has been dropped here.~
+~
+18 16 1 1 7 0 8392744 16385 0 0 0
+2 0 0 0 0 0 0 0
+3 1000 100
+E
+key red green~
+It looks like an old heavy key with beautiful ornaments on it.
+~
+#6866
+key black blue~
+a &+Lblack &nand &+Bblue &nkey~
+A key with black and blue ornamentations has been dropped here.~
+~
+18 16 1 1 7 0 8392744 16385 0 0 0
+2 0 0 0 0 0 0 0
+3 1000 100
+E
+key red green~
+It looks like an old heavy key with beautiful ornaments on it.
+~
