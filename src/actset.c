@@ -1344,7 +1344,7 @@ static void setbit_syntax(P_char ch, int type)
   }
   if( type == SETBIT_CHAR || type == -1 )
   {
-    send_to_char("setbit char name flag-type value [on|off]\r\n", ch);
+    send_to_char("setbit <char|mob> name flag-type value [on|off]\r\n", ch);
   }
   if( type == SETBIT_OBJ || type == -1 )
   {
