@@ -753,3 +753,16 @@ A &+Llarge flat &+ystone &+Llies &nhere.~
 29 15 3 0 7 0 0 0 0 0 0
 270 57136 1 0 0 0 0 0
 0 0 100
+#57057
+small plain chest~
+&+LA small &+ychest&n~
+A &+Lsmall, plain &+ychest &+Llies &nhere.~
+~
+15 15 3 0 7 0 16384 0 1024 0 0
+270 57121 0 4 0 0 0 0
+0 0 100
+E
+small plain chest engraving~
+&+LThis small chest has a short message engraved on the front:
+&+Y  Cheaters suck&+L.
+~
