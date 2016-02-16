@@ -8,25 +8,26 @@
  * ***************************************************************************
  */
 
-#define DEFAULT               0
-#define AIR_ELEMENTAL     BIT_1
-#define FIRE_ELEMENTAL    BIT_2
-#define EARTH_ELEMENTAL   BIT_3
-#define WATER_ELEMENTAL   BIT_4
-#define GHOST             BIT_5
-#define AIR_AURA          BIT_6
-#define VICTIM_BACK_RANK  BIT_7
-#define CHAR_BACK_RANK    BIT_8
-#define AGI_CHECK         BIT_9
-#define DRAGON            BIT_10
-#define NO_BASH           BIT_11
-#define FOOTING           BIT_12
-#define HARPY             BIT_13
-#define GRAPPLE           BIT_14
-#define EVADE             BIT_15
-#define ELEMENTALS        AIR_ELEMENTAL | FIRE_ELEMENTAL | EARTH_ELEMENTAL | WATER_ELEMENTAL
+#define TAKEDOWN_DEFAULT               0
+#define TAKEDOWN_AIR_ELEMENTAL     BIT_1
+#define TAKEDOWN_FIRE_ELEMENTAL    BIT_2
+#define TAKEDOWN_EARTH_ELEMENTAL   BIT_3
+#define TAKEDOWN_WATER_ELEMENTAL   BIT_4
+#define TAKEDOWN_GHOST             BIT_5
+#define TAKEDOWN_AIR_AURA          BIT_6
+#define TAKEDOWN_VICTIM_BACK_RANK  BIT_7
+#define TAKEDOWN_CHAR_BACK_RANK    BIT_8
+#define TAKEDOWN_AGI_CHECK         BIT_9
+#define TAKEDOWN_DRAGON            BIT_10
+#define TAKEDOWN_NO_BASH           BIT_11
+#define TAKEDOWN_FOOTING           BIT_12
+#define TAKEDOWN_HARPY             BIT_13
+#define TAKEDOWN_GRAPPLE           BIT_14
+#define TAKEDOWN_EVADE             BIT_15
+#define TAKEDOWN_LUK_CHECK         BIT_16
+#define TAKEDOWN_ELEMENTALS        TAKEDOWN_AIR_ELEMENTAL | TAKEDOWN_FIRE_ELEMENTAL | TAKEDOWN_EARTH_ELEMENTAL | TAKEDOWN_WATER_ELEMENTAL
 
-#define APPLY_ALL   65535U
+#define TAKEDOWN_ALL   65535U
 
 #define TAKEDOWN_CANCELLED  -1
 #define TAKEDOWN_PENALTY  -2
@@ -90,225 +91,225 @@ struct failed_takedown_messages
  * arrays for new skills and want to use skill_immunity* stuff
  */
 struct failed_takedown_messages failed_bash_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to bash $N fails as you simply pass through $M.",
    "$n makes a valiant attempt to bash $N, but simply falls through $M.",
    "$n's attempt to bash you fails as $e simply passes through you."},
-  {AIR_ELEMENTAL,
+  {TAKEDOWN_AIR_ELEMENTAL,
    "&+WYour attempt to bash $N fails as $E blows you on your ass!",
    "&+W$n makes a valiant attempt to bash $N, but gets blown on $s ass!",
    "$n's attempt to bash you fails as you simply blow $m onto $s ass!"},
-  {EARTH_ELEMENTAL,
+  {TAKEDOWN_EARTH_ELEMENTAL,
    "&+WYour attempt to bash $N feels like you just hit a brick wall!",
    "&+W$n just fell flat on $s ass after trying to bash $N!",
    "$n's attempt to bash you fails miserably."},
-  {FIRE_ELEMENTAL,
+  {TAKEDOWN_FIRE_ELEMENTAL,
    "&+WYour attempt to bash $N almost burns you to a crisp!",
    "&+W$n tries to bash $N, but falls right through $M and onto $s ass!",
    "$n's attempt to bash you almost burns $m to a crisp!"},
-  {WATER_ELEMENTAL,
+  {TAKEDOWN_WATER_ELEMENTAL,
    "&+WYou almost drown in your attempt to bash $N!",
    "$n almost drowns as $e passes right through $N!",
    "$n almost drowns as $e attempts to bash you!"},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to bash $N fails as $M flutters into the air.",
    "$n makes a valiant attempt to bash $N, but $E flutters into the air.",
    "$n's attempt to bash you fails as you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you try to bash $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n tries to bash $N, $N slips away from $m and slams $s face into the ground.",
    "As $n tries to bash you, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "Your powerful bash knocks $N to the ground yet $E quickly rolls back up onto $S feet.",
    "$N spins out of the way and rolls back onto $S feet as $n tries to knock $M to the ground.",
    "You use the momentum of $n's powerful bash to leap back up onto your feet!"},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to bash $N, but $E is simply immovable.",
    "$n makes a futile attempt to bash $N, but $E is simply immovable.",
    "$n makes a futile attempt to bash you, but you are simply immovable."}
 };
 
 struct failed_takedown_messages failed_trip_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to trip $N fails as you simply pass through $M.",
    "$n makes a valiant attempt to trip $N, but simply falls through $M.",
    "$n's attempt to trip you fails as $e simply passes through you."},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to trip $N fails as $M flutters into the air.",
    "$n makes a valiant attempt to trip $N, but $E flutters into the air.",
    "$n's attempt to trip you fails as you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you try to trip $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n tries to trip $N, $N slips away from $m and slams $s face into the ground.",
    "As $n tries to trip you, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "In an amazing display of dexterity $N does a backward flip avoiding being tripped!",
    "As $n tries to trip $N $E flips over $S shoulder and escapes!",
    "You spin out of reach as $n attempts to sweep your feet."},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to trip $N, but $E is simply immovable.",
    "$n makes a futile attempt to trip $N, but $E is simply immovable.",
    "$n makes a futile attempt to trip you, but you are simply immovable."}
 };
 
 struct failed_takedown_messages failed_round_kick_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to kick $N fails as you simply pass through $M.",
    "$n makes a valiant attempt to kick $N, but simply falls through $M.",
    "$n's attempt to kick you fails as $e simply passes through you."},
-  {AIR_ELEMENTAL,
+  {TAKEDOWN_AIR_ELEMENTAL,
    "&+WYour attempt to kick $N fails as $E blows you on your ass!",
    "&+W$n makes a valiant attempt to kick $N, but gets blown on $s ass!",
    "$n's attempt to kick you fails as you simply blow $m onto $s ass!"},
-  {EARTH_ELEMENTAL,
+  {TAKEDOWN_EARTH_ELEMENTAL,
    "&+WYour attempt to kick $N feels like you just hit a brick wall!",
    "&+W$n just fell flat on $s ass after trying to kick $N!",
    "$n's attempt to kick you fails miserably."},
-  {FIRE_ELEMENTAL,
+  {TAKEDOWN_FIRE_ELEMENTAL,
    "&+WYour attempt to kick $N almost burns you to a crisp!",
    "&+W$n tries to kick $N, but falls right through $M and onto $s ass!",
    "$n's attempt to kick you almost burns $m to a crisp!"},
-  {WATER_ELEMENTAL,
+  {TAKEDOWN_WATER_ELEMENTAL,
    "&+WYou almost drown in your attempt to kick $M!",
    "$n almost drowns as $e passes right through $M!",
    "$n almost drowns as $e attempts to kick you!"},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to kick $N fails as $M flutters into the air.",
    "$n makes a valiant attempt to kick $N, but $E flutters into the air.",
    "$n's attempt to kick you fails as you flutter into the air."},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "&+WYou attempt to kick $M but bounce right off!",
    "$n tries to kick $N but bounces right off!",
    "$n tries to kick you but bounces right off!"}
 };
 
 struct failed_takedown_messages failed_bodyslam_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to bodyslam $N fails as you simply pass through $M.",
    "$n tries to bodyslam $N, but simply falls through $M.",
    "$n tries to bodyslam you, but simply falls through."},
-  {AIR_ELEMENTAL,
+  {TAKEDOWN_AIR_ELEMENTAL,
    "&+WYour attempt to bodyslam $N fails as $E blows you on your ass!",
    "&+W$n makes a valiant attempt to bodyslam $N, but gets blown on $s ass!",
    "$n's attempt to bodyslam you fails as you simply blow $m onto $s ass!"},
-  {EARTH_ELEMENTAL,
+  {TAKEDOWN_EARTH_ELEMENTAL,
    "&+WYour attempt to bodyslam $N feels like you just hit a brick wall!",
    "&+W$n just fell flat on $s ass after trying to bodyslam $N!",
    "$n's attempt to bodyslam you fails miserably."},
-  {FIRE_ELEMENTAL,
+  {TAKEDOWN_FIRE_ELEMENTAL,
    "&+WYour attempt to bodyslam $N almost burns you to a crisp!",
    "&+W$n tries to bodyslam $N, but falls right through $M and onto $s ass!",
    "$n's attempt to bodyslam you almost burns $m to a crisp!"},
-  {WATER_ELEMENTAL,
+  {TAKEDOWN_WATER_ELEMENTAL,
    "&+WYou almost drown in your attempt to bodyslam $M!",
    "$n almost drowns as $e passes right through $M!",
    "$n almost drowns as $e attempts to bodyslam you!"},
-  {DRAGON,
+  {TAKEDOWN_DRAGON,
    "You simply bounce off $N's massive form.",
    "$n tries to bodyslam $N and bounces off, stunned!",
    "$n tries to bodyslam you and bounces off, stunned!"},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to bodyslam $N fails as $M flutters into the air.",
    "$n tries to bodyslam $N, but $E flutters into the air.",
    "$n's tries to bodyslam you but, you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you try to bodyslam $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n tries to bodyslam $N, $N slips away from $m and slams $s face into the ground.",
    "As $n tries to bodyslam you, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "The force of your bodyslam sends $N on $S ass but $E quickly recovers and leaps back up.",
    "$n's bodyslam sends $N on $S ass but with great dexterity $E rolls backward and leaps back up.",
    "$n bodyslams you to the ground but you use the momentum to roll backward onto your feet."},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to bodyslam $N, but $E is simply immovable.",
    "$n makes a futile attempt to bodyslam $N, but $E is simply immovable.",
    "$n makes a futile attempt to bodyslam you, but you are simply immovable."}
 };
 
 struct failed_takedown_messages failed_tackle_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to tackle $N fails as you simply pass through $M.",
    "$n makes a valiant attempt to tackle $N, but simply falls through $M.",
    "$n's attempt to tackle you fails as $e simply passes through you."},
-  {AIR_ELEMENTAL,
+  {TAKEDOWN_AIR_ELEMENTAL,
    "&+WYour attempt to tackle $N fails as $E blows you on your ass!",
    "&+W$n makes a valiant attempt to tackle $N, but gets blown on $s ass!",
    "$n's attempt to tackle you fails as you simply blow $m onto $s ass!"},
-  {EARTH_ELEMENTAL,
+  {TAKEDOWN_EARTH_ELEMENTAL,
    "&+WYour attempt to tackle $N feels like you just hit a brick wall!",
    "&+W$n just fell flat on $s ass after trying to tackle $N!",
    "$n's attempt to tackle you fails miserably."},
-  {FIRE_ELEMENTAL,
+  {TAKEDOWN_FIRE_ELEMENTAL,
    "&+WYour attempt to tackle $N almost burns you to a crisp!",
    "&+W$n tries to tackle $N, but falls right through $M and onto $s ass!",
    "$n's attempt to tackle you almost burns $m to a crisp!"},
-  {WATER_ELEMENTAL,
+  {TAKEDOWN_WATER_ELEMENTAL,
    "&+WYou almost drown in your attempt to tackle $M!",
    "$n almost drowns as $e passes right through $M!",
    "$n almost drowns as $e attempts to tackle you!"},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to tackle $N fails as $M flutters into the air.",
    "$n makes a valiant attempt to tackle $N, but $E flutters into the air.",
    "$n's attempt to tackle you fails as you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you try to tackle $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n tries to tackle $N, $N slips away from $m and slams $s face into the ground.",
    "As $n tries to tackle you, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "As you try to tackle $N $E casually sidesteps forcing you to abort or topple to the ground.",
    "As $n tries to tackle $N $E casually sidesteps causing $m to almost slip and fall.",
    "You casually sidesteps $n as $e tries to tackle you causing $m to stumble and almost fall."},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to tackle $N, but $E is simply immovable.",
    "$n makes a futile attempt to tackle $N, but $E is simply immovable.",
    "$n makes a futile attempt to tackle you, but you are simply immovable."}
 };
 
 struct failed_takedown_messages failed_springleap_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "You fly head first through $N, landing on your ass.",
    "$n attempts to springleap $N but simply flies through $M.",
    "$n attempts to springleap you.  Apparently $e didn't notice you're incorporeal."},
-  {DRAGON,
+  {TAKEDOWN_DRAGON,
    "You fly head first directly into what might as well be a brick wall.",
    "$n flies into $N, and simply drops off the massive form.",
    "$n is really quite an idiot to think $e could do that fancy crap on YOU."},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to springleap $N fails as $M flutters into the air.",
    "$n attempts to springleap $N, but $E flutters into the air.",
    "$n's attempts to springleap you fails as you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you try to springleap $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n tries to springleap $N, $N slips away from $m and slams $s face into the ground.",
    "As $n tries to springleap you, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "Your springleap knocks $N to the ground, yet with great dexterity $E rolls back onto $S feet.",
    "$n's springleap knocks $N to the ground, yet with great dexterity $E rolls back onto $S feet.",
    "$n flies into you knocking you off your feet, but you tuck and roll springing up on to your feet."},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to springleap $N, but $E is simply immovable.",
    "$n makes a futile attempt to springleap $N, but $E is simply immovable.",
    "$n makes a futile attempt to springleap you, but you are simply immovable."}
 };
 
 struct failed_takedown_messages failed_maul_messages[] = {
-  {GHOST,
+  {TAKEDOWN_GHOST,
    "Your attempt to maul $N fails as you simply pass through $M.",
    "$n attempts to maul $N, but simply falls through $M.",
    "$n's maul passes right through you."},
-  {HARPY,
+  {TAKEDOWN_HARPY,
    "Your attempt to maul $N fails as $M flutters into the air.",
    "$n makes a valiant attempt to maul $N, but $E flutters into the air.",
    "$n's attempt to maul you fails as you flutter into the air."},
-  {GRAPPLE,
+  {TAKEDOWN_GRAPPLE,
    "As you attempt to maul $N, $E sidesteps, trips you, and slams you face first into the ground.",
    "As $n attempts to maul $N, $N slips away from $m and slams $s face into the ground.",
    "As $n attempts to maul, you slip away from $m and slam $s face into the ground."},
-  {EVADE,
+  {TAKEDOWN_EVADE,
    "In an amazing display of dexterity $N does a backward flip avoiding your maul!",
    "As $n tries to maul $N $E flips over $S shoulder and escapes!",
    "You spin out of reach as $n attempts to maul you into the ground!"},
-  {DEFAULT,
+  {TAKEDOWN_DEFAULT,
    "You make a futile attempt to maul $N, but $E is simply immovable.",
    "$n makes a futile attempt to maul $N, but $E is simply immovable.",
    "$n makes a futile attempt to maul you, but you are simply immovable."}
@@ -354,7 +355,7 @@ void show_failed_takedown_messages(P_char ch, P_char victim, int skill, int reas
 
   i = 0;
   while (messages_set[i].reason != reason &&
-         messages_set[i].reason != DEFAULT)
+         messages_set[i].reason != TAKEDOWN_DEFAULT)
   {
     i++;
   }
@@ -392,7 +393,7 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
     return TAKEDOWN_CANCELLED;
   }
 
-  if( (applicable & CHAR_BACK_RANK) && !on_front_line(ch) )
+  if( (applicable & TAKEDOWN_CHAR_BACK_RANK) && !on_front_line(ch) )
   {
     send_to_char("You can't seem to break the ranks!\n", ch);
     return TAKEDOWN_CANCELLED;
@@ -425,14 +426,14 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
     && (notch_skill(victim, SKILL_EVADE, get_property("skill.notch.offensive", 7))
     || GET_CHAR_SKILL(victim, SKILL_EVADE) / 3 >= number(1, 100)) )
   {
-    show_failed_takedown_messages(ch, victim, skill, EVADE);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_EVADE);
     set_short_affected_by(victim, SKILL_EVADE, PULSE_VIOLENCE/2);
     CharWait(ch, (int) (PULSE_VIOLENCE * 0.5));
     return TAKEDOWN_CANCELLED;
   }
 
   // Back ranked check
-  if( (IS_PC(ch) || IS_PC_PET(ch)) && (applicable & VICTIM_BACK_RANK) && !on_front_line(victim) )
+  if( (IS_PC(ch) || IS_PC_PET(ch)) && (applicable & TAKEDOWN_VICTIM_BACK_RANK) && !on_front_line(victim) )
   {
     send_to_char("You can't quite seem to reach them...\n", ch);
     return TAKEDOWN_CANCELLED;
@@ -444,7 +445,7 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
     if(notch_skill(victim, SKILL_GRAPPLE, get_property("skill.notch.offensive", 7))
       || GET_CHAR_SKILL(victim, SKILL_GRAPPLE)/6 >= number(1, 100))
     {
-      show_failed_takedown_messages(ch, victim, skill, GRAPPLE);
+      show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_GRAPPLE);
       return TAKEDOWN_PENALTY;
     }
   }
@@ -455,7 +456,7 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
     return TAKEDOWN_CANCELLED;
   }
 
-  if( (applicable & FOOTING) && !HAS_FOOTING(ch) )
+  if( (applicable & TAKEDOWN_FOOTING) && !HAS_FOOTING(ch) )
   {
     // Water elemental pets of Water Maguses don't need footing.
     if( GET_RACE(ch) == RACE_W_ELEMENTAL && IS_PC_PET(ch) && GET_SPEC(GET_MASTER(ch), CLASS_CONJURER, SPEC_WATER) )
@@ -469,18 +470,18 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
   	}
   }
 
-  if( (applicable & GHOST) && IS_IMMATERIAL(victim) )
+  if( (applicable & TAKEDOWN_GHOST) && IS_IMMATERIAL(victim) )
   {
     if( IS_NPC(victim) )
     {
-      show_failed_takedown_messages(ch, victim, skill, GHOST);
+      show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_GHOST);
       return TAKEDOWN_PENALTY;
     }
 
     // Immaterial PCs get a 10% chance to dodge takedowns.
     if( IS_PC(victim) && !number(0, 9) )
     {
-      show_failed_takedown_messages(ch, victim, skill, GHOST);
+      show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_GHOST);
       return TAKEDOWN_PENALTY;
     }
   }
@@ -488,56 +489,56 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
   // Displacement - Dodges takedowns, max 10% chance @ lvl 50.
   if( affected_by_spell(victim, SPELL_DISPLACEMENT) && (5 + GET_LEVEL(ch) / 10) >= number(1, 100) )
   {
-    show_failed_takedown_messages(ch, victim, skill, GHOST);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_GHOST);
     return TAKEDOWN_PENALTY;
   }
 
   // Harpies - 5% chance to dodge takedowns.
-  if( (applicable & HARPY) && IS_HARPY(victim) && (number(1, 100) <= 5) )
+  if( (applicable & TAKEDOWN_HARPY) && IS_HARPY(victim) && (number(1, 100) <= 5) )
   {
-    show_failed_takedown_messages(ch, victim, skill, HARPY);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_HARPY);
     return TAKEDOWN_PENALTY;
   }
 
   // Earth Elemental race is !bash.
-  if( (applicable & EARTH_ELEMENTAL) && GET_RACE(victim) == RACE_E_ELEMENTAL )
+  if( (applicable & TAKEDOWN_EARTH_ELEMENTAL) && GET_RACE(victim) == RACE_E_ELEMENTAL )
   {
-    show_failed_takedown_messages(ch, victim, skill, EARTH_ELEMENTAL);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_EARTH_ELEMENTAL);
     return TAKEDOWN_PENALTY;
   }
   // Water Elemental race is !bash.
-  if( (applicable & WATER_ELEMENTAL) && GET_RACE(victim) == RACE_W_ELEMENTAL )
+  if( (applicable & TAKEDOWN_WATER_ELEMENTAL) && GET_RACE(victim) == RACE_W_ELEMENTAL )
   {
-    show_failed_takedown_messages(ch, victim, skill, WATER_ELEMENTAL);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_WATER_ELEMENTAL);
     return TAKEDOWN_PENALTY;
   }
 
   // !bash flag.
-  if( (applicable & NO_BASH) && IS_NPC(victim) && IS_SET(victim->specials.act, ACT_NO_BASH) )
+  if( (applicable & TAKEDOWN_NO_BASH) && IS_NPC(victim) && IS_SET(victim->specials.act, ACT_NO_BASH) )
   {
-    show_failed_takedown_messages(ch, victim, skill, DEFAULT);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_DEFAULT);
     return TAKEDOWN_PENALTY;
   }
 
   // All dragons are 100% !bash.
-  if( (applicable & DRAGON) && IS_DRAGON(victim) && IS_NPC(victim) )
+  if( (applicable & TAKEDOWN_DRAGON) && IS_DRAGON(victim) && IS_NPC(victim) )
   {
-    show_failed_takedown_messages(ch, victim, skill, DEFAULT);
+    show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_DEFAULT);
     return TAKEDOWN_PENALTY;
   }
 
-  if( (applicable & AIR_AURA) && IS_AFFECTED2(victim, AFF2_AIR_AURA) )
+  if( (applicable & TAKEDOWN_AIR_AURA) && IS_AFFECTED2(victim, AFF2_AIR_AURA) )
   {
     // 6 out of 20 chance - 30%
     if( number(1, 20) <= 6 )
     {
-      show_failed_takedown_messages(ch, victim, skill, GHOST);
+      show_failed_takedown_messages(ch, victim, skill, TAKEDOWN_GHOST);
       return TAKEDOWN_PENALTY;
     }
   }
 
   // Agi versus agi Nov08 -Lucrot
-  if( applicable & AGI_CHECK )
+  if( applicable & TAKEDOWN_AGI_CHECK )
   {
     cagi = GET_C_AGI(ch);
     vagi = GET_C_AGI(victim);
@@ -562,16 +563,19 @@ float takedown_check(P_char ch, P_char victim, float chance, int skill, ulong ap
     chance *= get_property("skill.bash.NPC_Modifier", 1.2);
   }
 
-  // Lucky bashers get a 10% @100 luck chance for a 10% bonus.
-  if( GET_C_LUK(ch) / 10 >= number(1, 100) )
+  if( applicable & TAKEDOWN_LUK_CHECK )
   {
-    chance *= 1.1;
-  }
+    // Lucky bashers get a 10% @100 luck chance for a 10% bonus.
+    if( GET_C_LUK(ch) / 10 >= number(1, 100) )
+    {
+      chance *= 1.1;
+    }
 
-  // Lucky victims get a 10% @100 luck chance for a 10% bonus to dodge.
-  if( GET_C_LUK(victim) / 10 >= number(1, 100) )
-  {
-    chance *= .9;
+    // Lucky victims get a 10% @100 luck chance for a 10% bonus to dodge.
+    if( GET_C_LUK(victim) / 10 >= number(1, 100) )
+    {
+      chance *= .9;
+    }
   }
 
   // Guardian spirits protects vs takedowns - chance dictated by the property.
@@ -951,7 +955,7 @@ void lance_charge(P_char ch, char *argument)
   if(dir != -1)
     dam = (int) (dam * get_property("skill.lance.charge.RangeDamMod", 2.000));    // ranged charge
 
-  knockdown_chance = takedown_check(ch, victim, knockdown_chance, SKILL_LANCE_CHARGE, APPLY_ALL ^ FOOTING);
+  knockdown_chance = takedown_check(ch, victim, knockdown_chance, SKILL_LANCE_CHARGE, TAKEDOWN_ALL ^ TAKEDOWN_FOOTING);
 
   if(knockdown_chance == TAKEDOWN_CANCELLED)
     return;
@@ -3622,7 +3626,7 @@ void kick(P_char ch, P_char victim)
     takedown_chance = (int) (takedown_chance * 1.4);
   }
 
-  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK, APPLY_ALL ^ AGI_CHECK ^ FOOTING);
+  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK, TAKEDOWN_ALL ^ TAKEDOWN_AGI_CHECK ^ TAKEDOWN_FOOTING);
 
   if( takedown_chance == TAKEDOWN_CANCELLED || takedown_chance == TAKEDOWN_PENALTY )
   {
@@ -3847,7 +3851,7 @@ int chance_roundkick(P_char ch, P_char victim)
     percent_chance = (int) (percent_chance * 0.95);
   }
   
-  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_ROUNDKICK, APPLY_ALL);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_ROUNDKICK, TAKEDOWN_ALL);
 
   return (int) percent_chance;
 
@@ -5876,7 +5880,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
     percent_chance *= get_property("skill.bash.ThriKreen_Modifier", .70);
   }
 
-  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_BASH, APPLY_ALL ^ AGI_CHECK ^ VICTIM_BACK_RANK);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_BASH, TAKEDOWN_ALL ^ TAKEDOWN_AGI_CHECK ^ TAKEDOWN_VICTIM_BACK_RANK);
 
   if( percent_chance == TAKEDOWN_CANCELLED )
   {
@@ -6276,7 +6280,7 @@ void do_tackle(P_char ch, char *arg, int cmd)
     }
   }
   
-  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_TACKLE, APPLY_ALL ^ FOOTING);
+  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_TACKLE, TAKEDOWN_ALL ^ TAKEDOWN_FOOTING);
     
   if(percent_chance == TAKEDOWN_CANCELLED)
     return;
@@ -7035,7 +7039,7 @@ void maul(P_char ch, P_char victim)
   act("You fill with &+rBLoodLuST&n and make a ferocious attack against $N!",
       FALSE, ch, 0, victim, TO_CHAR);
       
-  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_MAUL, APPLY_ALL);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_MAUL, TAKEDOWN_ALL);
     
   if(percent_chance == TAKEDOWN_CANCELLED)
     return;
@@ -7487,7 +7491,7 @@ void do_sweeping_thrust(P_char ch, char *argument, int cmd)
     return;
   }
   
-  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_SWEEPING_THRUST, APPLY_ALL ^ AGI_CHECK ^ FOOTING);
+  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_SWEEPING_THRUST, TAKEDOWN_ALL ^ TAKEDOWN_AGI_CHECK ^ TAKEDOWN_FOOTING);
 
   if(takedown_chance == TAKEDOWN_CANCELLED)
   {
@@ -7818,7 +7822,7 @@ void do_rearkick(P_char ch, char *argument, int cmd)
   if(IS_NPC(ch))
     takedown_chance += 15;
 
-  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK, APPLY_ALL ^ AGI_CHECK ^ FOOTING);
+  takedown_chance = takedown_check(ch, victim, takedown_chance, SKILL_KICK, TAKEDOWN_ALL ^ TAKEDOWN_AGI_CHECK ^ TAKEDOWN_FOOTING);
 
   if(takedown_chance == TAKEDOWN_CANCELLED || takedown_chance == TAKEDOWN_PENALTY)
     return;
@@ -7934,7 +7938,7 @@ void do_rearkick(P_char ch, char *argument, int cmd)
   }
 
   knockdown_chance =
-    takedown_check(ch, victim, knockdown_chance, SKILL_KICK, APPLY_ALL);
+    takedown_check(ch, victim, knockdown_chance, SKILL_KICK, TAKEDOWN_ALL);
 
   if(knockdown_chance == TAKEDOWN_CANCELLED) {
     return;
@@ -8197,7 +8201,7 @@ void do_trample(P_char ch, char *argument, int cmd)
 
   CharWait(ch, PULSE_VIOLENCE * 2);
   
-  knockdown_chance = takedown_check(ch, victim, knockdown_chance, SKILL_KICK, APPLY_ALL);
+  knockdown_chance = takedown_check(ch, victim, knockdown_chance, SKILL_KICK, TAKEDOWN_ALL);
 
   if(knockdown_chance == TAKEDOWN_CANCELLED)
   {
@@ -8355,7 +8359,7 @@ void bodyslam(P_char ch, P_char victim)
 
   debug( "bodyslam: (%s) bodyslamming (%s) chance (%d).", J_NAME(ch), J_NAME(victim), percent_chance );
 
-  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_BODYSLAM, ~AGI_CHECK);
+  percent_chance = takedown_check(ch, victim, percent_chance, SKILL_BODYSLAM, ~TAKEDOWN_AGI_CHECK);
 
   GET_VITALITY(ch) -= 30;
 
@@ -8587,7 +8591,7 @@ void do_springleap(P_char ch, char *argument, int cmd)
   }
 
   percent_chance = (int) (percent_chance * ((double) BOUNDED(80, 100 + GET_LEVEL(ch) - GET_LEVEL(vict), 125)) / 100);
-  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_SPRINGLEAP, APPLY_ALL);
+  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_SPRINGLEAP, TAKEDOWN_ALL);
 
   if(percent_chance == TAKEDOWN_CANCELLED)
   {
@@ -8906,7 +8910,7 @@ void do_trip(P_char ch, char *argument, int cmd)
 
   percent_chance =
     (int) (percent_chance * ((double) BOUNDED(72, GET_C_AGI(ch), 160)) / 100);
-  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_TRIP, APPLY_ALL);
+  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_TRIP, TAKEDOWN_ALL);
 
   if(percent_chance == TAKEDOWN_CANCELLED)
   {
@@ -10466,7 +10470,7 @@ void do_legsweep(P_char ch, char *arg, int cmd)
   }
 
 
-  if( GET_CHAR_SKILL(ch, SKILL_LEGSWEEP) < 1 )
+  if( (percent_chance = GET_CHAR_SKILL( ch, SKILL_LEGSWEEP )) < 1 )
   {
     send_to_char("You really dont know how.\n", ch);
     return;
@@ -10511,21 +10515,10 @@ void do_legsweep(P_char ch, char *arg, int cmd)
     return;
   }
 
-  percent_chance = GET_CHAR_SKILL(ch, SKILL_LEGSWEEP);
-
   if( !on_front_line(ch) || !on_front_line(vict) )
   {
     send_to_char("With an awesome aerial maneuver you manage to reach the target.\n", ch);
     percent_chance *= 0.5;
-  }
-
-  if( GET_C_LUK(ch) / 2 > number(1, 100) )
-  {
-    percent_chance *= 1.1;
-  }
-  if( GET_C_LUK(vict) / 2 > number(1, 100) )
-  {
-    percent_chance *= .9;
   }
 
   if(IS_AFFECTED(vict, AFF_AWARE))
@@ -10533,7 +10526,7 @@ void do_legsweep(P_char ch, char *arg, int cmd)
     percent_chance *= .75;
   }
 
-  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_LEGSWEEP, APPLY_ALL);
+  percent_chance = takedown_check(ch, vict, percent_chance, SKILL_LEGSWEEP, TAKEDOWN_ALL);
 
   if( percent_chance == TAKEDOWN_CANCELLED )
   {
@@ -10561,7 +10554,7 @@ void do_legsweep(P_char ch, char *arg, int cmd)
   }
 
   if( (notch_skill(ch, SKILL_LEGSWEEP, get_property("skill.notch.offensive", 7))
-    || number(1, 100) < percent_chance || IS_TRUSTED(ch)) && GET_POS(vict) == POS_STANDING )
+    || number(1, 100) <= percent_chance || IS_TRUSTED(ch)) && GET_POS(vict) == POS_STANDING )
   {
     if( !IS_TRUSTED(ch) )
     {
@@ -10604,7 +10597,7 @@ void do_legsweep(P_char ch, char *arg, int cmd)
     act("$n attemps to legsweep you, but only manages to land on $s ass.",
       FALSE, ch, 0, vict, TO_VICT);
 
-    SET_POS(ch, POS_PRONE + GET_STAT(ch));
+    SET_POS(ch, POS_SITTING + GET_STAT(ch));
     CharWait(ch, PULSE_VIOLENCE * 2);
   }
 
