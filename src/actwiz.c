@@ -5796,7 +5796,7 @@ void do_reinitphys(P_char ch, char *arg, int cmd)
   }
   else if(!(vict = get_char_vis(ch, buf)))
     send_to_char("No-one by that name in the world.\n", ch);
-  else if(!IS_TRUSTED(vict))
+  else if( ch == vict || !IS_TRUSTED(vict) )
   {
     NewbySkillSet(vict, TRUE);
     sprintf(buf, "Resetting of $N's skills completed.");
