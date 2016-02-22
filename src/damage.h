@@ -68,7 +68,16 @@
 #define DF_DRACOLICHVAMP        52
 #define DF_NEG_AC_MULT          53
 #define DF_DODGE_AGI_MODIFIER   54
-#define LAST_DF                 54
+#define DF_ARROWVAMP            55
+#define DF_ANTIPALADINVAMP      56
+#define DF_MERCENARYVAMP        57
+#define DF_WARRIORVAMP          58
+#define DF_BERSERKERVAMP        59
+#define DF_ROGUEVAMP            60
+#define DF_PALADINVAMP          61
+#define DF_RANGERVAMP           62
+#define DF_DLORDAVGRVAMP        63
+#define LAST_DF                 63
 
 #define SPLDAM_GENERIC   1
 #define SPLDAM_FIRE      2

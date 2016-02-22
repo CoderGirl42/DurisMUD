@@ -342,7 +342,7 @@ void update_dam_factors()
   dam_factor[DF_ELSHIELDDAM] = get_property("damage.shield.fireCold", 0.5);
   dam_factor[DF_NEGSHIELD] = get_property("damage.shield.neg", 0.25);
   dam_factor[DF_SOULSHIELDDAM] = get_property("damage.shield.soul", 0.2);
-  dam_factor[DF_MONKVAMP] = get_property("vamping.vampiricTouch.monks", 0.05);
+  dam_factor[DF_MONKVAMP] = get_property("vamping.vampiricTouch.monk", 0.05);
   dam_factor[DF_TOUCHVAMP] = get_property("vamping.vampiricTouch", 0.4);
   dam_factor[DF_TRANCEVAMP] = get_property("vamping.vampiricTrance", 0.2);
   dam_factor[DF_HFIREVAMP] = get_property("vamping.hellfire", 0.14);
@@ -363,6 +363,15 @@ void update_dam_factors()
   dam_factor[DF_DRACOLICHVAMP] = get_property("vamping.dracolich", 0.500);
   dam_factor[DF_NEG_AC_MULT] = get_property("damage.neg.armorclass.multiplier", 0.500);
   dam_factor[DF_DODGE_AGI_MODIFIER] = get_property("damage.dodge.agi.multiplier", 1.500);
+  dam_factor[DF_ARROWVAMP] = get_property("vamping.vampiricTouch.arrow", 0.05);
+  dam_factor[DF_ANTIPALADINVAMP] = get_property("vamping.vampiricTouch.antipaladin", 0.05);
+  dam_factor[DF_MERCENARYVAMP] = get_property("vamping.vampiricTouch.mercenary", 0.100);
+  dam_factor[DF_WARRIORVAMP] = get_property("vamping.vampiricTouch.warrior", 0.100);
+  dam_factor[DF_BERSERKERVAMP] = get_property("vamping.vampiricTouch.berserker", 0.100);
+  dam_factor[DF_ROGUEVAMP] = get_property("vamping.vampiricTouch.rogue", 0.100);
+  dam_factor[DF_PALADINVAMP] = get_property("vamping.vampiricTouch.paladin", 0.100);
+  dam_factor[DF_RANGERVAMP] = get_property("vamping.vampiricTouch.ranger", 0.100);
+  dam_factor[DF_DLORDAVGRVAMP] = get_property("vamping.vampiricTouch.dreadlord.or.avenger", 0.100);
 }
 
 // The swashbuckler is considered the victim. // May09 -Lucrot
@@ -5366,7 +5375,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( (flags & PHSDAM_ARROW) && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
     && IS_PC(ch) && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) && dam >= 4 )
   {
-    vamped = vamp(ch, dam * 0.050, GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+    vamped = vamp(ch, dam * dam_factor[DF_ARROWVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
   }
 
   // Physical type actions that vamp
@@ -5374,10 +5383,15 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if( (flags & PHSDAM_TOUCH) && !vamped && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
     && IS_PC(ch) && !IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) )
   {
-    // The class order makes a difference to multiclass chars.
-    if(GET_CLASS(ch, CLASS_ANTIPALADIN))
+    // Illithids get full regular touch vamp (since they have lousy str).
+    if( IS_ILLITHID(ch) )
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.antipaladins", 0.700), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_TOUCHVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+    }
+    // The class order makes a difference to multiclass chars.
+    else if(GET_CLASS(ch, CLASS_ANTIPALADIN))
+    {
+      vamped = vamp(ch, dam * dam_factor[DF_ANTIPALADINVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_MONK))
     {
@@ -5385,31 +5399,31 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     }
     else if(GET_CLASS(ch, CLASS_MERCENARY))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.mercs", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_MERCENARYVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_WARRIOR))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.warriors", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_WARRIORVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_BERSERKER))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.berserkers", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_BERSERKERVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_ROGUE))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.rogues", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_ROGUEVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_PALADIN))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.paladins", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_PALADINVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_RANGER))
     {
-      vamped = vamp(ch,  dam * get_property("vamping.vampiricTouch.rangers", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_RANGERVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else if(GET_CLASS(ch, CLASS_AVENGER) || GET_CLASS(ch, CLASS_DREADLORD))
     {
-      vamped = vamp(ch, dam * get_property("vamping.vampiricTouch.dreadlord.or.avenger", 0.100), GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
+      vamped = vamp(ch, dam * dam_factor[DF_DLORDAVGRVAMP], GET_MAX_HIT(ch) * VAMPPERCENT(ch) );
     }
     else
     {
