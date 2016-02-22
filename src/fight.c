@@ -9026,9 +9026,9 @@ int calculate_attacks(P_char ch, int attacks[])
     if( !IS_AFFECTED2(ch, AFF2_SLOW) || IS_AFFECTED(ch, AFF_HASTE) )
     {
       ADD_ATTACK(PRIMARY_WEAPON);
-      // Can swing both primary hands at once - 49% for newbs, 99% for maxxed dual wield.
+      // Can swing both primary hands at once - 50% for newbs, 100% for maxxed dual wield.
       if( HAS_FOUR_HANDS(ch) && ch->equipment[THIRD_WEAPON]
-        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) > number( 1, 100 )) )
+        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) >= number( 1, 100 )) )
       {
         ADD_ATTACK(THIRD_WEAPON);
       }
@@ -9042,19 +9042,19 @@ int calculate_attacks(P_char ch, int attacks[])
         || number(1, 100) < GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) )
       {
         ADD_ATTACK(SECONDARY_WEAPON);
-        // Can swing both secondary hands at once - 49% for newbs, 99% for maxxed dual wield.
+        // Can swing both secondary hands at once - 50% for newbs, 100% for maxxed dual wield.
         if( HAS_FOUR_HANDS(ch) && ch->equipment[FOURTH_WEAPON]
-          && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) > number( 1, 100 )) )
+          && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) >= number( 1, 100 )) )
         {
           ADD_ATTACK(FOURTH_WEAPON);
         }
 
-        if( number(1, 99) < GET_CHAR_SKILL(ch, SKILL_IMPROVED_TWOWEAPON) )
+        if( GET_CHAR_SKILL(ch, SKILL_IMPROVED_TWOWEAPON) >= number(1, 100) )
         {
           ADD_ATTACK(SECONDARY_WEAPON);
-          // Can swing both secondary hands at once - 49% for newbs, 99% for maxxed dual wield.
+          // Can swing both secondary hands at once - 50% for newbs, 100% for maxxed dual wield.
           if( HAS_FOUR_HANDS(ch) && ch->equipment[FOURTH_WEAPON]
-            && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) > number( 1, 100 )) )
+            && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) >= number( 1, 100 )) )
           {
             ADD_ATTACK(FOURTH_WEAPON);
           }
@@ -9094,7 +9094,8 @@ int calculate_attacks(P_char ch, int attacks[])
     }
 */
 
-    if(GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_VIOLATOR))
+    // This randomness might should go too.
+    if( GET_SPEC(ch, CLASS_ANTIPALADIN, SPEC_VIOLATOR) )
     {
       ADD_ATTACK(PRIMARY_WEAPON);
     }
@@ -9182,12 +9183,12 @@ int calculate_attacks(P_char ch, int attacks[])
     }
 
     if( notch_skill(ch, SKILL_DOUBLE_ATTACK, get_property("skill.notch.offensive.auto", 4) )
-      || GET_CHAR_SKILL(ch, SKILL_DOUBLE_ATTACK) > number(1, 100))
+      || GET_CHAR_SKILL(ch, SKILL_DOUBLE_ATTACK) >= number(1, 100))
     {
       ADD_ATTACK(PRIMARY_WEAPON);
-      // Can swing both primary hands at once - 94% chance max.
+      // Can swing both primary hands at once - 99% chance max.
       if( HAS_FOUR_HANDS(ch) && ch->equipment[THIRD_WEAPON]
-        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 45 ) > number( 1, 100 )) )
+        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) > number( 1, 100 )) )
       {
         ADD_ATTACK(THIRD_WEAPON);
       }
@@ -9200,20 +9201,20 @@ int calculate_attacks(P_char ch, int attacks[])
     }
 
     if (notch_skill(ch, SKILL_TRIPLE_ATTACK, get_property("skill.notch.offensive.auto", 4))
-      || GET_CHAR_SKILL(ch, SKILL_TRIPLE_ATTACK) > number(1, 100))
+      || GET_CHAR_SKILL(ch, SKILL_TRIPLE_ATTACK) >= number(1, 100))
     {
       ADD_ATTACK(PRIMARY_WEAPON);
-      // Can swing both primary hands at once - 89% chance max.
+      // Can swing both primary hands at once - 94% chance max.
       if( HAS_FOUR_HANDS(ch) && ch->equipment[THIRD_WEAPON]
-        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 40 ) > number( 1, 100 )) )
+        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 45 ) > number( 1, 100 )) )
       {
         ADD_ATTACK(THIRD_WEAPON);
       }
-      // Can swing second secondary hand - 94% chance max.
-      if( HAS_FOUR_HANDS(ch) && ch->equipment[FOURTH_WEAPON]
+      // Can swing primary secondary hand - 94% chance max.
+      if( HAS_FOUR_HANDS(ch) && ch->equipment[SECONDARY_WEAPON]
         && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 45 ) > number( 1, 100 )) )
       {
-        ADD_ATTACK(FOURTH_WEAPON);
+        ADD_ATTACK(SECONDARY_WEAPON);
       }
     }
 
@@ -9221,9 +9222,9 @@ int calculate_attacks(P_char ch, int attacks[])
       || GET_CHAR_SKILL(ch, SKILL_QUADRUPLE_ATTACK) > number(1, 100) )
     {
       ADD_ATTACK(PRIMARY_WEAPON);
-      // Can swing both primary hands at once - 84% chance max.
+      // Can swing both primary hands at once - 94% chance max.
       if( HAS_FOUR_HANDS(ch) && ch->equipment[THIRD_WEAPON]
-        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 35 ) > number( 1, 100 )) )
+        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 45 ) > number( 1, 100 )) )
       {
         ADD_ATTACK(THIRD_WEAPON);
       }
@@ -9236,14 +9237,16 @@ int calculate_attacks(P_char ch, int attacks[])
     if( !IS_AFFECTED2(ch, AFF2_SLOW) )
     {
       ADD_ATTACK(PRIMARY_WEAPON);
-      // Can swing both primary hands at once - 99% chance max.
+      // Can swing both primary hands at once - 100% chance max.
       if( HAS_FOUR_HANDS(ch) && ch->equipment[THIRD_WEAPON]
-        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) > number( 1, 100 )) )
+        && (( GET_CHAR_SKILL(ch, SKILL_DUAL_WIELD) / 2 + 50 ) >= number( 1, 100 )) )
       {
         ADD_ATTACK(THIRD_WEAPON);
       }
     }
   }
+
+// ADD_ATTACK PENIS END HERE
 
   //dex and dex max now grants extra attacks.
   P_obj weapon = ch->equipment[WIELD]; //harder to swing a lot with heavier weapons.
