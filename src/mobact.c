@@ -8175,14 +8175,16 @@ PROFILE_END(mundane_curepoison);
   /* remove blocking walls */
   // annoying, but not much to do here. Maybe should add a room flag WALLED?  -Odorf
 PROFILE_START(mundane_wallbreak);
-  if(!IS_PATROL(ch))
+  if( !IS_PATROL(ch) )
   { // 99.95%
     for (i = 0; i < NUM_EXITS; i++)
     { // x10
       // there's a wall!
       if(EXIT(ch, i) && IS_WALLED(ch->in_room, i))
       {
-        if(MobDestroyWall(ch, i))
+        // I know it's a little messy, but this stops pets from dispelling / breaking walls with owner there.
+        if( (( (tmp_ch = get_linked_char( ch, LNK_PET )) != NULL ) && IS_PC( tmp_ch )
+          && ( tmp_ch->in_room == ch->in_room )) || MobDestroyWall(ch, i) )
         {
 PROFILE_END(mundane_wallbreak);
           goto normal;
@@ -8608,8 +8610,7 @@ bool MobDestroyWall(P_char ch, P_obj wall, bool bTryHit)
     {
       do_search(ch, "", CMD_SEARCH);
     }
-    else if(npc_has_spell_slot(ch, SPELL_DISPEL_MAGIC) &&
-           !IS_FIGHTING(ch))
+    else if( npc_has_spell_slot(ch, SPELL_DISPEL_MAGIC) && !IS_FIGHTING(ch) )
     {
       MobCastSpell(ch, 0, wall, SPELL_DISPEL_MAGIC, GET_LEVEL(ch));
     }
