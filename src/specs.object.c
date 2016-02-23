@@ -1007,17 +1007,18 @@ int floating_pool(P_obj obj, P_char ch, int cmd, char *arg)
 
 #undef FLT_TOROOM
 
+// Match the number of array entries below - 1
+#define MAX_SQUID_ROOM 24
 int illithid_teleport_veil(P_obj obj, P_char ch, int cmd, char *arg)
 {
-
-  int max_room = 24;      /* match the array below - 1 */
   int r_room = -1;
-  int to_room[] =
-  { 96563, 96563, 11545, 15273, 96900,
-    36171, 96563,  4109,  4437,  4109,
-    96803, 17589, 17607, 96909,  3404,
-    23812, 23805, 12535, 12528, 25458,
-    25459, 25458, 12535, 12536, 12540
+  int to_room[MAX_SQUID_ROOM + 1] =
+  {
+     2368,  3404,  4108,  4109,  4437,
+     6900, 11545, 12528, 12535, 12536,
+    12540, 12541, 15273, 19022, 19275,
+    23805, 23812, 25458, 25459, 25484,
+    36171, 96563, 96569, 96803, 96909
   };
 
   if( cmd == CMD_SET_PERIODIC )
@@ -1035,7 +1036,7 @@ int illithid_teleport_veil(P_obj obj, P_char ch, int cmd, char *arg)
   char_from_room(ch);
   while( r_room == -1 )
   {
-    r_room = real_room(to_room[number(0, max_room)]);
+    r_room = real_room(to_room[number(0, MAX_SQUID_ROOM)]);
   }
 
   act("You enter $p and reappear elsewhere...", FALSE, ch, obj, 0, TO_CHAR);
@@ -1046,6 +1047,7 @@ int illithid_teleport_veil(P_obj obj, P_char ch, int cmd, char *arg)
 
   return TRUE;
 }
+#undef MAX_SQUID_ROOM
 
 /*
    This is for a random teleporting pool in a zone -DR
