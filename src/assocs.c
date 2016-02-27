@@ -2576,7 +2576,7 @@ int deposit_asc(P_char member, int pc, int gc, int sc, int cc)
     i++;
   }
   /* couldn't find the guy in association, quit now */
-  if (!i)
+  if( !i && !IS_TRUSTED(member) )
   {
     update_member(member, 1);
     return (0);
@@ -2597,8 +2597,14 @@ int deposit_asc(P_char member, int pc, int gc, int sc, int cc)
 
   if( IS_PC(member) )
   {
-    sprintf(buf, "&+y%s deposited &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc", GET_NAME(member), pc, gc, sc, cc);
+    sprintf(buf, "&+y%s deposited &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc.", GET_NAME(member), pc, gc, sc, cc);
     insert_guild_transaction(asc_number, buf);
+    if( IS_TRUSTED( member ) )
+    {
+      sprintf(buf, "&+yYou donated &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc to %s&+y.\n", pc, gc, sc, cc,
+        get_assoc_name(asc_number).c_str() );
+      send_to_char( buf, member);
+    }
   }
 
   /* return number of changed players, should be one */
@@ -2688,10 +2694,8 @@ int sub_money_asc(int asc, int pc, int gc, int sc, int cc)
   logit(LOG_PLAYER, "Guild Withdrawal %d p %d g %d s %d c by %s", pc, gc, sc,
         cc, str_dup("System"));
 
-  /* Commenting this out, as it just spams ledger.
-  sprintf(buf, "&+y%s withdrew &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc", str_dup("System"), pc, gc, sc, cc);
+  sprintf(buf, "&+y%s withdrew &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc.", str_dup("System"), pc, gc, sc, cc);
   insert_guild_transaction(asc_number, buf);
-   */
 
   /* return one for success */
   return (1);
@@ -3940,9 +3944,9 @@ int do_soc_ledger(P_char ch)
 
   char buff[MAX_STRING_LENGTH];
 
-  if( !qry("SELECT transaction_info FROM guild_transactions WHERE soc_id = %d ORDER BY date DESC LIMIT 100", asc_number) )
+  if( !qry("SELECT transaction_info FROM guild_transactions WHERE soc_id = %d AND transaction_info NOT LIKE '%%System withdrew%%' ORDER BY date DESC LIMIT 100", asc_number) )
   {
-    send_to_char("disabled.\r\n", ch);
+    send_to_char("No transactions found..\n", ch);
     return FALSE;
   }
 
@@ -4291,22 +4295,22 @@ string get_assoc_name(int assoc_id)
 {
   if( !qry("SELECT name FROM associations WHERE active = 1 AND id = %d", assoc_id) )
   {
-    return string();
+    return string("Bad Query");
   }
-  
+
   MYSQL_RES *res = mysql_store_result(DB);
-  
+
   if( mysql_num_rows(res) < 1 )
   {
     mysql_free_result(res);
-    return string();
+    return string("No association found");
   }
-    
+
   MYSQL_ROW row = mysql_fetch_row(res);
-  
+
   string name = trim(string(row[0]), " \t\n");
   mysql_free_result(res);
-  
+
   return name;
 }
 
