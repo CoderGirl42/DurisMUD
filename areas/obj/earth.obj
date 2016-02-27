@@ -1113,7 +1113,7 @@ totem planes~
 &+YA multi-colored totem lies here on the ground.&n~
 ~
 34 1 3 0 15 0 41992 8404993 64 416 0
-40 0 0 0 0 0 0 0
+60 0 0 0 0 0 0 0
 3 98765 100
 E
 totem planes~
@@ -1377,7 +1377,7 @@ lance dragon _id_~
 &+La &+Rd&+rr&+Ra&+rg&+Ro&+rn-&+Lforged lance&n~
 &+gA large lance lies here on the ground.&n~
 ~
-5 15 3 0 7 0 0 8193 64 83886104 0
+5 15 3 0 7 0 1024 8193 64 83886104 0
 16 3 8 0 0 0 0 0
 0 0 100 2 0 0 0
 E
