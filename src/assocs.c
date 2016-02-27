@@ -886,20 +886,18 @@ void do_society(P_char member, char *argument, int cmd)
     temp_time = GET_TIME_LEFT_GUILD(member);
     if (temp_time <= 0)
     {
-      send_to_char("You are banned from all associations, so sod off!\r\n",
-                   member);
+      send_to_char("You are banned from all associations, so sod off!\r\n", member);
       return;
     }
     if (GET_NB_LEFT_GUILD(member) <= 0)
     {
-      send_to_char("You are banned from all associations, so sod off!\r\n",
-                   member);
+      send_to_char("You have been banned from all associations, so sod off!\r\n", member);
       return;
     }
     temp_nb = GET_NB_LEFT_GUILD(member);
-    temp_time += SECS_PER_REAL_DAY * 
-      get_property("guild.secede.delay.days", 2);
-    if (time(NULL) >= temp_time)
+    temp_time += SECS_PER_REAL_DAY * get_property("guild.secede.delay.days", 2);
+
+    if( time(NULL) >= temp_time )
     {
       send_to_char("Look like you can join another guild!\r\n", member);
       SET_BANNED(GET_A_BITS(member));
@@ -1182,7 +1180,7 @@ void do_society(P_char member, char *argument, int cmd)
 //    do_setbit(member, buf, CMD_SETHOME);
     /* pop up help for gods only */
   case 'l':
-    do_soc_ledger(member);
+    do_soc_ledger(member, second);
     break;
   case '?':
   default:
@@ -2571,8 +2569,7 @@ int deposit_asc(P_char member, int pc, int gc, int sc, int cc)
      entrance fee */
   if (IS_APPLICANT(GET_A_BITS(member)))
   {
-    send_to_char("If this isn't a donation, tell them you paid up!\r\n",
-                 member);
+    send_to_char("If this isn't a donation, tell them you paid up!\r\n", member);
     i++;
   }
   /* couldn't find the guy in association, quit now */
@@ -2691,8 +2688,7 @@ int sub_money_asc(int asc, int pc, int gc, int sc, int cc)
     return (-1);
   fwrite(buf, strlen(buf), 1, f);
   fclose(f);
-  logit(LOG_PLAYER, "Guild Withdrawal %d p %d g %d s %d c by %s", pc, gc, sc,
-        cc, str_dup("System"));
+  logit(LOG_PLAYER, "Guild Withdrawal %d p %d g %d s %d c by %s", pc, gc, sc, cc, str_dup("System"));
 
   sprintf(buf, "&+y%s withdrew &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc.", str_dup("System"), pc, gc, sc, cc);
   insert_guild_transaction(asc_number, buf);
@@ -2819,16 +2815,15 @@ int withdraw_asc(P_char member, int pc, int gc, int sc, int cc)
   }
   fwrite(buf, strlen(buf), 1, f);
   fclose(f);
-  logit(LOG_PLAYER, "Guild Withdrawal %d p %d g %d s %d c by %s", pc, gc, sc,
-        cc, GET_NAME(member));
+  logit(LOG_PLAYER, "Guild Withdrawal %d p %d g %d s %d c by %s", pc, gc, sc, cc, GET_NAME(member));
   send_to_char("Ok, use that money for your association though.\r\n", member);
-  
+
   if( IS_PC(member) )
   {
     sprintf(buf, "&+y%s withdrew &+W%dp&n&+y, &+Y%dg&n&+y, &+w%ds&n&+y, and &+y%dc", GET_NAME(member), pc, gc, sc, cc);
     insert_guild_transaction(asc_number, buf);
   }
-  
+
   /* return one for success */
   return (1);
 }
@@ -3913,42 +3908,60 @@ void do_gmotd(P_char ch, char *argument, int cmd)
 }
 
 #ifdef __NO_MYSQL__
-int do_soc_ledger(P_char ch)
+void do_soc_ledger(P_char ch, char *args)
 {
-  send_to_char("disabled.\r\n", ch);
-  return 0;
+  send_to_char("Disabled - no SQL database.\r\n", ch);
 }
 
 void insert_guild_transaction(int soc_id, char *buff)
 {
 }
 #else
-int do_soc_ledger(P_char ch)
+void do_soc_ledger(P_char ch, char *args)
 {
   int asc_number = GET_A_NUM(ch);
   uint bits = GET_A_BITS(ch);
 
-  if (!IS_MEMBER(bits) || !asc_number)
+  if( !IS_MEMBER(bits) || !asc_number )
   {
     send_to_char("How about joining an association first?\r\n", ch);
-    return 0;
+    return;
   }
-  
-  if (!IS_LEADER(bits) && !IS_TRUSTED(ch) )
+
+  if( !IS_LEADER(bits) && !IS_TRUSTED(ch) )
   {
     send_to_char("You must be a leader to look at such things!\r\n", ch);
-    return 0;
+    return;
+  }
+
+  if( !args || is_abbrev(args, "player") )
+  {
+    if( !qry("SELECT transaction_info FROM guild_transactions WHERE soc_id = %d AND transaction_info NOT LIKE '%%System withdrew%%' ORDER BY date DESC LIMIT 100", asc_number) )
+    {
+      send_to_char("No transactions found..\n", ch);
+      return;
+    }
+  }
+  else if( is_abbrev(args, "system") || is_abbrev(args, "guild") )
+  {
+PENIS:
+    if( !qry("SELECT transaction_info FROM guild_transactions WHERE soc_id = %d AND (transaction_info LIKE '%%System withdrew%%' OR transaction_info LIKE '%%System deposited%%') ORDER BY date DESC LIMIT 100", asc_number) )
+    {
+      send_to_char("No transactions found...\n", ch);
+      return;
+    }
+  }
+  else
+  {
+    send_to_char("&+YSyntax: &+wsoc l [player|system|guild]&n\n", ch);
+    send_to_char("  Player - for a list of player transactions.\n", ch);
+    send_to_char("  System or guild - for a list of automated transactions.\n", ch);
+    return;
   }
 
   send_to_char("&+YGuild Ledger:\r\n------------------------------\r\n", ch);
 
   char buff[MAX_STRING_LENGTH];
-
-  if( !qry("SELECT transaction_info FROM guild_transactions WHERE soc_id = %d AND transaction_info NOT LIKE '%%System withdrew%%' ORDER BY date DESC LIMIT 100", asc_number) )
-  {
-    send_to_char("No transactions found..\n", ch);
-    return FALSE;
-  }
 
   MYSQL_RES *res = mysql_store_result(DB);
 
@@ -3956,7 +3969,7 @@ int do_soc_ledger(P_char ch)
   {
     send_to_char("&+yNo transactions on record.\r\n", ch);
     mysql_free_result(res);
-    return FALSE;
+    return;
   }
 
   MYSQL_ROW row;
@@ -3968,7 +3981,6 @@ int do_soc_ledger(P_char ch)
   }
 
   mysql_free_result(res);
-  return TRUE;
 }
 
 void insert_guild_transaction(int soc_id, char* buff)

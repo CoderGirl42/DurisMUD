@@ -131,7 +131,7 @@ struct guild_frags
 };
 //extern struct guild_frags guild_frags_data[];
 
-int do_soc_ledger(P_char ch);
+void do_soc_ledger(P_char ch, char *args);
 void insert_guild_transaction(int soc_id, char *buff);
 
 int get_assoc_prestige(int assoc_id);
