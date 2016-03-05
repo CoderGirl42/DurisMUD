@@ -1005,7 +1005,7 @@ A
 #91055
 zombie proc1~
 &+Lzombie proc 1&N~
-&+Lzombie proc 1 is here~
+&+LThe zombie proc 1 is here.~
 ~
 5 15 3 0 7 0 2 8192 0 0 0
 6 5 5 0 7 33186 57 11
@@ -1025,7 +1025,7 @@ A
 #91056
 zombie proc2~
 &+Lzombie proc 2~
-&+Lzombie proc 2 is here~
+&+LThe zombie proc 2 is here.~
 ~
 5 15 3 0 7 0 2 8192 0 0 0
 6 5 5 0 7 71033 57 10
@@ -1045,7 +1045,7 @@ A
 #91057
 zombie proc3~
 &+Lzombie proc 3~
-&+Lzombie proc 3 is here~
+&+LThe zombie proc 3 is here.~
 ~
 5 15 3 0 7 0 2 8192 0 0 0
 6 5 5 0 7 103033 57 10

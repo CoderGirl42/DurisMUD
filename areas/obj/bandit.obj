@@ -20,7 +20,7 @@ A
 #98501
 collar thorn blackthorn~
 a &+Lblack&+gthorn&N thorn collar~
-a collar with large thorns lies here~
+A collar with large thorns lies here.~
 ~
 9 6 0 0 7 0 262144 5 64 0 0
 5 2 1 3 0 0 0 0
@@ -73,7 +73,7 @@ A
 #98505
 dagger stone serrated~
 a &+Yserrated&N &+ystone dagger&N~
-a &+ystone dagger&N has been left here~
+A &+ystone dagger&N has been left here.~
 ~
 5 11 2 3 7 0 0 8193 0 0 0
 2 2 4 11 0 0 0 0
@@ -98,7 +98,7 @@ teeters back and forth in the breeze, seemingly about to fall at any moment.
 #98507
 watch gold~
 a &+Ygold watch&N~
-a &+Ygold watch&N lies here~
+A &+Ygold watch&N lies here.~
 ~
 8 24 0 0 7 0 4096 16389 64 0 0
 0 0 0 0 0 0 0 0
@@ -121,7 +121,7 @@ A
 #98508
 belt money~
 a &+Ymoney&N &+ybelt&N~
-a large leather belt lies here~
+A large leather belt lies here.~
 ~
 15 12 3 3 7 0 0 2049 0 0 0
 100 5 0 100 0 0 0 0
@@ -140,7 +140,7 @@ A
 #98509
 coins platinum stack~
 some &+Wplatinum&N coins~
-a large stack of &+Wplatinum&N coins lies here~
+A large stack of &+Wplatinum&N coins lies here.~
 ~
 20 25 1 0 7 0 4096 1 0 0 0
 0 0 0 5 0 0 0 0
@@ -148,7 +148,7 @@ a large stack of &+Wplatinum&N coins lies here~
 #98510
 coins platinum stack~
 some &+Wplatinum&N coins~
-a large stack of &+Wplatinum&N coins lies here~
+A large stack of &+Wplatinum&N coins lies here.~
 ~
 20 25 1 0 7 0 4096 1 0 0 0
 0 0 0 5 0 0 0 0
@@ -156,7 +156,7 @@ a large stack of &+Wplatinum&N coins lies here~
 #98511
 coins platinum stack~
 some &+Wplatinum&N coins~
-a large stack of &+Wplatinum&N coins lies here~
+A large stack of &+Wplatinum&N coins lies here.~
 ~
 20 25 1 0 7 0 4096 1 0 0 0
 0 0 0 5 0 0 0 0
@@ -164,7 +164,7 @@ a large stack of &+Wplatinum&N coins lies here~
 #98512
 mask leather black~
 a &+Lblack leather&N &+bmask&N~
-a small piece of black leather has been discarded here~
+A small piece of black leather has been discarded here.~
 ~
 9 13 3 3 7 0 0 131073 64 0 0
 2 12 2 3 0 0 0 0
@@ -191,7 +191,7 @@ A
 #98514
 note torn paper~
 a &+Wtorn note&N~
-a torn piece of &+Wpaper&N lies here~
+A torn piece of &+Wpaper&N lies here.~
 ~
 13 28 1 2 7 0 524288 16385 0 0 0
 0 0 0 0 0 0 0 0
@@ -204,7 +204,7 @@ word can be made out on its surface -   b o sh lf
 #98515
 note torn paper~
 a &+Wtorn note&N~
-a torn piece of &+Wpaper&N lies here~
+A torn piece of &+Wpaper&N lies here.~
 ~
 13 28 1 2 7 0 524288 16385 0 0 0
 0 0 0 0 0 0 0 0
@@ -245,7 +245,7 @@ side.
 #98518
 eye dragon dragons~
 a &+Gglowing&N &+gdragons e&+Wy&+ge&N~
-a &+Gglowing&N &+ggreen eye&N sits here~
+A &+Gglowing&N &+ggreen eye&N sits here.~
 ~
 8 2 0 0 7 0 262272 16385 64 0 0
 0 0 0 0 0 0 0 0
@@ -270,7 +270,7 @@ A
 #98520
 washboard board wash~
 a &+ywashboard&N~
-a &+ywashboard&N has been left here~
+A &+ywashboard&N has been left here.~
 ~
 5 16 3 50 7 0 0 24577 0 0 0
 10 1 3 7 0 0 0 0
@@ -285,7 +285,7 @@ A
 #98521
 hanger wire clothes~
 a &+Lwire clothes hanger&N~
-a long piece of wire sits here~
+A long piece of wire sits here.~
 ~
 5 3 3 8 7 0 0 24577 0 0 0
 2 1 3 2 0 0 0 0
@@ -313,7 +313,7 @@ corpse sits in a bloody pile against the wall.
 #98523
 boots boot stealth~
 the &+yboots&N of &+Lstealth&N~
-a pair of &+ybrown&N boots is lieing here~
+A pair of &+ybrown&N boots lies here.~
 ~
 9 16 3 8 7 0 12288 65 64 0 0
 6 6 1 3 0 0 0 0
@@ -330,7 +330,7 @@ A
 #98524
 salmon large fish~
 a &+Mlarge salmon&N~
-a &+Mlarge salmon&N has been discarded here~
+A &+Mlarge salmon&N has been discarded here.~
 ~
 19 2 2 2 7 0 0 16385 0 0 0
 24 0 0 0 0 0 0 0
@@ -343,7 +343,7 @@ It appears to be fresh and ready to eat. YUMMY.
 #98525
 salmon large fish~
 a &+Mlarge salmon&N~
-a &+Mlarge salmon&N has been discarded here~
+A &+Mlarge salmon&N has been discarded here.~
 ~
 19 2 2 2 7 0 0 16385 0 0 0
 24 0 0 1 0 0 0 0

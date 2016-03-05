@@ -108,7 +108,7 @@ fragment ruby encrusted key~
 #19611
 key~
 &+ya bronze key&N~
-&+yA bronze key lies here~
+&+yA bronze key lies here.~
 ~
 18 19 1 0 15 100 8392712 16385 64 0 0
 0 100 0 0 0 0 0 0
@@ -116,7 +116,7 @@ key~
 #19612
 key~
 &+ra red key&n~
-&+RA Red Key lies here~
+&+RA Red Key lies here.~
 ~
 18 19 1 0 15 100 8392712 16385 64 0 0
 0 100 0 0 0 0 0 0
@@ -132,7 +132,7 @@ key~
 #19614
 key~
 &+ba blue key~
-&+bA blue key lies here~
+&+bA blue key lies here.~
 ~
 18 19 1 0 15 100 8392712 16385 64 0 0
 0 0 0 0 0 0 0 0

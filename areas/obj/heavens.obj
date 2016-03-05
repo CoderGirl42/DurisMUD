@@ -1514,7 +1514,7 @@ helm telepathy~
 #102
 poison vial~
 a small vial of &+rapply poison&N~
-a very small vial has been discarded here~
+A very small vial has been discarded here.~
 ~
 17 7 1 2 7 0 0 16385 0 0 0
 1 1 27 1 0 0 0 0
@@ -7544,7 +7544,7 @@ stone living~
 #828
 bones bone _id_~
 &+Wa &nhuman&+W &+Wbone&n~
-&+Wa &nhuman&+W &+Wbone&n have been left here~
+&+WA &nhuman&+W &+Wbone&n have been left here.~
 ~
 13 15 3 0 7 0 0 16385 0 0 0
 0 0 0 0 0 0 0 0
@@ -7611,7 +7611,7 @@ default~
 #853
 vial strong acid~
 a vial of &+cstrong acid&n~
-a vial of &+cstrong acid&n lies here~
+A vial of &+cstrong acid&n lies here.~
 ~
 10 15 3 0 7 0 0 16385 0 0 0
 0 376 0 0 0 0 0 0
@@ -7636,7 +7636,7 @@ potion mossy entanglement~
 #855
 thick bottle explosive~
 a thick bottle full of &+Wexplosive&n~
-a very thick, dangerous looking bottle rests here~
+A very thick, dangerous looking bottle rests here.~
 ~
 10 15 3 0 7 0 0 16385 0 0 0
 0 491 0 0 0 0 0 0
@@ -7660,7 +7660,7 @@ potion flight~
 #857
 flask incendiary~
 a flask of &+Rincendiary&n substance~
-a fragile flask of sticky substance lies here~
+A fragile flask of sticky substance lies here.~
 ~
 10 15 3 0 7 0 0 16385 0 0 0
 0 375 0 0 0 0 0 0
@@ -7684,7 +7684,7 @@ A potion of various ingredients. A strong &+bmagical&n aura emanates from the sm
 #859
 vial greasy grease~
 a vial of &+Lgreasy&n liquid&n~
-a small vial of &+Lgreasy&n looking liquid lies here~
+A small vial of &+Lgreasy&n looking liquid lies here.~
 ~
 10 15 3 0 7 0 0 16385 0 0 0
 0 493 0 0 0 0 0 0
@@ -7792,7 +7792,7 @@ potion faerie fire~
 #868
 flask nitrogen~
 &+Ca small flask of nitrogen&n~
-a small flask labeled '&+CNitrogen&n' lies here~
+A small flask labeled '&+CNitrogen&n' lies here.~
 ~
 10 15 3 0 7 0 0 16385 0 0 0
 0 494 0 0 0 0 0 0
@@ -9462,7 +9462,7 @@ a &+rred rose&N with &+gthorns&N and a long &+ystem&N~
 #1278
 files book~
 the book of &+Wfiles&n~
-The book of &+Wfiles&n lies here~
+The book of &+Wfiles&n lies here.~
 ~
 12 28 2 5 7 0 0 0 0 0 0
 0 0 0 0 0 0 0 0

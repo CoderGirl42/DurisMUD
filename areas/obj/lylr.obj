@@ -1,7 +1,7 @@
 #82200
 boots drow~
 &+La pair of &+mdrow&n &+Lskin boots~
-&+LSomeone has left some &+mdrow&n &+Lskin boots here~
+&+LSomeone has left some &+mdrow&n &+Lskin boots here.~
 ~
 9 2 3 0 7 0 33792 65 64 96059419 0
 10 0 0 3 0 0 0 0
@@ -51,7 +51,7 @@ bp backpack~
 #82203
 muffin blueberry~
 &+Ya freshly baked &+Bblueberry&n &+Ymuffin~
-&+YSomeone has left a muffin here~
+&+YSomeone has left a muffin here.~
 ~
 19 48 3 0 7 0 0 1 0 0 0
 5 0 0 0 0 0 0 0
@@ -64,7 +64,7 @@ muffin blueberry~
 #82204
 torch~
 &+ma magical &+Yt&+yo&+wr&+Yc&+yh~
-&+YSomeone has left a &+Rmagical torch&n &+Yhere~
+&+YSomeone has left a &+Rmagical torch&n &+Yhere.~
 ~
 1 41 3 0 7 0 262144 8404993 64 0 0
 0 0 999 0 0 0 0 0
@@ -111,7 +111,7 @@ A
 #82207
 staff half-elf~
 &+mthe staff of the&n &+Chalf-&+celves~
-&+mSomeone has left a great staff here~
+&+mSomeone has left a great staff here.~
 ~
 5 22 3 0 7 0 73856 8193 64 0 0
 6 2 2 6 0 0 0 0
@@ -130,9 +130,9 @@ A
 #82208
 spring water~
 &+Ya bottle of&n &+Bspring water&N~
-&+YSomeone has left a bottle of spring&N &+Bwater&n &+Yhere~
+&+YSomeone has left a bottle of spring&N &+Bwater&n &+Yhere.&n~
 ~
-17 7 3 0 7 0 0 0 0 0 0
+17 7 3 0 7 0 0 16385 0 0 0
 20 20 17 0 0 0 0 0
 3 2000 100
 E
@@ -161,7 +161,7 @@ A
 #82210
 wine mulberry~
 &+ya glass of &+rMulberry wine&N~
-&+yA glass of &+rred wine&+y has been left here~
+&+yA glass of &+rred wine&+y has been left here.~
 ~
 17 7 3 0 7 0 0 16385 0 0 0
 4 4 2 0 0 0 0 0
@@ -247,7 +247,7 @@ T
 #82216
 coins~
 &+wa pile of coins&N~
-&+wA pile of coins rests here~
+&+wA pile of coins rests here.~
 ~
 20 15 3 0 7 0 0 1 0 0 0
 9999 0 0 0 0 0 0 0
@@ -271,7 +271,7 @@ scalp ogre~
 #82218
 gloves thin~
 &+Ya pair of ragged gloves&N~
-&+YA pair of oven mittens has been left here~
+&+YA pair of oven mittens has been left here.~
 ~
 9 12 3 0 7 0 1024 129 0 4198148 0
 7 0 0 4 0 0 0 0
