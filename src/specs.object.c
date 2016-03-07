@@ -8688,6 +8688,44 @@ int transparent_blade(P_obj obj, P_char ch, int cmd, char *arg)
   return TRUE;
 }
 
+// Gellz Added 060316 GELLZ
+int staff_of_air_conjuration(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  int 		rand;
+  int		curr_time;
+  P_char	victim;
+  
+  if (cmd == CMD_SET_PERIODIC)
+  {
+	  return TRUE;
+  }
+  
+  if (!IS_ALIVE(ch) || !OBJ_WORN(obj) || (obj->loc.wearing != ch) )
+  {
+	  return FALSE;
+  }
+
+  curr_time = time(NULL);
+  if( arg && (cmd == CMD_SAY) )
+  {
+	  if ( isname(arg, "lightning") )
+	  {
+		if (obj->timer[0]+1440 <= curr_time )
+		{
+	  	       act("&+cElectrical c&+Wh&+Ca&+Br&+bges&+c begin to &+Ca&+Wr&+Bc&+c and &+Ws&+Cp&+Ba&+brk&+c on the ground randomly..&n", TRUE, ch, obj, victim, TO_ROOM);
+		       cast_call_lightning(56, ch, 0, SPELL_TYPE_SPELL, victim, 0);
+		       obj->timer[0] = curr_time;
+		       return TRUE;
+		} else
+		{
+		  act("&+cA small &+Ws&+Cp&+Ba&+brk&+c of electricity &+Ca&+Wr&+Bcs&+c from your staff to your hand, but nothing else seems to happen.&n", TRUE, ch, obj, victim, TO_CHAR);
+		  return TRUE;
+		}
+	  }
+  }
+  return FALSE;
+}
+
 int serpent_of_miracles(P_obj obj, P_char ch, int cmd, char *arg)
 {
   int      rand;

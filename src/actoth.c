@@ -3429,6 +3429,11 @@ void do_quaff(P_char ch, char *argument, int cmd)
   int      i, j, chance;
   bool     equipped;
   char     Gbuf1[MAX_STRING_LENGTH];
+  int	   secs;
+  int      potiontimeleft;
+  P_event ne;
+  struct affected_type *af2;
+  struct affected_type *next;
 
   if( !IS_ALIVE(ch) )
     return;
@@ -3470,7 +3475,30 @@ void do_quaff(P_char ch, char *argument, int cmd)
 
   if(affected_by_spell(ch, TAG_POTION_TIMER))
   {
-    send_to_char("Your body cannot yet handle another jolt of magical influence!\r\n", ch);
+// gellz added potion messages for timer durations  070316 
+    for (af2=ch->affected; af2; af2=next)
+    {
+      next = af2->next;
+      if (af2->type == TAG_POTION_TIMER)
+      {break;}
+    }
+// just looped affects, found potion timer
+    if (af2)
+    {
+      i = af2->duration *100;
+      j = get_property("potion.timer", 100.00);
+      i = (int) (i/j);
+      if ( i <=1)
+      {
+        sprintf(Gbuf1, "&+cYou feel &+Calmost &+cready to try another potion&+g.&n\n");
+      } else 
+      {
+        sprintf(Gbuf1, "&+cYou dont feel like another potion would do you any good yet.&n\n");
+      }
+      send_to_char( Gbuf1, ch );
+/*    send_to_char("Your body cannot yet handle another jolt of magical influence!\r\n", ch);
+*/
+    }
     return;
   }
 

@@ -1375,6 +1375,8 @@ void assign_objects(void)
      
   /* artifact funcs */
 
+  obj_index[real_object0(67207)].func.obj = staff_of_air_conjuration;
+//gellz added air staff above
   obj_index[real_object0(919)].func.obj = ioun_sustenance;
   obj_index[real_object0(922)].func.obj = deflect_ioun;
   obj_index[real_object0(923)].func.obj = ioun_testicle;

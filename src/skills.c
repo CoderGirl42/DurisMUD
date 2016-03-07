@@ -5143,7 +5143,7 @@ void create_tags()
   TAG_CREATE("minotaur rage", TAG_MINOTAUR_RAGE);
   TAG_CREATE("conjured pet", TAG_CONJURED_PET);
   TAG_CREATE_WITH_MESSAGES("potion timer", TAG_POTION_TIMER,
-                           "&+cYou feel like a potion could do you good once again.&n",
+                           "&+cYou feel like a potion &+Ccould&+c do you good once again.&n",
                            "&+c$n's body appears to recover from the affects of the &+Wpotion&+c.&n");
 
   //Prestige Races
