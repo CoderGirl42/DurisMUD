@@ -14488,7 +14488,7 @@ int witch_doctor(P_char ch, P_char customer, int cmd, char *arg)
 {
   struct affected_type af;
   char     buf[256];
-  int      i, room, tries, code;
+  int      i, room, tries, code, temp;
   struct item
   {
     char    *keyword;
@@ -14508,6 +14508,8 @@ int witch_doctor(P_char ch, P_char customer, int cmd, char *arg)
       "a &+clight flask&n labeled \"&+CAv&+Wia&+Cte&n\"", 1000, 1, AFF_FLY},
     { "indigetis",
       "a &+Wglowing elixir&n labeled \"&+WIn&+wdiget&+Wis&n\"", 10000, 4, AFF4_EPIC_INCREASE},
+    { "gnowsis",
+      "a &+mrapidly vibrating vial&n labeled \"&+MGnowsis Ektaktos&n\"", (100 * GET_LEVEL(customer)), 0, TAG_RESTED},
     { 0 }
   };
 
@@ -14538,9 +14540,27 @@ int witch_doctor(P_char ch, P_char customer, int cmd, char *arg)
         if (transact(customer, NULL, ch, 1000 * elixir_list[i].price))
         {
           memset(&af, 0, sizeof(struct affected_type));
-          af.type = TAG_WITCHSPELL;
-
-          af.flags = AFFTYPE_NOSHOW | AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
+          if(i == 5) //static for TAG_RESTED potion for exp
+          {
+	    if (affected_by_spell(customer, TAG_RESTED) || affected_by_spell(customer, TAG_WELLRESTED)) 
+	    {
+	      send_to_char("The &+Gwi&+gtc&+Gh &+gdoctor&n says to you 'You already have an &+mexperience bonus&n currently active, come find me again when that one has expired!'\n\n", customer);
+	      sprintf(buf, "He refunds your %d &+Wplatinum&n.\n", (100 * GET_LEVEL(customer)));
+	      send_to_char(buf, customer);
+	      GET_PLATINUM(customer)+=(100 * GET_LEVEL(customer));
+	      return FALSE;
+	    } else 
+	    {
+              af.type = TAG_RESTED;
+              af.flags = AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
+              debug( "'%s' getting rested bonus from WITCH", J_NAME(customer) );
+	    }
+          }
+          else
+          {
+            af.type = TAG_WITCHSPELL;
+            af.flags = AFFTYPE_NOSHOW | AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
+          }
           // 1 rl week = 7 * 24 * 60.
           af.duration = 10080;
 
