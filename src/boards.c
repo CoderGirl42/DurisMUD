@@ -410,12 +410,15 @@ int Board_remove_msg(int board_type, struct char_data *ch, char *arg)
 
   one_argument(arg, which);
 
-  if (!*which || !isdigit(*which))
+  if( !*which || !is_number(which) )
     return 0;
-  if (!(msg = atoi(which)))
-    return (0);
+  if( (msg = atoi( which )) < 1 )
+  {
+    send_to_char("That message exists only in your imagination.\r\n", ch);
+    return 1;
+  }
 
-  if (!num_of_msgs[board_type])
+  if( !num_of_msgs[board_type] )
   {
     send_to_char("The board is empty!\r\n", ch);
     return 1;
@@ -435,8 +438,7 @@ int Board_remove_msg(int board_type, struct char_data *ch, char *arg)
   if (GET_LEVEL(ch) < REMOVE_LVL(board_type) &&
       !(strstr(MSG_HEADING(board_type, ind), buf)))
   {
-    send_to_char
-      ("You are not holy enough to remove other people's messages.\r\n", ch);
+    send_to_char("You are not holy enough to remove other people's messages.\r\n", ch);
     return 1;
   }
   if (GET_LEVEL(ch) < MSG_LEVEL(board_type, ind))
