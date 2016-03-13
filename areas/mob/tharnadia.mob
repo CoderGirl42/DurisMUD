@@ -1483,8 +1483,8 @@ A 0 0 0 -1
 0.0.0.0 388
 8 8 0
 #132604
-parrot~
-a &+gp&+Ga&+Yrr&+Ro&+rt&n~
+parrot small~
+a small &+gp&+Ga&+Yrr&+Ro&+rt&n~
 &+WA &+gp&+Ga&+Yrr&+Ro&+rt&+W squawks at you.&n
 ~
 &+W   This &+gp&+Ga&+Yrr&+Ro&+rt&+W has bright destinctive feathers, and a large orange beak.  Its
@@ -1493,13 +1493,13 @@ a &+gp&+Ga&+Yrr&+Ro&+rt&n~
 &+Wprunes itself.&n
 ~
 133258 0 0 0 0 0 0 0 0 S
-B 0 0 0 -1
+B 0 0 0 2
 3 20 90 3d15+11 1d5+0
 0.0.0.0 388
 8 8 0
 #132605
-wolf black~
-a &+Lblack wolf&n~
+wolf black medium~
+a medium &+Lblack wolf&n~
 &+LBristling with energy, this black wolf seems ready for anything.&n
 ~
 &+L   This wild canine has coarse black hair, that seems to stand off its body,
@@ -1507,12 +1507,12 @@ a &+Lblack wolf&n~
 &+Lwhile its large &+Rclaws&+L denote its lethal nature.  &n
 ~
 1074006026 0 0 0 34078720 0 0 0 0 S
-AC 0 0 0 -1
+AC 0 0 0 3
 6 18 80 6d18+21 2d3+1
 0.0.0.0 777
 8 8 0
 #132606
-firelizard dragon lizard~
+firelizard dragon lizard small~
 a small &+rf&+Ri&+Yr&+Weliz&+Ma&+mr&+Ld~
 &+WA small &+rd&+Rr&+Ya&+Wgonl&+Mi&+mk&+Le&+W creature hovers here.&n
 ~
@@ -1531,21 +1531,21 @@ DK 0 0 0 2
 3.2.0.0 907
 8 8 0
 #132607
-raccoon~
-a &+Lr&+Wa&+Lc&+Wc&+Lo&+Wo&+Ln&n~
+raccoon small~
+a small &+Lr&+Wa&+Lc&+Wc&+Lo&+Wo&+Ln&n~
 &+gA cute and furry &+Lr&+Wa&+Lc&+Wc&+Lo&+Wo&+Ln&+g stands here.&n
 ~
   This mischievous little fellow is busy grooming himself.  It looks at you
 with its small glassy ebon eyes, then goes back to its chore.
 ~
 1073741832 0 0 0 33554432 0 0 0 0 S
-AC 0 0 0 -1
+AC 0 0 0 2
 4 20 87 4d15+14 1d5+0
 0.0.0.0 518
 8 8 0
 #132608
-cat hunting black panther~
-a &+Lblack panther&n~
+cat hunting black panther large~
+a large &+Lblack panther&n~
 &+LA black panther, most feared of all hunting cats, stands here.&n
 ~
    &+LStanding three feet high and nearly five feet long, this deadly looking
@@ -1553,7 +1553,7 @@ a &+Lblack panther&n~
 &+Lclaws underneath, and its fur is as black as the night.&n
 ~
 264200 0 0 0 524320 0 0 0 0 S
-A 0 1 0 -1
+A 0 1 0 4
 8 18 74 8d18+28 2d3+1
 0.0.0.0 1036
 8 8 0
