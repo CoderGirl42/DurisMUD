@@ -961,7 +961,7 @@ a &+Rgnome&+r ambassador~
 &+ra pool of people of no more than a few.
 ~
 2058 0 0 0 24 0 0 0 400 S
-PF 0 512 0 -1
+PG 0 512 0 -1
 60 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
