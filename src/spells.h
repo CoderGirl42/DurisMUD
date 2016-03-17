@@ -176,7 +176,7 @@
 #define SPELL_CREATE_SOUND           165
 #define SPELL_DEATH_FIELD            166
 #define SPELL_DETONATE               167
-#define SPELL_UNUSED                 168
+#define SPELL_ASPHYXIATE             168
 #define SPELL_DISPLACEMENT           169
 #define SPELL_DOMINATION             170
 #define SPELL_ECTOPLASMIC_FORM       171

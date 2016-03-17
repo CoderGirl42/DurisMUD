@@ -283,8 +283,7 @@ void spell_insects(int level, P_char ch, char *arg, int type, P_char victim, P_o
 
 
 
-void spell_boulder(int level, P_char ch, char *arg, int type, P_char victim,
-                   P_obj obj)
+void spell_boulder(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   int      dam;
   struct damage_messages messages = {
@@ -2505,7 +2504,63 @@ void spell_shadow_spawn(int level, P_char ch, char *arg, int type, P_char victim
   }
 }
 
+// Event to handle asphyxiate spell.
+void event_asphyxiate(P_char ch, P_char victim, P_obj obj, void *data)
+{
+  int rounds = *( (int *)data );
+  int dam;
+  struct damage_messages messages = {
+    "Your &+wghastly hands&n choke $N.",
+    "&+wGhastly hands&n choke you!",
+    "$N chokes and gags.",
+    "$N succumbs to your &+wghastly hands&n.",
+    "Evertyhing be&+wgins to go &+Ldark...&n",
+    "$N falls to the floor and ceases to move.", 0
+  };
 
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+
+  if( NewSaves(victim, SAVING_SPELL, GET_LEVEL(ch) / 10) )
+  {
+    // About 50 dam
+    dam = 175 + number( 0, 50 );
+  }
+  else
+  {
+    // About 75 dam
+    dam = 275 + number( 0, 50 );
+  }
+
+  if( spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD
+    && (--rounds > 0) )
+  {
+    add_event(event_asphyxiate, 1, ch, victim, NULL, 0, &rounds, sizeof(int));
+  }
+}
+
+// _very_ quick dot that does damage over 3 ticks.
+void spell_asphyxiate(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+{
+  int rounds = 3;
+
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  {
+    return;
+  }
+  if( !HAS_LUNGS(GET_RACE( victim )) )
+  {
+    act("But $N doesn't need to breathe!", TRUE, ch, NULL, victim, TO_CHAR);
+    return;
+  }
+  act("Your &+wghastly hands&n begin to choke $N.", TRUE, ch, NULL, victim, TO_CHAR);
+  act("$N begins to choke and gag.", TRUE, ch, NULL, victim, TO_NOTVICT);
+  act("&+wGhastly hands&n begin to choke you!", TRUE, victim, NULL, NULL, TO_CHAR);
+
+  event_asphyxiate(ch, victim, NULL, &rounds);
+}
 
 #   define _ILLUSIONIST_MAGIC_C_
 #endif

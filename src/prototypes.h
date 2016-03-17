@@ -2861,6 +2861,7 @@ void cast_ardgral(int, P_char, char *, int, P_char, P_obj);
 void spell_shadow_burst(int, P_char, char *, int, P_char, P_obj);
 void spell_shadow_spawn(int, P_char, char*, int, P_char, P_obj);
 void event_shadow_spawn(P_char, P_char, P_obj, void *);
+void spell_asphyxiate(int, P_char, char*, int, P_char, P_obj);
 void spell_natures_calling(int, P_char, char *, int, P_char, P_obj);
 void spell_natures_call(int, P_char, char*, int, P_char, P_obj);
 void event_natures_call(P_char, P_char, P_obj, void *);

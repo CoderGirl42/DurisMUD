@@ -1409,6 +1409,15 @@ char *CRYPT2( char *passwd, char *name );
   || race == RACE_W_ELEMENTAL  || race == RACE_V_ELEMENTAL || race == RACE_I_ELEMENTAL || race == RACE_E_ELEMENTAL   \
   || (IS_AFFECTED4(obj, AFF4_VAMPIRE_FORM) && !GET_CLASS(obj, CLASS_THEURGIST)) || RACE_PUNDEAD(obj) )
 
+// This is done in reverse 'cause it's faster that way.
+#define HAS_LUNGS(race)     ( race != RACE_SHADE     && race != RACE_REVENANT    && race != RACE_PLICH       \
+  && race != RACE_PVAMPIRE && race != RACE_PDKNIGHT  && race != RACE_PSBEAST     && race != RACE_WIGHT       \
+  && race != RACE_PHANTOM  && race != RACE_GARGOYLE  && race != RACE_F_ELEMENTAL && race != RACE_A_ELEMENTAL \
+  && race != RACE_UNDEAD   && race != RACE_VAMPIRE   && race != RACE_W_ELEMENTAL && race != RACE_E_ELEMENTAL \
+  && race != RACE_GHOST    && race != RACE_GOLEM     && race != RACE_PLANT       && race != RACE_DRACOLICH   \
+  && race != RACE_SLIME    && race != RACE_CONSTRUCT && race != RACE_ZOMBIE      && race != RACE_SPECTRE     \
+  && race != RACE_SKELETON && race != RACE_WRAITH    && race != RACE_V_ELEMENTAL && race != RACE_I_ELEMENTAL \
+  && race != RACE_SHADOW   && race != RACE_AVATAR )
 
 // Good spell pulse is negative.
 #define SPELL_PULSE(ch) (1.0 + (.03 * ch->points.spell_pulse))
