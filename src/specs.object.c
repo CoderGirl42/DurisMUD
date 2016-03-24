@@ -11051,8 +11051,8 @@ int proc_whirlwinds(P_obj obj, P_char ch, int cmd, char *arg)
     }
     else
     {
-      act("As you tap on $q an immense rush of &+Cvibrating energy&n flows down your limbs!.", TRUE, ch, obj, 0, TO_CHAR);
-      act("$n performs a slight gesture around $s forearm and suddenly gains in speed and accuracy!", TRUE, ch, obj, 0, TO_ROOM);
+      act("As you tap on $p an immense rush of &+Cvibrating energy&n flows down your limbs!", TRUE, ch, obj, 0, TO_CHAR);
+      act("$n performs a slight gesture around $s forearm and suddenly gains &+Cspeed&n and &+Baccuracy&n!", TRUE, ch, obj, 0, TO_ROOM);
       obj->timer[0] = curr_time;
       obj->extra_flags &= ~ITEM_HUM;
       set_short_affected_by(ch, SKILL_WHIRLWIND, 3 * PULSE_VIOLENCE);
