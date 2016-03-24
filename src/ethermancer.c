@@ -1501,12 +1501,12 @@ void spell_comet(int level, P_char ch, char *arg, int type, P_char victim, P_obj
 {
   int    temp, dam;
   struct damage_messages messages = {
-    "&+yHarnessing the &+Yco&+Wsm&+Yic&n&+y powers, you reach out mentally and call forth a &+Ycomet&n&+y to blast into&n $N!&n" ,
-    "&+yWithout any hope of avoiding it,&n $n's &+Ycomet&n&+y blasts next to you, sending you reeling, burnt and stunned.&n" ,
-    "$n's &+Ycomet&n&+y strikes&n $N&n&+y, the blast rending $S&n&+y flesh and throwing $M&n&+y back several feet.&n" ,
-    "&+yYour &+Ycomet&n&+y blasts&n $N &+yinto oblivion.&n",
-    "&+yThe last thing you see is a &+Ycomet&n&+y crashing straight into you...&n",
-    "$n's &+Ycomet&n&+y crashes into&n $N, &+yblasting $M into oblivion.&n",
+    "&+LYou open a rift in the &+Yco&+Wsm&+Yos&+L and call forth a small &+Yco&+yme&+Yt&+L that &+Rsm&+ras&+Rhes &+Linto $N&+L!&n" ,
+    "&+LA rift opens in front of you, and in it you see &+Yst&+War&+Ys &+Land &+Cgalaxies&+L.  Suddenly, a &+Yco&+yme&+Yt &+Lflies out of it &+Rsm&+rash&+Ring &+Linto YOU!&n" ,
+    "&+LA large rift opens in front of $N&+L, you see &+Yst&+War&+Ys &+Lthrough it, and then a &+Yco&+yme&+Yt &+Lflies forth &+Rsmashing &+Linto $M!&n" ,
+    "&+LYou open a rift into space and call forth a comet, and an exceptionally &+RLARGE &+Yco&+yme&+Yt &+Lsails through the rift and through the &+rrem&+Rnan&+rts &+Lof $N&+L.&n",
+    "&+LA black rift opens before you, showing you &+Yst&+yar&+Ys&+L.  Suddenly a &+Rmassive &+Yco&+yme&+Yt &+Lflies through it and you...ending your &+Rl&+rif&+Re&+L...&n",
+    "&+LA black rift opens before $N &+Land out comes a &+RMASSIVE &+Yco&+yme&+Yt &+Lutterly &+Rpul&+rver&+Rizi&+rng &+L$M!&n",
       0
   };
 
