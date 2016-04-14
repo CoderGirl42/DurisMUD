@@ -12071,9 +12071,10 @@ void where_nowhere(P_char ch, char *args)
       send_to_char( buf, ch );
     }
   }
-  send_to_char( "\n", ch );
+  if( count > 0 )
+    send_to_char( "&+yTo collect these objects, type '&+wget nowhere&+y'.&n\n", ch );
 
-  send_to_char( "&-LCharacters in NOWHERE:&n\n", ch );
+  send_to_char( "\n&-LCharacters in NOWHERE:&n\n", ch );
   // For each character in the game..
   for( t_ch = character_list; t_ch; t_ch = t_ch->next )
   {
