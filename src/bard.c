@@ -1365,7 +1365,7 @@ void bard_storms(int songLevel, P_char ch, P_char victim, int song)
   // If they have empower song up to 100%, then they have a 20% chance to call lightning.
   if( (empower == 100) && (!number(0, 4)) )
   {
-    spell_call_lightning(songLevel, ch, victim, 0);
+    spell_call_lightning(songLevel - 10, ch, victim, 0);
   }
 }
 
