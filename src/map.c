@@ -171,7 +171,7 @@ mapSymbolInfo color_symbol[NUM_SECT_TYPES] = {
   {"=wl", true},
   {"+L" , false},
   {"+g" , false},
-  {"=gl", true},
+  {"+g" , false},
   {"+y" , false},
   {"+y" , false},
   {"=cw", true},
@@ -188,7 +188,7 @@ mapSymbolInfo color_symbol[NUM_SECT_TYPES] = {
   {"=bB", true},
   {"+w" , false},
   {"+w" , false},
-  {"+L" , true},
+  {"+L" , false},
   {"+w" , false},
   {"+w" , false},
   {"=Lr", true},
@@ -202,11 +202,11 @@ mapSymbolInfo color_symbol[NUM_SECT_TYPES] = {
   {"+M" , false},
   {"=wL", true},
   {"=wB", true},
-  {"+r" , true},
-  {"=lw", false},
-  {"=lw", false},
+  {"+r" , false},
+  {"=lw", true},
+  {"=lw", true},
   {"+L" , false},
-  {"=wl", true},
+  {"=lg", true},
   {"=rR", true}
 };
 
@@ -799,7 +799,7 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
 	strcat(buf, "&=LYF");
       }
 #endif
-      else if( (prev != what) || (x == -n) )
+      else if( (prev != what || what == SECT_FOREST) || (x == -n) )
       {
         int shift = 0;
 
@@ -808,8 +808,8 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
           shift = -2;
         }
 
-        sprintf(buf + strlen(buf) + shift, "&%s%s",
-            color_symbol[what].colorStrn, sector_symbol[what]);
+        sprintf( buf + strlen(buf) + shift, "&%s%s",
+          (what == SECT_FOREST && !number( 0,2 )) ? "+G" : color_symbol[what].colorStrn, sector_symbol[what]);
         hadbg = color_symbol[what].hasBg;
         prev = what;
         map_tile = true;
