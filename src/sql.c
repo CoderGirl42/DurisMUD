@@ -357,6 +357,66 @@ void sql_save_progress(int pid, int delta, const char *type)
            pid, type, delta);
 }
 
+// Retrieves the current highest number of frags and which racewar side has it.
+void get_level_cap( long *max_frags, int* racewar )
+{
+  MYSQL_RES *db = NULL;
+  MYSQL_ROW row;
+  db = db_query( "SELECT most_frags, racewar_leader FROM level_cap" );
+
+  if( (db == NULL) || (( row = mysql_fetch_row(db) ) == NULL) )
+  {
+    debug( "get_level_cap: Database read fail." );
+    *max_frags = (long)-1;
+    *racewar = RACEWAR_NONE;
+  }
+  *max_frags = (long)(atof( row[0] ) * 100.);
+  *racewar   = atoi(row[1]);
+
+  // cycle out until a NULL return
+  while( row != NULL )
+  {
+    row = mysql_fetch_row(db);
+  }
+}
+
+// Returns the highest level achievable by mortals, limited by racewar side.
+int sql_level_cap( int racewar_side )
+{
+  long max_frags;
+  int  leading_racewar, level_cap;
+
+  get_level_cap( &max_frags, &leading_racewar );
+
+  // This goes from 25 for no frags, 26 for .4 frags, 27 for .8 frags, up to 56 for 12.4 or more frags.
+  level_cap = (int) ( (max_frags / 40) + 25 );
+debug( "PENIS: level_cap: %d.", level_cap );
+  // Everyone can reach 56 when someone reaches the limit.
+  if( level_cap >= 56 )
+    return 56;
+  // 25 is the lower limit.
+  if( level_cap <= 25 )
+    return 25;
+  // Otherwise, we have a 1 level penalty for non-leading racewar sides.
+  return level_cap - ( (racewar_side == leading_racewar) ? 0 : 1 );
+}
+
+// Checks the number of frags against the current highest and sets the new highest if applicable.
+void sql_check_level_cap( long max_frags, int racewar )
+{
+  long old_max_frags;
+  int  old_racewar;
+  char query[1024];
+
+  get_level_cap( &old_max_frags, &old_racewar );
+
+  if( max_frags > old_max_frags )
+  {
+    sprintf(query, "UPDATE level_cap SET most_frags = %f, racewar_leader = %d", max_frags/100., racewar );
+    db_query(query);
+  }
+}
+
 /* Save frags delta */
 void sql_modify_frags(P_char ch, int gain)
 {
@@ -368,6 +428,8 @@ void sql_modify_frags(P_char ch, int gain)
   if (IS_MORPH(ch))
     ch = MORPH_ORIG(ch);
   sql_save_progress(GET_PID(ch), gain, "FRAGS");
+  if( gain > 0 )
+    sql_check_level_cap( ch->only.pc->frags, GET_RACEWAR(ch) );
 }
 
 /* Save frags delta */

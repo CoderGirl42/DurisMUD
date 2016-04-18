@@ -988,10 +988,10 @@ float gain_global_exp_modifiers(P_char ch, float XP)
   return XP;
 }
 
-// Percentage of exp gained.
-int exp_mod(P_char killer, P_char victim)
+// Percentage of exp gained per level mods.
+int exp_level_percent_modifier(P_char killer, P_char victim)
 {
-  int      diff, mod;
+  int diff, mod;
 
   // High difference -> high lvl killing lowbies
   diff = GET_LEVEL(killer) - GET_LEVEL(victim);
@@ -1005,11 +1005,11 @@ int exp_mod(P_char killer, P_char victim)
   }
   else if( diff > 20 )          /* 21 - 30  */
   {
-    mod = 3;
+    mod = 2;
   }
   else if( diff > 15 )          /* 16 - 20  */
   {
-    mod = 10;
+    mod = 5;
   }
   else if( diff > 10 )          /* 11 - 15  */
   {
@@ -1047,6 +1047,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 {
   int goodcap = get_property("exp.level.cap.good", 15);
   int evilcap = get_property("exp.level.cap.evil", 15);
+  int levelcap = sql_level_cap( GET_RACEWAR(ch) );
   bool pvp = FALSE;
   float XP = MAX(1, value);
   P_char master;
@@ -1073,6 +1074,9 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     {
       return 0;
     }
+    // If they're ready to level and capped by the levelcap, then only give 2/3 exp.
+    if( (GET_LEVEL( ch ) >= levelcap) && (new_exp_table[GET_LEVEL(ch) + 1] <= GET_EXP( ch )) )
+      XP *= exp_mods[EXPMOD_OVER_LEVEL_CAP];
   }
 
   if(ch && victim && IS_PC(ch) && IS_PC(victim))
@@ -1139,7 +1143,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 // debug("damage 1 exp gain (%d)", (int)XP);
     XP = gain_global_exp_modifiers(ch, XP);
 // debug("damage 2 exp gain (%d)", (int)XP);
-    XP *= exp_mod(ch, victim) / 100.;
+    XP *= exp_level_percent_modifier(ch, victim) / 100.;
 // debug("damage 3 exp gain (%d)", (int)XP);
     XP = modify_exp_by_zone_trophy(ch, type, XP);
 // debug("damage 4 exp gain (%d)", (int)XP);
@@ -1190,7 +1194,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 // debug("healing 3 (%d)", (int)XP);
     XP = gain_global_exp_modifiers(ch, XP);
 // debug("healing 4 (%d)", (int)XP);
-    XP *= exp_mod(ch, attacker) / 100.;
+    XP *= exp_level_percent_modifier(ch, attacker) / 100.;
 // debug("healing 5 (%d)", (int)XP);
     XP = modify_exp_by_zone_trophy(ch, type, XP);
 // debug("healing 6 (%d)", (int)XP);
@@ -1224,7 +1228,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 // debug("tanking 1 (%d)", (int)XP);
     XP = gain_global_exp_modifiers(ch, XP);
 // debug("tanking 2 (%d)", (int)XP);
-    XP *= exp_mod(ch, victim) / 100.;
+    XP *= exp_level_percent_modifier(ch, victim) / 100.;
 // debug("tanking 3 (%d)", (int)XP);
     XP = modify_exp_by_zone_trophy(ch, type, XP);
 // debug("tanking 4 (%d)", (int)XP);
@@ -1255,7 +1259,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 // debug("melee 2 exp gain (%d)", (int)XP);
     XP = gain_global_exp_modifiers(ch, XP);
 // debug("melee 3 exp gain (%d)", (int)XP);
-    XP *= exp_mod(ch, victim) / 100.;
+    XP *= exp_level_percent_modifier(ch, victim) / 100.;
 // debug("melee 4 exp gain (%d)", (int)XP);
     XP = modify_exp_by_zone_trophy(ch, type, XP);
 // debug("melee 5 exp gain (%d)", (int)XP);
@@ -1340,7 +1344,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
 // debug("kill 1 exp gain (%d)", (int)XP);
       XP = gain_global_exp_modifiers(ch, XP);
 // debug("kill 2 exp gain (%d)", (int)XP);
-      XP *= exp_mod(ch, victim) / 100.;
+      XP *= exp_level_percent_modifier(ch, victim) / 100.;
 // debug("kill 3 exp gain (%d)", (int)XP);
       XP = modify_exp_by_zone_trophy(ch, type, XP);
 // debug("kill 4 exp gain (%d)", (int)XP);
@@ -1361,6 +1365,8 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     if( pvp )
     {
       XP *= exp_mods[EXPMOD_PVP];
+      // Level difference mods.
+      XP *= exp_level_percent_modifier(ch, victim) / 100.;
 // debug("kill 8 exp gain (%d)", (int)XP);
     }
     check_boon_completion(ch, victim, XP, BOPT_MOB);
@@ -1419,9 +1425,9 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
   {
     // Hardcores should level via exp only. - Drannak 11/30/12
     // Liches can lvl exp only too since they are solo on 3rd racewar side (again). 7/7/2015
-    if( (IS_HARDCORE(ch) || GET_RACE(ch) == RACE_PLICH) && (GET_LEVEL(ch) <= 55) )
+    if( (IS_HARDCORE(ch) || GET_RACE(ch) == RACE_PLICH) && (GET_LEVEL(ch) < levelcap) )
     {
-      for(int i = GET_LEVEL(ch) + 1;i <= 56 && (new_exp_table[i] <= GET_EXP(ch)); i++ )
+      for( int i = GET_LEVEL(ch) + 1; (i <= levelcap) && (new_exp_table[i] <= GET_EXP( ch )); i++ )
   	  {
       	GET_EXP(ch) -= new_exp_table[i];
       	advance_level(ch);
@@ -1429,7 +1435,9 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
     }
     else
     {
-      for( int i = GET_LEVEL(ch) + 1; (i <= get_property("exp.maxExpLevel", 46)) &&  (new_exp_table[i] <= GET_EXP(ch)); i++ )
+      // Level cap capped by exp.maxExpLevel too.
+      levelcap = MIN( levelcap, get_property("exp.maxExpLevel", 46) );
+      for( int i = GET_LEVEL(ch) + 1; (i <= levelcap) && (new_exp_table[i] <= GET_EXP( ch )); i++ )
       {
         GET_EXP(ch) -= new_exp_table[i];
         advance_level(ch);
@@ -1741,4 +1749,5 @@ void update_exp_mods()
   exp_mods[EXPMOD_PALADIN_VS_GOOD] = get_property("exp.factor.paladin.vsGood", 0.200 );
   exp_mods[EXPMOD_PALADIN_VS_EVIL] = get_property("exp.factor.paladin.vsEvil", 1.100 );
   exp_mods[EXPMOD_ANTIPALADIN_VS_GOOD] = get_property("exp.factor.antipaladin.vsGood", 1.050 );
+  exp_mods[EXPMOD_OVER_LEVEL_CAP] = get_property("exp.factor.overCap", 0.550 );
 }

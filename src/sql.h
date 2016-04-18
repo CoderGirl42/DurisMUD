@@ -28,6 +28,7 @@ MYSQL_RES *db_query(const char *format, ...);
 
 int initialize_mysql();
 int sql_save_player_core( P_char ch );
+int sql_level_cap( int racewar_side );
 //void sql_save_progress( int pid, int delta, const char *type );
 void sql_modify_frags( P_char ch, int gain );
 void sql_save_pkill( P_char ch, P_char victim );

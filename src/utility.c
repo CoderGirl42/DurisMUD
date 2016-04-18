@@ -1648,7 +1648,7 @@ int ScaleAreaDamage(P_char ch, int orig_dam)
 // Takes an amount and converts it to a string containing the corresponding coinage.
 // If padfront > 0, then we add padfront spaces to the string minus the number of digits
 //   of the first non-zero coin type. (So, padfront 5 on 5 plat -> "    5 plat").
-char *coin_stringv( int amount, int padfront = 0 )
+char *coin_stringv( int amount, int padfront )
 {
   int p, g, s, c;
   static char buf[300], *spot;

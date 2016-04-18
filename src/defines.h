@@ -1384,8 +1384,9 @@ struct material_data {
 #define EXPMOD_PALADIN_VS_GOOD             58
 #define EXPMOD_PALADIN_VS_EVIL             59
 #define EXPMOD_ANTIPALADIN_VS_GOOD         60
+#define EXPMOD_OVER_LEVEL_CAP              61
 
-#define EXPMOD_MAX                         60
+#define EXPMOD_MAX                         61
 
 
 #endif /* _DURIS_DEFINES_H_ */
