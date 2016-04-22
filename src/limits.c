@@ -477,11 +477,11 @@ int move_regen(P_char ch)
    * Zion 11/1/07
    */
 
-  if (endurance > 0)
+  if( endurance > 0 )
     gain += (endurance / 10);
 
-  if (GET_RACE(ch) == RACE_QUADRUPED)
-    gain += (number(0, 6));
+  if( GET_RACE(ch) == RACE_QUADRUPED )
+    gain += dice(2, 4);
 
   return (int) (gain * gain / 5);
 }

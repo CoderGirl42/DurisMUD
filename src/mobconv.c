@@ -480,6 +480,7 @@ void convertMob(P_char ch)
   if(IS_SET(ch->specials.act, ACT_MOUNT))
   {
     GET_MAX_VITALITY(ch) *= 2;
+    GET_MAX_VITALITY(ch) += 50;
     ch->points.vitality = ch->points.base_vitality = ch->points.max_vitality;
   }
 
