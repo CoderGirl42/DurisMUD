@@ -5679,7 +5679,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
 
     if(victim != ch)
     {
-      if(CHAR_IN_SAFE_ZONE(ch))
+      if(CHAR_IN_SAFE_ROOM(ch))
       {
         return DAM_NONEDEAD;
       }

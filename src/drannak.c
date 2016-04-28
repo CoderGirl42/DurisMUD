@@ -1353,7 +1353,7 @@ void do_conjure(P_char ch, char *argument, int cmd)
   }
 */
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;

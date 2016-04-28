@@ -89,7 +89,7 @@ int CanDoFightMove(P_char ch, P_char victim)
     return FALSE;
   }
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("You feel ashamed trying to disrupt the tranquility of this place.\r\n", ch);
     return FALSE;
@@ -904,7 +904,7 @@ void chant_buddha_palm(P_char ch, char *argument, int cmd)
     CharWait(ch, 2 * PULSE_VIOLENCE);
     return;
   }
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char
       ("You feel ashamed to try to disrupt the tranquility of this place.\r\n",
@@ -1016,7 +1016,7 @@ void chant_quivering_palm(P_char ch, char *argument, int cmd)
     send_to_char("You are not in the proper mood for that right now!\r\n", ch);
     return;
   }
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char
       ("You feel ashamed to try to disrupt the tranquility of this place.\r\n",
@@ -1134,7 +1134,7 @@ void chant_jin_touch(P_char ch, char *argument, int cmd)
     return;
   }
   
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("&+GYou feel ashamed to try to disrupt the tranquility of this place.\r\n", ch);
     return;
@@ -1250,7 +1250,7 @@ void chant_ki_strike(P_char ch, char *argument, int cmd)
     send_to_char("Yer not in proper mood for that right now!\r\n", ch);
     return;
   }
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("You feel ashamed to try to disrupt the tranquility of this place.\r\n", ch);
     return;
@@ -3368,7 +3368,7 @@ void do_chi(P_char ch, char *argument, int cmd)
 
   if (!GET_SPEC(ch, CLASS_MONK, SPEC_CHIMONK))
   {
-    send_to_char("You lack the mental focus to perform this task\n\r", ch);
+    send_to_char("You lack the mental focus to perform this task.\n\r", ch);
     return;
   }
 
@@ -3648,11 +3648,12 @@ void do_true_strike(P_char ch, char *argument, int cmd)
   int      x;
   int      victim_dead;
 
-  if (IS_NPC(ch))
-    return;
 
-  if (!GET_SPEC(ch, CLASS_MONK, SPEC_CHIMONK))
+  if( !GET_SPEC(ch, CLASS_MONK, SPEC_CHIMONK) || IS_NPC(ch) )
+  {
+    send_to_char("You lack the mental focus to perform this task\n\r", ch);
     return;
+  }
 
   skl_lvl = GET_CHAR_SKILL(ch, SKILL_TRUE_STRIKE);
 
@@ -3697,7 +3698,7 @@ void do_true_strike(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char
       ("You feel ashamed to try to disrupt the tranquility of this place.\n\r",

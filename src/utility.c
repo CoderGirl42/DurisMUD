@@ -2586,7 +2586,7 @@ bool is_aggr_to(P_char ch, P_char target)
     IS_DESTROYING(ch) ||
     !IS_AWAKE(ch) ||
     IS_IMMOBILE(ch) ||
-    CHAR_IN_SAFE_ZONE(ch) ||
+    CHAR_IN_SAFE_ROOM(ch) ||
     !CAN_SEE(ch, target) ||
     IS_AFFECTED(target, AFF_WRAITHFORM))
   {
@@ -4781,7 +4781,7 @@ bool should_area_hit(P_char ch, P_char victim)
   if( ch == victim )
     return FALSE;
 
-  if( CHAR_IN_SAFE_ZONE(victim) )
+  if( CHAR_IN_SAFE_ROOM(victim) )
     return FALSE;
 
   if( GET_STAT(victim) == STAT_DEAD )
@@ -4934,7 +4934,7 @@ int cast_as_damage_area(P_char ch, void (*spell_func) (int, P_char, char *, int,
   ////////////
   // new algo
 
-  if(IS_SET(world[ch_room].room_flags, SAFE_ZONE))
+  if(IS_SET(world[ch_room].room_flags, SAFE_ROOM))
   {
     return 0;
   }
@@ -5023,8 +5023,8 @@ int cast_as_damage_area(P_char ch, void (*spell_func) (int, P_char, char *, int,
 
   int vict_room = victim->in_room;
   
-  if(IS_SET(world[ch_room].room_flags, SAFE_ZONE) ||
-     IS_SET(world[vict_room].room_flags, SAFE_ZONE))
+  if(IS_SET(world[ch_room].room_flags, SAFE_ROOM) ||
+     IS_SET(world[vict_room].room_flags, SAFE_ROOM))
   {
     return 0;
   }

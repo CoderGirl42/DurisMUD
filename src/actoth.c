@@ -2668,7 +2668,7 @@ void do_steal(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) && !IS_TRUSTED(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) && !IS_TRUSTED(ch) )
   {
     send_to_char("Your conscience prevents you from stealing in such a peaceful place.\r\n", ch);
     return;
@@ -3220,7 +3220,7 @@ bool newsteal_CheckIfValid(P_char ch, const char *victim_name, const char *args)
     send_to_char("Sheesh!  With that load it's a wonder you can walk!\r\n", ch);
     return false;
   }
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("Your conscience prevents you from stealing in such a peaceful place.\r\n",ch);
     return false;

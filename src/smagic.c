@@ -3115,7 +3115,7 @@ int can_summon_beast(P_char ch, int level)
     return FALSE;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return FALSE;
@@ -3170,7 +3170,7 @@ P_char summon_beast_common(int mobnumb, P_char ch, int max_summon,
     return NULL;
   }
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your summoning!\n", ch);
     return NULL;

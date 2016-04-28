@@ -815,7 +815,7 @@ void spell_conjure_air(int level, P_char ch, char *arg, int type,
     43, "&+CA HUGE gust of wind solidifies into&n $n."}
   };
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;
@@ -2400,7 +2400,7 @@ void spell_conjure_void_elemental(int level, P_char ch, char *arg, int type, P_c
   int      charisma = GET_C_CHA(ch) + (GET_LEVEL(ch) / 5);
   struct follow_type *k;
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;
@@ -2505,7 +2505,7 @@ void spell_conjure_ice_elemental(int level, P_char ch, char *arg, int type, P_ch
   int      charisma = GET_C_CHA(ch) + (GET_LEVEL(ch) / 5);
   struct follow_type *k;
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;

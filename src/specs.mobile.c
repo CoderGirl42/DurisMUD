@@ -5403,7 +5403,7 @@ int spore_ball(P_char ch, P_char pl, int cmd, char *arg)
   {
     act("$n crumples, a noxious gas escaping its interior.", FALSE, ch, 0, 0,
         TO_ROOM);
-    if (CHAR_IN_SAFE_ZONE(ch))
+    if (CHAR_IN_SAFE_ROOM(ch))
       act("The gas dissipates harmlessly.", FALSE, ch, 0, 0, TO_ROOM);
     else
     {
@@ -10027,13 +10027,22 @@ int justice_clerk(P_char ch, P_char pl, int cmd, char *arg)
     if (i < 1 || i > LAST_HOME)
     {
       sprintf(tempbuf, "Justice_clerk is in town %d?!?\r\n", i);
+      if( pl )
+        send_to_char( "This town has issues... It doesn't seem to be a town.\n", pl );
       return FALSE;
     }
 
     ttime = time(NULL);
 
-    if (IS_TOWN_INVADER(pl, i))
+    if( IS_TOWN_INVADER(pl, i) )
+    {
+      if( IS_PC(pl) )
+      {
+        sprintf( tempbuf, "%s", GET_NAME(pl) );
+        do_action(ch, tempbuf, CMD_SLAP);
+      }
       return FALSE;
+    }
     if (cmd == CMD_LIST)
     {
       if (!hometowns[CHAR_IN_TOWN(ch) - 1].crime_list)
@@ -10772,7 +10781,7 @@ P_char summon_creature(int mobnumb, P_char master, int max_summon,
   if (dur <= 0)
     dur = (GET_LEVEL(master) * 4) + 10;
 
-  if (CHAR_IN_SAFE_ZONE(master))
+  if (CHAR_IN_SAFE_ROOM(master))
   {
     send_to_char("A mysterious force blocks your summoning!\r\n", master);
     return NULL;

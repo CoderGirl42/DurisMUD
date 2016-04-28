@@ -53,6 +53,7 @@
 #include "auction_houses.h"
 #include "achievements.h"
 #include "siege.h"
+#include "vnum.room.h"
 
 /*
  * external variables
@@ -75,6 +76,7 @@ extern P_room world;
 bool command_confirm;
 
 void do_prestige(P_char ch, char *argument, int cmd);
+void check_aggro_from_command( P_char exec_char );
 
 /*=========================================================================*/
 /*
@@ -1276,7 +1278,7 @@ void command_interpreter(P_char ch, char *argument)
   uint     look_at, begin;
   int      cmd, i, j, k, current;
   char    *ch_ptr;
-  P_char   target, t_ch, exec_char = ch;
+  P_char   target, master, exec_char = ch;
 
   if( debug_mode )
   {
@@ -1814,7 +1816,7 @@ void command_interpreter(P_char ch, char *argument)
           exec_char->desc->confirm_state = CONFIRM_NONE;
         }
         command_confirm = TRUE;
-        ((*cmd_info[cmd].command_pointer) (exec_char, argument + begin + look_at,cmd));
+        ((*cmd_info[cmd].command_pointer) (exec_char, argument + begin + look_at, cmd));
       }
       else if( cmd_info[cmd].req_confirm == 1 )
       {
@@ -1839,6 +1841,13 @@ void command_interpreter(P_char ch, char *argument)
         }
 
         ((*cmd_info[cmd].command_pointer)(exec_char, argument + begin + look_at, cmd));
+        // If mobs should and can aggro the executor of the above command.
+        if( (cmd_info[cmd].check_aggro) && IS_ALIVE(exec_char)
+          && (IS_PC( exec_char ) || ( (( master = get_linked_char(exec_char, LNK_PET) ) != NULL) && IS_PC(master) ))
+          && (exec_char->in_room > RROOM_LIMBO) && !CHAR_IN_SAFE_ROOM(exec_char) )
+        {
+          check_aggro_from_command( exec_char );
+        }
       }
     }
     return;
@@ -2172,53 +2181,61 @@ bool special(P_char ch, int cmd, char *arg)
  * JAB
  */
 
-#define CMD_N(number, min_pos, pointer, min_level) {   \
-   cmd_info[(number)].command_pointer = (pointer);     \
-   cmd_info[(number)].minimum_position = (min_pos);    \
-   cmd_info[(number)].in_battle = FALSE;        \
-   cmd_info[(number)].minimum_level = (min_level);      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = FALSE;}
+#define CMD_N(number, min_pos, pointer, min_level, chk_aggro) { \
+   cmd_info[(number)].command_pointer = (pointer);              \
+   cmd_info[(number)].minimum_position = (min_pos);             \
+   cmd_info[(number)].in_battle = FALSE;                        \
+   cmd_info[(number)].minimum_level = (min_level);              \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = FALSE;                      \
+   cmd_info[(number)].check_aggro = chk_aggro;}
 
-#define CMD_Y(number, min_pos, pointer, min_level) {   \
-   cmd_info[(number)].command_pointer = (pointer);     \
-   cmd_info[(number)].minimum_position = (min_pos);    \
-   cmd_info[(number)].in_battle = TRUE; \
-   cmd_info[(number)].minimum_level = (min_level);      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = FALSE;}
+#define CMD_Y(number, min_pos, pointer, min_level, chk_aggro) { \
+   cmd_info[(number)].command_pointer = (pointer);              \
+   cmd_info[(number)].minimum_position = (min_pos);             \
+   cmd_info[(number)].in_battle = TRUE;                         \
+   cmd_info[(number)].minimum_level = (min_level);              \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = FALSE;                      \
+   cmd_info[(number)].check_aggro = chk_aggro;}
 
-#define CMD_CNF_Y(number, min_pos, pointer, min_level) {   \
-   cmd_info[(number)].command_pointer = (pointer);     \
-   cmd_info[(number)].minimum_position = (min_pos);    \
-   cmd_info[(number)].in_battle = TRUE; \
-   cmd_info[(number)].minimum_level = (min_level);      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = TRUE;}
+// Commands that need confirmation do not draw aggro, ever.
+#define CMD_CNF_Y(number, min_pos, pointer, min_level) {        \
+   cmd_info[(number)].command_pointer = (pointer);              \
+   cmd_info[(number)].minimum_position = (min_pos);             \
+   cmd_info[(number)].in_battle = TRUE;                         \
+   cmd_info[(number)].minimum_level = (min_level);              \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = TRUE;                       \
+   cmd_info[(number)].check_aggro = FALSE;}
 
-#define CMD_CNF_N(number, min_pos, pointer, min_level) {   \
-   cmd_info[(number)].command_pointer = (pointer);     \
-   cmd_info[(number)].minimum_position = (min_pos);    \
-   cmd_info[(number)].in_battle = FALSE;        \
-   cmd_info[(number)].minimum_level = (min_level);      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = TRUE;}
+#define CMD_CNF_N(number, min_pos, pointer, min_level) {        \
+   cmd_info[(number)].command_pointer = (pointer);              \
+   cmd_info[(number)].minimum_position = (min_pos);             \
+   cmd_info[(number)].in_battle = FALSE;                        \
+   cmd_info[(number)].minimum_level = (min_level);              \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = TRUE;                       \
+   cmd_info[(number)].check_aggro = FALSE;}
 
-#define CMD_TRIG(number, min_level) {   \
-   cmd_info[(number)].command_pointer = do_not_here;     \
-   cmd_info[(number)].minimum_position = STAT_DEAD + POS_PRONE;    \
-   cmd_info[(number)].in_battle = TRUE; \
-   cmd_info[(number)].minimum_level = (min_level);      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = FALSE;}
+#define CMD_TRIG(number, min_level, chk_aggro) {                \
+   cmd_info[(number)].command_pointer = do_not_here;            \
+   cmd_info[(number)].minimum_position = STAT_DEAD + POS_PRONE; \
+   cmd_info[(number)].in_battle = TRUE;                         \
+   cmd_info[(number)].minimum_level = (min_level);              \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = FALSE;                      \
+   cmd_info[(number)].check_aggro = chk_aggro;}
 
-#define CMD_SOC(number, min_position) {   \
-   cmd_info[(number)].command_pointer = do_action;     \
-   cmd_info[(number)].minimum_position = (min_position);    \
-   cmd_info[(number)].in_battle = TRUE; \
-   cmd_info[(number)].minimum_level = 0;      \
-   cmd_info[(number)].grantable = 0;    \
-   cmd_info[(number)].req_confirm = FALSE;}
+// Socials always draw aggro.
+#define CMD_SOC(number, min_position) {                         \
+   cmd_info[(number)].command_pointer = do_action;              \
+   cmd_info[(number)].minimum_position = (min_position);        \
+   cmd_info[(number)].in_battle = TRUE;                         \
+   cmd_info[(number)].minimum_level = 0;                        \
+   cmd_info[(number)].grantable = 0;                            \
+   cmd_info[(number)].req_confirm = FALSE;                      \
+   cmd_info[(number)].check_aggro = TRUE;}
 
 #define CMD_GRT(number, min_pos, pointer, min_level) {   \
    cmd_info[(number)].command_pointer = (pointer);     \
@@ -2320,7 +2337,7 @@ void assign_command_pointers(void)
   CMD_GRT(CMD_ZRESET, STAT_DEAD + POS_PRONE, do_zreset, GREATER_G);
   CMD_GRT(CMD_SETHOME, STAT_DEAD + POS_PRONE, do_sethome, LESSER_G);
   CMD_GRT(CMD_PROPERTIES, STAT_DEAD + POS_PRONE, do_properties, LESSER_G);
-  CMD_Y(CMD_QUEST, STAT_DEAD + POS_PRONE, do_quest, 1);
+  CMD_Y(CMD_QUEST, STAT_DEAD + POS_PRONE, do_quest, 1, FALSE);
   CMD_GRT(CMD_PROCLIB, STAT_DEAD + POS_PRONE, do_proclib, FORGER);
   CMD_GRT(CMD_SUPERVISE, STAT_DEAD + POS_PRONE, do_supervise, FORGER);
   CMD_GRT(CMD_DEATHOBJ, STAT_DEAD + POS_PRONE, do_deathobj, FORGER);
@@ -2351,8 +2368,8 @@ void assign_command_pointers(void)
    */
 
   CMD_CNF_N(CMD_JUNK, STAT_RESTING + POS_SITTING, do_junk, 56);
-  CMD_N(CMD_QUIT, STAT_DEAD + POS_PRONE, do_camp, 0);
-  CMD_Y(CMD_BERSERK, STAT_NORMAL + POS_STANDING, do_berserk, 0);
+  CMD_N(CMD_QUIT, STAT_DEAD + POS_PRONE, do_camp, 0, TRUE);
+  CMD_Y(CMD_BERSERK, STAT_NORMAL + POS_STANDING, do_berserk, 0, TRUE);
   CMD_CNF_N(CMD_SUICIDE, STAT_DEAD, do_suicide, 1);
 
   
@@ -2361,398 +2378,397 @@ void assign_command_pointers(void)
    * level restricted commands
    */
 
-  CMD_N(CMD_BURY, STAT_NORMAL + POS_STANDING, do_bury, 0);
-  CMD_Y(CMD_GCC, STAT_SLEEPING + POS_PRONE, do_gcc, 0);
-  CMD_N(CMD_SUMMON, STAT_NORMAL + POS_STANDING, do_innate, 10);
+  CMD_N(CMD_BURY, STAT_NORMAL + POS_STANDING, do_bury, 0, TRUE);
+  CMD_Y(CMD_GCC, STAT_SLEEPING + POS_PRONE, do_gcc, 0, FALSE);
+  CMD_N(CMD_SUMMON, STAT_NORMAL + POS_STANDING, do_innate, 10, TRUE);
 #ifdef MEM_DEBUG
-  CMD_Y(CMD_MREPORT, STAT_DEAD + POS_PRONE, do_mreport, 57);
+  CMD_Y(CMD_MREPORT, STAT_DEAD + POS_PRONE, do_mreport, AVATAR, FALSE);
 #endif
-  CMD_Y(CMD_NCHAT, STAT_SLEEPING + POS_PRONE, do_nchat, 1);
-  CMD_Y(CMD_PAGE, STAT_NORMAL + POS_STANDING, do_page, 58);
-  CMD_Y(CMD_SKILLS, STAT_SLEEPING + POS_PRONE, do_skills, 1);
-  CMD_Y(CMD_SPELLS, STAT_SLEEPING + POS_PRONE, do_spells, 1);
-  CMD_Y(CMD_TELL, STAT_RESTING + POS_PRONE, do_tell, 1);
-  CMD_Y(CMD_BEEP, STAT_RESTING + POS_PRONE, do_beep, 1);
-  CMD_Y(CMD_RWC, STAT_SLEEPING + POS_PRONE, do_rwc, 62);
-  CMD_Y(CMD_REPLY, STAT_RESTING + POS_PRONE, do_reply, 1);
-  CMD_N(CMD_LICK, STAT_NORMAL + POS_STANDING, do_lick, 1);
+  CMD_Y(CMD_NCHAT, STAT_SLEEPING + POS_PRONE, do_nchat, 1, FALSE);
+  CMD_Y(CMD_PAGE, STAT_NORMAL + POS_STANDING, do_page, IMMORTAL, FALSE);
+  CMD_Y(CMD_SKILLS, STAT_SLEEPING + POS_PRONE, do_skills, 1, FALSE);
+  CMD_Y(CMD_SPELLS, STAT_SLEEPING + POS_PRONE, do_spells, 1, FALSE);
+  CMD_Y(CMD_TELL, STAT_RESTING + POS_PRONE, do_tell, 1, FALSE);
+  CMD_Y(CMD_BEEP, STAT_RESTING + POS_PRONE, do_beep, 1, FALSE);
+  CMD_Y(CMD_RWC, STAT_SLEEPING + POS_PRONE, do_rwc, 62, FALSE);
+  CMD_Y(CMD_REPLY, STAT_RESTING + POS_PRONE, do_reply, 1, FALSE);
+  CMD_N(CMD_LICK, STAT_NORMAL + POS_STANDING, do_lick, 1, TRUE);
 
   /*
    * normal commands (not allowed while fighting)
    */
-  CMD_N(CMD_DESCEND, STAT_NORMAL + POS_PRONE, do_descend, 0);
-  CMD_N(CMD_ENHANCE, STAT_NORMAL + POS_PRONE, do_enhance, 0);
-  CMD_N(CMD_REMORT, STAT_NORMAL + POS_PRONE, do_remort, 0);
-  CMD_N(CMD_SPECIALIZE, STAT_SLEEPING + POS_PRONE, do_specialize, 0);
-//  CMD_N(CMD_SPECIALIZE, STAT_NORMAL + POS_PRONE, do_spec, 0);
-  CMD_N(CMD_APPRAISE, STAT_NORMAL + POS_PRONE, do_appraise, 0);
-  CMD_N(CMD_APPLY, STAT_RESTING + POS_PRONE, do_apply_poison, 0);
-  CMD_N(CMD_ARTIFACTS, STAT_SLEEPING + POS_PRONE, do_artifact_sql, 0);
-  CMD_N(CMD_RAID, STAT_SLEEPING + POS_PRONE, do_raid, 0);
-  CMD_N(CMD_DISMISS, STAT_NORMAL + POS_STANDING, do_dismiss, 0);
-   
-  CMD_N(CMD_DISAPPEAR, STAT_RESTING + POS_KNEELING, do_disappear, 0);
-  CMD_N(CMD_ASSIST, STAT_NORMAL + POS_STANDING, do_assist, 0);
-  CMD_N(CMD_DICE, STAT_NORMAL + POS_STANDING, do_dice, 0);
-  CMD_N(CMD_AWARENESS, STAT_NORMAL + POS_STANDING, do_awareness, 0);
-  CMD_N(CMD_BACKSTAB, STAT_NORMAL + POS_STANDING, do_backstab, 0);
-  CMD_N(CMD_BALANCE, STAT_NORMAL + POS_STANDING, do_balance, 0);
-  CMD_N(CMD_BANDAGE, STAT_NORMAL + POS_STANDING, do_bandage, 0);
-  CMD_Y(CMD_BEARHUG, STAT_NORMAL + POS_STANDING, do_bearhug, 0);
-  CMD_N(CMD_BODYSLAM, STAT_NORMAL + POS_STANDING, do_bodyslam, 0);
-  CMD_N(CMD_CARVE, STAT_NORMAL + POS_STANDING, do_carve, 0);
-  CMD_N(CMD_CAMP, STAT_RESTING + POS_PRONE, do_camp, 0);
-  CMD_N(CMD_CLIMB, STAT_NORMAL + POS_STANDING, do_climb, 0);
-  CMD_N(CMD_CLOSE, STAT_RESTING + POS_SITTING, do_close, 0);
-  CMD_N(CMD_COMMANDS, STAT_SLEEPING + POS_PRONE, do_commands, 0);
-  CMD_N(CMD_CREDITS, STAT_DEAD + POS_PRONE, do_credits, 0);
-  CMD_N(CMD_DEPOSIT, STAT_NORMAL + POS_STANDING, do_deposit, 0);
-  CMD_N(CMD_DIG, STAT_NORMAL + POS_STANDING, do_dig, 0);
-  CMD_N(CMD_MINE, STAT_NORMAL + POS_STANDING, do_mine, 0);
-  CMD_N(CMD_FISH, STAT_NORMAL + POS_STANDING, do_fish, 0);
-  CMD_N(CMD_FORGE, STAT_RESTING + POS_PRONE, do_forge, 0);
-  CMD_N(CMD_ASCEND, STAT_RESTING + POS_PRONE, do_ascend, 0);
-  CMD_N(CMD_EXHUME, STAT_NORMAL + POS_STANDING, do_exhume, 0);
-  CMD_N(CMD_FADE, STAT_NORMAL + POS_STANDING, do_fade, 0);
-  CMD_N(CMD_DISGUISE, STAT_RESTING + POS_PRONE, do_disguise, 0);
-  CMD_N(CMD_DO, STAT_RESTING + POS_PRONE, do_do, 0);
-  CMD_N(CMD_DONATE, STAT_NORMAL + POS_STANDING, do_donate, 0);
-  CMD_N(CMD_DOORBASH, STAT_NORMAL + POS_STANDING, do_doorbash, 0);
-  CMD_N(CMD_DOORKICK, STAT_NORMAL + POS_STANDING, do_doorkick, 0);
-  CMD_N(CMD_DOWN, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_MAKE, STAT_NORMAL + POS_SITTING, do_make, 0);
-  CMD_N(CMD_DRAG, STAT_NORMAL + POS_STANDING, do_drag, 0);
-  CMD_N(CMD_DRAIN, STAT_NORMAL + POS_SITTING, do_drain, 0);
-  CMD_N(CMD_DRINK, STAT_RESTING + POS_SITTING, do_drink, 0);
-  CMD_N(CMD_EAST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_EAT, STAT_RESTING + POS_PRONE, do_eat, 0);
-  CMD_N(CMD_EMOTE, STAT_RESTING + POS_PRONE, do_emote, 0);
-  CMD_N(CMD_EMOTE2, STAT_RESTING + POS_PRONE, do_emote, 0);
-  CMD_N(CMD_ENTER, STAT_NORMAL + POS_STANDING, do_enter, 0);
-  CMD_N(CMD_EXAMINE, STAT_RESTING + POS_PRONE, do_examine, 0);
-  CMD_N(CMD_EXP, STAT_DEAD + POS_PRONE, do_explist, 0);
-  CMD_N(CMD_PROJECTS, STAT_SLEEPING + POS_PRONE, do_projects, 0);
-  CMD_N(CMD_HOME, STAT_SLEEPING + POS_PRONE, do_home, 0);
-  CMD_N(CMD_FAQ, STAT_SLEEPING + POS_PRONE, do_faq, 0);
-  CMD_N(CMD_FILL, STAT_NORMAL + POS_STANDING, do_fill, 0);
-  CMD_Y(CMD_FIRE, STAT_NORMAL + POS_STANDING, do_fire, 0);
-  CMD_N(CMD_THROW, STAT_NORMAL + POS_STANDING, do_throw, 0);    /* TASFALEN */
-  CMD_N(CMD_FIRSTAID, STAT_NORMAL + POS_STANDING, do_first_aid, 0);
-  CMD_N(CMD_FLY, STAT_NORMAL + POS_SITTING, do_fly, IMMORTAL);
-  CMD_N(CMD_FORAGE, STAT_RESTING + POS_SITTING, do_forage, 0);
-  CMD_N(CMD_CONSTRUCT, STAT_NORMAL + POS_STANDING, do_construct, 20);
-  CMD_N(CMD_GUILDHALL, STAT_DEAD + POS_PRONE, do_guildhall, 25);
+  CMD_N(CMD_DESCEND, STAT_NORMAL + POS_PRONE, do_descend, 0, TRUE);
+  CMD_N(CMD_ENHANCE, STAT_NORMAL + POS_PRONE, do_enhance, 0, TRUE);
+  CMD_N(CMD_REMORT, STAT_NORMAL + POS_PRONE, do_remort, 0, TRUE);
+  CMD_N(CMD_SPECIALIZE, STAT_SLEEPING + POS_PRONE, do_specialize, 0, FALSE);
+//  CMD_N(CMD_SPECIALIZE, STAT_NORMAL + POS_PRONE, do_spec, 0, FALSE);
+  CMD_N(CMD_APPRAISE, STAT_NORMAL + POS_PRONE, do_appraise, 0, FALSE);
+  CMD_N(CMD_APPLY, STAT_RESTING + POS_PRONE, do_apply_poison, 0, TRUE);
+  CMD_N(CMD_ARTIFACTS, STAT_SLEEPING + POS_PRONE, do_artifact_sql, 0, FALSE);
+  CMD_N(CMD_RAID, STAT_SLEEPING + POS_PRONE, do_raid, 0, FALSE); // Raidable?
+  CMD_N(CMD_DISMISS, STAT_NORMAL + POS_STANDING, do_dismiss, 0, TRUE);
+  CMD_N(CMD_DISAPPEAR, STAT_RESTING + POS_KNEELING, do_disappear, 0, TRUE);
+  CMD_N(CMD_ASSIST, STAT_NORMAL + POS_STANDING, do_assist, 0, TRUE);
+  CMD_N(CMD_DICE, STAT_NORMAL + POS_STANDING, do_dice, 0, TRUE);
+  CMD_N(CMD_AWARENESS, STAT_NORMAL + POS_STANDING, do_awareness, 0, FALSE);
+  CMD_N(CMD_BACKSTAB, STAT_NORMAL + POS_STANDING, do_backstab, 0, TRUE);
+  CMD_N(CMD_BALANCE, STAT_NORMAL + POS_STANDING, do_balance, 0, FALSE);
+  CMD_N(CMD_BANDAGE, STAT_NORMAL + POS_STANDING, do_bandage, 0, TRUE);
+  CMD_Y(CMD_BEARHUG, STAT_NORMAL + POS_STANDING, do_bearhug, 0, TRUE);
+  CMD_N(CMD_BODYSLAM, STAT_NORMAL + POS_STANDING, do_bodyslam, 0, TRUE);
+  CMD_N(CMD_CARVE, STAT_NORMAL + POS_STANDING, do_carve, 0, TRUE);
+  CMD_N(CMD_CAMP, STAT_RESTING + POS_PRONE, do_camp, 0, TRUE);
+  CMD_N(CMD_CLIMB, STAT_NORMAL + POS_STANDING, do_climb, 0, TRUE);
+  CMD_N(CMD_CLOSE, STAT_RESTING + POS_SITTING, do_close, 0, TRUE);
+  CMD_N(CMD_COMMANDS, STAT_SLEEPING + POS_PRONE, do_commands, 0, FALSE);
+  CMD_N(CMD_CREDITS, STAT_DEAD + POS_PRONE, do_credits, 0, FALSE);
+  CMD_N(CMD_DEPOSIT, STAT_NORMAL + POS_STANDING, do_deposit, 0, FALSE);
+  CMD_N(CMD_DIG, STAT_NORMAL + POS_STANDING, do_dig, 0, TRUE);
+  CMD_N(CMD_MINE, STAT_NORMAL + POS_STANDING, do_mine, 0, TRUE);
+  CMD_N(CMD_FISH, STAT_NORMAL + POS_STANDING, do_fish, 0, TRUE);
+  CMD_N(CMD_FORGE, STAT_RESTING + POS_PRONE, do_forge, 0, TRUE);
+  CMD_N(CMD_ASCEND, STAT_RESTING + POS_PRONE, do_ascend, 0, TRUE);
+  CMD_N(CMD_EXHUME, STAT_NORMAL + POS_STANDING, do_exhume, 0, TRUE);
+  CMD_N(CMD_FADE, STAT_NORMAL + POS_STANDING, do_fade, 0, TRUE);
+  CMD_N(CMD_DISGUISE, STAT_RESTING + POS_PRONE, do_disguise, 0, TRUE);
+  CMD_N(CMD_DO, STAT_RESTING + POS_PRONE, do_do, 0, TRUE); // Shouldn't really be here, but ok.
+  CMD_N(CMD_DONATE, STAT_NORMAL + POS_STANDING, do_donate, 0, TRUE);
+  CMD_N(CMD_DOORBASH, STAT_NORMAL + POS_STANDING, do_doorbash, 0, TRUE);
+  CMD_N(CMD_DOORKICK, STAT_NORMAL + POS_STANDING, do_doorkick, 0, TRUE);
+  CMD_N(CMD_DOWN, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_MAKE, STAT_NORMAL + POS_SITTING, do_make, 0, FALSE);
+  CMD_N(CMD_DRAG, STAT_NORMAL + POS_STANDING, do_drag, 0, TRUE);
+  CMD_N(CMD_DRAIN, STAT_NORMAL + POS_SITTING, do_drain, 0, TRUE);
+  CMD_N(CMD_DRINK, STAT_RESTING + POS_SITTING, do_drink, 0, TRUE);
+  CMD_N(CMD_EAST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_EAT, STAT_RESTING + POS_PRONE, do_eat, 0, TRUE);
+  CMD_N(CMD_EMOTE, STAT_RESTING + POS_PRONE, do_emote, 0, TRUE);
+  CMD_N(CMD_EMOTE2, STAT_RESTING + POS_PRONE, do_emote, 0, TRUE);
+  CMD_N(CMD_ENTER, STAT_NORMAL + POS_STANDING, do_enter, 0, TRUE);
+  CMD_N(CMD_EXAMINE, STAT_RESTING + POS_PRONE, do_examine, 0, FALSE);
+  CMD_N(CMD_EXP, STAT_DEAD + POS_PRONE, do_explist, 0, FALSE);
+  CMD_N(CMD_PROJECTS, STAT_SLEEPING + POS_PRONE, do_projects, 0, FALSE);
+  CMD_N(CMD_HOME, STAT_SLEEPING + POS_PRONE, do_home, 0, FALSE);
+  CMD_N(CMD_FAQ, STAT_SLEEPING + POS_PRONE, do_faq, 0, FALSE);
+  CMD_N(CMD_FILL, STAT_NORMAL + POS_STANDING, do_fill, 0, TRUE);
+  CMD_Y(CMD_FIRE, STAT_NORMAL + POS_STANDING, do_fire, 0, TRUE);
+  CMD_N(CMD_THROW, STAT_NORMAL + POS_STANDING, do_throw, 0, TRUE);    /* TASFALEN */
+  CMD_N(CMD_FIRSTAID, STAT_NORMAL + POS_STANDING, do_first_aid, 0, TRUE);
+  CMD_N(CMD_FLY, STAT_NORMAL + POS_SITTING, do_fly, IMMORTAL, TRUE);
+  CMD_N(CMD_FORAGE, STAT_RESTING + POS_SITTING, do_forage, 0, TRUE);
+  CMD_N(CMD_CONSTRUCT, STAT_NORMAL + POS_STANDING, do_construct, 20, TRUE);
+  CMD_N(CMD_GUILDHALL, STAT_DEAD + POS_PRONE, do_guildhall, 25, FALSE);
   // old guildhalls (deprecated)
 //  CMD_N(CMD_SACK, STAT_NORMAL + POS_STANDING, do_sack, 25);
-  CMD_N(CMD_FRAGLIST, STAT_DEAD + POS_PRONE, displayFragList, 0);
-  CMD_N(CMD_HARDCORE, STAT_DEAD + POS_PRONE, displayHardCore, 0);
-  CMD_N(CMD_LEADERBOARD, STAT_DEAD + POS_PRONE, displayLeader, 0);
-  CMD_N(CMD_SOULBIND, STAT_DEAD + POS_PRONE, do_soulbind, 0);
-  CMD_N(CMD_REFINE, STAT_DEAD + POS_PRONE, do_refine, 0);
-  CMD_N(CMD_RELIC, STAT_DEAD + POS_PRONE, displayRelic, 0);
-  CMD_N(CMD_EPIC, STAT_DEAD + POS_PRONE, do_epic, 0);
-  CMD_N(CMD_NEXUS, STAT_DEAD + POS_PRONE, do_nexus, 0);
-  CMD_N(CMD_TEST, STAT_DEAD + POS_PRONE, do_test, FORGER);
-  CMD_Y(CMD_TRANQUILIZE, STAT_DEAD, do_tranquilize, 59);
-  CMD_Y(CMD_HELP, STAT_DEAD + POS_PRONE, do_help, 0);
-  CMD_N(CMD_HIDE, STAT_RESTING + POS_SITTING, do_hide, 0);
-  CMD_N(CMD_HITCH, STAT_NORMAL + POS_STANDING, do_hitch_vehicle, 0);
-  CMD_N(CMD_INFO, STAT_SLEEPING + POS_PRONE, do_help, 0);
-  CMD_N(CMD_LISTEN, STAT_NORMAL + POS_STANDING, do_listen, 0);
-  CMD_N(CMD_LOCK, STAT_RESTING + POS_SITTING, do_lock, 0);
-  CMD_N(CMD_MAIL, STAT_RESTING + POS_SITTING, do_mail, 0);
-  CMD_N(CMD_MAP, STAT_SLEEPING + POS_PRONE, do_map, 0);
-  CMD_N(CMD_LOTUS, STAT_RESTING + POS_SITTING, do_lotus, 0);
-  CMD_N(CMD_MEDITATE, STAT_RESTING + POS_KNEELING, do_meditate, 0);
-  CMD_N(CMD_MORE, STAT_DEAD + POS_PRONE, do_more, 0);
-  CMD_Y(CMD_RECALL, STAT_DEAD + POS_PRONE, do_recall, 0);
-  CMD_N(CMD_MOTD, STAT_SLEEPING + POS_PRONE, do_motd, 0);
-  CMD_N(CMD_GMOTD, STAT_SLEEPING + POS_PRONE, do_gmotd, 0);
-  CMD_Y(CMD_MOUNT, STAT_NORMAL + POS_STANDING, do_mount, 0);
-  CMD_N(CMD_NE, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_Y(CMD_NEWS, STAT_DEAD + POS_PRONE, do_news, 0);
-  CMD_Y(CMD_CHEATER, STAT_DEAD + POS_PRONE, do_cheaters, 0);
-  CMD_N(CMD_NORTH, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_NORTHWEST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_NORTHEAST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_NW, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_PICK, STAT_NORMAL + POS_STANDING, do_pick, 0);
-  CMD_Y(CMD_PLAY, STAT_RESTING + POS_SITTING, do_play, 0);
-  CMD_N(CMD_POSE, STAT_RESTING + POS_SITTING, do_pose, 0);
-  CMD_N(CMD_PRACTICE, STAT_RESTING + POS_KNEELING, do_practice, 0);
-  CMD_N(CMD_PRACTISE, STAT_RESTING + POS_KNEELING, do_practice, 0);
-  CMD_N(CMD_PUT, STAT_RESTING + POS_SITTING, do_put, 0);
-  CMD_N(CMD_EMPTY, STAT_RESTING + POS_SITTING, do_empty, 0);
-  CMD_N(CMD_QUI, STAT_DEAD + POS_PRONE, do_qui, 0);
-  CMD_N(CMD_READ, STAT_RESTING + POS_PRONE, do_read, 0);
-  CMD_N(CMD_RECITE, STAT_RESTING + POS_PRONE, do_recite, 0);
-  CMD_N(CMD_RELOAD, STAT_NORMAL + POS_STANDING, do_load_weapon, 0);
-  CMD_N(CMD_REST, STAT_RESTING + POS_PRONE, do_rest, 0);
-  CMD_N(CMD_RIDE, STAT_NORMAL + POS_STANDING, do_mount, 0);
-  CMD_N(CMD_RULES, STAT_RESTING + POS_PRONE, do_rules, 0);
-  CMD_N(CMD_SALVAGE, STAT_NORMAL + POS_STANDING, do_salvage, 0);
-  CMD_N(CMD_SCAN, STAT_RESTING + POS_STANDING, do_scan, 0);
-  CMD_N(CMD_SCRIBE, STAT_RESTING + POS_SITTING, do_scribe, 0);
-  CMD_N(CMD_SE, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_SEARCH, STAT_NORMAL + POS_STANDING, do_search, 0);
-  CMD_N(CMD_SHAPECHANGE, STAT_RESTING + POS_PRONE, do_shapechange, 0);
-  CMD_N(CMD_SLEEP, STAT_SLEEPING + POS_PRONE, do_sleep, 0);
-  CMD_N(CMD_SNEAK, STAT_NORMAL + POS_STANDING, do_sneak, 0);
-  CMD_N(CMD_SOUTH, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_SOUTHWEST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_SOUTHEAST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_SPLIT, STAT_RESTING + POS_SITTING, do_split, 0);
-  CMD_N(CMD_STEAL, STAT_NORMAL + POS_STANDING, do_steal, 0);
-  CMD_N(CMD_SW, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_STOMP, STAT_NORMAL + POS_SITTING, do_stomp, 0);
-  CMD_N(CMD_SWEEP, STAT_NORMAL + POS_SITTING, do_sweep, 0);
-  CMD_N(CMD_SWIM, STAT_NORMAL + POS_SITTING, do_swim, 60);
-  CMD_N(CMD_TASTE, STAT_RESTING + POS_PRONE, do_taste, 0);
-  CMD_N(CMD_TEACH, STAT_RESTING + POS_SITTING, do_teach, 0);
-  CMD_N(CMD_TRACK, STAT_NORMAL + POS_STANDING, do_track, 0);
-  CMD_N(CMD_TRAPSET, STAT_NORMAL + POS_STANDING, do_trapset, 59);
-  CMD_N(CMD_TRAPREMOVE, STAT_NORMAL + POS_STANDING, do_trapremove, 59);
-  CMD_N(CMD_UNHITCH, STAT_NORMAL + POS_STANDING, do_unhitch_vehicle, 0);
-  CMD_N(CMD_UNLOCK, STAT_RESTING + POS_SITTING, do_unlock, 0);
-  CMD_N(CMD_UP, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_WEAR, STAT_RESTING + POS_SITTING, do_wear, 0);
-  CMD_N(CMD_WEST, STAT_NORMAL + POS_PRONE, do_move, 0);
-  CMD_N(CMD_WHISPER, STAT_RESTING + POS_SITTING, do_whisper, 0);
-  CMD_N(CMD_WHO, STAT_DEAD + POS_PRONE, do_who, 0);
-  CMD_N(CMD_WITHDRAW, STAT_NORMAL + POS_STANDING, do_withdraw, 0);
-  CMD_N(CMD_WIZLIST, STAT_DEAD + POS_PRONE, do_wizlist, 0);
-  CMD_N(CMD_WRITE, STAT_NORMAL + POS_STANDING, do_write, 0);
-  CMD_N(CMD_JUSTICE, STAT_NORMAL + POS_SITTING, do_justice, 0);
-  CMD_N(CMD_SOCIETY, STAT_RESTING + POS_PRONE, do_society, 0);
-  CMD_N(CMD_BIND, STAT_NORMAL + POS_STANDING, do_bind, 0);
-  CMD_N(CMD_UNBIND, STAT_NORMAL + POS_PRONE, do_unbind, 0);
-  CMD_N(CMD_COVER, STAT_NORMAL + POS_STANDING, do_cover, 0);
-  CMD_N(CMD_STAMPEDE, STAT_NORMAL + POS_STANDING, do_stampede, 0);
-  CMD_N(CMD_CHARGE, STAT_NORMAL + POS_STANDING, do_charge, 0);
+  CMD_N(CMD_FRAGLIST, STAT_DEAD + POS_PRONE, displayFragList, 0, FALSE);
+  CMD_N(CMD_HARDCORE, STAT_DEAD + POS_PRONE, displayHardCore, 0, FALSE);
+  CMD_N(CMD_LEADERBOARD, STAT_DEAD + POS_PRONE, displayLeader, 0, FALSE);
+  CMD_N(CMD_SOULBIND, STAT_DEAD + POS_PRONE, do_soulbind, 0, TRUE);
+  CMD_N(CMD_REFINE, STAT_DEAD + POS_PRONE, do_refine, 0, TRUE);
+  CMD_N(CMD_RELIC, STAT_DEAD + POS_PRONE, displayRelic, 0, FALSE);
+  CMD_N(CMD_EPIC, STAT_DEAD + POS_PRONE, do_epic, 0, FALSE);
+  CMD_N(CMD_NEXUS, STAT_DEAD + POS_PRONE, do_nexus, 0, FALSE);
+  CMD_N(CMD_TEST, STAT_DEAD + POS_PRONE, do_test, FORGER, FALSE);
+  CMD_Y(CMD_TRANQUILIZE, STAT_DEAD, do_tranquilize, LESSER_G, FALSE);
+  CMD_Y(CMD_HELP, STAT_DEAD + POS_PRONE, do_help, 0, FALSE);
+  CMD_N(CMD_HIDE, STAT_RESTING + POS_SITTING, do_hide, 0, FALSE);
+  CMD_N(CMD_HITCH, STAT_NORMAL + POS_STANDING, do_hitch_vehicle, 0, TRUE);
+  CMD_N(CMD_INFO, STAT_SLEEPING + POS_PRONE, do_help, 0, FALSE);
+  CMD_N(CMD_LISTEN, STAT_NORMAL + POS_STANDING, do_listen, 0, FALSE);
+  CMD_N(CMD_LOCK, STAT_RESTING + POS_SITTING, do_lock, 0, TRUE);
+  CMD_N(CMD_MAIL, STAT_RESTING + POS_SITTING, do_mail, 0, FALSE);
+  CMD_N(CMD_MAP, STAT_SLEEPING + POS_PRONE, do_map, MINLVLIMMORTAL, FALSE);
+  CMD_N(CMD_LOTUS, STAT_RESTING + POS_SITTING, do_lotus, 0, TRUE);
+  CMD_N(CMD_MEDITATE, STAT_RESTING + POS_KNEELING, do_meditate, 0, TRUE);
+  CMD_N(CMD_MORE, STAT_DEAD + POS_PRONE, do_more, 0, FALSE);
+  CMD_Y(CMD_RECALL, STAT_DEAD + POS_PRONE, do_recall, 0, FALSE);
+  CMD_N(CMD_MOTD, STAT_SLEEPING + POS_PRONE, do_motd, 0, FALSE);
+  CMD_N(CMD_GMOTD, STAT_SLEEPING + POS_PRONE, do_gmotd, 0, FALSE);
+  CMD_Y(CMD_MOUNT, STAT_NORMAL + POS_STANDING, do_mount, 0, TRUE);
+  CMD_N(CMD_NE, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_Y(CMD_NEWS, STAT_DEAD + POS_PRONE, do_news, 0, FALSE);
+  CMD_Y(CMD_CHEATER, STAT_DEAD + POS_PRONE, do_cheaters, 0, FALSE);
+  CMD_N(CMD_NORTH, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_NORTHWEST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_NORTHEAST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_NW, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_PICK, STAT_NORMAL + POS_STANDING, do_pick, 0, FALSE);
+  CMD_Y(CMD_PLAY, STAT_RESTING + POS_SITTING, do_play, 0, TRUE);
+  CMD_N(CMD_POSE, STAT_RESTING + POS_SITTING, do_pose, 0, TRUE);
+  CMD_N(CMD_PRACTICE, STAT_RESTING + POS_KNEELING, do_practice, 0, TRUE);
+  CMD_N(CMD_PRACTISE, STAT_RESTING + POS_KNEELING, do_practice, 0, TRUE);
+  CMD_N(CMD_PUT, STAT_RESTING + POS_SITTING, do_put, 0, TRUE);
+  CMD_N(CMD_EMPTY, STAT_RESTING + POS_SITTING, do_empty, 0, TRUE);
+  CMD_N(CMD_QUI, STAT_DEAD + POS_PRONE, do_qui, 0, FALSE);
+  CMD_N(CMD_READ, STAT_RESTING + POS_PRONE, do_read, 0, FALSE);
+  CMD_N(CMD_RECITE, STAT_RESTING + POS_PRONE, do_recite, 0, TRUE);
+  CMD_N(CMD_RELOAD, STAT_NORMAL + POS_STANDING, do_load_weapon, 0, TRUE);
+  CMD_N(CMD_REST, STAT_RESTING + POS_PRONE, do_rest, 0, TRUE);
+  CMD_N(CMD_RIDE, STAT_NORMAL + POS_STANDING, do_mount, 0, TRUE);
+  CMD_N(CMD_RULES, STAT_RESTING + POS_PRONE, do_rules, 0, FALSE);
+  CMD_N(CMD_SALVAGE, STAT_NORMAL + POS_STANDING, do_salvage, 0, TRUE);
+  CMD_N(CMD_SCAN, STAT_RESTING + POS_STANDING, do_scan, 0, FALSE);
+  CMD_N(CMD_SCRIBE, STAT_RESTING + POS_SITTING, do_scribe, 0, FALSE);
+  CMD_N(CMD_SE, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_SEARCH, STAT_NORMAL + POS_STANDING, do_search, 0, TRUE);
+  CMD_N(CMD_SHAPECHANGE, STAT_RESTING + POS_PRONE, do_shapechange, 0, TRUE);
+  CMD_N(CMD_SLEEP, STAT_SLEEPING + POS_PRONE, do_sleep, 0, TRUE);
+  CMD_N(CMD_SNEAK, STAT_NORMAL + POS_STANDING, do_sneak, 0, FALSE);
+  CMD_N(CMD_SOUTH, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_SOUTHWEST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_SOUTHEAST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_SPLIT, STAT_RESTING + POS_SITTING, do_split, 0, FALSE);
+  CMD_N(CMD_STEAL, STAT_NORMAL + POS_STANDING, do_steal, 0, TRUE);
+  CMD_N(CMD_SW, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_STOMP, STAT_NORMAL + POS_SITTING, do_stomp, 0, TRUE);
+  CMD_N(CMD_SWEEP, STAT_NORMAL + POS_SITTING, do_sweep, 0, TRUE);
+  CMD_N(CMD_SWIM, STAT_NORMAL + POS_SITTING, do_swim, 60, TRUE);
+  CMD_N(CMD_TASTE, STAT_RESTING + POS_PRONE, do_taste, 0, FALSE);
+  CMD_N(CMD_TEACH, STAT_RESTING + POS_SITTING, do_teach, 0, TRUE);
+  CMD_N(CMD_TRACK, STAT_NORMAL + POS_STANDING, do_track, 0, TRUE);
+  CMD_N(CMD_TRAPSET, STAT_NORMAL + POS_STANDING, do_trapset, LESSER_G, TRUE);
+  CMD_N(CMD_TRAPREMOVE, STAT_NORMAL + POS_STANDING, do_trapremove, LESSER_G, TRUE);
+  CMD_N(CMD_UNHITCH, STAT_NORMAL + POS_STANDING, do_unhitch_vehicle, 0, TRUE);
+  CMD_N(CMD_UNLOCK, STAT_RESTING + POS_SITTING, do_unlock, 0, TRUE);
+  CMD_N(CMD_UP, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_WEAR, STAT_RESTING + POS_SITTING, do_wear, 0, TRUE);
+  CMD_N(CMD_WEST, STAT_NORMAL + POS_PRONE, do_move, 0, TRUE);
+  CMD_N(CMD_WHISPER, STAT_RESTING + POS_SITTING, do_whisper, 0, TRUE);
+  CMD_N(CMD_WHO, STAT_DEAD + POS_PRONE, do_who, 0, FALSE);
+  CMD_N(CMD_WITHDRAW, STAT_NORMAL + POS_STANDING, do_withdraw, 0, FALSE);
+  CMD_N(CMD_WIZLIST, STAT_DEAD + POS_PRONE, do_wizlist, 0, FALSE);
+  CMD_N(CMD_WRITE, STAT_NORMAL + POS_STANDING, do_write, 0, TRUE);
+  CMD_N(CMD_JUSTICE, STAT_NORMAL + POS_SITTING, do_justice, 0, FALSE);
+  CMD_N(CMD_SOCIETY, STAT_RESTING + POS_PRONE, do_society, 0, FALSE);
+  CMD_N(CMD_BIND, STAT_NORMAL + POS_STANDING, do_bind, 0, TRUE);
+  CMD_N(CMD_UNBIND, STAT_NORMAL + POS_PRONE, do_unbind, 0, TRUE);
+  CMD_N(CMD_COVER, STAT_NORMAL + POS_STANDING, do_cover, 0, TRUE);
+  CMD_N(CMD_STAMPEDE, STAT_NORMAL + POS_STANDING, do_stampede, 0, TRUE);
+  CMD_N(CMD_CHARGE, STAT_NORMAL + POS_STANDING, do_charge, 0, TRUE);
   // old guildhalls (deprecated)
-//  CMD_N(CMD_HOUSE, STAT_NORMAL + POS_PRONE, do_house, 0);
-  CMD_N(CMD_LORE, STAT_NORMAL + POS_STANDING, do_lore, 0);
-  CMD_N(CMD_CRAFT, STAT_NORMAL + POS_STANDING, do_craft, 0);
-  CMD_N(CMD_ENCRUST, STAT_NORMAL + POS_STANDING, do_encrust, 0);
-  CMD_N(CMD_SPELLBIND, STAT_NORMAL + POS_STANDING, do_spellbind, 0);
-  CMD_N(CMD_FIX, STAT_NORMAL + POS_STANDING, do_fix, 0);
-  CMD_N(CMD_MIX, STAT_NORMAL + POS_STANDING, do_mix, 0);
-  CMD_N(CMD_SMELT, STAT_NORMAL + POS_STANDING, do_smelt, 0);
-  CMD_N(CMD_TEST_DESC, STAT_NORMAL, do_testdesc, 59);
-  CMD_N(CMD_TESTCOLOR, STAT_NORMAL, do_testcolor, 0);
-  CMD_N(CMD_MULTICLASS, STAT_NORMAL, do_multiclass, 0);
-  CMD_Y(CMD_TARGET, STAT_DEAD + POS_PRONE, do_target, 0);
-  CMD_N(CMD_INTRODUCE, STAT_NORMAL, do_introduce, 0);
-  CMD_N(CMD_VOTE, STAT_NORMAL, do_vote, 25);
-  CMD_N(CMD_THRUST, STAT_NORMAL, do_thrust, 1);
-  CMD_N(CMD_UNTHRUST, STAT_NORMAL, do_unthrust, 1);
-  CMD_N(CMD_ENCHANT, STAT_NORMAL, do_enchant, 0);
-  CMD_N(CMD_INFUSE, STAT_NORMAL, do_infuse, 0);
-  CMD_N(CMD_GATHER, STAT_NORMAL, do_gather, 0);
-  CMD_N(CMD_AREA, STAT_RESTING + POS_PRONE, do_area, 0);
-  CMD_N(CMD_DEATHS_DOOR, STAT_NORMAL, do_deaths_door, 25);
+//  CMD_N(CMD_HOUSE, STAT_NORMAL + POS_PRONE, do_house, 0, TRUE);
+  CMD_N(CMD_LORE, STAT_NORMAL + POS_STANDING, do_lore, 0, FALSE);
+  CMD_N(CMD_CRAFT, STAT_NORMAL + POS_STANDING, do_craft, 0, TRUE);
+  CMD_N(CMD_ENCRUST, STAT_NORMAL + POS_STANDING, do_encrust, 0, TRUE);
+  CMD_N(CMD_SPELLBIND, STAT_NORMAL + POS_STANDING, do_spellbind, 0, TRUE);
+  CMD_N(CMD_FIX, STAT_NORMAL + POS_STANDING, do_fix, 0, TRUE);
+  CMD_N(CMD_MIX, STAT_NORMAL + POS_STANDING, do_mix, 0, TRUE);
+  CMD_N(CMD_SMELT, STAT_NORMAL + POS_STANDING, do_smelt, 0, TRUE);
+  CMD_N(CMD_TEST_DESC, STAT_NORMAL, do_testdesc, LESSER_G, FALSE);
+  CMD_N(CMD_TESTCOLOR, STAT_NORMAL, do_testcolor, 0, FALSE);
+  CMD_N(CMD_MULTICLASS, STAT_NORMAL, do_multiclass, 0, FALSE);
+  CMD_Y(CMD_TARGET, STAT_DEAD + POS_PRONE, do_target, 0, TRUE);
+  CMD_N(CMD_INTRODUCE, STAT_NORMAL, do_introduce, 0, TRUE);
+  CMD_N(CMD_VOTE, STAT_NORMAL, do_vote, 25, FALSE);
+  CMD_N(CMD_THRUST, STAT_NORMAL, do_thrust, 1, TRUE);
+  CMD_N(CMD_UNTHRUST, STAT_NORMAL, do_unthrust, 1, TRUE);
+  CMD_N(CMD_ENCHANT, STAT_NORMAL, do_enchant, 0, TRUE);
+  CMD_N(CMD_INFUSE, STAT_NORMAL, do_infuse, 0, TRUE);
+  CMD_N(CMD_GATHER, STAT_NORMAL, do_gather, 0, TRUE);
+  CMD_N(CMD_AREA, STAT_RESTING + POS_PRONE, do_area, 0, FALSE);
+  CMD_N(CMD_DEATHS_DOOR, STAT_NORMAL, do_deaths_door, 25, FALSE);
   /*
    * normal commands (allowed while fighting)
    */
 
-  CMD_Y(CMD_ABSORBE, STAT_NORMAL + POS_STANDING, do_absorbe, 0);
-  CMD_Y(CMD_ACHIEVEMENTS, STAT_DEAD + POS_PRONE, do_achievements, 0);
-  CMD_Y(CMD_ADDICTED_BLOOD, STAT_DEAD + POS_PRONE, do_addicted_blood, 0);
-  CMD_Y(CMD_CONJURE, STAT_NORMAL + POS_STANDING, do_conjure, 0);
-  CMD_Y(CMD_AGGR, STAT_RESTING + POS_PRONE, do_aggr, 0);
-  CMD_Y(CMD_SALVATION, STAT_NORMAL + POS_STANDING, do_salvation, 0);
-  CMD_Y(CMD_ALERT, STAT_RESTING + POS_PRONE, do_alert, 0);
-  CMD_Y(CMD_ARENA, STAT_RESTING + POS_PRONE, do_arena, 0);
-  CMD_Y(CMD_ASK, STAT_RESTING + POS_SITTING, do_ask, 0);
-  CMD_Y(CMD_ATTRIBUTES, STAT_SLEEPING + POS_PRONE, do_attributes, 0);
-  CMD_Y(CMD_BASH, STAT_NORMAL + POS_STANDING, do_bash, 0);
-  CMD_Y(CMD_DREADNAUGHT, STAT_NORMAL + POS_STANDING, do_dreadnaught, 0);
-  CMD_Y(CMD_SHADOWSTEP, STAT_NORMAL + POS_STANDING, do_shadowstep, 0);
-  CMD_Y(CMD_PARLAY, STAT_NORMAL + POS_STANDING, do_parlay, 0);
-  CMD_Y(CMD_THROWPOTION, STAT_NORMAL + POS_STANDING, do_throw_potion, 0);
-  CMD_Y(CMD_GUARD, STAT_NORMAL + POS_STANDING, do_guard, 0);
-  CMD_Y(CMD_BREATH, STAT_RESTING + POS_PRONE, do_breathe, 0);
-  CMD_Y(CMD_BUCK, STAT_NORMAL + POS_STANDING, do_buck, 0);
-  CMD_Y(CMD_BUG, STAT_DEAD + POS_PRONE, do_bug, 0);
-  CMD_Y(CMD_CHEAT, STAT_DEAD + POS_PRONE, do_cheat, 58);
-  CMD_Y(CMD_CAST, STAT_RESTING + POS_SITTING, do_cast, 0);
-  CMD_Y(CMD_SPELLWEAVE, STAT_RESTING + POS_SITTING, do_cast, 0);
-  CMD_Y(CMD_WILL, STAT_RESTING + POS_SITTING, do_will, 0);
-  CMD_Y(CMD_CHANNEL, STAT_RESTING + POS_PRONE, do_channel, 0);
-  CMD_Y(CMD_CHI, STAT_NORMAL + POS_SITTING, do_chi, 0);
-  CMD_Y(CMD_CHANT, STAT_NORMAL + POS_STANDING, do_chant, 0);
-  CMD_Y(CMD_CIRCLE, STAT_NORMAL + POS_STANDING, do_circle, 0);
-  CMD_Y(CMD_GARROTE, STAT_NORMAL + POS_STANDING, do_garrote, 0);
-  CMD_Y(CMD_COMBINATION, STAT_NORMAL + POS_STANDING, do_combination, 0);
-  CMD_Y(CMD_BLADE, STAT_NORMAL + POS_STANDING, do_barrage, 0);
-  CMD_Y(CMD_BARRAGE, STAT_NORMAL + POS_STANDING, do_barrage, 0);
+  CMD_Y(CMD_ABSORBE, STAT_NORMAL + POS_STANDING, do_absorbe, 0, TRUE);
+  CMD_Y(CMD_ACHIEVEMENTS, STAT_DEAD + POS_PRONE, do_achievements, 0, FALSE);
+  CMD_Y(CMD_ADDICTED_BLOOD, STAT_DEAD + POS_PRONE, do_addicted_blood, 0, FALSE);
+  CMD_Y(CMD_CONJURE, STAT_NORMAL + POS_STANDING, do_conjure, 0, TRUE);
+  CMD_Y(CMD_AGGR, STAT_RESTING + POS_PRONE, do_aggr, 0, FALSE);
+  CMD_Y(CMD_SALVATION, STAT_NORMAL + POS_STANDING, do_salvation, 0, TRUE);
+  CMD_Y(CMD_ALERT, STAT_RESTING + POS_PRONE, do_alert, 0, TRUE);
+  CMD_Y(CMD_ARENA, STAT_RESTING + POS_PRONE, do_arena, 0, FALSE);
+  CMD_Y(CMD_ASK, STAT_RESTING + POS_SITTING, do_ask, 0, TRUE);
+  CMD_Y(CMD_ATTRIBUTES, STAT_SLEEPING + POS_PRONE, do_attributes, 0, FALSE);
+  CMD_Y(CMD_BASH, STAT_NORMAL + POS_STANDING, do_bash, 0, TRUE);
+  CMD_Y(CMD_DREADNAUGHT, STAT_NORMAL + POS_STANDING, do_dreadnaught, 0, TRUE);
+  CMD_Y(CMD_SHADOWSTEP, STAT_NORMAL + POS_STANDING, do_shadowstep, 0, TRUE);
+  CMD_Y(CMD_PARLAY, STAT_NORMAL + POS_STANDING, do_parlay, 0, FALSE);
+  CMD_Y(CMD_THROWPOTION, STAT_NORMAL + POS_STANDING, do_throw_potion, 0, TRUE);
+  CMD_Y(CMD_GUARD, STAT_NORMAL + POS_STANDING, do_guard, 0, TRUE);
+  CMD_Y(CMD_BREATH, STAT_RESTING + POS_PRONE, do_breathe, 0, TRUE);
+  CMD_Y(CMD_BUCK, STAT_NORMAL + POS_STANDING, do_buck, 0, TRUE);
+  CMD_Y(CMD_BUG, STAT_DEAD + POS_PRONE, do_bug, 0, FALSE);
+  CMD_Y(CMD_CHEAT, STAT_DEAD + POS_PRONE, do_cheat, 58, FALSE);
+  CMD_Y(CMD_CAST, STAT_RESTING + POS_SITTING, do_cast, 0, TRUE);
+  CMD_Y(CMD_SPELLWEAVE, STAT_RESTING + POS_SITTING, do_cast, 0, TRUE);
+  CMD_Y(CMD_WILL, STAT_RESTING + POS_SITTING, do_will, 0, FALSE);
+  CMD_Y(CMD_CHANNEL, STAT_RESTING + POS_PRONE, do_channel, 0, FALSE);
+  CMD_Y(CMD_CHI, STAT_NORMAL + POS_SITTING, do_chi, 0, TRUE);
+  CMD_Y(CMD_CHANT, STAT_NORMAL + POS_STANDING, do_chant, 0, TRUE);
+  CMD_Y(CMD_CIRCLE, STAT_NORMAL + POS_STANDING, do_circle, 0, TRUE);
+  CMD_Y(CMD_GARROTE, STAT_NORMAL + POS_STANDING, do_garrote, 0, TRUE);
+  CMD_Y(CMD_COMBINATION, STAT_NORMAL + POS_STANDING, do_combination, 0, TRUE);
+  CMD_Y(CMD_BLADE, STAT_NORMAL + POS_STANDING, do_barrage, 0, TRUE);
+  CMD_Y(CMD_BARRAGE, STAT_NORMAL + POS_STANDING, do_barrage, 0, TRUE);
 /*  CMD_Y(CMD_CONDITION, STAT_RESTING + POS_SITTING, do_condition, 0); */
-  CMD_Y(CMD_CONSENT, STAT_DEAD + POS_PRONE, do_consent, 0);
-  CMD_Y(CMD_CONSIDER, STAT_RESTING + POS_SITTING, do_consider, 0);
-  CMD_Y(CMD_DISARM, STAT_NORMAL + POS_STANDING, do_disarm, 0);
-  CMD_Y(CMD_DISBAND, STAT_SLEEPING + POS_PRONE, do_disband, 0);
-  CMD_Y(CMD_DISENGAGE, STAT_NORMAL + POS_STANDING, do_disengage, 0);
-  CMD_Y(CMD_DISMOUNT, STAT_NORMAL + POS_STANDING, do_dismount, 0);
-  CMD_Y(CMD_DISPLAY, STAT_DEAD + POS_PRONE, do_display, 0);
-  CMD_Y(CMD_TRUE_STRIKE, STAT_NORMAL + POS_STANDING, do_true_strike, 0);
-  CMD_Y(CMD_DRAGONPUNCH, STAT_NORMAL + POS_STANDING, do_dragon_punch, 0);
-  CMD_Y(CMD_DIRTTOSS, STAT_NORMAL + POS_STANDING, do_dirttoss, 0);
-  CMD_Y(CMD_DROP, STAT_RESTING + POS_PRONE, do_drop, 0);
-  CMD_Y(CMD_EQUIPMENT, STAT_SLEEPING + POS_PRONE, do_equipment, 0);
-  CMD_Y(CMD_EXITS, STAT_RESTING + POS_SITTING, do_exits, 0);
-  CMD_Y(CMD_FEIGNDEATH, STAT_RESTING + POS_PRONE, do_feign_death, 0);
-  CMD_Y(CMD_FLANK, STAT_RESTING + POS_STANDING, do_flank, 0);
-  CMD_Y(CMD_FLEE, STAT_NORMAL + POS_PRONE, do_flee, 0);
-  CMD_Y(CMD_FOLLOW, STAT_RESTING + POS_SITTING, do_follow, 0);
-  CMD_Y(CMD_FORGET, STAT_RESTING + POS_PRONE, do_forget, 0);
-  CMD_Y(CMD_FREE, STAT_RESTING + POS_PRONE, do_nothing, 0);
-  CMD_Y(CMD_GAZE, STAT_RESTING + POS_STANDING, do_gaze, 0);
-  CMD_Y(CMD_GET, STAT_RESTING + POS_SITTING, do_get, 0);
-  CMD_Y(CMD_GIVE, STAT_RESTING + POS_SITTING, do_give, 0);
-  CMD_Y(CMD_GLANCE, STAT_RESTING + POS_PRONE, do_glance, 0);
-  CMD_Y(CMD_GRAB, STAT_RESTING + POS_PRONE, do_grab, 0);
-  CMD_Y(CMD_GROUP, STAT_RESTING + POS_PRONE, do_group, 0);
-  CMD_Y(CMD_GSAY, STAT_RESTING + POS_PRONE, do_gsay, 0);
-  CMD_Y(CMD_HEADBUTT, STAT_NORMAL + POS_STANDING, do_headbutt, 0);
-  CMD_Y(CMD_HIT, STAT_NORMAL + POS_STANDING, do_hit, 0);
-  CMD_Y(CMD_DESTROY, STAT_NORMAL + POS_STANDING, do_hit, 0);
-  CMD_Y(CMD_HITALL, STAT_NORMAL + POS_STANDING, do_hitall, 0);
-  CMD_Y(CMD_WARCRY, STAT_NORMAL + POS_STANDING, do_war_cry, 0);
-  CMD_Y(CMD_TACKLE, STAT_NORMAL + POS_STANDING, do_tackle, 0);
-  CMD_Y(CMD_LEGSWEEP, STAT_NORMAL + POS_STANDING, do_legsweep, 0);
-  CMD_Y(CMD_HOLD, STAT_RESTING + POS_PRONE, do_grab, 0);
-  CMD_Y(CMD_IDEA, STAT_DEAD + POS_PRONE, do_idea, 0);
-  CMD_Y(CMD_IGNORE, STAT_SLEEPING + POS_PRONE, do_ignore, 0);
-  CMD_Y(CMD_INNATE, STAT_NORMAL + POS_STANDING, do_innate, 0);
-  CMD_Y(CMD_INSULT, STAT_RESTING + POS_PRONE, do_insult, 0);
-  CMD_Y(CMD_INVENTORY, STAT_RESTING + POS_PRONE, do_inventory, 0);
-  CMD_Y(CMD_KICK, STAT_NORMAL + POS_STANDING, do_kick, 0);
-  CMD_Y(CMD_KILL, STAT_NORMAL + POS_STANDING, do_kill, 0);
-  CMD_Y(CMD_KNEEL, STAT_RESTING + POS_PRONE, do_kneel, 0);
-  CMD_Y(CMD_LAYHAND, STAT_NORMAL + POS_STANDING, do_layhand, 0);
-  CMD_Y(CMD_LOOK, STAT_RESTING + POS_PRONE, do_look, 0);
-  CMD_Y(CMD_MEMORIZE, STAT_RESTING + POS_KNEELING, do_memorize, 0);
-  CMD_Y(CMD_ASSIMILATE, STAT_RESTING + POS_KNEELING, do_assimilate, 0);
-  CMD_Y(CMD_COMMUNE, STAT_RESTING + POS_KNEELING, do_assimilate, 0);
-  CMD_Y(CMD_DEFOREST, STAT_RESTING + POS_KNEELING, do_assimilate, 0);
-  CMD_Y(CMD_PROJECT, STAT_RESTING + POS_PRONE, do_project, 0);
-  CMD_Y(CMD_MURDER, STAT_NORMAL + POS_STANDING, do_murder, 0);
-  CMD_Y(CMD_NECKBITE, STAT_NORMAL + POS_STANDING, do_gith_neckbite, 0);
-  CMD_Y(CMD_OGRE_ROAR, STAT_NORMAL + POS_STANDING, do_ogre_roar, 0);
-  CMD_Y(CMD_OPEN, STAT_RESTING + POS_SITTING, do_open, 0);
-  CMD_Y(CMD_ORDER, STAT_RESTING + POS_PRONE, do_order, 0);
-  CMD_Y(CMD_PETITION, STAT_DEAD + POS_PRONE, do_petition, 0);
-  CMD_Y(CMD_POUR, STAT_RESTING + POS_SITTING, do_pour, 0);
-  CMD_Y(CMD_PRAY, STAT_RESTING + POS_KNEELING, do_memorize, 0);
-  CMD_Y(CMD_TERRAIN, STAT_RESTING + POS_PRONE, do_terrain, 0);
-  CMD_Y(CMD_QUAFF, STAT_RESTING + POS_SITTING, do_quaff, 0);
-  CMD_Y(CMD_RECLINE, STAT_RESTING + POS_PRONE, do_recline, 0);
-  CMD_Y(CMD_REMOVE, STAT_RESTING + POS_SITTING, do_remove, 0);
-  CMD_Y(CMD_REPORT, STAT_RESTING + POS_PRONE, do_report, 0);
-  CMD_Y(CMD_RESCUE, STAT_NORMAL + POS_STANDING, do_rescue, 0);
-  CMD_Y(CMD_RUSH, STAT_NORMAL + POS_STANDING, do_rush, 0);
-  CMD_Y(CMD_RETREAT, STAT_NORMAL + POS_STANDING, do_retreat, 0);
-  CMD_Y(CMD_RETURN, STAT_DEAD + POS_PRONE, do_return, 0);
-  CMD_Y(CMD_RUB, STAT_RESTING + POS_SITTING, do_rub, 0);
-  CMD_Y(CMD_SAVE, STAT_SLEEPING + POS_PRONE, do_save, 0);
-  CMD_Y(CMD_SAY, STAT_RESTING + POS_PRONE, do_say, 0);
-  CMD_Y(CMD_SAY2, STAT_RESTING + POS_PRONE, do_say, 0);
-  CMD_Y(CMD_SCENT, STAT_DEAD + POS_PRONE, do_blood_scent, 0);
-  CMD_Y(CMD_CALL, STAT_DEAD + POS_PRONE, do_call_grave, 0);
-  CMD_Y(CMD_SCORE, STAT_DEAD + POS_PRONE, do_score, 0);
-  CMD_Y(CMD_SHIELDPUNCH, STAT_NORMAL + POS_STANDING, do_shieldpunch, 0);
-  CMD_Y(CMD_SHOUT, STAT_RESTING + POS_SITTING, do_yell, 0);
-//  CMD_Y(CMD_SING, STAT_RESTING + POS_PRONE, do_bardcheck_action, 0);
-  CMD_Y(CMD_SIP, STAT_RESTING + POS_SITTING, do_sip, 0);
-  CMD_Y(CMD_SIT, STAT_RESTING + POS_PRONE, do_sit, 0);
-  CMD_Y(CMD_SPEAK, STAT_SLEEPING + POS_PRONE, do_speak, 0);
-  CMD_Y(CMD_SPRINGLEAP, STAT_RESTING + POS_PRONE, do_springleap, 0);
-  CMD_Y(CMD_STAND, STAT_RESTING + POS_PRONE, do_stand, 0);
-  CMD_Y(CMD_STAT, STAT_DEAD + POS_PRONE, do_stat, 0);
-  CMD_Y(CMD_SUBTERFUGE, STAT_NORMAL + POS_STANDING, do_subterfuge, 0);
-  CMD_Y(CMD_SWEEPING_THRUST, STAT_NORMAL + POS_STANDING, do_sweeping_thrust, 0);
-  CMD_Y(CMD_TAKE, STAT_RESTING + POS_SITTING, do_get, 0);
-  CMD_Y(CMD_THROAT_CRUSH, STAT_NORMAL + POS_STANDING, do_throat_crush, 0);
-  CMD_Y(CMD_TIME, STAT_DEAD + POS_PRONE, do_time, 0);
-  CMD_Y(CMD_TOGGLE, STAT_DEAD + POS_PRONE, do_toggle, 0);
-  CMD_Y(CMD_TRAMPLE, STAT_NORMAL + POS_STANDING, do_trample, 0);
-  CMD_Y(CMD_TROPHY, STAT_RESTING + POS_PRONE, do_trophy, 0);
-  CMD_Y(CMD_TYPO, STAT_DEAD + POS_PRONE, do_typo, 0);
-  CMD_Y(CMD_USE, STAT_RESTING + POS_SITTING, do_use, 0);
-  CMD_Y(CMD_VIS, STAT_DEAD + POS_PRONE, do_vis, 0);
-  CMD_Y(CMD_WAKE, STAT_SLEEPING + POS_PRONE, do_wake, 0);
-//  CMD_Y(CMD_TUPOR, STAT_SLEEPING + POS_PRONE, do_tupor, 0);
-  CMD_Y(CMD_TUPOR, STAT_SLEEPING + POS_PRONE, do_assimilate, 0);
-  CMD_Y(CMD_WEATHER, STAT_RESTING + POS_PRONE, do_weather, 0);
-  CMD_Y(CMD_WHIRLWIND, STAT_NORMAL + POS_STANDING, do_whirlwind, 0);
-  CMD_Y(CMD_WIELD, STAT_RESTING + POS_PRONE, do_wield, 0);
-  CMD_Y(CMD_WIZHELP, STAT_DEAD + POS_PRONE, do_wizhelp, IMMORTAL);
-  CMD_Y(CMD_WIZMSG, STAT_DEAD + POS_PRONE, do_wizmsg, MINLVLIMMORTAL);
-  CMD_Y(CMD_WORLD, STAT_DEAD + POS_PRONE, do_world, 0);
-  CMD_Y(CMD_CAPTURE, STAT_NORMAL + POS_STANDING, do_capture, 0);
-  CMD_Y(CMD_ROUNDKICK, STAT_NORMAL + POS_STANDING, do_roundkick, 0);
-  CMD_Y(CMD_HAMSTRING, STAT_NORMAL + POS_STANDING, do_hamstring, 0);
-//  CMD_Y(CMD_DECREE, STAT_NORMAL + POS_STANDING, do_decree, 0);
-  CMD_Y(CMD_RAGE, STAT_NORMAL + POS_STANDING, do_rage, 0);
-  CMD_Y(CMD_MAUL, STAT_NORMAL + POS_STANDING, do_maul, 0);
-  CMD_Y(CMD_RESTRAIN, STAT_NORMAL + POS_STANDING, do_restrain, 0);
-  CMD_Y(CMD_RIFF, STAT_NORMAL + POS_STANDING, do_riff, 0);
-  CMD_Y(CMD_CONSUME, STAT_NORMAL + POS_STANDING, do_consume, 0);
-  CMD_Y(CMD_RAMPAGE, STAT_NORMAL + POS_STANDING, do_rampage, 0);
-  CMD_Y(CMD_INFURIATE, STAT_NORMAL + POS_STANDING, do_infuriate, 0);
-  CMD_Y(CMD_WAIL, STAT_RESTING + POS_SITTING, do_play, 0);
-  CMD_Y(CMD_SNEAKY_STRIKE, STAT_NORMAL + POS_STANDING, do_sneaky_strike, 0);
-  CMD_Y(CMD_MUG, STAT_NORMAL + POS_STANDING, do_mug, 0);
-  CMD_Y(CMD_SHRIEK, STAT_NORMAL + POS_STANDING, do_shriek, 0);
-  CMD_Y(CMD_SLIP, STAT_NORMAL + POS_STANDING, do_slip, 0);
-  CMD_Y(CMD_HEADLOCK, STAT_NORMAL + POS_STANDING, do_headlock, 0);
-  CMD_Y(CMD_GROUNDSLAM, STAT_NORMAL + POS_STANDING, do_groundslam, 0);
-  CMD_Y(CMD_LEGLOCK, STAT_NORMAL + POS_PRONE, do_leglock, 0);
+  CMD_Y(CMD_CONSENT, STAT_DEAD + POS_PRONE, do_consent, 0, FALSE);
+  CMD_Y(CMD_CONSIDER, STAT_RESTING + POS_SITTING, do_consider, 0, TRUE);
+  CMD_Y(CMD_DISARM, STAT_NORMAL + POS_STANDING, do_disarm, 0, TRUE);
+  CMD_Y(CMD_DISBAND, STAT_SLEEPING + POS_PRONE, do_disband, 0, TRUE);
+  CMD_Y(CMD_DISENGAGE, STAT_NORMAL + POS_STANDING, do_disengage, 0, TRUE);
+  CMD_Y(CMD_DISMOUNT, STAT_NORMAL + POS_STANDING, do_dismount, 0, TRUE);
+  CMD_Y(CMD_DISPLAY, STAT_DEAD + POS_PRONE, do_display, 0, FALSE);
+  CMD_Y(CMD_TRUE_STRIKE, STAT_NORMAL + POS_STANDING, do_true_strike, 0, TRUE);
+  CMD_Y(CMD_DRAGONPUNCH, STAT_NORMAL + POS_STANDING, do_dragon_punch, 0, TRUE);
+  CMD_Y(CMD_DIRTTOSS, STAT_NORMAL + POS_STANDING, do_dirttoss, 0, TRUE);
+  CMD_Y(CMD_DROP, STAT_RESTING + POS_PRONE, do_drop, 0, TRUE);
+  CMD_Y(CMD_EQUIPMENT, STAT_SLEEPING + POS_PRONE, do_equipment, 0, FALSE);
+  CMD_Y(CMD_EXITS, STAT_RESTING + POS_SITTING, do_exits, 0, FALSE);
+  CMD_Y(CMD_FEIGNDEATH, STAT_RESTING + POS_PRONE, do_feign_death, 0, TRUE);
+  CMD_Y(CMD_FLANK, STAT_RESTING + POS_STANDING, do_flank, 0, TRUE);
+  CMD_Y(CMD_FLEE, STAT_NORMAL + POS_PRONE, do_flee, 0, TRUE);
+  CMD_Y(CMD_FOLLOW, STAT_RESTING + POS_SITTING, do_follow, 0, TRUE);
+  CMD_Y(CMD_FORGET, STAT_RESTING + POS_PRONE, do_forget, 0, FALSE);
+  CMD_Y(CMD_FREE, STAT_RESTING + POS_PRONE, do_nothing, 0, FALSE);
+  CMD_Y(CMD_GAZE, STAT_RESTING + POS_STANDING, do_gaze, 0, TRUE);
+  CMD_Y(CMD_GET, STAT_RESTING + POS_SITTING, do_get, 0, TRUE);
+  CMD_Y(CMD_GIVE, STAT_RESTING + POS_SITTING, do_give, 0, TRUE);
+  CMD_Y(CMD_GLANCE, STAT_RESTING + POS_PRONE, do_glance, 0, FALSE);
+  CMD_Y(CMD_GRAB, STAT_RESTING + POS_PRONE, do_grab, 0, TRUE);
+  CMD_Y(CMD_GROUP, STAT_RESTING + POS_PRONE, do_group, 0, FALSE);
+  CMD_Y(CMD_GSAY, STAT_RESTING + POS_PRONE, do_gsay, 0, FALSE);
+  CMD_Y(CMD_HEADBUTT, STAT_NORMAL + POS_STANDING, do_headbutt, 0, TRUE);
+  CMD_Y(CMD_HIT, STAT_NORMAL + POS_STANDING, do_hit, 0, TRUE);
+  CMD_Y(CMD_DESTROY, STAT_NORMAL + POS_STANDING, do_hit, 0, TRUE);
+  CMD_Y(CMD_HITALL, STAT_NORMAL + POS_STANDING, do_hitall, 0, TRUE);
+  CMD_Y(CMD_WARCRY, STAT_NORMAL + POS_STANDING, do_war_cry, 0, TRUE);
+  CMD_Y(CMD_TACKLE, STAT_NORMAL + POS_STANDING, do_tackle, 0, TRUE);
+  CMD_Y(CMD_LEGSWEEP, STAT_NORMAL + POS_STANDING, do_legsweep, 0, TRUE);
+  CMD_Y(CMD_HOLD, STAT_RESTING + POS_PRONE, do_grab, 0, TRUE);
+  CMD_Y(CMD_IDEA, STAT_DEAD + POS_PRONE, do_idea, 0, FALSE);
+  CMD_Y(CMD_IGNORE, STAT_SLEEPING + POS_PRONE, do_ignore, 0, FALSE);
+  CMD_Y(CMD_INNATE, STAT_NORMAL + POS_STANDING, do_innate, 0, TRUE);
+  CMD_Y(CMD_INSULT, STAT_RESTING + POS_PRONE, do_insult, 0, TRUE);
+  CMD_Y(CMD_INVENTORY, STAT_RESTING + POS_PRONE, do_inventory, 0, FALSE);
+  CMD_Y(CMD_KICK, STAT_NORMAL + POS_STANDING, do_kick, 0, TRUE);
+  CMD_Y(CMD_KILL, STAT_NORMAL + POS_STANDING, do_kill, 0, TRUE);
+  CMD_Y(CMD_KNEEL, STAT_RESTING + POS_PRONE, do_kneel, 0, TRUE);
+  CMD_Y(CMD_LAYHAND, STAT_NORMAL + POS_STANDING, do_layhand, 0, TRUE);
+  CMD_Y(CMD_LOOK, STAT_RESTING + POS_PRONE, do_look, 0, FALSE);
+  CMD_Y(CMD_MEMORIZE, STAT_RESTING + POS_KNEELING, do_memorize, 0, FALSE);
+  CMD_Y(CMD_ASSIMILATE, STAT_RESTING + POS_KNEELING, do_assimilate, 0, FALSE);
+  CMD_Y(CMD_COMMUNE, STAT_RESTING + POS_KNEELING, do_assimilate, 0, FALSE);
+  CMD_Y(CMD_DEFOREST, STAT_RESTING + POS_KNEELING, do_assimilate, 0, FALSE);
+  CMD_Y(CMD_PROJECT, STAT_RESTING + POS_PRONE, do_project, 0, FALSE);
+  CMD_Y(CMD_MURDER, STAT_NORMAL + POS_STANDING, do_murder, 0, TRUE);
+  CMD_Y(CMD_NECKBITE, STAT_NORMAL + POS_STANDING, do_gith_neckbite, 0, TRUE);
+  CMD_Y(CMD_OGRE_ROAR, STAT_NORMAL + POS_STANDING, do_ogre_roar, 0, TRUE);
+  CMD_Y(CMD_OPEN, STAT_RESTING + POS_SITTING, do_open, 0, TRUE);
+  CMD_Y(CMD_ORDER, STAT_RESTING + POS_PRONE, do_order, 0, TRUE);
+  CMD_Y(CMD_PETITION, STAT_DEAD + POS_PRONE, do_petition, 0, FALSE);
+  CMD_Y(CMD_POUR, STAT_RESTING + POS_SITTING, do_pour, 0, TRUE);
+  CMD_Y(CMD_PRAY, STAT_RESTING + POS_KNEELING, do_memorize, 0, TRUE);
+  CMD_Y(CMD_TERRAIN, STAT_RESTING + POS_PRONE, do_terrain, 0, FALSE);
+  CMD_Y(CMD_QUAFF, STAT_RESTING + POS_SITTING, do_quaff, 0, TRUE);
+  CMD_Y(CMD_RECLINE, STAT_RESTING + POS_PRONE, do_recline, 0, TRUE);
+  CMD_Y(CMD_REMOVE, STAT_RESTING + POS_SITTING, do_remove, 0, TRUE);
+  CMD_Y(CMD_REPORT, STAT_RESTING + POS_PRONE, do_report, 0, TRUE);
+  CMD_Y(CMD_RESCUE, STAT_NORMAL + POS_STANDING, do_rescue, 0, TRUE);
+  CMD_Y(CMD_RUSH, STAT_NORMAL + POS_STANDING, do_rush, 0, TRUE);
+  CMD_Y(CMD_RETREAT, STAT_NORMAL + POS_STANDING, do_retreat, 0, TRUE);
+  CMD_Y(CMD_RETURN, STAT_DEAD + POS_PRONE, do_return, 0, FALSE);
+  CMD_Y(CMD_RUB, STAT_RESTING + POS_SITTING, do_rub, 0, TRUE);
+  CMD_Y(CMD_SAVE, STAT_SLEEPING + POS_PRONE, do_save, 0, FALSE);
+  CMD_Y(CMD_SAY, STAT_RESTING + POS_PRONE, do_say, 0, TRUE);
+  CMD_Y(CMD_SAY2, STAT_RESTING + POS_PRONE, do_say, 0, TRUE);
+  CMD_Y(CMD_SCENT, STAT_DEAD + POS_PRONE, do_blood_scent, 0, TRUE);
+  CMD_Y(CMD_CALL, STAT_DEAD + POS_PRONE, do_call_grave, 0, TRUE);
+  CMD_Y(CMD_SCORE, STAT_DEAD + POS_PRONE, do_score, 0, FALSE);
+  CMD_Y(CMD_SHIELDPUNCH, STAT_NORMAL + POS_STANDING, do_shieldpunch, 0, TRUE);
+  CMD_Y(CMD_SHOUT, STAT_RESTING + POS_SITTING, do_yell, 0, TRUE);
+//  CMD_Y(CMD_SING, STAT_RESTING + POS_PRONE, do_bardcheck_action, 0, TRUE);
+  CMD_Y(CMD_SIP, STAT_RESTING + POS_SITTING, do_sip, 0, TRUE);
+  CMD_Y(CMD_SIT, STAT_RESTING + POS_PRONE, do_sit, 0, TRUE);
+  CMD_Y(CMD_SPEAK, STAT_SLEEPING + POS_PRONE, do_speak, 0, FALSE);
+  CMD_Y(CMD_SPRINGLEAP, STAT_RESTING + POS_PRONE, do_springleap, 0, TRUE);
+  CMD_Y(CMD_STAND, STAT_RESTING + POS_PRONE, do_stand, 0, TRUE);
+  CMD_Y(CMD_STAT, STAT_DEAD + POS_PRONE, do_stat, 0, FALSE);
+  CMD_Y(CMD_SUBTERFUGE, STAT_NORMAL + POS_STANDING, do_subterfuge, 0, FALSE);
+  CMD_Y(CMD_SWEEPING_THRUST, STAT_NORMAL + POS_STANDING, do_sweeping_thrust, 0, TRUE);
+  CMD_Y(CMD_TAKE, STAT_RESTING + POS_SITTING, do_get, 0, TRUE);
+  CMD_Y(CMD_THROAT_CRUSH, STAT_NORMAL + POS_STANDING, do_throat_crush, 0, TRUE);
+  CMD_Y(CMD_TIME, STAT_DEAD + POS_PRONE, do_time, 0, FALSE);
+  CMD_Y(CMD_TOGGLE, STAT_DEAD + POS_PRONE, do_toggle, 0, FALSE);
+  CMD_Y(CMD_TRAMPLE, STAT_NORMAL + POS_STANDING, do_trample, 0, TRUE);
+  CMD_Y(CMD_TROPHY, STAT_RESTING + POS_PRONE, do_trophy, 0, FALSE);
+  CMD_Y(CMD_TYPO, STAT_DEAD + POS_PRONE, do_typo, 0, FALSE);
+  CMD_Y(CMD_USE, STAT_RESTING + POS_SITTING, do_use, 0, TRUE);
+  CMD_Y(CMD_VIS, STAT_DEAD + POS_PRONE, do_vis, 0, TRUE);
+  CMD_Y(CMD_WAKE, STAT_SLEEPING + POS_PRONE, do_wake, 0, TRUE);
+//  CMD_Y(CMD_TUPOR, STAT_SLEEPING + POS_PRONE, do_tupor, 0, TRUE);
+  CMD_Y(CMD_TUPOR, STAT_SLEEPING + POS_PRONE, do_assimilate, 0, TRUE);
+  CMD_Y(CMD_WEATHER, STAT_RESTING + POS_PRONE, do_weather, 0, FALSE);
+  CMD_Y(CMD_WHIRLWIND, STAT_NORMAL + POS_STANDING, do_whirlwind, 0, TRUE);
+  CMD_Y(CMD_WIELD, STAT_RESTING + POS_PRONE, do_wield, 0, TRUE);
+  CMD_Y(CMD_WIZHELP, STAT_DEAD + POS_PRONE, do_wizhelp, IMMORTAL, FALSE);
+  CMD_Y(CMD_WIZMSG, STAT_DEAD + POS_PRONE, do_wizmsg, MINLVLIMMORTAL, FALSE);
+  CMD_Y(CMD_WORLD, STAT_DEAD + POS_PRONE, do_world, 0, FALSE);
+  CMD_Y(CMD_CAPTURE, STAT_NORMAL + POS_STANDING, do_capture, 0, TRUE);
+  CMD_Y(CMD_ROUNDKICK, STAT_NORMAL + POS_STANDING, do_roundkick, 0, TRUE);
+  CMD_Y(CMD_HAMSTRING, STAT_NORMAL + POS_STANDING, do_hamstring, 0, TRUE);
+//  CMD_Y(CMD_DECREE, STAT_NORMAL + POS_STANDING, do_decree, 0, TRUE);
+  CMD_Y(CMD_RAGE, STAT_NORMAL + POS_STANDING, do_rage, 0, TRUE);
+  CMD_Y(CMD_MAUL, STAT_NORMAL + POS_STANDING, do_maul, 0, TRUE);
+  CMD_Y(CMD_RESTRAIN, STAT_NORMAL + POS_STANDING, do_restrain, 0, TRUE);
+  CMD_Y(CMD_RIFF, STAT_NORMAL + POS_STANDING, do_riff, 0, TRUE);
+  CMD_Y(CMD_CONSUME, STAT_NORMAL + POS_STANDING, do_consume, 0, TRUE);
+  CMD_Y(CMD_RAMPAGE, STAT_NORMAL + POS_STANDING, do_rampage, 0, TRUE);
+  CMD_Y(CMD_INFURIATE, STAT_NORMAL + POS_STANDING, do_infuriate, 0, TRUE);
+  CMD_Y(CMD_WAIL, STAT_RESTING + POS_SITTING, do_play, 0, TRUE);
+  CMD_Y(CMD_SNEAKY_STRIKE, STAT_NORMAL + POS_STANDING, do_sneaky_strike, 0, TRUE);
+  CMD_Y(CMD_MUG, STAT_NORMAL + POS_STANDING, do_mug, 0, TRUE);
+  CMD_Y(CMD_SHRIEK, STAT_NORMAL + POS_STANDING, do_shriek, 0, TRUE);
+  CMD_Y(CMD_SLIP, STAT_NORMAL + POS_STANDING, do_slip, 0, FALSE);
+  CMD_Y(CMD_HEADLOCK, STAT_NORMAL + POS_STANDING, do_headlock, 0, TRUE);
+  CMD_Y(CMD_GROUNDSLAM, STAT_NORMAL + POS_STANDING, do_groundslam, 0, TRUE);
+  CMD_Y(CMD_LEGLOCK, STAT_NORMAL + POS_PRONE, do_leglock, 0, TRUE);
 
-  CMD_N(CMD_BUILD, STAT_NORMAL + POS_STANDING, do_build, 0);
-  CMD_Y(CMD_PRESTIGE, STAT_NORMAL + POS_STANDING, do_prestige, 0);
-  CMD_N(CMD_ALLIANCE, STAT_RESTING + POS_PRONE, do_alliance, 0);
-  CMD_Y(CMD_ACC, STAT_SLEEPING + POS_PRONE, do_acc, 0);
-  CMD_Y(CMD_SMITE, STAT_NORMAL + POS_STANDING, do_holy_smite, 0);
-  CMD_N(CMD_OUTPOST, STAT_RESTING + POS_PRONE, do_outpost, 0);
-  CMD_Y(CMD_OFFENSIVE, STAT_RESTING + POS_PRONE, do_offensive, 0);
-  CMD_Y(CMD_FOCUS, STAT_RESTING + POS_KNEELING, do_assimilate, 0);
-  CMD_Y(CMD_BOON, STAT_SLEEPING + POS_PRONE, do_boon, 0);
-  CMD_Y(CMD_CTF, STAT_NORMAL + POS_STANDING, do_ctf, 0);
-  CMD_Y(CMD_TETHER, STAT_NORMAL + POS_STANDING, do_tether, 0);
-  CMD_Y(CMD_AUCTION, STAT_NORMAL + POS_STANDING, new_ah_call, 0);
+  CMD_N(CMD_BUILD, STAT_NORMAL + POS_STANDING, do_build, 0, TRUE);
+  CMD_Y(CMD_PRESTIGE, STAT_NORMAL + POS_STANDING, do_prestige, 0, FALSE);
+  CMD_N(CMD_ALLIANCE, STAT_RESTING + POS_PRONE, do_alliance, 0, FALSE);
+  CMD_Y(CMD_ACC, STAT_SLEEPING + POS_PRONE, do_acc, 0, FALSE);
+  CMD_Y(CMD_SMITE, STAT_NORMAL + POS_STANDING, do_holy_smite, 0, TRUE);
+  CMD_N(CMD_OUTPOST, STAT_RESTING + POS_PRONE, do_outpost, 0, FALSE);
+  CMD_Y(CMD_OFFENSIVE, STAT_RESTING + POS_PRONE, do_offensive, 0, FALSE);
+  CMD_Y(CMD_FOCUS, STAT_RESTING + POS_KNEELING, do_assimilate, 0, TRUE);
+  CMD_Y(CMD_BOON, STAT_SLEEPING + POS_PRONE, do_boon, 0, FALSE);
+  CMD_Y(CMD_CTF, STAT_NORMAL + POS_STANDING, do_ctf, 0, FALSE);
+  CMD_Y(CMD_TETHER, STAT_NORMAL + POS_STANDING, do_tether, 0, FALSE);
+  CMD_Y(CMD_AUCTION, STAT_NORMAL + POS_STANDING, new_ah_call, 0, FALSE);
 
   /*
    * 'commands' which exist only to trigger specials
    */
 
-  CMD_TRIG(CMD_BRIBE, 0);
-  CMD_TRIG(CMD_BUY, 0);
-  CMD_TRIG(CMD_DELETE, 0);
-  CMD_TRIG(CMD_DISEMBARK, 0);
-  CMD_TRIG(CMD_EXCHANGE, 0);
-  CMD_TRIG(CMD_JOIN, 0);
-  CMD_TRIG(CMD_LIST, 0);
-  CMD_TRIG(CMD_PERUSE, 0);
-  CMD_TRIG(CMD_MOVE, 0);
-  CMD_TRIG(CMD_OFFER, 0);
-  CMD_TRIG(CMD_RENT, 0);
-  CMD_TRIG(CMD_REPAIR, 0);
-  CMD_TRIG(CMD_SELL, 0);
-  CMD_TRIG(CMD_VALUE, 0);
-  CMD_TRIG(CMD_ZAP, 0);
-  CMD_TRIG(CMD_PAY, 0);
-  CMD_TRIG(CMD_PARDON, 0);
-  CMD_TRIG(CMD_REPORTING, 0);
-  CMD_TRIG(CMD_TURN_IN, 0);     /* TASFALEN3 */
-  CMD_TRIG(CMD_CLAIM, 0);
-  CMD_TRIG(CMD_HIRE, 0);
-  //CMD_TRIG(CMD_AUCTION, 0);
-  CMD_TRIG(CMD_TRAIN, 0);
+  CMD_TRIG(CMD_BRIBE, 0, TRUE);
+  CMD_TRIG(CMD_BUY, 0, TRUE);
+  CMD_TRIG(CMD_DELETE, 0, FALSE);
+  CMD_TRIG(CMD_DISEMBARK, 0, TRUE);
+  CMD_TRIG(CMD_EXCHANGE, 0, TRUE);
+  CMD_TRIG(CMD_JOIN, 0, TRUE);
+  CMD_TRIG(CMD_LIST, 0, FALSE);
+  CMD_TRIG(CMD_PERUSE, 0, FALSE);
+  CMD_TRIG(CMD_MOVE, 0, TRUE);
+  CMD_TRIG(CMD_OFFER, 0, TRUE);
+  CMD_TRIG(CMD_RENT, 0, FALSE);
+  CMD_TRIG(CMD_REPAIR, 0, TRUE);
+  CMD_TRIG(CMD_SELL, 0, TRUE);
+  CMD_TRIG(CMD_VALUE, 0, FALSE);
+  CMD_TRIG(CMD_ZAP, 0, TRUE);
+  CMD_TRIG(CMD_PAY, 0, TRUE);
+  CMD_TRIG(CMD_PARDON, 0, TRUE);
+  CMD_TRIG(CMD_REPORTING, 0, TRUE);
+  CMD_TRIG(CMD_TURN_IN, 0, TRUE);     /* TASFALEN3 */
+  CMD_TRIG(CMD_CLAIM, 0, TRUE);
+  CMD_TRIG(CMD_HIRE, 0, TRUE);
+  //CMD_TRIG(CMD_AUCTION, 0, TRUE);
+  CMD_TRIG(CMD_TRAIN, 0, TRUE);
   //CMD_TRIG(CMD_SPECIALIZE, 0);
-  CMD_TRIG(CMD_HARVEST, 0);
-  CMD_TRIG(CMD_BATTLERAGER, 0);
-  CMD_TRIG(CMD_DEPLOY, 0);
+  CMD_TRIG(CMD_HARVEST, 0, TRUE);
+  CMD_TRIG(CMD_BATTLERAGER, 0, FALSE);
+  CMD_TRIG(CMD_DEPLOY, 0, TRUE);
 
   /*
    * socials (all call do_action, rather than a specific func)
@@ -3115,7 +3131,7 @@ void assign_command_pointers(void)
   CMD_SOC(CMD_NAFK, STAT_NORMAL + POS_STANDING);
   CMD_SOC(CMD_GRIMACE, STAT_NORMAL + POS_STANDING);
 
-  CMD_N(CMD_SQUIDRAGE, STAT_NORMAL + POS_STANDING, do_squidrage, 41);
+  CMD_N(CMD_SQUIDRAGE, STAT_NORMAL + POS_STANDING, do_squidrage, 41, TRUE);
 }
 
 /*
@@ -3129,3 +3145,97 @@ void assign_command_pointers(void)
 #undef CMD_SOC
 #undef CMD_TRIG
 #undef CMD_Y
+
+// This assumes exec_char is a valid PC that's in a valid room.
+void check_aggro_from_command( P_char exec_char )
+{
+  P_char master, mob, next_mob;
+  int room, calming_chance;
+
+  room = exec_char->in_room;
+  // Chance of aggro mobs not attacking.
+  calming_chance = CALMCHANCE( exec_char );
+  // Innate calming is +10% chance for this type of aggro check.
+  if( has_innate(exec_char, INNATE_CALMING) )
+  {
+    calming_chance += 10;
+  }
+
+  // Check for a PC master (controller of exec_char) that's in the same room.
+  master = get_linked_char( exec_char, LNK_PET );
+  if( !IS_ALIVE(master) || !IS_PC(master) || (master->in_room != room) )
+  {
+    master = NULL;
+  }
+
+  for( mob = world[exec_char->in_room].people; mob && IS_ALIVE(exec_char); mob = next_mob )
+  {
+    next_mob = mob->next_in_room;
+
+    // Only consider aggro NPCs (not including self) that are not lagged nor fighting something else nor asleep/ko'd.
+    if( !IS_NPC(mob) || !IS_AGGRESSIVE(mob) || (mob == exec_char) || !CAN_ACT(mob)
+      || IS_FIGHTING(mob) || !IS_AWAKE(mob) )
+    {
+      continue;
+    }
+
+    // Check for calming.
+    if( calming_chance >= number(1, 100) )
+    {
+      continue;
+    }
+
+    // Stand if need be.
+    if( GET_POS( mob ) < POS_STANDING )
+    {
+      do_stand( mob, "", CMD_STAND );
+    }
+
+    // If the mob is too hurt to attack.
+    if( (( 100 * GET_HIT(mob) ) / GET_MAX_HIT( mob )) <= number(1, 100) )
+    {
+      continue;
+    }
+
+    // If the mob can see the master of the executor, it may attack them (int check).
+    if( master && CAN_SEE(mob, master) && aggressive_to(mob, master)
+      && (number( 1, 100 ) < GET_C_INT(mob) / 2) )
+    {
+      do_action(mob, "", CMD_SNEER);
+      MobStartFight(mob, master);
+      // Just return if we kill the master, no need to pound on the charmie.
+      // If we don't return, we need to set master to NULL.
+      if( !IS_ALIVE(master) )
+      {
+        return;
+      }
+      // Room kicked master or some such.
+      if( master->in_room != room )
+      {
+        master = NULL;
+      }
+      continue;
+    }
+
+    // If the mob can see the executor of the command and doesn't like them or their boss.
+    if( CAN_SEE(mob, exec_char) && (aggressive_to( mob, exec_char ) || ( master && aggressive_to(mob, master) )) )
+    {
+      MobStartFight(mob, exec_char);
+      // If they killed the executor, or room kicked them etc.
+      if( !IS_ALIVE(exec_char) || (exec_char->in_room != room) )
+      {
+        // Then start on the owner!
+        if( IS_ALIVE(master) && master->in_room == room )
+        {
+          exec_char = master;
+          calming_chance = CALMCHANCE( exec_char ) + (has_innate( exec_char, INNATE_CALMING )) ? 10 : 0;
+          master = NULL;
+        }
+        else
+        {
+          return;
+        }
+      }
+    }
+  }
+}

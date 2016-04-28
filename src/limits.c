@@ -1062,7 +1062,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
   }
 
 // debug("check 1 exp (%d:%d).", type, value);
-  if( CHAR_IN_ARENA(ch) || IS_SET(world[ch->in_room].room_flags, GUILD_ROOM | SAFE_ZONE) )
+  if( CHAR_IN_ARENA(ch) || IS_SET(world[ch->in_room].room_flags, GUILD_ROOM | SAFE_ROOM) )
   {
     return 0;
   }
@@ -1070,7 +1070,7 @@ int gain_exp(P_char ch, P_char victim, const int value, int type)
   if( victim && type != EXP_RESURRECT )
   {
     if( (IS_PC_PET(victim) && type != EXP_HEALING) || IS_SHOPKEEPER(victim)
-      || IS_SET(world[victim->in_room].room_flags, GUILD_ROOM | SAFE_ZONE) )
+      || IS_SET(world[victim->in_room].room_flags, GUILD_ROOM | SAFE_ROOM) )
     {
       return 0;
     }

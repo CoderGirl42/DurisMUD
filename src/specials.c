@@ -292,7 +292,7 @@ void npc_steal(P_char ch, P_char vict)
     return;
   }
 
-  if( IS_TRUSTED(vict) || IS_SET(world[ch->in_room].room_flags, SAFE_ZONE) )
+  if( IS_TRUSTED(vict) || IS_SET(world[ch->in_room].room_flags, SAFE_ROOM) )
   {
     return;
   }
@@ -300,7 +300,7 @@ void npc_steal(P_char ch, P_char vict)
   if( !number(0, 1) )
   {                             /* 50/50, items or coins */
     if( (IS_RIDING(ch)) || ((IS_CARRYING_N(ch) + 1) > CAN_CARRY_N(ch))
-      || (CHAR_IN_SAFE_ZONE(ch)) || ((world[ch->in_room].room_flags & SINGLE_FILE)
+      || (CHAR_IN_SAFE_ROOM(ch)) || ((world[ch->in_room].room_flags & SINGLE_FILE)
       && !AdjacentInRoom(ch, vict)) || IS_FIGHTING(ch) || IS_FIGHTING(vict))
     {
       return;

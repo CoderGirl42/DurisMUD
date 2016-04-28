@@ -1762,7 +1762,7 @@ struct command_info {
   byte minimum_level;
   byte req_confirm;
   byte grantable;
-
+  bool check_aggro;  // Check the room for mobs to aggro any ch that executes this command.
 };
 
 

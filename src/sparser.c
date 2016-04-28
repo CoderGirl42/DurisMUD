@@ -1202,7 +1202,7 @@ bool cast_common_generic(P_char ch, int spl)
     return FALSE;
   }
   
-  if (CHAR_IN_SAFE_ZONE(ch) && IS_AGG_SPELL(spl))
+  if (CHAR_IN_SAFE_ROOM(ch) && IS_AGG_SPELL(spl))
   {
     send_to_char("You may not cast harmful magic here!\n", ch);
     return FALSE;

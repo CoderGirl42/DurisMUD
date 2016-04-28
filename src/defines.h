@@ -380,7 +380,7 @@ typedef unsigned int uint;
 #define TUNNEL        BIT_9
 #define PRIVATE       BIT_10      /* No more than two ppl can move in here  */
 #define ARENA         BIT_11
-#define SAFE_ZONE     BIT_12      /* No steal, attacks permitted in room    */
+#define SAFE_ROOM     BIT_12      /* No steal, attacks permitted in room    */
 #define NO_PRECIP     BIT_13
 #define SINGLE_FILE   BIT_14
 #define JAIL          BIT_15

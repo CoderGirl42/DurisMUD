@@ -1323,8 +1323,8 @@ void boot_world(int mini_mode)
         if (!IS_SET(world[room_nr].room_flags, NO_SUMMON))
           SET_BIT(world[room_nr].room_flags, NO_SUMMON);
       if (IS_SET(world[room_nr].room_flags, JAIL))
-        if (!IS_SET(world[room_nr].room_flags, SAFE_ZONE))
-          SET_BIT(world[room_nr].room_flags, SAFE_ZONE);
+        if (!IS_SET(world[room_nr].room_flags, SAFE_ROOM))
+          SET_BIT(world[room_nr].room_flags, SAFE_ROOM);
       if ((zone_table[zone].flags & ZONE_MAP) && (SECT_CITY == world[room_nr].sector_type))
         world[room_nr].sector_type = SECT_ROAD;
 

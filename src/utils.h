@@ -630,13 +630,13 @@ int race_size(int race);
 
 /* New Macros */
 
-#define CHAR_IN_SAFE_ZONE(CH)  IS_SET(world[(CH)->in_room].room_flags, SAFE_ZONE)
+#define CHAR_IN_SAFE_ROOM(CH)  IS_SET(world[(CH)->in_room].room_flags, SAFE_ROOM)
 
 #define CHAR_IN_NO_MAGIC_ROOM(CH)  IS_SET(world[(CH)->in_room].room_flags, NO_MAGIC)
 
 #define MOB_IN_NO_MAGIC_ROOM(ch) (IS_SET(world[ch->in_room].room_flags, (NO_MAGIC | ROOM_SILENT) || \
                                  ch->in_room != NOWHERE) || \
-                                 IS_SET(world[ch->in_room].room_flags, SAFE_ZONE))
+                                 IS_SET(world[ch->in_room].room_flags, SAFE_ROOM))
 
 #define CHAR_IN_PRIV_ZONE(CH)  IS_SET(world[(CH)->in_room].room_flags, PRIV_ZONE)
 

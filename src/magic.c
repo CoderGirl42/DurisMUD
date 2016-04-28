@@ -1852,7 +1852,7 @@ void spell_elemental_swarm(int level, P_char ch, char *arg, int type, P_char vic
   P_char   mob;
   int      lvl;
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -1951,7 +1951,7 @@ void spell_conjour_elemental(int level, P_char ch, char *arg, int type,
     return;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -2126,7 +2126,7 @@ void spell_living_stone(int level, P_char ch, char *arg, int type, P_char victim
     return;
   }
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -2200,7 +2200,7 @@ void spell_greater_living_stone(int level, P_char ch, char *arg, int type,
     return;
   }
   
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -2702,7 +2702,7 @@ void spell_conjour_greater_elemental(int level, P_char ch, char *arg, int type, 
 
   room = ch->in_room;
 
-  if( !(room) || CHAR_IN_SAFE_ZONE(ch) )
+  if( !(room) || CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\n", ch);
     return;
@@ -2821,7 +2821,7 @@ void spell_summon_greater_demon(int level, P_char ch, P_char victim,
     32, "&+RA huge fireball falls from the sky, forming into &N$n"}
   };
 
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your summoning!\n", ch);
     return;
@@ -8529,7 +8529,7 @@ void spell_summon(int level, P_char ch, char *arg, int type, P_char victim,
   max_summon_level = level + 3;
 
   if((GET_LEVEL(victim) > MIN(MAXLVLMORTAL, max_summon_level)) ||
-      CHAR_IN_PRIV_ZONE(ch) || CHAR_IN_SAFE_ZONE(victim) ||
+      CHAR_IN_PRIV_ZONE(ch) || CHAR_IN_SAFE_ROOM(victim) ||
      (!is_linked_to(ch, victim, LNK_CONSENT) &&
       NewSaves(victim, SAVING_SPELL, 0)))
   {
@@ -8591,7 +8591,7 @@ void charm_generic(int level, P_char ch, P_char victim)
     send_to_char("Sorry, following in circles cannot be allowed.\n", ch);
     return;
   }
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("You wouldn't even consider that, would you?\n", ch);
     return;

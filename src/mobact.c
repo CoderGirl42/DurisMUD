@@ -6984,7 +6984,7 @@ P_char PickTarget(P_char ch)
     return NULL;
   }
   
-  if(IS_SET(world[ch->in_room].room_flags, SAFE_ZONE))
+  if(IS_SET(world[ch->in_room].room_flags, SAFE_ROOM))
   {
     return NULL;
   }
@@ -7109,7 +7109,7 @@ void MobStartFight(P_char ch, P_char vict)
     return;
   }
 
-  if( IS_SET(world[ch->in_room].room_flags, SAFE_ZONE) )
+  if( IS_SET(world[ch->in_room].room_flags, SAFE_ROOM) )
   {
     return;
   }
@@ -8033,7 +8033,7 @@ PROFILE_END(mundane_specproc);
 
 PROFILE_START(mundane_mobcast);
   // If they're not a sentinel in a safe zone? and they're not a pet with master in room.
-  if( !(IS_SET(ch->specials.act, ACT_SENTINEL) && CHAR_IN_SAFE_ZONE(ch))
+  if( !(IS_SET(ch->specials.act, ACT_SENTINEL) && CHAR_IN_SAFE_ROOM(ch))
     && !(IS_PC_PET(ch) && (ch->in_room == GET_MASTER(ch)->in_room)) )
   { // 100%
     if (GET_CLASS(ch,
@@ -8479,7 +8479,7 @@ PROFILE_START(mundane_wander);
       !get_linking_char(ch, LNK_RIDING) && should_teacher_move(ch))
   { // 96%
     if((!IS_SET(ch->specials.act, ACT_SENTINEL) ||
-         (IS_SET(world[ch->in_room].room_flags, SAFE_ZONE) &&
+         (IS_SET(world[ch->in_room].room_flags, SAFE_ROOM) &&
           IS_AGGRESSIVE(ch) &&
           GET_HIT(ch) > GET_MAX_HIT(ch) / 2)) &&
         (MIN_POS(ch, POS_STANDING + STAT_RESTING)) &&
@@ -9380,7 +9380,7 @@ void mobact_memoryHandle(P_char mob)
   P_char   vict;
   Memory  *mem;
 
-  if(CHAR_IN_SAFE_ZONE(mob))
+  if(CHAR_IN_SAFE_ROOM(mob))
     return;
 
   if(!HAS_MEMORY(mob) || IS_FIGHTING(mob) || ALONE(mob) ||

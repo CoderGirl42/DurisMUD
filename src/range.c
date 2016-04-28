@@ -1152,7 +1152,7 @@ void do_throw(P_char ch, char *argument, int cmd)
    return;
  }
 
- if (CHAR_IN_SAFE_ZONE(ch))
+ if (CHAR_IN_SAFE_ROOM(ch))
  {
    send_to_char("This room just has such a peaceful, easy feeling...\r\n",
                 ch);

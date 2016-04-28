@@ -58,7 +58,7 @@ int is_wearing_necroplasm(P_char);
 
 #define LOCKERS_SECT_TYPE       SECT_INSIDE
 #define LOCKERS_ROOMFLAGS       (NO_MOB | INDOORS | ROOM_SILENT | NO_RECALL | NO_MAGIC | NO_TELEPORT | LOCKER | \
-                                 SAFE_ZONE | NO_HEAL | NO_SUMMON | NO_PSI | NO_GATE | BLOCKS_SIGHT)
+                                 SAFE_ROOM | NO_HEAL | NO_SUMMON | NO_PSI | NO_GATE | BLOCKS_SIGHT)
 
 #define LOCKERS_DOORSIGN        "The door has a sign with the current occupant's name on it: "
 

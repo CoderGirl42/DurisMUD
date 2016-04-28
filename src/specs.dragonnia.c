@@ -100,7 +100,7 @@ void do_mobdisarm(P_char ch, char *argument, int cmd)
     send_to_char("Aren't we funny today...\r\n", ch);
     return;
   }
-  if (CHAR_IN_SAFE_ZONE(victim))
+  if (CHAR_IN_SAFE_ROOM(victim))
   {
     return;
   }

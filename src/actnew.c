@@ -1094,7 +1094,7 @@ void do_trap(P_char ch, char *arg, int cmd)
   }
   room = world + ch->in_room;
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("You can't lay a trap in here!\r\n", ch);
     return;
@@ -1954,7 +1954,7 @@ bool shapechange_canShapechange(P_char ch)
     return FALSE;
   }
   if (IS_SET(world[ch->in_room].room_flags, NO_MOB) ||
-      IS_SET(world[ch->in_room].room_flags, SAFE_ZONE))
+      IS_SET(world[ch->in_room].room_flags, SAFE_ROOM))
   {
     send_to_char("Something in the air prevents yer magics!\r\n", ch);
     return FALSE;
@@ -4604,7 +4604,7 @@ void do_home(P_char ch, char *argument, int cmd)
   if(IS_NPC(ch))
     return;
 
-  if(IS_SET(world[ch->in_room].room_flags, SAFE_ZONE))
+  if(IS_SET(world[ch->in_room].room_flags, SAFE_ROOM))
   {
     send_to_char("Try somewhere else...\r\n", ch);
     return;

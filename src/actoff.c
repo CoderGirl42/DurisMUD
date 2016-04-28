@@ -651,7 +651,7 @@ bool is_in_safe(P_char ch)
   if(!ch)
     return FALSE;
 
-  if(IS_SET(world[ch->in_room].room_flags, SAFE_ZONE))
+  if(IS_SET(world[ch->in_room].room_flags, SAFE_ROOM))
   {
     send_to_char("No fighting permitted in this room.\n", ch);
     return TRUE;
@@ -1696,8 +1696,9 @@ void do_kill(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if( GET_LEVEL(ch) < MINLVLIMMORTAL || IS_NPC(ch) || ch->equipment[WIELD] ||
-    ch->equipment[SECONDARY_WEAPON] )
+  // Only gods with bare hands execute the quick-kill code.
+  //   Otherwise, we just do_hit.
+  if( !IS_TRUSTED(ch) || ch->equipment[WIELD] || ch->equipment[SECONDARY_WEAPON] )
   {
     do_hit(ch, argument, CMD_HIT);
     return;
@@ -1754,6 +1755,13 @@ void do_kill(P_char ch, char *argument, int cmd)
           FALSE, victim, 0, ch, TO_CHAR);
       act("$n grabs $N by the throat and rips out $S still beating heart!",
           FALSE, ch, 0, victim, TO_NOTVICT);
+
+      if( !strcmp(GET_NAME( ch ), "Lohrr") && !number(0, 99) )
+      {
+        act("You eat $n's heart.", FALSE, ch, NULL, victim, TO_CHAR);
+        act("$N eats your heart.", FALSE, ch, NULL, victim, TO_VICT);
+        act("$N eats $n's heart.", FALSE, ch, NULL, victim, TO_NOTVICT);
+      }
       die(victim, ch);
     }
   }

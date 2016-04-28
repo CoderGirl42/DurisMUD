@@ -406,7 +406,7 @@ void raise_undead(int level, P_char ch, P_char victim, P_obj obj, int which_type
     life += (int) (life / 3);
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("You do not feel right raising undead here.\r\n", ch);
     return;
@@ -1012,7 +1012,7 @@ void spell_call_titan(int level, P_char ch, char *arg, int type, P_char victim, 
     return;
   }
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
     return;
@@ -1297,7 +1297,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
     return;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
     return;
@@ -1578,7 +1578,7 @@ void create_golem(int level, P_char ch, P_char victim, P_obj obj,
     return;
   }
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
     return;
@@ -1789,7 +1789,7 @@ void spell_call_avatar(int level, P_char ch, char *arg, int type, P_char victim,
     send_to_char("But you can barely move!\r\n", ch);
     return;
   }
-  if(CHAR_IN_SAFE_ZONE(ch))
+  if(CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
     return;
@@ -2039,7 +2039,7 @@ void spell_create_greater_dracolich(int level, P_char ch, char *arg, int type, P
     level = 56;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your spell!\r\n", ch);
     return;

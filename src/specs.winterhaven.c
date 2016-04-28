@@ -1347,7 +1347,7 @@ int newbie_spellup_mob(P_char ch, P_char victim, int cmd, char *arg)
   // everything after here is in the periodic event
 
   /* make sure I'm even able to cast in this room! */
-  if( IS_SET(world[ch->in_room].room_flags,  SAFE_ZONE | NO_MAGIC | ROOM_SILENT)
+  if( IS_SET(world[ch->in_room].room_flags,  SAFE_ROOM | NO_MAGIC | ROOM_SILENT)
     || affected_by_spell(ch, SPELL_FEEBLEMIND) || IS_AFFECTED2(ch, AFF2_SILENCED) )
   {
     return FALSE;

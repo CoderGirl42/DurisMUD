@@ -1263,7 +1263,7 @@ bool char_to_room(P_char ch, int room, int dir)
   }
 
   // Purge NPCs from safe rooms? ok...
-  if( IS_SET(world[room].room_flags, SAFE_ZONE) )
+  if( IS_SET(world[room].room_flags, SAFE_ROOM) )
   {
     if( IS_NPC(ch) )
     {

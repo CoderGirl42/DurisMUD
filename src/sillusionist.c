@@ -146,7 +146,7 @@ void spell_shadow_monster(int level, P_char ch, char *arg, int type, P_char vict
     return;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;
@@ -214,7 +214,7 @@ void spell_insects(int level, P_char ch, char *arg, int type, P_char victim, P_o
     return;
   }
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;
@@ -1893,7 +1893,7 @@ void spell_dragon(int level, P_char ch, char *arg, int type, P_char victim, P_ob
   if (!ch || !victim)
     return;
 
-  if( CHAR_IN_SAFE_ZONE(ch) )
+  if( CHAR_IN_SAFE_ROOM(ch) )
   {
     send_to_char("A mysterious force blocks your casting!\r\n", ch);
     return;
@@ -1968,7 +1968,7 @@ void spell_titan(int level, P_char ch, char *arg, int type, P_char victim,
     return;
   }
 
-  if (CHAR_IN_SAFE_ZONE(ch))
+  if (CHAR_IN_SAFE_ROOM(ch))
   {
     send_to_char("A mysterious force blocks your conjuring!\r\n", ch);
     return;
