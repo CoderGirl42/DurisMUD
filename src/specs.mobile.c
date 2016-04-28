@@ -16096,24 +16096,71 @@ int bs_stirge(P_char ch, P_char pl, int cmd, char *arg)
   }
 }
 
+// Artifact types.
+#define ARTIFACT_MAJOR  1
+#define ARTIFACT_UNIQUE 2
+#define ARTIFACT_IOUN   3
+
 int llyren(P_char ch, P_char pl, int cmd, char *arg)
 {
   P_obj t_obj, container;
   P_char owner = NULL;
   char buffer[256];
+  int arti_type, cost;
 
   if( cmd != CMD_LIST )
     return FALSE;
 
+  arg = skip_spaces(arg);
+
+  // Uniques are default.
+  if( !arg || *arg == '\0' || is_abbrev(arg, "unique") )
+  {
+    arti_type = ARTIFACT_UNIQUE;
+    cost = 50 * 1000;
+  }
+  else if( is_abbrev(arg, "main") || is_abbrev(arg, "major") )
+  {
+    arti_type = ARTIFACT_MAJOR;
+    cost = 500 * 1000;
+  }
+  else if( is_abbrev(arg, "ioun") )
+  {
+    arti_type = ARTIFACT_IOUN;
+    cost = 175 * 1000;
+  }
+  else
+  {
+    do_say( ch, "I'm not quite sure what you meant by that...", CMD_SAY );
+    do_say( ch, "What type of artifacts did you want me to show you?", CMD_SAY );
+    return TRUE;
+  }
+
   // Cost 50 p.
-  if( !transact(pl, NULL, ch, 50 * 1000) )
+  if( !transact(pl, NULL, ch, cost) )
     return TRUE;
 
-  for (t_obj = object_list; t_obj; t_obj = t_obj->next)
+  act("$N grins and forces your mind into $S &+Wgl&+Co&+Wbe&n, which scatters it across the ether..", FALSE, pl, NULL, ch, TO_CHAR);
+  for( t_obj = object_list; t_obj; t_obj = t_obj->next )
   {
     // Revenants crown won't be shown as it's a rareload
-    if( !IS_ARTIFACT(t_obj) || !strstr(t_obj->name, "unique")
-      || obj_index[t_obj->R_num].virtual_number == 22070 )
+    if( !IS_ARTIFACT(t_obj) || obj_index[t_obj->R_num].virtual_number == 22070 )
+    {
+      continue;
+    }
+    // Skip non-uniques if arti type is uniques.
+    if( (arti_type == ARTIFACT_UNIQUE) && (strstr( t_obj->name, "unique" ) == NULL) )
+    {
+      continue;
+    }
+    // Skip uniques and iouns if arti type is major.
+    if( (arti_type == ARTIFACT_MAJOR) && (( strstr(t_obj->name, "unique") != NULL )
+      || IS_IOUN( t_obj )) )
+    {
+      continue;
+    }
+    // Skip non-iouns if arti type is ioun.
+    if( (arti_type == ARTIFACT_IOUN) && !IS_IOUN(t_obj) )
     {
       continue;
     }
@@ -16124,7 +16171,7 @@ int llyren(P_char ch, P_char pl, int cmd, char *arg)
       owner = t_obj->loc.carrying;
     else if( OBJ_ROOM(t_obj) )
     {
-      sprintf(buffer, "I see %s in %s.\n", t_obj->short_description,
+      sprintf(buffer, "You see %s in %s.\n", t_obj->short_description,
           world[t_obj->loc.room].name);
       send_to_char(buffer, pl);
       continue;
@@ -16137,7 +16184,7 @@ int llyren(P_char ch, P_char pl, int cmd, char *arg)
       }
       if( OBJ_ROOM(container) )
       {
-        sprintf(buffer, "I see %s inside %s in %s.\n", OBJ_SHORT(t_obj), OBJ_SHORT(container),
+        sprintf(buffer, "You see %s inside %s in %s.\n", OBJ_SHORT(t_obj), OBJ_SHORT(container),
           world[container->loc.room].name);
         send_to_char(buffer, pl);
         continue;
@@ -16159,7 +16206,7 @@ int llyren(P_char ch, P_char pl, int cmd, char *arg)
     if( IS_PC(owner) )
       continue;
 
-    sprintf(buffer, "I see %s in posession of %s.\n", t_obj->short_description, owner->player.short_descr);
+    sprintf(buffer, "You see %s in posession of %s.\n", t_obj->short_description, owner->player.short_descr);
     send_to_char(buffer, pl);
   }
 

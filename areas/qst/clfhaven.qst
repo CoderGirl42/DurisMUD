@@ -89,3 +89,29 @@ G I 32490
 G I 26614
 G I 402
 S
+#21549
+MA
+qc_action 60~
+$n shuffles about.
+~
+MA
+qc_action 75~
+&+LSomething echoes in your head about &+wmajor&+L, &+wunique&+L, and &+wioun&+L types of artifacts.&n
+~
+M
+unique uniques~
+$n chitters 'Oh, yes, uniques.  A &+wlist&ning of &+wunique&n artifacts would cost 50 &+Wplatinum&n.'
+~
+M
+major main~
+$n chitters 'Major artifacts!  Now there's an idea.  A &+wlist&ning of &+wmajor&n artifacts would cost 500 &+Wplatinum&n.'
+~
+M
+ioun iouns~
+$n chitters 'Ah, elusive iouns.  A &+wlist&ning of &+wunique&n artifactss would cost 175 &+Wplatinum&n.'
+~
+M
+artifact artifacts~
+$n chitters 'Use &+wlist&n to show a listing of &+wunique&n artifacts.  You can also scry &+wmajor&n artifacts and &+wiouns&n.
+~
+S

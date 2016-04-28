@@ -29,7 +29,7 @@
 #include "vnum.obj.h"
 
 // Artifact types.
-#define ARTIFACT_MAIN   1
+#define ARTIFACT_MAJOR   1
 #define ARTIFACT_UNIQUE 2
 #define ARTIFACT_IOUN   3
 
@@ -100,7 +100,7 @@ void nuke_eq( P_char ch );
                     = ARTIFACT_ {NOTINGAME | ON_NPC | ON_PC | ONGROUND | ONCORPSE}
           location  = PID of PC / vnum of NPC / vnum of room.
           timer     = when the arti is due to poof.
-          type      = full artifact -> ARTIFACT_MAIN, unique -> ARTIFACT_UNIQUE, ioun -> ARTIFACT_IOUN
+          type      = full artifact -> ARTIFACT_MAJOR, unique -> ARTIFACT_UNIQUE, ioun -> ARTIFACT_IOUN
           lastUpdate= last time this entry was updated.
 */
 
@@ -141,9 +141,9 @@ void do_artifact_sql( P_char ch, char *arg, int cmd )
     Godlist = TRUE;
   }
 
-  if( is_abbrev(arg1, "list") )
+  if( is_abbrev(arg1, "list") || is_abbrev(arg1, "major") )
   {
-    list_artifacts_sql( ch, ARTIFACT_MAIN, Godlist, allArtis );
+    list_artifacts_sql( ch, ARTIFACT_MAJOR, Godlist, allArtis );
     return;
   }
 
@@ -161,7 +161,7 @@ void do_artifact_sql( P_char ch, char *arg, int cmd )
 
   if( GET_LEVEL(ch) < FORGER || IS_NPC(ch) )
   {
-    send_to_char( "Valid arguments are list, unique or ioun.\n\r", ch );
+    send_to_char( "Valid arguments are major, unique or ioun.\n\r", ch );
     return;
   }
 
@@ -214,12 +214,12 @@ void do_artifact_sql( P_char ch, char *arg, int cmd )
     return;
   }
 
-  send_to_char( "Valid arguments are list, unique, ioun, swap, poof, timer, hunt, clear, or files.\n\r", ch );
+  send_to_char( "Valid arguments are major, unique, ioun, swap, poof, timer, hunt, clear, or files.\n\r", ch );
   send_to_char( "Valid sub-arguments for list, unique, ioun are [mortal] - shows mortal list and [all] shows un-owned artis.\n\r", ch );
 }
 
 // This function displays either the Godlist or mortal list of artifacts of type type.
-//   The type is either ARTIFACT_MAIN, ARTIFACT_UNIQUE, or ARTIFACT_IOUN.
+//   The type is either ARTIFACT_MAJOR, ARTIFACT_UNIQUE, or ARTIFACT_IOUN.
 //   Possible edit: Change select ... lastUpdate -> UNIXTIME_STAMP(lastUpdate), then use ctime(row[5]).
 //     This will make the last update time look the same as when you type 'time' in game.
 void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
@@ -236,7 +236,7 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
 
   memset(articount, 0, sizeof(articount));
 
-  if( type != ARTIFACT_MAIN && type != ARTIFACT_UNIQUE && type != ARTIFACT_IOUN )
+  if( type != ARTIFACT_MAJOR && type != ARTIFACT_UNIQUE && type != ARTIFACT_IOUN )
   {
     send_to_char( "Invalid artifact type.\n\r", ch );
     debug( "list_artifacts_sql: Invalid artifact type: %d.", type );
@@ -246,7 +246,7 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
   if( Godlist )
   {
     sprintf(buf, "&+YOwner                  Time      Last Update           %s\r\n\r\n",
-      type == ARTIFACT_MAIN ? "Artifact" : type == ARTIFACT_UNIQUE ? "Unique" :
+      type == ARTIFACT_MAJOR ? "Artifact" : type == ARTIFACT_UNIQUE ? "Unique" :
       type == ARTIFACT_IOUN ? "Ioun" : "Unknown Type" );
     send_to_char( buf, ch );
 
@@ -255,7 +255,7 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
   }
   else
   {
-    sprintf(buf, "&+YOwner               %s\r\n\r\n", type == ARTIFACT_MAIN ? "Artifact" :
+    sprintf(buf, "&+YOwner               %s\r\n\r\n", type == ARTIFACT_MAJOR ? "Artifact" :
       type == ARTIFACT_UNIQUE ? "Unique" : type == ARTIFACT_IOUN ? "Ioun" : "Unknown Type" );
     send_to_char( buf, ch );
 
@@ -594,7 +594,7 @@ void artifact_feed_to_min_sql( P_obj arti, int min_minutes )
         world[location].number;
       }
       qry("INSERT INTO artifacts VALUES(%d, 'Y', 'OnGround', %d, FROM_UNIXTIME(%lu), %d, SYSDATE() )", vnum,
-        location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN );
+        location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR );
     }
     else if( OBJ_WORN(cont) || OBJ_CARRIED(cont) )
     {
@@ -611,14 +611,14 @@ void artifact_feed_to_min_sql( P_obj arti, int min_minutes )
         {
           location = GET_VNUM(owner);
           qry("INSERT INTO artifacts VALUES(%d, 'N', 'OnNPC', %d, FROM_UNIXTIME(%lu), %d, SYSDATE() )", vnum,
-            location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN );
+            location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR );
         }
         // Adding a PC owner to arti -> owned = 'Y', location = PID.
         else
         {
           location = GET_PID(owner);
           qry("INSERT INTO artifacts VALUES(%d, 'Y', 'OnPC', %d, FROM_UNIXTIME(%lu), %d, SYSDATE() )", vnum,
-            location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN );
+            location, to_time, IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR );
         }
       }
     }
@@ -746,7 +746,7 @@ void artifact_update_sql( P_obj arti, char owned, time_t timer )
   }
 
   // Figure out the new info.
-  type = IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN;
+  type = IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR;
 
   // Set location and locType here.
   // If we have it in a container, need to get the outer-most one and go from there.
@@ -1027,7 +1027,7 @@ bool remove_owned_artifact_sql( P_obj arti, int pid )
   {
       // On a PC corpse -> owned == 'Y', locType == 'OnCorpse', and location == pid.
       qry("INSERT INTO artifacts VALUES(%d, 'Y', %d, %d, 0, %d, SYSDATE())", vnum, ARTIFACT_ONCORPSE, pid,
-        IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN );
+        IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR );
   }
 
   // Safe to assume that a poofed arti has an entry in artifact_bind.  We don't really care either way though,
@@ -1194,7 +1194,7 @@ void artifact_feed_sql(P_char owner, P_obj arti, int feed_seconds, bool soulChec
     send_to_char("&+RYou feel a deep sense of satisfaction from somewhere...\r\n", owner);
     qry("INSERT INTO artifacts VALUES(%d, 'Y', %d, %d, FROM_UNIXTIME(%lu), %d, SYSDATE())",
       vnum, ARTIFACT_ON_PC, GET_PID(owner), poof_time, IS_IOUN(arti) ? ARTIFACT_IOUN
-      : (IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN) );
+      : (IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR) );
     return;
   }
 
@@ -1759,7 +1759,7 @@ void arti_files_to_sql( P_char ch, char *arg )
 
     if( arti = read_object( vnum, VIRTUAL) )
     {
-      type = IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN;
+      type = IS_IOUN(arti) ? ARTIFACT_IOUN : IS_UNIQUE(arti) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR;
 
       // If there's another in the game (maybe on a mob / treasure room / chest / etc).
       if( obj_index[arti->R_num].number > 1 )
@@ -2292,7 +2292,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
   while( nextlist )
   {
     // Count up the artis.
-    count[0] = count[ARTIFACT_MAIN] = count[ARTIFACT_UNIQUE] = count[ARTIFACT_IOUN] = 0;
+    count[0] = count[ARTIFACT_MAJOR] = count[ARTIFACT_UNIQUE] = count[ARTIFACT_IOUN] = 0;
     node = nextlist->artis;
     while( node )
     {
@@ -2302,7 +2302,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
       node = node->next;
     }
     // Count up how much over limit (1 of each is limit).
-    punish_level = (count[ARTIFACT_MAIN] > 1) ? count[ARTIFACT_MAIN] - 1 : 0;
+    punish_level = (count[ARTIFACT_MAJOR] > 1) ? count[ARTIFACT_MAJOR] - 1 : 0;
     punish_level += (count[ARTIFACT_UNIQUE] > 1) ? count[ARTIFACT_UNIQUE] - 1 : 0;
     punish_level += (count[ARTIFACT_IOUN] > 1) ? count[ARTIFACT_IOUN] - 1 : 0;
     // If they're in violation (more than one arti of the same type.
@@ -3094,7 +3094,7 @@ void arti_swap_sql( P_char ch, char *arg )
   extract_obj( arti1, TRUE ); // Yes, we want to remove arti1 from owned artis.
   // Updata artidata type with arti2 stats.
   // The timer and owned don't change.  Nor does the locType / location since we put it in the same spot arti1 was in.
-  artidata.type = IS_IOUN(arti2) ? ARTIFACT_IOUN : (IS_UNIQUE(arti2) ? ARTIFACT_UNIQUE : ARTIFACT_MAIN);
+  artidata.type = IS_IOUN(arti2) ? ARTIFACT_IOUN : (IS_UNIQUE(arti2) ? ARTIFACT_UNIQUE : ARTIFACT_MAJOR);
   // Use the uber-generic update.
   artifact_update_sql( vnum2, artidata.owned, artidata.locType, artidata.location, artidata.timer, artidata.type );
   if( owner1 == dummy )
