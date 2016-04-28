@@ -200,7 +200,7 @@ qc_action 50~
 ~
 M
 qc_action 50~
-&+BAgnot says 'Agnot say ME best Ogre!'
+&+BAgnut says 'Agnut say ME best Ogre!'
 ~
 M
 qc_action 50~
@@ -208,12 +208,12 @@ qc_action 50~
 ~
 MA
 hi hello~
-&+BAgnot says 'Agnot best Ogre, Agnot smartest!  Me make you bracer from green
-&+Ghydralisk scale!.  Bring Agnot three hydralisk glands, bronze-colored
+&+BAgnut says 'Agnut best Ogre, Agnut smartest!  Me make you bracer from green
+&+Ghydralisk scale!.  Bring Agnut three hydralisk glands, bronze-colored
 &+Gbracers to infuse, and 100 platinum for work!'
 ~
 QA
-&+BAgnot graciously takes the bracer, glands, and money and thanks you
+&+BAgnut graciously takes the bracer, glands, and money and thanks you
 &+Bwith a foul-breathed grunt.  Moments later, he finishes his creation.
 ~
 R I 500008
@@ -223,35 +223,35 @@ G I 43142
 G I 729
 G C 100000
 D
-&+BAgnot say 'Me see you later!'
+&+BAgnut say 'Me see you later!'
 ~
 S
 #500041
 M
 qc_action 50~
-&+WA decorated Winterhaven watchman peers out across the lands, aware of his surroundings.
+&+WA decorated Tharnadian watchman peers out across the lands, aware of his surroundings.
 ~
 M
 qc_action 50~
-&+WA decorated Winterhaven watchman says 'Move along...'
+&+WA decorated Tharnadian watchman says 'Move along...'
 ~
 M
 qc_action 400~
-&+WA decorated Winterhaven watchman says 'These aren't the droids you're looking for.'
+&+WA decorated Tharnadian watchman says 'These aren't the droids you're looking for.'
 ~
 M
 qc_action 50~
-&+CA loud horn sounds in the distance from the city of Winterhaven.
+&+CA loud horn sounds in the distance from the city of &+WTharnadia&n.
 ~
 M
 hi hello~
-&+WA decorated Winterhaven watchman ignores you.
+&+WA decorated Tharnadian watchman ignores you.
 ~
 S
 #500043
 M
 qc_action 50~
-&+WSeveral Winterhaven troops on horseback ride through here, disappearing into the distance.
+&+WSeveral Tharnadian troops on horseback ride through here, disappearing into the distance.
 ~
 M
 qc_action 50~
@@ -307,13 +307,13 @@ S
 #500055
 M
 qc_action 55~
-&+WMeldar the Winterhaven Marshall says 'Greetings.'
+&+WMeldar the Tharnadian Marshall says 'Greetings.'
 ~
 S
 #500059
 M
 qc_action 50~
-&+gA highwayman looks around and says 'Winterhaven is a beautiful realm, and we aim to keep it that way.'
+&+gA highwayman looks around and says 'Tharnadia is a beautiful realm, and we aim to keep it that way.'
 ~
 M
 qc_action 50~
