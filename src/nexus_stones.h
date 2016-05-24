@@ -20,12 +20,12 @@
 #define STONE_ALIGN_EVIL -3
 #define STONE_ALIGN_GOOD 3
 
-#define NEXUS_STONE_MARDUK    1
-#define NEXUS_STONE_ANTU      2
-#define NEXUS_STONE_ENLIL     3
+#define NEXUS_STONE_MARDUK      1
+#define NEXUS_STONE_ANTU        2
+#define NEXUS_STONE_ENLIL       3
 #define NEXUS_STONE_NINGISHZIDA 4
-#define NEXUS_STONE_LAST	4
-#define MAX_NEXUS_STONES      9
+#define NEXUS_STONE_LAST        4
+#define MAX_NEXUS_STONES        9
 
 #define NEXUS_BONUS_NONE      0
 #define NEXUS_BONUS_EPICS     1

@@ -1429,12 +1429,12 @@ bool get_zone_info(int zone_number, struct zone_info *info)
 {
   if( !info )
   {
-    return FALSE;    
+    return FALSE;
   }
-  
+
   if( !qry("SELECT number, name, epic_type, frequency_mod, zone_freq_mod, epic_level, task_zone, quest_zone, trophy_zone, suggested_group_size, epic_payout, difficulty FROM zones WHERE number = %d", zone_number) )
   {
-    return FALSE;    
+    return FALSE;
   }
   
   MYSQL_RES *res = mysql_store_result(DB);

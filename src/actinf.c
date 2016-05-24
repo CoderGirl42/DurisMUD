@@ -4973,7 +4973,7 @@ void do_score(P_char ch, char *argument, int cmd)
       strcat(buf, " &+WHoly Aura");
     else
       strcat(buf, " &+WSoulshielded&n");
-  
+
   if( IS_AFFECTED2(ch, AFF2_FIRESHIELD) )
   {
     strcat(buf, " &+RFireshielded&n");
@@ -5035,14 +5035,13 @@ void do_score(P_char ch, char *argument, int cmd)
   /* frags */
 #ifdef STANCES_ALLOWED
   if(IS_AFFECTED5(ch, AFF5_STANCE_DEFENSIVE))
-          send_to_char("Stance: &+yDefensive stance&n\n", ch);
-           
+    send_to_char("Stance: &+yDefensive stance&n\n", ch);
   else if (IS_AFFECTED5(ch, AFF5_STANCE_OFFENSIVE))
     send_to_char("Stance: &+rOffensive stance&n\n", ch);
   else
     send_to_char("Stance: &+WNo stance at all&n\n", ch);
 #endif
-                             
+
   if( GET_LEVEL(ch) > 19 )
   {
 
@@ -5097,19 +5096,24 @@ void do_score(P_char ch, char *argument, int cmd)
 
       if( afp = get_epic_task(ch) )
       {
-        if( afp->modifier == SPILL_BLOOD )
+        i = afp->modifier;
+        if( i < 0 )
+        {
+          i *= -1;
+        }
+        if( i == SPILL_BLOOD )
         {
           sprintf(buf, "&n&+YEpic points(total):&n &+W%ld(%d)&n Current task: &+rspill enemy blood&n\n",
               ch->only.pc->epics, afp2 ? afp2->modifier : 0 );
         }
-        else if( afp->modifier >= 0 )
+        else if( i < SPILL_BLOOD )
         {
           sprintf(buf, "&nEpic points(total): &+W%ld(%d)&n Current task: find runestone of %s\n",
-              ch->only.pc->epics, afp2 ? afp2->modifier : 0, zone_table[real_zone0(afp->modifier)].name);
+              ch->only.pc->epics, afp2 ? afp2->modifier : 0, zone_table[real_zone0(i)].name);
         }
-        else if( afp->modifier <= MAX_NEXUS_STONES && afp->modifier < 0 )
+        else if( afp->modifier - SPILL_BLOOD <= NEXUS_STONE_LAST )
         {
-          nexus = get_nexus_stone(-(afp->modifier));
+          nexus = get_nexus_stone(afp->modifier - SPILL_BLOOD);
           if( nexus )
           {
             sprintf(buf, "&nEpic points(total): &+W%ld(%d)&n Current task: &+Gturn %s.&n\n",

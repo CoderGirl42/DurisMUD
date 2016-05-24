@@ -588,8 +588,9 @@ void nexus_stone_epics(P_char ch, P_obj stone)
   }
 
   int amount = amount_max;
-  if (afp = get_epic_task(ch)) {
-    if (-(afp->modifier) == STONE_ID(stone))
+  if( afp = get_epic_task(ch) )
+  {
+    if( afp->modifier - SPILL_BLOOD == STONE_ID(stone) )
     {
       send_to_char("The &+rGods of Duris&n are very pleased with your success.\n", ch);
       send_to_char("You can now progress further in your quest for epic power!\n", ch);
@@ -597,7 +598,7 @@ void nexus_stone_epics(P_char ch, P_obj stone)
       affect_remove(ch, afp);
     }
   }
-  
+
   // give out epics for turning the stone
   gain_epic(ch, EPIC_NEXUS_STONE, STONE_ID(stone), 
             number( amount_min, amount )
@@ -612,8 +613,8 @@ void nexus_stone_epics(P_char ch, P_obj stone)
       amount = amount_max;
       if( gl->ch->in_room == ch->in_room )
       {
-        if ( (afp = get_epic_task(gl->ch)) &&
-             (-(afp->modifier) == STONE_ID(stone)) )
+        if( (afp = get_epic_task( gl->ch )) &&
+             (( afp->modifier - SPILL_BLOOD ) == STONE_ID( stone )) )
         {
           send_to_char("The &+rGods of Duris&n are very pleased with your success.\n", gl->ch);
           send_to_char("You can now progress further in your quest for epic power!\n", gl->ch);

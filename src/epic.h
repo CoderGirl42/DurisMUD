@@ -107,6 +107,6 @@ void clear_racial_skills(P_char ch);
 #define EPIC_STRAHDME      9 // You strahd me at hello achievement.
 #define EPIC_RANDOMMOB    10 // Single epic point randomly gained when killing mobs.
 
-#define SPILL_BLOOD -10
+#define SPILL_BLOOD 10000000
 
 #endif

@@ -186,23 +186,23 @@ void epic_choose_new_epic_task(P_char ch)
     zone_number = epic_random_task_zone(ch);
   }
 
-//Getting rid of nexus . 7/13 Drannak
-
-  //zone_number = epic_random_task_zone(ch);
-
+  // Getting rid of nexus . 7/13 Drannak
+  // Adding nexus back. 5/23/2016
   if( zone_number < 0 )
   {
-   /* nexus = get_random_enemy_nexus(ch);
-    if((number(0, 100) < 50) && (GET_LEVEL(ch) >= 51) && nexus)
+    nexus = get_random_enemy_nexus(ch);
+    // 10% chance.
+    if( (number(1, 100) <= 10) && (GET_LEVEL(ch) >= 51) && nexus )
     {
       act("The Gods of &+rDuris&n demand that you seek out $p and convert it!", FALSE, ch, nexus, 0, TO_CHAR);
-      af.modifier = -STONE_ID(nexus);
+      // Nexus stone IDs run from 1 on up.
+      af.modifier = SPILL_BLOOD + STONE_ID(nexus);
     }
     else
-    {*/
+    {
       send_to_char("The Gods of &+rDuris&n demand that you &+rspill the &+Rblood&n of the &+Lenemies&n of your race!\n", ch);
       af.modifier = SPILL_BLOOD;
-    //}
+    }
   }
   else
   {
@@ -505,14 +505,14 @@ void gain_epic(P_char ch, int type, int data, int amount)
 struct affected_type *get_epic_task(P_char ch)
 {
   struct affected_type *hjp;
-  
+
   if(!ch)
     return NULL;
-  
+
   for (hjp = ch->affected; hjp; hjp = hjp->next)
     if(hjp->type == TAG_EPIC_ERRAND)
       return hjp;
-  
+
   return NULL;
 }
 
@@ -854,7 +854,7 @@ void epic_stone_one_touch(P_obj obj, P_char ch, int epic_value)
 
   /* if char is completing their epic errand, give them extra epic points! */
   struct affected_type *afp = get_epic_task(ch);
-  if(afp && afp->modifier == obj->value[2])
+  if( afp && (( afp->modifier == obj->value[2] ) || ( 0 - afp->modifier == obj->value[2] )) )
   {
     send_to_char("The &+rGods of Duris&n are very pleased with your achievement!\n"
                  "You can now continue with your quest for &+Wpower!\n", ch);
@@ -1756,7 +1756,7 @@ void do_epic_share(P_char ch, char *arg, int cmd)
 
   struct affected_type *afp, *tafp;
 
-  if(!has_epic_task(ch))
+  if( !has_epic_task(ch) )
   {
     send_to_char("You don't have an epic task to share.\r\n", ch);
     return;
@@ -1765,30 +1765,38 @@ void do_epic_share(P_char ch, char *arg, int cmd)
   {
     afp = get_epic_task(ch);
   }
+  if( afp->modifier < 0 )
+  {
+    send_to_char( "Only the &+Woriginal&n task owner can share tasks.\n", ch );
+    return;
+  }
 
   if( ch->group )
   {
     for( struct group_list *gl = ch->group; gl; gl = gl->next )
     {
-      if( gl->ch == ch ) continue;
+      if( gl->ch == ch )
+        continue;
       if( gl->ch->in_room == ch->in_room )
       {
-	if(is_linked_to(ch, gl->ch, LNK_CONSENT) && IS_PC(gl->ch))
-	{
-	  if(has_epic_task(gl->ch))
-	  {
-	    tafp = get_epic_task(gl->ch);
-	    // Don't let nexus stones or pvp get replaced
-	    if(tafp->modifier < 0)
-	      continue;
-	    tafp->type = afp->type;
-	    tafp->flags = afp->flags;
-	    tafp->duration = afp->duration;
-	    tafp->modifier = afp->modifier;
-	    act("&+C$n has just shared $s epic task with you!&n", TRUE, ch, 0, gl->ch, TO_VICT);
-	    act("&+CYou have just shared your epic task with $N.&n", TRUE, ch, 0, gl->ch, TO_CHAR);
-	  }
-	}
+        if( is_linked_to(ch, gl->ch, LNK_CONSENT) && IS_PC(gl->ch) )
+        {
+          if( has_epic_task(gl->ch) )
+          {
+            tafp = get_epic_task(gl->ch);
+            // Don't let nexus stones or pvp get replaced
+            if( tafp->modifier >= SPILL_BLOOD )
+              continue;
+            tafp->type = afp->type;
+            tafp->flags = afp->flags;
+            tafp->duration = afp->duration;
+            // The - sign here is intentional; it prevents people from sharing tasks that have been shared,
+            //   which, in turn, should stop storing tasks for the most part.
+            tafp->modifier = - afp->modifier;
+            act("&+C$n has just shared $s epic task with you!&n", TRUE, ch, 0, gl->ch, TO_VICT);
+            act("&+CYou have just shared your epic task with $N.&n", TRUE, ch, 0, gl->ch, TO_CHAR);
+          }
+        }
       }
     }
   }
