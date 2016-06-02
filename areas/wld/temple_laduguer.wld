@@ -2,7 +2,7 @@
 &+LThe &+WEntrance &+Lto a Basalt &+rVol&+Rca&+rnic &+LTunnel&N~
 &+L   The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins.&N
 ~
-1 131076 13
+81 131076 13
 D1
 ~
 ~
@@ -16,7 +16,7 @@ S
 &+LA Basalt &+rVol&+Rca&+rnic &+LTunnel&N~
 &+L   The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -30,7 +30,7 @@ S
 &+LA Split in a Basalt &+rVol&+Rca&+rnic &+LTunnel&N~
 &+L   The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -48,7 +48,7 @@ S
 &+LA &+wGatehouse &+Lin a Basalt &+rVol&+Rca&+rnic &+LTunnel&N~
 &+L   Before you stands a structure for guards to stop visitors and patrons alike and review their intentions before entering the Temple. The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins. The columns also support a guardhouse to either side of the opening.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 gate~
@@ -70,7 +70,7 @@ S
 &+rThe North &+RGatehouse &+rEntrance&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -88,7 +88,7 @@ S
 &+rThe South &+RGatehouse &+rEntrance&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 gate~
@@ -102,7 +102,7 @@ S
 &+rA &+RHallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -120,7 +120,7 @@ S
 &+rA &+RHallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -134,7 +134,7 @@ S
 &+rA &+RHallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -152,7 +152,7 @@ S
 &+rA &+RHallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -170,7 +170,7 @@ S
 &+rA &+RStaircase Landing&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -184,7 +184,7 @@ S
 &+rA &+RStaircase Landing&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -198,7 +198,7 @@ S
 &+rThe Bottom of a &+RStaircase Landing&+r in the Temple Gatehouse&N~
 &+L   This spiral staircase is rather wide, which is useful for armed and armored guards to get up and down. The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -212,7 +212,7 @@ S
 &+rThe Bottom of a &+RStaircase Landing&+r in the Temple Gatehouse&N~
 &+L   This spiral staircase is rather wide, which is useful for armed and armored guards to get up and down. The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -226,7 +226,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -244,7 +244,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -262,7 +262,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -280,7 +280,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -298,7 +298,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -316,7 +316,7 @@ S
 &+rThe &+RLower Hallway&+r in the Temple Gatehouse&N~
 &+L   The cavern has been carved away in this side area to make a gatehouse for the guards to rest, meet, and perform other miscellaneous duties to their jobs of protecting the Temple of Laduguer and its inhabitants and visitors. The room is sparsely decorated or carved, and leans towards the ends of highly functional for the guard's basic uses.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -334,7 +334,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -344,7 +344,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -354,7 +354,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -364,7 +364,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -374,7 +374,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -384,7 +384,7 @@ S
 &+rThe &+RGuardhouse &+rBarracks&N~
 &+L   This room has been made to house up to 6 guards for living quarters while they are here at the temple. Many young Duergar come to this facility to train and become adult warriors and guards for the hometown of Khilidarak, and while they are here they reside in these barracks. The beds have been carved into the rock walls along the north and south side, making cubbies for three beds each.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -394,7 +394,7 @@ S
 &+rA &+RTraining Room&+r in the Barracks&N~
 &+L   This is a large room capable of hosting nearly two dozen Dwarves for combat training purposes. There are various targets made upon the walls for throwing axes and several combat dummies made from wood - most of which are shaped like Drow Elves or a somewhat simplified Illithid. The very center of the room appears to have a raised platform where a teacher might give instructional presentations and examples to their students.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -404,7 +404,7 @@ S
 &+rA &+RTraining Room&+r in the Barracks&N~
 &+L   This is a large room capable of hosting nearly two dozen Dwarves for combat training purposes. There are various targets made upon the walls for throwing axes and several combat dummies made from wood - most of which are shaped like Drow Elves or a somewhat simplified Illithid. The very center of the room appears to have a raised platform where a teacher might give instructional presentations and examples to their students.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -414,7 +414,7 @@ S
 &+rA &+RTraining Room&+r in the Barracks&N~
 &+L   This is a large room capable of hosting nearly two dozen Dwarves for combat training purposes. There are various targets made upon the walls for throwing axes and several combat dummies made from wood - most of which are shaped like Drow Elves or a somewhat simplified Illithid. The very center of the room appears to have a raised platform where a teacher might give instructional presentations and examples to their students.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -424,7 +424,7 @@ S
 &+rA &+RTraining Room&+r in the Barracks&N~
 &+L   This is a large room capable of hosting nearly two dozen Dwarves for combat training purposes. There are various targets made upon the walls for throwing axes and several combat dummies made from wood - most of which are shaped like Drow Elves or a somewhat simplified Illithid. The very center of the room appears to have a raised platform where a teacher might give instructional presentations and examples to their students.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -434,7 +434,7 @@ S
 &+LA &+wFoyer&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This room is a dimly-lit foyer carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 4 13
+81 4 13
 D0
 ~
 door~
@@ -452,7 +452,7 @@ S
 &+LA Lower &+WStaircase &+wLanding&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This room has a very large staircase carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 ~
@@ -466,7 +466,7 @@ S
 &+LAn Upper &+WStaircase &+wLanding&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This room has a very large staircase carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -484,7 +484,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 ~
@@ -498,7 +498,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D7
 ~
 ~
@@ -512,7 +512,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -526,7 +526,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -544,7 +544,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -558,7 +558,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D6
 ~
 ~
@@ -572,7 +572,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 ~
@@ -586,7 +586,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 door~
@@ -608,7 +608,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -622,7 +622,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D7
 ~
 ~
@@ -636,7 +636,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -650,7 +650,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -668,7 +668,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -682,7 +682,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D6
 ~
 ~
@@ -696,7 +696,7 @@ S
 &+LA &+WCurved &+wHallway&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This hallway curves about the outside edge of this dormant subterranean volcanic crater, carved into the very basalt rock that was once lava. The floors have been polished smoothly to glisten in honor of the patroness of the Temple's affinity to craftsmanship, and the walls are perfectly carved with ever so slight detail.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -710,7 +710,7 @@ S
 &+LAn &+wEastern &+WUpper &+wFoyer&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This room is a dimly-lit foyer carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 131076 13
+81 131076 13
 D1
 ~
 door~
@@ -724,7 +724,7 @@ S
 &+LThe &+wEntry &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -742,7 +742,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -756,7 +756,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -770,7 +770,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -784,7 +784,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -802,7 +802,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -816,7 +816,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -830,7 +830,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -844,7 +844,7 @@ S
 &+wA &+LSteeder &+wStable Room&N~
 &+L   This room is quite sparse, and exists only for the raising, training, storage, and maintenence of the flock of steeders that are provided by the Temple for its residents. There are also additional spaces available for those visitors of the Underdark who ride here upon their steeders to bed them here for their visit, however long or short that might be. A simple wooden door is provided to keep the pens secure.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door wooden~
@@ -854,7 +854,7 @@ S
 &+LAn &+wWestern &+WUpper &+wFoyer&+L in the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This room is a dimly-lit foyer carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 131076 13
+81 131076 13
 D1
 ~
 ~
@@ -868,7 +868,7 @@ S
 &+LThe &+wEntry &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -886,7 +886,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 ~
@@ -900,7 +900,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -914,7 +914,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -928,7 +928,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -946,7 +946,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -960,7 +960,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -974,7 +974,7 @@ S
 &+LA &+WHallway&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This hallway is a dimly-lit passage carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -988,7 +988,7 @@ S
 &+LAn &+WUpper Landing &+Lfor the &+rF&+Ror&+rge &+wStaircase&N~
 &+L   This foyer is a dimly-lit room carved into the basalt stone walls of the Underdark. It has been carved masterfully with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source that may be nearby.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 ~
@@ -1002,7 +1002,7 @@ S
 &+LIn the &+rVol&+Rcan&+ric &+WTunnel &+Lleading to the Subterranean &+rF&+Ror&+rge&N~
 &+r   This area is part tunnel and part staircase as it descends into the inner crust of the subterranean Underdark volcano. The heat of the volcano lends itself to the forges that are coveted and protected by the Duergar Dwarves, and of their venerated protector and deity, Laduguer, who is a god of artisans and magic weapon creation.&N
 ~
-1 4 11
+81 4 11
 D4
 ~
 door~
@@ -1018,7 +1018,7 @@ S
 &+LIn the &+rVol&+Rcan&+ric &+WTunnel &+Lleading to the Subterranean &+rF&+Ror&+rge&N~
 &+r   This area is part tunnel and part staircase as it descends into the inner crust of the subterranean Underdark volcano. The heat of the volcano lends itself to the forges that are coveted and protected by the Duergar Dwarves, and of their venerated protector and deity, Laduguer, who is a god of artisans and magic weapon creation.&N
 ~
-1 0 11
+81 0 11
 D2
 ~
 ~
@@ -1032,7 +1032,7 @@ S
 &+LIn the &+rVol&+Rcan&+ric &+WTunnel &+Lleading to the Subterranean &+rF&+Ror&+rge&N~
 &+r   This area is part tunnel and part staircase as it descends into the inner crust of the subterranean Underdark volcano. The heat of the volcano lends itself to the forges that are coveted and protected by the Duergar Dwarves, and of their venerated protector and deity, Laduguer, who is a god of artisans and magic weapon creation.&N
 ~
-1 0 11
+81 0 11
 D0
 ~
 ~
@@ -1046,7 +1046,7 @@ S
 &+LA &+WCentral Staircase&+L in the &+wTemple's &+WWestern Tower&N~
 &+L   This spiral staircase is carved into the center stone column that makes up this tower. It has been carved masterfully with a simple handrail decorating exterior spiral. The steps are polished stone, and echo with every step up the stairs.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -1060,7 +1060,7 @@ S
 &+LA &+WCentral Staircase&+L in the &+wTemple's &+WEastern Tower&N~
 &+L   This spiral staircase is carved into the center stone column that makes up this tower. It has been carved masterfully with a simple handrail decorating exterior spiral. The steps are polished stone, and echo with every step up the stairs.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 door~
@@ -1074,7 +1074,7 @@ S
 &+LAt the Top of the &+WEast Central Staircase&+L in the &+wTemple's &+WTower&N~
 &+L   This spiral staircase is carved into the center stone column that makes up this tower. It has been carved masterfully with a simple handrail decorating exterior spiral. The steps are polished stone, and echo with every step up the stairs.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door~
@@ -1088,7 +1088,7 @@ S
 &+LAt the Top of the &+WWest Central Staircase&+L in the &+wTemple's &+WTower&N~
 &+L   This spiral staircase is carved into the center stone column that makes up this tower. It has been carved masterfully with a simple handrail decorating exterior spiral. The steps are polished stone, and echo with every step up the stairs.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 gate door~
@@ -1102,7 +1102,7 @@ S
 &+LA &+WBridge &+LAcross an &+wUnderdark &+rVol&+Rca&+rnic &+WHot &+wSpring&N~
 &+L   This metal bridge spans from the tower going back into the Underdark Volcanic features of the region. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe. A slight glow of &+rred &+Rvol&+rca&+Rnic&+r lava&+L flows just in the distance ahead of the bridge.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -1116,7 +1116,7 @@ S
 &+LA &+WBridge &+LAcross an &+wUnderdark &+rVol&+Rca&+rnic &+WHot &+wSpring&N~
 &+L   This metal bridge spans from the tower going back into the Underdark Volcanic features of the region. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe. A slight glow of &+rred &+Rvol&+rca&+Rnic&+r lava&+L flows just in the distance ahead of the bridge.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 gate door~
@@ -1130,7 +1130,7 @@ S
 &+LA &+WBridge &+Lover a &+rVol&+Rca&+rnic &+WHot &+wSpring&N~
 &+L   This metal bridge spans from the tower going back into the Underdark Volcanic features of the region. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe. A slight glow of &+rred &+Rvol&+rca&+Rnic&+r lava&+L flows just in the distance ahead of the bridge.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -1148,7 +1148,7 @@ S
 &+LA &+WBridge &+Lover a &+rVol&+Rca&+rnic &+WHot &+wSpring&N~
 &+L   This metal bridge spans from the tower going back into the Underdark Volcanic features of the region. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe. A slight glow of &+rred &+Rvol&+rca&+Rnic&+r lava&+L flows just in the distance ahead of the bridge.&N
 ~
-1 0 13
+81 0 13
 D1
 ~
 ~
@@ -1166,7 +1166,7 @@ S
 &+LA &+wStairway &+LDown into a &+RL&+ra&+Rv&+ra &+RFlow&N~
 &+L   This stairway descends into a small crater that is creating a &+Rl&+rav&+Ra &+rflow&+L from the &+wunderground volcano&+L here in the Underdark. The obsidian around the &+rl&+Rav&+ra &+Rflow&+L has been carved by master artisans to revere the god &+RLaduguer &+Land his patronage of weaponsmithing in the hottest of forges.&N
 ~
-1 0 13
+81 0 13
 D5
 ~
 ~
@@ -1180,7 +1180,7 @@ S
 &+LA &+WStairway &+Lascending into a &+WColumn &+Lof &+wAsh &+Land&+w Smoke&N~
 &+L   This stairway is made from the finest of mithril metals, designed and created by the master artisans of the Duergar Dwarves. Its stairs are quite short, perhaps to accomodate the stride of a Dwarf, yet each is meticulously angled to spiral up into this passage of air, ash, and smoke.&N
 ~
-1 0 13
+81 0 13
 D4
 ~
 door~
@@ -1194,7 +1194,7 @@ S
 &+rA &+RSpiral Staircase &+rinto a &+RV&+rol&+Rca&+rni&+Rc &+RHot &+rSpring&N~
 &+r   This metal staircase descends into the Underdark Volcanic features of the region, slightly around and over a flow of volcanic lava. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe.&N
 ~
-1 0 30
+81 0 30
 D4
 ~
 ~
@@ -1210,7 +1210,7 @@ S
 &+rThe &+RBottom&+r of a &+RSpiral Staircase &+rinto a &+RV&+rol&+Rca&+rni&+Rc &+RHot &+rSpring&N~
 &+r   This metal staircase descends into the Underdark Volcanic features of the region, slightly around and over a flow of volcanic lava. Steam rolls up from below, and makes the area quite humid and the air quite difficult to breathe.&N
 ~
-1 0 30
+81 0 30
 D0
 ~
 door~
@@ -1224,7 +1224,7 @@ S
 &+rThe &+RFoyer&+r of the &+RShrine to Laduguer&N~
 &+L   This room, carved directly over a &+rl&+Rav&+ra &+Rflow&+L so that the lava would &+rt&+Rr&+ri&+Rc&+rk&+Rl&+re&+L into the room through specifically &+wca&+Lrv&+wed &+rde&+Rsig&+rns&+L in the floor, opens up into several personal shrines to &+RLaduguer&+L. Many weaponsmiths and other Dwarven craftsmen of the Underdark come to these shrines as a pilgrimmage.&N
 ~
-1 4 30
+81 4 30
 D0
 ~
 ~
@@ -1238,7 +1238,7 @@ S
 &+rA &+RHallway&+r in the &+RShrine to Laduguer&N~
 &+L   This long hallway, carved directly over a &+rl&+Rav&+ra &+Rflow&+L so that the lava would &+rt&+Rr&+ri&+Rc&+rk&+Rl&+re&+L into the room through specifically &+wca&+Lrv&+wed &+rde&+Rsig&+rns&+L in the floor, opens up into several personal shrines to &+RLaduguer&+L. Many weaponsmiths and other Dwarven craftsmen of the Underdark come to these shrines as a pilgrimmage.&N
 ~
-1 0 30
+81 0 30
 D0
 ~
 door~
@@ -1260,7 +1260,7 @@ S
 &+rA &+RShrine &+rto &+RLaduguer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 30
+81 0 30
 D3
 ~
 door~
@@ -1270,7 +1270,7 @@ S
 &+rA &+RShrine &+rto &+RLaduguer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 30
+81 0 30
 D1
 ~
 door~
@@ -1280,7 +1280,7 @@ S
 &+rA &+RShrine &+rto &+RLaduguer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 30
+81 0 30
 D2
 ~
 door~
@@ -1290,7 +1290,7 @@ S
 &+LThe &+WFoyer&+L to the &+wAshen &+WShrines &+Lof &+rLa&+Rdug&+ruer&N~
 &+w   This room has been created so that it has tiles and grates over the steam from the volcanic hot springs and volcanic flows below, and so the ash from below wafts into the room in a circular spiral upwards and outwards into the chambers that eventually lead to the surface above.&N
 ~
-1 0 11
+81 0 11
 D0
 ~
 door~
@@ -1316,7 +1316,7 @@ S
 &+LAn &+wAshen &+WShrine &+Lto &+rLa&+Rdug&+ruer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 11
+81 0 11
 D2
 ~
 door~
@@ -1326,7 +1326,7 @@ S
 &+LAn &+wAshen &+WShrine &+Lto &+rLa&+Rdug&+ruer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 11
+81 0 11
 D3
 ~
 door~
@@ -1336,7 +1336,7 @@ S
 &+LAn &+wAshen &+WShrine &+Lto &+rLa&+Rdug&+ruer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 11
+81 0 11
 D0
 ~
 door~
@@ -1346,7 +1346,7 @@ S
 &+LAn &+wAshen &+WShrine &+Lto &+rLa&+Rdug&+ruer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 11
+81 0 11
 D1
 ~
 door~
@@ -1356,7 +1356,7 @@ S
 &+LAn &+wTributary &+WChapel &+Lwithin the &+wTemple &+Lto &+rLa&+Rdug&+ruer&N~
 &+L   This room, carved into the volcanic walls of the Underdark of this area, has been made into a shrine to the god Laduguer. In the middle of the room is a pedestal that has been shaped like an exquisite anvil of the gods which stands to receive offerings from the Dwarven craftsmen that visit this shrine.&N
 ~
-1 0 30
+81 0 30
 D2
 ~
 door~
@@ -1366,7 +1366,7 @@ S
 &+LIn the &+rVol&+Rcan&+ric &+WTunnel &+Lleading to the Subterranean &+rF&+Ror&+rge&N~
 &+r   This area is part tunnel and part staircase as it descends into the inner crust of the subterranean Underdark volcano. The heat of the volcano lends itself to the forges that are coveted and protected by the Duergar Dwarves, and of their venerated protector and deity, Laduguer, who is a god of artisans and magic weapon creation.&N
 ~
-1 0 11
+81 0 11
 D1
 ~
 ~
@@ -1380,7 +1380,7 @@ S
 &+LThe End of the &+rVol&+Rcan&+ric &+WTunnel &+Lleading to the Subterranean &+rF&+Ror&+rge&N~
 &+r   This area is part tunnel and part staircase as it descends into the inner crust of the subterranean Underdark volcano. The heat of the volcano lends itself to the forges that are coveted and protected by the Duergar Dwarves, and of their venerated protector and deity, Laduguer, who is a god of artisans and magic weapon creation.&N
 ~
-1 4 11
+81 4 11
 D1
 ~
 ~
@@ -1394,7 +1394,7 @@ S
 &+LThe &+wEntrance &+Lto the &+wSubterranean &+rF&+Ror&+rge&N~
 &+r   The heat of the Underdark volcano is strong in this area, and the ground trembles every so often with the struggle between earth and fire deep in these underground recesses. The obsidian walls glitter a fine red glow off of their polished black walls.&N
 ~
-1 0 11
+81 0 11
 D1
 ~
 door forge~
@@ -1408,7 +1408,7 @@ S
 &+wWithin &+Lthe &+wSubterranean &+rF&+Ror&+rge&N~
 &+r   The heat of the Underdark volcano is strong in this area, and the ground trembles every so often with the struggle between earth and fire deep in these underground recesses. The obsidian walls glitter a fine red glow off of their polished black walls.&N
 ~
-1 1216380992 11
+81 1216380992 11
 D3
 ~
 door forge~
@@ -1418,7 +1418,7 @@ S
 &+LA Basalt &+rVol&+Rca&+rnic &+LTunnel before a &+wSmall Gate&N~
 &+L   The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 gate~
@@ -1432,7 +1432,7 @@ S
 &+LThe &+wEntrance&+L to the &+rTe&+Rmp&+rle &+wStables&N~
 &+L   The volcanic basalt walls of this cavern are dark black, yet have the slightest tinge of minerals and other rust in them. The tunnel was carved by a master carver, as the walls themselves are perfectly cut and shaped, with columns built into the sides and ceilings every so often to support potential weights from cave-ins.&N
 ~
-1 0 13
+81 0 13
 D0
 ~
 door wooden~
@@ -1454,7 +1454,7 @@ S
 &+LAn &+WInn&+L for the Visitors to the &+rTemple&+L of &+rLad&+Rug&+ruer&N~
 &+L   This reception room is a dimly-lit space carved into the basalt stone walls of the Underdark. It has been carved into a perfectly circular room with a simple bordered decorating the top portion of the room. The floors are polished stone, shimmering black in the presence of any light source.&N
 ~
-1 1074397188 15
+81 1074397188 15
 D2
 ~
 door~
@@ -1464,7 +1464,7 @@ S
 &+wA &+LSteeder &+wStable Room&N~
 &+L   This room is quite sparse, and exists only for the raising, training, storage, and maintenence of the flock of steeders that are provided by the Temple for its residents. There are also additional spaces available for those visitors of the Underdark who ride here upon their steeders to bed them here for their visit, however long or short that might be. A simple wooden door is provided to keep the pens secure.&N
 ~
-1 0 13
+81 0 13
 D3
 ~
 door wooden~
@@ -1474,7 +1474,7 @@ S
 &+wA &+LSteeder &+wStable Room&N~
 &+L   This room is quite sparse, and exists only for the raising, training, storage, and maintenence of the flock of steeders that are provided by the Temple for its residents. There are also additional spaces available for those visitors of the Underdark who ride here upon their steeders to bed them here for their visit, however long or short that might be. A simple wooden door is provided to keep the pens secure.&N
 ~
-1 0 13
+81 0 13
 D2
 ~
 door wooden~
