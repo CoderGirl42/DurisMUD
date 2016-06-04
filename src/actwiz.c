@@ -3697,7 +3697,7 @@ void do_wizlock(P_char ch, char *arg, int cmd)
 void do_nchat(P_char ch, char *argument, int cmd)
 {
   P_desc i;
-  bool   good, evil, undead, all;
+  bool   good, evil, undead, neutral, all;
   char   Gbuf1[MAX_STRING_LENGTH];
   char   Gbuf2[MAX_STRING_LENGTH];
   P_char to;
@@ -3755,7 +3755,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
     argument++;
   }
 
-  all = good = evil = undead = FALSE;
+  all = good = evil = undead = neutral = FALSE;
 
   if( !*argument )
   {
@@ -3776,6 +3776,9 @@ void do_nchat(P_char ch, char *argument, int cmd)
       else if(((*argument == 'u') || (*argument == 'U')) &&
                (*(argument + 1) == ' '))
         undead = TRUE;
+      else if(((*argument == 'n') || (*argument == 'N')) &&
+               (*(argument + 1) == ' '))
+        neutral = TRUE;
       else if(((*argument == 'a') || (*argument == 'A')) &&
                (*(argument + 1) == ' '))
       {
@@ -3783,7 +3786,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
       }
       else
       {
-        send_to_char("&+YMake up your mind first which side do you want to help. Use nchat 'e', 'u', 'g' or 'a'. &n\n", ch);
+        send_to_char("&+YMake up your mind first which side do you want to help. Use nchat 'e', 'u', 'g', 'n' or 'a'. &n\n", ch);
         return;
       }
       argument += 2;
@@ -3796,6 +3799,8 @@ void do_nchat(P_char ch, char *argument, int cmd)
         sprintf(Gbuf2, "&+Revil&n");
       else if( undead )
         sprintf(Gbuf2, "&+Lundead&n");
+      else if( neutral )
+        sprintf(Gbuf2, "&+Mneutral&n");
       else
         sprintf(Gbuf2, "undefined");
 
@@ -3829,6 +3834,11 @@ void do_nchat(P_char ch, char *argument, int cmd)
       sprintf(Gbuf2, "&+Lundead&n");
       undead = TRUE;
     }
+    else if(RACE_NEUTRAL(ch))
+    {
+      sprintf(Gbuf2, "&+Mneutral&n");
+      neutral = TRUE;
+    }
     else
     {
       sprintf(Gbuf2, "&-Rundefined&n");
@@ -3843,7 +3853,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
     }
     // If mortal && racewar side doesn't match.  (Immortals see all nchats).
     if( !IS_TRUSTED(to) && !all && ( (evil && !RACE_EVIL(to)) || (undead && !RACE_PUNDEAD(to))
-      || (good && !RACE_GOOD(to)) ) )
+      || (good && !RACE_GOOD(to)) || (neutral && !RACE_NEUTRAL(to)) ) )
     {
       continue;
     }
@@ -3864,6 +3874,9 @@ void do_nchat(P_char ch, char *argument, int cmd)
       continue;
     }
     */
+    // Mortals do not see the undefined racewar sides.
+    if( !IS_TRUSTED(to) && (!good && !evil && !undead && !neutral) )
+      continue;
     if( IS_TRUSTED(to) )
     {
       sprintf(Gbuf1, "&+W%s&n&+m racewar-chats &+w(%s&+w): '&+Y%s&n&+w'\n",
@@ -3876,6 +3889,7 @@ void do_nchat(P_char ch, char *argument, int cmd)
     }
     send_to_char(Gbuf1, to, LOG_PRIVATE);
   }
+
   if( get_property("logs.chat.status", 0.000) )
   {
     logit(LOG_CHAT, "%s newb chat's (%s) '%s'", GET_NAME(ch), Gbuf2, argument);

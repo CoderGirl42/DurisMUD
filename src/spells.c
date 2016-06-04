@@ -3069,7 +3069,7 @@ void event_mirage(P_char ch, P_char vict, P_obj obj, void *data)
 // Curse of the Yzar... changes his race randomly every mud-night at 3am.
 void event_change_yzar_race(P_char ch, P_char victim, P_obj obj, void *data)
 {
-  int time_to_witching_hour;
+  int time_to_witching_hour, previous_hps;
   struct affected_type *paf, af;
 
   if( !IS_ALIVE(ch) )
@@ -3077,25 +3077,28 @@ void event_change_yzar_race(P_char ch, P_char victim, P_obj obj, void *data)
     return;
   }
 
+  previous_hps = GET_HIT(ch);
+
   if( (paf = get_spell_from_char( ch, TAG_RACE_CHANGE )) != NULL )
   {
     send_to_char( "You feel &+Yho&+yrr&+Yible&n as &+Wbones&n shift and &+wsnap&n, and your &+rf&+yles&+rh&n falls to the ground.\n", ch );
     act("$n slowly twists and shifts into A &+wSkeleton&n.", TRUE, ch, 0, 0, TO_ROOM);
-    affect_remove( ch, paf );
+    paf->duration = 25;
+  }
+  else
+  {
+    memset(&af, 0, sizeof(af));
+    af.type = TAG_RACE_CHANGE;
+    af.flags = AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
+    af.duration = 25;
+    // Yzar will always have a 'base' race of skeleton.
+    af.modifier = RACE_SKELETON;
+
+    affect_to_char(ch, &af);
   }
 
-  if( !IS_ALIVE(ch) )
-    return;
-
-  memset(&af, 0, sizeof(af));
-  af.type = TAG_RACE_CHANGE;
-  af.flags = AFFTYPE_PERM | AFFTYPE_NODISPEL | AFFTYPE_OFFLINE;
-  af.duration = 24;
-  af.modifier = RACE_SKELETON;
-
-  affect_to_char(ch, &af);
-
   GET_RACE(ch) = number( RACE_NONE + 1, LAST_RACE );
+  GET_HIT(ch) = previous_hps;
 
   act("A &+wSkeleton&n continues to change into $n.", TRUE, ch, 0, 0, TO_ROOM);
 

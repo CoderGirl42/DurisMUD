@@ -1639,7 +1639,7 @@ void do_society( P_char member, char *argument, int cmd )
         return;
       }
       // get_char_room_vis checks for 'me' and 'self'.
-      if( (victim = get_char_room_vis( member, second )) == NULL )
+      if( (victim = get_char_vis( member, second )) == NULL )
       {
         send_to_char_f( member, "Could not find player '%s'.\n", second );
         return;
@@ -2804,8 +2804,6 @@ void Guild::name_title( P_char member, char *args )
   // Skip leading spaces first.
   while( isspace(*args) )
     args++;
-
-  send_to_char_f( member, "We would update rank number %d to '%s', but not finished.\n", rank_number, args );
 
   // Check string length and trim if necessry.
   trim_and_end_colorless( args, titles[rank_number], ASC_MAX_STR_RANK );

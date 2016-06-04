@@ -1915,6 +1915,9 @@ void list_char_to_char(P_char list, P_char ch, int mode)
   int    higher, lower, vis_mode;
   bool   globe, flame;
 
+  if( list == NULL )
+    return;
+
   vis_mode = get_vis_mode(ch, list->in_room);
 
   for( i = list; i; i = i->next_in_room )
@@ -4317,15 +4320,15 @@ void do_attributes(P_char ch, char *argument, int cmd)
               "&+cSTR: &+Y%-15s&n  &+cAGI: &+Y%-15s&n   &+cDEX: &+Y%s\n"
               "&+cPOW: &+Y%-15s&n  &+cINT: &+Y%-15s&n   &+cWIS: &+Y%s\n"
               "&+cCON: &+Y%-15s&n  &+cCHA: &+Y%-15s&n  &+cLUCK: &+Y%s\n\n",
-              stat_to_string2((int) ((GET_C_STR(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Str) + .55)),
-              stat_to_string2((int) ((GET_C_AGI(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Agi) + .55)),
-              stat_to_string2((int) ((GET_C_DEX(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Dex) + .55)),
-              stat_to_string2((int) ((GET_C_POW(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Pow) + .55)),
-              stat_to_string2((int) ((GET_C_INT(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Int) + .55)),
-              stat_to_string2((int) ((GET_C_WIS(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Wis) + .55)),
-              stat_to_string2((int) ((GET_C_CON(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Con) + .55)),
-              stat_to_string2((int) ((GET_C_CHA(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Cha) + .55)),
-              stat_to_string2((int) ((GET_C_LUK(ch) * 100 / stat_factor[(int) GET_RACE(ch)].Luk) + .55)) );
+              stat_to_string2((int) ((GET_C_STR(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Str) + .55)),
+              stat_to_string2((int) ((GET_C_AGI(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Agi) + .55)),
+              stat_to_string2((int) ((GET_C_DEX(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Dex) + .55)),
+              stat_to_string2((int) ((GET_C_POW(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Pow) + .55)),
+              stat_to_string2((int) ((GET_C_INT(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Int) + .55)),
+              stat_to_string2((int) ((GET_C_WIS(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Wis) + .55)),
+              stat_to_string2((int) ((GET_C_CON(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Con) + .55)),
+              stat_to_string2((int) ((GET_C_CHA(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Cha) + .55)),
+              stat_to_string2((int) ((GET_C_LUK(ch) * 100. / (float)stat_factor[(int) GET_RACE(ch)].Luk) + .55)) );
     }
   }
   else

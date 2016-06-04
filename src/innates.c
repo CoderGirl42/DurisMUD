@@ -4080,10 +4080,13 @@ void branch(P_char ch, P_char victim)
 
   victim = guard_check(ch, victim); 
 
+  act("One of your branches reaches towards $N.", FALSE, ch, 0, victim, TO_CHAR);
   act("One of $n's branches reaches towards $N.", FALSE, ch, 0, victim, TO_NOTVICT);
   act("One of $n's branches reaches towards you.", FALSE, ch, 0, victim, TO_VICT);
-  if (get_takedown_size(victim) >= get_takedown_size(ch)) {
-    act("$n fails to pick $N.", FALSE, ch, 0, victim, TO_NOTVICT);
+  if( get_takedown_size(victim) >= get_takedown_size(ch) )
+  {
+    act("You fail to pick $N up.", FALSE, ch, 0, victim, TO_NOTVICT);
+    act("$n fails to pick $N up.", FALSE, ch, 0, victim, TO_NOTVICT);
     act("$n failed to pick you up.", FALSE, ch, 0, victim, TO_VICT);
     return;
   }
