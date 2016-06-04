@@ -4226,6 +4226,11 @@ bool violating_one_hour_rule( P_desc d )
 
   timer = sql_find_racewar_for_ip( d->host, &racewar_side );
 
+  if( racewar_side < RACEWAR_NONE || racewar_side > MAX_RACEWAR )
+  {
+    return FALSE;
+  }
+
   // If they haven't been on in an hour (or never before).
   if( racewar_side == RACEWAR_NONE )
     return FALSE;

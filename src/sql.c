@@ -873,7 +873,12 @@ int sql_find_racewar_for_ip( char *ip, int *racewar_side )
 
     // If they've been offline for an hour or more, return a 0 timer.
     if( last_disconnect > last_connect && last_disconnect <= hour_ago )
+    {
+      racewar_side = RACEWAR_NONE;
+      while( row != NULL )
+        row = mysql_fetch_row(db);
       return 0;
+    }
 
     while( row != NULL )
       row = mysql_fetch_row(db);
