@@ -1562,205 +1562,262 @@ bool sql_pwipe( int code_verify )
   if( code_verify == 1723699 )
   {
     logit(LOG_DEBUG, "sql_pwipe: Clearing zone alignments, trophy and touches... .. .");
+    send_to_all( "Clearing zone alignments, trophy and touches... .. ." );
     if( sql_clear_zone_trophy()
       && qry("DELETE FROM zone_trophy")
       && qry("DELETE FROM zone_touches") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n" );
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing tower ownership... .. ." );
+    send_to_all( "Clearing tower ownership... .. ." );
     if( qry("UPDATE outposts SET owner_id='0', level='8', walls='1', archers='0', hitpoints='300000', territory='0',"
       " portal_room='0', resources='0', applied_resources='0', golems='0', meurtriere='0', scouts='0'") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n" );
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing nexus stone data... .. ." );
+    send_to_all( "Clearing nexus stone data... .. ." );
     if( qry("UPDATE nexus_stones SET align='0', last_touched_at='0'") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing prestige lists... .. ." );
+    send_to_all( "Clearing prestige lists... .. ." );
     if( qry("DELETE FROM associations") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing alliances... .. ." );
+    send_to_all( "Clearing alliances... .. ." );
     if( qry("DELETE FROM alliances") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing artifact bind data... .. ." );
+    send_to_all( "Clearing artifact bind data... .. ." );
     if( qry("DELETE FROM artifact_bind") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing auction data... .. ." );
+    send_to_all( "Clearing auction data... .. ." );
     if( qry("DELETE FROM auction_bid_history")
       && qry("DELETE FROM auction_item_pickups")
       && qry("DELETE FROM auction_money_pickups")
       && qry("DELETE FROM auctions") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing boon data... .. ." );
+    send_to_all( "Clearing boon data... .. ." );
     if( qry("DELETE FROM boons_progress")
       && qry("DELETE FROM boons") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing ctf data... .. ." );
+    send_to_all( "Clearing ctf data... .. ." );
     if( qry("DELETE FROM ctf_data") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing frag data and epic bonus data... .. ." );
+    send_to_all( "Clearing frag data and epic bonus data... .. ." );
     if( qry("DELETE FROM epic_bonus")
       && qry("DELETE FROM epic_gain")
       && qry("DELETE FROM progress") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing guild data... .. ." );
+    send_to_all( "Clearing guild data... .. ." );
     if( qry("DELETE FROM guild_transactions")
       && qry("DELETE FROM guildhall_rooms")
       && qry("DELETE FROM guildhalls") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing ip info... .. ." );
+    send_to_all( "Clearing ip info... .. ." );
     if( qry("DELETE FROM ip_info") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing log entries... .. ." );
+    send_to_all( "Clearing log entries... .. ." );
     if( qry("DELETE FROM log_entries") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing offline messages... .. ." );
+    send_to_all( "Clearing offline messages... .. ." );
     if( qry("DELETE FROM offline_messages") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing cargo data... .. ." );
+    send_to_all( "Clearing cargo data... .. ." );
     if( qry("DELETE FROM ship_cargo_market_mods")
       && qry("DELETE FROM ship_cargo_prices") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing timers... .. ." );
+    send_to_all( "Clearing timers... .. ." );
     if( qry("UPDATE timers SET date='0'") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing shop data... .. ." );
+    send_to_all( "Clearing shop data... .. ." );
     if( qry("DELETE FROM shop_trophy") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Clearing completed quest data... .. ." );
+    send_to_all( "Clearing completed quest data... .. ." );
     if( qry("DELETE FROM world_quest_accomplished") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     logit(LOG_DEBUG, "sql_pwipe: Deactivating players_core data... .. ." );
+    send_to_all( "Deactivating players_core data... .. ." );
     if( qry("UPDATE players_core SET active = 0") )
     {
       logit(LOG_DEBUG, "  success!" );
+      send_to_all( "  success!\n" );
     }
     else
     {
       logit(LOG_DEBUG, "        failure!");
+      send_to_all( "        failure!\n");
       return FALSE;
     }
     return TRUE;
@@ -1771,5 +1828,7 @@ bool sql_pwipe( int code_verify )
     return FALSE;
   }
   logit(LOG_DEBUG, "sql_pwipe: COMPLETED!" );
+  send_to_all( "WIPE COMPLETED!" );
+  sleep(1);
 }
 #endif
