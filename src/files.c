@@ -2014,13 +2014,20 @@ int deleteCharacter(P_char ch, bool bDeleteLocker)
 
   sprintf( Gbuf1, "%s/%c/%s", SAVE_DIR, *name, name );
   strcpy( Gbuf2, Gbuf1 );
-  sprintf( Gbuf2, "mv -f %s %s.bak", Gbuf1, Gbuf1 );
+  sprintf( Gbuf2, "mv -f %s %s.old", Gbuf1, Gbuf1 );
   system( Gbuf2 );
   if( f = fopen( Gbuf1, "r" ) )
   {
     debug( "deleteCharacter: Error: pfile (%s) still exists.", Gbuf1 );
-    debug( "deleteCharacter: Command: (%s).", Gbuf2 );
+    debug( "deleteCharacter: Command: (%s) failed.", Gbuf2 );
     fclose( f );
+    sprintf( Gbuf2, "rm -f %s", Gbuf1 );
+    system( Gbuf2 );
+    if( f = fopen( Gbuf1, "r" ) )
+    {
+      fclose( f );
+      debug( "deleteCharacter: Command: (%s) failed.", Gbuf2 );
+    }
   }
 
   if( bDeleteLocker )
