@@ -1983,6 +1983,10 @@ SPELL_CREATE("vigorize light", SPELL_VIGORIZE_LIGHT, PULSE_SPELLCAST * 2,
                 TAR_OBJ_ROOM | TAR_NOCOMBAT, spell_raise_lich);
   SPELL_ADD(CLASS_NECROMANCER, 10);
 
+  SPELL_CREATE("compact corpse", SPELL_COMPACT_CORPSE, PULSE_SPELLCAST * 3,
+                TAR_OBJ_ROOM | TAR_NOCOMBAT, spell_compact_corpse);
+  SPELL_ADD(CLASS_NECROMANCER, 10);
+
   SPELL_CREATE("call asura", SPELL_CALL_ASURA, PULSE_SPELLCAST * 3,
                 TAR_OBJ_ROOM | TAR_NOCOMBAT, spell_call_asura);
   SPELL_ADD(CLASS_THEURGIST, 5);

@@ -11,6 +11,7 @@
 #define VOBJ_HOLYSWORD_AMBRAN               425
 #define VOBJ_GEMMINE                        434
 
+#define VOBJ_PILE_BONES                     498
 
 #define VOBJ_WALLS                          759
 
