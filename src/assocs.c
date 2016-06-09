@@ -669,6 +669,29 @@ void Guild::update_member( P_char ch )
     send_to_char( "You have been placed on parole.\n", ch );
   }
 
+  if( !IS_TRUSTED(ch) )
+  {
+    for( pMembers = members; pMembers != NULL; pMembers = pMembers->next )
+    {
+      if( !strcmp(pMembers->name, GET_NAME( ch )) )
+      {
+        break;
+      }
+    }
+
+    if( pMembers == NULL )
+    {
+      GET_ASSOC(ch) = NULL;
+      GET_A_BITS(ch) = 0;
+      send_to_char( "You have been kicked out of your association in disgrace.\n", ch );
+      // add_member( ch, (A_GET_RANK(ch) > 0) ? A_GET_RANK(ch) : A_NORMAL );
+    }
+    else
+    {
+      GET_A_BITS(ch) = pMembers->bits;
+    }
+  }
+
   // Check homed in someone else's guildhall.
   if( (gh = Guildhall::find_by_vnum( GET_BIRTHPLACE(ch) )) != NULL )
   {
@@ -717,6 +740,62 @@ void Guild::kick( P_char ch )
   member_count--;
   save( );
   writeCharacter(ch, RENT_CRASH, ch->in_room );
+}
+
+void Guild::kick( P_char kicker, char *char_name )
+{
+  P_member pMembers, pTargetMember;
+
+  CAP(char_name);
+
+  if( !char_name || !*char_name )
+  {
+    send_to_char( "Who?!\n", kicker );
+    return;
+  }
+
+  pMembers = members;
+  // If at the head of the list
+  if( !strcmp(members->name, char_name) )
+  {
+    if( GET_RK_BITS(members->bits) > GET_RK_BITS(GET_A_BITS(kicker)) )
+    {
+      send_to_char( "You can't kick a superior?!\n", kicker );
+      return;
+    }
+
+    // Move list down one and free memory.
+    members = members->next;
+    pMembers->next = NULL;
+    delete pMembers;
+  }
+  else
+  {
+    // Find the member before (next exists and has a different name).
+    while( (pMembers->next != NULL) && strcmp(pMembers->next->name, char_name) )
+    {
+      pMembers = pMembers->next;
+    }
+    // Not on list? WTF!?
+    if( pMembers->next == NULL )
+    {
+      send_to_char_f( kicker, "'%s' is not on your guild list.\n", char_name );
+      return;
+    }
+    if( GET_RK_BITS(pMembers->next->bits) > GET_RK_BITS(GET_A_BITS(kicker)) )
+    {
+      send_to_char( "You can't kick a superior?!\n", kicker );
+      return;
+    }
+    // Remove them from the list.
+    pTargetMember = pMembers->next;
+    pMembers->next = pTargetMember->next;
+    // And free memory.
+    pTargetMember->next = NULL;
+    delete pTargetMember;
+  }
+  send_to_char_f( kicker, "You mercilessly kick %s from your guild.\n", char_name );
+  save( );
 }
 
 void Guild::remove_member_from_list( P_char ch )
@@ -1642,6 +1721,11 @@ void do_society( P_char member, char *argument, int cmd )
       // get_char_room_vis checks for 'me' and 'self'.
       if( (victim = get_char_vis( member, second )) == NULL )
       {
+        if( command == SOC_CMD_KICK )
+        {
+          guild->kick( member, second );
+          return;
+        }
         send_to_char_f( member, "Could not find player '%s'.\n", second );
         return;
       }
