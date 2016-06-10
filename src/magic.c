@@ -1108,12 +1108,17 @@ void spell_energy_drain(int level, P_char ch, char *arg, int type, P_char victim
   if(resists_spell(ch, victim))
     return;
 
-  dam = dice(3 * level, 5);
-
+  // 20% increase in level (lowered from 25%, but added to actual hps damage).
   if( GET_SPEC(ch, CLASS_NECROMANCER, SPEC_REAPER) || GET_SPEC(ch, CLASS_THEURGIST, SPEC_THAUMATURGE) )
   {
-    level = (int)(level * 1.25);
+    level = (int) (level * get_property("damage.increase.reaper", 1.200));
   }
+
+  // dam = dice(3 * level, 5);
+  // At level 56: 168 to 840 -> 336 + (56 to 280) = 392 to 616
+  // Avg stays 504 == 126 real damage
+  // But new range is 224 == 56 real as opposed to 672 == 168 real (+/- 28 vs 84).
+  dam = 6 * level + dice(level, 5);
 
   if(IS_AFFECTED4(victim, AFF4_DEFLECT))
   {
