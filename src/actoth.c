@@ -6262,16 +6262,16 @@ void do_climb(P_char ch, char *argument, int cmd)
 {
   struct affected_type af;
 
-  if (!ch || !ch->desc || !CAN_ACT(ch))
+  if( !ch || !ch->desc || !CAN_ACT(ch) )
     return;
 
-  if (IS_NPC(ch) || !GET_CHAR_SKILL(ch, SKILL_CLIMB))
+  if( IS_NPC(ch) || !GET_CHAR_SKILL(ch, SKILL_CLIMB) )
   {
     send_to_char("You would probably fall, best not attempt this.\r\n", ch);
     return;
   }
 
-  if (!affected_by_spell(ch, SKILL_CLIMB))
+  if( !affected_by_spell(ch, SKILL_CLIMB) )
   {
     send_to_char("You survey the climb ahead...\r\n", ch);
     bzero(&af, sizeof(af));
@@ -6279,6 +6279,10 @@ void do_climb(P_char ch, char *argument, int cmd)
     af.duration = 10;
     affect_to_char(ch, &af);
     notch_skill(ch, SKILL_CLIMB, 17);
+  }
+  else
+  {
+    send_to_char( "You're about as ready as you can get.\n", ch );
   }
 }
 
