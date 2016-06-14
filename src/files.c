@@ -767,15 +767,15 @@ ulong ObjUniqueFlags(P_obj obj, P_obj control)
   if (obj->bitvector5 != control->bitvector5)
     flag |= O_U_BV5;
 
-  if ((obj->affected[0].location != control->affected[0].location) ||
-      (obj->affected[0].modifier != control->affected[0].modifier) ||
-      (obj->affected[1].location != control->affected[1].location) ||
-      (obj->affected[1].modifier != control->affected[1].modifier) ||
-      (obj->affected[1].location != control->affected[2].location) ||
-      (obj->affected[1].modifier != control->affected[2].modifier) ||
-      (obj->affected[1].location != control->affected[3].location) ||
-      (obj->affected[1].modifier != control->affected[3].modifier))
-    flag |= O_U_AFFS;
+  for (i = 0; i < MAX_OBJ_AFFECT; i++)
+  {
+    if( (obj->affected[i].location != control->affected[i].location)
+      || (obj->affected[i].modifier != control->affected[i].modifier) )
+    {
+      flag |= O_U_AFFS;
+      break;
+    }
+  }
 
   return flag;
 }

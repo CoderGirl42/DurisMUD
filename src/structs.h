@@ -216,13 +216,6 @@ struct edit_data {
 #define MISSING_LEGS    BIT_11
 #define HUMANOID_CORPSE BIT_16
 
-/* for 'str_mask' */
-#define STRUNG_KEYS   BIT_1     /* M: name         O: name               */
-#define STRUNG_DESC1  BIT_2     /* M: long_descr   O: description        */
-#define STRUNG_DESC2  BIT_3     /* M: short_descr  O: short_description  */
-#define STRUNG_DESC3  BIT_4     /* M: description  O: action_description */
-#define STRUNG_EDESC  BIT_5     /* M: (n/a)        O: extra_description  */
-
 /* kingdom stuff */
 
 /* Troop constants */
