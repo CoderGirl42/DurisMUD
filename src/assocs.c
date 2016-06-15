@@ -948,7 +948,7 @@ void Guild::display( P_char member )
       {
         if( NR_RANK(pMembers->bits) == i )
         {
-          sprintf( buf + strlen(buf), " %s |%12s | %s | %s\n",
+          sprintf( buf + strlen(buf), " %s | %-12s | %s | %s\n",
             (get_char_online( pMembers->name, FALSE )) ? "&+Go&n"
             : (get_char_online( pMembers->name, TRUE )) ? "&+y+&n" : " ", pMembers->name,
             current_title, (pMembers->debt && ( (rank > A_SENIOR) || !strcmp(pMembers->name, GET_NAME( member )) ))
