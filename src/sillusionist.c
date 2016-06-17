@@ -2511,13 +2511,13 @@ void event_asphyxiate(P_char ch, P_char victim, P_obj obj, void *data)
 
   if( NewSaves(victim, SAVING_SPELL, GET_LEVEL(ch) / 10) )
   {
-    // About 50 dam
-    dam = 175 + number( 0, 50 );
+    // 40 +/- 5 dam at 56.
+    dam = (5 * GET_LEVEL(ch)) / 2 + number( 0, 40 );
   }
   else
   {
-    // About 75 dam
-    dam = 275 + number( 0, 50 );
+    // 70 +/- 5 dam at 56.
+    dam = 5 * GET_LEVEL(ch) + number( -20, 20 );
   }
 
   if( spell_damage(ch, victim, dam, SPLDAM_GENERIC, SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD
