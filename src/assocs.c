@@ -244,11 +244,11 @@ void show_guild_frags( P_char ch )
   {
     sprintf(Gbuf1, "\t%s\n\t&+WTotal Guild Frags: \t&+Y%+.2f&n\n"
       "\t&+WTop Fragger: &+Y%-10s %+.2f&n\n"
-      "\t&+WMembers:&+Y%2d&+W frags/member:&+Y%+.2f&n\n"
+      "\t&+WMembers:&+Y%2d&+W Frags/Member:&+Y%+.2f&n\n"
       "    &+L---------------------------------------\n",
       gfrag_list[i].guild_name, gfrag_list[i].tot_frags / 100.00, gfrag_list[i].top_fragger,
       gfrag_list[i].top_frags / 100.00, gfrag_list[i].num_members,
-      (float)(gfrag_list[i].top_frags / ( gfrag_list[i].num_members * 100.00 )) );
+      (float)(gfrag_list[i].tot_frags / ( gfrag_list[i].num_members * 100.00 )) );
     strcat(buf, Gbuf1);
     i++;
   }
@@ -455,8 +455,9 @@ void Guild::save( )
 
   // Print the name first.
   sprintf( write_buf, "%s\n", name );
-  // Then the guild number
-  sprintf( buf, "%d\n", id_number );
+  // Then the guild number and frag info.
+  sprintf( buf, "%u %lu %lu %s\n", id_number, frags.frags, frags.top_frags, frags.topfragger );
+
   strcat( write_buf, buf );
   // Then the default guild titles
   for( int i = 0; i < ASC_NUM_RANKS; i++ )
@@ -467,17 +468,18 @@ void Guild::save( )
     strcat( write_buf, "\n" );
   }
   // Then the guild bits, prestige and construction.
-  sprintf( buf, "%d %d %d\n", bits, prestige, construction );
+  sprintf( buf, "%lu %lu %lu\n", bits, prestige, construction );
   strcat( write_buf, buf );
   // Then guild funds.
-  sprintf( buf, "%i %i %i %i\n", platinum, gold, silver, copper );
+  sprintf( buf, "%u %u %u %u\n", platinum, gold, silver, copper );
   strcat( write_buf, buf );
-  // Then walk through and add the members.
+
   for( pMembers = members; pMembers != NULL; pMembers = pMembers->next )
   {
-    sprintf( buf, "%s %i %i\n", pMembers->name, pMembers->bits, pMembers->debt );
+    sprintf( buf, "%s %lu %lu\n", pMembers->name, pMembers->bits, pMembers->debt );
     strcat( write_buf, buf );
   }
+
 
   fwrite( write_buf, strlen(write_buf), 1, file );
   fclose( file );
@@ -486,7 +488,7 @@ void Guild::save( )
 bool Guild::load_guild( int guild_num )
 {
   P_Guild  new_guild;
-  P_member new_member;
+  P_member last_member, new_member;
   FILE    *file;
   char     filename[MAX_STR_NORMAL], buf[MAX_STR_NORMAL], mem_name[MAX_NAME_LENGTH + 1];
   int      mem_bits, mem_debt;
@@ -503,8 +505,9 @@ bool Guild::load_guild( int guild_num )
   fgets( new_guild->name, ASC_MAX_STR + 1, file );
   // Cut the carriage return off.
   new_guild->name[strlen(new_guild->name) - 1] = '\0';
-  // Then the guild number
-  fscanf( file, "%i\n", &(new_guild->racewar) );
+  // Then the guild number and frag info.
+  fscanf( file, "%u %lu %lu %s\n", &(new_guild->racewar), &(new_guild->frags.frags), &(new_guild->frags.top_frags),
+    new_guild->frags.topfragger );
 
   new_guild->id_number = guild_num;
 
@@ -519,20 +522,33 @@ bool Guild::load_guild( int guild_num )
   // Then get the guild bits, prestige and construction.
   fgets( buf, MAX_STR_NORMAL, file );
 
-  sscanf( buf, "%d %d %d", &new_guild->bits, &new_guild->prestige, &new_guild->construction );
+  sscanf( buf, "%lu %lu %lu", &new_guild->bits, &new_guild->prestige, &new_guild->construction );
 
   // Then get the money for the guild...
-  fscanf( file, "%i %i %i %i\n", &(new_guild->platinum), &(new_guild->gold),
+  fscanf( file, "%u %u %u %u\n", &(new_guild->platinum), &(new_guild->gold),
     &(new_guild->silver), &(new_guild->copper) );
+
   // Then get members.
-  while( fscanf(file, "%s %i %i\n", mem_name, &mem_bits, &mem_debt) == 3 )
+  last_member = NULL;
+  while( fscanf(file, "%s %u %u\n", mem_name, &mem_bits, &mem_debt) == 3 )
   {
     new_member = new guild_member();
     sprintf( new_member->name, "%s", mem_name );
     new_member->bits = mem_bits;
     new_member->debt = mem_debt;
-    new_member->next = new_guild->members;
-    new_guild->members = new_member;
+    new_member->next = NULL;
+
+    if( last_member == NULL )
+    {
+      new_guild->members = new_member;
+      last_member = new_member;
+    }
+    else
+    {
+      last_member->next = new_member;
+      last_member = new_member;
+    }
+
     new_guild->member_count++;
   }
   fclose( file );
@@ -595,7 +611,7 @@ bool Guild::add_member( P_char ch, int rank )
 {
   long new_frags = GET_FRAGS(ch);
   int length;
-  P_member new_member;
+  P_member last_member;
 
   if( GET_ASSOC(ch) != NULL )
   {
@@ -618,15 +634,27 @@ bool Guild::add_member( P_char ch, int rank )
   default_title( ch );
   send_to_char_f( ch, "You are now known as %s %s!\n", GET_NAME(ch), GET_TITLE(ch) );
 
-  // Add to member list.
-  new_member = new guild_member;
-  strcpy(new_member->name, GET_NAME(ch) );
-  new_member->bits = GET_A_BITS(ch);
-  new_member->debt = 0;
-  new_member->next = members;
-  members = new_member;
+  // Add to the end of the member list.
+  // If list is not empty - guild has members.
+  if( (last_member = members) != NULL )
+  {
+    while( last_member->next != NULL )
+    {
+      last_member = last_member->next;
+    }
+    last_member->next = new guild_member;
+    last_member = last_member->next;
+  }
+  else
+  {
+    members = new guild_member;
+    last_member = members;
+  }
+  strcpy(last_member->name, GET_NAME(ch) );
+  last_member->bits = GET_A_BITS(ch);
+  last_member->debt = 0;
+  last_member->next = NULL;
   member_count++;
-
 
   if( IS_PC(ch) )
   {
@@ -689,6 +717,7 @@ void Guild::update_member( P_char ch )
 
     if( pMembers == NULL )
     {
+      frag_remove(ch);
       GET_ASSOC(ch) = NULL;
       GET_A_BITS(ch) = 0;
       send_to_char( "You have been kicked out of your association in disgrace.\n", ch );
@@ -727,6 +756,8 @@ void Guild::kick( P_char ch )
       J_NAME(ch), GET_ID(ch), get_id(), GET_ASSOC(ch)->get_id() );
     return;
   }
+
+  frag_remove(ch);
   GET_ASSOC(ch) = NULL;
   GET_NB_LEFT_GUILD(ch) += 1;
   GET_TIME_LEFT_GUILD(ch) = time(NULL);
@@ -798,6 +829,7 @@ void Guild::kick( P_char kicker, char *char_name )
     pTargetMember->next = NULL;
     delete pTargetMember;
   }
+  member_count--;
   send_to_char_f( kicker, "You mercilessly kick %s from your guild.\n", char_name );
   save( );
 }
@@ -875,7 +907,7 @@ bool Guild::is_enemy( P_char enemy )
     fgets(buf, MAX_STR_NORMAL, f);
 
   // Control if enemy
-  while (fscanf(f, "%s %u %i %i %i %i\n", buf, &dummy1, &dummy2,
+  while (fscanf(f, "%s %u %u %u %u %u\n", buf, &dummy1, &dummy2,
                 &dummy3, &dummy4, &dummy5) != EOF)
   {
     if (!str_cmp(GET_NAME(enemy), buf) && IS_ENEMY(dummy1))
@@ -923,17 +955,20 @@ void Guild::display( P_char member )
     {
       sprintf(buf + strlen(buf), "%-8s : %s&n\n", standard_names[i], titles[i]);
     }
-    strcat(buf, "\n");
+    strcat( buf, "\n" );
   }
 
   sprintf( buf + strlen(buf), "Type: %s%s%s%s.\n", (( gbits == 0 ) ? "normal " : ""),
     (( gbits & A_CHALL ) ? "challenge " : ""), (( gbits & A_HIDETITLE ) ? "hidden_titles " : ""),
     (( gbits & A_HIDESUBTITLE ) ? "hidden_subtitles " : "") );
 
-  sprintf( buf + strlen(buf), "Prestige:            &+W%d&n.\nConstruction points: &+W%d&n.\n"
-                              "Maximum members:     &+W%d&n.\nCurrent members:     &+W%d&n.\n"
-                              "Cash:                &+W%d platinum&n, &+Y%d gold&n, &+w%d silver&n, &+y%d copper&n.\n",
+  sprintf( buf + strlen(buf), "Prestige:            &+W%lu&n.\nConstruction points: &+W%lu&n.\n"
+                              "Maximum members:     &+W%u&n.\nCurrent members:     &+W%u&n.\n"
+                              "Cash:                &+W%u platinum&n, &+Y%u gold&n, &+w%u silver&n, &+y%u copper&n.\n",
     prestige, construction, get_max_members(), member_count, platinum, gold, silver, copper );
+
+  sprintf(buf + strlen(buf), "Total Frags: &+W%.2f&N, Top Fragger: '&+W%s&N' with &+W%.2f&N frags.\n",
+    frags.frags / 100., frags.topfragger, frags.top_frags / 100. );
 
   strcat(buf, "Members:\n");
   if( members != NULL )
@@ -1254,18 +1289,7 @@ void do_supervise( P_char god, char *argument, int cmd )
         "&+YSyntax: &+wsupervise update <association number>&+Y.&n\n", second );
       return;
     }
-
-    for( count = 0, member = character_list; member != NULL; member = member->next )
-    {
-      // Outposts & guildhall guards, etc.
-      if( IS_NPC(member) )
-        continue;
-      if( GET_ASSOC(member) == guild )
-      {
-        guild->update_member(member);
-        count++;
-      }
-    }
+    count = guild->update( );
     send_to_char_f( god, "%d online member%shave been updated.\n", count, (count == 1) ? " " : "s " );
     return;
   }
@@ -2137,8 +2161,9 @@ void Guild::enroll( P_char member, P_char victim )
 //   all from checks in do_society.
 void Guild::fine( P_char member, char *target, int p, int g, int s, int c )
 {
-  int mem_bits = GET_A_BITS( member );
-  int fine_in_copper = (1000 * p) + (100 * g) + (10 * s) + c;
+  long unsigned mem_bits = GET_A_BITS( member );
+  long unsigned fine_in_copper = (1000 * p) + (100 * g) + (10 * s) + c;
+  long unsigned new_debt;
   P_member pMembers;
   P_char victim;
 
@@ -2161,10 +2186,14 @@ void Guild::fine( P_char member, char *target, int p, int g, int s, int c )
     {
       if( !strcmp(pMembers->name, target) )
       {
-        pMembers->debt += fine_in_copper;
-        if( pMembers->debt < 0 )
+        new_debt = pMembers->debt + fine_in_copper;
+        if( new_debt < 0 )
         {
           pMembers->debt = 0;
+        }
+        else
+        {
+          pMembers->debt = new_debt;
         }
         if( pMembers->debt == 0 )
         {
@@ -2174,7 +2203,7 @@ void Guild::fine( P_char member, char *target, int p, int g, int s, int c )
         else
         {
           send_to_char_f( member, "You changed %s's debt to %s.\n", pMembers->name, coin_stringv(pMembers->debt, 0) );
-          SET_DEBT( pMembers->debt );
+          SET_DEBT( pMembers->bits );
         }
         if( (victim = get_char_online( pMembers->name )) )
         {
@@ -2925,6 +2954,10 @@ void Guild::update_bits( P_char ch )
   char    *char_name = GET_NAME(ch);
   int      ch_bits = GET_A_BITS(ch);
 
+  // We don't update Immortal's bits.
+  if( IS_TRUSTED(ch) )
+    return;
+
   for( pMembers = members; pMembers != NULL; pMembers = pMembers->next )
   {
     if( !strcmp(pMembers->name, char_name) )
@@ -2971,3 +3004,84 @@ void Guild::update_bits( P_char ch )
   logit(LOG_DEBUG, "Guild::update_bits: '%s' %d not on guild %d's member list.", char_name, GET_ID(ch), id_number );
   debug( "Guild::update_bits: '%s' %d not on guild %d's member list.", char_name, GET_ID(ch), id_number );
 }
+
+void Guild::frag_remove( P_char member )
+{
+  if( !strcmp(GET_NAME( member ), frags.topfragger) )
+  {
+    frags.topfragger[0] = '\0';
+    frags.top_frags = 0;
+  }
+  frags.frags -= GET_FRAGS(member);
+  save( );
+}
+
+int Guild::update( )
+{
+  int count;
+  P_char member;
+  P_member pMembers, pMembers2, pMembers3;
+
+  for( count = 0, member = character_list; member != NULL; member = member->next )
+  {
+    // Outposts & guildhall guards, etc.
+    if( IS_NPC(member) )
+      continue;
+    if( GET_ASSOC(member) == this )
+    {
+      update_member(member);
+      count++;
+    }
+  }
+
+  // Delete duplicates of same member.
+  for( pMembers = members; pMembers != NULL; pMembers = pMembers->next )
+  {
+    pMembers2 = pMembers->next;
+
+    // While duplicate entries are right next to each other.
+    while( pMembers2 != NULL )
+    {
+      if( !strcmp(pMembers->name, pMembers2->name) )
+      {
+        // Remove the 2nd entry from list.
+        pMembers->next = pMembers2->next;
+        // And free memory.
+        pMembers2->next = NULL;
+        delete pMembers2;
+        pMembers2 = pMembers->next;
+      }
+      else
+        break;
+    }
+    // If we still have 2nd / 3rd / etc entries, look at the entry after pMembers2 for a duplicate.
+    if( pMembers2 != NULL )
+    {
+      while( pMembers2->next != NULL )
+      {
+        if( !strcmp(pMembers->name, pMembers2->next->name) )
+        {
+          // Get a pointer to the duplicate.
+          pMembers3 = pMembers2->next;
+          // Remove the duplicate from the list.
+          pMembers2->next = pMembers3->next;
+          // Delete the duplicate.
+          pMembers3->next = NULL;
+          delete pMembers3;
+        }
+        else
+        {
+          pMembers2 = pMembers2->next;
+        }
+      }
+    }
+  }
+
+  member_count = 0;
+  for( pMembers = members; pMembers != NULL; pMembers = pMembers->next )
+  {
+    member_count++;
+  }
+  save( );
+}
+

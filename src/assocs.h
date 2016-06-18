@@ -153,8 +153,8 @@ typedef struct guild_member *P_member;
 struct guild_member
 {
   char name[MAX_NAME_LENGTH + 1];
-  int  bits;
-  int  debt; // In copper
+  unsigned long bits;
+  unsigned long debt; // In copper
   P_member next;
 };
 
@@ -210,9 +210,11 @@ class Guild
 
     long get_frags( ) { return frags.frags; }
     void add_frags( P_char ch, long new_frags );
+    void frag_remove( P_char member );
 
     void apply(P_char member, P_char applicant );
     bool add_member( P_char ch, int rank );
+    int update( );
     void update_member( P_char ch );
     void update_bits( P_char ch );
     void secede( P_char ch );
@@ -246,6 +248,8 @@ class Guild
     void name_title( P_char member, char *title_info );
 
     void save( );
+    void save_members( P_member member, char *buf );
+
     static void initialize();
     Guild( char *_name, int _racewar, int _id_number, int _prestige, int _construction, int _money, int _bits );
     Guild( );
@@ -261,14 +265,14 @@ class Guild
 
     char name[ASC_MAX_STR];
     char titles[ASC_NUM_RANKS][ASC_MAX_STR_RANK];
-    int  racewar;
-    int  id_number;
-    int  prestige;
-    int  construction;
-    int  platinum, gold, silver, copper;
-    int  member_count;
-    int  bits;
-    int  overmax;
+    unsigned int  racewar;
+    unsigned int  id_number;
+    unsigned long prestige;
+    unsigned long construction;
+    unsigned int  platinum, gold, silver, copper;
+    unsigned int  member_count;
+    unsigned long bits;
+    unsigned int  overmax;
     struct guild_frags frags;
     P_member members;
     P_Guild next_guild;
