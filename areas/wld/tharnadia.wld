@@ -6491,6 +6491,10 @@ S
 &+Lto the west into the alley.
 ~
 1325 142639176 0 0
+D1
+~
+~
+0 0 133075
 D2
 ~
 door~
@@ -14168,4 +14172,19 @@ D5
 ~
 ~
 0 0 133072
+S
+#133075
+&+mA &+LGrubby &+mTavern&n~
+&+L   A foul stench fills the air of this large tavern, with the smells of &+Gvomit&+L,
+&+Yalcohol&+L, and &+ytobacco&+L all mingling together.  The bar itself if considerably
+&+Lgrubby, covered with spilled drink and empty bottles.  It is obvious that
+&+Lwhoever owns this bar cares little for it, or enjoys running a very scummy
+&+Land run-down establishment.  There is only one main exit, leading back out
+&+Lto the west into the alley.
+~
+1325 142639176 0 0
+D3
+~
+~
+0 0 132766
 S
