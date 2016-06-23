@@ -191,26 +191,26 @@ class Guild
     unsigned int get_max_members();
 
     string get_name() { return string(name); }
-    void set_name( char *new_name ) { sprintf( name, "%s", new_name ); }
+    void set_name( char *new_name ) { sprintf( name, "%s", new_name ); save(); }
 
     unsigned long get_prestige( ) { return prestige; }
-    void add_prestige( int prest ) { prestige += prest; }
-    void set_prestige( int prest ) { prestige = prest; }
+    void add_prestige( int prest ) { prestige += prest; save(); }
+    void set_prestige( int prest ) { prestige = prest; save(); }
     void add_prestige_epics( P_char ch, int epics, int epic_type );
 
     unsigned long get_construction( ) { return construction; }
-    void add_construction( int cps ) { construction += cps; }
-    void set_construction( int cps ) { construction = cps; }
+    void add_construction( int cps ) { construction += cps; save(); }
+    void set_construction( int cps ) { construction = cps; save(); }
 
-    void set_bits( unsigned long new_bits ) { bits = new_bits; }
+    void set_bits( unsigned long new_bits ) { bits = new_bits; save(); }
 
     unsigned int get_overmax( ) { return overmax; }
-    void add_overmax( unsigned int _overmax ) { overmax += _overmax; }
+    void add_overmax( unsigned int _overmax ) { overmax += _overmax; save(); }
     unsigned int max_size( );
 
     long get_frags( ) { return frags.frags; }
     void add_frags( P_char ch, long new_frags );
-    void set_frags( long new_frags ) { frags.frags = new_frags; }
+    void set_frags( long new_frags ) { frags.frags = new_frags; save(); }
     void frag_remove( P_char member );
 
     void apply(P_char member, P_char applicant );
