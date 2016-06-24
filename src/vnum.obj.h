@@ -7,6 +7,7 @@
 
 #define VOBJ_PATH_OF_FROST_ICE              110
 #define VOBJ_MINE                           193
+#define VOBJ_DRAGON_SCALE                   392
 #define VOBJ_THOUGHT_BEACON                 416
 #define VOBJ_HOLYSWORD_AMBRAN               425
 #define VOBJ_GEMMINE                        434

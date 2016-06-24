@@ -9,8 +9,6 @@
 
 #define NECROPET      1201
 
-#define DRAGONSCALE_VNUM 392
-
 #define NECROPET_START      0
 #define NECROPET_SKELETON   0
 #define NECROPET_ZOMBIE     1

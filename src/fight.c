@@ -2460,7 +2460,7 @@ void die(P_char ch, P_char killer)
   // No longer includes !exp mobs like dragon illusions.
   if( GET_RACE(ch) == RACE_DRAGON && GET_EXP(ch) > 0 )
   {
-    P_obj tempobj = read_object(DRAGONSCALE_VNUM, VIRTUAL);
+    P_obj tempobj = read_object(VOBJ_DRAGON_SCALE, VIRTUAL);
     obj_to_char(tempobj, ch);
   }
 

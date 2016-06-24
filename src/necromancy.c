@@ -1368,7 +1368,7 @@ void spell_create_dracolich(int level, P_char ch, char *arg, int type, P_char vi
   /*P_obj dragonscale = NULL;
   for( P_obj t_obj = ch->carrying; t_obj; t_obj->next_content )
   {
-    if( obj_index[t_obj->R_num].virtual_number == DRAGONSCALE_VNUM )
+    if( obj_index[t_obj->R_num].virtual_number == VOBJ_DRAGON_SCALE )
     {
       dragonscale = t_obj;
       break;
@@ -2867,73 +2867,94 @@ P_obj get_globe( P_char ch )
 
 void spell_wall_of_bones(int level, P_char ch, char *arg, int type, P_char tar_ch, P_obj tar_obj)
 {
-  char  buf1[MAX_STRING_LENGTH], buf2[MAX_STRING_LENGTH],
-        Gbuf4[MAX_STRING_LENGTH], Gbuf5[MAX_STRING_LENGTH];
-  int   var = 0;
-  int   clevel = 0;
-  int   scales = 0;
-  P_obj corpse = NULL;
-  P_obj obj_in_corpse, next_obj;
+  char  arg1[MAX_STRING_LENGTH], buf1[MAX_STRING_LENGTH], *arg2;
+  int   exit_dir, clevel, scales;
+  P_obj corpse, obj_in_corpse, next_obj;
 
-  arg = one_argument(arg, Gbuf4);
-  var = dir_from_keyword(Gbuf4);
+  arg = one_argument(arg, arg1);
+  arg2 = skip_spaces(arg);
+  exit_dir = dir_from_keyword(arg1);
 
-  if( var != -1 )
+  corpse = NULL;
+  clevel = scales = 0;
+  if( exit_dir == -1 )
   {
-    if( !EXIT(ch, var) )
+    if( (exit_dir = dir_from_keyword( arg2 )) == -1 )
     {
-      send_to_char("You see no exit in that direction!\r\n", ch);
+      send_to_char("You can't figure out what direction to wall?\r\n", ch);
+      act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
       return;
     }
-    if( !exit_wallable(ch->in_room, var, ch) )
+    else
     {
-      return;
-    }
-  }
-  else
-  {
-    tar_obj = get_obj_in_list_vis(ch, Gbuf4, world[ch->in_room].contents);
+      corpse = get_obj_in_list_vis(ch, arg1, world[ch->in_room].contents);
+      if( !corpse )
+        corpse = get_obj_in_list_vis(ch, arg1, ch->carrying);
 
-    if( tar_obj && tar_obj->type == ITEM_CORPSE )
-    {
-      clevel = tar_obj->value[CORPSE_LEVEL];
-
-      if( IS_SET(tar_obj->value[CORPSE_FLAGS], PC_CORPSE) && (clevel < 0) )
-        clevel = -clevel;
-
-      if (clevel > (level + 4) &&
-        !IS_TRUSTED(ch) &&
-        (level < 49))
+      if( corpse && corpse->type == ITEM_CORPSE )
       {
-        act("You are not powerful enough to transform that corpse!", FALSE, ch, 0, 0, TO_CHAR);
-        return;
+        clevel = corpse->value[CORPSE_LEVEL];
+
+        if( IS_SET(corpse->value[CORPSE_FLAGS], PC_CORPSE) && (clevel < 0) )
+          clevel = -clevel;
+
+        if( clevel > (level + 4) && !IS_TRUSTED(ch) && (level < 50) )
+        {
+          act("You are not powerful enough to transform that corpse!", FALSE, ch, 0, 0, TO_CHAR);
+          act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
+          return;
+        }
+
+	      if( clevel < 46 )
+        {
+  	      act("This spell requires the corpse of a more powerful being!", FALSE, ch, 0, 0, TO_CHAR);
+          act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
+          return;
+        }
       }
-
-	    if (clevel < 46)
+      else if( OBJ_VNUM(corpse) == VOBJ_PILE_BONES )
       {
-  	    act("This spell requires the corpse of a more powerful being!", FALSE, ch, 0, 0, TO_CHAR);
-        return;
+        clevel = corpse->value[CORPSE_LEVEL];
       }
-
-      arg = one_argument(arg, Gbuf5);
-      var = dir_from_keyword(Gbuf5);
-      if( !exit_wallable(ch->in_room, var, ch) )
+      else if( OBJ_VNUM(corpse) == VOBJ_DRAGON_SCALE )
       {
-        send_to_char("You cannot block that direction.\n", ch);
+        scales = 1;
+      }
+      else
+      {
+        if( corpse )
+        {
+          act( "$p is not a corpse.", FALSE, ch, corpse, NULL, TO_CHAR );
+        }
+        else
+        {
+          send_to_char_f( ch, "You don't see a '%s' here.\n", arg1 );
+        }
         act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
         return;
       }
-      extract_obj( tar_obj );
     }
   }
-
-  if( !tar_obj )
+  if( !EXIT(ch, exit_dir) )
   {
-    if( (tar_obj = get_object_from_char( ch, VOBJ_PILE_BONES )) == NULL )
-      scales = get_spell_component(ch, DRAGONSCALE_VNUM, 4) * number(1, 2);
+    send_to_char("You see no exit in that direction!\r\n", ch);
+    act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
+    return;
+  }
+  if( !exit_wallable(ch->in_room, exit_dir, ch) )
+  {
+    send_to_char("You cannot block that direction.\n", ch);
+    act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
+    return;
+  }
+
+  if( !corpse )
+  {
+    if( (corpse = get_object_from_char( ch, VOBJ_PILE_BONES )) == NULL )
+      scales = get_spell_component(ch, VOBJ_DRAGON_SCALE, 4) * number(1, 2);
     else
     {
-      clevel = tar_obj->value[CORPSE_LEVEL];
+      clevel = corpse->value[CORPSE_LEVEL];
     }
   }
 
@@ -2945,50 +2966,50 @@ void spell_wall_of_bones(int level, P_char ch, char *arg, int type, P_char tar_c
     return;
   }
 
-  if( tar_obj && create_walls(ch->in_room, var, ch, level, WALL_OF_BONES, level / 2, 1800,
+  if( corpse && create_walls(ch->in_room, exit_dir, ch, level, WALL_OF_BONES, level / 2, 1800,
     "&+La wall of &+wbones&n",
     "&+LA large wall of &+wbones&+L is here to the %s.&n", 0) )
   {
 
-    SET_BIT(EXIT(ch, var)->exit_info, EX_BREAKABLE);
-    SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[var])->to_room, rev_dir[var])->exit_info, EX_BREAKABLE);
+    SET_BIT(EXIT(ch, exit_dir)->exit_info, EX_BREAKABLE);
+    SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[exit_dir])->to_room, rev_dir[exit_dir])->exit_info, EX_BREAKABLE);
 
     sprintf(buf1, "&+LInfused by a powerful magic, %s &+Lmagically transforms into a wall of bones, blocking the %s exit!&n\r\n",
-	        tar_obj->short_description, dirs[var]);
-    sprintf(buf2, "&+LA pile of bones magically assembles to the %s!&n\r\n",
-            dirs[rev_dir[var]]);
-
+      corpse->short_description, dirs[exit_dir]);
     send_to_room(buf1, ch->in_room);
-    send_to_room(buf2, (world[ch->in_room].dir_option[var])->to_room);
+    sprintf(buf1, "&+LA pile of bones magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
+    send_to_room(buf1, (world[ch->in_room].dir_option[exit_dir])->to_room);
 
-    for (obj_in_corpse = tar_obj->contains; obj_in_corpse; obj_in_corpse = next_obj)
+    for( obj_in_corpse = corpse->contains; obj_in_corpse; obj_in_corpse = next_obj )
     {
       next_obj = obj_in_corpse->next_content;
       obj_from_obj(obj_in_corpse);
       obj_to_room(obj_in_corpse, ch->in_room);
     }
 
-    extract_obj(tar_obj, TRUE); // Empty corpse, but 'in game.'
+    extract_obj(corpse, TRUE); // Empty corpse, but 'in game.'
   }
-  else if( scales && create_walls(ch->in_room, var, ch, level, WALL_OF_BONES, scales, 1000,
+  else if( scales && create_walls(ch->in_room, exit_dir, ch, level, WALL_OF_BONES, scales, 1000,
     "&+La thin wall of &+gscales&n",
     "&+LA thin wall of &+gscales&+L is here to the %s.&n", 0) )
   {
 
-    SET_BIT(EXIT(ch, var)->exit_info, EX_BREAKABLE);
-    SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[var])->to_room, rev_dir[var])->exit_info, EX_BREAKABLE);
+    SET_BIT(EXIT(ch, exit_dir)->exit_info, EX_BREAKABLE);
+    SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[exit_dir])->to_room, rev_dir[exit_dir])->exit_info, EX_BREAKABLE);
 
     sprintf(buf1, "&+LInfused by powerful sorcery, some &+gdragonscales &+Lmagically transform into a delicate yet solid curtain, blocking exit to the %s!&n\r\n",
-            dirs[var]);
-    sprintf(buf2, "&+LA thin &+gdragonscale&+L curtain magically assembles to the %s!&n\r\n",
-            dirs[rev_dir[var]]);
-
+      dirs[exit_dir]);
     send_to_room(buf1, ch->in_room);
-    send_to_room(buf2, (world[ch->in_room].dir_option[var])->to_room);
+    sprintf(buf1, "&+LA thin &+gdragonscale&+L curtain magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
+    send_to_room(buf1, (world[ch->in_room].dir_option[exit_dir])->to_room);
+
+    if( corpse )
+      extract_obj(corpse, TRUE); // Dragon scales.
   }
   else
   {
     send_to_char( "Something prevents you from making a wall there.\n", ch );
+    act("&+L$n's&+L spell fizzles and dies.\n", TRUE, ch, 0, 0, TO_ROOM);
   }
 }
 
