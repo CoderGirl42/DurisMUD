@@ -1,0 +1,62 @@
+Lohrr:
+  This doesn't replace the last update file, as that had actual
+ideas in it toward the mud on a whole, and a rather pedantic 
+CV from me.  ;)  In other words, I hope when you get the chance 
+you at least read the old update file in its entirety and maybe
+get some ideas worth implementing.  This just explains the changes 
+made to the area since it was installed, and what needs to be fixed 
+via code.
+
+
+Newhaven Rewrite
+-----------------
+Newhaven Specific Problems:
+ 1) [Fixed] Missing !Mob Rooms to limit where mobs roam.
+ 2) [Fixed] All Undead are now Aggro-All at Night.
+ 3) [Fixed] Moved skeletal remains obj to the zombie of the blacksmith's assistant (~lvl30), and upped reward to flat 50k.
+ 4) [Fixed] Moved one of the two blackberries deeper into the evil side so it wasn't so easy to get.
+ 5) [Fixed] Set all mobs that are marked as !Standing in their long descriptions to position:whatever, default_position:standing.
+    This is as per the sleeping seamstresses in Harrow.  As I said in my IM, the code is bugged and needs to be addressed (see below).  
+ 6) [Added] Added warrior/caster versions of the items the armorer crafts for money and objects (quest).
+ 7) [Fixed] Fixed ansi on fishing rod and the quest that mention it.
+ 8) [Added] You can now fish at the waterfall.
+ 9) [Fixed] Added to the quest chatter to finish the zone's story as well as animate Vulgaris.  You now learn through mob_chat that
+    the librarian summoned the Erinyes who then created the undead duplication of Newhaven.
+10) [Partial Fixed] Derth of scenery mobs for lowbs.  Added another cat/skeletal_cat combo, as well as some small lizard mobs.
+11) [Added] Added a new mining pick item (exact stats as heavens.zon pick... just different ansi).  Kinda like the fishing rod.  
+    You might need to add this to the code so it works.  Also, you
+    will need to refix the rod so it works. 
+12) [Added] Expanded items that Dibbly will purchase.  Making his store a lil more useful.
+13) [Fixed] Court Room mobs should remain in court room.
+14) [Fixed] Lowered the chance mobs speak (I think, as there really is no documentation on how that shit works).
+15) [Fixed] Moved the lizard tail from the gate to the deepest lizard in the undead part of the zone.  Players will now need to hunt
+    thru all the lizards to find the tail if they want a chance at getting their bracer made.
+16) [Added] A pouch of coins has been added to the gate to replace the tail object.  This is the pouch loaded on the map on both the
+    goodie and evil continents which contains 90g and 100s.
+17) [Added] Two grates (one on each side) that exit out to the surface.  This is a lowbie zone, a single wall shouldn't be enough to lock
+    in and grief players.  The living side's grate exits to the forest west of town (room #552844), while the undead side's grate leads to
+    the hills east of town (room #552052).  They are both one way.  I wish there were a way to make them select randomly from a list of 2
+    to 5 different target rooms.  Would allow for less chance of the target rooms being walled off as well.  Also added descriptions in
+    room to indicate they exist.
+18) Made the meat pies takeable.
+19) Added !Sleep to the Veldian Collar.
+
+
+Changes Requiring Lohrr
+-----------------------
+1) Didn't know what level poison you flagged blackberries, so you will need reflag them.
+2) New Mining Pick and Fishing Rod need to be made functional.
+3) Problems with position code:
+    - As I originally thought, what is happening is they are loading as seated, but then stand (since only sleeping prevents a mob
+      from attempting to stand).  The code should prevent the NPC from leaving its load position (position in DE) unless there is a 
+      fight in room or they are attacked (like sleeping mobs), upon which they abandon using the long_description provided in DE,
+      and revert to "<short_name_capitalized> <position>."... Basically, the same code used to show players positioning.  This is 
+      how Tavril originally coded it to work, but I think he only did so for sleeping position.  When the mob (re)loads it should
+      load in the DE position:whatever and use the DE-set long_description.  Sorry, brother.  But this is really the only big code 
+      change required.  I dunno how this affects the sleeping antelope in Centaur Villages, as they have been reset to both 
+      position:sleeping and default_position:sleeping.  When the zone went in 23 years ago flagged like that, the mobs would wake when
+      hit and then instantly go back to sleep, making them basically just hitting posts.
+ 
+
+Sincerly,
+Sniktiorg Blackhaven, Drow God of Anguish
