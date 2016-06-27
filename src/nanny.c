@@ -1,9 +1,9 @@
-/****************************************************************************
+/*****************************************************************************
  *  File: nanny.c                                            Part of Duris   *
  *  Usage: handle non-playing sockets (new character creation too)           *
  *  Copyright  1990, 1991 - see 'license.doc' for complete information.      *
  *  Copyright 1994 - 2008 - Duris Systems Ltd.                               *
- *************************************************************************** */
+ *****************************************************************************/
 
 
 #include <arpa/telnet.h>
@@ -3299,9 +3299,9 @@ void enter_game(P_desc d)
 
     if (d->rtype != RENT_DEATH)
     {
-      hit_g = BOUNDED(0, hit_regen(ch) * heal_time, 3000);
-      mana_g = BOUNDED(0, mana_regen(ch) * heal_time, 3000);
-      move_g = BOUNDED(0, move_regen(ch) * heal_time, 3000);
+      hit_g = BOUNDED(0, hit_regen(ch, FALSE) * heal_time, 3000);
+      mana_g = BOUNDED(0, mana_regen(ch, FALSE) * heal_time, 3000);
+      move_g = BOUNDED(0, move_regen(ch, FALSE) * heal_time, 3000);
     }
     else
     {

@@ -508,7 +508,7 @@ void event_move_regen(P_char ch, P_char victim, P_obj obj, void *data)
       regen_value = regen_value - (float)regen_value_int;
   }
 
-  int per_tick = move_regen(ch);
+  int per_tick = move_regen(ch, FALSE);
 
 #if defined(CTF_MUD) && (CTF_MUD == 1)
   affected_type *af;
@@ -568,7 +568,7 @@ void event_hit_regen(P_char ch, P_char victim, P_obj obj, void *data)
   }
 
   update_pos(ch);
-  int per_tick = hit_regen(ch);
+  int per_tick = hit_regen(ch, FALSE);
 #if defined(CTF_MUD) && (CTF_MUD == 1)
   affected_type *af;
   if ((af = get_spell_from_char(ch, TAG_CTF_BONUS)) != NULL)
@@ -606,14 +606,14 @@ void StartRegen(P_char ch, int type)
   {
     func = event_move_regen;
     if (get_scheduled(ch, func)) return;
-    per_tick = move_regen(ch);
+    per_tick = move_regen(ch, FALSE);
     delay = IS_PC(ch) ? 1 : MOB_MOVE_REGEN_DELAY; 
   }
   else if (type == EVENT_HIT_REGEN)
   {
     func = event_hit_regen;
     if (get_scheduled(ch, func)) return;
-    per_tick = hit_regen(ch);
+    per_tick = hit_regen(ch, FALSE);
     delay = 1;
   }
   else if (type == EVENT_MANA_REGEN)
@@ -621,8 +621,8 @@ void StartRegen(P_char ch, int type)
     func = event_mana_regen;
     if (get_scheduled(ch, func)) return;
     //codemod remove multiplicate of mana_regen
-    per_tick = mana_regen(ch);
-	
+    per_tick = mana_regen(ch, FALSE);
+
     delay = IS_PC(ch) ? 1 : MOB_MANA_REGEN_DELAY; 
   }
   else

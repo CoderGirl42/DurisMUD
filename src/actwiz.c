@@ -2741,7 +2741,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     }
     sprintf(buf,
             "&+YHits: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]&+W   Pcoins: &N%5d",
-            GET_HIT(k), GET_MAX_HIT(k), k->points.base_hit, hit_regen(k),
+            GET_HIT(k), GET_MAX_HIT(k), k->points.base_hit, hit_regen(k, TRUE),
             GET_PLATINUM(k));
     if(IS_PC(k))
       sprintf(buf, "%s  &+WPbank: &N%5d\n", buf, GET_BALANCE_PLATINUM(k));
@@ -2751,7 +2751,7 @@ void do_stat(P_char ch, char *argument, int cmd)
 
     sprintf(buf,
             "&+YMana: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]   Gcoins: &N%5d",
-            GET_MANA(k), GET_MAX_MANA(k), k->points.base_mana, mana_regen(k),
+            GET_MANA(k), GET_MAX_MANA(k), k->points.base_mana, mana_regen(k, TRUE),
             GET_GOLD(k));
 
     if(IS_PC(k))
@@ -2766,7 +2766,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     sprintf(buf,
             "&+YMove: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]&n   Scoins: %5d",
             GET_VITALITY(k), GET_MAX_VITALITY(k), vitality_limit(k),
-            move_regen(k), GET_SILVER(k));
+            move_regen(k, TRUE), GET_SILVER(k));
     if(IS_PC(k))
       sprintf(buf, "%s  &nSbank: %5d\n", buf, GET_BALANCE_SILVER(k));
     else

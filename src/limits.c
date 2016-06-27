@@ -152,11 +152,11 @@ int vitality_limit(P_char ch)
  * players do.  JAB
  */
 
-int mana_regen(P_char ch)
+int mana_regen( P_char ch, bool display_only )
 {
   int      gain;
 
-  if (ch->points.mana_reg >= 0 && GET_MANA(ch) == GET_MAX_MANA(ch))
+  if( ch->points.mana_reg >= 0 && GET_MANA(ch) == GET_MAX_MANA(ch) && !display_only )
     return 0;
 
   if (GET_MANA(ch) > GET_MAX_MANA(ch))
@@ -228,7 +228,7 @@ int mana_regen(P_char ch)
 
 /* * calculate ch's hit regeneration rate, return regen/minute */
 
-int hit_regen(P_char ch)
+int hit_regen(P_char ch, bool display_only)
 {
   int      gain;
   struct affected_type *af;
@@ -238,7 +238,7 @@ int hit_regen(P_char ch)
     return 0;
   }
 
-  if( ch->points.hit_reg >= 0 && GET_HIT(ch) == GET_MAX_HIT(ch) )
+  if( ch->points.hit_reg >= 0 && GET_HIT(ch) == GET_MAX_HIT(ch) && !display_only )
   {
     return 0;
   }
@@ -379,7 +379,7 @@ int hit_regen(P_char ch)
  * calculate ch's move regeneration rate, return regen/minute
  */
 
-int move_regen(P_char ch)
+int move_regen( P_char ch, bool display_only )
 {
   float gain;
   int endurance;
@@ -397,7 +397,7 @@ int move_regen(P_char ch)
     endurance = 100;
   }
 
-  if( ch->points.move_reg >= 0 && GET_VITALITY(ch) == GET_MAX_VITALITY(ch) )
+  if( ch->points.move_reg >= 0 && GET_VITALITY(ch) == GET_MAX_VITALITY(ch) && !display_only )
   {
     return 0;
   }

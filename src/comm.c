@@ -915,7 +915,7 @@ void game_loop(int s)
         if (t_ch->points.delay_move > 0)
           t_ch->points.delay_move -=
             BOUNDED(0, !IS_MAP_ROOM(t_ch->in_room) ?
-                    move_regen(t_ch) : move_regen(t_ch) / 2,
+                    move_regen(t_ch, FALSE) : move_regen(t_ch, FALSE) / 2,
                     t_ch->points.delay_move);
       }
     }

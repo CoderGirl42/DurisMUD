@@ -4736,7 +4736,7 @@ void do_score(P_char ch, char *argument, int cmd)
     statuslog(GET_LEVEL(ch), "%s is dead, but still in game.", GET_NAME(ch));
     break;
   case STAT_DYING:
-    if (hit_regen(ch) > 0)
+    if( hit_regen(ch, FALSE) > 0 )
     {
       strcpy(buf, "Status:  Very badly wounded, but healing");
     }
@@ -4759,7 +4759,7 @@ void do_score(P_char ch, char *argument, int cmd)
       strcat(buf, ".");
     break;
   case STAT_INCAP:
-    if (hit_regen(ch) > 0)
+    if( hit_regen(ch, FALSE) > 0 )
     {
       strcpy(buf, "Status:  Badly wounded, but healing");
     }
