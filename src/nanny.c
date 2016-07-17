@@ -109,7 +109,7 @@ void event_halfling_check(P_char, P_char, P_obj, void*);
 void event_smite_evil(P_char, P_char, P_obj, void*);
 long unsigned int ip2ul(const char *ip);
 
-unsigned int game_locked = 0;       /* 0x00000001;  no creation */
+unsigned int game_locked = LOCK_CREATE;       /* 0x00000001;  no creation */
 struct mm_ds *dead_pconly_pool = NULL;
 long int highestPCidNumb;
 
