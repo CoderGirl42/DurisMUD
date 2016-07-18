@@ -2086,6 +2086,7 @@ void Guild::deposit( P_char member, int p, int g, int s, int c )
 {
   char *char_name;
   P_member pMembers;
+  int iDeposit;
 
   // Verify they have enough money.
   if( (GET_PLATINUM( member ) < p) || (GET_GOLD( member ) < g) || (GET_SILVER( member ) < s) || (GET_COPPER( member ) < c) )
@@ -2116,8 +2117,8 @@ void Guild::deposit( P_char member, int p, int g, int s, int c )
     {
       if( !strcmp(char_name, pMembers->name) )
       {
-        pMembers->debt -= (1000 * p) + (100 * g) + (10 * s) + c;
-        if( pMembers->debt <= 0 )
+        iDeposit = (1000 * p) + (100 * g) + (10 * s) + c;
+        if( pMembers->debt <= iDeposit )
         {
           pMembers->debt = 0;
           // Remove debt flag from member list.
@@ -2128,6 +2129,7 @@ void Guild::deposit( P_char member, int p, int g, int s, int c )
         }
         else
         {
+          pMembers->debt -= iDeposit;
           send_to_char( "You still owe the association some money.\n", member );
         }
         break;
