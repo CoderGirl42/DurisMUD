@@ -560,8 +560,7 @@ void do_group(P_char ch, char *argument, int cmd)
   {
     if (!ch->group)
     {
-      send_to_char("You can't leave a group when your not already in one!\n",
-                   ch);
+      send_to_char("You can't leave a group when you're not already in one!\n", ch);
     }
     else
     {
