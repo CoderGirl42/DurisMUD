@@ -5390,7 +5390,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   // Physical type actions that vamp
   // PC vamp touch.
   if( (flags & PHSDAM_TOUCH) && !vamped && IS_AFFECTED2(ch, AFF2_VAMPIRIC_TOUCH)
-    && IS_PC(ch) && !IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) )
+    && IS_PC(ch) && !IS_AFFECTED4(ch, AFF4_VAMPIRE_FORM) ) // && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) )
   {
     // Illithids get full regular touch vamp (since they have lousy str).
     if( IS_ILLITHID(ch) )
