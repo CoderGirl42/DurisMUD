@@ -9,6 +9,7 @@
 #define ACMD(c)  \
    void (c)(P_char ch, char *argument, int cmd)
 
+#define LOCK_NONE                   0
 #define LOCK_CREATION           BIT_1
 #define LOCK_CONNECTIONS        BIT_2
 #define LOCK_MAX_PLAYERS        BIT_3
