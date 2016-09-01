@@ -3,7 +3,7 @@
 123833 2 16 60 65 2
 100 100
 *
-* Zone edited with durisEdit v3.00
+* Zone edited with durisEdit v3.02
 *
 *
 *
@@ -142,8 +142,8 @@ P 1 13723 3 120033 100 0 0 0       *   (object type not in this .obj file)
 P 1 13726 2 120033 100 0 0 0       *   (object type not in this .obj file)
 P 1 13726 2 120033 100 0 0 0       *   (object type not in this .obj file)
 P 1 13724 1 120033 100 0 0 0       *   (object type not in this .obj file)
-M 0 120012 5 121051 100 0 0 0      * a BrightAxe elite stair guard
-E 1 120008 5 16 100 0 0 0          *   a huge dwarven battle-axe
+M 0 120012 4 121051 100 0 0 0      * a BrightAxe elite stair guard
+E 1 120008 4 16 100 0 0 0          *   a huge dwarven battle-axe
 M 0 53642 23 121064 100 0 0 0      * (mob type not in this .mob file)
 M 0 120022 5 121114 80 0 0 0       * a halfling traveler
 M 0 120022 5 121114 80 0 0 0       * a halfling traveler
@@ -195,12 +195,10 @@ E 1 120010 20 11 100 0 0 0         *   a well-polished mithril body shield
 E 1 120011 20 16 100 0 0 0         *   a heavy mithril dwarven hammer
 E 1 120009 14 5 100 0 0 0          *   a full suit of well-polished mithril platemail
 M 0 120051 23 121231 80 0 0 0      * an osquip
-M 0 120012 5 121253 100 0 0 0      * a BrightAxe elite stair guard
-E 1 120008 5 16 100 0 0 0          *   a huge dwarven battle-axe
-M 0 120012 5 121255 100 0 0 0      * a BrightAxe elite stair guard
-E 1 120008 5 16 100 0 0 0          *   a huge dwarven battle-axe
-M 0 120012 5 121257 100 0 0 0      * a BrightAxe elite stair guard
-E 1 120008 5 16 100 0 0 0          *   a huge dwarven battle-axe
+M 0 120012 4 121253 100 0 0 0      * a BrightAxe elite stair guard
+E 1 120008 4 16 100 0 0 0          *   a huge dwarven battle-axe
+M 0 120012 4 121255 100 0 0 0      * a BrightAxe elite stair guard
+E 1 120008 4 16 100 0 0 0          *   a huge dwarven battle-axe
 M 0 53642 23 121274 100 0 0 0      * (mob type not in this .mob file)
 M 0 120051 23 121312 80 0 0 0      * an osquip
 M 0 120025 5 121318 100 0 0 0      * a shield dwarf
@@ -273,8 +271,8 @@ M 0 120056 1 121544 6 0 0 0        * the spirit of Brigy Stonehammer
 E 1 120037 1 9 100 0 0 0           *   some spectral gauntlets of the battleragers
 E 1 120011 20 16 100 0 0 0         *   a heavy mithril dwarven hammer
 E 1 120011 20 17 100 0 0 0         *   a heavy mithril dwarven hammer
-M 0 120012 5 121555 100 0 0 0      * a BrightAxe elite stair guard
-E 1 120008 5 16 100 0 0 0          *   a huge dwarven battle-axe
+M 0 120012 4 121555 100 0 0 0      * a BrightAxe elite stair guard
+E 1 120008 4 16 100 0 0 0          *   a huge dwarven battle-axe
 M 0 120053 5 121573 50 0 0 0       * a troglodyte ambusher
 G 1 11619 22 0 100 0 0 0           *    (object type not in this .obj file)
 G 1 11619 22 0 100 0 0 0           *    (object type not in this .obj file)
