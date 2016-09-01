@@ -1573,9 +1573,9 @@ void list_town( P_char ch, P_town town )
                 "  Cavalry: %3s: Max %3d Vnum %6d Room %6d.\n"
                 "  Portals: %3s:         Vnum %6d Room %6d.\n",
     (town->zone != NULL) ? town->zone->name : "Unknown", town->resources, town->offense, town->defense,
-    town->deploy_guard ? "YES" : "NO", town->guard_max, town->guard_vnum, town->guard_load_room,
-    town->deploy_cavalry ? "YES" : "NO", town->cavalry_max, town->cavalry_vnum, town->cavalry_load_room, 
-    town->deploy_portals ? "YES" : "NO", town->portal_vnum, town->portal_load_room );
+    YESNO(town->deploy_guard), town->guard_max, town->guard_vnum, town->guard_load_room,
+    YESNO(town->deploy_cavalry), town->cavalry_max, town->cavalry_vnum, town->cavalry_load_room, 
+    YESNO(town->deploy_portals), town->portal_vnum, town->portal_load_room );
   send_to_char( buf, ch );
 }
 

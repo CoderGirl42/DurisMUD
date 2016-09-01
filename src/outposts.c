@@ -218,7 +218,8 @@ void show_outposts(P_char ch)
     send_to_char(buff, ch);
     if (IS_TRUSTED(ch) || ((owner != 0) && (owner == GET_ASSOC(ch)->get_id())))
     {
-      sprintf(buff, "       &+LGateguards: &+c%d &+LPortal: &+c%-4s &+LArchers: &+c%-4s &+LMeurtriere: &+c%-4s&n\r\n", golems, (portal ? "Yes" : "No"), (archers ? "Yes" : "No"), (meurtriere ? "Yes" : "No"));
+      sprintf(buff, "       &+LGateguards: &+c%d &+LPortal: &+c%-4s &+LArchers: &+c%-4s &+LMeurtriere: &+c%-4s&n\r\n",
+        golems, YESNO(portal), YESNO(archers), YESNO(meurtriere) );
       send_to_char(buff, ch);
       int basehit = building_types[BUILDING_OUTPOST-1].hitpoints;
       sprintf(buff, "       &+LOutpost Condition: %s%-6d&+L/&+c%d&n\r\n",

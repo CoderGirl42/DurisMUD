@@ -449,7 +449,7 @@ int bard_song_level(P_char ch, int song)
   // If we aren't alive and singing (SINGING checks IS_ALIVE) a valid song, return minimum.
   if( !SINGING(ch) || song < FIRST_SONG || song > LAST_SONG )
   {
-    debug( "bard_song_level: Bogus Params - SINGING(ch): %s, song: %d.", SINGING(ch) ? "YES" : "NO", song );
+    debug( "bard_song_level: Bogus Params - SINGING(ch): %s, song: %d.", YESNO(SINGING(ch)), song );
     return 1;
   }
 

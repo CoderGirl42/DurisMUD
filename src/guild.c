@@ -642,11 +642,11 @@ void do_spells(P_char ch, char *argument, int cmd)
                         "&+yWear off message:&n %s\n",
             skills[spl].name,
             spell_types[skills[spl].type],
-            skills[spl].harmful ? "YES" : "NO",
+            YESNO(skills[spl].harmful),
             skills[spl].beats / 4,
             buf2,
             buf,
-            skills[spl].spell_pointer ? "YES" : "NO",
+            YESNO(skills[spl].spell_pointer),
             skills[spl].wear_off_char[0] ? skills[spl].wear_off_char[0] : "NONE");
 
           send_to_char(buf1, ch);

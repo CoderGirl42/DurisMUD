@@ -1157,6 +1157,7 @@ for ((IN_ROOM) = world[(PLAYER)->in_room].people; (IN_ROOM) != NULL; (IN_ROOM) =
 #define IS_NHARPY(ch) (IS_HARPY(ch) && (GET_RACEWAR(ch) == RACEWAR_NEUTRAL))
 
 #define VOWEL(letter) ( index("aeiouAEIOU", letter) )
+#define YESNO(boo) ((boo) ? "Yes" : "No")
 
 /* this macro returns TRUE if the character is the only one in room.
    Designed to save tons of processor time when dealing with mobs.  If

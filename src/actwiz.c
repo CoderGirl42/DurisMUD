@@ -1713,7 +1713,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     sprintf(o_buf + strlen(o_buf),
             "&+YCurrent: (&N%d&+Y)-(&N%d)&+Y  Chance of falling:&N %d&+Y%%  Light sources:&N %d &+YSunShine:&N %s\n&+YDescription:&N\n",
             rm->current_speed, rm->current_direction, rm->chance_fall,
-            rm->light, (IS_SUNLIT(i) ? "Yes" : "No"));
+            rm->light, YESNO(IS_SUNLIT(i)) );
 
     sprintf(o_buf + strlen(o_buf),
             "&+YSection: &N%d  &+YX = &N%d  &+YY = &N%d  &+YZ = &N%d&N\n",
@@ -1885,7 +1885,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       sprintf(o_buf + strlen(o_buf), "\n&+GZone Info\n");
 
       sprintf(o_buf + strlen(o_buf), "&+gTask zone: &+G%s  &+gQuest zone:  &+G%s  &+gTrophy zone:  &+G%s\n",
-        (zinfo.task_zone ? "YES" : "NO"), (zinfo.quest_zone ? "YES" : "NO"), (zinfo.trophy_zone ? "YES" : "NO"));
+        YESNO(zinfo.task_zone), YESNO(zinfo.quest_zone), YESNO(zinfo.trophy_zone) );
 
       if(zinfo.epic_type)
       {
@@ -3655,10 +3655,10 @@ void do_wizlock(P_char ch, char *arg, int cmd)
   if( !*arg || !str_cmp(arg, "?") )
   {
     send_to_char_f( ch, "Status: \nCreation   : %s\nConnections: %s\nMaxplayers : %s %d / %d\nLevel      : %s %d\n",
-      (IS_SET(game_locked, LOCK_CREATION)) ? "Yes" : "No ",
-      (IS_SET(game_locked, LOCK_CONNECTIONS)) ? "Yes" : "No ",
-      (IS_SET(game_locked, LOCK_MAX_PLAYERS)) ? "Yes" : "No ", number_of_players(), game_locked_players,
-      (IS_SET(game_locked, LOCK_LEVEL)) ? "Yes" : "No ", game_locked_level );
+      YESNO(IS_SET(game_locked, LOCK_CREATION)),
+      YESNO(IS_SET(game_locked, LOCK_CONNECTIONS)),
+      YESNO(IS_SET(game_locked, LOCK_MAX_PLAYERS)), number_of_players(), game_locked_players,
+      YESNO(IS_SET(game_locked, LOCK_LEVEL)), game_locked_level );
     send_to_char("Usage: wizlock <creation | connections | maxplayers | level | ?> [value]\n", ch);
     return;
   }

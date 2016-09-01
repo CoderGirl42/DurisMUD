@@ -1763,7 +1763,7 @@ bool check_mob_retaliate(P_char ch, P_char tar_char, int spl)
   if( !IS_SET(skills[spl].targets, TAR_AGGRO) || !IS_ALIVE(ch) )
   {
     debug( "check_mob_retaliate: Non-aggro (%s) or dead/missing ch: %s is %s.",
-      IS_SET(skills[spl].targets, TAR_AGGRO) ? "NO" : "YES",
+      YESNO(!IS_SET(skills[spl].targets, TAR_AGGRO)),
       !ch ? "NULL" : J_NAME(ch), IS_ALIVE(ch) ? "ALIVE" : "DEAD" );
     return TRUE;
   }

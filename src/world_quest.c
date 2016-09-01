@@ -459,14 +459,14 @@ void do_quest(P_char ch, char *args, int cmd)
         "Bartender Vnum: %d, Shares left: %d, Original Questor PID: %d, Can share: %s\n\r"
         "Target Mob Vnum: %d, Number Killed: %d out of %d needed.\n\r"
         "Zone: %s (%d), Map room: %s (%d), Map purchased: %s.\n\r", J_NAME(victim), GET_PID(victim),
-        pcdata->quest_active ? "YES" : "NO", pcdata->quest_level, (pcdata->quest_type == FIND_AND_ASK) ? "ASK"
+        YESNO(pcdata->quest_active), pcdata->quest_level, (pcdata->quest_type == FIND_AND_ASK) ? "ASK"
         : (pcdata->quest_type == FIND_AND_KILL) ? "KILL" : (pcdata->quest_type == FIND_AND_SOMETHING)
-        ? "SOMETHING" : "UNKNOWN", pcdata->quest_started ? "YES" : "NO", pcdata->quest_accomplished ? "YES" : "NO",
+        ? "SOMETHING" : "UNKNOWN", YESNO(pcdata->quest_started), YESNO(pcdata->quest_accomplished),
         pcdata->quest_giver, pcdata->quest_shares_left, pcdata->quest_receiver,
-        (GET_PID(victim) == pcdata->quest_receiver) ? "YES" : "NO", pcdata->quest_mob_vnum,
+        YESNO(GET_PID(victim) == pcdata->quest_receiver), pcdata->quest_mob_vnum,
         pcdata->quest_kill_how_many, pcdata->quest_kill_original, zone_table[real_zone0(pcdata->quest_zone_number)].name,
         pcdata->quest_zone_number, world[real_room0(pcdata->quest_map_room)].name,
-        pcdata->quest_map_room, pcdata->quest_map_bought ? "YES" : "NO" );
+        pcdata->quest_map_room, YESNO(pcdata->quest_map_bought) );
       send_to_char( buf, ch );
 
       return;

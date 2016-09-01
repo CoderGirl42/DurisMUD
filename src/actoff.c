@@ -9910,7 +9910,7 @@ void restrain(P_char ch, P_char victim)
   percent_chance = BOUNDED(1, percent_chance, 90);
 
   debug("RESTRAIN: (%s) with (%d) percent at (%s&n) - standing? %s battling? %s.",
-    GET_NAME(ch), percent_chance, J_NAME(victim), standing ? "YES" : "NO", battling ? "YES" : "NO" );
+    GET_NAME(ch), percent_chance, J_NAME(victim), YESNO(standing), YESNO(battling) );
 // ---------------------------------------
 
   if( notch_skill(ch, SKILL_RESTRAIN, get_property("skill.notch.offensive", 15))

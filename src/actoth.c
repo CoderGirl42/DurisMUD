@@ -4174,7 +4174,6 @@ void do_use(P_char ch, char *argument, int cmd)
   }
 }
 
-#define YESNO(a) ((a) ? "YES" : "NO")
 #define ONOFF(a) ((a) ? "ON"  : "OFF")
 #define TOG_OFF 0
 #define TOG_ON  1
