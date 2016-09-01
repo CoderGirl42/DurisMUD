@@ -2791,7 +2791,7 @@ void new_look(P_char ch, char *argument, int cmd, int room_no)
           map_look(ch, MAP_IGNORE_TOGGLE);
         brief_mode = FALSE;
         break;
-      case 20:
+      case 23:
         // Look out -> look out of a tower, or out of a ship.
         if( IS_MAP_ROOM(room_no) && (cmd == CMD_LOOKOUT) )
         {
