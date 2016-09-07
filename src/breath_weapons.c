@@ -33,7 +33,7 @@ void breath_weapon_fire(int level, P_char ch, char *arg, int type, P_char victim
 
   if( IS_PC_PET(ch) )
   {
-    dam /= 2;
+    dam /= 4;
   }
 
   if( NewSaves(victim, SAVING_BREATH, save) )
