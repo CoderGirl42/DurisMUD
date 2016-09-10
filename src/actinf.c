@@ -3398,6 +3398,8 @@ void do_examine(P_char ch, char *argument, int cmd)
     if ((GET_ITEM_TYPE(tmp_object) == ITEM_WAND || GET_ITEM_TYPE(tmp_object) == ITEM_STAFF) && IS_AFFECTED2(ch, AFF2_DETECT_MAGIC))
     {
       int max = tmp_object->value[1];
+      if( max < 1 )
+         max = 1;
       int curr = tmp_object->value[2];
       int ratio = (int)(100*curr/max);
 
