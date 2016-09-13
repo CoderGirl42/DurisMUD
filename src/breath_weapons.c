@@ -10,7 +10,7 @@
 #include "comm.h"
 
 float breath_dam_mod;
-float breath_saved_divisor;
+float breath_saved_multiplier;
 
 // Same as spell_fire_breath, which should be removed eventually.
 void breath_weapon_fire(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
@@ -41,7 +41,7 @@ void breath_weapon_fire(int level, P_char ch, char *arg, int type, P_char victim
 
   if( NewSaves(victim, SAVING_BREATH, save) )
   {
-    dam = (int) ((float)dam / breath_saved_divisor);
+    dam = (int) ((float)dam * breath_saved_multiplier);
   }
   // 5 - 250 damage.
   dam = BOUNDED(20, dam, 1000);
@@ -126,7 +126,7 @@ void breath_weapon_lightning(int level, P_char ch, char *arg, int type, P_char v
     dam /= 4;
   }
   if(NewSaves(victim, SAVING_BREATH, save))
-    dam = (int) ((float)dam / breath_saved_divisor);
+    dam = (int) ((float)dam * breath_saved_multiplier);
 
   if( IS_AFFECTED2(victim, AFF2_PROT_LIGHTNING) )
   {
@@ -167,7 +167,7 @@ void breath_weapon_frost(int level, P_char ch, char *arg, int type, P_char victi
 
   if( NewSaves(victim, SAVING_BREATH, save) )
   {
-    dam = (int) ((float)dam / breath_saved_divisor);
+    dam = (int) ((float)dam * breath_saved_multiplier);
   }
   dam = BOUNDED(20, dam, 1000);
 
@@ -311,7 +311,7 @@ void breath_weapon_poison(int level, P_char ch, char *arg, int type, P_char vict
   }
 
   if(NewSaves(victim, SAVING_BREATH, save))
-    dam = (int) (dam / breath_saved_divisor);
+    dam = (int) (dam * breath_saved_multiplier);
   dam = BOUNDED(20, dam, 1000);
 
   if( spell_damage(ch, victim, dam, SPLDAM_GAS, SPLDAM_BREATH | SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD )
@@ -363,7 +363,7 @@ void breath_weapon_shadow_1(int level, P_char ch, char *arg, int type, P_char vi
   }
 
   if(NewSaves(victim, SAVING_BREATH, save))
-    dam = (int) (dam / breath_saved_divisor);
+    dam = (int) (dam * breath_saved_multiplier);
 
   dam = BOUNDED(20, dam, 1000);
 
@@ -394,7 +394,7 @@ void breath_weapon_shadow_2(int level, P_char ch, char *arg, int type, P_char vi
   }
 
   if( NewSaves(victim, SAVING_BREATH, save) )
-    dam = (int) (dam / breath_saved_divisor);
+    dam = (int) (dam * breath_saved_multiplier);
 
   dam = BOUNDED(20, dam, 1000);
 
@@ -666,5 +666,5 @@ void breath_weapon_basalt_2(int level, P_char ch, char *arg, int type, P_char vi
 void update_breath_weapon_properties()
 {
   breath_dam_mod = get_property("dragon.Breath.DamageMod", 1.0);
-  breath_saved_divisor = get_property("dragon.Breath.savedDamage", 2.0);
+  breath_saved_multiplier = get_property("dragon.Breath.savedDamage", 2.0);
 }
