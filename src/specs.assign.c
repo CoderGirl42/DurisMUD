@@ -1302,6 +1302,9 @@ bogentok
   mob_index[real_mobile0(22956)].func.mob = construct;
   mob_index[real_mobile0(38737)].func.mob = nyneth;
 
+  // Myrloch Vale
+  mob_index[real_mobile0(26402)].func.mob = unblock_on_death;
+
   logit(LOG_STATUS, "   Booting the shops.");
   fprintf(stderr, "--    Booting the shops.\r\n");
   boot_the_shops();

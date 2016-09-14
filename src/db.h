@@ -105,6 +105,7 @@ using namespace std;
 
 #define QC_ACTION      "qc_action"
 #define QC_GREET       "qc_nocorpse"
+#define QC_UNBLOCK     "qc_unblock"
 
 struct ship_reg_node {
 

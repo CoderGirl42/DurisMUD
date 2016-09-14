@@ -297,8 +297,8 @@ int boulder_pusher(P_char, P_char, int, char *);
 int braddistock(P_char, P_char, int, char *);
 int brass_dragon(P_char, P_char, int, char *);
 int bridge_troll(P_char, P_char, int, char *);
-int bs_boss(P_char, P_char, int, char *);
 
+int bs_boss(P_char, P_char, int, char *);
 int bs_citizen(P_char, P_char, int, char *);
 int bs_barons_mistress(P_char ch, P_char tch, int cmd, char *arg);
 int bs_comwoman(P_char, P_char, int, char *);
@@ -507,6 +507,8 @@ int fooquest_boss(P_char, P_char, int, char *);
 int io_assistant(P_char ch, P_char pl, int cmd, char *arg);
 
 int monk_remort(P_char ch, P_char pl, int cmd, char *arg);
+
+int unblock_on_death(P_char ch, P_char pl, int cmd, char *arg);
 
 // Alatorin
 int smelter(P_char ch, P_char pl, int cmd, char *arg);
@@ -1112,3 +1114,4 @@ int super_cannon(P_obj obj, P_char ch, int cmd, char *arg);
 void halloween_mine_proc(P_char ch);
 int zombies_game(P_obj obj, P_char ch, int cmd, char *arg);
 int zg_count_zombies(P_obj obj);
+

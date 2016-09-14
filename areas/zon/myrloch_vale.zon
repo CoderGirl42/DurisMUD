@@ -2,7 +2,7 @@
 &+YMyrloch Vale&n~
 26578 1 0 19 29 1
 *
-* Zone edited with durisEdit v3.00
+* Zone edited with durisEdit v3.02
 *
 *
 D 0 26492 5 2 100 0 0 0
@@ -69,6 +69,14 @@ D 0 26541 1 0 100 0 0 0
 *     east exit from "A Huge Corridor In The Tower Of The Under-Realms" to
 *     "A Huge Corridor In The Tower Of The Under-Realms" - open
 *
+D 0 26555 0 8 100 0 0 0
+*     north exit from "The Warlord Of Fire's Chamber In The Under-Realm Palace" to
+*     "Treasure Chamber Of The Under-Realms" - open/blocked
+*
+D 0 26558 2 0 100 0 0 0
+*     south exit from "Treasure Chamber Of The Under-Realms" to
+*     "The Warlord Of Fire's Chamber In The Under-Realm Palace" - open
+*
 *
 O 0 26400 1 26413 100 0 0 0        * an ivory statue of a horse
 O 0 26401 1 26425 100 0 0 0        * the statue of Labelas
@@ -90,7 +98,7 @@ O 0 26413 1 26547 100 0 0 0        * a stalagmite
 O 0 26414 1 26549 100 0 0 0        * a stalagmite
 O 0 26415 1 26551 100 0 0 0        * a stalagmite
 O 0 26416 1 26553 100 0 0 0        * a stalagmite
-O 0 358 1 26555 100 0 0 0          * (object type not in this .obj file)
+O 0 26435 1917 26558 100 0 0 0     * a glittering mountain of coins
 *
 M 0 26416 15 26401 100 0 0 0       * a Llewyrr child
 E 1 26436 11 18 100 0 0 0          *   a toy
@@ -201,6 +209,7 @@ M 0 26412 11 26544 100 0 0 0       * a blue flame
 M 0 26402 1 26555 100 0 0 0        * the warlord of fire
 E 1 26438 1 11 100 0 0 0           *   a flaming shield
 G 1 26418 1 0 100 0 0 0            *    a bloodied head of the warlord of fire
+G 1 358 1 0 100 0 0 0              *    (object type not in this .obj file)
 M 0 26403 10 26560 100 0 0 0       * a Llewyrr elf
 E 1 26422 10 16 100 0 0 0          *   a short sword
 M 0 26405 10 26560 100 0 0 0       * a Llewyrr guard

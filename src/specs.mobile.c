@@ -74,6 +74,7 @@ extern P_char guard_check(P_char, P_char);
 extern P_char pick_target(P_char, unsigned int);
 extern int cast_as_damage_area(P_char, void (*func)
   (int, P_char, char *, int, P_char, P_obj), int, P_char, float, float);
+extern struct quest_data quest_index[];
 
 struct social_type
 {
@@ -17006,4 +17007,64 @@ void finish_smelt( P_char ch, P_char pl, int vnum )
   sprintf( buf, "$n &+RSMELTS&n some %s!", oreType );
   act( buf, FALSE, ch, NULL, NULL, TO_ROOM );
   act( "$n gives $p to $N.", TRUE, ch, ore, pl, TO_ROOM );
+}
+
+int unblock_on_death(P_char ch, P_char pl, int cmd, char *arg)
+{
+  int rroom, dir, qi;
+  struct quest_msg_data *qdata;
+  char direction[32];
+
+  // Includes periodic.
+  if( cmd != CMD_DEATH )
+  {
+    return FALSE;
+  }
+
+  if( (qi = find_quester_id( GET_RNUM(ch) )) < 0 )
+  {
+    return FALSE;
+  }
+
+  for( qdata = quest_index[qi].quest_message; qdata; qdata = qdata->next )
+  {
+    if( sscanf(qdata->key_words, QC_UNBLOCK" %d %s", &rroom, direction) == 2 )
+    {
+      break;
+    }
+  }
+  if( !qdata )
+  {
+    return FALSE;
+  }
+
+  if( (rroom = real_room( rroom )) == NOWHERE )
+  {
+    return FALSE;
+  }
+  if( (dir = dir_from_keyword( direction )) == -1 )
+  {
+    return FALSE;
+  }
+  if( world[rroom].dir_option[dir] == NULL )
+  {
+    return FALSE;
+  }
+
+  REMOVE_BIT(world[rroom].dir_option[dir]->exit_info, EX_BLOCKED);
+
+  act("$n is dead! &+RR.I.P.&n", TRUE, ch, 0, 0, TO_ROOM);
+  act("&-L&+rYou feel yourself falling to the ground.&n", FALSE, ch, 0, 0, TO_CHAR);
+  act("&-L&+rYour soul leaves your body in the cold sleep of death...&n", FALSE, ch, 0, 0, TO_CHAR);
+
+  if( !CAN_SPEAK(ch) )
+  {
+    death_rattle(ch);
+  }
+  else
+  {
+    death_cry(ch);
+  }
+
+  return FALSE;
 }

@@ -924,7 +924,9 @@ bool has_quest_ask( int qi )
 
   for( qdata = quest_index[qi].quest_message; qdata; qdata = qdata->next )
   {
-    if( sscanf(qdata->key_words, QC_ACTION " %d", &arg) == 1 )
+    // Skip the room messages on timers and the unblock messages.
+    if( (sscanf( qdata->key_words, QC_ACTION " %d", &arg ) == 1)
+    || is_abbrev(QC_UNBLOCK " ", qdata->key_words) )
     {
       continue;
     }

@@ -1924,9 +1924,6 @@ void death_cry(P_char ch)
   int      door, was_in, room;
   char     buf[MAX_INPUT_LENGTH];
 
-  if(IS_SET(ch->specials.act, ACT_SPEC_DIE))
-    return;
-
   switch(number(1,5))
   {
     case 1:
@@ -1982,9 +1979,7 @@ void death_rattle(P_char ch)
   int      door, was_in, room;
   char     buf[MAX_INPUT_LENGTH];
 
-  act
-    ("&+rYou feel a carnal satisfaction as $n&+r's gurgling and choking signals $s demise.&n",
-     FALSE, ch, 0, 0, TO_ROOM);
+  act("&+rYou feel a carnal satisfaction as $n&+r's gurgling and choking signals $s demise.&n", FALSE, ch, 0, 0, TO_ROOM);
   was_in = ch->in_room;
   play_sound(SOUND_DEATH_CRY, NULL, was_in, TO_ROOM);
 
@@ -2463,13 +2458,16 @@ void die(P_char ch, P_char killer)
     return;
   }
 
-  if(!CAN_SPEAK(ch))
+  if( IS_PC(ch) || !IS_SET(ch->specials.act, ACT_SPEC_DIE) )
   {
-    death_rattle(ch);
-  }
-  else
-  {
-    death_cry(ch);
+    if( !CAN_SPEAK(ch) )
+    {
+      death_rattle(ch);
+    }
+    else
+    {
+      death_cry(ch);
+    }
   }
 
   // Dragon mobs now will drop a dragon scale
