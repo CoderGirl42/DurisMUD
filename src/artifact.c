@@ -2214,12 +2214,15 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
   arti_data *node, *next_node;
   P_obj      arti;
   P_char     owner;
-  int        pid, vnum, punish_level, punishment;
+  int        pid, vnum, punish_level;
+  float      punishment, modifier;
   int        count[4];
   MYSQL_RES *res;
   MYSQL_ROW  row;
 
   debug( "event_artifact_wars: beginning..." );
+
+  modifier = get_property("artifact.wars.modifier", 1.0);
 
   // We only care about artis on a PC or corpse (Note: it's implied that owned='Y' on these).
   // The other options: not in game, on npc, on ground can not have fighting artis.
@@ -2302,16 +2305,18 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
       node = node->next;
     }
     // Count up how much over limit (1 of each is limit).
-    punish_level = (count[ARTIFACT_MAJOR] > 1) ? count[ARTIFACT_MAJOR] - 1 : 0;
+    punish_level  = (count[ARTIFACT_MAJOR ] > 1) ? count[ARTIFACT_MAJOR ] - 1 : 0;
     punish_level += (count[ARTIFACT_UNIQUE] > 1) ? count[ARTIFACT_UNIQUE] - 1 : 0;
-    punish_level += (count[ARTIFACT_IOUN] > 1) ? count[ARTIFACT_IOUN] - 1 : 0;
+    punish_level += (count[ARTIFACT_IOUN  ] > 1) ? count[ARTIFACT_IOUN  ] - 1 : 0;
     // If they're in violation (more than one arti of the same type.
     if( punish_level > 0 )
     {
-      // 1: 5min, 2: 15min, 3: 30min, 4: 64min, 5: 125min, 6: 216min, 7: 343min (happens every 30 min).
+      // 1: 5min, 2: 15min, 3: 30min, 4: 64min, 5: 125min (2hrs+), 6: 216min (3.5hrs+), 7: 343min (5.5hrs+).
       // More than a punish_level of 3 is ridiculous though.
       switch( punish_level )
       {
+        case 0:
+            punishment = 0;
         case 1:
             punishment = 300;
           break;
@@ -2326,9 +2331,10 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
           punishment = 60 * punish_level * punish_level * punish_level;
           break;
       }
-      // 2 of the same type (and no others):  300 + 240 =  540 sec =  9min
-      // 6 artis with two of each type     : 1800 + 720 = 2520 sec = 42min
-      punishment += 120 * count[0];
+      // 2 of the same type (and no others):  300 * 2 =   600 sec = 10min
+      // 6 artis with two of each type     : 1800 * 6 = 10800 sec = 180min = 3 hrs loss every half hr.
+      punishment *= count[0];
+      punishment *= modifier;
 
       node = nextlist->artis;
       while( node )
@@ -2336,7 +2342,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
         arti = read_object( node->vnum, VIRTUAL );
         debug( "fight: '%s&n'%6d upset (%d/%d =%3d:%02d) with %s.",
           pad_ansi(arti->short_description, 35, TRUE).c_str(), node->vnum,
-          punish_level, count[0], punishment/60, punishment%60, get_player_name_from_pid(node->location) );
+          punish_level, count[0], punishment/60, (int)punishment%60, get_player_name_from_pid(node->location) );
         if( node->locType == ARTIFACT_ON_PC
           && (owner = get_player_from_name( get_player_name_from_pid(node->location) )) )
         {
