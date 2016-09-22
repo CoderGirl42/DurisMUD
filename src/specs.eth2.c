@@ -399,51 +399,28 @@ int eth2_aramus_crown(P_obj obj, P_char ch, int cmd, char *arg)
         switch( number(1, 13) )
         {
           case 1:
-          case 2:
-            if (!IS_AFFECTED(ch, AFF_HASTE))
+            if (!affected_by_spell(ch, SPELL_INERTIAL_BARRIER))
             {
-              send_to_char("Your dreams are filled with visions of ultimate speed.\r\n", ch);
-              af.type = SPELL_HASTE;
-              af.bitvector = AFF_HASTE;
+              send_to_char("Your dreams are filled with strange visions of interrupted motion.\r\n", ch);
+              af.type = SPELL_INERTIAL_BARRIER;
+              af.bitvector3 = AFF3_INERTIAL_BARRIER;
               linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
             }
-            break;
 
+          case 2:
           case 3:
-          case 4:
             if (!affected_by_spell(ch, SPELL_STONE_SKIN))
             {
               send_to_char("You dream of a lonely hillside, covered with rocky shale.\r\n", ch);
               af.type = SPELL_STONE_SKIN;
               af.bitvector = AFF_STONE_SKIN;
               linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
             }
-            break;
 
+          case 4:
           case 5:
-          case 6:
-            if (!IS_AFFECTED(ch, AFF_FLY))
-            {
-              send_to_char("You dream of soaring above the fjords.\r\n", ch);
-              af.type = SPELL_FLY;
-              af.bitvector = AFF_FLY;
-              linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
-            }
-            break;
-
-          case 7:
-          case 8:
-            if (!IS_AFFECTED(ch, AFF_BARKSKIN))
-            {
-              send_to_char("You dream of a dark and mysterious forest.\r\n", ch);
-              af.type = SPELL_BARKSKIN;
-              af.bitvector = AFF_BARKSKIN;
-              linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
-            }
-            break;
-
-          case 9:
-          case 10:
             if (!affected_by_spell(ch, SPELL_VITALITY))
             {
               send_to_char("In your dream, you feel life essence flowing freely through your veins.\r\n", ch);
@@ -451,23 +428,53 @@ int eth2_aramus_crown(P_obj obj, P_char ch, int cmd, char *arg)
               af.modifier = MAX( 10, GET_LEVEL(ch) * 4 );
               af.location = APPLY_HIT;
               linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
             }
-            break;
 
+          case 6:
+          case 7:
+            if (!IS_AFFECTED(ch, AFF_HASTE))
+            {
+              send_to_char("Your dreams are filled with visions of ultimate speed.\r\n", ch);
+              af.type = SPELL_HASTE;
+              af.bitvector = AFF_HASTE;
+              linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
+            }
+
+          case 8:
+          case 9:
+            if (!IS_AFFECTED(ch, AFF_FLY))
+            {
+              send_to_char("You dream of soaring above the fjords.\r\n", ch);
+              af.type = SPELL_FLY;
+              af.bitvector = AFF_FLY;
+              linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
+            }
+
+          case 10:
           case 11:
           case 12:
-            if (!affected_by_spell(ch, SPELL_INERTIAL_BARRIER))
+            if (!IS_AFFECTED(ch, AFF_BARKSKIN))
             {
-              send_to_char("Your dreams are filled with strange visions of interrupted motion.\r\n", ch);
-              af.type = SPELL_INERTIAL_BARRIER;
-              af.bitvector3 = AFF3_INERTIAL_BARRIER;
+              send_to_char("You dream of a dark and mysterious forest.\r\n", ch);
+              af.type = SPELL_BARKSKIN;
+              af.bitvector = AFF_BARKSKIN;
               linked_affect_to_char_obj( ch, &af, obj, LNK_CHAR_OBJ_AFF );
+              break;
             }
-            break;
 
           case 13:
-            send_to_char("You have a horrible nightmare of appearing in public totally naked!\r\n", ch);
-            unequip_all(ch);
+            if( number(1, 100) == 1 )
+            {
+              send_to_char("You have a horrible nightmare of appearing in public totally naked!\r\n", ch);
+              unequip_all(ch);
+            }
+            else
+            {
+              send_to_char( "You have dreams of people pawing at your body... tugging at your clothes.\n", ch );
+            }
             break;
         }
         return TRUE;
