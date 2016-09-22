@@ -604,6 +604,7 @@ int guild_badge(P_obj, P_char, int, char *);
 int gc_portal(P_obj, P_char, int, char *);
 int ec_portal(P_obj, P_char, int, char *);
 int ud_portal(P_obj, P_char, int, char *);
+int uc_nexus_portal(P_obj, P_char, int, char *);
 int druid_spring(P_obj, P_char, int, char *);
 int blighter_pond(P_obj, P_char, int, char *);
 int druid_sabre(P_obj, P_char, int, char *);
@@ -1115,3 +1116,5 @@ void halloween_mine_proc(P_char ch);
 int zombies_game(P_obj obj, P_char ch, int cmd, char *arg);
 int zg_count_zombies(P_obj obj);
 
+// nexus_uc
+int obj_tp_no_high_levels(P_obj obj, P_char ch, int cmd, char *arg);

@@ -2,7 +2,7 @@
 &+LThe Reliquary &+rN&+Re&+rx&+Ru&+rs &+Lof &+WTh&+re De&+Wad&n~
 130284 0 0 40 50 3
 *
-* Zone edited with durisEdit v3.00
+* Zone edited with durisEdit v3.02
 *
 *
 D 0 130200 2 1 100 0 0 0
@@ -111,22 +111,22 @@ O 0 130207 1 130280 100 0 0 0      * the statue of Ogremoch
 *
 M 0 130200 1 130201 100 0 0 0      * Thotenthomanp, The Lord of Decay
 G 1 130214 1 0 100 0 0 0           *    a key bearing the rite of passage
-M 0 26624 1 130207 100 0 0 0       * (mob type not in this .mob file)
-M 0 26605 2 130208 100 0 0 0       * (mob type not in this .mob file)
-M 0 26605 2 130216 100 0 0 0       * (mob type not in this .mob file)
-M 0 26626 1 130217 100 0 0 0       * (mob type not in this .mob file)
+M 0 130203 1 130207 100 0 0 0      * a negative material planar projection of a wraith
+M 0 130204 2 130208 100 0 0 0      * the negative material planar projection of a vampire
+M 0 130204 2 130216 100 0 0 0      * the negative material planar projection of a vampire
+M 0 130205 1 130217 100 0 0 0      * a negative material planar projection of an ancient lich
 M 0 130202 2 130219 100 0 0 0      * an anubian soldier
 G 1 130215 1 0 100 0 0 0           *    the white limestone gate key
 M 0 130202 2 130238 100 0 0 0      * an anubian soldier
 G 1 130216 1 0 100 0 0 0           *    the Nexus Tower key
-M 0 25430 2 130263 100 0 0 0       * (mob type not in this .mob file)
-M 0 25450 1 130264 100 0 0 0       * (mob type not in this .mob file)
-M 0 23805 2 130270 100 0 0 0       * (mob type not in this .mob file)
-M 0 23804 2 130271 100 0 0 0       * (mob type not in this .mob file)
-M 0 25420 1 130272 100 0 0 0       * (mob type not in this .mob file)
-M 0 25430 2 130273 100 0 0 0       * (mob type not in this .mob file)
-M 0 23804 2 130279 100 0 0 0       * (mob type not in this .mob file)
-M 0 23805 2 130280 100 0 0 0       * (mob type not in this .mob file)
+M 0 130206 2 130263 100 0 0 0      * a flame salamander
+M 0 130207 1 130264 100 0 0 0      * a magman
+M 0 130208 2 130270 100 0 0 0      * a powerful xorn
+M 0 130209 2 130271 100 0 0 0      * a dao noble
+M 0 130210 1 130272 100 0 0 0      * an efreeti scout
+M 0 130206 2 130273 100 0 0 0      * a flame salamander
+M 0 130209 2 130279 100 0 0 0      * a dao noble
+M 0 130208 2 130280 100 0 0 0      * a powerful xorn
 M 0 130201 1 130283 100 0 0 0      * Osiris, Keeper of the Land of the Dead
 G 1 130217 1 0 100 0 0 0           *    the key to the Reliquary Nexus of the Dead
 *

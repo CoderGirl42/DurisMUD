@@ -14844,3 +14844,81 @@ int ud_portal( P_obj obj, P_char ch, int cmd, char *argument )
 
   return TRUE;
 }
+
+int uc_nexus_portal( P_obj obj, P_char ch, int cmd, char *argument )
+{
+  char buf[MAX_INPUT_LENGTH];
+
+  if( cmd == CMD_SET_PERIODIC )
+    return FALSE;
+
+  if( !IS_ALIVE(ch) )
+    return FALSE;
+
+  if( cmd != CMD_ENTER )
+    return FALSE;
+
+  one_argument(argument, buf);
+  // If not the right portal..
+  if( obj != get_obj_in_list(buf, world[ch->in_room].contents) )
+  {
+    return FALSE;
+  }
+
+  if( (GET_LEVEL( ch ) < 10 || GET_LEVEL( ch ) > 30) && !IS_TRUSTED(ch) )
+  {
+    act("&+LA strong force pushes you away from $p&+L.", FALSE, ch, obj, 0, TO_CHAR);
+    return TRUE;
+  }
+
+  // Add ch enters portal message here.
+  act("&+L$n &+Lenters $p &+Land quickly fades to nothing!", FALSE, ch, obj, 0, TO_ROOM);
+  act("&+LAs you enter $p&+L, you feel your body begin to be torn apart!", FALSE, ch, obj, 0, TO_CHAR);
+
+  // Move ch to random room on gc.
+  char_from_room( ch );
+  char_to_room( ch, real_room(130200), -2 );
+
+  // Destroy eq here.
+
+  // Add ch appears here.
+  // Add message to ch here.
+  act("&+LSuddenly, you feel your body reform...", FALSE, ch, obj, 0, TO_CHAR);
+  act("&+LSuddenly, $n &+Lforms out of nothing...", FALSE, ch, obj, 0, TO_ROOM);
+  do_look( ch, NULL, -4 );
+
+  return TRUE;
+}
+
+// This function prevents high level chars from entering a teleporter.
+int obj_tp_no_high_levels(P_obj obj, P_char ch, int cmd, char *arg)
+{
+  char arg1[MAX_INPUT_LENGTH];
+
+  // Not a periodic proc, nor can we check an object that doesn't exist, nor stop a char that isn't alive.
+  if( cmd == CMD_SET_PERIODIC || !obj || !IS_ALIVE(ch) )
+  {
+    return FALSE;
+  }
+
+  // If the command isn't the trigger command.
+  if( cmd != obj->value[1] )
+  {
+    return FALSE;
+  }
+
+  one_argument( arg, arg1 );
+  // If we're not triggering the object.
+  if( obj != get_obj_in_list(arg1, world[ch->in_room].contents) )
+  {
+    return FALSE;
+  }
+
+  // If they're too high level (and not a god).
+  if( (GET_LEVEL(ch) > obj->value[3]) && !IS_TRUSTED(ch) )
+  {
+    act( "$p is not powerful enough to transport you.", FALSE, ch, obj, NULL, TO_CHAR );
+    return TRUE;
+  }
+  return FALSE;
+}

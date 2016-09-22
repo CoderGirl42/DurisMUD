@@ -167,6 +167,7 @@ P 1 95528 999 95504 100 0 0 0      *   some standard rations
 O 0 95503 1 95553 100 0 0 0        * a large fountain
 O 0 90 999 95553 100 0 0 0         * (object type not in this .obj file)
 O 0 467 1 95553 100 0 0 0          * (object type not in this .obj file)
+O 0 468 1 95553 100 0 0 0          * (object type not in this .obj file)
 O 0 92 1 95556 100 0 0 0           * (object type not in this .obj file)
 O 0 95511 1 95558 100 0 0 0        * a small sign
 O 0 3097 999 95572 100 0 0 0       * (object type not in this .obj file)

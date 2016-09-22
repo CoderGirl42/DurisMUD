@@ -183,7 +183,6 @@ void assign_mobiles(void)
 
   /* speed wipe entry to Tharn Rifts */
   mob_index[real_mobile0(500129)].func.mob = Baltazo;
-  obj_index[real_object0(500055)].func.obj = tharnrifts_portal;
   /* scorched valley */
   mob_index[real_mobile0(71223)].func.mob = block_up;
   mob_index[real_mobile0(71259)].func.mob = yeenoghu;
@@ -277,7 +276,6 @@ void assign_mobiles(void)
   mob_index[real_mobile0(55554)].func.mob = wh_corpse_to_object; 
   mob_index[real_mobile0(500102)].func.mob = wh_corpse_to_object; 
   mob_index[real_mobile0(500103)].func.mob = wh_corpse_to_object; 
-  obj_index[real_object0(55007)].func.obj = no_kill_priest_obj;
   mob_index[real_mobile0(55184)].func.mob = newbie_spellup_mob; // Priest of WH
   mob_index[real_mobile0(55124)].func.mob = money_changer; 
 //  mob_index[real_mobile0(55026)].func.mob = volo_teleport;
@@ -347,7 +345,6 @@ void assign_mobiles(void)
 
   /* Braddistock Mansion */
   mob_index[real_mobile0(135014)].func.mob = braddistock;
-  obj_index[real_object0(1372)].func.obj = jet_black_maul;
 
   /* Orc town? */
   mob_index[real_mobile0(97545)].func.mob = troll_slave;
@@ -942,8 +939,6 @@ void assign_mobiles(void)
      Players Guild
    */
   mob_index[real_mobile0(16501)].func.mob = guild_guard;
-  obj_index[real_object0(35102)].func.obj = magic_pool;
-  obj_index[real_object0(35103)].func.obj = magic_pool;
 
   /*
      Split Shield
@@ -984,7 +979,6 @@ void assign_mobiles(void)
   mob_index[real_mobile0(12025)].func.mob = xexos;
   mob_index[real_mobile0(12026)].func.mob = agthrodos;
   mob_index[real_mobile0(12027)].func.mob = automaton_unblock;
-  obj_index[real_object0(12028)].func.obj = moonstone_fragment;
 
   /*
      Twin Towers - Forest
@@ -1169,31 +1163,11 @@ void assign_mobiles(void)
   mob_index[real_mobile0(96040)].func.mob = jotun_utgard_loki;
   mob_index[real_mobile0(96013)].func.mob = jotun_mimer;
   mob_index[real_mobile0(96027)].func.mob = jotun_thrym;
-  obj_index[real_object0(96073)].func.obj = faith;
-  obj_index[real_object0(96012)].func.obj = mistweave;
-  obj_index[real_object0(96027)].func.obj = leather_vest;
-  obj_index[real_object0(96042)].func.obj = deva_cloak;
-  obj_index[real_object0(96059)].func.obj = icicle_cloak;
-  obj_index[real_object0(8406)].func.obj = ogrebane;
-  obj_index[real_object0(96066)].func.obj = giantbane;
-  obj_index[real_object0(20000)].func.obj = mindbreaker;
-
-
-  /* Heaven */
-  
-  obj_index[real_object0(1270)].func.obj = treasure_chest;
-  obj_index[real_object0(453)].func.obj = cards_object;
 
   /*
      torg
    */
   mob_index[real_mobile0(28961)].func.mob = timoro_die;
-
-/*
-drst
-*/
-
-  obj_index[real_object0(34226)].func.obj = dwarfslayer;
 
 /*
 bogentok
@@ -1326,6 +1300,25 @@ bogentok
 
 void assign_objects(void)
 {
+
+  obj_index[real_object0(500055)].func.obj = tharnrifts_portal;
+  obj_index[real_object0(55007)].func.obj = no_kill_priest_obj;
+  obj_index[real_object0(1372)].func.obj = jet_black_maul;
+  obj_index[real_object0(35102)].func.obj = magic_pool;
+  obj_index[real_object0(35103)].func.obj = magic_pool;
+  obj_index[real_object0(12028)].func.obj = moonstone_fragment;
+  obj_index[real_object0(96073)].func.obj = faith;
+  obj_index[real_object0(96012)].func.obj = mistweave;
+  obj_index[real_object0(96027)].func.obj = leather_vest;
+  obj_index[real_object0(96042)].func.obj = deva_cloak;
+  obj_index[real_object0(96059)].func.obj = icicle_cloak;
+  obj_index[real_object0(8406)].func.obj = ogrebane;
+  obj_index[real_object0(96066)].func.obj = giantbane;
+  obj_index[real_object0(20000)].func.obj = mindbreaker;
+  obj_index[real_object0(1270)].func.obj = treasure_chest;
+  obj_index[real_object0(453)].func.obj = cards_object;
+  obj_index[real_object0(34226)].func.obj = dwarfslayer;
+
   obj_index[real_object0(354)].func.obj = artifact_monolith;
 
   obj_index[real_object0(83457)].func.obj = miners_helmet;
@@ -1689,6 +1682,7 @@ void assign_objects(void)
   obj_index[real_object0(465)].func.obj = gc_portal;
   obj_index[real_object0(466)].func.obj = ec_portal;
   obj_index[real_object0(467)].func.obj = ud_portal;
+  obj_index[real_object0(468)].func.obj = uc_nexus_portal;
   obj_index[real_object0(750)].func.obj = druid_spring;
   obj_index[real_object0(749)].func.obj = blighter_pond;
 //  obj_index[real_object0(366)].func.obj = druid_sabre;
@@ -1729,7 +1723,10 @@ void assign_objects(void)
   obj_index[real_object0(130028)].func.obj = vecna_krindor_main;
   obj_index[real_object0(130018)].func.obj = vecna_death_mask;
   obj_index[real_object0(130038)].func.obj = mob_vecna_procs;
-  
+
+  // nexus_uc
+  obj_index[real_object0(130200)].func.obj = obj_tp_no_high_levels;
+
   /* Duris Tournament */
   obj_index[real_object0(67900)].func.obj = arenaobj_proc;
 

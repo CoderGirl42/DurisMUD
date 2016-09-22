@@ -8,7 +8,7 @@ the fountain, onyx tub himself in it.
 ~
 67532906 1 0 0 1007266044 268744926 626786528 126891520 -1001 S
 x 0 16778256 0 7
-51 0 0 1d1+1 1d1+1
+31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #130201
@@ -19,7 +19,7 @@ osiris god dead man~
 ~
 3702538 1 0 0 268435584 0 0 0 0 S
 vt 0 263216 0 3
-61 0 0 1d1+1 1d1+1
+41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
 #130202
@@ -33,6 +33,119 @@ flaring in its eyes.
 ~
 8 1 0 0 0 0 0 0 0 S
 og 0 1 0 7
-55 0 0 1d1+1 1d1+1
+35 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
+#130203
+wraith~
+&+La negative material planar projection of a wraith~
+&+LA wraith is here, prepared to devour a soul.
+~
+&+LWraiths, being one of the more powerful types of undead, have a strong
+&+Lpresence on both The Prime Material and Negative Material Plane.
+&+LPossessing unholy magical abilities, the ability to drain life, and
+&+La need to neutralize the life that threatens their continued existence,
+&+Lwraiths are a dangerous foe.
+~
+1107441736 1 0 0 973676732 276700 0 0 -1000 S
+wr 0 512 0 -1
+36 2 -38 40d64+840 4d7+10
+0.0.0.0 51840
+8 8 0
+#130204
+vampire projection figure~
+&+Lthe negative material planar projection of a vampire~
+&+LA malevolent, pitch black figure is here.
+~
+&+LAll undead have  a link to the Negative Material Plane, but some exist
+&+Lfully on both the Prime Material Plane and the Negative Material Plane.
+&+LA vampire draws its emmense strength and powers from the Negative Material
+&+LPlane, and as a result is far stronger closer to its source of power...
+~
+1107441738 1 0 0 973676604 276672 0 0 -1000 S
+UV 0 4 0 -1
+36 -5 -111 55d121+4620 7d6+30
+0.2.7.6 222750
+8 8 0
+#130205
+lich projection~
+&+La negative material planar projection of an ancient &+mlich~
+&+LA lich stands here, looking contemplative.
+~
+&+LLiches are generally extremely powerful necromancers (and occasionaly other
+&+Ltypes of spellcasters) who have overcome death by draining negative energy
+&+Lfrom The Negative Material Plane, and using it to continue their existence.
+&+LOnce a member of the living, and still possessing a memory of their past,
+&+Lwhile retaining control over their behavoir, liches are far less inclined
+&+Lto slay the living than most undead.  Nonethless, they tend to attack
+&+Lany who would traditionally be an enemy to them, just as they are often
+&+Lready to aid their fellow necromancer in the path to lich-hood.
+~
+1107441736 1 0 0 973676734 276700 0 0 -1000 S
+ul 0 1024 0 -1
+31 -10 -132 60d96+6180 7d6+35
+6.6.9.7 243000
+8 8 1
+#130206
+flame salamander~
+&+ra flame salamander&n~
+&+rA powerful flame salamander slithers along here, looking for food.&n
+~
+This huge fire red snake like being carries a huge flaming spear and glows
+with a bright orange flame.
+~
+2284 1 0 0 0 0 0 0 -1000 S
+EF 0 1 0 -1
+31 -3 -82 46d100+2438 6d6+25
+0.0.0.0 111780
+8 8 0
+#130207
+magman~
+&+Ra magman&n~
+&+RA magman is here, slowly moving along the endless plane of fire.&n
+~
+This huge man-like monster, closely resembles the mudmen of the prime plane.
+~
+2252 1 0 0 0 0 0 0 -1000 S
+EF 0 1 0 -1
+32 -1 -79 45d107+2025 6d6+12
+0.0.0.0 109350
+8 8 1
+#130208
+xorn _spec4_~
+&+ya powerful xorn&n~
+&+yA powerful xorn moves thought the rock here.&N
+~
+&+yThis large 3 armed and 3 legged creature is always on the lookout for gems.
+~
+1074141252 1 0 0 973078680 32770 0 0 0 S
+EE 0 2048 0 -1
+31 -3 -105 50d80+2650 6d6+25
+0.0.0.0 121500
+8 8 1
+#130209
+dao noble _spec1_~
+&+ya dao noble&n~
+&+yA powerful dao noble stands here, and moves to attack when he sees you&n.
+~
+&+yThis powerful genie kind, hates those who invade his homeland,
+&+yand moves to attack you at once!
+~
+1342572544 1 0 0 570425496 14466 0 0 0 S
+EE 0 512 0 -1
+38 -7 -135 58d96+5974 7d6+35
+0.0.0.0 234900
+8 8 1
+#130210
+efreeti scout~
+&+Yan efreeti scout&n~
+&+YA powerful efreeti scout flys here, and moves to attack when he sees you&n.
+~
+This efreeti is out scouting the fire plane for slaves for his masters in
+the city of brass.
+~
+133324 1 0 0 134807608 0 0 0 -1000 S
+EF 0 512 0 -1
+31 -1 -79 45d90+1935 6d6+12
+0.0.0.0 109350
+8 8 1
