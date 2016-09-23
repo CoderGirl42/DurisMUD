@@ -389,6 +389,11 @@ int inn(int room, P_char ch, int cmd, char *arg)
     loginlog( ch->player.level, "%s [%s] has rented out in [%d] @ %s.",
       GET_NAME(ch), (ch->desc) ? ch->desc->host : "LINKDEAD", world[ch->in_room].number, timestr );
     sql_log(ch, CONNECTLOG, "Rented Out");
+    // If it's not an immortal.
+    if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+    {
+      update_ingame_racewar( -GET_RACEWAR(ch) );
+    }
     extract_char(ch);
     ch = NULL;
 
@@ -465,6 +470,11 @@ int undead_inn(int room, P_char ch, int cmd, char *arg)
              GET_NAME(ch), (ch->desc) ? ch->desc->host : "LINKDEAD",
              world[ch->in_room].number);
     sql_log(ch, CONNECTLOG, "Rented Out");
+    // If it's not an immortal.
+    if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+    {
+      update_ingame_racewar( -GET_RACEWAR(ch) );
+    }
     extract_char(ch);
     ch = NULL;
   }
@@ -1449,6 +1459,11 @@ int mortal_heaven(int room, P_char ch, int cmd, char *arg)
       send_to_char("Your soul is torn from the afterlife, eternal rest denied...\n\r", ch);
       act("$n is torn from the afterlife.", FALSE, ch, 0, 0, TO_ROOM);
       writeCharacter(tch, RENT_DEATH, NOWHERE);
+      // If it's not an immortal.
+      if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+      {
+        update_ingame_racewar( -GET_RACEWAR(ch) );
+      }
       extract_char(tch);
       if( !tch->desc )
       {

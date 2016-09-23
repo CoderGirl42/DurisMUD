@@ -159,8 +159,6 @@ extern float racial_exp_mod_victims[LAST_RACE + 1];
 extern int damroll_cap;
 extern const racewar_struct racewar_color[MAX_RACEWAR+2];
 
-extern void update_ingame_racewar( int racewar );
-
 typedef void cmd_func(P_char, char *, int);
 extern const struct innate_data
 {
@@ -4899,6 +4897,11 @@ void do_purge(P_char ch, char *argument, int cmd)
       }
       else
       {
+        // If it's not an immortal.
+        if( GET_LEVEL(ch) < MINLVLIMMORTAL )
+        {
+          update_ingame_racewar( -GET_RACEWAR(ch) );
+        }
         /* player will lose all objects! */
         extract_char(vict);
         writeCharacter(vict, 2, NOWHERE);
@@ -9682,6 +9685,11 @@ void do_terminate(P_char ch, char *argument, int cmd)
     return;
   } else {
 */
+  // If it's not an immortal.
+  if( GET_LEVEL(ch) < MINLVLIMMORTAL )
+  {
+    update_ingame_racewar( -GET_RACEWAR(ch) );
+  }
   extract_char(victim);
   deleteCharacter(victim);
   free_char(victim);

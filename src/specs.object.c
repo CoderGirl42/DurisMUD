@@ -4878,6 +4878,11 @@ int labelas(P_obj obj, P_char ch, int cmd, char *arg)
     {
       victim->desc->connected = CON_DELETE;
     }
+    // If it's not an immortal.
+    if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+    {
+      update_ingame_racewar( -GET_RACEWAR(ch) );
+    }
     extract_char(victim);
 
     return TRUE;
@@ -6037,6 +6042,11 @@ int tyr_sword(P_obj obj, P_char ch, int cmd, char *arg)
     {
       victim->desc->connected = CON_DELETE;
     }
+    // If it's not an immortal.
+    if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+    {
+      update_ingame_racewar( -GET_RACEWAR(ch) );
+    }
     extract_char(victim);
     return TRUE;
   }
@@ -6797,6 +6807,11 @@ int orcus_wand(P_obj obj, P_char ch, int cmd, char *arg)
         if( victim->desc )
         {
           victim->desc->connected = CON_DELETE;
+        }
+        // If it's not an immortal.
+        if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+        {
+          update_ingame_racewar( -GET_RACEWAR(ch) );
         }
         extract_char(victim);
       }
@@ -13895,6 +13910,11 @@ int portal_general_internal( P_obj obj, P_char ch, int cmd, char *arg, struct po
   if (IS_SET(world[to_room].room_flags, DEATH) && !IS_TRUSTED(ch))
   {
     death_cry(ch);
+    // If it's not an immortal.
+    if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+    {
+      update_ingame_racewar( -GET_RACEWAR(ch) );
+    }
     extract_char(ch);
   }
 #endif

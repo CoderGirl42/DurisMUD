@@ -2666,6 +2666,11 @@ void die(P_char ch, P_char killer)
         {
           close_socket(ch->desc);
         }
+        // If it's not an immortal.
+        if( GET_LEVEL(ch) < MINLVLIMMORTAL )
+        {
+          update_ingame_racewar( -GET_RACEWAR(ch) );
+        }
         extract_char(ch);
         deleteCharacter(ch);
         free_char(ch);
@@ -2754,6 +2759,11 @@ void die(P_char ch, P_char killer)
     }
     else
     {
+      // If it's not an immortal.
+      if( GET_LEVEL(ch) < MINLVLIMMORTAL )
+      {
+        update_ingame_racewar( -GET_RACEWAR(ch) );
+      }
       extract_char(ch);
       if (!ch->desc)
       {

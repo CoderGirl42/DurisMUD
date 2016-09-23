@@ -1949,6 +1949,7 @@ void wimps_in_accept_queue(void);
 bool valid_password(P_desc, char *);
 bool pfile_exists(const char *, char *);
 void event_autosave(P_char, P_char, P_obj, void*);
+void update_ingame_racewar( int racewar );
 
 /* new_combat.c */
 /*

@@ -333,6 +333,7 @@ void do_camp(P_char ch, char *arg, int cmd)
     act("$n has left the game.", TRUE, ch, 0, 0, TO_ROOM);
 
     writeCharacter(ch, RENT_INN, ch->in_room);
+
     extract_char(ch);
     ch = NULL;
     return;
@@ -1689,6 +1690,12 @@ void do_quit(P_char ch, char *argument, int cmd)
     ch->specials.was_in_room = world[i].number;
     ch->in_room = i;
     writeCharacter(ch, 3, i);
+  }
+
+  // If it's not an immortal.
+  if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+  {
+    update_ingame_racewar( -GET_RACEWAR(ch) );
   }
 
   extract_char(ch);

@@ -294,6 +294,11 @@ void nq_free_instance(struct nq_instance *instance, P_char ch)
         act("$n walks away..", FALSE, actor->ch, 0, 0, TO_ROOM);
         act(buf, FALSE, ch, 0, actor->ch, TO_CHAR);
       }
+      // If it's not an immortal.
+      if( IS_PC(ch) && (GET_LEVEL( ch ) < MINLVLIMMORTAL) )
+      {
+        update_ingame_racewar( -GET_RACEWAR(ch) );
+      }
       extract_char(actor->ch);
     }
     FREE(actor);

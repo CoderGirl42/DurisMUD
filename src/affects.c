@@ -39,6 +39,7 @@
 #include "sql.h"
 #include "vnum.obj.h"
 #include "ctf.h"
+#include "files.h"
 
 /*
  * external variables
@@ -3615,11 +3616,16 @@ int camp(P_char ch)
           {
             GET_HOME(ch) = world[ch->in_room].number;
           }
-          writeCharacter(ch, 6, ch->in_room);
+          writeCharacter(ch, RENT_CAMPED, ch->in_room);
 
           loginlog(ch->player.level, "%s has camped in [%d].",
                    GET_NAME(ch), world[ch->in_room].number);
           sql_log(ch, CONNECTLOG, "Camped");
+          // If it's not an immortal.
+          if( GET_LEVEL(ch) < MINLVLIMMORTAL )
+          {
+            update_ingame_racewar( -GET_RACEWAR(ch) );
+          }
           extract_char(ch);
 
           /*

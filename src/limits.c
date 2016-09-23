@@ -1667,6 +1667,11 @@ void point_update(void)
           close_socket(i->desc);
         //writeCharacter(i, 5, reloghere);
         writeCharacter(i, RENT_LINKDEAD, i->in_room);
+        // If it's not an immortal.
+        if( GET_LEVEL(i) < MINLVLIMMORTAL )
+        {
+          update_ingame_racewar( -GET_RACEWAR(i) );
+        }
         extract_char(i);
         continue;
       }

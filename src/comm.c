@@ -1019,6 +1019,11 @@ void game_loop(int s)
           write_to_descriptor(point->descriptor, "\r\nSaving...\r\n");
           do_save_silent(point->character, 3);
         }
+        // If it's not an immortal.
+        if( GET_LEVEL(point->character) < MINLVLIMMORTAL )
+        {
+          update_ingame_racewar( -GET_RACEWAR(point->character) );
+        }
         extract_char(point->character);
       }
     }

@@ -9304,20 +9304,16 @@ void event_bye_grave(P_char ch, P_char victim, P_obj obj, void *data)
   if(ch->following && ch->in_room == ch->following->in_room)
   {
     act("$N &nturns toward you and bows slightly before vanishing, "
-        "sinking back into its cold grave.", FALSE, ch->following, 0, ch,
-        TO_CHAR);
+      "sinking back into its cold grave.", FALSE, ch->following, 0, ch, TO_CHAR);
 
     act("$N &nturns toward $n and bows slightly before vanishing, "
-        "sinking back into its cold grave.", FALSE, ch->following, 0, ch,
-        TO_NOTVICT);
+      "sinking back into its cold grave.", FALSE, ch->following, 0, ch, TO_NOTVICT);
   }
   else
   {
     if(ch->following)
     {
-      send_to_char
-        ("&+LYour called &+Wskeleton &+Lreturns to its cold grave.\n",
-         ch->following);
+      send_to_char("&+LYour called &+Wskeleton &+Lreturns to its cold grave.\n", ch->following);
     }
   }
   extract_char(ch);
