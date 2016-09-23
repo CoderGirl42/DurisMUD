@@ -2831,6 +2831,13 @@ void extract_char(P_char ch)
     {
       debug( "Char: '%s' decrementing ingame_racewar; connection: %s.", GET_NAME(ch),
         (ch->desc==NULL) ? "LINKDEAD" : connected_types[STATE(ch->desc)] );
+      FILE *f = fopen("logs/log/decrement", "a");
+      if( f != NULL )
+      {
+        fwrite( GET_NAME(ch), strlen(GET_NAME(ch)), 1, f );
+        fwrite( "\n", 1, 1, f );
+        fclose(f);
+      }
       update_ingame_racewar( -GET_RACEWAR(ch) );
     }
     if (IS_AFFECTED2(ch, AFF2_CASTING))
