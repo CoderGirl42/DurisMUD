@@ -314,7 +314,18 @@ int hit_regen(P_char ch, bool display_only)
     || (has_innate(ch, INNATE_WOODLAND_RENEWAL) && (world[ch->in_room].sector_type == SECT_FOREST))
     || has_innate(ch, INNATE_ELEMENTAL_BODY))
   {
-    gain += get_innate_regeneration(ch);
+    switch( GET_STAT(ch) )
+    {
+      case STAT_SLEEPING:
+        gain += 2 * get_innate_regeneration(ch);
+        break;
+      case STAT_RESTING:
+        gain += (3 * get_innate_regeneration(ch)) / 2;
+        break;
+      default:
+        gain += get_innate_regeneration(ch);
+      break;
+    }
   }
 
   if( IS_AFFECTED4(ch, AFF4_TUPOR) )
