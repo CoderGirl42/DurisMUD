@@ -6602,9 +6602,12 @@ void do_who(P_char ch, char *argument, int cmd)
       }
 
       sprintf(who_output + strlen(who_output),
-        "\nThere are %d &+gmortal(s)&n on.\n\n&+cTotal visible players: %d.&N\n"
-        "&+cTotal in-game connections: %d.&N\n\n&+rRecord number of connections this boot: %d.&n\n",
-        who_list_size, who_list_size + who_gods_size, total_ingame_connections, max_descs);
+        "\nThere are %d &+gmortal(s)&n on.\n\n&+cTotal visible players: %d.&N\n",
+        who_list_size, who_list_size + who_gods_size );
+      if( IS_TRUSTED(ch) )
+        sprintf(who_output + strlen(who_output),
+          "&+cTotal in-game connections: %d.&N\n\n&+rRecord number of connections this boot: %d.&n\n",
+          total_ingame_connections, max_descs);
     }
     send_to_char(who_output, ch, LOG_NONE);
     strcpy(who_output, "");
