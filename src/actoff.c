@@ -5783,7 +5783,7 @@ if((GET_RACE(victim) == RACE_OGRE) && ch_size < vict_size)
   {
     // Note: IS_PAL..SWORD checks to make sure weapon exists.
     if( !(ch->equipment[WEAR_SHIELD]) && (GET_CHAR_SKILL( ch, SKILL_SHIELDLESS_BASH ) < 1)
-      && !(GET_CLASS( ch, CLASS_PALADIN | CLASS_ANTIPALADIN ) && IS_PALADIN_SWORD( weap )) )
+      && (GET_CLASS( ch, CLASS_PALADIN | CLASS_ANTIPALADIN ) && IS_PALADIN_SWORD( weap )) )
     {
       // Artifacts are often low weight to allow all to use -  Jexni 6/7/08
       if( IS_ARTIFACT(weap) )
