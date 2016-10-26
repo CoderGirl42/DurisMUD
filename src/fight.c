@@ -8594,7 +8594,7 @@ int MonkRiposte(P_char victim, P_char attacker, P_obj wpn)
       SET_POS(victim, POS_STANDING + GET_STAT(victim));
       // Clear the lag!
       disarm_char_nevents(victim, event_wait);
-      set_short_affected_by(victim, SKILL_MARTIAL_ARTS, PULSE_VIOLENCE/2);
+      set_short_affected_by(victim, SKILL_MARTIAL_ARTS, PULSE_VIOLENCE);
       REMOVE_BIT(victim->specials.act2, PLR2_WAIT);
       update_pos(victim);
       return FALSE;
