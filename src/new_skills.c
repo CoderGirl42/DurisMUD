@@ -558,7 +558,7 @@ void do_feign_death(P_char ch, char *arg, int cmd)
     return;
   }
 
-  IF( IS_PC(ch) )
+  if( IS_PC(ch) )
   {
     memset(&af, 0, sizeof(af));
     af.type = SKILL_FEIGN_DEATH;
