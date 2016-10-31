@@ -8906,17 +8906,17 @@ int serpent_of_miracles(P_obj obj, P_char ch, int cmd, char *arg)
 }
 
 /* THIS IS NEWBIE ZONE  STREAM OF LIFE*/
-int life_of_stream(P_obj obj, P_char ch, int cmd, char *arg)
+int stream_of_life(P_obj obj, P_char ch, int cmd, char *arg)
 {
-  int      bits;
-  P_char   tempch;
-  P_obj    tempobj;
-  int      r_room, rand;
+  P_char dummy;
+  P_obj  dummyobj;
+  int    r_room;
 
   if( cmd != CMD_ENTER || !arg || !IS_ALIVE(ch) || !*arg )
     return FALSE;
 
-  if( !strcmp(arg, "stream") )
+  generic_find(arg, FIND_OBJ_ROOM, ch, &dummy, &dummyobj);
+  if( obj == dummyobj )
   {
     if( affected_by_spell(ch, TAG_LIFESTREAMNEWBIE) )
     {
@@ -8926,16 +8926,16 @@ int life_of_stream(P_obj obj, P_char ch, int cmd, char *arg)
 
     send_to_char("You feel refreshed as you enter the realm of life.\n", ch);
     GET_HIT(ch) = GET_MAX_HIT(ch);
-    r_room = real_room(GET_BIRTHPLACE(ch));
-    char_from_room(ch);
-    char_to_room(ch, r_room, -1);
-    act("$n slowly fades into existence.", FALSE, ch, 0, 0, TO_ROOM);
+    if( (r_room = real_room( 29201 )) > 0 )
+    {
+      char_from_room(ch);
+      char_to_room(ch, r_room, -1);
+      act("$n slowly fades into existence.", FALSE, ch, 0, 0, TO_ROOM);
+    }
     return TRUE;
   }
-  else
-  {
-    return FALSE;
-  }
+
+  return FALSE;
 }
 
 int newbie_sign1(P_obj obj, P_char ch, int cmd, char *arg)
@@ -8951,8 +8951,6 @@ int newbie_sign1(P_obj obj, P_char ch, int cmd, char *arg)
    */
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
-
-
 
   if (!ch || cmd == CMD_PERIODIC || !arg)
     return FALSE;
@@ -8988,12 +8986,9 @@ int newbie_sign2(P_obj obj, P_char ch, int cmd, char *arg)
   if (cmd == CMD_SET_PERIODIC)
     return FALSE;
 
-
-
   if (!ch || cmd == CMD_PERIODIC || !arg)
     return FALSE;
   one_argument(arg, Gbuf1);
-
 
   if (arg && (cmd == CMD_LOOK || cmd == CMD_EXAMINE || cmd == CMD_LOOK))
   {
@@ -13004,12 +12999,20 @@ int doom_blade_Proc(P_obj obj, P_char ch, int cmd, char *arg)
 
 int newbie_portal(P_obj obj, P_char ch, int cmd, char *arg)
 {
-  if (cmd == CMD_ENTER) {
-    find_starting_location(ch, 0);
-    GET_BIRTHPLACE(ch) = GET_HOME(ch);
-    GET_ORIG_BIRTHPLACE(ch) = GET_HOME(ch);
-    obj->value[0] = GET_HOME(ch);
-    return FALSE;
+  P_char dummy;
+  P_obj dummyobj;
+
+  if( cmd == CMD_ENTER )
+  {
+    generic_find(arg, FIND_OBJ_ROOM, ch, &dummy, &dummyobj);
+    if( dummyobj == obj )
+    {
+      find_starting_location(ch, 0);
+      GET_BIRTHPLACE(ch) = GET_HOME(ch);
+      GET_ORIG_BIRTHPLACE(ch) = GET_HOME(ch);
+      teleport_to( ch, real_room(GET_HOME(ch)), 0 );
+      return TRUE;
+    }
   }
 
   return FALSE;

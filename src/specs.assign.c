@@ -2126,7 +2126,7 @@ void assign_objects(void)
   /*
      newbiezone
    */
-  obj_index[real_object0(22803)].func.obj = newbie_portal;
+  obj_index[real_object0(22803)].func.obj = stream_of_life;
   obj_index[real_object0(22800)].func.obj = newbie_sign1;
   obj_index[real_object0(22801)].func.obj = newbie_sign2;
 

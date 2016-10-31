@@ -1058,8 +1058,8 @@ int sevenoaks_longsword(P_obj, P_char, int, char*);
 int dagger_of_wind(P_obj, P_char, int, char*);
 int staff_of_air_conjuration(P_obj, P_char, int, char *);
 
-//newbie zone stuf
-int life_of_stream(P_obj obj, P_char ch, int cmd, char *arg);
+//newbie zone stuff
+int stream_of_life(P_obj obj, P_char ch, int cmd, char *arg);
 int newbie_sign1(P_obj obj, P_char ch, int cmd, char *arg);
 int newbie_sign2(P_obj obj, P_char ch, int cmd, char *arg);
 

@@ -37,6 +37,7 @@
 #include "epic.h"
 #include "utility.h"
 #include "vnum.room.h"
+#include "achievements.h"
 
 /* external variables */
 
@@ -5954,6 +5955,10 @@ void find_starting_location(P_char ch, int hometown)
     logit(LOG_DEBUG, Gbuf1);
     GET_HOME(ch) = guild_locations[hometown][0];
     return;
+  }
+  if( guild_num == 22800 )
+  {
+    apply_achievement( ch, TAG_LIFESTREAMNEWBIE );
   }
   GET_HOME(ch) = guild_num;
 }
