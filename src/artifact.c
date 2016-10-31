@@ -3225,7 +3225,7 @@ void event_artifact_check_bind_sql( P_char ch, P_char vict, P_obj obj, void * ar
               qry("UPDATE artifact_bind SET owner_pid = %d, timer = %ld WHERE vnum = %d", artidata.location, curr_time, list->vnum);
               logit(LOG_ARTIFACT, "event_artifact_check_bind_sql(): artifact '%s' %d merged with '%s' %d's soul.",
                 arti ? OBJ_SHORT(arti) : "NULL", list->vnum, J_NAME(owner), artidata.location );
-              debug( "%3d: artifact '%s&n'%6d merged with '%s' %d's soul.",
+              debug( "%3d: '%s&n'%6d merged with '%s' %d's soul.",
                 ++counter, pad_ansi( arti ? OBJ_SHORT(arti) : "NULL", 35, TRUE).c_str(), list->vnum, J_NAME(owner), artidata.location );
             }
             else
