@@ -659,29 +659,30 @@ void epic_stone_absorb(P_obj obj)
 /* calculate the epic point payout based on members in group */
 int epic_stone_payout(P_obj obj, P_char ch)
 {
-  int num_players = 1;
+  int num_players;
   if(ch->group)
   {
+    num_players = 0;
     for(struct group_list *gl = ch->group; gl; gl = gl->next)
     {
-      if(gl->ch != ch && IS_PC(gl->ch) && !IS_TRUSTED(gl->ch) && gl->ch->in_room == ch->in_room)
+      if( IS_PC(gl->ch) && !IS_TRUSTED(gl->ch) && (gl->ch->in_room == ch->in_room) )
       {
         num_players++;
       }
     }
   }
+  else
+  {
+    num_players = 1;
+  }
 
-  if(num_players < obj->value[1] && obj->value[1] != 0)
+  if( (num_players < obj->value[1]) && (obj->value[1] != 0) )
       num_players = obj->value[1];
-  
-  /* epic value is
-    the old payout value * number of touches / total group players in room,
-    max = (1.5) * the old payout value */
 
+  // Payout is the base value of the stone * (100% for up to max group size, then max/current % for larger groups).
   int payout = (int) (obj->value[0] * obj->value[1] / num_players);
-  int max_payout = (int) (obj->value[0] * (float) get_property("epic.touch.maxPayoutFactor", 1.5));
-
-  int epic_value = BOUNDED(1, payout, max_payout);
+  // Max_payout is just the base value of the stone * 10.
+  int max_payout = (int) (obj->value[0] * (float) get_property("epic.touch.maxPayoutFactor", 10.));
 
 //  DEPRECATED - Torgal 12/21/09
 //  float freq_mod = get_epic_zone_frequency_mod(obj->value[2]);
@@ -697,6 +698,8 @@ int epic_stone_payout(P_obj obj, P_char ch)
   debug("epic_stone_payout:alignment_mod: old_epic_value: %d, epic_value: %d", __old_epic_value, epic_value);  
 
   epic_value = epic_value * get_property("epic.touch.PayoutFactor", 1.000);
+
+  int epic_value = BOUNDED(1, epic_value, max_payout);
 
   return epic_value;
 }
@@ -963,7 +966,6 @@ int epic_stone(P_obj obj, P_char ch, int cmd, char *arg)
     }
 
     /* stones must be touched in the zone in which they were loaded */
-    
     if(zone_number && world[ch->in_room].zone != real_zone(zone_number))
     {
       act("A sick noise emanates from $p, and a large crack runs down the side! Something was misplaced!",
