@@ -692,14 +692,14 @@ int epic_stone_payout(P_obj obj, P_char ch)
 //  debug("epic_stone_payout:freq_mod: old_epic_value: %d, epic_value: %d", __old_epic_value, epic_value);
 
   float alignment_mod = get_epic_zone_alignment_mod(obj->value[2], GET_RACEWAR(ch));
-  int __old_epic_value = epic_value;
+  int __old_epic_value = payout;
 
-  epic_value = MAX(1, (int) (epic_value * alignment_mod));
-  debug("epic_stone_payout:alignment_mod: old_epic_value: %d, epic_value: %d", __old_epic_value, epic_value);  
+  payout = MAX(1, (int) (payout * alignment_mod));
+  debug("epic_stone_payout:alignment_mod: old_epic_value: %d, epic_value: %d", __old_epic_value, payout);
 
-  epic_value = epic_value * get_property("epic.touch.PayoutFactor", 1.000);
+  int epic_value = payout * get_property("epic.touch.PayoutFactor", 1.000);
 
-  int epic_value = BOUNDED(1, epic_value, max_payout);
+  epic_value = BOUNDED(1, epic_value, max_payout);
 
   return epic_value;
 }
