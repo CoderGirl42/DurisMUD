@@ -2641,12 +2641,13 @@ void do_drink(P_char ch, char *argument, int cmd)
         send_to_char("You feel &+Wt&+wou&+Wc&+wh&+Wed&n by a higher power!\r\n", ch);
         GET_HIT(ch) += healamt;
         healCondition(ch, healamt);
+        CharWait( ch, WAIT_SEC );
       }
       else if ((temp->value[2] == LIQ_UNHOLYWAT && IS_GOOD(ch)) || (temp->value[2] == LIQ_HOLYWATER && IS_EVIL(ch)))
       {
         send_to_char("You are &+rbl&+Ra&+rs&+Rte&+rd&n by a higher power!\r\n", ch);
         GET_HIT(ch) = MAX(0, GET_HIT(ch) - dice(3, 3));
-      } 
+      }
       else if (temp->value[3])
       {                         /*
                                  * The shit was poisoned !
