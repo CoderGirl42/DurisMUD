@@ -9096,6 +9096,12 @@ bool flank(P_char ch, P_char victim)
 {
   P_char   tch;
 
+  if( !IS_ALIVE(victim) )
+  {
+    send_to_char( "You can only flank the living.", ch );
+    return FALSE;
+  }
+
   if( IS_DESTROYING( ch ) )
   {
     send_to_char("You can't flank an object.. well maybe a steak.\n", ch );
@@ -9110,21 +9116,18 @@ bool flank(P_char ch, P_char victim)
 
   if(affected_by_spell(ch, SKILL_FLANK))
   {
-    send_to_char("You haven't reoriented yet enough for another attempt!\n",
-                 ch);
+    send_to_char("You haven't reoriented yet enough for another attempt!\n", ch);
     return FALSE;
   }
 
   if(ch == victim)
   {
-    send_to_char
-      ("You turn around a few times chasing your own buttocks and give up eventually.\n",
-       ch);
+    send_to_char("You turn around a few times chasing your own buttocks and give up eventually.\n", ch);
     return FALSE;
   }
 
   set_short_affected_by(ch, SKILL_FLANK, PULSE_VIOLENCE * 4);
-  
+
   appear(ch);
 
   CharWait(ch, PULSE_VIOLENCE * 1);
