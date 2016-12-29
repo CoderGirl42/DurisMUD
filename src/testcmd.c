@@ -36,6 +36,8 @@ extern struct zone_random_data {
   int races[10];
   int proc_spells[3][2];
 } zones_random_data[100];
+extern const racewar_struct racewar_color[MAX_RACEWAR+2];
+extern P_char character_list;
 
 extern int get_mincircle( int spell );
 
@@ -256,6 +258,47 @@ void do_test_writemap(P_char ch, char *arg, int cmd)
     
 }
 
+void do_test_zonepvp( P_char ch, char *arg )
+{
+  P_char vict;
+  u_short reset_players[MAX_RACEWAR + 1];
+  int zone;
+
+  // Initialize.
+  for( int i = 0;i < MAX_RACEWAR + 1; i++ )
+  {
+    reset_players[i] = 0;
+  }
+
+  zone = world[ch->in_room].zone;
+
+  for( vict = character_list; vict; vict = vict->next )
+  {
+    if( IS_NPC(vict) )
+      continue;
+    if( vict->in_room == NOWHERE )
+      continue;
+    if( world[vict->in_room].zone != zone )
+      continue;
+    // Immortals do not affect misfire regardless of IS_TRUSTED toggle.
+    if( GET_LEVEL(vict) < MINLVLIMMORTAL )
+    {
+      reset_players[GET_RACEWAR(vict)]++;
+    }
+  }
+
+  for( int i = 0;i < MAX_RACEWAR + 1; i++ )
+  {
+    if( zone_table[zone].players[i] != reset_players[i] )
+    {
+      debug( "do_test_zonepvp: Zone: %s (%d) - changing players[%s] from %d to %d.", zone_table[zone].name, zone,
+        racewar_color[i].name, zone_table[zone].players[i], reset_players[i] );
+      zone_table[zone].players[i] = reset_players[i];
+    }
+    zone_table[zone].misfiring[i] = FALSE;
+  }
+}
+
 void do_test_suffix( P_char ch, char *arg )
 {
   char orig[MAX_STRING_LENGTH], suffix[MAX_STRING_LENGTH];
@@ -345,6 +388,11 @@ void do_test(P_char ch, char *arg, int cmd)
   if( isname("suffix", buff) )
   {
     do_test_suffix( ch, arg );
+    return;
+  }
+  if( isname("zonepvp", buff) )
+  {
+    do_test_zonepvp( ch, arg );
     return;
   }
   if( isname("missile", buff) )
