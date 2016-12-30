@@ -562,7 +562,7 @@ void do_gcc(P_char ch, char *argument, int cmd)
       {
         if( IS_NPC(ch) || IS_SET(ch->specials.act3, PLR3_GUILDNAME) )
         {
-          sprintf(Gbuf1, "&+cYou tell %s '&+C%s&n&+c'\r\n", from_guild->get_name().c_str(), argument);
+          sprintf(Gbuf1, "&+cYou tell %s &+c'&+C%s&n&+c'\r\n", from_guild->get_name().c_str(), argument);
           send_to_char(Gbuf1, ch, LOG_PRIVATE);
         }
         else
