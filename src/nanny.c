@@ -4307,7 +4307,7 @@ bool violating_one_hour_rule( P_desc d )
   sql_log( d->character, PLAYERLOG, "Tried to break the one-hour rule.", GET_NAME(d->character) );
 
   send_to_char_f( d->character, "\n\rYou need to wait longer before logging a character on a different"
-    " racewar side.\n\rCurrent side: &+%c%s&n, Time to clear: %d:%02d\n\rPress return to disconnect.\n\r",
+    " racewar side.\n\rCurrent side: &+%c%s&n, Time to clear: %d:%02d\n\r",
     racewar_color[racewar_side].color, racewar_color[racewar_side].name, timer / 60, timer % 60 );
   return TRUE;
 }
@@ -4520,12 +4520,6 @@ void select_pwd(P_desc d, char *arg)
         STATE(d) = CON_FLUSH;
         return;
       }
-      // One hour rule check: if the user has had a char on a different racewar side w/in an hour.
-      if( violating_one_hour_rule(d) )
-      {
-        STATE(d) = CON_FLUSH;
-        return;
-      }
 
       logit(LOG_COMM, "%s [%s@%s] has connected.", GET_NAME(d->character),
             d->login, d->host);
@@ -4704,6 +4698,12 @@ void select_main_menu(P_desc d, char *arg)
   case '1':                    /* enter game */
     if( is_multiplaying(d) )
     {
+      break;
+    }
+    // One hour rule check: if the user has had a char on a different racewar side w/in an hour.
+    if( violating_one_hour_rule(d) )
+    {
+      SEND_TO_Q(MENU, d);
       break;
     }
     enter_game(d);
