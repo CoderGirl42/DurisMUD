@@ -841,10 +841,9 @@ void spell_molten_spray(int level, P_char ch, char *arg, int type, P_char victim
   spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_GLOBE, &messages);
 }
 
-void spell_soul_disturbance(int level, P_char ch, char *arg, int type,
-                            P_char victim, P_obj obj)
+void spell_soul_disturbance( int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "$N&n's body spasms uncontrollably as $S soul is wracked with pain.",
     "Your soul is engulfed by pain as $n&n finishes incanting $s spell.",
@@ -858,28 +857,26 @@ void spell_soul_disturbance(int level, P_char ch, char *arg, int type,
     return;
 
   do_point(ch, victim);
-  
-  if(IS_SOULLESS(victim))
+
+  if( IS_SOULLESS(victim) )
   {
     send_to_char("&+YYour victim lacks a &+Wsoul!\r\n", ch);
     return;
   }
-  
-  if(number(0, 2) &&
-   resists_spell(ch, victim))
+
+  if( number(0, 2) && resists_spell(ch, victim) )
     return;
 
   dam = dice(level * 3, 2);
-  
-  dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 
-  spell_damage(ch, victim, dam, SPLDAM_PSI, SPLDAM_GLOBE | SPLDAM_GRSPIRIT | SPLDAM_NOSHRUG,  &messages);
+  dam = shaman_shield_damage_adjustments(ch, victim, dam);
+
+  spell_damage(ch, victim, dam, SPLDAM_SPIRIT, SPLDAM_GLOBE | SPLDAM_GRSPIRIT | SPLDAM_NOSHRUG,  &messages);
 }
 
-void spell_greater_soul_disturbance(int level, P_char ch, char *arg, int type,
-                                    P_char victim, P_obj obj)
+void spell_greater_soul_disturbance( int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
 {
-  int      dam;
+  int dam;
   struct damage_messages messages = {
     "$N&n's entire body spasms uncontrollably as $S soul is wracked with unbearable pain.",
     "Your soul is engulfed by unbearable pain as $n&n finishes incanting $s spell.",
@@ -893,28 +890,26 @@ void spell_greater_soul_disturbance(int level, P_char ch, char *arg, int type,
     return;
 
   do_point(ch, victim);
-  
-  if(IS_SOULLESS(victim))
+
+  if( IS_SOULLESS(victim) )
   {
     send_to_char("&+YYour victim lacks a &+Wsoul!\r\n", ch);
     return;
   }
-  
-  if(number(0, 2) &&
-     resists_spell(ch, victim))
+
+  if( number(0, 2) && resists_spell(ch, victim) )
       return;
-      
+
   dam = dice(level * 6, 2);
-  
+
   dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 
-  spell_damage(ch, victim, dam, SPLDAM_PSI, SPLDAM_NOSHRUG, &messages);
+  spell_damage(ch, victim, dam, SPLDAM_SPIRIT, SPLDAM_NOSHRUG, &messages);
 }
 
-void spell_greater_spirit_anguish(int level, P_char ch, char *arg, int type,
-                                  P_char victim, P_obj obj)
+void spell_greater_spirit_anguish( int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
 {
-  int  dam;
+  int dam;
   struct affected_type af;
   bool saved = TRUE;
 
@@ -953,7 +948,8 @@ void spell_greater_spirit_anguish(int level, P_char ch, char *arg, int type,
   act("$N &+LSCREAMS&N in utter anguish, caused by $n's &+Wspiritual&N assault!",
      TRUE, ch, 0, victim, TO_NOTVICT);
 
-  if(spell_damage(ch, victim, dam, SPLDAM_PSI, SPLDAM_NOSHRUG, 0) == DAM_NONEDEAD && GET_SPEC(ch, CLASS_SHAMAN, SPEC_SPIRITUALIST))
+  if( (spell_damage( ch, victim, dam, SPLDAM_SPIRIT, SPLDAM_NOSHRUG, 0 ) == DAM_NONEDEAD)
+    && GET_SPEC(ch, CLASS_SHAMAN, SPEC_SPIRITUALIST) )
   {
     if( (number(1,100) > 50) && !saved && !IS_AFFECTED2(victim, AFF2_SLOW))
     {
@@ -971,8 +967,7 @@ void spell_greater_spirit_anguish(int level, P_char ch, char *arg, int type,
   }
 }
 
-void spell_spirit_anguish(int level, P_char ch, char *arg, int type,
-                          P_char victim, P_obj obj)
+void spell_spirit_anguish( int level, P_char ch, char *arg, int type, P_char victim, P_obj obj )
 {
   int      dam;
   struct damage_messages messages = {
@@ -988,7 +983,7 @@ void spell_spirit_anguish(int level, P_char ch, char *arg, int type,
     return;
 
   do_point(ch, victim);
-  
+
   if(IS_SOULLESS(victim))
   {
     send_to_char("&+YYour victim lacks a &+Wsoul!\r\n", ch);
@@ -996,13 +991,13 @@ void spell_spirit_anguish(int level, P_char ch, char *arg, int type,
   }
 
   dam = dice(level * 4, 2);
-  
-  if(IS_SPIRITUALIST(ch))
-    dam += level;
-  
-  dam = shaman_shield_damage_adjustments(ch, victim, dam); 
 
-  spell_damage(ch, victim, dam, SPLDAM_PSI, SPLDAM_NODEFLECT | SPLDAM_GLOBE | SPLDAM_NOSHRUG, &messages);
+  if( IS_SPIRITUALIST(ch) )
+    dam += level;
+
+  dam = shaman_shield_damage_adjustments(ch, victim, dam);
+
+  spell_damage(ch, victim, dam, SPLDAM_SPIRIT, SPLDAM_NODEFLECT | SPLDAM_GLOBE | SPLDAM_NOSHRUG, &messages);
 }
 
 
