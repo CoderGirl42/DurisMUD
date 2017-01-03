@@ -883,8 +883,8 @@ void game_loop(int s)
     if (!(pulse % PULSES_IN_TICK) && !mini_mode)
       web_info();
 
-//    if (!(pulse % PULSES_IN_TICK))
-//      wimps_in_accept_queue();
+    if( !(pulse % ( WAIT_SEC * 90 )) )
+      wimps_in_approve_queue();
 
     if (!(pulse % (WAIT_SEC * 120)))
     {
