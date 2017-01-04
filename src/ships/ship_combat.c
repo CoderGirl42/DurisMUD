@@ -355,17 +355,17 @@ bool sink_ship(P_ship ship, P_ship attacker)
     if(!IS_SET(ship->flags, SINKING))
         SET_BIT(ship->flags, SINKING);
 
-    if (attacker)
+    if( attacker )
     {
-        if (IS_NPC_SHIP(attacker))
+        if( IS_NPC_SHIP(attacker) )
             SET_BIT(ship->flags, SUNKBYNPC);
-        logit(LOG_SHIP, "%s's ship sunk by %s", ship->ownername, attacker->ownername);
-        statuslog(AVATAR, "%s's ship sunk by %s", ship->ownername, attacker->ownername);
+        logit( LOG_SHIP, "%s's ship sunk by %s.", ship->ownername, (attacker->ownername) ? attacker->ownername : "a pirate" );
+        statuslog( AVATAR, "%s's ship sunk by %s.", ship->ownername, (attacker->ownername) ? attacker->ownername : "a pirate" );
     }
     else
     {
-        logit(LOG_SHIP, "%s's ship has sunk", ship->ownername);
-        statuslog(AVATAR, "%s's ship has sunk", ship->ownername);
+        logit(LOG_SHIP, "%s's ship has sunk.", ship->ownername);
+        statuslog(AVATAR, "%s's ship has sunk.", ship->ownername);
     }
 
     if (IS_WATER_ROOM(ship->location))
