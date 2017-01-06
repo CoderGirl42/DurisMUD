@@ -2,7 +2,7 @@
 &+WIce&+CCrag &+LCastle&n~
 97289 2 0 55 65 1
 *
-* Zone edited with durisEdit v3.00
+* Zone edited with durisEdit v3.02
 *
 *
 D 0 97026 0 2 100 0 0 0
@@ -1030,8 +1030,8 @@ M 0 97024 4 97242 100 0 0 0        * a treasury guard
 E 1 97056 4 3 100 0 0 0            *   an iron gorget
 E 1 97055 4 5 100 0 0 0            *   a dull suit of silver ringmail
 M 0 97023 1 97244 100 0 0 0        * the Viscount
-E 1 97079 1 5 100 0 0 0            *   a revolting orange and yellow cloak
 E 1 97124 1 11 100 0 0 0           *   a shield of gray illithid hide
+E 1 97079 1 12 100 0 0 0           *   a revolting orange and yellow cloak
 E 1 97053 1 16 100 0 0 0           *   a main gauche
 G 1 97128 1 0 100 0 0 0            *    a green key
 M 0 97040 1 97244 100 0 0 0        * the Viscount's assistant
