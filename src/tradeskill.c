@@ -3206,7 +3206,7 @@ int itemvalue( P_obj obj )
     workingvalue += 30;
 
   if (IS_SET(obj->bitvector2, AFF2_GLOBE))
-	  workingvalue += 75;
+	  workingvalue += 80;
 
   if (IS_SET(obj->bitvector2, AFF2_PROT_GAS))
     workingvalue += 30;
@@ -3565,6 +3565,18 @@ int itemvalue( P_obj obj )
       // So, 1d8 / 3d7 stabber is !forge and !enhance (115 ival when combined with above).
       workingvalue += ( (obj->value[1] * obj->value[1] + 19.) / 20. ) * ( mod * mod * mod ) / 5.;
     }
+  }
+  if( obj->type == ITEM_ARMOR )
+  {
+    mod = obj->value[0];
+    // Same as APPLY_AC.  1.5 points for each point of armor class.
+    if( mod < 0 )
+    {
+      mod *= -1;
+    }
+    workingvalue += (3 * mod) / 2;
+    // +10% at 50ac.
+    multiplier += mod / 500.;
   }
 
   // Two handed items have less ival.
