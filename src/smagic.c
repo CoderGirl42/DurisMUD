@@ -1151,7 +1151,7 @@ void spell_scathing_wind(int level, P_char ch, char *arg, int type,
      ch);
   act("&+WA scathing gust of wind bursts from &n$n&n&+W's fingertips!", FALSE,
       ch, 0, 0, TO_ROOM);
-  zone_spellmessage(ch->in_room,
+  zone_spellmessage(ch->in_room, FALSE,
                     "&+WYou feel a slight gust of hot air.\n",
                     "&+WYou feel a slight gust of hot air from %s.\n");
   //radiate_message_from_room(ch->in_room, 
