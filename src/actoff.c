@@ -4926,7 +4926,8 @@ bool single_stab(P_char ch, P_char victim, P_obj weapon)
 
   dam += (number (10, GET_C_LUK(ch)) / 10);
 
-  dam = (int)((float)dam * ((float)skill / (float)100));
+  // 50% damage at 0 skill ... 100% damage at 100 skill.
+  dam = (dam * (skill + 100)) / 200;
 
   dice_mult = (int) (weapon->value[1] + (weapon->value[2] / 2)) / 2;
   dice_mult += weapon->value[1] + (weapon->value[1] / 2);
