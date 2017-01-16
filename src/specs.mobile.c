@@ -14404,9 +14404,7 @@ int outpost_captain(P_char ch, P_char pl, int cmd, char *arg)
           {
             if (how_close(ch->in_room, d->character->in_room, distance) > 0)
               if (number(0, 11) >
-                  BOUNDED(0,
-                          how_close(ch->in_room, d->character->in_room,
-                                    distance), 10))
+                  BOUNDED(0, how_close(ch->in_room, d->character->in_room, distance), 10))
               {                 // the longer the less offen
                 ii++;
                 if (number(0, 10) < ii)

@@ -2907,9 +2907,9 @@ void spell_ether_warp(int level, P_char ch, char *arg, int type, P_char victim, 
     to_room = ch->in_room;
   }
 
-  if(!IS_TRUSTED(ch) && IS_NPC(victim) && GET_SPEC(ch, CLASS_PSIONICIST, SPEC_PSYCHEPORTER)
-    && ((how_close(ch->in_room, victim->in_room, level*1.35+15) < 0
-    || how_close(victim->in_room, ch->in_room, level*1.35+15) < 0)) )
+  if( !IS_TRUSTED(ch) && IS_NPC(victim) && GET_SPEC(ch, CLASS_PSIONICIST, SPEC_PSYCHEPORTER)
+    && (( how_close(ch->in_room, victim->in_room, level*1.35+15) < 0 )) )
+//    || how_close(victim->in_room, ch->in_room, level*1.35+15) < 0)) )
   {
     to_room = ch->in_room;
   }
@@ -3110,8 +3110,8 @@ void spell_wormhole(int level, P_char ch, char *arg, int type, P_char victim, P_
        {
          distance = level;
 
-         if( how_close(ch->in_room, to_room, distance) < 0 ||
-           how_close(to_room, ch->in_room, distance) < 0)
+         if( how_close(ch->in_room, to_room, distance) < 0 )
+//          || how_close(to_room, ch->in_room, distance) < 0)
           success = false;
        }
      }
