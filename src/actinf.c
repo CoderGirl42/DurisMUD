@@ -6217,8 +6217,15 @@ const char *get_class_name(P_char ch, P_char tch)
 
 int compare_char_data(const void *char1, const void *char2)
 {
-  return ((*(P_char *) char2)->player.level) -
-    ((*(P_char *) char1)->player.level);
+  int lvl1, lvl2;
+  lvl1 = (*(P_char *) char1)->player.level;
+  lvl2 = (*(P_char *) char2)->player.level;
+  if( lvl1 < lvl2 )
+    return TRUE;
+  else if( lvl2 < lvl1 )
+    return FALSE;
+  else
+    return GET_RACEWAR(*(P_char *) char1) - GET_RACEWAR(*(P_char *) char2);
 }
 
 void do_who(P_char ch, char *argument, int cmd)
