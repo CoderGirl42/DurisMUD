@@ -1607,7 +1607,10 @@ void event_mine_check( P_char ch, P_char victim, P_obj, void *data )
   {
     if( mdata->mine_type == VOBJ_MINE )
     {
-      ore = get_ore_from_mine(ch, mdata->mine_quality);
+      if( GET_C_LUK(ch) > number(1, 10000) )
+        ore = get_gem_from_mine(ch, mdata->mine_quality);
+      else
+        ore = get_ore_from_mine(ch, mdata->mine_quality);
       if( !ore )
       {
         wizlog(56, "event_mine_check: couldn't load ore, quality %d.", mdata->mine_quality );
