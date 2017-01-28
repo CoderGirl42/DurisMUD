@@ -45,6 +45,7 @@
 #include "specs.prototypes.h"
 #include "assocs.h"
 #include "vnum.obj.h"
+#include "achievements.h"
 
 #define SMITH_MAX_ITEMS   20
 
@@ -1616,6 +1617,8 @@ void event_mine_check( P_char ch, P_char victim, P_obj, void *data )
       else
       {
         ore = get_ore_from_mine(ch, mdata->mine_quality);
+        if( notch_achievement(ch, AIP_ORE_MINED) == 1000 )
+          apply_achievement( ch, ACH_DO_YOU_MINE );
         gem = FALSE;
       }
       if( !ore )
@@ -5313,6 +5316,10 @@ int calc_ore_cost( P_char ch, P_obj ore )
   // Level/skill multipliers
   newcost *= (float)GET_LEVEL(ch) / 56.0;
   newcost *= (GET_CHAR_SKILL(ch, SKILL_MINE)) / 100.0;
+
+  // Do you mine achievement.
+  if( affected_by_spell(ch, ACH_DO_YOU_MINE) )
+    newcost *= 1.10;
 
   debug( "New ore: '%s' (lvl: %d, skill: %d) value: %d,%d.", ore->short_description, GET_LEVEL(ch),
     GET_CHAR_SKILL(ch, SKILL_MINE), (int)newcost/1000, (int)newcost%1000 );

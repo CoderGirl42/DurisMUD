@@ -27,19 +27,21 @@ void do_achievements(P_char ch, char *arg, int cmd)
   int lvlachi = paf ? paf->modifier : 0;
   paf = get_spell_from_char(ch, AIP_CARGOCOUNT);
   int cargo = paf ? paf->modifier : 0;
+  paf = get_spell_from_char(ch, AIP_ORE_MINED);
+  int ore = paf ? paf->modifier : 0;
 
   sprintf(buf, "\r\n&+L=-=-=-=-=-=-=-=-=-=--= &+rDuris Mud &+yAch&+Yieveme&+ynts &+Lfor &+r%s &+L=-=-=-=-=-=-=-=-=-=-=-&n\r\n\r\n", GET_NAME(ch));
 
-  /* PVP ACHIEVEMENTS */
-
-  sprintf(buf2, "   &+W%-23s           &+W%s\r\n",
-      " ", "&+L(&+rP&+Rv&+rP&+L)&n");
-  strcat(buf, buf2);
   sprintf(buf2, "  &+W%-23s&+W%-42s&+W%s\r\n",
       "Achievement", "Requirement", "Affect/Reward");
   strcat(buf, buf2);
   sprintf(buf2, "  &+W%-23s&+W%-42s&+W%s\r\n",
-      "-----------", "-------------", "-------------");
+      "-----------", "-----------", "-------------");
+  strcat(buf, buf2);
+
+  // PVP ACHIEVEMENTS
+  sprintf(buf2, "   &+W%-23s           &+W%s\r\n",
+      " ", "&+L-=(&+rP&+Rv&+rP&+L)=-&n");
   strcat(buf, buf2);
 
   //-----Achievement: Soul Reaper
@@ -76,7 +78,7 @@ void do_achievements(P_char ch, char *arg, int cmd)
   sprintf(buf2, "\r\n");
   strcat(buf, buf2);
   sprintf(buf3, "   &+W%-23s           &+W%s\r\n",
-      " ", "&+L(&+gP&+Gv&+gE&+L)&n");
+      " ", "&+L-=(&+gP&+Gv&+gE&+L)=-&n");
   strcat(buf, buf3);
 
   //-----Achievement: The Journey Begins
@@ -104,7 +106,7 @@ void do_achievements(P_char ch, char *arg, int cmd)
     sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s\r\n",
         "&+gDr&+Gag&+Lon &+gS&+Glaye&+gr&n", "&+BKill 1000 Dragons", "&+B10% damage increase vs Dragons");
   else
-    sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s &+W%d%%\r\n",
+    sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s: &+W%d%%\r\n",
         "&+gDr&+Gag&+Lon &+gS&+Glaye&+gr&n", "&+wKill 1000 Dragons", "&+w10% damage increase vs Dragons", get_progress(ch, AIP_DRAGONSLAYER, 1000));
   strcat(buf, buf3);
   //-----Dragonslayer
@@ -114,18 +116,28 @@ void do_achievements(P_char ch, char *arg, int cmd)
     sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s\r\n",
         "&+rD&+Rem&+Lon &+rS&+Rlaye&+rr&n", "&+BKill 1000 Demons", "&+B10% damage increase vs Demons");
   else
-    sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s &+W%d%%\r\n",
+    sprintf(buf3, "  &+L%-43s&+L%-45s&+L%s: &+W%d%%\r\n",
         "&+rD&+Rem&+Lon &+rS&+Rlaye&+rr&n", "&+wKill 1000 Demons", "&+w10% damage increase vs Demons", get_progress(ch, AIP_DEMONSLAYER, 1000));
   strcat(buf, buf3);
   //-----Demonslayer
 
+  //-----Achievement: Miner
+  if( affected_by_spell(ch, ACH_DO_YOU_MINE) )
+    sprintf(buf3, "  %s            %s                             %s\r\n",
+        "&+LD&+co &+CY&+yo&+wu &+YM&+Wi&+mn&+Me&N", "&+BMine 1000 ore&n", "&+B10% increase in ore prices&n");
+  else
+    sprintf(buf3, "  %s            %s                             %s: &+W%d%%\r\n",
+        "&+LD&+co &+CY&+yo&+wu &+YM&+Wi&+mn&+Me&N", "&+wMine 1000 ore&n", "&+w10% increase in ore prices&n", ore/10);
+  strcat(buf, buf3);
+  //-----Miner
+
   //-----Achievement: Trader
   if( cargo >= 10000 )
     sprintf(buf3, "  &+L%-43s&+L%-45s  &+L%s\r\n",
-        "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+BSell 10000 crates of cargo&n", "&+YShip construction halved&n");
+        "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+BSell 10000 crates of cargo&n", "&+BShip construction halved&n");
   else
-    sprintf(buf3, "  &+L%-43s&+L%-45s  &+L%s &+W%d%%\r\n",
-        "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+ySell 10000 crates of cargo&n", "&+YShip construction halved&n", cargo/100);
+    sprintf(buf3, "  &+L%-43s&+L%-45s  &+L%s: &+W%d%%\r\n",
+        "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+ySell 10000 crates of cargo&n", "&+wShip construction halved&n", cargo/100);
   strcat(buf, buf3);
   //-----Trader
 
@@ -142,10 +154,10 @@ void do_achievements(P_char ch, char *arg, int cmd)
 
   //-----Achievement: May I Heals You
   if(affected_by_spell(ch, ACH_MAYIHEALSYOU))
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s\r\n", 
+    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s\r\n",
         "&+WMay I &+WHe&+Ya&+Wls &+WYou?&n", "&+BHeal 1,000,000 points of player damage", "&+BAccess to the salvation command");
   else
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s &+W%d%%&n\r\n", 
+    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s: &+W%d%%&n\r\n",
         "&+WMay I &+WHe&+Ya&+Wls &+WYou?&n", "&+wHeal 1,000,000 points of player damage", "&+wAccess to the salvation command", get_progress(ch, AIP_MAYIHEALSYOU, 1000000));
   strcat(buf, buf3);
   //-----May I Heals You
@@ -155,7 +167,7 @@ void do_achievements(P_char ch, char *arg, int cmd)
     sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s\r\n",
         "&+LMa&+rst&+Rer of De&+rcep&+Ltion&n", "&+BSuccessfully use 500 disguise kits", "&+BDisguise doesnt consume a kit&n");
   else
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s  &+W%d%%\r\n",
+    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s:  &+W%d%%\r\n",
         "&+LMa&+rst&+Rer of De&+rcep&+Ltion&n", "&+wSuccessfully use 500 disguise kits", "&+wDisguise doesnt consume a kit&n", get_progress(ch, AIP_DECEPTICON, 500));
   strcat(buf, buf3);
   //-----Master of Deception
@@ -593,3 +605,19 @@ void update_addicted_to_blood(P_char ch, P_char victim)
   }
 }
 
+int notch_achievement( P_char ch, int achievement )
+{
+  struct affected_type *paf;
+
+  paf = get_spell_from_char(ch, achievement);
+
+  if( paf != NULL )
+  {
+    return ++(paf->modifier);
+  }
+  else
+  {
+    (apply_achievement(ch, achievement))->modifier = 1;
+    return 1;
+  }
+}

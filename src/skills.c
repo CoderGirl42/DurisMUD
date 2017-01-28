@@ -5185,7 +5185,8 @@ void create_tags()
   TAG_CREATE("deaths door cooldown", TAG_DEATHSDOOR);
   TAG_CREATE("aip - demonslayer", AIP_DEMONSLAYER);
   TAG_CREATE("ach - demonslayer", ACH_DEMONSLAYER);
-
+  TAG_CREATE("aip - ore mined", AIP_ORE_MINED );
+  TAG_CREATE("ach - do you mine", ACH_DO_YOU_MINE);
   TAG_CREATE("epic control", TAG_EPICS);
 
   TAG_CREATE("fragged victim", TAG_RECENTLY_FRAGGED);
