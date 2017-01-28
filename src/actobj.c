@@ -4072,7 +4072,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, bool showit )
     {
       if( isname("horseshoes", obj_object->name) )
       {
-        if( IS_CENTAUR(ch) )
+        if( IS_CENTAUR(ch) || IS_MINOTAUR(ch) )
         {
           // Replace if Wearing Something or Wear New Item
           return remove_and_wear(ch, obj_object, WEAR_FEET, keyword, comnd, showit);
