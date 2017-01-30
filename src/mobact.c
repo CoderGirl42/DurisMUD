@@ -69,6 +69,7 @@ extern void event_wait(P_char ch, P_char victim, P_obj obj, void *data);
 extern P_nevent ne_schedule[PULSES_IN_TICK];
 extern void clear_nevent( P_nevent e );
 extern struct misfire_properties_struct misfire_properties;
+extern const racewar_struct racewar_color[MAX_RACEWAR+2];
 
 int CheckFor_remember(P_char ch, P_char victim);
 int count_potions(P_char ch);
@@ -9151,10 +9152,14 @@ void event_misfire_cooldown( P_char ch, P_char victim, P_obj obj, void *data )
   if( info->zone_number < 0 )
   {
     continent_misfire.misfiring[-(info->zone_number)][info->racewar_side] = FALSE;
+    debug( "Misfire: Continent: %d - Racewar: &+%c%s&N ended.", -(info->zone_number),
+      racewar_color[info->racewar_side].color, racewar_color[info->racewar_side].name );
   }
   else
   {
     zone_table[info->zone_number].misfiring[info->racewar_side] = FALSE;
+    debug( "Misfire: Zone: %s %d - Racewar: &+%c%s&N ended.", zone_table[info->zone_number].name, info->zone_number,
+      racewar_color[info->racewar_side].color, racewar_color[info->racewar_side].name );
   }
 }
 
@@ -9201,7 +9206,7 @@ void AddCharToZone(P_char ch)
     {
       // If the continent ch is on is back up to misfire size for ch's racewar side
       //   and ch's racewar side is currently misfiring there.
-      if( (++(continent_misfire.players[CONTINENT(ch->in_room)][GET_RACEWAR(ch)]) == misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)])
+      if( ((continent_misfire.players[CONTINENT(ch->in_room)][GET_RACEWAR(ch)])++ == misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)])
         && continent_misfire.misfiring[CONTINENT(ch->in_room)][GET_RACEWAR(ch)] )
       {
         // The negative sign means it's a continent and not a regular zone.
@@ -9209,7 +9214,7 @@ void AddCharToZone(P_char ch)
       }
     }
     // If we're back up to misfire size and misfiring is ocurring.
-    else if( (++zone_table[zn].players[GET_RACEWAR(ch)] == misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)]) && zone_table[zn].misfiring[GET_RACEWAR(ch)] )
+    else if( (zone_table[zn].players[GET_RACEWAR(ch)]++ == misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)]) && zone_table[zn].misfiring[GET_RACEWAR(ch)] )
     {
       event_remove_misfire_cooldown( zn, GET_RACEWAR(ch) );
     }
@@ -11249,6 +11254,9 @@ void startPvP( P_char ch, bool racewar )
   {
     if( zone_table[zn].players[GET_RACEWAR(ch)] > misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)] )
     {
+      if( zone_table[zn].misfiring[GET_RACEWAR(ch)] == FALSE )
+        debug( "Misfire: Zone: %s %d - Racewar: &+%c%s&N started.", zone_table[zn].name, zn,
+          racewar_color[GET_RACEWAR(ch)].color, racewar_color[GET_RACEWAR(ch)].name );
       zone_table[zn].misfiring[GET_RACEWAR(ch)] = TRUE;
     }
   }
@@ -11257,6 +11265,9 @@ void startPvP( P_char ch, bool racewar )
     if( continent_misfire.players[CONTINENT(ch->in_room)][GET_RACEWAR(ch)]
       > misfire_properties.pvp_maxAllies[GET_RACEWAR(ch)] )
     {
+      if( continent_misfire.misfiring[CONTINENT(ch->in_room)][GET_RACEWAR(ch)] == FALSE )
+        debug( "Misfire: Continent: %d - Racewar: &+%c%s&N started.", CONTINENT(ch->in_room),
+          racewar_color[GET_RACEWAR(ch)].color, racewar_color[GET_RACEWAR(ch)].name );
       continent_misfire.misfiring[CONTINENT(ch->in_room)][GET_RACEWAR(ch)] = TRUE;
     }
   }
