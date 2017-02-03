@@ -2009,6 +2009,10 @@ int deleteCharacter(P_char ch, bool bDeleteLocker)
   // Remove all artis from char.
   remove_all_artifacts_sql( ch );
   remove_all_locker_access( ch );
+  if( GET_ASSOC(ch) != NULL )
+  {
+    GET_ASSOC(ch)->kick(ch);
+  }
 
 #ifdef USE_ACCOUNT
   remove_char_from_list(ch->desc->account, ch->player.name);
