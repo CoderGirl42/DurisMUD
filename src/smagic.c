@@ -1309,9 +1309,11 @@ void earthen_grasp( int level, P_char ch, P_char victim )
   // If they fail their str bonus save..
   else if(!NewSaves(victim, SAVING_PARA, attdiff))
   {
-    // If they fail a regular save.
-    if( !NewSaves(victim, SAVING_PARA, 0) )
+    // If they fail an easier save.
+    if( !NewSaves(victim, SAVING_PARA, attdiff/3) )
       effect = EG_LONG;
+    else if( !NewSaves(victim, SAVING_PARA, attdiff/2) )
+      effect = EG_SHORT;
     else
       effect = EG_FAIL;
   }
