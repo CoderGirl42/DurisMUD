@@ -137,7 +137,8 @@ void do_smoke( P_char ch, char *argument, int cmd )
   }
 
   // Can't smoke in the rain, snow, or blizzards.
-  if( (weather_info != NULL) && (weather_info->precip_rate > 0) && (world[room].sector_type != SECT_INSIDE) )
+  if( (weather_info != NULL) && (weather_info->precip_rate > 0) &&
+    !(( world[room].sector_type == SECT_INSIDE ) || ( world[room].sector_type == SECT_UNDRWLD_INSIDE )) )
   {
     if( !IS_ROOM(room, ( ROOM_INDOORS | ROOM_NO_PRECIP | ROOM_TUNNEL )) )
     {
