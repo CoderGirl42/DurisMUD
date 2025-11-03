@@ -128,7 +128,7 @@ int load_ctf()
     {
       snprintf(buff, MAX_STRING_LENGTH, "&+Lthe flag of&n %s&n", zone_table[world[real_room0(ctfdata[i].room)].zone].name);
       set_short_description(ctfdata[i].obj, buff);
-      sprintf(buff + strlen(buff), "&+L is here.&n");
+      snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "&+L is here.&n");
       set_long_description(ctfdata[i].obj, buff);
     }
     
@@ -242,8 +242,8 @@ int ctf_flag_proc(P_obj flag, P_char ch, int cmd, char *argument)
 	if (GET_RACEWAR(ch) == RACEWAR_GOOD)
 	  snprintf(buff, MAX_STRING_LENGTH, "&+YA beautiful melody rings through your ears as %s reclaims your team flag!\r\n", GET_NAME(ch));
 	else
-	  sprintf(buff, "&+YYou feel the bloodlust of a thousand ogres rise within you as %s reclaims your team flag!&n\r\n", GET_NAME(ch));
-	sprintf(buff2, "&+YTorment and anguish can be felt gripping your soul as %s reclaims %s team's flag!&n\r\n", GET_NAME(ch), HSHR(ch));
+	  snprintf(buff, MAX_STRING_LENGTH, "&+YYou feel the bloodlust of a thousand ogres rise within you as %s reclaims your team flag!&n\r\n", GET_NAME(ch));
+	snprintf(buff2, MAX_STRING_LENGTH, "&+YTorment and anguish can be felt gripping your soul as %s reclaims %s team's flag!&n\r\n", GET_NAME(ch), HSHR(ch));
 	ctf_notify(buff, GET_RACEWAR(ch));
 	ctf_notify(buff2, (GET_RACEWAR(ch) == 1 ? 2 : 1));
 	add_ctf_entry(ch, ctfdata[i].type, CTF_TYPE_RECLAIM);
@@ -255,16 +255,16 @@ int ctf_flag_proc(P_obj flag, P_char ch, int cmd, char *argument)
       if (ctfdata[i].type == CTF_PRIMARY)
       {
 	// perform stuff for picking up primary flag.. do we notify?
-        sprintf(buff, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up the enemies flag!&n\r\n", GET_NAME(ch));
-        sprintf(buff2, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up your flag!&n\r\n", GET_NAME(ch));
+        snprintf(buff, MAX_STRING_LENGTH, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up the enemies flag!&n\r\n", GET_NAME(ch));
+        snprintf(buff2, MAX_STRING_LENGTH, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up your flag!&n\r\n", GET_NAME(ch));
       }
       else if (ctfdata[i].type == CTF_SECONDARY ||
 	       ctfdata[i].type == CTF_BOON ||
 	       ctfdata[i].type == CTF_RANDOM)
       {
 	// perform secondary flag pickup stuff
-        sprintf(buff, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up %s!&n\r\n", GET_NAME(ch), ctfdata[i].obj->short_description);
-        sprintf(buff2, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up %s!&n\r\n", GET_NAME(ch), ctfdata[i].obj->short_description);
+        snprintf(buff, MAX_STRING_LENGTH, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up %s!&n\r\n", GET_NAME(ch), ctfdata[i].obj->short_description);
+        snprintf(buff2, MAX_STRING_LENGTH, "&+rSeveral dull tones and chimes can be heard sounding through the area as %s picks up %s!&n\r\n", GET_NAME(ch), ctfdata[i].obj->short_description);
       }
       send_to_char_f(ch, "You get %s.\r\n", flag->short_description);
       act("$n gets $p.", TRUE, ch, flag, 0, TO_ROOM);
@@ -534,7 +534,7 @@ void capture_flag(P_char ch, P_obj flag, int id)
       ctfdata[id].room = ctf_get_random_room(id);
       snprintf(buff, MAX_STRING_LENGTH, "&+Lthe flag of&n %s&n", zone_table[world[real_room0(ctfdata[id].room)].zone].name);
       set_short_description(ctfdata[id].obj, buff);
-      sprintf(buff + strlen(buff), "&+L is here.&n");
+      snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "&+L is here.&n");
       set_long_description(ctfdata[id].obj, buff);
     }
     if (ctfdata[id].room > 0)
@@ -570,19 +570,19 @@ void show_ctf(P_char ch)
   {
     if (ctfdata[i].room && ctfdata[i].obj)
     {
-      sprintf(buff + strlen(buff), "%-2d %-60s ", ctfdata[i].id, pad_ansi(ctfdata[i].obj->short_description, 60).c_str());
+      snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%-2d %-60s ", ctfdata[i].id, pad_ansi(ctfdata[i].obj->short_description, 60).c_str());
       if (OBJ_ROOM(ctfdata[i].obj))
       {
-	sprintf(buff + strlen(buff), "%-60s\r\n", pad_ansi(world[ctfdata[i].obj->loc.room].name, 60).c_str());
+	snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%-60s\r\n", pad_ansi(world[ctfdata[i].obj->loc.room].name, 60).c_str());
       }
       else if (get_flag_carrier(i))
       {
 	snprintf(buff2, MAX_STRING_LENGTH, "Carried by %s in %s", GET_NAME(get_flag_carrier(i)), pad_ansi(world[get_flag_carrier(i)->in_room].name, 60).c_str());
-	sprintf(buff + strlen(buff), "%-60s\r\n", buff2);
+	snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%-60s\r\n", buff2);
       }
       else
       {
-	sprintf(buff + strlen(buff), "%-60s\r\n", "Unknown location");
+	snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%-60s\r\n", "Unknown location");
       }
     }
   }
@@ -655,21 +655,21 @@ void show_ctf_score(P_char ch, char *argument)
   snprintf(dbqry, MAX_STRING_LENGTH, "SELECT COUNT(pid) as 'score', pid FROM ctf_data");
 
   if (racewar || type || flagtype)
-    sprintf(dbqry + strlen(dbqry), " WHERE");
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " WHERE");
   if (racewar)
-    sprintf(dbqry + strlen(dbqry), " racewar = %d", racewar);
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " racewar = %d", racewar);
   if ((racewar && type) || (racewar && flagtype))
-    sprintf(dbqry + strlen(dbqry), " AND");
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " AND");
   if (type)
-    sprintf(dbqry + strlen(dbqry), " type = %d", type);
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " type = %d", type);
   if (type && flagtype)
-    sprintf(dbqry + strlen(dbqry), " AND");
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " AND");
   if (flagtype == 1)
-    sprintf(dbqry + strlen(dbqry), " flagtype = %d", CTF_PRIMARY);
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " flagtype = %d", CTF_PRIMARY);
   if (flagtype == 2)
-    sprintf(dbqry + strlen(dbqry), " flagtype BETWEEN %d AND %d", CTF_SECONDARY, CTF_MAX);
+    snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " flagtype BETWEEN %d AND %d", CTF_SECONDARY, CTF_MAX);
   
-  sprintf(dbqry + strlen(dbqry), " GROUP BY pid ORDER BY score DESC LIMIT 10");
+  snprintf(dbqry + strlen(dbqry), MAX_STRING_LENGTH - strlen(dbqry), " GROUP BY pid ORDER BY score DESC LIMIT 10");
  
   if (!qry(dbqry))
   {
@@ -692,7 +692,7 @@ void show_ctf_score(P_char ch, char *argument)
   *buff = '\0';
   while (row = mysql_fetch_row(res))
   {
-     sprintf(buff + strlen(buff), "%-30s %-3d\r\n", get_player_name_from_pid(atoi(row[1])), atoi(row[0]));
+     snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%-30s %-3d\r\n", get_player_name_from_pid(atoi(row[1])), atoi(row[0]));
   }
 
   mysql_free_result(res);
@@ -899,7 +899,7 @@ int ctf_reload_flag(int id)
   {
     snprintf(buff, MAX_STRING_LENGTH, "&+Lthe flag of&n %s&n", zone_table[world[real_room0(ctfdata[i].room)].zone].name);
     set_short_description(ctfdata[id].obj, buff);
-    sprintf(buff + strlen(buff), "&+L is here.&n");
+    snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "&+L is here.&n");
     set_long_description(ctfdata[id].obj, buff);
   }
   

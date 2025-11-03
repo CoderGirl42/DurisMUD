@@ -2233,33 +2233,33 @@ int tiamat(P_char ch, P_char pl, int cmd, char *arg)
         vict = GET_OPPONENT(ch);
       if (vict)
       {
-        sprintf(bufs[0], "You bite $N with your %s head.", colors[i - 1]);
-        sprintf(bufs[1], "The %s head of $n lashes out and bites you.", colors[i - 1]);
-        sprintf(bufs[2], "$n bites $N with $m %s head.", colors[i - 1]);
-        sprintf(bufs[3], "You bite $N with your %s head until they are dead.", colors[i - 1]);
-        sprintf(bufs[4], "The %s head of $n bites you... to DEATH!", colors[i - 1]);
-        sprintf(bufs[5], "$n bites $N in two with $m %s head! $N is dead.", colors[i - 1]);
+        snprintf(bufs[0], MAX_STRING_LENGTH, "You bite $N with your %s head.", colors[i - 1]);
+        snprintf(bufs[1], MAX_STRING_LENGTH, "The %s head of $n lashes out and bites you.", colors[i - 1]);
+        snprintf(bufs[2], MAX_STRING_LENGTH, "$n bites $N with $m %s head.", colors[i - 1]);
+        snprintf(bufs[3], MAX_STRING_LENGTH, "You bite $N with your %s head until they are dead.", colors[i - 1]);
+        snprintf(bufs[4], MAX_STRING_LENGTH, "The %s head of $n bites you... to DEATH!", colors[i - 1]);
+        snprintf(bufs[5], MAX_STRING_LENGTH, "$n bites $N in two with $m %s head! $N is dead.", colors[i - 1]);
         switch( i )
         {
         case 1: // Red head
           damtype = SPLDAM_FIRE;
-          sprintf( dam_msg, "&+RFire courses through your blood as she bites deep!" );
+          snprintf(dam_msg, MAX_STRING_LENGTH, "&+RFire courses through your blood as she bites deep!" );
           break;
         case 2: // Black head
           damtype = SPLDAM_ACID;
-          sprintf( dam_msg, "&+LShe lashes out at you, the acid from her fangs burning immensly!" );
+          snprintf(dam_msg, MAX_STRING_LENGTH, "&+LShe lashes out at you, the acid from her fangs burning immensly!" );
           break;
         case 3: // Blue head
           damtype = SPLDAM_LIGHTNING;
-          sprintf( dam_msg, "&+BYour heart skips a beat or three as her shocking teeth clamp down upon your arm!" );
+          snprintf(dam_msg, MAX_STRING_LENGTH, "&+BYour heart skips a beat or three as her shocking teeth clamp down upon your arm!" );
           break;
         case 4: // Green head
           damtype = SPLDAM_GAS;
-          sprintf( dam_msg, "&+GYou feel a wave of poisonous nausea, as her teeth sink deep!" );
+          snprintf(dam_msg, MAX_STRING_LENGTH, "&+GYou feel a wave of poisonous nausea, as her teeth sink deep!" );
           break;
         case 5: // White head
           damtype = SPLDAM_COLD;
-          sprintf( dam_msg, "&+WShe rips into your skin, sending shivers of intense cold through your body!" );
+          snprintf(dam_msg, MAX_STRING_LENGTH, "&+WShe rips into your skin, sending shivers of intense cold through your body!" );
           break;
         }
         spell_damage(ch, vict, dice(6, 6), damtype, SPLDAM_BREATH | SPLDAM_NOSHRUG | SPLDAM_NODEFLECT, &messages);
@@ -3627,7 +3627,7 @@ void gfstone_event(P_char ch, P_char vict, P_obj obj, void *data)
     }
     send_to_char("\n", ch);
     count -= 1;
-    sprintf(buf, "%d %d %s %d %d", gf, count, owner, room, obj->R_num);
+    snprintf(buf, MAX_STRING_LENGTH, "%d %d %s %d %d", gf, count, owner, room, obj->R_num);
     add_event(gfstone_event, 4, NULL, NULL, NULL, 0, buf, strlen(buf)+1);
     //AddEvent(EVENT_SPECIAL, 4, TRUE, gfstone_event, buf);
     return;
@@ -3764,7 +3764,7 @@ int gfstone(P_obj obj, P_char ch, int cmd, char *arg)
   {
     if( isname(arg, "stone god") )
     {
-      sprintf(buf, "&+WCompatability with: %s\n", owner);
+      snprintf(buf, MAX_STRING_LENGTH, "&+WCompatability with: %s\n", owner);
       send_to_char(buf, ch);
 
       for( i = 1; i <= TOTAL_GF; i++ )
@@ -3774,25 +3774,25 @@ int gfstone(P_obj obj, P_char ch, int cmd, char *arg)
           switch (i)
           {
           case SHIVA:
-            sprintf(buf, "&+CKeja");
+            snprintf(buf, MAX_STRING_LENGTH, "&+CKeja");
             break;
           case IFRIT:
-            sprintf(buf, "&+RJera");
+            snprintf(buf, MAX_STRING_LENGTH, "&+RJera");
             break;
           case DOOMTRAIN:
-            sprintf(buf, "&+rCython");
+            snprintf(buf, MAX_STRING_LENGTH, "&+rCython");
             break;
           case CEREBUS:
-            sprintf(buf, "&+LDakta");
+            snprintf(buf, MAX_STRING_LENGTH, "&+LDakta");
             break;
           case CARBUNCLE:
-            sprintf(buf, "&+cRaxxel");
+            snprintf(buf, MAX_STRING_LENGTH, "&+cRaxxel");
             break;
           default:
-            sprintf(buf, "&+WERROR");
+            snprintf(buf, MAX_STRING_LENGTH, "&+WERROR");
             break;
           }
-          sprintf(buf2, "%-17s: &+W%-5d\n", buf, obj->value[i]);
+          snprintf(buf2, MAX_STRING_LENGTH, "%-17s: &+W%-5d\n", buf, obj->value[i]);
           send_to_char(buf2, ch);
         }
       }
@@ -3809,7 +3809,7 @@ int gfstone(P_obj obj, P_char ch, int cmd, char *arg)
     }
     count = (int) (obj->value[gf] / 100);
     count = 11 - count;
-    sprintf(buf, "%d %d %s %d %d", gf, count, owner, ch->in_room, obj->R_num);
+    snprintf(buf, MAX_STRING_LENGTH, "%d %d %s %d %d", gf, count, owner, ch->in_room, obj->R_num);
 
     add_event(gfstone_event, 4, NULL, NULL, NULL, 0, buf, strlen(buf)+1);
     //AddEvent(EVENT_SPECIAL, 4, TRUE, gfstone_event, buf);

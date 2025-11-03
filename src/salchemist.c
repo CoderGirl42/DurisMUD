@@ -752,14 +752,14 @@ void do_spellbind (P_char ch, char *argument, int cmd)
     item->affected[i].modifier = total;
   }
 
-  sprintf(tempbuf , "%s %s", item->name, GET_NAME(ch));
+  snprintf(tempbuf, MAX_STRING_LENGTH, "%s %s", item->name, GET_NAME(ch));
   set_keywords(item, tempbuf);
   if(IS_RACEWAR_GOOD(ch))
-  sprintf(tempbuf , "%s &+yenc&+Yha&+ynted by &+L%s&n", item->short_description, GET_NAME(ch));
+  snprintf(tempbuf, MAX_STRING_LENGTH, "%s &+yenc&+Yha&+ynted by &+L%s&n", item->short_description, GET_NAME(ch));
   else if(IS_RACEWAR_EVIL(ch))
-  sprintf(tempbuf , "%s &+renc&+Rha&+rnted by &+L%s&n", item->short_description, GET_NAME(ch));
+  snprintf(tempbuf, MAX_STRING_LENGTH, "%s &+renc&+Rha&+rnted by &+L%s&n", item->short_description, GET_NAME(ch));
   else
-  sprintf(tempbuf , "%s &+wenc&+Wha&+wnted by &+L%s&n", item->short_description, GET_NAME(ch));
+  snprintf(tempbuf, MAX_STRING_LENGTH, "%s &+wenc&+Wha&+wnted by &+L%s&n", item->short_description, GET_NAME(ch));
   set_short_description(item, tempbuf);
 }
 
@@ -912,11 +912,11 @@ void do_encrust(P_char ch, char *argument, int cmd)
   SET_BIT(new_item->extra_flags, ITEM_ENCRUSTED | ITEM_NOREPAIR);
   SET_BIT(new_item->type, item->type);
 
-  sprintf(buf1, "%s with %s", str_dup(item->short_description), str_dup(jewel->short_description));
+  snprintf(buf1, MAX_STRING_LENGTH, "%s with %s", str_dup(item->short_description), str_dup(jewel->short_description));
   set_short_description(new_item, buf1);
-  sprintf(buf1, "%s", str_dup(item->description));
+  snprintf(buf1, MAX_STRING_LENGTH, "%s", str_dup(item->description));
   set_long_description(new_item, buf1);
-  sprintf(buf1, "%s %s", item->name, "encrust");
+  snprintf(buf1, MAX_STRING_LENGTH, "%s %s", item->name, "encrust");
   set_keywords(new_item, buf1);
 
   set_encrust_affect(new_item, jewel->value[6]);

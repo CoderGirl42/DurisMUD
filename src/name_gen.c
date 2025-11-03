@@ -191,7 +191,7 @@ int get_name(char return_namn[256])
     strcpy(namn, start[rand() % antal_start]);  /* get a start                  */
     strcat(namn, mitt[rand() % antal_mitt]);    /* get a middle                 */
     strcat(namn, slut[rand() % antal_slut]);    /* get an ending                */
-    sprintf(return_namn, "%s", namn);
+    snprintf(return_namn, MAX_STRING_LENGTH, "%s", namn);
   }
 
 

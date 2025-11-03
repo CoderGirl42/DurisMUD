@@ -474,7 +474,7 @@ void parse_action(int command, char *string, struct descriptor_data *d)
       *t = '\0';
       RECREATE(*d->str, char, strlen(*d->str) + 3);
 
-      sprintf(buf, "%d line%sdeleted.\r\n", total_len,
+      snprintf(buf, MAX_STRING_LENGTH, "%d line%sdeleted.\r\n", total_len,
               ((total_len != 1) ? "s " : " "));
       SEND_TO_Q(buf, d);
     }
@@ -519,7 +519,7 @@ void parse_action(int command, char *string, struct descriptor_data *d)
     *buf = '\0';
     if ((line_high < 999999) || (line_low > 1))
     {
-      sprintf(buf, "Current buffer range [%d - %d]:\r\n", line_low,
+      snprintf(buf, MAX_STRING_LENGTH, "Current buffer range [%d - %d]:\r\n", line_low,
               line_high);
     }
     i = 1;
@@ -610,7 +610,7 @@ void parse_action(int command, char *string, struct descriptor_data *d)
         s++;
         temp = *s;
         *s = '\0';
-        sprintf(buf, "&+c%s&n&+B%d:&n ", buf, (i - 1));
+        snprintf(buf, MAX_STRING_LENGTH, "&+c%s&n&+B%d:&n ", buf, (i - 1));
         strcat(buf, t);
         *s = temp;
         t = s;

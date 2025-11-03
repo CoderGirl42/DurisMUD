@@ -471,7 +471,7 @@ int calculate_hitpoints(P_char ch)
     // Max con hitpoint bonus now uses a racial constitution ratio. May2010 -Lucrot
     if( IS_PC(ch) && hitpoint_bonus )
     {
-      sprintf(buf, "stats.con.%s", race_names_table[GET_RACE(ch)].no_spaces);
+      snprintf(buf, MAX_STRING_LENGTH, "stats.con.%s", race_names_table[GET_RACE(ch)].no_spaces);
       mod = (int) get_property(buf, 100.);
       hps += (int) (hitpoint_bonus * get_property("hitpoints.spellcaster.maxConBonus", 2.5) * mod / 100);
     }

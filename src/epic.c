@@ -2232,7 +2232,7 @@ void do_epic_reset(P_char ch, char *arg, int cmd)
   insert_money_pickup(GET_PID(t_ch), coins_refund);
   t_ch->only.pc->epic_skill_points += point_refund;
 
-  sprintf(buff2, "\r\n&+GYour epic skills have been reset: your skill points have been refunded, \r\n&+Gand %s&+G has been reimbursed and is waiting for you at the nearest auction house.\r\n\r\n", coin_stringv(coins_refund));
+  snprintf(buff2, MAX_STRING_LENGTH, "\r\n&+GYour epic skills have been reset: your skill points have been refunded, \r\n&+Gand %s&+G has been reimbursed and is waiting for you at the nearest auction house.\r\n\r\n", coin_stringv(coins_refund));
 */
   if(!send_to_pid(buff2, GET_PID(t_ch)))
     send_to_pid_offline(buff2, GET_PID(t_ch));

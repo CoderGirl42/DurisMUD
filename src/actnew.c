@@ -1245,13 +1245,13 @@ void do_commands(P_char ch, char *arg, int cmd)
           break;
       }
 
-      sprintf(Gbuf1 + strlen(Gbuf1), "%-16s", command[i]);
+      snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "%-16s", command[i]);
       if (!(no % 5))
         strcat(Gbuf1, "\r\n");
       no++;
     }
   }
-  sprintf(Gbuf1 + strlen(Gbuf1),
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
       "\r\n\r\nCommands listed:  %d of %d total.   (Use 'commands all' to see a full list)\r\n",
       no - 1, i);
   page_string(ch->desc, Gbuf1, 1);
@@ -2665,7 +2665,7 @@ void do_lore(P_char ch, char *arg, int cmd)
   {
     if (GET_LEVEL(target) >= AVATAR)
     {
-      sprintf(Gbuf1, "You know that %s %s is a God of Duris\r\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You know that %s %s is a God of Duris\r\n",
           GET_NAME(target),
           GET_TITLE(target) == NULL ? "" : GET_TITLE(target));
       send_to_char(Gbuf1, ch);
@@ -2674,7 +2674,7 @@ void do_lore(P_char ch, char *arg, int cmd)
         (GET_LEVEL(target) >= 40 && lore_power > 2)    // masters knows more
         )
     {
-      sprintf(Gbuf1, "Using your abilities to cast your knowledge far into the realm,\nyou glean that it is %s (%s) %s %s\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "Using your abilities to cast your knowledge far into the realm,\nyou glean that it is %s (%s) %s %s\n",
           GET_NAME(target),
           race_names_table[(int) GET_RACE(target)].ansi,
           get_class_string(target, Gbuf3),
@@ -2804,7 +2804,7 @@ void lore_item( P_char ch, P_obj obj )
         percent =
           100 - (100 / obj->value[1]) * (obj->value[1] - obj->value[2]);
 
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
           "%d%% of its charges remain, and it contains the spell of: ",
           percent);
       send_to_char(Gbuf1, ch);
@@ -2818,17 +2818,17 @@ void lore_item( P_char ch, P_obj obj )
       break;
 
     case ITEM_WEAPON:
-      sprintf(Gbuf1, "Damage Dice is '%dD%d'\r\n", obj->value[1],
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "Damage Dice is '%dD%d'\r\n", obj->value[1],
           obj->value[2]);
       send_to_char(Gbuf1, ch);
       break;
     case ITEM_INSTRUMENT:
-      sprintf(Gbuf1, "This instrument has level %d.\r\n", obj->value[1]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "This instrument has level %d.\r\n", obj->value[1]);
       send_to_char(Gbuf1, ch);
       break;
 
     case ITEM_ARMOR:
-      sprintf(Gbuf1, "AC-apply is %d\r\n", obj->value[0]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "AC-apply is %d\r\n", obj->value[0]);
       send_to_char(Gbuf1, ch);
       break;
 
@@ -2871,7 +2871,7 @@ void lore_item( P_char ch, P_obj obj )
       else
         Gbuf3[0] = 0;
 
-      sprintf(Gbuf1, " %s %s", Gbuf2, Gbuf3);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, " %s %s", Gbuf2, Gbuf3);
       send_to_char(Gbuf1, ch);
     }
   }
@@ -2924,7 +2924,7 @@ void lore_item( P_char ch, P_obj obj )
     }
   }
 
-  sprintf(Gbuf2, "$p &nhas an item value of &+W%d&n.", itemvalue(obj));
+  snprintf(Gbuf2, MAX_STRING_LENGTH, "$p &nhas an item value of &+W%d&n.", itemvalue(obj));
   act(Gbuf2, FALSE, ch, obj, 0, TO_CHAR);
 }
 
@@ -3911,13 +3911,13 @@ void do_craft(P_char ch, char *argument, int cmd)
     if( numLowest == 0 )
     {
       send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
-      sprintf(buf1, "To craft this item, you will need %d of %s.\r\n&n", numHighest, matHighest->short_description);
+      snprintf(buf1, MAX_STRING_LENGTH, "To craft this item, you will need %d of %s.\r\n&n", numHighest, matHighest->short_description);
       page_string(ch->desc, buf1, 1);
     }
     else
     {
       send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
-      sprintf(buf1, "To craft this item, you will need %d of %s and %d of %s.\r\n&n",
+      snprintf(buf1, MAX_STRING_LENGTH, "To craft this item, you will need %d of %s and %d of %s.\r\n&n",
         numHighest, matHighest->short_description, numLowest, matLowest->short_description);
       page_string(ch->desc, buf1, 1);
     }
@@ -3926,7 +3926,7 @@ void do_craft(P_char ch, char *argument, int cmd)
  *   then we add 4 (total 5) and divide by 5 (result minimum 1).
  * But, in case we change that, I'm leaving the code here. 2/10/2015
       send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
-      sprintf(buf1, "To craft this item, you will need %d of %s.\r\n&n", numLowest, matLowest->short_description);
+      snprintf(buf1, MAX_STRING_LENGTH, "To craft this item, you will need %d of %s.\r\n&n", numLowest, matLowest->short_description);
       page_string(ch->desc, buf1, 1);
 */
 
@@ -4094,10 +4094,10 @@ void do_craft(P_char ch, char *argument, int cmd)
     SET_BIT(tobj->extra_flags, ITEM_NOREPAIR);
     REMOVE_BIT(tobj->extra_flags, ITEM_SECRET);
     randomizeitem(ch, tobj);
-    sprintf(keywords, "%s %s tradeskill", tobj->name, GET_NAME(ch));
+    snprintf(keywords, MAX_STRING_LENGTH, "%s %s tradeskill", tobj->name, GET_NAME(ch));
 
-    sprintf(tempdesc, "%s", tobj->short_description);
-    sprintf(short_desc, "%s &+ymade by&n &+r%s&n", tempdesc, GET_NAME(ch));
+    snprintf(tempdesc, MAX_STRING_LENGTH, "%s", tobj->short_description);
+    snprintf(short_desc, MAX_STRING_LENGTH, "%s &+ymade by&n &+r%s&n", tempdesc, GET_NAME(ch));
     set_keywords(tobj, keywords);
     set_short_description(tobj, short_desc);
 
@@ -4162,7 +4162,7 @@ void do_craft(P_char ch, char *argument, int cmd)
 
      for (i = 0; i < MAX_SLOT; i++)
      {
-     sprintf(Gbuf2, "%s\0", strip_ansi(slot_data[i].m_name).c_str());
+     snprintf(Gbuf2, MAX_STRING_LENGTH, "%s\0", strip_ansi(slot_data[i].m_name).c_str());
      if (!strcmp(argument, Gbuf2))
      {
      howmany = slot_data[i].numb_material;

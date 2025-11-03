@@ -486,21 +486,21 @@ int very_angry_npc( P_char ch, P_char pl, int cmd, char *arg )
   {
     if( GET_PID(pl) == 5 )
     {
-      sprintf( buf, "I remember you, %s.", J_NAME(pl) );
+      snprintf(buf, MAX_STRING_LENGTH, "I remember you, %s.", J_NAME(pl) );
       do_say( ch, buf, CMD_SAY );
       // We can return FALSE _only_ because we know they're both still alive.
       return TRUE;
     }
     if( GET_PID(pl) == 32620 )
     {
-      sprintf( buf, "I remember you, %s.", J_NAME(pl) );
+      snprintf(buf, MAX_STRING_LENGTH, "I remember you, %s.", J_NAME(pl) );
       do_say( ch, buf, CMD_SAY );
       // We can return FALSE _only_ because we know they're both still alive.
       return FALSE;
     }
     else
     {
-      sprintf( buf, "You, %s, have number %d and are not on my list.", J_NAME(pl), GET_PID(pl) );
+      snprintf(buf, MAX_STRING_LENGTH, "You, %s, have number %d and are not on my list.", J_NAME(pl), GET_PID(pl) );
       do_say( ch, buf, CMD_SAY );
       // We can return FALSE _only_ because we know they're both still alive.
       return FALSE;

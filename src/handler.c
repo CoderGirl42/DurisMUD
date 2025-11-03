@@ -982,13 +982,13 @@ bool char_to_room(P_char ch, int room, int dir)
   {
     if (was_in_arena && IS_SET(arena.flags, FLAG_SEENAME))
     {
-      sprintf(buf, "%s has left the arena.\r\n", GET_NAME(ch));
+      snprintf(buf, MAX_STRING_LENGTH, "%s has left the arena.\r\n", GET_NAME(ch));
       send_to_arena(buf, -1);
 //      broadcast_to_arena("%s has left the arena.\r\n", ch, 0, was_in);
     }
     else if (IS_SET(arena.flags, FLAG_SEENAME))
     {
-      sprintf(buf, "%s has entered the arena.\r\n", GET_NAME(ch));
+      snprintf(buf, MAX_STRING_LENGTH, "%s has entered the arena.\r\n", GET_NAME(ch));
       send_to_arena(buf, -1);
 //      broadcast_to_arena("%s has entered the arena.\r\n", ch, 0, room);
     }
@@ -1058,7 +1058,7 @@ bool char_to_room(P_char ch, int room, int dir)
       send_to_char("\n<map>\n", ch);
       rm = &world[ch->in_room];
       zone = &zone_table[world[ch->in_room].zone];
-      sprintf(temp_buffer, "&+WZone: %s&n.\n&+WRoom: %s", zone->name, rm->name);
+      snprintf(temp_buffer, MAX_STRING_LENGTH, "&+WZone: %s&n.\n&+WRoom: %s", zone->name, rm->name);
       send_to_char(temp_buffer, ch);
       send_to_char("\n</map>\n", ch);
       ch->desc->last_map_update = 0;
@@ -1247,7 +1247,7 @@ bool char_to_room(P_char ch, int room, int dir)
       x = number(0, 3);
       if (ch->points.cash[x] >= 40)
       {
-        sprintf(Gbuf1, "%d %s", number(5, 40), coin_abbrev[x]);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "%d %s", number(5, 40), coin_abbrev[x]);
         do_drop(ch, Gbuf1, 1);
         worked = TRUE;
       }
@@ -2916,7 +2916,7 @@ void extract_char(P_char ch)
     {
       P_char   auctioneer = find_auctioneer(i);
 
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "Last bid has been withdrawn. We will now start over.\r\n");
       if (auctioneer)
         mobsay(auctioneer, buf);
@@ -3727,19 +3727,19 @@ void add_coins(P_obj pile, int copper, int silver, int gold, int platinum)
       {
         p = (pile->value[i] * 100) / num;
         if (p > 99)
-          sprintf(buf + strlen(buf), "%s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%s coins, ", coin_names[i]);
         else if (p >= 85)
-          sprintf(buf + strlen(buf), "mostly %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "mostly %s coins, ", coin_names[i]);
         else if (p >= 65)
-          sprintf(buf + strlen(buf), "3/4 %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "3/4 %s coins, ", coin_names[i]);
         else if (p >= 40)
-          sprintf(buf + strlen(buf), "half %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "half %s coins, ", coin_names[i]);
         else if (p >= 20)
-          sprintf(buf + strlen(buf), "1/4 %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "1/4 %s coins, ", coin_names[i]);
         else if (p >= 10)
-          sprintf(buf + strlen(buf), "some %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "some %s coins, ", coin_names[i]);
         else if (p >= 1)
-          sprintf(buf + strlen(buf), "a few %s coins, ", coin_names[i]);
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "a few %s coins, ", coin_names[i]);
       }
       buf[strlen(buf) - 2] = '.';
       buf[strlen(buf) - 1] = 0;

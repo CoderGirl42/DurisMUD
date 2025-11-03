@@ -1052,7 +1052,7 @@ void convertObj(P_obj obj)
   case ITEM_INSTRUMENT:
     if (!strstr(obj->name, "instrument"))
     {
-      sprintf(buf2, "%s %s", obj->name, "instrument");
+      snprintf(buf2, MAX_STRING_LENGTH, "%s %s", obj->name, "instrument");
       obj->name = str_dup(buf2);
     }
     break;
@@ -1060,7 +1060,7 @@ void convertObj(P_obj obj)
     /* ? */
     if (!strstr(obj->name, "totem"))
     {
-      sprintf(buf2, "%s %s", obj->name, "totem");
+      snprintf(buf2, MAX_STRING_LENGTH, "%s %s", obj->name, "totem");
       obj->name = str_dup(buf2);
     }
 /*    weight = (GET_ITEM_TYPE(obj) == ITEM_TOTEM) ? 2 : 3;

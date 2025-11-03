@@ -1019,25 +1019,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector4, AFF4_REGENERATION);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+gTroll&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+gTroll&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector, AFF_FLY);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+WAn&+Cge&+cls&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+WAn&+Cge&+cls&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector2, AFF2_FIRESHIELD);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+rbu&+Rrn&+Ying&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+rbu&+Rrn&+Ying&n");
         }
         else
         {
           SET_BIT(obj->bitvector, AFF_MINOR_GLOBE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+ylesser &+Yde&+yfen&+Lse&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+ylesser &+Yde&+yfen&+Lse&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1049,25 +1049,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector4, AFF4_DETECT_ILLUSION);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+CIl&+clu&+Wsi&+con&+Cist&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+CIl&+clu&+Wsi&+con&+Cist&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector, AFF_DETECT_INVISIBLE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+Cvi&+csi&+Won&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+Cvi&+csi&+Won&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector, AFF_SENSE_LIFE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+rlife &+Lsensing&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+rlife &+Lsensing&n");
         }
         else
         {
           SET_BIT(obj->bitvector, AFF2_DETECT_EVIL);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+revil &+Ldetection&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+revil &+Ldetection&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1079,25 +1079,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector4, AFF4_REGENERATION);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+gTroll&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+gTroll&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector, AFF_INVISIBLE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof Invi&+Wsibi&+Llity&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof Invi&+Wsibi&+Llity&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector2, AFF2_PROT_GAS);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+ggas &+Ldefense&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+ggas &+Ldefense&n");
         }
         else
         {
           SET_BIT(obj->bitvector, AFF2_DETECT_GOOD);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+Wgood &+Ldetection&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+Wgood &+Ldetection&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1109,25 +1109,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector3, AFF3_TOWER_IRON_WILL);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+MIllithid&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+MIllithid&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector2, AFF2_VAMPIRIC_TOUCH);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+rVa&+Rmp&+Lire&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+rVa&+Rmp&+Lire&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector2, AFF2_PROT_ACID);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+Gacid &+Ldefense&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+Gacid &+Ldefense&n");
         }
         else
         {
           SET_BIT(obj->bitvector2, AFF2_DETECT_MAGIC);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+mmagic &+Ldetection&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+mmagic &+Ldetection&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1139,25 +1139,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector3, AFF3_GR_SPIRIT_WARD);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+CShaman&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+CShaman&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector2, AFF2_SOULSHIELD);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+Wsoul&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+Wsoul&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector, AFF_UD_VISION);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof the &+munderdark&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof the &+munderdark&n");
         }
         else
         {
           SET_BIT(obj->bitvector2, AFF2_DETECT_MAGIC);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+mmagic &+Ldetection&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+mmagic &+Ldetection&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1169,25 +1169,25 @@ void randomizeitem(P_char ch, P_obj obj)
         {
           SET_BIT(obj->bitvector2, AFF2_GLOBE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+mmag&+Mic&+mal pro&+Mtec&+mtion&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+mmag&+Mic&+mal pro&+Mtec&+mtion&n");
         }
         else if( rchance < 25 )
         {
           SET_BIT(obj->bitvector, AFF_AWARE);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+WAwa&+wrene&+Lss&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+WAwa&+wrene&+Lss&n");
         }
         else if( rchance < 76 )
         {
           SET_BIT(obj->bitvector4, AFF4_NEG_SHIELD);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+Lne&+mga&+Lti&+mvi&+Lty&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+Lne&+mga&+Lti&+mvi&+Lty&n");
         }
         else
         {
           SET_BIT(obj->bitvector2, AFF2_DETECT_MAGIC);
           send_to_char("&+LYou infuse the &+Mmagical&+L properties of your stone into your creation...\r\n", ch);
-          sprintf(emsg, " &+Lof &+mmagic &+Ldetection&n");
+          snprintf(emsg, MAX_STRING_LENGTH, " &+Lof &+mmagic &+Ldetection&n");
         }
         obj_from_char(t_obj);
         extract_obj(t_obj);
@@ -1199,20 +1199,20 @@ void randomizeitem(P_char ch, P_obj obj)
 
   if( good > 0 )
   {
-    sprintf(tempdesc, "%s", obj->short_description);
-    sprintf(short_desc, "%s&n%s &+w[&+Lsu&+wp&+Wer&+wi&+Lor&+w]&n", tempdesc, emsg);
+    snprintf(tempdesc, MAX_STRING_LENGTH, "%s", obj->short_description);
+    snprintf(short_desc, MAX_STRING_LENGTH, "%s&n%s &+w[&+Lsu&+wp&+Wer&+wi&+Lor&+w]&n", tempdesc, emsg);
     set_short_description(obj, short_desc);
   }
   else if( good < 0 )
   {
-    sprintf(tempdesc, "%s", obj->short_description);
-    sprintf(short_desc, "%s&n%s &+w[&+ypoor&+w]&n", tempdesc, emsg);
+    snprintf(tempdesc, MAX_STRING_LENGTH, "%s", obj->short_description);
+    snprintf(short_desc, MAX_STRING_LENGTH, "%s&n%s &+w[&+ypoor&+w]&n", tempdesc, emsg);
     set_short_description(obj, short_desc);
   }
   else if( modified )
   {
-    sprintf(tempdesc, "%s", obj->short_description);
-    sprintf(short_desc, "%s&n%s &+w[&+Gmodified&+w]&n", tempdesc, emsg);
+    snprintf(tempdesc, MAX_STRING_LENGTH, "%s", obj->short_description);
+    snprintf(short_desc, MAX_STRING_LENGTH, "%s&n%s &+w[&+Gmodified&+w]&n", tempdesc, emsg);
     set_short_description(obj, short_desc);
   }
 }
@@ -1551,7 +1551,7 @@ void do_conjure(P_char ch, char *argument, int cmd)
       {
         continue;
       }
-      sprintf( Gbuf1 + counter, "%ld ", recnum );
+      snprintf(Gbuf1 + counter, MAX_STRING_LENGTH, "%ld ", recnum );
       counter += strlen(Gbuf1 + counter);
     }
     fclose(recipefile);
@@ -2371,7 +2371,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_DEX_MAX;
-      sprintf(modstring, "&+wof &+ggreater dexterity&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+ggreater dexterity&n");
       mod = 1;
       break;
     case 400246:
@@ -2379,7 +2379,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_STR;
-      sprintf(modstring, "&+wof &+rstrength&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+rstrength&n");
       mod = 1;
       break;
     case 400247:
@@ -2387,7 +2387,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_STR_MAX;
-      sprintf(modstring, "&+wof &+rgreater strength&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+rgreater strength&n");
       mod = 1;
       break;
     case 400248:
@@ -2395,7 +2395,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_CHA;
-      sprintf(modstring, "&+wof &+Ccharisma&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Ccharisma&n");
       mod = 1;
       break;
     case 400249:
@@ -2403,7 +2403,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_CHA_MAX;
-      sprintf(modstring, "&+wof &+Cgreater charisma&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Cgreater charisma&n");
       mod = 1;
       break;
     case 400250:
@@ -2411,7 +2411,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_WIS;
-      sprintf(modstring, "&+wof &+cwisdom&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+cwisdom&n");
       mod = 1;
       break;
     case 400251:
@@ -2419,7 +2419,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_WIS_MAX;
-      sprintf(modstring, "&+wof &+cgreater wisdom&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+cgreater wisdom&n");
       mod = 1;
       break;
     case 400252:
@@ -2427,7 +2427,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_POW;
-      sprintf(modstring, "&+wof &+Lpower&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Lpower&n");
       mod = 1;
       break;
     case 400253:
@@ -2435,7 +2435,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_POW_MAX;
-      sprintf(modstring, "&+wof &+Lgreater power&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Lgreater power&n");
       mod = 1;
       break;
     case 400254:
@@ -2443,7 +2443,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1;
       else
         source->affected[2].location = APPLY_HIT;
-      sprintf(modstring, "&+wof &+Rhealth&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Rhealth&n");
       mod = 3;
       break;
     case 400255:
@@ -2451,7 +2451,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1;
       else
         source->affected[2].location = APPLY_HITROLL;
-      sprintf(modstring, "&+wof &+yprecision&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+yprecision&n");
       mod = 1;
       break;
     case 400256:
@@ -2459,7 +2459,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_DAMROLL;
-      sprintf(modstring, "&+wof &+ydamage&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+ydamage&n");
       mod = 1;
       break;
     case 400257:
@@ -2467,7 +2467,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_HIT_REG;
-      sprintf(modstring, "&+wof &+gregeneration&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+gregeneration&n");
       mod = 3;
       break;
     case 400258:
@@ -2475,7 +2475,7 @@ void modenhance(P_char ch, P_obj source, P_obj material)
         loctype = 1; 
       else
         source->affected[2].location = APPLY_MOVE_REG;
-      sprintf(modstring, "&+wof &+Gendurance&n");
+      snprintf(modstring, MAX_STRING_LENGTH, "&+wof &+Gendurance&n");
       mod = 3;
       break;
 

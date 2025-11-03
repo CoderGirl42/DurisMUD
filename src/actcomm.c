@@ -583,7 +583,7 @@ void do_gcc(P_char ch, char *argument, int cmd)
       }
     }
 
-    sprintf( guild_name, "%s", from_guild->get_name().c_str() );
+    snprintf(guild_name, MAX_STRING_LENGTH, "%s", from_guild->get_name().c_str() );
     for( i = descriptor_list; i; i = i->next )
     {
       if( !(to_ch = i->character) )
@@ -623,12 +623,12 @@ void do_gcc(P_char ch, char *argument, int cmd)
       }
       if( IS_NPC(to_ch) || IS_SET(to_ch->specials.act3, PLR3_GUILDNAME) )
       {
-        sprintf(Gbuf1, "&+c%s&n&+c tells &n%s&+c '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+c%s&n&+c tells &n%s&+c '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
           guild_name, language_CRYPT(ch, to_ch, argument));
       }
       else
       {
-        sprintf(Gbuf1, "&+c%s&n&+c tells your &+%cguild&+c '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+c%s&n&+c tells your &+%cguild&+c '&+C%s&n&+c'\r\n", PERS(ch, to_ch, FALSE),
           IS_TRUSTED(to_ch) ? racewar_color[from_guild->get_racewar()].color : 'c',
           language_CRYPT(ch, to_ch, argument));
       }
@@ -1032,7 +1032,7 @@ void do_tell(P_char ch, char *argument, int cmd)
     {
       if (IS_SET(ch->specials.act, PLR_ECHO) || IS_NPC(ch))
       {
-        sprintf(Gbuf1, "&+WYou tell %s %s'%s'\r\n", GET_NAME(vict),
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+WYou tell %s %s'%s'\r\n", GET_NAME(vict),
                 language_known(ch, ch), message);
         send_to_char(Gbuf1, ch, LOG_PRIVATE);
       }
@@ -1051,7 +1051,7 @@ void do_tell(P_char ch, char *argument, int cmd)
     }
 
 
-    sprintf(Gbuf1, "&+W%s&+W tells you %s'%s'&N\r\n",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W%s&+W tells you %s'%s'&N\r\n",
             ((CAN_SEE(vict, ch) || racewar(vict, ch)) ?
              (IS_PC(ch) ? (ch)->player.name : (ch)->player.
               short_descr) : "Someone"), language_known(ch, vict),
@@ -1068,7 +1068,7 @@ void do_tell(P_char ch, char *argument, int cmd)
       vict->only.pc->last_tell = ch->player.name;
 
 /*
- * sprintf(Gbuf1, "&+W$n tells you %s'%s'&N", language_known(ch, vict),
+ * snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W$n tells you %s'%s'&N", language_known(ch, vict),
  * language_CRYPT(ch, vict, message)); act(Gbuf1, 0, ch, 0, vict,
  * TO_VICT);
  */
@@ -2189,7 +2189,7 @@ void do_beep(P_char ch, char *argument, int cmd)
     {
       if( IS_SET(ch->specials.act, PLR_ECHO) || IS_NPC(ch) )
       {
-        sprintf( Gbuf1, "&+WYou beep %s!\r\n", J_NAME(vict) );
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+WYou beep %s!\r\n", J_NAME(vict) );
         send_to_char( Gbuf1, ch, LOG_NONE );
       }
       else
@@ -2211,7 +2211,7 @@ void do_beep(P_char ch, char *argument, int cmd)
       }
     }
 
-    sprintf(Gbuf1, "&+W%s&+W beeps you.\a\r\n", CAN_SEE(vict, ch) ? J_NAME(ch) : "Someone" );
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W%s&+W beeps you.\a\r\n", CAN_SEE(vict, ch) ? J_NAME(ch) : "Someone" );
     send_to_char(Gbuf1, vict, LOG_NONE);
     if (IS_SET(vict->specials.act, PLR_AFK))
     {

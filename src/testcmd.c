@@ -232,7 +232,7 @@ void do_test_writemap(P_char ch, char *arg, int cmd)
         int shift = 0;
         if (hadbg && color_symbol[what].hasBg)
           shift = -2;
-        sprintf(buff + strlen(buff) + shift, "&%s%s",
+        snprintf(buff + strlen(buff) + shift, MAX_STRING_LENGTH, "&%s%s",
                 color_symbol[what].colorStrn, sector_symbol[what]);
         
         hadbg = color_symbol[what].hasBg;
@@ -243,9 +243,9 @@ void do_test_writemap(P_char ch, char *arg, int cmd)
         int shift = 0;
         if (hadbg)
           shift = -2;
-        sprintf(buff + strlen(buff) + shift, "%s", sector_symbol[what]);
+        snprintf(buff + strlen(buff) + shift, MAX_STRING_LENGTH, "%s", sector_symbol[what]);
       }*/
-      sprintf(buff + strlen(buff), "&%s%s", color_symbol[what].colorStrn, sector_symbol[what]);
+      snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "&%s%s", color_symbol[what].colorStrn, sector_symbol[what]);
 //      if( color_symbol[what].hasBg )
 //        strcat(buff, "&n");
       
@@ -474,7 +474,7 @@ void do_test(P_char ch, char *arg, int cmd)
     {
       if( IS_SET(zone_table[i].flags, ZONE_MAP) )
       {
-        sprintf( buff, "%3d) %s&n (%d): IS a map zone.\n", ++count, pad_ansi(zone_table[i].name, 35, TRUE).c_str(),
+        snprintf(buff, MAX_STRING_LENGTH, "%3d) %s&n (%d): IS a map zone.\n", ++count, pad_ansi(zone_table[i].name, 35, TRUE).c_str(),
           zone_table[i].number );
         send_to_char( buff, ch );
       }
@@ -499,11 +499,11 @@ void do_test(P_char ch, char *arg, int cmd)
 
     for( int i = 0;i <= EXPMOD_MAX;i++ )
     {
-      sprintf( buff, "%3d) %20s %2.3f %s\n", i, exp_mod_names[i], exp_mods[i],
+      snprintf(buff, MAX_STRING_LENGTH, "%3d) %20s %2.3f %s\n", i, exp_mod_names[i], exp_mods[i],
       (i <= CLASS_COUNT) ? class_names_table[i].ansi : "" );
       send_to_char( buff, ch );
     }
-    sprintf( buff, "WARRIOR: %d %d, CLERIC: %d %d.\n", flag2idx(CLASS_WARRIOR), EXPMOD_CLS_WARRIOR,
+    snprintf(buff, MAX_STRING_LENGTH, "WARRIOR: %d %d, CLERIC: %d %d.\n", flag2idx(CLASS_WARRIOR), EXPMOD_CLS_WARRIOR,
       flag2idx(CLASS_CLERIC), EXPMOD_CLS_CLERIC );
     send_to_char( buff, ch );
     return;
@@ -751,7 +751,7 @@ void do_test(P_char ch, char *arg, int cmd)
         // Sneak in and keep a record of minac shields too.
         if( currac == minac )
         {
-          sprintf( buff + strlen(buff), "%2d) '%s' %6d.\n", ++count2, pad_ansi(OBJ_SHORT(obj), 35, TRUE).c_str(), OBJ_VNUM(obj) );
+          snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff), "%2d) '%s' %6d.\n", ++count2, pad_ansi(OBJ_SHORT(obj), 35, TRUE).c_str(), OBJ_VNUM(obj) );
         }
       }
       extract_obj(obj);
@@ -768,7 +768,7 @@ void do_test(P_char ch, char *arg, int cmd)
     arg = skip_spaces(arg);
     snprintf(buf1, MAX_STRING_LENGTH, "%s", CRYPT( arg, GET_NAME(ch) ) );
     snprintf(buf2, MAX_STRING_LENGTH, "%s", CRYPT2( arg, GET_NAME(ch) ) );
-    sprintf( buff, "%s\n\rcrypt1: %s, crypt1(crypt1): %s.\n\rcrypt2: %s, crypt2(crypt2): %s.\n\r",
+    snprintf(buff, MAX_STRING_LENGTH, "%s\n\rcrypt1: %s, crypt1(crypt1): %s.\n\rcrypt2: %s, crypt2(crypt2): %s.\n\r",
       arg, buf1, CRYPT( arg, buf1 ), buf2, CRYPT2( arg, buf2 ) );
     send_to_char( buff, ch );
     snprintf(buf1, MAX_STRING_LENGTH, "%s", CRYPT2( arg, buf2 ) );

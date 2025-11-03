@@ -197,14 +197,14 @@ void Ferry::activity()
 
 			if( state_timer == depart_notice_time )
       {
-				sprintf(buffer, "A bell rings, announcing final boarding call for %s\r\nA strange voice announces, 'All aboard! Now departing for %s.'&n\r\n", name.c_str(), cur_dest_name() );
+				snprintf(buffer, MAX_STRING_LENGTH, "A bell rings, announcing final boarding call for %s\r\nA strange voice announces, 'All aboard! Now departing for %s.'&n\r\n", name.c_str(), cur_dest_name() );
 				act_to_all_on_board(buffer);
 				send_to_room( buffer, cur_room() );
 
 			}
       else if( state_timer <= 0 )
       {
-				sprintf(buffer, "The %s departs for %s&n.\r\n", name.c_str(), cur_dest_name() );
+				snprintf(buffer, MAX_STRING_LENGTH, "The %s departs for %s&n.\r\n", name.c_str(), cur_dest_name() );
 				act_to_all_on_board(buffer);
 				send_to_room(buffer, cur_room() );
 
@@ -231,7 +231,7 @@ void Ferry::activity()
 				if( route[next_route_leg].stop_here )
         {
 					// we've reached one of our stops
-					sprintf(buffer, "A shrill horn blows, alerting passengers to disembark.\r\nA strange voice announces, 'Now arrived at %s.'&n\r\n", cur_dest_name() );
+					snprintf(buffer, MAX_STRING_LENGTH, "A shrill horn blows, alerting passengers to disembark.\r\nA strange voice announces, 'Now arrived at %s.'&n\r\n", cur_dest_name() );
 					act_to_all_on_board(buffer);
 					send_to_room(buffer, cur_room() );
 
@@ -342,12 +342,12 @@ void Ferry::move()
 			return;
 		}
 
-		sprintf(buffer, "$p sails to %s.", dirs2[next_step]);
+		snprintf(buffer, MAX_STRING_LENGTH, "$p sails to %s.", dirs2[next_step]);
 		act(buffer, FALSE, 0, obj, 0, TO_ROOM);
 		obj_from_room(obj);
 
 		obj_to_room(obj,to_room);
-		sprintf(buffer, "$p sails in from %s.", dirs2[rev_dir[next_step]]);
+		snprintf(buffer, MAX_STRING_LENGTH, "$p sails in from %s.", dirs2[rev_dir[next_step]]);
 		act(buffer, FALSE, 0, obj, 0, TO_ROOM);
 
     everyone_look_out_ferry();

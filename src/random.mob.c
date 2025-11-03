@@ -502,37 +502,37 @@ P_char create_random_mob(int theme, int mob_level)
         random_mob->player.sex = SEX_FEMALE;
       }
       random_mob->only.npc->str_mask |= STRUNG_DESC1;
-      sprintf(t_buf, "&+W%s&+w the&n %s %s &+Wfrom %s&n.", temp_name,
+      snprintf(t_buf, MAX_STRING_LENGTH, "&+W%s&+w the&n %s %s &+Wfrom %s&n.", temp_name,
               race_name, class_name, the_zone->name);
       random_mob->player.long_descr = str_dup(t_buf);
 
       //Short
       random_mob->only.npc->str_mask |= STRUNG_DESC2;
 
-      sprintf(t_buf, "%s the %s %s", temp_name, race_name, class_name);
+      snprintf(t_buf, MAX_STRING_LENGTH, "%s the %s %s", temp_name, race_name, class_name);
       random_mob->player.short_descr = str_dup(t_buf);
       //name!
       random_mob->only.npc->str_mask |= STRUNG_KEYS;
 
-      sprintf(t_buf, "%s %s %s", temp_name, strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
+      snprintf(t_buf, MAX_STRING_LENGTH, "%s %s %s", temp_name, strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
       random_mob->player.name = str_dup(t_buf);
     }
     else
     {
       random_mob->only.npc->str_mask |= STRUNG_DESC1;
-      sprintf(t_buf, "%s %s %s &+Wfrom %s&n.", prefix_name[prefix], race_name,
+      snprintf(t_buf, MAX_STRING_LENGTH, "%s %s %s &+Wfrom %s&n.", prefix_name[prefix], race_name,
               class_name, the_zone->name);
       random_mob->player.long_descr = str_dup(t_buf);
 
 //Short
       random_mob->only.npc->str_mask |= STRUNG_DESC2;
 
-      sprintf(t_buf, "%s %s %s", prefix_name[prefix], race_name, class_name);
+      snprintf(t_buf, MAX_STRING_LENGTH, "%s %s %s", prefix_name[prefix], race_name, class_name);
       random_mob->player.short_descr = str_dup(t_buf);
 //name!
       random_mob->only.npc->str_mask |= STRUNG_KEYS;
 
-      sprintf(t_buf, "%s %s", strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
+      snprintf(t_buf, MAX_STRING_LENGTH, "%s %s", strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
       random_mob->player.name = str_dup(t_buf);
     }
   }
@@ -540,20 +540,20 @@ P_char create_random_mob(int theme, int mob_level)
   {
     prefix = number(0, 1);
     random_mob->only.npc->str_mask |= STRUNG_DESC1;
-    sprintf(t_buf, "%s %s %s&n stands here.",
+    snprintf(t_buf, MAX_STRING_LENGTH, "%s %s %s&n stands here.",
             prefix_name_theme[theme][prefix], race_name, class_name);
     random_mob->player.long_descr = str_dup(t_buf);
 
 //Short
     random_mob->only.npc->str_mask |= STRUNG_DESC2;
 
-    sprintf(t_buf, "%s %s %s", prefix_name_theme[theme][prefix], race_name,
+    snprintf(t_buf, MAX_STRING_LENGTH, "%s %s %s", prefix_name_theme[theme][prefix], race_name,
             class_name);
     random_mob->player.short_descr = str_dup(t_buf);
 //name!
     random_mob->only.npc->str_mask |= STRUNG_KEYS;
 
-    sprintf(t_buf, "%s %s", strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
+    snprintf(t_buf, MAX_STRING_LENGTH, "%s %s", strip_ansi(race_name).c_str(), strip_ansi(class_name).c_str());
     random_mob->player.name = str_dup(t_buf);
   }
 

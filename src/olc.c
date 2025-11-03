@@ -63,7 +63,7 @@ void olc_build_flag_menu8(char *str, ubyte value, const char *names[])
             i + 1, value == i ? "&+C" : "", names[i]);
 
     if (*names[i + ttl] != '\n')
-      sprintf(buf + strlen(buf),
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf),
               " %s &+W%2d.&N %s%-33.33s&N\r\n",
               value == (i + ttl) ? "&+M*&N" : " ",
               i + ttl + 1, value == (i + ttl) ? "&+C" : "", names[i + ttl]);
@@ -110,7 +110,7 @@ void olc_build_bitflag_menu32(char *str, ulong value, const char *names[])
             i + 1, IS_SET(value, 1 << i) ? "&+C" : "", names[i]);
 
     if (*names[i + ttl] != '\n')
-      sprintf(buf + strlen(buf),
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf),
               " %s &+W%2d.&N %s%-33.33s&N\r\n",
               IS_SET(value, 1 << (i + ttl)) ? "&+M*&N" : " ",
               i + ttl + 1, IS_SET(value, 1 << (i + ttl)) ? "&+C" : "",
@@ -130,7 +130,7 @@ void olc_del_exit_menu(struct olc_data *data)
 
   for (i = 0; i < NUM_EXITS; i++)
     if (world[data->rnum].dir_option[i])
-      sprintf(buf1 + strlen(buf1),
+      snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
               " &+W%d.&N Delete %s exit\r\n", i, dirs[i]);
   if (*buf1)
   {

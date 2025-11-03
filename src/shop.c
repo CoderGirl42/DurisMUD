@@ -273,7 +273,7 @@ char    *times_message(P_obj obj, char *name, int num)
   }
 
   if (num > 1)
-    sprintf(END_OF(buf), " (x %d)", num);
+    snprintf(END_OF(buf), MAX_STRING_LENGTH, " (x %d)", num);
   return (buf);
 }
 
@@ -548,17 +548,17 @@ void shopping_buy(char *arg, P_char ch, P_char keeper, int shop_nr)
   {
     if( !transact(ch, gem, keeper, sale) )
     {
-      sprintf(Gbuf1, shop_index[shop_nr].missing_cash2, GET_NAME(ch));
+      snprintf(Gbuf1, MAX_STRING_LENGTH, shop_index[shop_nr].missing_cash2, GET_NAME(ch));
       mobsay(keeper, Gbuf1);
       return;
     }
   }
   act("$n buys $p.", FALSE, ch, temp1, 0, TO_ROOM);
-  sprintf( Gbuf1, shop_index[shop_nr].message_buy, GET_NAME(ch),
+  snprintf(Gbuf1, MAX_STRING_LENGTH, shop_index[shop_nr].message_buy, GET_NAME(ch),
           coin_stringv(sale) );
   do_tell(keeper, Gbuf1, 0);
  // SET_BIT(temp1->type, ITEM_TREASURE);
-  sprintf(Gbuf1, "You now have %s.\r\n", temp1->short_description);
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "You now have %s.\r\n", temp1->short_description);
   send_to_char(Gbuf1, ch);
 
 /*
@@ -592,13 +592,13 @@ void shopping_buy(char *arg, P_char ch, P_char keeper, int shop_nr)
     }
     if( !(container = get_obj_in_list(arg2, ch->carrying)) )
     {
-      sprintf(Gbuf1, "You don't seem to have a '%s'.\r\n", arg2);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You don't seem to have a '%s'.\r\n", arg2);
       send_to_char(Gbuf1, ch);
       return;
     }
     if( container->type != ITEM_CONTAINER )
     {
-      sprintf(Gbuf1, "%s&n isn't a container.\r\n", container->short_description);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s&n isn't a container.\r\n", container->short_description);
       send_to_char(Gbuf1, ch);
       return;
     }
@@ -611,7 +611,7 @@ void shopping_buy(char *arg, P_char ch, P_char keeper, int shop_nr)
         send_to_char( "The limit for buying items is 50 at a time.\n\r", ch );
         return;
       }
-      sprintf( Gbuf1, "%s %s %d", argm, arg2, atoi(arg3) - 1 );
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s %s %d", argm, arg2, atoi(arg3) - 1 );
       shop_keeper( keeper, ch, CMD_BUY, Gbuf1 );
     }
   }
@@ -730,7 +730,7 @@ void shopping_sell(char *arg, P_char ch, P_char keeper, int shop_nr)
     if( sale < 1 )
       sale = 1;
   
-    sprintf(Gbuf1, "The shopkeeper says 'This item is rather common, you won't get as much for it.'\r\n", temp1->short_description);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "The shopkeeper says 'This item is rather common, you won't get as much for it.'\r\n", temp1->short_description);
     send_to_char(Gbuf1, ch);
   }
 
@@ -738,10 +738,10 @@ void shopping_sell(char *arg, P_char ch, P_char keeper, int shop_nr)
   
   sql_shop_sell(ch, temp1, sale);
 
-  sprintf(Gbuf1, "The shopkeeper now has %s.\r\n", temp1->short_description);
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "The shopkeeper now has %s.\r\n", temp1->short_description);
   send_to_char(Gbuf1, ch);
    
-  sprintf(Gbuf1, "The shopkeeper gives you %s.\r\n", coin_stringv(sale));
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "The shopkeeper gives you %s.\r\n", coin_stringv(sale));
   send_to_char(Gbuf1, ch);
   
   if(sale &&
@@ -1039,10 +1039,10 @@ void shopping_list(char *arg, P_char ch, P_char keeper, int shop_nr)
           else
             snprintf(Gbuf3, MAX_STRING_LENGTH, "%s", descbuf ? descbuf : "");
 
-          sprintf(Gbuf2, "%s for %s.\r\n", pad_ansi(Gbuf3, 45).c_str(), coin_stringv(sale));
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%s for %s.\r\n", pad_ansi(Gbuf3, 45).c_str(), coin_stringv(sale));
         }
 
-        sprintf(Gbuf4, "%2d) ", temp);
+        snprintf(Gbuf4, MAX_STRING_LENGTH, "%2d) ", temp);
         CAP(Gbuf2);
         strcat(Gbuf4, Gbuf2);
         strcat(Gbuf1, Gbuf4);
@@ -1226,7 +1226,7 @@ void shopping_repair(char *arg, P_char ch, P_char keeper, int shop_nr)
 
       if (!transact(ch, gem, keeper, cost))
       {
-        sprintf(buf, shop_index[shop_nr].missing_cash2, GET_NAME(ch));
+        snprintf(buf, MAX_STRING_LENGTH, shop_index[shop_nr].missing_cash2, GET_NAME(ch));
         mobsay(keeper, buf);
         return;
       }
@@ -1301,13 +1301,13 @@ int shop_keeper(P_char keeper, P_char ch, int cmd, char *arg)
    (shop_index[shop_nr].flag == 0)) {
    if ((time_info.hour == shop_index[shop_nr].open1) ||
    (time_info.hour == shop_index[shop_nr].open2)) {
-   sprintf (Gbuf1, "%s", shop_index[shop_nr].open_message);
+   snprintf(Gbuf1, MAX_STRING_LENGTH, "%s", shop_index[shop_nr].open_message);
    do_say (keeper, Gbuf1, 0);
    shop_index[shop_nr].flag = 1;
    shop_index[shop_nr].temptime = (time_info.hour + 1);
    } else if ((time_info.hour == shop_index[shop_nr].close1) ||
    (time_info.hour == shop_index[shop_nr].close2)) {
-   sprintf (Gbuf1, "%s", shop_index[shop_nr].close_message);
+   snprintf(Gbuf1, MAX_STRING_LENGTH, "%s", shop_index[shop_nr].close_message);
    do_say (keeper, Gbuf1, 0);
    shop_index[shop_nr].flag = 1;
    shop_index[shop_nr].temptime = (time_info.hour + 1);

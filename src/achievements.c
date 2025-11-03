@@ -123,30 +123,30 @@ void do_achievements(P_char ch, char *arg, int cmd)
 
   //-----Achievement: Miner
   if( affected_by_spell(ch, ACH_DO_YOU_MINE) )
-    sprintf(buf3, "  %s            %s                             %s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  %s            %s                             %s\r\n",
         "&+LD&+co &+CY&+yo&+wu &+YM&+Wi&+mn&+Me&N", "&+BMine 1000 ore&n", "&+B15% increase in ore prices&n");
   else
-    sprintf(buf3, "  %s            %s                             %s: &+W%d%%\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  %s            %s                             %s: &+W%d%%\r\n",
         "&+LD&+co &+CY&+yo&+wu &+YM&+Wi&+mn&+Me&N", "&+wMine 1000 ore&n", "&+w15% increase in ore prices&n", ore/10);
   strcat(buf, buf3);
   //-----Miner
 
   //-----Achievement: Trader
   if( cargo >= 10000 )
-    sprintf(buf3, "  &+L%-43s&+L%-45s  &+L%s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-43s&+L%-45s  &+L%s\r\n",
         "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+BSell 10000 crates of cargo&n", "&+BShip construction halved&n");
   else
-    sprintf(buf3, "  &+L%-43s&+L%-45s  &+L%s: &+W%d%%\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-43s&+L%-45s  &+L%s: &+W%d%%\r\n",
         "&+yT&+Yr&+ya&+Yd&+ye&+Yr&n", "&+ySell 10000 crates of cargo&n", "&+wShip construction halved&n", cargo/100);
   strcat(buf, buf3);
   //-----Trader
 
   //-----Achievement: You Strahd Me
   if(affected_by_spell(ch, ACH_YOUSTRAHDME))
-    sprintf(buf3, "  &+L%-34s&+L%-50s&+L%s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-34s&+L%-50s&+L%s\r\n",
         "&+LYou &+rStrahd &+LMe At Hello&n", "&+BSee &+chelp strahd&n", "&+Bsee &+chelp you strahd me&n");
   else
-    sprintf(buf3, "  &+L%-34s&+L%-50s&+L%s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-34s&+L%-50s&+L%s\r\n",
         "&+LYou &+rStrahd &+LMe At Hello&n", "&+wSee &+chelp strahd&n", "&+wan unknown reward&n");
   strcat(buf, buf3);
   //-----You Strahd Me
@@ -154,30 +154,30 @@ void do_achievements(P_char ch, char *arg, int cmd)
 
   //-----Achievement: May I Heals You
   if(affected_by_spell(ch, ACH_MAYIHEALSYOU))
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-40s&+L%-45s&+L%s\r\n",
         "&+WMay I &+WHe&+Ya&+Wls &+WYou?&n", "&+BHeal 1,000,000 points of player damage", "&+BAccess to the salvation command");
   else
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s: &+W%d%%&n\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-40s&+L%-45s&+L%s: &+W%d%%&n\r\n",
         "&+WMay I &+WHe&+Ya&+Wls &+WYou?&n", "&+wHeal 1,000,000 points of player damage", "&+wAccess to the salvation command", get_progress(ch, AIP_MAYIHEALSYOU, 1000000));
   strcat(buf, buf3);
   //-----May I Heals You
 
   //-----Achievement: Master of Deception
   if(affected_by_spell(ch, ACH_DECEPTICON))
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-40s&+L%-45s&+L%s\r\n",
         "&+LMa&+rst&+Rer of De&+rcep&+Ltion&n", "&+BSuccessfully use 500 disguise kits", "&+BDisguise doesnt consume a kit&n");
   else
-    sprintf(buf3, "  &+L%-40s&+L%-45s&+L%s:  &+W%d%%\r\n",
+    snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-40s&+L%-45s&+L%s:  &+W%d%%\r\n",
         "&+LMa&+rst&+Rer of De&+rcep&+Ltion&n", "&+wSuccessfully use 500 disguise kits", "&+wDisguise doesnt consume a kit&n", get_progress(ch, AIP_DECEPTICON, 500));
   strcat(buf, buf3);
   //-----Master of Deception
 
   //-----Achievement: Full Base Stats 100 - gellz
   if(affected_by_spell(ch, ACH_DEATHSDOOR))
-    sprintf(buf2, "  &+L%-55s&+L%-45s&+L%s\r\n",
+    snprintf(buf2, MAX_STRING_LENGTH, "  &+L%-55s&+L%-45s&+L%s\r\n",
         "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+BGet 100 in all stats(help toughen up)", "&+BAbility to use &+LDea&+wths&+L Do&+wor&n");
   else
-    sprintf(buf2, "  &+L%-55s&+L%-45s&+L%s\r\n",
+    snprintf(buf2, MAX_STRING_LENGTH, "  &+L%-55s&+L%-45s&+L%s\r\n",
         "&+MTo&+mug&+Mhe&+mn &+MU&+mp &+MPr&+min&+Mce&+mss&n", "&+wGet 100 in all stats(help toughen up)", "&+wAbility to use &+LDea&+wths&+L Do&+wor&n");
   strcat(buf, buf2);
   //-----END Achievement: Full Base Stats 100
@@ -186,19 +186,19 @@ void do_achievements(P_char ch, char *arg, int cmd)
   {
     //-----Achievement: Descendent
     if(GET_RACE(ch) == RACE_LICH)
-      sprintf(buf3, "  &+L%-50s&+L%-45s&+L%s\r\n",
+      snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-50s&+L%-45s&+L%s\r\n",
           "&+LDe&+msc&+Len&+mde&+Lnt&n", "&+BSuccessfully &+cdescend&+L into darkness", "&+BBecome a Lich&n");
     else
-      sprintf(buf3, "  &+L%-40s&+L%-51s&+L%s\r\n",
+      snprintf(buf3, MAX_STRING_LENGTH, "  &+L%-40s&+L%-51s&+L%s\r\n",
           "&+LDe&+msc&+Len&+mde&+Lnt&n", "&+wSuccessfully &+cdescend&+w into darkness", "&+wSee &+chelp descend&n");
     strcat(buf, buf3);
     //-----Descendent
   }
 
 
-  sprintf(buf3, "\r\n&+L=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-&n\r\n\r\n", GET_NAME(ch));
+  snprintf(buf3, MAX_STRING_LENGTH, "\r\n&+L=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-&n\r\n\r\n", GET_NAME(ch));
   strcat(buf, buf3);
-  /* sprintf(buf2, "   &+w%-15s          &+Y% 6.2f\t\r\n",
+  /* snprintf(buf2, MAX_STRING_LENGTH, "   &+w%-15s          &+Y% 6.2f\t\r\n",
      name, pts);*/
   page_string(ch->desc, buf, 1);
 

@@ -732,13 +732,13 @@ void spell_reflection(int level, P_char ch, char *arg, int type,
 
     logit(LOG_DEBUG, "REFLECTION: (%s) casting on (%s).", GET_NAME(ch), GET_NAME(victim));
 
-    sprintf(Gbuf1, "image %s %s", GET_NAME(victim),
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "image %s %s", GET_NAME(victim),
             race_names_table[GET_RACE(victim)].normal);
 
     image->player.name = str_dup(Gbuf1);
     image->player.short_descr = str_dup(victim->player.name);
 
-    sprintf(Gbuf1, "%s stands here.\r\n", victim->player.name);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "%s stands here.\r\n", victim->player.name);
 
     image->player.long_descr = str_dup(Gbuf1);
 
@@ -892,11 +892,11 @@ void spell_mask(int level, P_char ch, char *arg, int type, P_char victim,
         ch->disguise.racewar = GET_RACEWAR(target);
         if (GET_TITLE(target))
           ch->disguise.title = str_dup(GET_TITLE(target));
-        sprintf(tbuf,
+        snprintf(tbuf, MAX_STRING_LENGTH,
                 "&+LYour image shifts and &+bb&+Blur&+bs&+L into %s!&N\r\n",
                 target->player.name);
         send_to_char(tbuf, ch);
-        sprintf(tbuf,
+        snprintf(tbuf, MAX_STRING_LENGTH,
                 "&+LThe image of %s &+Lshifts and &+bb&+Blur&+bs&+L into %s&+L!&N\r\n",
                 GET_NAME(ch), GET_NAME(target));
         act(tbuf, FALSE, ch, 0, NULL, TO_ROOM);
@@ -1613,7 +1613,7 @@ void spell_clone_form(int level, P_char ch, char *arg, int type, P_char victim, 
       ch->disguise.hit = GET_LEVEL(ch) * 2;
       snprintf(tbuf, MAX_STRING_LENGTH, "&+LYou &+Bblur&N and take on the form of %s!\r\n", t_ch->player.short_descr);
       send_to_char(tbuf, ch);
-      sprintf(tbuf, " &+LThe image of %s &Ndisappears&+L, and is replaced by %s!\r\n",
+      snprintf(tbuf, MAX_STRING_LENGTH, " &+LThe image of %s &Ndisappears&+L, and is replaced by %s!\r\n",
         GET_NAME(ch), t_ch->player.short_descr);
       act(tbuf, FALSE, ch, 0, NULL, TO_ROOM);
       SET_BIT(ch->specials.act, PLR_NOWHO);
@@ -1661,11 +1661,11 @@ void spell_clone_form(int level, P_char ch, char *arg, int type, P_char victim, 
           ch->disguise.racewar = GET_RACEWAR(target);
           if (GET_TITLE(target))
             ch->disguise.title = str_dup(GET_TITLE(target));
-          sprintf(tbuf,
+          snprintf(tbuf, MAX_STRING_LENGTH,
                   "&+LYour image shifts and &+bb&+Blur&+bs&+L into %s!&N\r\n",
                   target->player.name);
           send_to_char(tbuf, ch);
-          sprintf(tbuf, "&+LThe image of %s &+Lshifts and &+bb&+Blur&+bs&+L into %s&+L!&N\r\n",
+          snprintf(tbuf, MAX_STRING_LENGTH, "&+LThe image of %s &+Lshifts and &+bb&+Blur&+bs&+L into %s&+L!&N\r\n",
                   GET_NAME(ch), GET_NAME(target));
           act(tbuf, FALSE, ch, 0, NULL, TO_ROOM);
           SET_BIT(ch->specials.act, PLR_NOWHO);

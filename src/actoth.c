@@ -1331,7 +1331,7 @@ bool forage_sect( P_char ch, int sector, bool poisoned )
   }
 
   obj_to_char(forage_obj, ch);
-  sprintf(buf, "Searching %s, you manage to find $p.", text);
+  snprintf(buf, MAX_STRING_LENGTH, "Searching %s, you manage to find $p.", text);
   act(buf, FALSE, ch, forage_obj, 0, TO_CHAR);
   act("Foraging around, $n comes up with $p.", TRUE, ch, forage_obj, 0, TO_ROOM);
   return TRUE;
@@ -1562,7 +1562,7 @@ void do_forage(P_char ch, char *arg, int cmd)
       }
       treeobj = read_object(20, VIRTUAL);
       obj_to_room(treeobj, ch->in_room);
-      sprintf(buf, "Searching %s, you manage to unroot $p.", sectmessage);
+      snprintf(buf, MAX_STRING_LENGTH, "Searching %s, you manage to unroot $p.", sectmessage);
       act(buf, FALSE, ch, treeobj, 0, TO_CHAR);
       act("Foraging around, $n unroots $p.", TRUE, ch, treeobj, 0, TO_ROOM);
       CharWait(ch, PULSE_VIOLENCE * 1);
@@ -3032,7 +3032,7 @@ void do_steal(P_char ch, char *argument, int cmd)
         GET_GOLD(ch) += gold[2];
         GET_PLATINUM(ch) += gold[3];
 
-        sprintf(Gbuf1,
+        snprintf(Gbuf1, MAX_STRING_LENGTH,
                 "Bingo! You got %d &+Wplatinum&N, %d &+Ygold&N, %d silver, and %d &+ycopper&N coins!\r\n",
                 gold[3], gold[2], gold[1], gold[0]);
         send_to_char(Gbuf1, ch);
@@ -4134,9 +4134,9 @@ void do_use(P_char ch, char *argument, int cmd)
         // Skip whitespace..
         while( isspace(*argument) )
           argument++;
-        sprintf( Gbuf1, "You wave $p and say '%s'.", argument );
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "You wave $p and say '%s'.", argument );
         act(Gbuf1, TRUE, ch, stick, NULL, TO_CHAR);
-        sprintf( Gbuf1, "$n waves $p and says '%s'.", argument );
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "$n waves $p and says '%s'.", argument );
         act(Gbuf1, TRUE, ch, stick, NULL, TO_ROOM);
       }
       else
@@ -4324,7 +4324,7 @@ void show_toggles(P_char ch)
 
   if (GET_LEVEL(ch) >= AVATAR)
   {
-    sprintf(Gbuf1,
+    snprintf(Gbuf1, MAX_STRING_LENGTH,
             "&+rWmsg:&+g %-3s "
             "&+rWlog:&+g %-3s "
             "&+rLogmsg:&+g %-3s "
@@ -4753,7 +4753,7 @@ void do_toggle(P_char ch, char *arg, int cmd)
     else
     {
       result = TRUE;
-      sprintf(Gbuf3, "%d", number);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "%d", number);
     }
     break;
   case 14:                     /*
@@ -4860,7 +4860,7 @@ void do_toggle(P_char ch, char *arg, int cmd)
     {
       ch->only.pc->screen_length = number;
       result = TRUE;
-      sprintf(Gbuf3, "%d", number);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "%d", number);
     }
     break;
   case 22:
@@ -4869,9 +4869,9 @@ void do_toggle(P_char ch, char *arg, int cmd)
     // result = PLR_TOG_CHK(ch, PLR_SMARTPROMPT);
     // if (!IS_SET(ch->specials.act, PLR_SMARTPROMPT))
     // {
-      // sprintf(buf, VT_HOMECLR);
+      // snprintf(buf, MAX_STRING_LENGTH, VT_HOMECLR);
       // send_to_char(buf, ch);
-      // sprintf(buf, VT_MARGSET, 0, ch->only.pc->screen_length);
+      // snprintf(buf, MAX_STRING_LENGTH, VT_MARGSET, 0, ch->only.pc->screen_length);
       // send_to_char(buf, ch);
     // }
     // else
@@ -5063,11 +5063,11 @@ void do_toggle(P_char ch, char *arg, int cmd)
 
   if( result )
   {
-    sprintf(Gbuf1, tog_messages[tog_nr][TOG_ON], Gbuf3);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, tog_messages[tog_nr][TOG_ON], Gbuf3);
   }
   else
   {
-    sprintf(Gbuf1, tog_messages[tog_nr][TOG_OFF], Gbuf3);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, tog_messages[tog_nr][TOG_OFF], Gbuf3);
   }
   send_to_char(Gbuf1, send_ch);
 }
@@ -5225,11 +5225,11 @@ void do_split(P_char ch, char *argument, int cmd)
         break;
       }
       given += share;
-      sprintf(Gbuf1, "$n gives you your share:  %ld %s coins.",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "$n gives you your share:  %ld %s coins.",
               share, coin_names[ctype]);
       act(Gbuf1, 0, ch, 0, gl->ch, TO_VICT);
 
-      sprintf(Gbuf1, "You give %s %ld %s coins.\r\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You give %s %ld %s coins.\r\n",
               GET_NAME(gl->ch), share, coin_names[ctype]);
       send_to_char(Gbuf1, ch);  /*
                                  * Tell splitter money was given
@@ -5243,7 +5243,7 @@ void do_split(P_char ch, char *argument, int cmd)
       ("$n then notices that no one in $s group is around, and smiles greedily.",
        1, ch, 0, 0, TO_ROOM);
   }
-  sprintf(Gbuf1, "You keep %ld %s coins for yourself.\r\n",
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "You keep %ld %s coins for yourself.\r\n",
           gold - given, coin_names[ctype]);
   send_to_char(Gbuf1, ch);
   return;
@@ -5268,9 +5268,9 @@ void do_reboot(P_char ch, char *argument, int cmd)
   timestr = asctime(localtime(&timenow));
   strcpy(nwtime, timestr);
 
-  sprintf(Gbuf4, "System last rebooted at %s\r\n", rbtime);
+  snprintf(Gbuf4, MAX_STRING_LENGTH, "System last rebooted at %s\r\n", rbtime);
   send_to_char(Gbuf4, ch);
-  sprintf(Gbuf4, "It is now %s\r\n", nwtime);
+  snprintf(Gbuf4, MAX_STRING_LENGTH, "It is now %s\r\n", nwtime);
   send_to_char(Gbuf4, ch);
 
   /*
@@ -5284,7 +5284,7 @@ void do_reboot(P_char ch, char *argument, int cmd)
   uptime %= SECS_PER_REAL_HOUR;
   upmins = uptime / SECS_PER_REAL_MIN;
 
-  sprintf(Gbuf4,
+  snprintf(Gbuf4, MAX_STRING_LENGTH,
           "The system has been up for %d days, %d hours, %d mins.\r\n",
           updays, uphours, upmins);
   send_to_char(Gbuf4, ch);
@@ -5937,7 +5937,7 @@ void do_fly(P_char ch, char *argument, int cmd)
 //        act("$N follows you.", TRUE, ch, 0, k->follower, TO_CHAR);
 //        act("$N follows $n.", TRUE, ch, 0, k->follower, TO_NOTVICT);
         act("You follow $n.", TRUE, ch, 0, k->follower, TO_VICT);
-        sprintf(Gbuf1, "fly %s", argument);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "fly %s", argument);
         command_interpreter(k->follower, Gbuf1);
       }
     }
@@ -6491,7 +6491,7 @@ void do_ascend(P_char ch, char *arg, int cmd)
         "Your prayers have been answered, as you ascend into the ranks of\n"
         "the holy army, from this day on you will be an "
         "&+WAvenger&n of divine law.\n\n", ch);
-    sprintf(buffer,
+    snprintf(buffer, MAX_STRING_LENGTH,
         "You hear a loud voice exclaiming, '&+WWelcome my child, you shall\n"
         "&+Wnow be the avenging hand of %s,\n"
         "&+Wthe %s &+Wfor his enemies!'",

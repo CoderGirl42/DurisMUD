@@ -209,13 +209,13 @@ char *where_obj(P_obj w_obj, int flag)
   }
   if(OBJ_ROOM(w_obj))
   {
-    sprintf(GS_buf1 + strlen(GS_buf1), "in [&+R%4d&+W:&+C%6d&n] &n%s",
+    snprintf(GS_buf1 + strlen(GS_buf1), MAX_STRING_LENGTH - strlen(GS_buf1), "in [&+R%4d&+W:&+C%6d&n] &n%s",
             ROOM_ZONE_NUMBER(w_obj->loc.room), world[w_obj->loc.room].number, world[w_obj->loc.room].name);
     return (GS_buf1);
   }
   if(OBJ_CARRIED(w_obj))
   {
-    sprintf(GS_buf1 + strlen(GS_buf1),
+    snprintf(GS_buf1 + strlen(GS_buf1), MAX_STRING_LENGTH - strlen(GS_buf1),
             "in [&+R%4d&+W:&+C%6d&n] &+Ycarried by &n%s&n",
             ((w_obj->loc.carrying->in_room != NOWHERE) ? ROOM_ZONE_NUMBER(w_obj->loc.carrying->in_room) : -1),            
             ((w_obj->loc.carrying->in_room != NOWHERE) ? world[w_obj->loc.carrying->in_room].number : -1),
@@ -224,7 +224,7 @@ char *where_obj(P_obj w_obj, int flag)
   }
   if(OBJ_WORN(w_obj))
   {
-    sprintf(GS_buf1 + strlen(GS_buf1),
+    snprintf(GS_buf1 + strlen(GS_buf1), MAX_STRING_LENGTH - strlen(GS_buf1),
             "in [&+R%4d&+W:&+C%6d&n] &+Yequipped by &n%s&n",
             ((w_obj->loc.carrying->in_room != NOWHERE) ? ROOM_ZONE_NUMBER(w_obj->loc.carrying->in_room) : -1),            
             ((w_obj->loc.carrying->in_room != NOWHERE) ? world[w_obj->loc.carrying->in_room].number : -1),
@@ -233,7 +233,7 @@ char *where_obj(P_obj w_obj, int flag)
   }
   if(OBJ_INSIDE(w_obj))
   {
-    sprintf(GS_buf1 + strlen(GS_buf1), "&+Yinside &n%s&+Y, ",
+    snprintf(GS_buf1 + strlen(GS_buf1), MAX_STRING_LENGTH - strlen(GS_buf1), "&+Yinside &n%s&+Y, ",
             w_obj->loc.inside->short_description);
     where_obj(w_obj->loc.inside, TRUE);
     return GS_buf1;
@@ -1157,7 +1157,7 @@ void do_goto(P_char ch, char *argument, int cmd)
 
   if(ch->only.pc->poofInSound)
   {
-    sprintf(output, "!!SOUND(%s F=1 P=30)\n", ch->only.pc->poofInSound);
+    snprintf(output, MAX_STRING_LENGTH, "!!SOUND(%s F=1 P=30)\n", ch->only.pc->poofInSound);
 
     for (pers = world[ch->in_room].people; pers; pers = pers->next_in_room)
     {
@@ -1565,13 +1565,13 @@ void stat_game(P_char ch)
   {
     if(i < LAST_RACE && race[i + 1])
     {
-      sprintf(buf + strlen(buf), "%2d%%/%3d  %s",
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%2d%%/%3d  %s",
               (int) ((race[i + 1] / x) * 100 + .5), (int) race[i + 1],
               pad_ansi(race_names_table[i + 1].ansi, 15).c_str());
     }
     else if(i < (LAST_RACE - 1))
     {
-      sprintf(buf + strlen(buf), " 0%%/  0  %s",
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), " 0%%/  0  %s",
               pad_ansi(race_names_table[i + 1].ansi, 15).c_str());
     }
     else
@@ -1579,21 +1579,21 @@ void stat_game(P_char ch)
 
     if(i < CLASS_COUNT && m_class[i + 1])
     {
-      sprintf(buf + strlen(buf), "      %10d%%/%3d  %s\n",
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "      %10d%%/%3d  %s\n",
               (int) ((m_class[i + 1] / x) * 100 + .5), (int) m_class[i + 1],
               class_names_table[i + 1].ansi);
     }
     else if(i < (CLASS_COUNT - 1))
     {
-      sprintf(buf + strlen(buf), "      %10d%%/%3d  %s \n",
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "      %10d%%/%3d  %s \n",
               0, 0, class_names_table[i + 1].ansi);
     }
     else
       strcat(buf + strlen(buf), "\n");
   }
-  sprintf(buf + strlen(buf), "\nGood/Evil/Undead -raced players: %3d/%3d/%3d",
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "\nGood/Evil/Undead -raced players: %3d/%3d/%3d",
           goods, evils, pundeads);
-  sprintf(buf + strlen(buf), "\nTotal playing          : %3d\n", used_descs);
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "\nTotal playing          : %3d\n", used_descs);
   send_to_char(buf, ch);
 }
 
@@ -1704,43 +1704,43 @@ void do_stat(P_char ch, char *argument, int cmd)
             zone_table[rm->zone].number, 
             buf2);
 
-    sprintf(o_buf + strlen(o_buf), "&+YName: &N%s\n", rm->name);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YName: &N%s\n", rm->name);
 
     sprintbitde(rm->room_flags, room_bits, buf2);
-    sprintf(o_buf + strlen(o_buf), "&+YRoom flags:&N %s\n", buf2);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YRoom flags:&N %s\n", buf2);
 
-    sprintf(o_buf + strlen(o_buf), "&+YWeather sector: &N%d\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YWeather sector: &N%d\n",
             in_weather_sector(real_room0(rm->number)));
 
     if(rm->continent)
     {
-      sprintf(o_buf + strlen(o_buf), "&+YContinent: &n%s\n", continent_name(rm->continent));
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YContinent: &n%s\n", continent_name(rm->continent));
       for( int i = 1; i <= MAX_RACEWAR; i++ )
       {
-        sprintf( o_buf + strlen(o_buf), "  &+%c%7s &+Yplayers: &N%d, &+Ymisfire: &N%s.\n",
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "  &+%c%7s &+Yplayers: &N%d, &+Ymisfire: &N%s.\n",
           racewar_color[i].color, racewar_color[i].name, continent_misfire.players[rm->continent][i],
           YESNO(continent_misfire.misfiring[rm->continent][i]) );
       }
     }
 
-    sprintf(o_buf + strlen(o_buf), "&+YJustice Patrol:&N %s \n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YJustice Patrol:&N %s \n",
             town_name_list[(int) rm->justice_area]);
     
-//    sprintf(o_buf + strlen(o_buf), "&+YKingdom Type:&N %s ", kingdom_type_list[(int) rm->kingdom_type]);
-//    sprintf(o_buf + strlen(o_buf), "&+YKingdom Number:&N %d\n", rm->kingdom_num);
+//    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YKingdom Type:&N %s ", kingdom_type_list[(int) rm->kingdom_type]);
+//    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YKingdom Number:&N %d\n", rm->kingdom_num);
 //    sprintbit(rm->resources, resource_list, buf);
-//    sprintf(o_buf + strlen(o_buf), "&+YResources:&N (%ld) %s\n", rm->resources, buf);
+//    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YResources:&N (%ld) %s\n", rm->resources, buf);
 
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YSpecial procedure:&N %s\n",
             (rm->funct) ? get_function_name((void*)rm->funct) : "None");
     
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YCurrent: (&N%d&+Y)-(&N%d)&+Y  Chance of falling:&N %d&+Y%%  Light sources:&N %d &+YSunShine:&N %s\n&+YDescription:&N\n",
             rm->current_speed, rm->current_direction, rm->chance_fall,
             rm->light, YESNO(IS_SUNLIT(i)) );
 
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YSection: &N%d  &+YX = &N%d  &+YY = &N%d  &+YZ = &N%d&N\n",
             rm->map_section, rm->x_coord, rm->y_coord, rm->z_coord);
 
@@ -1787,7 +1787,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       if(rm->dir_option[i])
       {
         sprintbit((ulong) rm->dir_option[i]->exit_info, exit_bits, buf2);
-        sprintf(buf,
+        snprintf(buf, MAX_STRING_LENGTH,
                 "&+YDirection &+R%5s  &+YKeyword: &+G%s  &+YKey:&N %d  &+YExit flag: &N%s\n&+YTo room: [&N%d&+Y](&N%d&+Y)&N  %s\n\n",
                 dirs[i], rm->dir_option[i]->keyword, rm->dir_option[i]->key,
                 buf2,
@@ -1817,7 +1817,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     for (x = 0; x <= top_of_zone_table; x++)
     {
       zone = &zone_table[x];
-      sprintf(o_buf, "&+YZone: (&N%d&+Y)  Name:&N %s\n",
+      snprintf(o_buf, MAX_STRING_LENGTH, "&+YZone: (&N%d&+Y)  Name:&N %s\n",
               world[zone->real_bottom].zone, zone->name);
 
       for (i3 = 0, i = zone->real_bottom;
@@ -1832,11 +1832,11 @@ void do_stat(P_char ch, char *argument, int cmd)
               if(!i3)
                 i3 = 1;
               if(world[i].dir_option[i2]->to_room == NOWHERE)
-                sprintf(o_buf + strlen(o_buf),
+                snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                         " &+Y[&n%5d&+Y](&n%5d&+Y)&n &+R%-5s&n to &+WNOWHERE\n",
                         world[i].number, i, dirs[i2]);
               else
-                sprintf(o_buf + strlen(o_buf),
+                snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                         " &+Y[&n%5d&+Y]&n &+R%-5s&n to &+Y[&+R%3d&n:&+Y%5d&+Y]&n %s\n",
                         world[i].number, dirs[i2],
                         zone_table[world[world[i].dir_option[i2]->to_room].zone].number,
@@ -1911,12 +1911,12 @@ void do_stat(P_char ch, char *argument, int cmd)
     m_virtual = (j->R_num >= 0) ? obj_index[j->R_num].virtual_number : 0;
 
     sprinttype(GET_ITEM_TYPE(j), item_types, buf2);
-    sprintf(o_buf,
+    snprintf(o_buf, MAX_STRING_LENGTH,
             "&+YObject:\n&+YNumber: [&N%d&+Y](&N%d&+Y)  Type: &N%s  &+YName: &N%s\n",
             m_virtual, j->R_num, buf2,
             ((j->short_description) ? j->short_description : "None"));
 
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YKeywords: &N%s\n&+YLong description:\n%s\n",
             ((j->name) ? j->name : "None"),
             ((j->description) ? j->description : "None"));
@@ -1932,52 +1932,52 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcat(buf, "&+Y----------\n");
       strcat(o_buf, buf);
     }
-    sprintf(o_buf + strlen(o_buf), "&+YNumber in game : &N%d\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YNumber in game : &N%d\n",
             (obj_index[j->R_num].number - ((t_obj != NULL) ? 1 : 0)));
 
     sprintbitde(j->wear_flags, wear_bits, buf2);
-    sprintf(o_buf + strlen(o_buf), "&+YCan be worn on : &N%s\n", buf2);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YCan be worn on : &N%s\n", buf2);
 
     if(j->bitvector)
     {
       sprintbitde(j->bitvector, affected1_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 1: &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSet char bits 1: &N%s\n", buf2);
     }
 
     if(j->bitvector2)
     {
       sprintbitde(j->bitvector2, affected2_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 2: &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSet char bits 2: &N%s\n", buf2);
     }
 
     if(j->bitvector3)
     {
       sprintbitde(j->bitvector3, affected3_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 3: &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSet char bits 3: &N%s\n", buf2);
     }
 
     if(j->bitvector4)
     {
       sprintbitde(j->bitvector4, affected4_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 4: &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSet char bits 4: &N%s\n", buf2);
     }
 
     if(j->bitvector5)
     {
       sprintbitde(j->bitvector5, affected5_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YSet char bits 5: &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSet char bits 5: &N%s\n", buf2);
     }
 
     if(j->extra_flags)
     {
       sprintbitde(j->extra_flags, extra_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YExtra flags    : &N%s (%d)\n", buf2, j->extra_flags);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YExtra flags    : &N%s (%d)\n", buf2, j->extra_flags);
     }
 
     if(j->extra2_flags)
     {
       sprintbitde(j->extra2_flags, extra2_bits, buf2);
-      sprintf(o_buf + strlen(o_buf), "&+YExtra2 flags   : &N%s\n", buf2);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YExtra2 flags   : &N%s\n", buf2);
     }
 
     if(j->anti_flags)
@@ -1985,8 +1985,8 @@ void do_stat(P_char ch, char *argument, int cmd)
       *buf2 = '\0';
       for (x = 0; x < CLASS_COUNT; x++)
         if(j->anti_flags & (((unsigned long) 1) << x))
-          sprintf(buf2 + strlen(buf2), "%s ", class_names_table[x + 1].normal);
-      sprintf(o_buf + strlen(o_buf), "&+Y%s : &N%s\n",
+          snprintf(buf2 + strlen(buf2), MAX_STRING_LENGTH - strlen(buf2), "%s ", class_names_table[x + 1].normal);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+Y%s : &N%s\n",
         IS_SET(j->extra_flags, ITEM_ALLOWED_CLASSES) ? "Allowed classes" : "Denied classes", buf2);
     }
 
@@ -1995,25 +1995,25 @@ void do_stat(P_char ch, char *argument, int cmd)
       *buf2 = '\0';
       for (x = 0; x < RACE_PLAYER_MAX; x++)
         if(j->anti2_flags & (((unsigned long) 1) << x))
-          sprintf(buf2 + strlen(buf2), "%s ", race_names_table[x + 1].no_spaces);
-      sprintf(o_buf + strlen(o_buf), "&+Y%s  : &N%s\n",
+          snprintf(buf2 + strlen(buf2), MAX_STRING_LENGTH - strlen(buf2), "%s ", race_names_table[x + 1].no_spaces);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+Y%s  : &N%s\n",
         IS_SET(j->extra_flags, ITEM_ALLOWED_RACES) ? "Allowed races" : "Denied races", buf2);
     }
 
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YWeight: &N%d&+Y lbs   Value: &N%s   &+YCondition: &N%d   &+YItem Value: &N%d\n",//%d(%d%%)\n",
             j->weight, comma_string((long) (j->cost)), j->condition, itemvalue(j));
 //, j->max_condition, (int) (((float) j->condition / j->max_condition) * 100)); wipe2011
 
-    sprintf(o_buf + strlen(o_buf),
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
             "&+YT0: &n%d&+Y  T1: &n%d&+Y  T2: &n%d&+Y  T3: &n%d&+Y  T4: &n%d&+Y  T5: &n%d\n",
             (int) j->timer[0], (int) j->timer[1], (int) j->timer[2],
             (int) j->timer[3], (int) j->timer[4], (int) j->timer[5]);
 
-    sprintf(o_buf + strlen(o_buf), "&+YCraftsmanship: &n%s\n", craftsmanship_names[j->craftsmanship]);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YCraftsmanship: &n%s\n", craftsmanship_names[j->craftsmanship]);
 
     sprinttype(j->material, item_material, buf2);
-    sprintf(o_buf + strlen(o_buf), "&+YMaterial: &n%s\n", buf2);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YMaterial: &n%s\n", buf2);
 
     if(!t_obj)
     {
@@ -2024,17 +2024,17 @@ void do_stat(P_char ch, char *argument, int cmd)
     switch (j->type)
     {
     case ITEM_LIGHT:
-      sprintf(buf, "&+YColor: [&N%d&+Y]  Type: [&N%d&+Y]  Hours: [&N%d&+Y]",
+      snprintf(buf, MAX_STRING_LENGTH, "&+YColor: [&N%d&+Y]  Type: [&N%d&+Y]  Hours: [&N%d&+Y]",
               j->value[0], j->value[1], j->value[2]);
       break;
     case ITEM_POTION:
     case ITEM_SCROLL:
-      sprintf(buf, "&+Y Level: &N%d&+Y  Spells:&N ", j->value[0]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+Y Level: &N%d&+Y  Spells:&N ", j->value[0]);
 
       for (i = 1; (i < 4) && (j->value[i] > 0); i++)
       {
         sprinttype(j->value[i], (const char **) spells, buf2);
-        sprintf(buf, "%s%d) &+C%s [%d]&+Y, ", buf, j->value[i], buf2,
+        snprintf(buf, MAX_STRING_LENGTH, "%s%d) &+C%s [%d]&+Y, ", buf, j->value[i], buf2,
                 GetCircle(j->value[i]));
       }
 
@@ -2054,7 +2054,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         sprinttype(j->value[3], (const char **) spells, buf2);
       else
         strcpy(buf2, "&+RBUGGED!&");
-      sprintf(buf, "%d(%d)&+Y charges, Level &N%d&+Y spell: %d) &+C%s [%d]&N",
+      snprintf(buf, MAX_STRING_LENGTH, "%d(%d)&+Y charges, Level &N%d&+Y spell: %d) &+C%s [%d]&N",
               j->value[1], j->value[2], j->value[0], j->value[3], buf2,
               GetCircle(j->value[3]));
       break;
@@ -2063,7 +2063,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         strcpy(buf2, "&+RBUGGED!&N");
       else
         sprinttype(j->value[3] - 1, shot_types, buf2);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YRange: &N%d  &+YRate of fire: &N%d  &+YMissile type: &N%d",
               j->value[1], j->value[0], j->value[3]);
       break;
@@ -2086,30 +2086,30 @@ void do_stat(P_char ch, char *argument, int cmd)
           if(skills[spells[0]].name)
             strcpy(spell_list, skills[spells[0]].name);
           if(spells[1] && skills[spells[1]].name)
-            sprintf(spell_list + strlen(spell_list), "&n, &+W%s",
+            snprintf(spell_list + strlen(spell_list), MAX_STRING_LENGTH - strlen(spell_list), "&n, &+W%s",
                     skills[spells[1]].name);
           if(spells[2] && skills[spells[2]].name)
-            sprintf(spell_list + strlen(spell_list), "&n, &+W%s",
+            snprintf(spell_list + strlen(spell_list), MAX_STRING_LENGTH - strlen(spell_list), "&n, &+W%s",
                     skills[spells[2]].name);
 
           if(j->value[5] / 1000000000)
-            sprintf(buf1,
+            snprintf(buf1, MAX_STRING_LENGTH,
                     "&+YProcs one of &+W%d&+Y level &+W%s &+Yat &+W1/%d&+Y chance\n",
                     j->value[6], spell_list, j->value[7]);
           else
-            sprintf(buf1,
+            snprintf(buf1, MAX_STRING_LENGTH,
                     "&+YProcs all of &+W%d&+Y level &+W%s &+Yat &+W1/%d&+Y chance\n",
                     j->value[6], spell_list, j->value[7]);
         }
         else
           *buf1 = 0;
-        sprintf(buf, "%s&+YType: &n%s &+Ydice: &N%dD%d&N %s", buf1, buf2,
+        snprintf(buf, MAX_STRING_LENGTH, "%s&+YType: &n%s &+Ydice: &N%dD%d&N %s", buf1, buf2,
                 j->value[1], j->value[2],
                 j->value[4] ? "&+g(Poisoned)&n" : "");
         break;
       }
     case ITEM_QUIVER:
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YMax Capacity: &N%d  &+YCurrent No. Arrows. &N%d  &+YContainer Flags: &N%d  &+YMissile type: &N%d",
               j->value[0], j->value[3], j->value[1], j->value[2]);
       break;
@@ -2118,62 +2118,62 @@ void do_stat(P_char ch, char *argument, int cmd)
         strcpy(buf2, "&+RBUGGED!&N");
       else
         sprinttype(j->value[3] - 1, shot_types, buf2);
-      sprintf(buf, "&+YDamage: &N%dd%d&N &+YMissile Type: &n%s",
+      snprintf(buf, MAX_STRING_LENGTH, "&+YDamage: &N%dd%d&N &+YMissile Type: &n%s",
               j->value[1], j->value[2],
               missile_types[j->value[3] - 1].flagLong);
       break;
     case ITEM_ARMOR:
-      sprintf(buf, "&+YAC-apply: &N%d  &+rWarmth: &N%d  &+YPrestige: &N%d",
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAC-apply: &N%d  &+rWarmth: &N%d  &+YPrestige: &N%d",
               j->value[0], j->value[1], j->value[2]);
 
-/*      sprintf(buf, "&+YDefl: &n%.2f  &+YAbs: &n%.2f",
+/*      snprintf(buf, MAX_STRING_LENGTH, "&+YDefl: &n%.2f  &+YAbs: &n%.2f",
               getArmorDeflection(j, NULL), getArmorAbsorbtion(j, NULL));*/
       break;
     case ITEM_SHIELD:
-      sprintf(buf, "&+YAC-apply: &N%d", j->value[3]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAC-apply: &N%d", j->value[3]);
       break;
     case ITEM_CONTAINER:
     case ITEM_STORAGE:
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YHolds: &N%d  &+YLocktype: &N%d  &+YKey: &N%d  &+YSize hold: &N%d",
               j->value[0], j->value[1], j->value[2], j->value[3]);
       break;
     case ITEM_CORPSE:
       if(IS_SET(j->value[1], PC_CORPSE))
-        sprintf(buf, "&+mPlayer Corpse&n &+YHolding:&n %d &+Ylbs&N",
+        snprintf(buf, MAX_STRING_LENGTH, "&+mPlayer Corpse&n &+YHolding:&n %d &+Ylbs&N",
                 j->value[0]);
       else
-        sprintf(buf, "&+bNPC Corpse&n&+Y (&n%d&+Y) Holding:&n %d &+Ylbs&n",
+        snprintf(buf, MAX_STRING_LENGTH, "&+bNPC Corpse&n&+Y (&n%d&+Y) Holding:&n %d &+Ylbs&n",
                 j->value[3], j->value[0]);
       break;
     case ITEM_DRINKCON:
       sprinttype(j->value[2], drinks, buf2);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YHolds: &N%d  &+YContains:&N %d  &+YPoisoned:&N %d  &+YLiquid:&N %s",
               j->value[0], j->value[1], j->value[3], buf2);
       break;
     case ITEM_NOTE:
-      sprintf(buf, "&+YTongue:&N %d", j->value[0]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YTongue:&N %d", j->value[0]);
       break;
     case ITEM_KEY:
-      sprintf(buf, "&+YKeytype:&N %3d   &+YBreak Percentage:&n %d%%", j->value[0], j->value[1]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YKeytype:&N %3d   &+YBreak Percentage:&n %d%%", j->value[0], j->value[1]);
       break;
     case ITEM_FOOD:
-      sprintf(buf, "&+YMakes full:&N %d  &+YPoisoned:&N %d",
+      snprintf(buf, MAX_STRING_LENGTH, "&+YMakes full:&N %d  &+YPoisoned:&N %d",
               j->value[0], j->value[3]);
       break;
     case ITEM_MONEY:
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YCopper:&N %d  &+YSilver:&N %d  &+YGold:&N %d  &+YPlatinum:&N %d",
               j->value[0], j->value[1], j->value[2], j->value[3]);
       break;
     case ITEM_WORN:
-      sprintf(buf, "&+rWarmth:&N %d  &+YPrestige:&N %d  &+YMaterial:&n %d",
+      snprintf(buf, MAX_STRING_LENGTH, "&+rWarmth:&N %d  &+YPrestige:&N %d  &+YMaterial:&n %d",
               j->value[1], j->value[2], j->value[3]);
       break;
     case ITEM_TELEPORT:
       i = real_room(j->value[0]);
-      sprintf(buf, "&+YTo room: [&N%d&+Y]&N %s\n"
+      snprintf(buf, MAX_STRING_LENGTH, "&+YTo room: [&N%d&+Y]&N %s\n"
               "&+YCommand #: [&N%d&+Y]  Charges: [&N%d&+Y]  Zone-to: [&N%d&+Y]",
               j->value[0],
               ((i > 1) && (i <= top_of_world)) ?
@@ -2181,10 +2181,10 @@ void do_stat(P_char ch, char *argument, int cmd)
               j->value[1], j->value[2], j->value[3]);
       break;
     case ITEM_BANDAGE:
-      sprintf(buf, "&+YHeals : &n%d&n", j->value[0]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YHeals : &n%d&n", j->value[0]);
       break;
     default:
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YValues 0-7: [&N%d&+Y] [&N%d&+Y] [&N%d&+Y] [&N%d&+Y] [&n%d&+Y] [&n%d&+Y] [&n%d&+Y] [&n%d&+Y]",
               j->value[0], j->value[1], j->value[2], j->value[3], j->value[4],
               j->value[5], j->value[6], j->value[7]);
@@ -2195,7 +2195,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     strcat(o_buf, buf);
 
     if(!showed_vals)
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "\n&+YValues 0-7: [&N%d&+Y] [&N%d&+Y] [&N%d&+Y] [&N%d&+Y] [&n%d&+Y] [&n%d&+Y] [&n%d&+Y] [&n%d&+Y]",
               j->value[0], j->value[1], j->value[2], j->value[3], j->value[4],
               j->value[5], j->value[6], j->value[7]);
@@ -2226,7 +2226,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       if(j->affected[i].location != APPLY_NONE)
       {
         sprinttype(j->affected[i].location, apply_types, buf2);
-        sprintf(o_buf + strlen(o_buf), "   &+YAffects: &+c%s&+y By &N%d\n", buf2, j->affected[i].modifier);
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "   &+YAffects: &+c%s&+y By &N%d\n", buf2, j->affected[i].modifier);
       }
     }
     if(j->affects)
@@ -2238,12 +2238,12 @@ void do_stat(P_char ch, char *argument, int cmd)
       {
         if(o_af->extra2)
         {
-          sprintf(o_buf + strlen(o_buf), "   &n%s &+Yfor&n %d &+Ygranting:&n ",
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "   &n%s &+Yfor&n %d &+Ygranting:&n ",
             skills[o_af->type].name, (int) o_af->data);
           sprintbitde(o_af->extra2, extra2_bits, o_buf + strlen(o_buf));
         }
         else
-          sprintf(o_buf + strlen(o_buf), "   &n%s &+Yfor&n %d&n",
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "   &n%s &+Yfor&n %d&n",
             skills[o_af->type].name, (int) o_af->data);
         strcat(o_buf, "\n");
       }
@@ -2254,16 +2254,16 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcat(o_buf, "&+YEvents:\n&+Y-------\n");
 
       for (e1 = j->events; e1; e1 = e1->next)
-        sprintf(o_buf + strlen(o_buf), "%6d&+Y seconds,&n %s%s&+Y.\n",
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "%6d&+Y seconds,&n %s%s&+Y.\n",
           event_time(e1, T_SECS), event_names[(int) e1->type], (e1->one_shot) ? "" : "&+Y(&N&+RR&+Y)");
 
       LOOP_EVENTS_OBJ( ne, j->nevents )
       {
-        sprintf(o_buf + strlen(o_buf), "%6d&+Y seconds,&n %s&+Y.\n",
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "%6d&+Y seconds,&n %s&+Y.\n",
           ne_event_time(ne)/WAIT_SEC, get_function_name((void*)ne->func));
         if( ne->func == event_mob_mundane )
         {
-          sprintf( o_buf + strlen(o_buf), "  &+YOffending mob: &n%s&N %d&+Y.\n",
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "  &+YOffending mob: &n%s&N %d&+Y.\n",
             (ne->ch) ? J_NAME(ne->ch) : "NULL", IS_ALIVE(ne->ch) ? GET_ID(ne->ch) : -1 );
         }
       }
@@ -2298,7 +2298,7 @@ void do_stat(P_char ch, char *argument, int cmd)
        if(j->justice_status > 0) {
        strcat(o_buf, "\n&+RJustice:\n");
        sprinttype(j->justice_status, justice_obj_status, buf2);
-       sprintf(o_buf + strlen(o_buf), " &+RStatus: %s Belongs to: %s&N\n",
+       snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), " &+RStatus: %s Belongs to: %s&N\n",
        buf2, j->justice_name);
        } */
 
@@ -2385,26 +2385,26 @@ void do_stat(P_char ch, char *argument, int cmd)
       break;
     }
 	
-    sprintf(buf1, "  &+YIn room: [&N%d&+Y] Zone: [&n%d&+Y](&n%d&+Y) %s", world[k->in_room].number,
+    snprintf(buf1, MAX_STRING_LENGTH, "  &+YIn room: [&N%d&+Y] Zone: [&n%d&+Y](&n%d&+Y) %s", world[k->in_room].number,
                   zone_table[world[k->in_room].zone].number, world[k->in_room].zone, zone_table[world[k->in_room].zone].name);
-    sprintf(buf2, "%s %s%s  ", buf,
+    snprintf(buf2, MAX_STRING_LENGTH, "%s %s%s  ", buf,
             (IS_PC(k) ? "&+YPC" : (IS_PC(k) ? "&+RNPC" : "&+GMOB")),
             (t_mob) ? "" : buf1);
     if(IS_NPC(k))
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "Numbers: &N%d&+Y-V &N%d&+Y-R &N%d&+Y-I   # in game: &n%d\n",
               mob_index[GET_RNUM(k)].virtual_number, GET_RNUM(k), GET_IDNUM(k),
               (mob_index[GET_RNUM(k)].number));
     else
-      sprintf(buf, " Name: &N%s  &+YID numb: &n%d\n", GET_NAME(k), GET_PID(k));
+      snprintf(buf, MAX_STRING_LENGTH, " Name: &N%s  &+YID numb: &n%d\n", GET_NAME(k), GET_PID(k));
     strcat(buf2, buf);
     strcpy(o_buf, buf2);
 
     if(IS_NPC(k))
-      sprintf(buf, "&+YName: &N%s\n&+YKeywords: &N%s\n&+YDescription:\n%s\n",
+      snprintf(buf, MAX_STRING_LENGTH, "&+YName: &N%s\n&+YKeywords: &N%s\n&+YDescription:\n%s\n",
               k->player.short_descr, GET_NAME(k), k->player.long_descr);
     else
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YTitle: &N%s\n&+YShort Description:&n%s\n&+YLong Description:\n%s\n",
 /*              k->only.pc->title ? k->only.pc->title : "&+rNone", */
               k->player.title ? k->player.title : "&+rNone",
@@ -2414,8 +2414,8 @@ void do_stat(P_char ch, char *argument, int cmd)
 
     if(IS_NPC(k))
     {
-      //sprintf(buf2, "&+Y+(&N%s&+Y)", comma_string((long) (GET_LEVEL(k) * GET_HIT(k) * .4)));
-      sprintf(buf2, "");
+      //snprintf(buf2, MAX_STRING_LENGTH, "&+Y+(&N%s&+Y)", comma_string((long) (GET_LEVEL(k) * GET_HIT(k) * .4)));
+      snprintf(buf2, MAX_STRING_LENGTH, "");
     }
     else
     {
@@ -2427,30 +2427,30 @@ void do_stat(P_char ch, char *argument, int cmd)
         strcpy(buf1,
                comma_string((long)
                             (new_exp_table[GET_LEVEL(k) + 1] - GET_EXP(k))));
-      sprintf(buf2, "&+Y Exp to Level: &N%s",
+      snprintf(buf2, MAX_STRING_LENGTH, "&+Y Exp to Level: &N%s",
               IS_TRUSTED(k) ? "Unknown" : buf1);
     }
 
-    sprintf(buf, "&+YLevel: &N%d&+Y(&n%d&+Y)&n  &+YExperience: &N%s %s  &+YAlignment [&N%d&+Y] Assoc:&n %d %s\n",
+    snprintf(buf, MAX_STRING_LENGTH, "&+YLevel: &N%d&+Y(&n%d&+Y)&n  &+YExperience: &N%s %s  &+YAlignment [&N%d&+Y] Assoc:&n %d %s\n",
       k->player.level, IS_PC(k) ? k->only.pc->highest_level : GET_LEVEL(k), comma_string((int) GET_EXP(k)),
       buf2, GET_ALIGNMENT(k), (GET_ASSOC(k) == NULL) ? -1 : GET_ASSOC(k)->get_id(),
       (GET_ASSOC(k) == NULL) ? "" : GET_ASSOC(k)->get_name().c_str() );
     strcat(o_buf, buf);
 
 
-    sprintf(buf, "&+YRace: &N%s  &+YClass: &N",
+    snprintf(buf, MAX_STRING_LENGTH, "&+YRace: &N%s  &+YClass: &N",
             race_names_table[k->player.race].ansi);
     get_class_string(k, buf2);
     strcat(buf, buf2);
-    sprintf(buf + strlen(buf), " &+YRacewar: ");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), " &+YRacewar: ");
     if( IS_NPC(k) )
-      sprintf(buf + strlen(buf), "&+wNPC&n");
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+wNPC&n");
     else if(GET_RACEWAR(k) >= 0 && GET_RACEWAR(k) <= MAX_RACEWAR )
-      sprintf( buf + strlen(buf), "&+%c%s&N", racewar_color[GET_RACEWAR(k)].color, racewar_color[GET_RACEWAR(k)].name );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+%c%s&N", racewar_color[GET_RACEWAR(k)].color, racewar_color[GET_RACEWAR(k)].name );
     else
-      sprintf(buf + strlen(buf), "&+RINVALID&n");
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+RINVALID&n");
 
-    sprintf(buf2,
+    snprintf(buf2, MAX_STRING_LENGTH,
             "\n&+YHometown: &N%d  &+YBirthplace: &N%d  &+YOrig BP: &n%d &+YSpell Pulse: &n%+.2f\n",
             GET_HOME(k), GET_BIRTHPLACE(k), GET_ORIG_BIRTHPLACE(k), spell_pulse_data[GET_RACE(k)] * SPELL_PULSE(k) );
     strcat(buf, buf2);
@@ -2461,7 +2461,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       fragnum = 0;
     fragnum /= 100;
 
-    sprintf(buf, "&+YPulse: &N%4d&+Y  Current Pulse: &N%4d&+Y  Dam Multiplier: &N%1.2f  &+YFrags:&n %+.02f\n",
+    snprintf(buf, MAX_STRING_LENGTH, "&+YPulse: &N%4d&+Y  Current Pulse: &N%4d&+Y  Dam Multiplier: &N%1.2f  &+YFrags:&n %+.02f\n",
       (int)k->specials.base_combat_round, k->specials.combat_tics,
       k->specials.damage_mod, fragnum );
     strcat(o_buf, buf);
@@ -2472,10 +2472,10 @@ void do_stat(P_char ch, char *argument, int cmd)
     {
       struct affected_type *paf = get_spell_from_char(ch, TAG_EPICS_GAINED);
 
-      sprintf(buf, "&+YEpic points: &n%ld&+Y  Total epics gained: &n%d\n", k->only.pc->epics, paf ? paf->modifier : 0);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YEpic points: &n%ld&+Y  Total epics gained: &n%d\n", k->only.pc->epics, paf ? paf->modifier : 0);
       strcat(o_buf, buf);
 
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YAge: &N%4d &+Yyears  &N%2d &+Ymonths  &N%2d &+Ydays  &N%2d &+YHours\n",
               age(k).year, age(k).month, age(k).day, age(k).hour);
       strcat(o_buf, buf);
@@ -2486,13 +2486,13 @@ void do_stat(P_char ch, char *argument, int cmd)
 #else
         real_time_passed((long) (k->player.time.played - EQ_WIPE + (time(0) - k->player.time.logon)), 0);
 #endif
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YPlayed:  &N%3d &+Ydays  &N%2d &+Yhours  &N%2d &+Yminutes\n",
               playing_time.day, playing_time.hour, playing_time.minute);
       strcat(o_buf, buf);
 
       playing_time = real_time_passed(time(0), k->player.time.logon);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YSession: &N%3d &+Ydays  &N%2d &+Yhours  &N%2d &+Yminutes\n",
               playing_time.day, playing_time.hour, playing_time.minute);
       strcat(o_buf, buf);
@@ -2500,7 +2500,7 @@ void do_stat(P_char ch, char *argument, int cmd)
     else
     {
       playing_time = real_time_passed(time(0), k->player.time.birth);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YLived: &N%2d &+Ydays  &N%2d &+Yhours  &N%2d &+Yminutes\n",
               playing_time.day, playing_time.hour, playing_time.minute);
       strcat(o_buf, buf);
@@ -2515,31 +2515,31 @@ void do_stat(P_char ch, char *argument, int cmd)
     i =  i2 / 12;
     i2 -= i * 12;
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YStr: &n%3d&+Y (&n%3d&+Y)    Pow: &n%3d&+Y (&n%3d&+Y)    Height: &n%3d&+Y\' &n%2d&+Y\" (&n%d&+Yin)\n",
             GET_C_STR(k), k->base_stats.Str, GET_C_POW(k), k->base_stats.Pow, i, i2, GET_HEIGHT(k));
     strcat(o_buf, buf);
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YDex: &n%3d&+Y (&n%3d&+Y)    Int: &n%3d&+Y (&n%3d&+Y)    Weight: &n%3d&+Y lbs\n",
             GET_C_DEX(k), k->base_stats.Dex, GET_C_INT(k), k->base_stats.Int,
             GET_WEIGHT(k));
     strcat(o_buf, buf);
 
     sprinttype(GET_ALT_SIZE(k), size_types, buf2);
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YAgi: &n%3d&+Y (&n%3d&+Y)    Wis: &n%3d&+Y (&n%3d&+Y)    Size: &n%s&+Y\n",
             GET_C_AGI(k), k->base_stats.Agi, GET_C_WIS(k), k->base_stats.Wis,
             buf2);
     strcat(o_buf, buf);
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YCon: &n%3d&+Y (&n%3d&+Y)    Cha: &n%3d&+Y (&n%3d&+Y)    Equipped Items:&n%3d&+Y     Carried weight:&n%5d\n",
             GET_C_CON(k), k->base_stats.Con, GET_C_CHA(k), k->base_stats.Cha,
             i3, IS_CARRYING_W(k, rider));
     strcat(o_buf, buf);
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YKar: &n%3d&+Y (&n%3d&+Y)    Luc: &n%3d&+Y (&n%3d&+Y)    Carried Items: &n%3d&+Y   Max Carry Weight:&n%5d\n",
             GET_C_KAR(k), k->base_stats.Kar, GET_C_LUK(k),
             k->base_stats.Luk, IS_CARRYING_N(k), CAN_CARRY_W(k));
@@ -2553,7 +2553,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       k->base_stats.Con + k->base_stats.Pow + k->base_stats.Int +
       k->base_stats.Wis + k->base_stats.Cha;
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YAvg: &n%3d&+Y (&n%3d&+Y)  Total mod: (&n%3d&+Y)              Load modifer: &n%3d\n\n",
             (int) (i / 8), (int) (i2 / 8), (i - i2), load_modifier(k));
     strcat(o_buf, buf);
@@ -2565,82 +2565,82 @@ void do_stat(P_char ch, char *argument, int cmd)
 
     if(IS_NPC(k) || IS_PUNDEAD(k) || GET_CLASS(k, CLASS_DRUID))
     {
-      sprintf(buf, "&+mSpells left in circles:  (%d to regain)\n&+m",
+      snprintf(buf, MAX_STRING_LENGTH, "&+mSpells left in circles:  (%d to regain)\n&+m",
               k->specials.undead_spell_slots[0]);
       strcat(o_buf, buf);
 
       for (i4 = 1; i4 < MAX_CIRCLE + 1; i4++)
       {
-        sprintf(buf, "%d:%d/%d", i4, k->specials.undead_spell_slots[i4],
+        snprintf(buf, MAX_STRING_LENGTH, "%d:%d/%d", i4, k->specials.undead_spell_slots[i4],
                 spl_table[GET_LEVEL(k)][i4 - 1]);
-        sprintf(o_buf + strlen(o_buf), "%-8s", buf);
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "%-8s", buf);
       }
       strcat(o_buf, "\n\n");
     }
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YHits: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]&+W   Pcoins: &N%5d",
             GET_HIT(k), GET_MAX_HIT(k), k->points.base_hit, hit_regen(k, TRUE),
             GET_PLATINUM(k));
     if(IS_PC(k))
-      sprintf(buf, "%s  &+WPbank: &N%5d\n", buf, GET_BALANCE_PLATINUM(k));
+      snprintf(buf, MAX_STRING_LENGTH, "%s  &+WPbank: &N%5d\n", buf, GET_BALANCE_PLATINUM(k));
     else
-      sprintf(buf, "%-52s  &+YTimer: &N%d\n", buf, k->specials.timer);
+      snprintf(buf, MAX_STRING_LENGTH, "%-52s  &+YTimer: &N%d\n", buf, k->specials.timer);
     strcat(o_buf, buf);
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YMana: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]   Gcoins: &N%5d",
             GET_MANA(k), GET_MAX_MANA(k), k->points.base_mana, mana_regen(k, TRUE),
             GET_GOLD(k));
 
     if(IS_PC(k))
-      sprintf(buf, "%s  &+YGbank: &N%5d\n", buf, GET_BALANCE_GOLD(k));
+      snprintf(buf, MAX_STRING_LENGTH, "%s  &+YGbank: &N%5d\n", buf, GET_BALANCE_GOLD(k));
     else
-      sprintf(buf, "%-50s  &+YSpecial: &N%s\n", buf,
+      snprintf(buf, MAX_STRING_LENGTH, "%-50s  &+YSpecial: &N%s\n", buf,
               (mob_index[GET_RNUM(k)].func.mob ?
                get_function_name((void*)mob_index[GET_RNUM(k)].func.mob) :
                "None"));
     strcat(o_buf, buf);
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YMove: [&N%5d&+Y/&N%5d&+Y/&N%5d&+Y+&N%3d&+Y]&n   Scoins: %5d",
             GET_VITALITY(k), GET_MAX_VITALITY(k), vitality_limit(k),
             move_regen(k, TRUE), GET_SILVER(k));
     if(IS_PC(k))
-      sprintf(buf, "%s  &nSbank: %5d\n", buf, GET_BALANCE_SILVER(k));
+      snprintf(buf, MAX_STRING_LENGTH, "%s  &nSbank: %5d\n", buf, GET_BALANCE_SILVER(k));
     else
     {
       qi = find_quester_id( GET_RNUM(k) );
 
-      sprintf( buf, "%-52s  &+YQuest: &N%s\n", buf, mob_index[GET_RNUM(k)].qst_func
+      snprintf(buf, MAX_STRING_LENGTH, "%-52s  &+YQuest: &N%s\n", buf, mob_index[GET_RNUM(k)].qst_func
         ? (has_quest_complete( qi ) ? "&+BComplete&N"
         : ( has_quest_ask(qi) ? "&+RAsk&N" : "&+RRoomMsg&n" )) : "None" );
     }
     strcat(o_buf, buf);
 
-    sprintf(buf, "                                &+yCcoins: &N%5d",
+    snprintf(buf, MAX_STRING_LENGTH, "                                &+yCcoins: &N%5d",
             GET_COPPER(k));
     if(IS_PC(k))
-      sprintf(buf, "%s  &+yCbank: &N%5d\n", buf, GET_BALANCE_COPPER(k));
+      snprintf(buf, MAX_STRING_LENGTH, "%s  &+yCbank: &N%5d\n", buf, GET_BALANCE_COPPER(k));
     else
       strcat(buf, "\n");
     strcat(o_buf, buf);
 
 //    i = calculate_ac(k, FALSE);
-//    sprintf(buf, "&+cAgility Armor Class: &+Y%d&n  ", i);
+//    snprintf(buf, MAX_STRING_LENGTH, "&+cAgility Armor Class: &+Y%d&n  ", i);
 //    strcat(o_buf, buf);
 
     i = calculate_ac(k);//, TRUE);  wipe 2011
 
     if(i > 0)
-        sprintf(buf, "&+cTotal Armor Class: &+Y%d&n,  Increases melee damage by &+W%+.2f&n percent.\n", i, (double)(i * 0.10));
+        snprintf(buf, MAX_STRING_LENGTH, "&+cTotal Armor Class: &+Y%d&n,  Increases melee damage by &+W%+.2f&n percent.\n", i, (double)(i * 0.10));
       else
-        sprintf(buf, "&+cTotal Armor Class: &+Y%d&n,  Reduces melee damage by &+W%+.2f&n.\n", i, (double)(i * 0.10));
+        snprintf(buf, MAX_STRING_LENGTH, "&+cTotal Armor Class: &+Y%d&n,  Reduces melee damage by &+W%+.2f&n.\n", i, (double)(i * 0.10));
 
     strcat(o_buf, buf);
 
     i2 = calculate_thac_zero(k, 100); // Assumes 100 weapon skill.
 
-    sprintf(buf, "&+Y thAC0: &N%d &+Y  +Hit: &N%d", i2,
+    snprintf(buf, MAX_STRING_LENGTH, "&+Y thAC0: &N%d &+Y  +Hit: &N%d", i2,
             GET_HITROLL(k) + str_app[STAT_INDEX(GET_C_STR(k))].tohit);
     if(IS_NPC(k) ||
         (GET_CLASS(k, CLASS_MONK) &&
@@ -2649,19 +2649,19 @@ void do_stat(P_char ch, char *argument, int cmd)
         !k->equipment[HOLD] &&
         !k->equipment[SECONDARY_WEAPON]))
     {
-      sprintf(buf, "%s   &+YUnarmed damage: &N%d&+Yd&N%d  &+Y+Dam: &N%d\n",
+      snprintf(buf, MAX_STRING_LENGTH, "%s   &+YUnarmed damage: &N%d&+Yd&N%d  &+Y+Dam: &N%d\n",
               buf, k->points.damnodice, k->points.damsizedice, TRUE_DAMROLL(k) );
     }
     else
     {
-      sprintf(buf, "%s  &+Y+Dam: &N%d+%d = %d\n", buf,
+      snprintf(buf, MAX_STRING_LENGTH, "%s  &+Y+Dam: &N%d+%d = %d\n", buf,
               GET_DAMROLL(k), str_app[STAT_INDEX(GET_C_STR(k))].todam,
               TRUE_DAMROLL(k) );
     }
     strcat(o_buf, buf);
 
     strcat(o_buf, "&+YSaves:    Para   Wands  Fear   Breath Spell\n");
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+Y (actual) [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]\n",
             BOUNDED(1, (find_save(k, SAVING_PARA ) + k->specials.apply_saving_throw[0] * 5), 100),
             BOUNDED(1, (find_save(k, SAVING_ROD  ) + k->specials.apply_saving_throw[1] * 5), 100),
@@ -2669,7 +2669,7 @@ void do_stat(P_char ch, char *argument, int cmd)
             BOUNDED(1, (find_save(k, SAVING_BREATH) + k->specials.apply_saving_throw[3] * 5), 100),
             BOUNDED(1, (find_save(k, SAVING_SPELL) + k->specials.apply_saving_throw[4] * 5), 100));
     strcat(o_buf, buf);
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+Y (mods)   [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]  [&N%3d&+Y]\n",
             k->specials.apply_saving_throw[0],
             k->specials.apply_saving_throw[1],
@@ -2686,7 +2686,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         sprinttype(k->desc->connected, connected_types, buf2);
       else
         strcpy(buf2, "");
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+YHunger: &N%2d  &+YThirst: &N%2d  &+YDrunk: &N%2d &+Y%s%s\n",
               k->specials.conditions[FULL], k->specials.conditions[THIRST],
               k->specials.conditions[DRUNK],// k->only.pc->justice_level, /* &+YJustice Level: &N%d */  wipe2011
@@ -2699,7 +2699,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       
       for(i4 = 0; i4 < NUMB_CHAR_VALS; i4++)
       {
-        sprintf(buf, "&+Y[&n%d&+Y] ", k->only.npc->value[i4]);
+        snprintf(buf, MAX_STRING_LENGTH, "&+Y[&n%d&+Y] ", k->only.npc->value[i4]);
         strcat(o_buf, buf);
       }      
       
@@ -2715,11 +2715,11 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcat(buf2, " ");
       sprintbit(((k->only.npc->default_pos & STAT_MASK) * 4),
                 position_types, buf2 + strlen(buf2));
-      sprintf(buf, "&+YPosition/Default: &N%s&+Y/&N%s", buf1, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YPosition/Default: &N%s&+Y/&N%s", buf1, buf2);
     }
     else
-      sprintf(buf, "&+YPosition: &N%s", buf1);
-    sprintf(buf1, "%s  &+YFighting:&n %s", buf,
+      snprintf(buf, MAX_STRING_LENGTH, "&+YPosition: &N%s", buf1);
+    snprintf(buf1, MAX_STRING_LENGTH, "%s  &+YFighting:&n %s", buf,
             ((GET_OPPONENT(k)) ? GET_NAME(k->specials.
                                                fighting) : "---"));
     if(IS_NPC(k))
@@ -2728,96 +2728,96 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcpy(buf, buf1);
     }
     else
-      sprintf(buf, "%-61s  &+YTimer: &N%d\n", buf1, k->specials.timer);
+      snprintf(buf, MAX_STRING_LENGTH, "%-61s  &+YTimer: &N%d\n", buf1, k->specials.timer);
     strcat(o_buf, buf);
 
     if(IS_NPC(k))
     {
-      sprintf(buf, "&+YJustice hooks: &N%d\n", k->only.npc->spec[2]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YJustice hooks: &N%d\n", k->only.npc->spec[2]);
       strcat(o_buf, buf);
       sprintbitde(k->specials.act, action_bits, buf2);
-      sprintf(buf + strlen(buf), "&+YACT flags: &N%s\n", buf2);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+YACT flags: &N%s\n", buf2);
       sprintbitde(k->specials.act2, action2_bits, buf2);
-      sprintf(buf + strlen(buf),  "&+YACT2 flags: &N%s\n", buf2);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf),  "&+YACT2 flags: &N%s\n", buf2);
       sprintbitde(k->only.npc->aggro_flags, aggro_bits, buf2);
-      sprintf(buf + strlen(buf), "&+YAggro    : &n%s\n", buf2);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+YAggro    : &n%s\n", buf2);
       sprintbitde(k->only.npc->aggro2_flags, aggro2_bits, buf2);
-      sprintf(buf + strlen(buf), "&+YAggro2   : &n%s\n", buf2);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+YAggro2   : &n%s\n", buf2);
       sprintbitde(k->only.npc->aggro3_flags, aggro3_bits, buf2);
-      sprintf(buf + strlen(buf), "&+YAggro3   : &n%s\n", buf2);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+YAggro3   : &n%s\n", buf2);
       strcat(o_buf, buf);
     }
     else
     {
       sprintbit(k->only.pc->prompt, player_prompt, buf2);
-      sprintf(buf, "&+YPrompt: &N%s\n", buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YPrompt: &N%s\n", buf2);
       strcat(o_buf, buf);
       sprintbit(k->specials.act, player_bits, buf2);
-      sprintf(buf, "&+YAct1: &N%s\n", buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAct1: &N%s\n", buf2);
       strcat(o_buf, buf);
       sprintbit(k->specials.act2, player2_bits, buf2);
-      sprintf(buf, "&+YAct2: &N%s\n", buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAct2: &N%s\n", buf2);
       strcat(o_buf, buf);
       sprintbit(k->specials.act3, player3_bits, buf2);
-      sprintf(buf, "&+YAct3: &N%s\n", buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAct3: &N%s\n", buf2);
       strcat(o_buf, buf);
       /* sprintbit(k->only.pc->law_flags, player_law_flags, buf2); */
-      /* sprintf(buf, "&+YFlags (Player Flags): &N%s\n", buf2); */
+      /* snprintf(buf, MAX_STRING_LENGTH, "&+YFlags (Player Flags): &N%s\n", buf2); */
       /* strcat(o_buf, buf); */
     }
     if(k->specials.affected_by)
     {
       sprintbitde(k->specials.affected_by, affected1_bits, buf2);
-      sprintf(buf, "&+YAffected by (1):&n %10u - %s\n", k->specials.affected_by, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAffected by (1):&n %10u - %s\n", k->specials.affected_by, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by2)
     {
       sprintbitde(k->specials.affected_by2, affected2_bits, buf2);
-      sprintf(buf, "&+YAffected by (2):&n %10u - %s\n", k->specials.affected_by2, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAffected by (2):&n %10u - %s\n", k->specials.affected_by2, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by3)
     {
       sprintbitde(k->specials.affected_by3, affected3_bits, buf2);
-      sprintf(buf, "&+YAffected by (3):&n %10u - %s\n", k->specials.affected_by3, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAffected by (3):&n %10u - %s\n", k->specials.affected_by3, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by4)
     {
       sprintbitde(k->specials.affected_by4, affected4_bits, buf2);
-      sprintf(buf, "&+YAffected by (4):&n %10u - %s\n", k->specials.affected_by4, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAffected by (4):&n %10u - %s\n", k->specials.affected_by4, buf2);
       strcat(o_buf, buf);
     }
 
     if(k->specials.affected_by5)
     {
       sprintbitde(k->specials.affected_by5, affected5_bits, buf2);
-      sprintf(buf, "&+YAffected by (5):&n %10u - %s\n", k->specials.affected_by5, buf2);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YAffected by (5):&n %10u - %s\n", k->specials.affected_by5, buf2);
       strcat(o_buf, buf);
     }
 
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "&+YFollowers:           &+YMaster is: &N%s   &+YRank: &n%s\n",
             ((k->following) ? GET_NAME(k->following) : "---"),
             (k->group ? (IS_BACKRANKED(k) ? "Back" : "Front") : "---"));
     strcat(o_buf, buf);
     for (fol = k->followers; fol; fol = fol->next)
     {
-      sprintf(buf, "  %s\n", IS_NPC(fol->follower) ?
+      snprintf(buf, MAX_STRING_LENGTH, "  %s\n", IS_NPC(fol->follower) ?
               fol->follower->player.short_descr : GET_NAME(fol->follower));
       strcat(o_buf, buf);
     }
 
     if(IS_PC(k))
     {
-      sprintf(buf, "&+YLanguages known:&n\n");
+      snprintf(buf, MAX_STRING_LENGTH, "&+YLanguages known:&n\n");
       for (i = 1; i <= TONGUE_GOD; i++)
       {
-        sprintf(buf + strlen(buf), "&+Y%-12s&n%3d%% ",
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+Y%-12s&n%3d%% ",
                 language_names[i - 1], GET_LANGUAGE(k, i));
         if(!(i % 4))
           strcat(buf, "\n");
@@ -2829,13 +2829,13 @@ void do_stat(P_char ch, char *argument, int cmd)
     /* Show player on mobs piss list */
     if(IS_NPC(k) && IS_SET(k->specials.act, ACT_MEMORY))
     {
-      sprintf(buf, "&+RPissed List&n:\n&+Y--------------&n\n");
+      snprintf(buf, MAX_STRING_LENGTH, "&+RPissed List&n:\n&+Y--------------&n\n");
 
       // rebuild this for new memory system
       mem = k->only.npc->memory;
       while (mem)
       {
-        sprintf(buf2, "  %10u\n", mem->pcID);
+        snprintf(buf2, MAX_STRING_LENGTH, "  %10u\n", mem->pcID);
         strcat(buf, buf2);
 
         mem = mem->next;
@@ -2849,7 +2849,7 @@ void do_stat(P_char ch, char *argument, int cmd)
 
     if( IS_PC(k) )
     {
-      sprintf( buf, "&+YTimers: T[0] = &N%10ld&+Y, T[1] = &N%10ld&+Y, T[2] = &N%10ld&+Y, T[3] = &N%10ld&+Y, T[4] = &N%10ld&+Y,\n"
+      snprintf(buf, MAX_STRING_LENGTH, "&+YTimers: T[0] = &N%10ld&+Y, T[1] = &N%10ld&+Y, T[2] = &N%10ld&+Y, T[3] = &N%10ld&+Y, T[4] = &N%10ld&+Y,\n"
                     "&+Y        T[5] = &N%10ld&+Y, T[6] = &N%10ld&+Y, T[7] = &N%10ld&+Y, T[8] = &N%10ld&+Y, T[9] = &N%10ld&+Y.&N\n",
         k->only.pc->pc_timer[0], k->only.pc->pc_timer[1], k->only.pc->pc_timer[2], k->only.pc->pc_timer[3],
         k->only.pc->pc_timer[4], k->only.pc->pc_timer[5], k->only.pc->pc_timer[6], k->only.pc->pc_timer[7],
@@ -2857,7 +2857,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcat( o_buf, buf );
 
       now = time(NULL);
-      sprintf( buf, "&+YTimers(left): T[STAT_POOL] = &N%8ld&+Y, T[FLEE]    = &N%8ld&+Y, T[HEAVEN] = &N%8ld&+Y,\n"
+      snprintf(buf, MAX_STRING_LENGTH, "&+YTimers(left): T[STAT_POOL] = &N%8ld&+Y, T[FLEE]    = &N%8ld&+Y, T[HEAVEN] = &N%8ld&+Y,\n"
                     "&+Y              T[AVATAR]    = &N%8ld&+Y, T[SBEACON] = &N%8ld&+Y.\n\n",
         (k->only.pc->pc_timer[PC_TIMER_STAT_POOL] > now) ? k->only.pc->pc_timer[PC_TIMER_STAT_POOL] - now : 0,
         (k->only.pc->pc_timer[PC_TIMER_FLEE] > now) ? k->only.pc->pc_timer[PC_TIMER_FLEE] - now : 0,
@@ -2874,7 +2874,7 @@ void do_stat(P_char ch, char *argument, int cmd)
       {
         if(aff->type == TAG_MEMORIZE)
         {
-          sprintf(buf, "  %sMEMORIZED &+Yspell&n %s%s&n\n",
+          snprintf(buf, MAX_STRING_LENGTH, "  %sMEMORIZED &+Yspell&n %s%s&n\n",
                   (aff->flags & AFFTYPE_CUSTOM1) ? "  "  : "UN",
                   (aff->flags & AFFTYPE_CUSTOM1) ? "&+W" : "&+w",
                   skills[aff->modifier].name);
@@ -2882,7 +2882,7 @@ void do_stat(P_char ch, char *argument, int cmd)
           continue;
         }
 
-        sprintf(buf, "%13s &+Yby &N%4d &+Yfor &N%3d &+Yfrom &N'%s'\n",
+        snprintf(buf, MAX_STRING_LENGTH, "%13s &+Yby &N%4d &+Yfor &N%3d &+Yfrom &N'%s'\n",
                 IS_SET(aff->flags, AFFTYPE_NOAPPLY) ? "NONE" :
                 apply_types[(int) aff->location],
                 aff->modifier,
@@ -2919,7 +2919,7 @@ void do_stat(P_char ch, char *argument, int cmd)
 
         if(*buf2 != '\0' && !IS_SET(aff->flags, AFFTYPE_NOAPPLY))
         {
-          sprintf(buf, "%-61s &+YSets: &N%s\n", buf, buf2);
+          snprintf(buf, MAX_STRING_LENGTH, "%-61s &+YSets: &N%s\n", buf, buf2);
         }
         else
           strcat(buf, "\n");
@@ -2933,20 +2933,20 @@ void do_stat(P_char ch, char *argument, int cmd)
 
       for (e1 = k->events; e1; e1 = e1->next)
       {
-        sprintf(o_buf + strlen(o_buf),
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                 "%6d&+Y seconds,&n %s&+Y.\n",
                 event_time(e1, T_SECS), get_event_name(e1));
       }
       LOOP_EVENTS_CH( ne, k->nevents )
       {
-        sprintf(o_buf + strlen(o_buf),
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                 "%6d&+Y seconds,&n %s",
                 ne_event_time(ne)/WAIT_SEC, get_function_name((void*)ne->func));
         if( ne->func == event_short_affect )
-          sprintf(o_buf + strlen(o_buf), " - %s&+Y.\n", (ne->data == NULL || ((event_short_affect_data *)ne->data)->af == NULL)
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), " - %s&+Y.\n", (ne->data == NULL || ((event_short_affect_data *)ne->data)->af == NULL)
             ? "No affect" : skills[((event_short_affect_data *)ne->data)->af->type].name );
         else
-          sprintf(o_buf + strlen(o_buf), "&+Y.\n" );
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+Y.\n" );
       }
       strcat(o_buf, "\n");
     }
@@ -2959,21 +2959,21 @@ void do_stat(P_char ch, char *argument, int cmd)
       strcat(o_buf, "&+YLinks:\n&+Y-------\n");
       for (link = k->linking; link; link = link->next_linking)
       {
-        sprintf(o_buf + strlen(o_buf),
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                 "%s (%s): &+Ylinked to&n %s.\n",
                 link_types[link->type].name,
                 "master", link->linked->player.name);
       }
       for (link = k->linked; link; link = link->next_linked)
       {
-        sprintf(o_buf + strlen(o_buf),
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                 "%s (%s): &+Ylinked to&n %s.\n",
                 link_types[link->type].name,
                 "slave", link->linking->player.name);
       }
       for( olink = k->obj_linked; olink; olink = olink->next )
       {
-        sprintf( o_buf + strlen(o_buf), "%s: &+Ylinked to&n %s - %s.\n", link_types[olink->type].name,
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "%s: &+Ylinked to&n %s - %s.\n", link_types[olink->type].name,
           OBJ_SHORT(olink->obj), (olink->affect == NULL) ? "no affect" : (( skills[olink->affect->type].name )
           ? skills[olink->affect->type].name : "Nameless Type") );
       }
@@ -2993,16 +2993,16 @@ void do_stat(P_char ch, char *argument, int cmd)
       {
         strcpy(time_left, "None");
       }
-      sprintf(buf, "&+YDate left last guild : &N%s\n", time_left);
+      snprintf(buf, MAX_STRING_LENGTH, "&+YDate left last guild : &N%s\n", time_left);
       strcat(o_buf, buf);
-      sprintf(buf, "&+YNumber of guild left : &N%d\n", GET_NB_LEFT_GUILD(k));
+      snprintf(buf, MAX_STRING_LENGTH, "&+YNumber of guild left : &N%d\n", GET_NB_LEFT_GUILD(k));
       strcat(o_buf, buf);
       strcat(o_buf, "\n");
     }
     if(IS_PC(k) && IS_DISGUISE(k))
     {
       strcat(o_buf, "&+YDisguise:\n&+Y-------\n");
-      sprintf(buf, "&+mDisguise as : &N%s\n", k->disguise.name);
+      snprintf(buf, MAX_STRING_LENGTH, "&+mDisguise as : &N%s\n", k->disguise.name);
       strcat(o_buf, buf);
     }
     page_string(ch->desc, o_buf, 1);
@@ -3112,40 +3112,40 @@ void do_stat(P_char ch, char *argument, int cmd)
           num_pr++;
       }
     }
-    sprintf(o_buf, "&+Y%s %sShop, Number: &N%d&+Y  for [&N%d&+Y](&n%d&+Y)&N %s\n\n",
+    snprintf(o_buf, MAX_STRING_LENGTH, "&+Y%s %sShop, Number: &N%d&+Y  for [&N%d&+Y](&n%d&+Y)&N %s\n\n",
       shop_index[i].shop_new_options ? "New" : "Old",
       shop_index[i].shop_is_roaming ? "Roaming " : "", i,
       mob_index[GET_RNUM(k)].virtual_number, GET_RNUM(k),
       k->player.short_descr ? k->player.short_descr : "&+rNone");
-    sprintf(o_buf + strlen(o_buf), "&+YHours: &N%d&+Y-&N%d&+Y,&N %d&+Y-&N%d  &+YAttackable?: %c  Allow Casting?: %c\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YHours: &N%d&+Y-&N%d&+Y,&N %d&+Y-&N%d  &+YAttackable?: %c  Allow Casting?: %c\n",
       shop_index[i].open1, shop_index[i].close1, shop_index[i].open2,
       shop_index[i].close2, shop_index[i].shop_killable ? 'Y' : 'N',
       shop_index[i].magic_allowed ? 'Y' : 'N');
-    sprintf(o_buf + strlen(o_buf), "&+YBuys for: &N%d%%&+Y, Sells for: &N%d%%&+Y, Produces &N%d &+YItems, Trades in &N%d &+YTypes\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YBuys for: &N%d%%&+Y, Sells for: &N%d%%&+Y, Produces &N%d &+YItems, Trades in &N%d &+YTypes\n",
       (int) (shop_index[i].buy_percent * 100),
       (int) (shop_index[i].sell_percent * 100), num_pr, num_tr);
 
     /* various messages that shop has stored. */
 
-    sprintf(o_buf + strlen(o_buf), "&+YRacist       :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YRacist       :&N %s\n",
       shop_index[i].racist_message ? shop_index[i].racist_message : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YOpening      :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YOpening      :&N %s\n",
       shop_index[i].open_message ? shop_index[i].open_message : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YClosing      :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YClosing      :&N %s\n",
       shop_index[i].close_message ? shop_index[i].close_message : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YDon't have   :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YDon't have   :&N %s\n",
       shop_index[i].no_such_item1 ? shop_index[i].no_such_item1 : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YCh don't have:&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YCh don't have:&N %s\n",
       shop_index[i].no_such_item2 ? shop_index[i].no_such_item2 : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YToo poor     :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YToo poor     :&N %s\n",
       shop_index[i].missing_cash1 ? shop_index[i].missing_cash1 : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YCh too poor  :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YCh too poor  :&N %s\n",
       shop_index[i].missing_cash2 ? shop_index[i].missing_cash2 : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YWrong Type   :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YWrong Type   :&N %s\n",
       shop_index[i].do_not_buy ? shop_index[i].do_not_buy : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YSOLD!        :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YSOLD!        :&N %s\n",
       shop_index[i].message_buy ? shop_index[i].message_buy : "&+R<NONE>");
-    sprintf(o_buf + strlen(o_buf), "&+YBought       :&N %s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YBought       :&N %s\n",
       shop_index[i].message_sell ? shop_index[i].message_sell : "&+R<NONE>");
 
     strcat(o_buf, "\n&+YItems traded: &N");
@@ -3160,10 +3160,10 @@ void do_stat(P_char ch, char *argument, int cmd)
     for (i2 = 0; SHOP_BUYTYPE(i, i2) != NOTHING; i2++) {
       if(i2)
         strcat(buf, ", ");
-      sprintf(buf1, "%s (#%d) ", item_types[SHOP_BUYTYPE(i, i2)],
+      snprintf(buf1, MAX_STRING_LENGTH, "%s (#%d) ", item_types[SHOP_BUYTYPE(i, i2)],
               SHOP_BUYTYPE(i, i2));
       if(SHOP_BUYWORD(i, i2))
-        sprintf(END_OF(buf1), "[%s]", SHOP_BUYWORD(i, i2));
+        snprintf(END_OF(buf1), MAX_STRING_LENGTH, "[%s]", SHOP_BUYWORD(i, i2));
       else
         strcat(buf1, "[all]");
       strcat(o_buf
@@ -3180,7 +3180,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         {
           m_virtual = (t_obj->R_num >= 0) ? obj_index[t_obj->R_num].virtual_number : 0;
 
-          sprintf(o_buf + strlen(o_buf),
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf),
                   "&+Y[&N%5d&+Y] (&N%5d&+Y)&N %12s %s\n", m_virtual,
                   t_obj->R_num, item_types[(int) t_obj->type],
                   ((t_obj->short_description) ? t_obj->
@@ -3191,7 +3191,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         {
           logit(LOG_DEBUG, "do_stat(): obj %d [%d] not loadable (shop stat)",
             shop_index[i].producing[i2], obj_index[shop_index[i].producing[i2]].virtual_number);
-          sprintf(o_buf + strlen(o_buf), "&+RNon-existant object: &N%d\n",
+          snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+RNon-existant object: &N%d\n",
             shop_index[i].producing[i2]);
         }
       }
@@ -3214,7 +3214,7 @@ void do_stat(P_char ch, char *argument, int cmd)
   {
     if( !(mob = get_char_vis(ch, arg2)) || !IS_NPC(mob) )
     {
-      sprintf( buf, "'%s' not found or is not a NPC.\n", arg2 );
+      snprintf(buf, MAX_STRING_LENGTH, "'%s' not found or is not a NPC.\n", arg2 );
       send_to_char( buf, ch );
       return;
     }
@@ -3224,24 +3224,24 @@ void do_stat(P_char ch, char *argument, int cmd)
 
     if( !qdata )
     {
-      sprintf( buf, "'%s' is not a quest complete mob.\n", mob->player.short_descr );
+      snprintf(buf, MAX_STRING_LENGTH, "'%s' is not a quest complete mob.\n", mob->player.short_descr );
       send_to_char( buf, ch );
     }
     else
     {
 
-      sprintf( buf, "'%s' has quest:\n", mob->player.short_descr );
+      snprintf(buf, MAX_STRING_LENGTH, "'%s' has quest:\n", mob->player.short_descr );
       send_to_char( buf, ch );
 
       while( qdata )
       {
-        sprintf( buf, "'%s'\n", qdata->message );
+        snprintf(buf, MAX_STRING_LENGTH, "'%s'\n", qdata->message );
         send_to_char( buf, ch );
         if( qdata->receive )
         {
           for( goals = qdata->receive; goals; goals = goals->next )
           {
-            sprintf( buf, "Receive: '%c' %d\n", goals->goal_type, goals->number );
+            snprintf(buf, MAX_STRING_LENGTH, "Receive: '%c' %d\n", goals->goal_type, goals->number );
             send_to_char( buf, ch );
           }
         }
@@ -3249,7 +3249,7 @@ void do_stat(P_char ch, char *argument, int cmd)
         {
           for( goals = qdata->give; goals; goals = goals->next )
           {
-            sprintf( buf, "Give: '%c' %d\n", goals->goal_type, goals->number );
+            snprintf(buf, MAX_STRING_LENGTH, "Give: '%c' %d\n", goals->goal_type, goals->number );
             send_to_char( buf, ch );
           }
         }
@@ -3730,25 +3730,25 @@ void do_nchat(P_char ch, char *argument, int cmd)
       argument += 2;
 
       if( all )
-        sprintf(Gbuf2, "&+W*all*&n");
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+W*all*&n");
       else if( good )
-        sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_GOOD].color, racewar_color[RACEWAR_GOOD].name );
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_GOOD].color, racewar_color[RACEWAR_GOOD].name );
       else if( evil )
-        sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_EVIL].color, racewar_color[RACEWAR_EVIL].name );
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_EVIL].color, racewar_color[RACEWAR_EVIL].name );
       else if( undead )
-        sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_UNDEAD].color, racewar_color[RACEWAR_UNDEAD].name );
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_UNDEAD].color, racewar_color[RACEWAR_UNDEAD].name );
       else if( neutral )
-        sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_NEUTRAL].color, racewar_color[RACEWAR_NEUTRAL].name );
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_NEUTRAL].color, racewar_color[RACEWAR_NEUTRAL].name );
       else
-        sprintf(Gbuf2, "&+Cundefined&n");
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "&+Cundefined&n");
 
 
-      sprintf(Gbuf1, "&+mYou racewar chat to &n(%s): '&+w%s&n&+w'\n", Gbuf2, argument);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+mYou racewar chat to &n(%s): '&+w%s&n&+w'\n", Gbuf2, argument);
       send_to_char(Gbuf1, ch, LOG_PRIVATE);
     }
     else if( IS_SET(ch->specials.act, PLR_ECHO) )
     {
-      sprintf(Gbuf1, "&+mYou tell your racewar '&+W%s&n&+w'\n", argument);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+mYou tell your racewar '&+W%s&n&+w'\n", argument);
       send_to_char( Gbuf1, ch, LOG_PRIVATE );
     }
     else
@@ -3759,27 +3759,27 @@ void do_nchat(P_char ch, char *argument, int cmd)
   {
     if( IS_RACEWAR_GOOD(ch) )
     {
-      sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_GOOD].color, racewar_color[RACEWAR_GOOD].name );
+      snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_GOOD].color, racewar_color[RACEWAR_GOOD].name );
       good = TRUE;
     }
     else if(IS_RACEWAR_EVIL(ch))
     {
-      sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_EVIL].color, racewar_color[RACEWAR_EVIL].name );
+      snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_EVIL].color, racewar_color[RACEWAR_EVIL].name );
       evil = TRUE;
     }
     else if(IS_RACEWAR_UNDEAD(ch))
     {
-      sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_UNDEAD].color, racewar_color[RACEWAR_UNDEAD].name );
+      snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_UNDEAD].color, racewar_color[RACEWAR_UNDEAD].name );
       undead = TRUE;
     }
     else if(IS_RACEWAR_NEUTRAL(ch))
     {
-      sprintf( Gbuf2, "&+%c%s&N", racewar_color[RACEWAR_NEUTRAL].color, racewar_color[RACEWAR_NEUTRAL].name );
+      snprintf(Gbuf2, MAX_STRING_LENGTH, "&+%c%s&N", racewar_color[RACEWAR_NEUTRAL].color, racewar_color[RACEWAR_NEUTRAL].name );
       neutral = TRUE;
     }
     else
     {
-      sprintf(Gbuf2, "&-Rundefined&n");
+      snprintf(Gbuf2, MAX_STRING_LENGTH, "&-Rundefined&n");
     }
   }
 
@@ -3817,12 +3817,12 @@ void do_nchat(P_char ch, char *argument, int cmd)
       continue;
     if( IS_TRUSTED(to) )
     {
-      sprintf(Gbuf1, "&+W%s&n&+m racewar-chats &+w(%s&+w): '&+Y%s&n&+w'\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W%s&n&+m racewar-chats &+w(%s&+w): '&+Y%s&n&+w'\n",
         PERS(ch, to, FALSE), Gbuf2, language_CRYPT(ch, to, argument));
     }
     else
     {
-      sprintf(Gbuf1, "&+W%s&n&+m tells your racewar: &+w'&+Y%s&n&+w'\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W%s&n&+m tells your racewar: &+w'&+Y%s&n&+w'\n",
         PERS(ch, to, FALSE), language_CRYPT(ch, to, argument));
     }
     send_to_char(Gbuf1, to, LOG_PRIVATE);
@@ -4076,10 +4076,10 @@ void timedShutdown(P_char ch, P_char, P_obj, void *data)
         type = "SHUTDOWN";
       }
       if(secs > 60)
-//        sprintf(buf, "&+R*** Scheduled %s in %d minutes ***&n\n", type, secs/60, shutdownData.IssuedBy);
-        sprintf(buf, "&+R*** Scheduled %s in %ld minutes ***&n\n", type, secs/60);
+//        snprintf(buf, MAX_STRING_LENGTH, "&+R*** Scheduled %s in %d minutes ***&n\n", type, secs/60, shutdownData.IssuedBy);
+        snprintf(buf, MAX_STRING_LENGTH, "&+R*** Scheduled %s in %ld minutes ***&n\n", type, secs/60);
       else
-        sprintf(buf, "&+R*** Scheduled &-L%s&n&+R in %ld seconds ***&n\n", type, secs);
+        snprintf(buf, MAX_STRING_LENGTH, "&+R*** Scheduled &-L%s&n&+R in %ld seconds ***&n\n", type, secs);
       send_to_all(buf);
       // and set when the next warning should occur..
 
@@ -4259,7 +4259,7 @@ void do_shutdown(P_char ch, char *argument, int cmd)
   strcpy(shutdownData.IssuedBy, GET_NAME(ch));
   shutdownData.next_warning = -1;
   shutdownData.reboot_time = (time(0) + (mins_to_reboot * 60));
-  sprintf(buf, "Scheduled %s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot);
+  snprintf(buf, MAX_STRING_LENGTH, "Scheduled %s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot);
   wizlog(60, buf);
   sql_log( ch, WIZLOG, "%s initiated by %s in %d minutes.", type, GET_NAME(ch), mins_to_reboot );
   // calling the event will start the event
@@ -4586,7 +4586,7 @@ void do_force(P_char ch, char *argument, int cmd)
         send_to_char("Ok.\n", ch);
       else
       {
-        sprintf(buf, "$n has forced you to '%s'.", to_force);
+        snprintf(buf, MAX_STRING_LENGTH, "$n has forced you to '%s'.", to_force);
         act(buf, FALSE, ch, 0, vict, TO_VICT);
         if(level < 62)
           wizlog(GET_LEVEL(ch), "%s has forced %s to '%s' [%d/%d]",
@@ -4614,7 +4614,7 @@ void do_force(P_char ch, char *argument, int cmd)
         vict = i->character;
         if((level > GET_LEVEL(vict)))
         {
-          sprintf(buf, "$n has forced you to '%s'.", to_force);
+          snprintf(buf, MAX_STRING_LENGTH, "$n has forced you to '%s'.", to_force);
           act(buf, FALSE, ch, 0, vict, TO_VICT);
           forced_command = 1;
           command_interpreter(vict, to_force);
@@ -4837,7 +4837,7 @@ void do_purge(P_char ch, char *argument, int cmd)
       }
       while (fscanf(flist, " %s \n", buf) != EOF)
       {
-        sprintf(buf2, "Players/%c/%s", LOWER(*buf), buf);
+        snprintf(buf2, MAX_STRING_LENGTH, "Players/%c/%s", LOWER(*buf), buf);
         f = fopen(buf2, "r");
         vict = (struct char_data *) mm_get(dead_mob_pool);
         vict->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
@@ -6075,18 +6075,18 @@ void do_law_flags(P_char ch, char *argument, int cmd)
         (city == zone_table[world[r_room].zone].hometown))
       GET_HOME(vict) = GET_BIRTHPLACE(vict);
   }
-  sprintf(buf, "%s is now a %s in %s.\n",
+  snprintf(buf, MAX_STRING_LENGTH, "%s is now a %s in %s.\n",
           GET_NAME(vict), justice_flag_names[flag], town_name_list[city]);
   send_to_char(buf, ch);
 
-  sprintf(buf, "%s just set your status in %s to \"%s\".\n",
+  snprintf(buf, MAX_STRING_LENGTH, "%s just set your status in %s to \"%s\".\n",
           CAN_SEE(vict, ch) ? GET_NAME(ch) : "Someone",
           town_name_list[city], justice_flag_names[flag]);
   send_to_char(buf, vict);
 
   /* log the hell out of it. */
 
-  sprintf(buf, "%s made %s in %s by %s",
+  snprintf(buf, MAX_STRING_LENGTH, "%s made %s in %s by %s",
           GET_NAME(vict), justice_flag_names[flag],
           town_name_list[city], GET_NAME(ch));
   wizlog(GET_LEVEL(ch), buf);
@@ -7038,7 +7038,7 @@ void do_lookup(P_char ch, char *argument, int cmd)
             if(isname(tbuf, race) || isname("*", race))
             {                   // RACE
               how_many++;
-              sprintf(buf, "%-12s %d\t %-10s\t %-10s\n", GET_NAME(owner),
+              snprintf(buf, MAX_STRING_LENGTH, "%-12s %d\t %-10s\t %-10s\n", GET_NAME(owner),
                       GET_LEVEL(owner), get_class_string(owner, buffer),
                       race_to_string(owner));
               send_to_char(buf, ch);
@@ -7070,9 +7070,9 @@ void do_lookup(P_char ch, char *argument, int cmd)
 
   if((fp = fopen(file, "r")) == NULL)
   {
-    sprintf(buf, "Error opening %s", file);
+    snprintf(buf, MAX_STRING_LENGTH, "Error opening %s", file);
     logit(LOG_FILE, buf);
-    sprintf(buf, "Error opening %s...tell an implementor.\n", file);
+    snprintf(buf, MAX_STRING_LENGTH, "Error opening %s...tell an implementor.\n", file);
     send_to_char(buf, ch);
     return;
   }
@@ -7111,7 +7111,7 @@ void do_lookup(P_char ch, char *argument, int cmd)
 
     if(!found)
     {
-      sprintf(buf, "No matches found for pattern '%s'\n", pattern);
+      snprintf(buf, MAX_STRING_LENGTH, "No matches found for pattern '%s'\n", pattern);
       send_to_char(buf, ch);
     }
     else
@@ -7228,7 +7228,7 @@ void do_money_supply(P_char ch, char *argument, int cmd)
        fclose(flist);
     }
     system("rm -f temp_letterfile");
-    sprintf(buff, "\r\nTotal money in game: &+W%ld platinum, &+Y%ld gold, &+w%ld silver, &+y%ld copper\r\n", total_p, total_g, total_s, total_c);
+    snprintf(buff, MAX_STRING_LENGTH, "\r\nTotal money in game: &+W%ld platinum, &+Y%ld gold, &+w%ld silver, &+y%ld copper\r\n", total_p, total_g, total_s, total_c);
     send_to_char(buff, ch);
 }
 
@@ -7453,7 +7453,7 @@ void GetMIA(char *playerName, char *returned)
 
   if( !playerName || !*playerName )
   {
-    sprintf(returned, "NoArgs");
+    snprintf(returned, MAX_STRING_LENGTH, "NoArgs");
     return;
   }
 
@@ -7464,38 +7464,38 @@ void GetMIA(char *playerName, char *returned)
   {
     if(finger_foo)
       free_char(finger_foo);
-    sprintf(returned, "NoPfile: '%s'.", playerName );
+    snprintf(returned, MAX_STRING_LENGTH, "NoPfile: '%s'.", playerName );
     return;
   }
 
   laston = finger_foo->player.time.saved;
   minutesgone = (time(0) - laston) / 60;
 
-  sprintf(returned, "  &n(&+cMIA: &+w" );
+  snprintf(returned, MAX_STRING_LENGTH, "  &n(&+cMIA: &+w" );
   if( minutesgone > 0 )
   {
     // 1440 min / day = 24 hrs/day * 60 min / hr
     if( minutesgone > 1440 )
     {
-      sprintf(returned + strlen(returned), "%ld day%s%s",
+      snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%ld day%s%s",
         (minutesgone / 1440), ((minutesgone / 1440) > 1) ? "s" : "", (minutesgone % 1440) ? ", " : "" );
     }
     // % 1440 -> removes days.  .. / 60 -> hours MIA.
     if( (minutesgone % 1440) / 60 > 0 )
     {
-      sprintf(returned + strlen(returned), "%ld hour%s%s",
+      snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%ld hour%s%s",
         (minutesgone % 1440) / 60, (((minutesgone % 1440) / 60) > 1) ? "s" : "", (minutesgone % 60) ? ", " : "");
     }
     // % 60 cuts out hours, just leaving minutes MIA.
     if( minutesgone % 60 )
     {
-      sprintf(returned + strlen(returned), "%ld minute%s", (minutesgone % 60), ((minutesgone % 60) > 1) ? "s" : "");
+      snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%ld minute%s", (minutesgone % 60), ((minutesgone % 60) > 1) ? "s" : "");
     }
   }
   else
   {
     minutesgone = time(0) - laston;
-    sprintf(returned + strlen(returned), "%ld second%s", minutesgone, (minutesgone > 1) ? "s" : "" );
+    snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%ld second%s", minutesgone, (minutesgone > 1) ? "s" : "" );
   }
 
   strcat(returned, "&n)");
@@ -7529,26 +7529,26 @@ void GetMIA2(char *playerName, char *returned)
   minutes = (timegone % (3600      )) / (  60);
   seconds = (timegone % (  60      ));
 
-  sprintf( returned, "&+cMIA:&n ");
+  snprintf(returned, MAX_STRING_LENGTH, "&+cMIA:&n ");
 
   if( days )
   {
-    sprintf(returned + strlen(returned), "%d day%s%s", days, (days > 1) ? "s" : "", (hours || minutes) ? ", " : "");
+    snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%d day%s%s", days, (days > 1) ? "s" : "", (hours || minutes) ? ", " : "");
   }
   if( hours )
   {
-    sprintf(returned + strlen(returned), "%d hour%s%s", hours, (hours > 1) ? "s" : "", (minutes||seconds) ? ", " : "" );
+    snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%d hour%s%s", hours, (hours > 1) ? "s" : "", (minutes||seconds) ? ", " : "" );
   }
   if( minutes )
   {
-    sprintf(returned + strlen(returned), "%d minute%s%s", minutes, (minutes > 1) ? "s" : "", (seconds) ? ", " : "" );
+    snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%d minute%s%s", minutes, (minutes > 1) ? "s" : "", (seconds) ? ", " : "" );
   }
   // display seconds only if there are no days/hours/minutes
   if( seconds )
   {
-    sprintf(returned + strlen(returned), "%d second%s", seconds, (seconds > 1) ? "s" : "");
+    snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), "%d second%s", seconds, (seconds > 1) ? "s" : "");
   }
-  sprintf(returned + strlen(returned), " - %ld mud hour%s.", timegone / SECS_PER_MUD_HOUR,
+  snprintf(returned + strlen(returned), MAX_STRING_LENGTH - strlen(returned), " - %ld mud hour%s.", timegone / SECS_PER_MUD_HOUR,
     (timegone / SECS_PER_MUD_HOUR) > 1 ? "s" : "");
 }
 
@@ -7634,10 +7634,10 @@ void do_finger(P_char ch, char *arg, int cmd)
     if( hours > 0 )
       snprintf(Gbuf1, MAX_STRING_LENGTH, "%d hour%s", hours, (hours > 1) ? "s" : "");
     if( minutes > 0 )
-      sprintf(Gbuf1 + strlen(Gbuf1), "%s%d minute%s", (hours > 0) ? ", " : "", minutes, (minutes > 1) ? "s" : "");
+      snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "%s%d minute%s", (hours > 0) ? ", " : "", minutes, (minutes > 1) ? "s" : "");
     // display seconds only if there are no hours/minutes
     if( timegone < 60 )
-      sprintf(Gbuf1 + strlen(Gbuf1), "%d second%s", seconds, (seconds > 1) ? "s" : "");
+      snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "%d second%s", seconds, (seconds > 1) ? "s" : "");
     strcat(Gbuf1, "&n)&n\n");
   }
   else
@@ -8302,7 +8302,7 @@ void do_ingame(P_char ch, char *args, int cmd)
     if( (desc->character != ch) && (desc->connected == CON_PLAYING) && CAN_SEE(ch, desc->character)
       && (GET_LEVEL( desc->character ) < GET_LEVEL( ch )) )
     {
-      sprintf( name, "%s", GET_TRUE_NAME(desc->character) );
+      snprintf(name, MAX_STRING_LENGTH, "%s", GET_TRUE_NAME(desc->character) );
       // We know there's at least one %s in the string that needs substituting.
       snprintf(buf2, MAX_STRING_LENGTH, buf1, name );
       i = 1;
@@ -8411,7 +8411,7 @@ void concat_which_flags(const char *flagType, const char **flagNames, char *buf)
     if(j && !(j % 3))
       strcat(buf, "\n");
 
-    sprintf(buf + strlen(buf), "%-20s", flagNames[j]);
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%-20s", flagNames[j]);
   }
 
   strcat(buf, "\n\n");
@@ -8430,7 +8430,7 @@ void concat_which_flagsde(const char *flagType, const flagDef flagNames[], char 
     if(j && !(j % 3))
       strcat(buf, "\n");
 
-    sprintf(buf + strlen(buf), "%-20s", flagNames[j].flagShort);
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%-20s", flagNames[j].flagShort);
   }
 
   strcat(buf, "\n\n");
@@ -8549,7 +8549,7 @@ void do_which(P_char ch, char *args, int cmd)
         if(j && !(j % 3))
           strcat(buf1, "\n");
 
-        sprintf(buf1 + strlen(buf1), "%-20s", room_bits[j].flagShort);
+        snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%-20s", room_bits[j].flagShort);
       }
       strcat(buf1, "\n");
       send_to_char(buf1, ch);
@@ -8588,7 +8588,7 @@ void do_which(P_char ch, char *args, int cmd)
         if(j && !(j % 3))
           strcat(buf1, "\n");
 
-        sprintf(buf1 + strlen(buf1), "%-20s", zone_bits[j]);
+        snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%-20s", zone_bits[j]);
       }
       strcat(buf1, "\n");
       send_to_char(buf1, ch);
@@ -8727,7 +8727,7 @@ void do_which(P_char ch, char *args, int cmd)
 
       if(found && !stat_check)
       {
-        sprintf(buf1, "[%5d] %-30s - %s\n",
+        snprintf(buf1, MAX_STRING_LENGTH, "[%5d] %-30s - %s\n",
                 obj_index[t_obj->R_num].virtual_number,
                 t_obj->short_description, where_obj(t_obj, FALSE));
 
@@ -8753,11 +8753,11 @@ void do_which(P_char ch, char *args, int cmd)
             if(t_obj->affected[t].location != APPLY_NONE)
             {
                sprinttype(t_obj->affected[t].location, apply_types, temp2);
-               sprintf(temp + strlen(temp), "   &+YAffects: &+c%s&+Y By &+c%d\n",
+               snprintf(temp + strlen(temp), MAX_STRING_LENGTH - strlen(temp), "   &+YAffects: &+c%s&+Y By &+c%d\n",
                   temp2, t_obj->affected[t].modifier);
             }
           }
-          sprintf(buf1, "[%5d] %-30s - %s\n%s\n",
+          snprintf(buf1, MAX_STRING_LENGTH, "[%5d] %-30s - %s\n%s\n",
                   obj_index[t_obj->R_num].virtual_number,
                   t_obj->short_description, where_obj(t_obj, FALSE), temp);
 
@@ -8801,7 +8801,7 @@ void do_which(P_char ch, char *args, int cmd)
           if(j && !(j % 3))
             strcat(buf1, "\n");
 
-          sprintf(buf1 + strlen(buf1), "%-20s", action_bits[j].flagShort);
+          snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%-20s", action_bits[j].flagShort);
         }
         strcat(buf1, "\n");
 
@@ -8811,7 +8811,7 @@ void do_which(P_char ch, char *args, int cmd)
           if(j && !(j % 3))
             strcat(buf1, "\n");
 
-          sprintf(buf1 + strlen(buf1), "%-20s", player_bits[j]);
+          snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%-20s", player_bits[j]);
         }
         strcat(buf1, "\n");
 
@@ -8839,11 +8839,11 @@ void do_which(P_char ch, char *args, int cmd)
       if(found)
       {
         if(IS_NPC(t_ch))
-          sprintf(buf1, "%-30s- &+Y[&n%5d&+Y]&n %s\n",
+          snprintf(buf1, MAX_STRING_LENGTH, "%-30s- &+Y[&n%5d&+Y]&n %s\n",
                   t_ch->player.short_descr, world[t_ch->in_room].number,
                   world[t_ch->in_room].name);
         else
-          sprintf(buf1, "%-30s- &+Y[&n%5d&+Y]&n %s\n",
+          snprintf(buf1, MAX_STRING_LENGTH, "%-30s- &+Y[&n%5d&+Y]&n %s\n",
                   t_ch->player.name, world[t_ch->in_room].number,
                   world[t_ch->in_room].name);
         o_len += strlen(buf1);
@@ -9015,12 +9015,12 @@ void do_grant(P_char ch, char *args, int cmd)
 
   vict->only.pc->gcmd_arr = new_arr;
 
-  sprintf(buf, "You have granted the command '%s' (level %d) to %s.\n",
+  snprintf(buf, MAX_STRING_LENGTH, "You have granted the command '%s' (level %d) to %s.\n",
           command[cmd - 1], cmd_info[cmd].minimum_level, GET_NAME(vict));
 
   send_to_char(buf, ch);
 
-  sprintf(buf, "%s has granted you the use of the '%s' command.\n",
+  snprintf(buf, MAX_STRING_LENGTH, "%s has granted you the use of the '%s' command.\n",
           GET_NAME(ch), command[cmd - 1]);
 
   send_to_char(buf, vict);
@@ -9138,12 +9138,12 @@ void do_revoke(P_char ch, char *args, int cmd)
 
       vict->only.pc->numb_gcmd--;
 
-      sprintf(buf, "You have revoked the command '%s' (level %d) from %s.\n",
+      snprintf(buf, MAX_STRING_LENGTH, "You have revoked the command '%s' (level %d) from %s.\n",
               command[cmd - 1], cmd_info[cmd].minimum_level, GET_NAME(vict));
 
       send_to_char(buf, ch);
 
-      sprintf(buf, "%s has revoked your ability to use the '%s' command.\n",
+      snprintf(buf, MAX_STRING_LENGTH, "%s has revoked your ability to use the '%s' command.\n",
               GET_NAME(ch), command[cmd - 1]);
 
       send_to_char(buf, vict);
@@ -9940,13 +9940,13 @@ ACMD(do_list_witness)
     }
     else if(arg4[0] == '@')
     {
-      sprintf(buf, "Special crimes report for &+M%s&N:\n",
+      snprintf(buf, MAX_STRING_LENGTH, "Special crimes report for &+M%s&N:\n",
               town_name_list[town]);
       while ((crec =
               crime_find(hometowns[town - 1].crime_list, NULL, NULL, 0,
                          NOWHERE, J_STATUS_NONE, crec)))
       {
-        sprintf(buf + strlen(buf),
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf),
                 "&+R%s&N committed %s against %s, status &+c%s&n (%d)(%d).\n",
                 crec->attacker, crime_list[crec->crime], crec->victim,
                 justice_status[crec->status], crec->money, (int) crec->time);
@@ -9962,7 +9962,7 @@ ACMD(do_list_witness)
       {
         crime_remove(town, crec);
       }
-      sprintf(buf, "Records removed for &+M%s&N.\n", arg4);
+      snprintf(buf, MAX_STRING_LENGTH, "Records removed for &+M%s&N.\n", arg4);
       send_to_char(buf, ch);
     }
   }
@@ -9974,18 +9974,18 @@ ACMD(do_list_witness)
       send_to_char("No-one by that name around.\n", ch);
       return;
     }
-    sprintf(buf, "Witness record of &+M%s&N:\n", J_NAME(target));
+    snprintf(buf, MAX_STRING_LENGTH, "Witness record of &+M%s&N:\n", J_NAME(target));
 
     if(!target->specials.witnessed)
     {
-      sprintf(buf, "%sWitness record is empty.\n", buf);
+      snprintf(buf, MAX_STRING_LENGTH, "%sWitness record is empty.\n", buf);
     }
     else
     {
       while ((rec = witness_find(target->specials.witnessed,
                                  NULL, NULL, 0, NOWHERE, rec)))
       {
-        sprintf(buf + strlen(buf), "&+R%s&N committed %s against %s at %s.\n",
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+R%s&N committed %s against %s at %s.\n",
                 rec->attacker, crime_list[rec->crime], rec->victim,
                 world[rec->room].name);
       }
@@ -10112,7 +10112,7 @@ int vnum_mobile(char *searchname, struct char_data *ch)
       logit(LOG_DEBUG, "vnum_mobile(): mob %d not loadable",
             mob_index[i].virtual_number);
   strcat(buff, "\n");
-  sprintf(buff + strlen(buff),
+  snprintf(buff + strlen(buff), MAX_STRING_LENGTH - strlen(buff),
           "&+LTotal mobs of this name in database:&n %d\n", count);
   page_string(ch->desc, buff, 1);
 
@@ -10914,7 +10914,7 @@ void which_race( P_char ch, char *argument )
   }
   else
   {
-    sprintf( buf, "No mobs of race '%s' (%d) found.\n\r", race_names_table[raceIndex].ansi, raceIndex );
+    snprintf(buf, MAX_STRING_LENGTH, "No mobs of race '%s' (%d) found.\n\r", race_names_table[raceIndex].ansi, raceIndex );
     send_to_char( buf, ch );
   }
 }
@@ -11030,16 +11030,16 @@ void stat_zone( P_char ch, char *arg )
   int maproom = maproom_of_zone(zone_id);
   if(maproom > 0)
   {
-    sprintf(o_buf + strlen(o_buf), "&+YConnects to map room: [&N%d&+Y]\n", maproom);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YConnects to map room: [&N%d&+Y]\n", maproom);
   }
 
-  sprintf(o_buf + strlen(o_buf), "&+YRooms: &N%d  &+YRange: [&N%d&+Y](&N%d&+Y) to [&N%d&+Y](&N%d&+Y)  Top: &N%d\n",
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YRooms: &N%d  &+YRange: [&N%d&+Y](&N%d&+Y) to [&N%d&+Y](&N%d&+Y)  Top: &N%d\n",
     zone->real_top - zone->real_bottom + 1, world[zone->real_bottom].number, zone->real_bottom,
     world[zone->real_top].number, zone->real_top, zone->top);
 
-  sprintf(o_buf + strlen(o_buf), "&+YDifficulty: &N%d ", zone->difficulty);
-  sprintf(o_buf + strlen(o_buf), "&+YAvg mob level: &N%d ", zone->avg_mob_level);
-  sprintf(o_buf + strlen(o_buf), "&+YLifespan: &N%d  &+YAge: &N%d  &+R", zone->lifespan, zone->age);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YDifficulty: &N%d ", zone->difficulty);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YAvg mob level: &N%d ", zone->avg_mob_level);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YLifespan: &N%d  &+YAge: &N%d  &+R", zone->lifespan, zone->age);
 
   switch (zone->reset_mode)
   {
@@ -11057,46 +11057,46 @@ void stat_zone( P_char ch, char *arg )
       break;
   }
 
-  sprintf(o_buf + strlen(o_buf), "&+YFull reset lifespan: &n%d  &+YFull reset age: &n%d\n",
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YFull reset lifespan: &n%d  &+YFull reset age: &n%d\n",
     zone->fullreset_lifespan, zone->fullreset_age);
 
   if( IS_SET(zone->flags, ZONE_MAP) )
   {
-    sprintf(o_buf + strlen(o_buf), "&+YMap size:&n %d&+Yx&n%d\n", zone->mapx, zone->mapy);
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YMap size:&n %d&+Yx&n%d\n", zone->mapx, zone->mapy);
   }
 
-  sprintf(o_buf + strlen(o_buf), "&+YControlling town:&N %s\n",
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YControlling town:&N %s\n",
     town_name_list[zone->hometown]);
   sprintbit(zone->hometown ? hometowns[zone->hometown - 1].flags : 0,
     justice_flags, buf2);
-  sprintf(o_buf + strlen(o_buf), "&+YJustice:&N %s\n", buf2);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YJustice:&N %s\n", buf2);
   sprintbit(zone->flags, zone_bits, buf);
-  sprintf(o_buf + strlen(o_buf), "&+YZone flags:&N %s\n", buf);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YZone flags:&N %s\n", buf);
 
   struct zone_info zinfo;
   if(get_zone_info(zone->number, &zinfo))
   {
     string buff;
 
-    sprintf(o_buf + strlen(o_buf), "\n&+GZone Info\n");
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "\n&+GZone Info\n");
 
-    sprintf(o_buf + strlen(o_buf), "&+gTask zone: &+G%s  &+gQuest zone:  &+G%s  &+gTrophy zone:  &+G%s\n",
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gTask zone: &+G%s  &+gQuest zone:  &+G%s  &+gTrophy zone:  &+G%s\n",
       YESNO(zinfo.task_zone), YESNO(zinfo.quest_zone), YESNO(zinfo.trophy_zone) );
 
     if(zinfo.epic_type)
     {
       if(zinfo.epic_level)
       {
-        sprintf(o_buf + strlen(o_buf), "&+gGrants epic level: &+G%d\n", zinfo.epic_level);
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gGrants epic level: &+G%d\n", zinfo.epic_level);
       }
 
-      sprintf(o_buf + strlen(o_buf), "&+gRarity: &+G%1.3f  ", zinfo.frequency_mod);
-      sprintf(o_buf + strlen(o_buf), "&+gZone frequency multiplier: &+G%1.3f\n", zinfo.zone_freq_mod);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gRarity: &+G%1.3f  ", zinfo.frequency_mod);
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gZone frequency multiplier: &+G%1.3f\n", zinfo.zone_freq_mod);
 
-      sprintf(o_buf + strlen(o_buf), "&+gEpic value: &+G%d  &+gSuggested group size: &+G%d\n",
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gEpic value: &+G%d  &+gSuggested group size: &+G%d\n",
         zinfo.epic_payout, zinfo.suggested_group_size);
 
-      sprintf(o_buf + strlen(o_buf), "&+gEpic stone(s):\n");
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+gEpic stone(s):\n");
 
       for( P_obj tobj = object_list; tobj; tobj = tobj->next )
       {
@@ -11117,20 +11117,20 @@ void stat_zone( P_char ch, char *arg )
         {
           continue;
         }
-        sprintf(o_buf + strlen(o_buf), " %s &nin &+W[&n%d&+W]\n", tobj->short_description, obj_room_vnum);
+        snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), " %s &nin &+W[&n%d&+W]\n", tobj->short_description, obj_room_vnum);
       }
     }
 
-    sprintf(o_buf + strlen(o_buf), "&+YRacewar Info:&N\n" );
+    snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+YRacewar Info:&N\n" );
     zone_data *zdata = &(zone_table[zone_id]);
     // Skip RACEWAR_NONE.
     for( int rw = 1; rw <= MAX_RACEWAR; rw++ )
     {
-      sprintf(o_buf + strlen(o_buf), "&+%c%7s&+Y Count: &N%2d&+Y, Misfiring: &N%s&+Y.&N\n",
+      snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "&+%c%7s&+Y Count: &N%2d&+Y, Misfiring: &N%s&+Y.&N\n",
         racewar_color[rw].color, racewar_color[rw].name, zdata->players[rw], YESNO(zdata->misfiring[rw]) );
     }
   }
-  sprintf(o_buf + strlen(o_buf), "\n&+YExits from this zone:\n", buf);
+  snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), "\n&+YExits from this zone:\n", buf);
 
   int exits_shown = 0;
   int i, i2, i3;
@@ -11149,12 +11149,12 @@ void stat_zone( P_char ch, char *arg )
           }
           if( world[i].dir_option[i2]->to_room == NOWHERE )
           {
-            sprintf(o_buf + strlen(o_buf), " &+Y[&n%5d&+Y]&n &+R%-5s&n to &+WNOWHERE\n", world[i].number, dirs[i2]);
+            snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), " &+Y[&n%5d&+Y]&n &+R%-5s&n to &+WNOWHERE\n", world[i].number, dirs[i2]);
             exits_shown++;
           }
           else
           {
-            sprintf(o_buf + strlen(o_buf), " &+Y[&n%5d&+Y]&n &+R%-5s&n to &+Y[&+R%3d&n:&+C%5d&+Y]&n %s\n",
+            snprintf(o_buf + strlen(o_buf), MAX_STRING_LENGTH - strlen(o_buf), " &+Y[&n%5d&+Y]&n &+R%-5s&n to &+Y[&+R%3d&n:&+C%5d&+Y]&n %s\n",
               world[i].number, dirs[i2], zone_table[world[world[i].dir_option[i2]->to_room].zone].number,
               world[world[i].dir_option[i2]->to_room].number, world[world[i].dir_option[i2]->to_room].name);
             exits_shown++;
@@ -11628,7 +11628,7 @@ void which_stat(P_char ch, char *argument)
   }
 
   // Header for list: shows the flag and amount to ch.
-  sprintf( buf, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
+  snprintf(buf, MAX_STRING_LENGTH, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
     "\n&-L( AMT)&n  &-LINGAME&n   &-LVNUM&n &-LOBJ-SHORT&n\n",
     apply_types[flags], amount, greater ? '+' : ( lesser ? '-' : '=') );
   send_to_char( buf, ch );
@@ -11648,7 +11648,7 @@ void which_stat(P_char ch, char *argument)
           && obj->affected[i].modifier >= amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
             obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
           send_to_char( buf, ch );
@@ -11674,7 +11674,7 @@ void which_stat(P_char ch, char *argument)
           && obj->affected[i].modifier <= amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
             obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
           send_to_char( buf, ch );
@@ -11700,7 +11700,7 @@ void which_stat(P_char ch, char *argument)
           && obj->affected[i].modifier == amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(r_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(r_num),
             obj_index[r_num].number-1, obj_index[r_num].limit, obj_index[r_num].virtual_number, obj->short_description );
           send_to_char( buf, ch );
@@ -11887,27 +11887,27 @@ char *food_modifiers( P_obj food )
     {
       mod = food->value[2];
     }
-    sub += sprintf( mod_string + sub, "MV_REG: %d, ", mod );
+    sub += snprintf(mod_string + sub, MAX_STRING_LENGTH, "MV_REG: %d, ", mod );
   }
   if( food->value[4] != 0 )
   {
-    sub += sprintf( mod_string + sub, "STR&CON: %d, ", food->value[4] );
+    sub += snprintf(mod_string + sub, MAX_STRING_LENGTH, "STR&CON: %d, ", food->value[4] );
   }
   if( food->value[5] != 0 )
   {
-    sub += sprintf( mod_string + sub, "AGI&DEX: %d, ", food->value[5] );
+    sub += snprintf(mod_string + sub, MAX_STRING_LENGTH, "AGI&DEX: %d, ", food->value[5] );
   }
   if( food->value[6] != 0 )
   {
-    sub += sprintf( mod_string + sub, "INT&WIS: %d, ", food->value[6] );
+    sub += snprintf(mod_string + sub, MAX_STRING_LENGTH, "INT&WIS: %d, ", food->value[6] );
   }
   if( food->value[7] != 0 )
   {
-    sub += sprintf( mod_string + sub, "HIT&DAM: %d, ", food->value[7] );
+    sub += snprintf(mod_string + sub, MAX_STRING_LENGTH, "HIT&DAM: %d, ", food->value[7] );
   }
 
   // Duration is in value[0].
-  sprintf( mod_string + ((sub > 0) ? sub - 2 : sub), " for %d ticks", food->value[0] );
+  snprintf(mod_string + ((sub > 0) ? sub - 2 : sub), MAX_STRING_LENGTH, " for %d ticks", food->value[0] );
 
   return mod_string;
 }
@@ -12276,7 +12276,7 @@ void where_stat(P_char ch, char *argument)
   }
 
   // Header for list: shows the flag and amount to ch.
-  sprintf( buf, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
+  snprintf(buf, MAX_STRING_LENGTH, "&=LWFlag: '%s', Amount: %d, Greater/Lesser: '%c'&n\n     &+W*&n=arti"
     "\n&-L( AMT)&n  &-LINGAME&n   &-LVNUM&n &-LOBJ-SHORT&n\n",
     apply_types[flags], amount, greater ? '+' : ( lesser ? '-' : '=') );
   send_to_char( buf, ch );
@@ -12293,7 +12293,7 @@ void where_stat(P_char ch, char *argument)
           && obj->affected[i].modifier >= amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
             obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
             obj->short_description );
@@ -12314,7 +12314,7 @@ void where_stat(P_char ch, char *argument)
           && obj->affected[i].modifier <= amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
             obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
             obj->short_description );
@@ -12335,7 +12335,7 @@ void where_stat(P_char ch, char *argument)
           && obj->affected[i].modifier == amount )
         {
           // As if things could be easier to read...
-          sprintf( buf, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
+          snprintf(buf, MAX_STRING_LENGTH, "&%s(%+4d)&+W%c&%s%3d/%3d %6d &n'%s'\n", OBJ_COLOR(obj->R_num),
             obj->affected[i].modifier, IS_ARTIFACT(obj) ? '*' : ' ', OBJ_COLOR(obj->R_num),
             obj_index[obj->R_num].number, obj_index[obj->R_num].limit, obj_index[obj->R_num].virtual_number,
             obj->short_description );
@@ -12445,7 +12445,7 @@ void do_where(P_char ch, char *argument, int cmd)
         if( d->original )        /* If switched */
         {
 
-          sprintf(lines[line_count].line, "&+%c%-20s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s &n(In body of %s&n)\n",
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "&+%c%-20s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s &n(In body of %s&n)\n",
             IS_TRUSTED(t_ch) ? 'w' : racewar_color[GET_RACEWAR(t_ch)].color, t_ch->player.name,
             ROOM_ZONE_NUMBER(d->character->in_room), world[d->character->in_room].number,
             world[d->character->in_room].name, FirstWord(d->character->player.name));
@@ -12453,7 +12453,7 @@ void do_where(P_char ch, char *argument, int cmd)
         }
         else
         {
-          sprintf(lines[line_count].line, "&+%c%-20s - &n[&+R%4d&+W:&+C%6d&n] %s&n\n",
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "&+%c%-20s - &n[&+R%4d&+W:&+C%6d&n] %s&n\n",
             IS_TRUSTED(t_ch) ? 'w' : racewar_color[GET_RACEWAR(t_ch)].color, t_ch->player.name,
             ROOM_ZONE_NUMBER(d->character->in_room), world[d->character->in_room].number,
             world[d->character->in_room].name);
@@ -12462,7 +12462,7 @@ void do_where(P_char ch, char *argument, int cmd)
         // We increment here because we want to increment before the break.
         if( strlen(lines[line_count++].line) + length + 512 > MAX_STRING_LENGTH )
         {
-          sprintf(lines[line_count].line, "   ...the list is too long...\n");
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "   ...the list is too long...\n");
           // Max zone number is 9999999.
           lines[line_count++].room_number = 10000000;
           break;
@@ -12525,7 +12525,7 @@ void do_where(P_char ch, char *argument, int cmd)
       {
         if( d->original )        /* If switched */
         {
-          sprintf(lines[line_count].line, "&+%c%-20s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s &n(In body of %s&n)\n",
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "&+%c%-20s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s &n(In body of %s&n)\n",
             IS_TRUSTED(t_ch) ? 'w' : racewar_color[GET_RACEWAR(t_ch)].color, t_ch->player.name,
             ROOM_ZONE_NUMBER(d->character->in_room), world[d->character->in_room].number,
             world[d->character->in_room].name, FirstWord(d->character->player.name));
@@ -12533,7 +12533,7 @@ void do_where(P_char ch, char *argument, int cmd)
         }
         else
         {
-          sprintf(lines[line_count].line, "&+%c%-20s - &n[&+R%4d&+W:&+C%6d&n] %s&n\n",
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "&+%c%-20s - &n[&+R%4d&+W:&+C%6d&n] %s&n\n",
             IS_TRUSTED(t_ch) ? 'w' : racewar_color[GET_RACEWAR(t_ch)].color, t_ch->player.name,
             ROOM_ZONE_NUMBER(d->character->in_room), world[d->character->in_room].number,
             world[d->character->in_room].name);
@@ -12542,7 +12542,7 @@ void do_where(P_char ch, char *argument, int cmd)
         // We increment here because we want to increment before the break.
         if( strlen(lines[line_count++].line) + length + 512 > MAX_STRING_LENGTH )
         {
-          sprintf(lines[line_count].line, "   ...the list is too long...\n");
+          snprintf(lines[line_count].line, MAX_STRING_LENGTH, "   ...the list is too long...\n");
           // Max zone number is 9999999.
           lines[line_count++].room_number = 10000000;
           break;
@@ -12578,7 +12578,7 @@ void do_where(P_char ch, char *argument, int cmd)
         if( (i->in_room != NOWHERE) && (IS_TRUSTED(ch) || (world[i->in_room].zone == world[ch->in_room].zone)) )
         {
           count++;
-          sprintf(buf2, "%3d. [%6d] %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n\n", count, v_num, pad_ansi(i->player.short_descr, 40).c_str(),
+          snprintf(buf2, MAX_STRING_LENGTH, "%3d. [%6d] %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n\n", count, v_num, pad_ansi(i->player.short_descr, 40).c_str(),
             ROOM_ZONE_NUMBER(i->in_room), world[i->in_room].number, world[i->in_room].name);
           if( (length + strlen(buf2) + 35) > MAX_STRING_LENGTH )
           {
@@ -12620,7 +12620,7 @@ void do_where(P_char ch, char *argument, int cmd)
         o_count++;
         count++;
 
-        sprintf(buf2, "%3d. [%6d] %s &+Y-&n %s\n", o_count, v_num, pad_ansi(k->short_description, 40).c_str(), where_obj(k, FALSE));
+        snprintf(buf2, MAX_STRING_LENGTH, "%3d. [%6d] %s &+Y-&n %s\n", o_count, v_num, pad_ansi(k->short_description, 40).c_str(), where_obj(k, FALSE));
 
         if( (strlen(buf2) + length + 35) > MAX_STRING_LENGTH )
         {
@@ -12658,7 +12658,7 @@ void do_where(P_char ch, char *argument, int cmd)
         {
           if (d->original)
           {
-            sprintf(buf2, "%-20s &+Y- &n[&+C%6d&n] &n%s (In body of %s&n)\n",
+            snprintf(buf2, MAX_STRING_LENGTH, "%-20s &+Y- &n[&+C%6d&n] &n%s (In body of %s&n)\n",
                     d->original->player.name,
                     world[d->character->in_room].number,
                     world[d->character->in_room].name,
@@ -12666,14 +12666,14 @@ void do_where(P_char ch, char *argument, int cmd)
           }
           else
           {
-            sprintf(buf2, "%-20s &+Y- &n[&+C%6d&n] %s&n\n",
+            snprintf(buf2, MAX_STRING_LENGTH, "%-20s &+Y- &n[&+C%6d&n] %s&n\n",
                     d->character->player.name,
                     world[d->character->in_room].number,
                     world[d->character->in_room].name);
           }
           if (strlen(buf2) + length + 35 > MAX_STRING_LENGTH)
           {
-            sprintf(buf2, "   ...the list is too long...\n");
+            snprintf(buf2, MAX_STRING_LENGTH, "   ...the list is too long...\n");
             strcat(buf, buf2);
           }
           strcat(buf, buf2);
@@ -12715,10 +12715,10 @@ void do_where(P_char ch, char *argument, int cmd)
 
         count++;
         if (IS_NPC(i))
-          sprintf(buf2, "%3d. [%6d] %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n ", count, GET_VNUM(i), pad_ansi(i->player.short_descr, 40).c_str(),
+          snprintf(buf2, MAX_STRING_LENGTH, "%3d. [%6d] %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n ", count, GET_VNUM(i), pad_ansi(i->player.short_descr, 40).c_str(),
                   ROOM_ZONE_NUMBER(i->in_room), world[i->in_room].number, world[i->in_room].name);
         else
-          sprintf(buf2, "%3d. %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n ", count, pad_ansi(i->player.name, 40).c_str(),
+          snprintf(buf2, MAX_STRING_LENGTH, "%3d. %s &+Y- &n[&+R%4d&+W:&+C%6d&n] %s&n ", count, pad_ansi(i->player.name, 40).c_str(),
                   ROOM_ZONE_NUMBER(i->in_room), world[i->in_room].number, world[i->in_room].name);
 
         strcat(buf2, "\n");
@@ -12762,7 +12762,7 @@ void do_where(P_char ch, char *argument, int cmd)
 
       o_count++;
       count++;
-      sprintf(buf2, "%3d. [%6d] %s &+Y- &n%s\n",
+      snprintf(buf2, MAX_STRING_LENGTH, "%3d. [%6d] %s &+Y- &n%s\n",
               o_count, OBJ_VNUM(k), pad_ansi(k->short_description, 40).c_str(), where_obj(k, FALSE));
       if ((strlen(buf2) + length + 35) > MAX_STRING_LENGTH)
       {
@@ -12992,7 +12992,7 @@ void choronize(char *argument)
 
   while( (index = strcasestr( argument, "fucking" )) != NULL )
   {
-    sprintf( index, "Choron" );
+    snprintf(index, MAX_STRING_LENGTH, "Choron" );
     index += strlen("Choron");
     *index = ' ';
     while( *index != '\0' )

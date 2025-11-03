@@ -613,7 +613,7 @@ void game_loop(int s)
         point->host[49] = 0;
 
         /* site ban code, skip if address is junk */
-        sprintf(buf, "%s\r\n", point->host);
+        snprintf(buf, MAX_STRING_LENGTH, "%s\r\n", point->host);
         SEND_TO_Q(buf, point);
         if (bannedsite(point->host, 0) || bannedsite(host_ans_buf.addr, 0))
         {
@@ -1514,7 +1514,7 @@ void close_socket(struct descriptor_data *d)
         logit(LOG_COMM, "Closing link to: %s [%s].", GET_NAME(GET_PLYR(d->character)), d->host);
         // Subtract 5 hrs: GMT -> EST.
         ct = time(0) - 5*60*60;
-        sprintf(Gbuf1, "%s", asctime( localtime(&ct) ));
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "%s", asctime( localtime(&ct) ));
         *(Gbuf1 + strlen(Gbuf1) - 1) = '\0';
         loginlog(d->character->player.level, "%s [%s] has lost link @ %s EST.",
                  GET_NAME(GET_PLYR(d->character)), d->host, Gbuf1 );
@@ -1725,7 +1725,7 @@ int new_descriptor(int s)
 
       buf.mtype = MSG_HOST_REQ;
       buf.desc = desc;
-      sprintf(buf.addr, "%d.%d.%d.%d",
+      snprintf(buf.addr, MAX_STRING_LENGTH, "%d.%d.%d.%d",
               ((unsigned char *) &(sock.sin_addr))[0],
               ((unsigned char *) &(sock.sin_addr))[1],
               ((unsigned char *) &(sock.sin_addr))[2],
@@ -1746,7 +1746,7 @@ int new_descriptor(int s)
        */
 #endif
 
-      sprintf(Gbuf1, "%s", buf.addr);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s", buf.addr);
       looking_up = TRUE;
     }
     if (found)
@@ -1769,7 +1769,7 @@ int new_descriptor(int s)
      * will signal the "reciver" that this name already occurs in the
      * lookup list.
      */
-    sprintf(buf.addr, ".%d.%d.%d.%d",
+    snprintf(buf.addr, MAX_STRING_LENGTH, ".%d.%d.%d.%d",
             ((unsigned char *) &(sock.sin_addr))[0],
             ((unsigned char *) &(sock.sin_addr))[1],
             ((unsigned char *) &(sock.sin_addr))[2],
@@ -1790,7 +1790,7 @@ int new_descriptor(int s)
      * I'll use yellow to indicate the address is being looked up
      */
 
-    sprintf(Gbuf1, "%s", buf.addr);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "%s", buf.addr);
   }
   if (!found)
     write_to_descriptor(desc, "Looking up your hostname...\r\n");
@@ -1801,7 +1801,7 @@ int new_descriptor(int s)
   //newd->connected = CON_HOST_LOOKUP;
   newd->wait = 1;
   strncpy(newd->host, Gbuf1, 50);
-  sprintf(Gbuf1,
+  snprintf(Gbuf1, MAX_STRING_LENGTH,
           "host %s | sed -e 's/.*pointer\\ \\(.*\\)\\./\\1/g;t;d' > lib/etc/hosts/%d &",
           strip_ansi(newd->host).c_str(), desc);
   system(Gbuf1);
@@ -1969,25 +1969,25 @@ void append_prompt(P_char ch ,char *promptbuf)
 
   if (percent >= 66)
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+g %dh",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+g %dh",
         ch->points.hit);
   }
   else if (percent >= 33)
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+y %dh",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+y %dh",
         ch->points.hit);
   }
   else if (percent >= 15)
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+r %dh",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+r %dh",
         ch->points.hit);
   }
   else
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+R %dh",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+R %dh",
         ch->points.hit);
   }
-  sprintf(promptbuf + strlen(promptbuf), "&+g/%dH",
+  snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+g/%dH",
       GET_MAX_HIT(ch));
 
   if (GET_MAX_VITALITY(ch) > 0)
@@ -2001,20 +2001,20 @@ void append_prompt(P_char ch ,char *promptbuf)
 
   if (percent >= 66)
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+g %dv",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+g %dv",
         ch->points.vitality);
   }
   else if (percent >= 33)
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+y %dv",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+y %dv",
         ch->points.vitality);
   }
   else
   {
-    sprintf(promptbuf + strlen(promptbuf), "&+r %dv",
+    snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+r %dv",
         ch->points.vitality);
   }
-  sprintf(promptbuf + strlen(promptbuf), "&+g/%dV",
+  snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+g/%dV",
       GET_MAX_VITALITY(ch));
 
   strcat(promptbuf, " &+CPos:&+g");
@@ -2036,7 +2036,7 @@ void append_prompt(P_char ch ,char *promptbuf)
     /* TANK elements only active if... */
     if( (tank = GET_OPPONENT(t_ch_f)) && (ch->in_room == tank->in_room) )
     {
-      sprintf(promptbuf + strlen(promptbuf), " &+BT: %s", (ch != tank && !CAN_SEE(ch, tank)) ? "someone"
+      snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " &+BT: %s", (ch != tank && !CAN_SEE(ch, tank)) ? "someone"
         : (IS_PC(tank) ? PERS(tank, ch, 0) : ( FirstWord(GET_NAME( tank )) )) );
       strcat(promptbuf, " &+CTP:&+g");
       if (GET_POS(tank) == POS_STANDING)
@@ -2090,7 +2090,7 @@ void append_prompt(P_char ch ,char *promptbuf)
         strcat(promptbuf, "&+r bleeding, close to death");
       }
 
-      sprintf(promptbuf + strlen(promptbuf), " &+rE: %s&+g",
+      snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " &+rE: %s&+g",
           (!CAN_SEE(ch, t_ch_f)) ? "someone" : (IS_PC(t_ch_f)
                                                 ? PERS(t_ch_f, ch, 0)
                                                 : (FirstWord
@@ -2305,7 +2305,7 @@ int process_output(P_desc t)
         case 'n':
           if (flg)
           {
-            sprintf(&buffer[j], "\033[0m");
+            snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[0m");
             j += 4;
           }
           was_upper = FALSE;
@@ -2313,7 +2313,7 @@ int process_output(P_desc t)
         case 'L':
           if (flg)
           {
-            sprintf(&buffer[j], "\r\n");
+            snprintf(&buffer[j], MAX_STRING_LENGTH, "\r\n");
             j += 2;
           }
           break;
@@ -2335,11 +2335,11 @@ int process_output(P_desc t)
                 was_upper = TRUE;
               else if (was_upper)
               {
-                sprintf(&buffer[j], "\033[0m");
+                snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[0m");
                 j += 4;
                 was_upper = FALSE;
               }
-              sprintf(&buffer[j], "\033[%s%s%sm", bold ? "1;" : "",
+              snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[%s%s%sm", bold ? "1;" : "",
                       blink ? (PLR3_FLAGGED(t->character, PLR3_UNDERLINE) ? "4;" : "5;") : "",
                       (bg ? color_table[k].bg_code : color_table[k].fg_code));
               j += (5 + (bold ? 2 : 0) + (blink ? 2 : 0));
@@ -2347,7 +2347,7 @@ int process_output(P_desc t)
           }
           else
           {
-            sprintf(&buffer[j], "&%c%c", (bg ? '-' : '+'), buf[i]);
+            snprintf(&buffer[j], MAX_STRING_LENGTH, "&%c%c", (bg ? '-' : '+'), buf[i]);
             j += 3;
           }
           break;
@@ -2374,11 +2374,11 @@ int process_output(P_desc t)
                 was_upper = TRUE;
               else if (was_upper)
               {
-                sprintf(&buffer[j], "\033[0m");
+                snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[0m");
                 j += 4;
                 was_upper = FALSE;
               }
-              sprintf(&buffer[j], "\033[%s%s%s;%sm", bold ? "1;" : "",
+              snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[%s%s%s;%sm", bold ? "1;" : "",
                       blink ? (PLR3_FLAGGED(t->character, PLR3_UNDERLINE) ? "4;" : "5;") : "",
                       color_table[bg].bg_code, color_table[k].fg_code);
               j += (8 + (bold ? 2 : 0) + (blink ? 2 : 0));
@@ -2386,13 +2386,13 @@ int process_output(P_desc t)
           }
           else
           {
-            sprintf(&buffer[j], "&=%c%c", buf[i - 1], buf[i]);
+            snprintf(&buffer[j], MAX_STRING_LENGTH, "&=%c%c", buf[i - 1], buf[i]);
             j += 4;
           }
           break;
 
         default:
-          sprintf(&buffer[j], "&%c", buf[i]);
+          snprintf(&buffer[j], MAX_STRING_LENGTH, "&%c", buf[i]);
           j += 2;
           break;
         }
@@ -2400,7 +2400,7 @@ int process_output(P_desc t)
       else if (flg && (buf[i] == '\n'))
       {
         /* Want normal color at EoLN */
-        sprintf(&buffer[j], "\033[0m\n");
+        snprintf(&buffer[j], MAX_STRING_LENGTH, "\033[0m\n");
         j += 5;
       }
       else
@@ -2563,7 +2563,7 @@ int process_input(P_desc t)
       {
         k = MAX_INPUT_LENGTH - 1;
         *(tmp + k) = 0;
-        sprintf(buffer, "Line too long. Truncated to:\r\n%s\r\n", tmp);
+        snprintf(buffer, MAX_STRING_LENGTH, "Line too long. Truncated to:\r\n%s\r\n", tmp);
         if (write_to_descriptor(t->descriptor, buffer) < 0)
           return (-1);
 
@@ -3557,7 +3557,7 @@ void act(const char *str, int hide_invisible, P_char ch, P_obj obj, void *vict_o
             // Otherwise, add the rest of the string to the end of tbuf (contains ansi).
             else
             {
-              sprintf( tbuf + tbp, "%s", i );
+              snprintf(tbuf + tbp, MAX_STRING_LENGTH, "%s", i );
               i = tbuf;
             }
             break;
@@ -3819,7 +3819,7 @@ void format_to_snoopers( char *from_string, char *to_string )
 
 //  debug( "From: '%s'.", from_string );
   index2 = to_string;
-  sprintf( index2, "&+C%%&N " );
+  snprintf(index2, MAX_STRING_LENGTH, "&+C%%&N " );
   index2 += 7;
   index = from_string;
   while( *index != '\0' )
@@ -3831,7 +3831,7 @@ void format_to_snoopers( char *from_string, char *to_string )
     }
     if( index[0] == '\n' && index[1] != '\0' )
     {
-      sprintf( index2, "\n&+C%%&N " );
+      snprintf(index2, MAX_STRING_LENGTH, "\n&+C%%&N " );
       index2 += 8;
       index++;
     }

@@ -380,8 +380,8 @@ int inn(int room, P_char ch, int cmd, char *arg)
     ct = time(NULL);
     // Convert to EST. - this sux.. gotta be a be'er way.
     ct -= 4*60*60;
-    sprintf( timestr, "%s", asctime(localtime( &ct )) );
-    sprintf( timestr + strlen(timestr) - 1, " EST" );
+    snprintf(timestr, MAX_STRING_LENGTH, "%s", asctime(localtime( &ct )) );
+    snprintf(timestr + strlen(timestr) - 1, MAX_STRING_LENGTH, " EST" );
 
     loginlog( ch->player.level, "%s [%s] has rented out in [%d] @ %s.",
       GET_NAME(ch), (ch->desc) ? ch->desc->host : "LINKDEAD", world[ch->in_room].number, timestr );
@@ -1011,7 +1011,7 @@ int pet_shops(int room, P_char ch, int cmd, char *arg)
       return TRUE;
     }
     val = mount_rent_cost(mount);
-    sprintf(buf, "A stable-hand says, 'That pet will cost ye %s to rent.'",
+    snprintf(buf, MAX_STRING_LENGTH, "A stable-hand says, 'That pet will cost ye %s to rent.'",
             coin_stringv(val));
     act(buf, FALSE, ch, 0, 0, TO_CHAR);
     return TRUE;
@@ -1041,7 +1041,7 @@ int pet_shops(int room, P_char ch, int cmd, char *arg)
     {
       return FALSE;
     }
-    sprintf(buf, "%s%d", GET_NAME(ch), ticket->value[1]);
+    snprintf(buf, MAX_STRING_LENGTH, "%s%d", GET_NAME(ch), ticket->value[1]);
 //    petrestore(ch, buf);
     SUB_MONEY(ch, val, 0);
     obj_from_char(ticket);

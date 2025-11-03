@@ -1012,7 +1012,7 @@ void show_world_events(P_char ch, const char* arg)
           count++;
           if((strlen(buf)+80) < sizeof(buf))
           {
-            sprintf(buf + strlen(buf),
+            snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf),
 //                    "    %-5d | %-5d | %-12.12s | %-12.12s | %-8d | 0x%08.8x\n",
               "    %-5d | %-5d | %-12.12s | %-12.12s | %-8d | %p\n",
               ev->element, ev->timer, ev->ch ? GET_NAME(ev->ch) : "   none",

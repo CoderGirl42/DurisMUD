@@ -543,7 +543,7 @@ void cast_gate(int level, P_char ch, char *arg, int type, P_char tar_ch, P_obj t
 
   if( spell_general_portal(level, ch, 0, &set, &msg) )
   {
-    sprintf(Gbuf4, "A gateway is opened to the %s plane!\r\n", planes_name[plane_id]);
+    snprintf(Gbuf4, MAX_STRING_LENGTH, "A gateway is opened to the %s plane!\r\n", planes_name[plane_id]);
     send_to_char(Gbuf4, ch);
   }
 
@@ -837,7 +837,7 @@ void cast_plane_shift(int level, P_char ch, char *arg, int type, P_char tar_ch, 
       }
       act("$n slowly fades away...", 0, ch, 0, 0, TO_ROOM);
       char_from_room(ch);
-      sprintf(Gbuf4, "You materialize in the %s plane!\r\n", planes_name[plane_id]);
+      snprintf(Gbuf4, MAX_STRING_LENGTH, "You materialize in the %s plane!\r\n", planes_name[plane_id]);
       send_to_char(Gbuf4, ch);
       char_to_room(ch, to_room, 0);
       act("$n slowly materializes...", 0, ch, 0, 0, TO_ROOM);
@@ -2920,11 +2920,11 @@ void spell_mirage(int level, P_char ch, char *arg, int type, P_char victim, P_ob
       affect_to_char(gm, &af);
       add_event(event_mirage, 0, gm, NULL, NULL, 0, 0, 0);
 
-      sprintf(buff, "&+LYour &+wi&+Wmag&+we &+ms&+Mh&+Lif&+Mt&+ms &+Land &+bb&+Blur&+bs &+Linto %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
+      snprintf(buff, MAX_STRING_LENGTH, "&+LYour &+wi&+Wmag&+we &+ms&+Mh&+Lif&+Mt&+ms &+Land &+bb&+Blur&+bs &+Linto %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
       act(buff, TRUE, gm, 0, ch, TO_CHAR);
-      sprintf(buff, "&+LThe &+wi&+Wmag&+we &+Lof $n &+ms&+Mh&+Lif&+Mt&+ms &+Land &+bb&+Blur&+bs &+Linto %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
+      snprintf(buff, MAX_STRING_LENGTH, "&+LThe &+wi&+Wmag&+we &+Lof $n &+ms&+Mh&+Lif&+Mt&+ms &+Land &+bb&+Blur&+bs &+Linto %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
       act(buff, FALSE, gm, 0, ch, TO_ROOM);
-      //sprintf(buff, "$N's arcane magic forms an illusion about $n turning $m into %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
+      //snprintf(buff, MAX_STRING_LENGTH, "$N's arcane magic forms an illusion about $n turning $m into %s %s.&n", VOWEL(race_names_table[race].normal[0]) ? "an" : "a", race_names_table[race].ansi);
       //act(buff, TRUE, gm, 0, ch, TO_NOTVICTROOM);
     }
   }

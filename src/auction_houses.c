@@ -281,7 +281,7 @@ bool auction_resort(P_char ch, char *args)
       continue;
 
     string keywords = sorter->getSortFlagsString(tmp_obj);
-    sprintf(buff, "%s: %s\r\n", obj_short.c_str(), keywords.c_str() );
+    snprintf(buff, MAX_STRING_LENGTH, "%s: %s\r\n", obj_short.c_str(), keywords.c_str() );
     send_to_char(buff, ch);
 
     if( keywords.length() > 0 )
@@ -294,7 +294,7 @@ bool auction_resort(P_char ch, char *args)
     count++;
   }
 
-  sprintf(buff, "&+W%d items resorted.", count);
+  snprintf(buff, MAX_STRING_LENGTH, "&+W%d items resorted.", count);
   send_to_char(buff, ch);
 
   mysql_free_result(res);
@@ -432,7 +432,7 @@ bool auction_offer(P_char ch, char *args)
     return FALSE;
 
   logit(LOG_STATUS, "%s put %s up for auction.", ch->player.name, desc_buff);
-  sprintf(buff, "&+WYou put &n%s &+Won the market.\r\n", tmp_obj->short_description);
+  snprintf(buff, MAX_STRING_LENGTH, "&+WYou put &n%s &+Won the market.\r\n", tmp_obj->short_description);
   send_to_char(buff, ch);
 
   // remove money
@@ -478,7 +478,7 @@ bool auction_list(P_char ch, char *args)
 
     list_arg[0] = toupper(list_arg[0]);
 
-    sprintf(buff, "&+WAuctions by &n%s&+W:\r\n", list_arg);
+    snprintf(buff, MAX_STRING_LENGTH, "&+WAuctions by &n%s&+W:\r\n", list_arg);
     send_to_char(buff, ch);
 
     mysql_real_escape_string(DB, buff, list_arg, strlen(list_arg));
@@ -492,12 +492,12 @@ bool auction_list(P_char ch, char *args)
 
     if( !*args )
     {
-      count = sprintf( buff, "&+WValid keywords: &+Y%s", sorter->getKeyword(0).c_str() );
+      count = snprintf(buff, MAX_STRING_LENGTH, "&+WValid keywords: &+Y%s", sorter->getKeyword(0).c_str() );
       for( i = 1;i < sorter->getSize();i++ )
       {
-        count += sprintf(buff + count, ", %s", sorter->getKeyword(i).c_str());
+        count += snprintf(buff + count, MAX_STRING_LENGTH, ", %s", sorter->getKeyword(i).c_str());
       }
-      sprintf( buff + count, ".\n\r" );
+      snprintf(buff + count, MAX_STRING_LENGTH, ".\n\r" );
       send_to_char( buff, ch );
       return TRUE;
     }
@@ -509,12 +509,12 @@ bool auction_list(P_char ch, char *args)
 
       if( !sorter->isKeyword(list_arg) )
       {
-        sprintf(buff, "&+W'&+Y%s&+W' is an invalid keyword!\r\n", list_arg);
+        snprintf(buff, MAX_STRING_LENGTH, "&+W'&+Y%s&+W' is an invalid keyword!\r\n", list_arg);
         send_to_char(buff, ch);
         return TRUE;
       }
 
-      sprintf(buff, "&+WAuctions for items &+y%s&+W:&n\n", sorter->getDescString(list_arg).c_str() );
+      snprintf(buff, MAX_STRING_LENGTH, "&+WAuctions for items &+y%s&+W:&n\n", sorter->getDescString(list_arg).c_str() );
       send_to_char(buff, ch);
 
       mysql_real_escape_string(DB, buff, list_arg, strlen(list_arg));
@@ -523,7 +523,7 @@ bool auction_list(P_char ch, char *args)
 
     for( int i = 0; i < list_args.size(); i++ )
     {
-      sprintf(buff, " and id_keywords like '%% %s,%%'", list_args[i].c_str() );
+      snprintf(buff, MAX_STRING_LENGTH, " and id_keywords like '%% %s,%%'", list_args[i].c_str() );
       strcat( where_str, buff );
     }
 
@@ -535,12 +535,12 @@ bool auction_list(P_char ch, char *args)
                  "auction list sort <keyword list> - show only auctions for items"
                  " with the specified attributes (like lockers)\n\r"
                  "auction list player <playername> - show all auctions by a player\n\r", ch );
-    count = sprintf( buff, "&+WValid keywords: &+Y%s", sorter->getKeyword(0).c_str() );
+    count = snprintf(buff, MAX_STRING_LENGTH, "&+WValid keywords: &+Y%s", sorter->getKeyword(0).c_str() );
     for( i = 1;i < sorter->getSize();i++ )
     {
-      count += sprintf(buff + count, ", %s", sorter->getKeyword(i).c_str());
+      count += snprintf(buff + count, MAX_STRING_LENGTH, ", %s", sorter->getKeyword(i).c_str());
     }
-    sprintf( buff + count, ".\n\r" );
+    snprintf(buff + count, MAX_STRING_LENGTH, ".\n\r" );
     send_to_char( buff, ch );
     return TRUE;
   }
@@ -592,12 +592,12 @@ bool auction_list(P_char ch, char *args)
     {
       // Display vnum for gods.
       if( IS_TRUSTED(ch) )
-        sprintf(buff, "&+W%s)&+W%s&n[&+B%6d&n] %d &n%s&n [%s&n] &+WBid: &n%s&+W Buy: &n%s\r\n",
+        snprintf(buff, MAX_STRING_LENGTH, "&+W%s)&+W%s&n[&+B%6d&n] %d &n%s&n [%s&n] &+WBid: &n%s&+W Buy: &n%s\r\n",
           auction_id, mine_flag, obj_vnum, quantity, pad_ansi(obj_short, 45, TRUE).c_str(),
           format_time(secs_remaining).c_str(), pad_ansi(cur_price_str.c_str(), 7).c_str(),
           pad_ansi(buy_price_str.c_str(), 7).c_str() );
       else
-        sprintf(buff, "&+W%s)&+W%s&n %d %s&n [%s&n] &+WBid: &n%s&+W Buy: &n%s\r\n",
+        snprintf(buff, MAX_STRING_LENGTH, "&+W%s)&+W%s&n %d %s&n [%s&n] &+WBid: &n%s&+W Buy: &n%s\r\n",
           auction_id, mine_flag, quantity, pad_ansi(obj_short, 45, TRUE).c_str(),
           format_time(secs_remaining).c_str(), pad_ansi(cur_price_str.c_str(), 6).c_str(),
           pad_ansi(buy_price_str.c_str(), 6).c_str() );
@@ -605,11 +605,11 @@ bool auction_list(P_char ch, char *args)
     else
     {
       if( IS_TRUSTED(ch) )
-        sprintf(buff, "&+W%s)&+W%s&n[&+B%6d&n] %d &n%s&n [%s&n] &+WBid: &n%s&+W\r\n",
+        snprintf(buff, MAX_STRING_LENGTH, "&+W%s)&+W%s&n[&+B%6d&n] %d &n%s&n [%s&n] &+WBid: &n%s&+W\r\n",
           auction_id, mine_flag, obj_vnum, quantity, pad_ansi(obj_short, 45, TRUE).c_str(),
           format_time(secs_remaining).c_str(), pad_ansi(cur_price_str.c_str(), 6).c_str() );
       else
-        sprintf(buff, "&+W%s)&+W%s&n %d %s&n [%s&n] &+WBid: &n%s&+W\r\n",
+        snprintf(buff, MAX_STRING_LENGTH, "&+W%s)&+W%s&n %d %s&n [%s&n] &+WBid: &n%s&+W\r\n",
           auction_id, mine_flag, quantity, pad_ansi(obj_short, 45, TRUE).c_str(),
           format_time(secs_remaining).c_str(), pad_ansi(cur_price_str.c_str(), 6).c_str() );
     }
@@ -665,40 +665,40 @@ bool auction_info(P_char ch, char *args)
     return FALSE;
   }
 
-  sprintf(buff, "&+WAuction &+W%d\r\n", auction_id);
+  snprintf(buff, MAX_STRING_LENGTH, "&+WAuction &+W%d\r\n", auction_id);
   send_to_char(buff, ch);
 
-  sprintf(buff, "&+WSeller: &n%s\r\n", seller_name);
+  snprintf(buff, MAX_STRING_LENGTH, "&+WSeller: &n%s\r\n", seller_name);
   send_to_char(buff, ch);
 
-  sprintf(buff, "&+WTime left: &n%s\r\n", format_time(secs_remaining).c_str() );
+  snprintf(buff, MAX_STRING_LENGTH, "&+WTime left: &n%s\r\n", format_time(secs_remaining).c_str() );
   send_to_char(buff, ch);
 
   if( winning_bidder_pid == 0 )
   {
-    sprintf(buff, "&+WNo bids received. Starting bid: &n%s\r\n", cur_price_str.c_str());
+    snprintf(buff, MAX_STRING_LENGTH, "&+WNo bids received. Starting bid: &n%s\r\n", cur_price_str.c_str());
     send_to_char(buff, ch);
   }
   else
   {
-    sprintf(buff, "&+WHigh bid: &n%s&+W by &n%s\r\n", cur_price_str.c_str(), winning_bidder_name );
+    snprintf(buff, MAX_STRING_LENGTH, "&+WHigh bid: &n%s&+W by &n%s\r\n", cur_price_str.c_str(), winning_bidder_name );
     send_to_char(buff, ch);
   }
 
   if( buy_price > 0 )
   {
-    sprintf(buff, "&+WBuy-it-now price: &n%s\r\n", buy_price_str.c_str() );
+    snprintf(buff, MAX_STRING_LENGTH, "&+WBuy-it-now price: &n%s\r\n", buy_price_str.c_str() );
     send_to_char(buff, ch);
   }
 
-  sprintf(buff, "&+WQuantity:&n %d\r\n", quantity );
+  snprintf(buff, MAX_STRING_LENGTH, "&+WQuantity:&n %d\r\n", quantity );
   send_to_char(buff, ch);
 
   send_to_char("\r\n", ch);
 
   if( IS_TRUSTED(ch) )
   {
-    sprintf(buff, "[&+B%d&n]\r\n", obj_vnum);
+    snprintf(buff, MAX_STRING_LENGTH, "[&+B%d&n]\r\n", obj_vnum);
     send_to_char(buff, ch);
   }
 
@@ -770,7 +770,7 @@ bool auction_remove(P_char ch, char *args)
   {
     if( qry("UPDATE auctions SET status = 'REMOVED' WHERE id = '%d'", auc_ids[--i]) )
     {
-      sprintf(buff, "&+WAuction %d removed.\r\n", auc_ids[i]);
+      snprintf(buff, MAX_STRING_LENGTH, "&+WAuction %d removed.\r\n", auc_ids[i]);
       send_to_char(buff, ch);
       logit(LOG_WIZ, "Auction [%d] removed by %s", auc_ids[i], ch->player.name);
     }
@@ -840,14 +840,14 @@ bool auction_bid(P_char ch, char *args)
   // take away money
   if( GET_MONEY(ch) < to_pay )
   {
-    sprintf(buff, "&+WYou don't have enough money!\r\nYou need: &n%s\r\n", 
+    snprintf(buff, MAX_STRING_LENGTH, "&+WYou don't have enough money!\r\nYou need: &n%s\r\n", 
       coin_stringv(to_pay) );
     send_to_char(buff, ch);
     return TRUE;
   }
 
   SUB_MONEY(ch, to_pay, 0);
-  sprintf(buff, "&+WYou pay &n%s&n.\r\n", coin_stringv(to_pay));
+  snprintf(buff, MAX_STRING_LENGTH, "&+WYou pay &n%s&n.\r\n", coin_stringv(to_pay));
   send_to_char(buff, ch);
 
   qry("INSERT INTO auction_bid_history (date, auction_id, bidder_pid, bidder_name, bid_amount) VALUES "
@@ -874,7 +874,7 @@ bool auction_bid(P_char ch, char *args)
   else
   {
     // normal bid
-    sprintf(buff, "&+WYou bid &n%s&+W on &n%d %s&n.\r\n", coin_stringv(bid_value), quantity, obj_short.c_str());
+    snprintf(buff, MAX_STRING_LENGTH, "&+WYou bid &n%s&+W on &n%d %s&n.\r\n", coin_stringv(bid_value), quantity, obj_short.c_str());
     send_to_char(buff, ch);
 
     logit(LOG_STATUS, "%s bid %s on auction %d", ch->player.name, coin_stringv(bid_value), auction_id );
@@ -898,7 +898,7 @@ bool auction_bid(P_char ch, char *args)
         return FALSE;
 			
       // alert loser that they were outbid!
-      sprintf(buff, "&+WA voice says in your mind, &+W'You were outbid in auction [&+W%d&+W]"
+      snprintf(buff, MAX_STRING_LENGTH, "&+WA voice says in your mind, &+W'You were outbid in auction [&+W%d&+W]"
                     " for &n%s&+W, and your bid money is available for pickup.'\r\n", 
                     auction_id, obj_short.c_str() );
 
@@ -942,7 +942,7 @@ bool auction_pickup(P_char ch, char *args)
       if( !qry("INSERT INTO auction_item_pickups (pid, obj_blob_str) (SELECT '%d', obj_blob_str FROM auctions WHERE id = '%d')", GET_PID(ch), auction_id) )
         return FALSE;
 
-      sprintf(buff, "&+WA voice in your mind says, &+W'&n%s &+Wis ready for pickup, oh Great Master!'\r\n", obj_short.c_str() );
+      snprintf(buff, MAX_STRING_LENGTH, "&+WA voice in your mind says, &+W'&n%s &+Wis ready for pickup, oh Great Master!'\r\n", obj_short.c_str() );
       send_to_char(buff, ch);
 
       return TRUE;
@@ -975,7 +975,7 @@ bool auction_pickup(P_char ch, char *args)
     ADD_MONEY(ch, money);
     logit(LOG_PLAYER, "%s picked up %s from the auction house.", GET_NAME(ch), coin_stringv(money));
 
-    sprintf(buff, "&+WYou pick up &n%s&+W.&n\r\n", coin_stringv(money));
+    snprintf(buff, MAX_STRING_LENGTH, "&+WYou pick up &n%s&+W.&n\r\n", coin_stringv(money));
     send_to_char(buff, ch);		
   }
   mysql_free_result(res);
@@ -1025,7 +1025,7 @@ bool auction_pickup(P_char ch, char *args)
       }
 
       logit(LOG_PLAYER, "%s picked up %s [R:%d] from the auction house.", GET_NAME(ch), tmp_obj->short_description, tmp_obj->R_num);
-      sprintf(buff, "&+WYou pick up &n%s&+W.\r\n", tmp_obj->short_description);
+      snprintf(buff, MAX_STRING_LENGTH, "&+WYou pick up &n%s&+W.\r\n", tmp_obj->short_description);
       send_to_char(buff, ch);
       while( tmp_obj->next_content )
       {
@@ -1035,7 +1035,7 @@ bool auction_pickup(P_char ch, char *args)
         tmp_obj = temp_obj;
 
         logit(LOG_PLAYER, "%s picked up %s [R:%d] from the auction house.", GET_NAME(ch), tmp_obj->short_description, tmp_obj->R_num);
-        sprintf(buff, "&+WYou pick up &n%s&+W.\r\n", tmp_obj->short_description);
+        snprintf(buff, MAX_STRING_LENGTH, "&+WYou pick up &n%s&+W.\r\n", tmp_obj->short_description);
         send_to_char(buff, ch);
       }
       obj_to_char(tmp_obj, ch);
@@ -1105,7 +1105,7 @@ bool finalize_auction(int auction_id, P_char to_ch)
       return FALSE;
 
     // alert seller that auction closed
-    sprintf(buff, "&+WA voice says in your mind, &+W'Your auction for &n%d %s&+W received no bids, and is available for pickup.'\r\n", quantity, obj_short.c_str());
+    snprintf(buff, MAX_STRING_LENGTH, "&+WA voice says in your mind, &+W'Your auction for &n%d %s&+W received no bids, and is available for pickup.'\r\n", quantity, obj_short.c_str());
     if( !send_to_pid(buff, seller_pid) )
       send_to_pid_offline(buff, seller_pid);
   }
@@ -1126,11 +1126,11 @@ bool finalize_auction(int auction_id, P_char to_ch)
       return FALSE;
 
     // alert buyer and seller that auction closed
-    sprintf(buff, "&+WA voice says in your mind, &+W'&n%d %s&+W was sold for &n%s&+W, and the money is available for pickup.'\r\n", quantity, obj_short.c_str(), final_price_str.c_str());
+    snprintf(buff, MAX_STRING_LENGTH, "&+WA voice says in your mind, &+W'&n%d %s&+W was sold for &n%s&+W, and the money is available for pickup.'\r\n", quantity, obj_short.c_str(), final_price_str.c_str());
     if( !send_to_pid(buff, seller_pid) )
       send_to_pid_offline(buff, seller_pid);
 
-    sprintf(buff, "&+WA voice says in your mind, &+W'You bought &n%d %s&+W for &n%s&+W, and it's now available for pickup.'\r\n", quantity, obj_short.c_str(), final_price_str.c_str());
+    snprintf(buff, MAX_STRING_LENGTH, "&+WA voice says in your mind, &+W'You bought &n%d %s&+W for &n%s&+W, and it's now available for pickup.'\r\n", quantity, obj_short.c_str(), final_price_str.c_str());
     if( !send_to_pid(buff, winning_bidder_pid) )
       send_to_pid_offline(buff, winning_bidder_pid);
   }

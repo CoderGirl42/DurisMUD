@@ -205,7 +205,7 @@ void save_properties(P_char ch)
       {
         if (property.value != result->value)
         {
-          sprintf(changes + strlen(changes), "%s from %.3f to %.3f, ",
+          snprintf(changes + strlen(changes), MAX_STRING_LENGTH - strlen(changes), "%s from %.3f to %.3f, ",
                   property.key, property.value, result->value);
           result->old_value = result->value;
         }

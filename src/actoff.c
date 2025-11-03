@@ -982,11 +982,11 @@ void lance_charge(P_char ch, char *argument)
   }
   else
   {
-    sprintf(buf, "$n rears up on $N and charges %s.", dirs[dir]);
+    snprintf(buf, MAX_STRING_LENGTH, "$n rears up on $N and charges %s.", dirs[dir]);
     act(buf, TRUE, ch, weapon, mount, TO_NOTVICT);
-    sprintf(buf, "You rear up on $N and charge %s.", dirs[dir]);
+    snprintf(buf, MAX_STRING_LENGTH, "You rear up on $N and charge %s.", dirs[dir]);
     act(buf, TRUE, ch, weapon, mount, TO_CHAR);
-    sprintf(buf, "$n rears up on you and orders you to charge %s.", dirs[dir]);
+    snprintf(buf, MAX_STRING_LENGTH, "$n rears up on you and orders you to charge %s.", dirs[dir]);
     act(buf, TRUE, ch, weapon, mount, TO_VICT);
     do_simple_move(ch, dir, 0);
   }
@@ -1096,11 +1096,11 @@ void lance_charge(P_char ch, char *argument)
       act
         ("Your aim is off and your $q misses $N.\nUnable to halt your mount you charge onward!",
          TRUE, ch, weapon, victim, TO_CHAR);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "As $n fails to impale $N upon $s $q $e is unable to halt $s charge and disappears %s.",
               dirs[continue_dir]);
       act(buf, TRUE, ch, weapon, victim, TO_NOTVICT);
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "As $n fails to impale you upon $s $q $e is unable to halt $s charge and disappears %s.",
               dirs[continue_dir]);
       act(buf, TRUE, ch, weapon, victim, TO_VICT);
@@ -1166,13 +1166,13 @@ void lance_charge(P_char ch, char *argument)
         int      target_room =
           world[ch->in_room].dir_option[continue_dir]->to_room;
         dam = dam + dice(20, 6);
-        sprintf(buf, "You ram your $q through $N sending both veering out %s.",
+        snprintf(buf, MAX_STRING_LENGTH, "You ram your $q through $N sending both veering out %s.",
                 dirs[continue_dir]);
         act(buf, FALSE, ch, weapon, victim, TO_CHAR);
-        sprintf(buf, "$n rams $s $q through $N sending both veering out %s.",
+        snprintf(buf, MAX_STRING_LENGTH, "$n rams $s $q through $N sending both veering out %s.",
                 dirs[continue_dir]);
         act(buf, FALSE, ch, weapon, victim, TO_NOTVICT);
-        sprintf(buf, "$n rams $s $q through you sending both veering out %s.",
+        snprintf(buf, MAX_STRING_LENGTH, "$n rams $s $q through you sending both veering out %s.",
                 dirs[continue_dir]);
         act(buf, FALSE, ch, weapon, victim, TO_VICT);
         char_from_room(victim);
@@ -1180,7 +1180,7 @@ void lance_charge(P_char ch, char *argument)
         char_from_room(ch);
         char_to_room(ch, target_room, -1);
         set_fighting(ch, victim);
-        sprintf(buf,"$N is flung to the ground as $n charges in from the %s, with $M impaled on the tip of the $q.", 
+        snprintf(buf, MAX_STRING_LENGTH,"$N is flung to the ground as $n charges in from the %s, with $M impaled on the tip of the $q.", 
           dirs[rev_dir[continue_dir]]);
         if(!number(0,100))
           DamageOneItem(ch, SPLDAM_GENERIC, weapon, FALSE);
@@ -2165,7 +2165,7 @@ void do_order(P_char ch, char *argument, int comd)
     if(victim)
     {
 /*
-      sprintf(buf, "$N orders you to '%s'", message);
+      snprintf(buf, MAX_STRING_LENGTH, "$N orders you to '%s'", message);
 */
       /*
       if(IS_NPC(victim))
@@ -2262,7 +2262,7 @@ void do_order(P_char ch, char *argument, int comd)
                 else
                 {
 /*
-                  sprintf(buf, "$n orders you to '%s'", message);
+                  snprintf(buf, MAX_STRING_LENGTH, "$n orders you to '%s'", message);
 */
                   strcpy(buf, "$n orders you to do something.");
                   act(buf, TRUE, ch, 0, k, TO_VICT);
@@ -2609,7 +2609,7 @@ void do_flee(P_char ch, char *argument, int cmd)
             GET_VITALITY(mount) > 0)
               GET_VITALITY(mount) = MAX(0, (GET_VITALITY(mount) - (number(30, 40))));
               
-    sprintf(buf, "You flee %sward!\n", dirs[attempted_dir]);
+    snprintf(buf, MAX_STRING_LENGTH, "You flee %sward!\n", dirs[attempted_dir]);
     send_to_char(buf, ch);
     
     if(!affected_by_spell(ch, SKILL_AWARENESS))
@@ -3662,9 +3662,9 @@ void kick(P_char ch, P_char victim)
 
     if( CAN_GO(victim, door) && (!check_wall(victim->in_room, door)) )
     { 
-      sprintf(buf, "Your mighty kick sends $N flying out of the room to the %s!&n", dirs[door]);
+      snprintf(buf, MAX_STRING_LENGTH, "Your mighty kick sends $N flying out of the room to the %s!&n", dirs[door]);
       act(buf, FALSE, ch, 0, victim, TO_CHAR);
-      sprintf(buf, "$n's mighty kick sends $N flying out of the room to the %s!&n", dirs[door]);
+      snprintf(buf, MAX_STRING_LENGTH, "$n's mighty kick sends $N flying out of the room to the %s!&n", dirs[door]);
       act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
       act("$n's mighty kick sends you flying out of the room!", FALSE, ch, 0, victim, TO_VICT);
       target_room = world[victim->in_room].dir_option[door]->to_room;
@@ -6798,12 +6798,12 @@ void do_retreat(P_char ch, char *arg, int cmd)
           stop_fighting(ch);
           if( IS_DESTROYING(ch) )
             stop_destroying(ch);
-          sprintf(Gbuf1, "&+WYou stop fighting and retreat to the %s!&n",dirs[dir]);
+          snprintf(Gbuf1, MAX_STRING_LENGTH, "&+WYou stop fighting and retreat to the %s!&n",dirs[dir]);
           act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
           
           if(number(1, 150) > expdr)
           {
-            sprintf(Gbuf1, "&+WYour vision blurs, but you recover in time to see&n $n &+Wretreat %s!&n",dirs[dir]);
+            snprintf(Gbuf1, MAX_STRING_LENGTH, "&+WYour vision blurs, but you recover in time to see&n $n &+Wretreat %s!&n",dirs[dir]);
             act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
           }
         }
@@ -6818,9 +6818,9 @@ void do_retreat(P_char ch, char *arg, int cmd)
       {
         StopAllAttackers(ch);
         stop_fighting(ch);
-        sprintf(Gbuf1, "&+WYou strategically stop fighting and retreat to the %s!&n",dirs[dir]);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+WYou strategically stop fighting and retreat to the %s!&n",dirs[dir]);
         act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
-        sprintf(Gbuf1, "$n suddenly stops fighting and attempts to retreat to the %s!",dirs[dir]);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "$n suddenly stops fighting and attempts to retreat to the %s!",dirs[dir]);
         act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
       }
     }
@@ -6828,9 +6828,9 @@ void do_retreat(P_char ch, char *arg, int cmd)
     {
       StopAllAttackers(ch);
       stop_fighting(ch);
-      sprintf(Gbuf1, "&+wYou stop fighting and retreat to the %s!&n",dirs[dir]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+wYou stop fighting and retreat to the %s!&n",dirs[dir]);
       act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
-      sprintf(Gbuf1, "$n suddenly stops fighting and attempts to retreat to the %s!",dirs[dir]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "$n suddenly stops fighting and attempts to retreat to the %s!",dirs[dir]);
       act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
     }
     do_simple_move(ch, dir, 0);
@@ -7872,9 +7872,9 @@ void do_rearkick(P_char ch, char *argument, int cmd)
 
     if((CAN_GO(victim, door)) && (!check_wall(victim->in_room, door)))
     { 
-      sprintf(buf, "&+LYour mighty rearkick sends&n $N &+Lflying out of the room to the %s!&n", dirs[door]);
+      snprintf(buf, MAX_STRING_LENGTH, "&+LYour mighty rearkick sends&n $N &+Lflying out of the room to the %s!&n", dirs[door]);
       act(buf, FALSE, ch, 0, victim, TO_CHAR);
-      sprintf(buf, "$n's &+Lmighty rearkick sends&n $N &+Lflying out of the room to the %s!&n", dirs[door]);
+      snprintf(buf, MAX_STRING_LENGTH, "$n's &+Lmighty rearkick sends&n $N &+Lflying out of the room to the %s!&n", dirs[door]);
       act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
       act("$n's &+Lmighty rearkick sends you flying out of the room!&n",
         FALSE, ch, 0, victim, TO_VICT);

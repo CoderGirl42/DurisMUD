@@ -166,7 +166,7 @@ void displayM(P_char ch, char *tbuf)
   else
     snprintf(color, 10, "&+L");
 
-  sprintf(tbuf, "%s <%s%dm&n/%s%dM&n>", tbuf, color, GET_VITALITY(ch), color,
+  snprintf(tbuf, MAX_STRING_LENGTH, "%s <%s%dm&n/%s%dM&n>", tbuf, color, GET_VITALITY(ch), color,
           GET_MAX_VITALITY(ch));
 }
 
@@ -192,7 +192,7 @@ void displayH(P_char ch, char *tbuf)
   else
     snprintf(color, 10, "&+L");
 
-  sprintf(tbuf, "%s <%s%dh&n/%s%dH&n>", tbuf, color, GET_HIT(ch), color,
+  snprintf(tbuf, MAX_STRING_LENGTH, "%s <%s%dh&n/%s%dH&n>", tbuf, color, GET_HIT(ch), color,
           GET_MAX_HIT(ch));
 }
 
@@ -385,19 +385,19 @@ void do_group(P_char ch, char *argument, int cmd)
       maxsize = 5;
 #endif
 
-      sprintf(Gbuf1, "Your group consists of (%2d/%d):\n", counter, maxsize);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "Your group consists of (%2d/%d):\n", counter, maxsize);
       send_to_char(Gbuf1, ch);
 
 
       gl = ch->group;
 /*      if (GET_CLASS(gl->ch, CLASS_PSIONICIST) ||
           GET_CLASS(gl->ch, CLASS_MINDFLAYER))
-        sprintf(Gbuf2, "%5d/%-5d hit, %4d/%-4d move, %4d/%-4d mana",
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "%5d/%-5d hit, %4d/%-4d move, %4d/%-4d mana",
                 GET_HIT(gl->ch), GET_MAX_HIT(gl->ch), GET_VITALITY(gl->ch),
                 GET_MAX_VITALITY(gl->ch), GET_MANA(gl->ch),
                 GET_MAX_MANA(gl->ch));
       else*/
-        sprintf(Gbuf2, "%5d/%-5d hit, %4d/%-4d move",
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "%5d/%-5d hit, %4d/%-4d move",
                 GET_HIT(gl->ch), GET_MAX_HIT(gl->ch),
                 GET_VITALITY(gl->ch), GET_MAX_VITALITY(gl->ch));
       if (IS_NPC(gl->ch))
@@ -409,7 +409,7 @@ void do_group(P_char ch, char *argument, int cmd)
         else
           strcpy(Gbuf3, GET_NAME(gl->ch));
       }
-      sprintf(Gbuf1, "( Head) %-30s %-s\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "( Head) %-30s %-s\n",
               (ch->in_room == gl->ch->in_room) ? Gbuf2 : "",
               (!CAN_SEE_Z_CORD(ch, gl->ch)) ? "Someone" : Gbuf3);
 /*       IS_NPC(gl->ch) ? gl->ch->player.short_descr : GET_NAME(gl->ch)*/
@@ -420,12 +420,12 @@ void do_group(P_char ch, char *argument, int cmd)
       {
         /*if (GET_CLASS(gl->ch, CLASS_PSIONICIST) ||
             GET_CLASS(gl->ch, CLASS_MINDFLAYER))
-          sprintf(Gbuf2, "%5d/%-5d hit, %4d/%-4d move, %4d/%-4d mana",
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%5d/%-5d hit, %4d/%-4d move, %4d/%-4d mana",
                   GET_HIT(gl->ch), GET_MAX_HIT(gl->ch), GET_VITALITY(gl->ch),
                   GET_MAX_VITALITY(gl->ch), GET_MANA(gl->ch),
                   GET_MAX_MANA(gl->ch));
         else*/
-          sprintf(Gbuf2, "%5d/%-5d hit, %4d/%-4d move",
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%5d/%-5d hit, %4d/%-4d move",
                   GET_HIT(gl->ch), GET_MAX_HIT(gl->ch),
                   GET_VITALITY(gl->ch), GET_MAX_VITALITY(gl->ch));
 
@@ -439,7 +439,7 @@ void do_group(P_char ch, char *argument, int cmd)
             strcpy(Gbuf3, GET_NAME(gl->ch));
         }
 
-        sprintf(Gbuf1, "(%-5s) %-30s %-s\n",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "(%-5s) %-30s %-s\n",
                 (!IS_BACKRANKED(gl->ch) ? "Front" : "Back"),
                 ((ch->in_room == gl->ch->in_room) && (!racewar(ch, gl->ch) || IS_DISGUISE(gl->ch)) )
                 ? Gbuf2 : "",

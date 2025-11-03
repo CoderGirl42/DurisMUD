@@ -1846,7 +1846,7 @@ int writeCharacter(P_char ch, int type, int room)
       GET_NAME(ch), (int) (buf - buff));
     return 0;
   }
-  sprintf(Gbuf1, "%s/%c/", SAVE_DIR, LOWER(*ch->player.name));
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "%s/%c/", SAVE_DIR, LOWER(*ch->player.name));
   tmp = Gbuf1 + strlen(Gbuf1);
   strcat(Gbuf1, GET_NAME(ch));
   for (; *tmp; tmp++)

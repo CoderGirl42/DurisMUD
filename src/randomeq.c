@@ -956,17 +956,17 @@ P_obj create_random_eq_new( P_char killer, P_char mob, int object_type, int mate
     // Note: Some plural nouns don't end in s, but ok.
     if( slot_data[slot].m_name[strlen(slot_data[slot].m_name) - 3] == 's' )
     {
-      sprintf(o_short, "some %s %s %s &+rfrom %s&n", prefix_data[prefix].m_name,
+      snprintf(o_short, MAX_STRING_LENGTH, "some %s %s %s &+rfrom %s&n", prefix_data[prefix].m_name,
         material_data[material].m_name, slot_data[slot].m_name, zone->name);
-      sprintf(o_long, "Some %s %s %s &+rfrom %s&n lie here on the ground.",
+      snprintf(o_long, MAX_STRING_LENGTH, "Some %s %s %s &+rfrom %s&n lie here on the ground.",
         prefix_data[prefix].m_name, material_data[material].m_name,
         slot_data[slot].m_name, zone->name);
     }
     else
     {
-      sprintf(o_short, "%s %s %s %s &+rfrom %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a",
+      snprintf(o_short, MAX_STRING_LENGTH, "%s %s %s %s &+rfrom %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a",
 	      prefix_data[prefix].m_name, material_data[material].m_name, slot_data[slot].m_name, zone->name);
-      sprintf(o_long, "%s %s %s %s &+rfrom %s&n lies here on the ground.",
+      snprintf(o_long, MAX_STRING_LENGTH, "%s %s %s %s &+rfrom %s&n lies here on the ground.",
         VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
         prefix_data[prefix].m_name, material_data[material].m_name,
         slot_data[slot].m_name, zone->name);
@@ -988,20 +988,20 @@ P_obj create_random_eq_new( P_char killer, P_char mob, int object_type, int mate
   }
   else if( !number(0, 9) && (material_type == -1) && (GET_LEVEL(mob) > 45) )
   {
-    sprintf(o_name, "random _noquest_ %s %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
+    snprintf(o_name, MAX_STRING_LENGTH, "random _noquest_ %s %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
       strip_ansi(material_data[material].m_name).c_str(), strip_ansi(slot_data[slot].m_name).c_str(), owner );
     if( slot_data[slot].m_name[strlen(slot_data[slot].m_name) - 3] == 's' )
     {
-      sprintf(o_short, "some %s %s %s&n", prefix_data[prefix].m_name,
+      snprintf(o_short, MAX_STRING_LENGTH, "some %s %s %s&n", prefix_data[prefix].m_name,
         material_data[material].m_name, slot_data[slot].m_name);
-      sprintf(o_long, "Some %s %s %s&n lie here on the ground.",
+      snprintf(o_long, MAX_STRING_LENGTH, "Some %s %s %s&n lie here on the ground.",
         prefix_data[prefix].m_name, material_data[material].m_name, slot_data[slot].m_name);
     }
     else
     {
-      sprintf(o_short, "%s %s %s %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a",
+      snprintf(o_short, MAX_STRING_LENGTH, "%s %s %s %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a",
         prefix_data[prefix].m_name, material_data[material].m_name, slot_data[slot].m_name);
-      sprintf(o_long, "%s %s %s %s&n lies here on the ground.", VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
+      snprintf(o_long, MAX_STRING_LENGTH, "%s %s %s %s&n lies here on the ground.", VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
         prefix_data[prefix].m_name, material_data[material].m_name, slot_data[slot].m_name);
     }
 
@@ -1023,26 +1023,26 @@ P_obj create_random_eq_new( P_char killer, P_char mob, int object_type, int mate
   else if( !number(0, BOUNDED(1, 150 - GET_CHAR_SKILL(killer, SKILL_CRAFT) - (GET_C_LUK(killer) - 90), 150))
     && material_type != -1 )
   {
-    sprintf(o_name, "random _noquest_ %s %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
+    snprintf(o_name, MAX_STRING_LENGTH, "random _noquest_ %s %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
             strip_ansi(material_data[material].m_name).c_str(),
             strip_ansi(slot_data[slot].m_name).c_str(), owner );
     if (slot_data[slot].m_name[strlen(slot_data[slot].m_name) - 3] == 's')
     {
-      sprintf(o_short, "some %s %s %s crafted by &+r%s&n",
+      snprintf(o_short, MAX_STRING_LENGTH, "some %s %s %s crafted by &+r%s&n",
               prefix_data[prefix].m_name, material_data[material].m_name,
               slot_data[slot].m_name, owner);
-      sprintf(o_long,
+      snprintf(o_long, MAX_STRING_LENGTH,
               "Some %s %s %s crafted by &+r%s&n lie here on the ground.",
               prefix_data[prefix].m_name, material_data[material].m_name,
               slot_data[slot].m_name, owner);
     }
     else
     {
-      sprintf(o_short, "%s %s %s %s crafted by &+r%s&n",
+      snprintf(o_short, MAX_STRING_LENGTH, "%s %s %s %s crafted by &+r%s&n",
               VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a",
               prefix_data[prefix].m_name, material_data[material].m_name,
               slot_data[slot].m_name, owner);
-      sprintf(o_long, "%s %s %s %s crafted by &+r%s&n lies here on the ground.",
+      snprintf(o_long, MAX_STRING_LENGTH, "%s %s %s %s crafted by &+r%s&n lies here on the ground.",
               VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
               prefix_data[prefix].m_name, material_data[material].m_name,
               slot_data[slot].m_name, owner);
@@ -1057,20 +1057,20 @@ P_obj create_random_eq_new( P_char killer, P_char mob, int object_type, int mate
 */
   else
   {
-    sprintf(o_name, "random _noquest_ %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
+    snprintf(o_name, MAX_STRING_LENGTH, "random _noquest_ %s %s %s", strip_ansi(prefix_data[prefix].m_name).c_str(),
       strip_ansi(material_data[material].m_name).c_str(), strip_ansi(slot_data[slot].m_name).c_str());
     if (slot_data[slot].m_name[strlen(slot_data[slot].m_name) - 3] == 's')
     {
-      sprintf(o_short, "some %s %s %s&n", prefix_data[prefix].m_name, material_data[material].m_name,
+      snprintf(o_short, MAX_STRING_LENGTH, "some %s %s %s&n", prefix_data[prefix].m_name, material_data[material].m_name,
         slot_data[slot].m_name);
-      sprintf(o_long, "Some %s %s %s&n lie here on the ground.", prefix_data[prefix].m_name, material_data[material].m_name,
+      snprintf(o_long, MAX_STRING_LENGTH, "Some %s %s %s&n lie here on the ground.", prefix_data[prefix].m_name, material_data[material].m_name,
         slot_data[slot].m_name);
     }
     else
     {
-      sprintf(o_short, "%s %s %s %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a", prefix_data[prefix].m_name,
+      snprintf(o_short, MAX_STRING_LENGTH, "%s %s %s %s&n", VOWEL(prefix_data[prefix].m_name[3]) ? "an" : "a", prefix_data[prefix].m_name,
         material_data[material].m_name, slot_data[slot].m_name);
-      sprintf(o_long, "%s %s %s %s&n lies here on the ground.", VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
+      snprintf(o_long, MAX_STRING_LENGTH, "%s %s %s %s&n lies here on the ground.", VOWEL(prefix_data[prefix].m_name[3]) ? "An" : "A",
         prefix_data[prefix].m_name, material_data[material].m_name, slot_data[slot].m_name);
     }
   }

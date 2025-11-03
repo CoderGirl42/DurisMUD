@@ -995,7 +995,7 @@ char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
       if(world[foo].dir_option[rev] &&
         (world[foo].dir_option[rev]->to_room == was_in))
       {
-        sprintf(amsg + strlen(amsg), "%%s from %s", dirs2[rev]);
+        snprintf(amsg + strlen(amsg), MAX_STRING_LENGTH - strlen(amsg), "%%s from %s", dirs2[rev]);
       }
       else
       {
@@ -1055,7 +1055,7 @@ char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
     }
     /* amsg's only %s is placeholder for verb, which is now in tmp2 */
 
-    sprintf(tmp, amsg, tmp2);
+    snprintf(tmp, MAX_STRING_LENGTH, amsg, tmp2);
 
     strcpy(amsg, tmp);
   }
@@ -1064,7 +1064,7 @@ char    *enter_message(P_char ch, P_char people, int exitnumb, char *amsg,
 
     /* amsg's only %s is placeholder for verb .. */
 
-    sprintf(tmp, amsg,
+    snprintf(tmp, MAX_STRING_LENGTH, amsg,
             IS_ROOM(ch->in_room, ROOM_UNDERWATER) ? "swims in" :
             ch->specials.z_cord < 0 ? "swims in" :
             ch->specials.z_cord > 0 ? "flies in" :
@@ -1116,7 +1116,7 @@ char    *leave_message(P_char ch, P_char people, int exitnumb, char *amsg)
   strcat(amsg, " ");
 
   /* add verb and direction */
-  sprintf(amsg + strlen(amsg), "%s %s",
+  snprintf(amsg + strlen(amsg), MAX_STRING_LENGTH - strlen(amsg), "%s %s",
           IS_ROOM(ch->in_room, ROOM_UNDERWATER) ? "swims" :
           ch->specials.z_cord < 0 ? "swims" :
           ch->specials.z_cord > 0 ? "flies" :
@@ -1909,7 +1909,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
           if( i < 9 )
           {
             send_to_char("&+WYou are &+Gconfused&+W and unable to follow, watch out!&n\n", ch);
-            sprintf(amsg, "%s %s", command[cmd2], dirs[cmd_to_exitnumb(cmd2)]);
+            snprintf(amsg, MAX_STRING_LENGTH, "%s %s", command[cmd2], dirs[cmd_to_exitnumb(cmd2)]);
             command_interpreter(k->follower, amsg);
           }
           else
@@ -1926,7 +1926,7 @@ int do_simple_move_skipping_procs(P_char ch, int exitnumb, unsigned int flags)
         {
           act("You follow $N.", FALSE, k->follower, 0, ch, TO_CHAR);
           send_to_char("\n", k->follower);
-          sprintf(amsg, "%s %s", command[cmd], dirs[exitnumb]);
+          snprintf(amsg, MAX_STRING_LENGTH, "%s %s", command[cmd], dirs[exitnumb]);
           SET_BIT(k->follower->specials.affected_by5, AFF5_FOLLOWING);
           // We need to use tch here, because if he dies, then the memory for followers will be gone.
           //   tch won't be following anymore so k->follower points to free memory.
@@ -2520,7 +2520,7 @@ send_to_char(buf, ch);
             REMOVE_BIT(back->exit_info, EX_SECRET);
             if( back->keyword)
             {
-              sprintf(Gbuf1,
+              snprintf(Gbuf1, MAX_STRING_LENGTH,
                       "The %s is opened from the other side.\n",
                       FirstWord(back->keyword));
               send_to_room(Gbuf1, EXIT(ch, door)->to_room);

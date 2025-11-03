@@ -199,7 +199,7 @@ void do_auction(P_char ch, char *argument, int dummy)
       auction[i].bet = newbet;
       auction[i].going = 0;
       auction[i].pulse = PULSE_AUCTION; /* start the auction over again */
-      sprintf(buf, "%s has bid %s on %s.", J_NAME(auction[i].buyer),
+      snprintf(buf, MAX_STRING_LENGTH, "%s has bid %s on %s.", J_NAME(auction[i].buyer),
               coin_stringv(newbet), auction[i].item->short_description);
       mobsay(auctioneer, buf);
       return;
@@ -255,11 +255,11 @@ void do_auction(P_char ch, char *argument, int dummy)
     auction[i].seller = ch;
     auction[i].pulse = PULSE_AUCTION;
     auction[i].going = 0;
-    sprintf(buf, "A new item has been received: %s.", obj->short_description);
+    snprintf(buf, MAX_STRING_LENGTH, "A new item has been received: %s.", obj->short_description);
     mobsay(auctioneer, buf);
     if (auction[i].bet)
     {
-      sprintf(buf, "Minimum bid on this item is %s.", coin_stringv(auction[i].bet));
+      snprintf(buf, MAX_STRING_LENGTH, "Minimum bid on this item is %s.", coin_stringv(auction[i].bet));
       mobsay(auctioneer, buf);
     }
     return;

@@ -296,11 +296,11 @@ int get_spell_component(P_char ch, int vnum, int max_components)
 void prepare_ray_messages(char *color_string, char *ch_buffer,
                           char *vict_buffer, char *room_buffer)
 {
-  sprintf(ch_buffer, "You send a %s shaft of light streaking towards $N!",
+  snprintf(ch_buffer, MAX_STRING_LENGTH, "You send a %s shaft of light streaking towards $N!",
           color_string);
-  sprintf(vict_buffer, "$n sends a %s shaft of light streaking towards YOU!",
+  snprintf(vict_buffer, MAX_STRING_LENGTH, "$n sends a %s shaft of light streaking towards YOU!",
           color_string);
-  sprintf(room_buffer, "$n sends a %s shaft of light streaking towards $N!",
+  snprintf(room_buffer, MAX_STRING_LENGTH, "$n sends a %s shaft of light streaking towards $N!",
           color_string);
 }
 
@@ -10056,16 +10056,16 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
       if(i == (currelem - 1))
       {
         if(currelem > 1)
-          sprintf(Gbuf2, "and %s.\n", strarr[i]);
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "and %s.\n", strarr[i]);
         else
-          sprintf(Gbuf2, "%s.\n", strarr[i]);
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%s.\n", strarr[i]);
       }
       else
       {
         if(currelem > 2)
-          sprintf(Gbuf2, "%s, ", strarr[i]);
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%s, ", strarr[i]);
         else
-          sprintf(Gbuf2, "%s ", strarr[i]);
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "%s ", strarr[i]);
       }
       send_to_char(Gbuf2, ch);
     }
@@ -10088,7 +10088,7 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
     {
     case ITEM_SCROLL:
     case ITEM_POTION:
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "It appears to be a %s these level %d spells:\n",
               (GET_ITEM_TYPE(obj) == ITEM_SCROLL) ?
               "scroll charged with" : "potion that grants",
@@ -10147,7 +10147,7 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
 
     case ITEM_WAND:
     case ITEM_STAFF:
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "It appears to be a %s with %d out of %d charges left, granting the\n",
               ((GET_ITEM_TYPE(obj) == ITEM_WAND) ? "wand" : "staff"),
               obj->value[2], obj->value[1]);
@@ -10167,26 +10167,26 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
 
         sprinttype(i, (const char **) spells, Gbuf2);
 
-        sprintf(Gbuf1, "level %d spell \"%s\"\n",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "level %d spell \"%s\"\n",
                 obj->value[0] + (inacc ? number(-inacc, inacc) : 0), Gbuf2);
         send_to_char(Gbuf1, ch);
       }
       break;
 
     case ITEM_FIREWEAPON:
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
           "You magically sense that this weapons rate of fire is &+W%d&n "
           "and it's range is &+W%d&n\n", obj->value[0], obj->value[1]);
       send_to_char(Gbuf1, ch);
       break;
         case ITEM_MISSILE:
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "You magically sense that the damage dice for this type of arrow are '%dD%d'\n",
               obj->value[1], obj->value[2]);
       send_to_char(Gbuf1, ch);
           break;
     case ITEM_WEAPON:
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "You magically sense that the damage dice for this weapon are '%dD%d'\n",
               obj->value[1], obj->value[2]);
       send_to_char(Gbuf1, ch);
@@ -10203,13 +10203,13 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
         if(skills[spells[0]].name)
           strcpy(spell_list, skills[spells[0]].name);
         if(spells[1] && skills[spells[1]].name)
-          sprintf(spell_list + strlen(spell_list), "&n and &+W%s",
+          snprintf(spell_list + strlen(spell_list), MAX_STRING_LENGTH - strlen(spell_list), "&n and &+W%s",
                   skills[spells[1]].name);
         if(spells[2] && skills[spells[2]].name)
-          sprintf(spell_list + strlen(spell_list), "&n and &+W%s",
+          snprintf(spell_list + strlen(spell_list), MAX_STRING_LENGTH - strlen(spell_list), "&n and &+W%s",
                   skills[spells[2]].name);
 
-        sprintf(Gbuf1,
+        snprintf(Gbuf1, MAX_STRING_LENGTH,
                 "You recognize the forces of &+W%s &nimbued within this item.\n",
                 spell_list);
         send_to_char(Gbuf1, ch);
@@ -10248,7 +10248,7 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
       else
         strcpy(Gbuf2, "well over six notches");
 
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "You mystically sense that this item will affect your AC by %s%d.\n",
               temp > 0 ? "-" : "+", temp);
       send_to_char(Gbuf1, ch);
@@ -10379,11 +10379,11 @@ void spell_identify(int level, P_char ch, char *arg, int type, P_char victim,
           break;
         }
 
-        sprintf(Gbuf1, "  %s %s%d\n", Gbuf2, temp > 0 ? "by +" : "by ", temp);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "  %s %s%d\n", Gbuf2, temp > 0 ? "by +" : "by ", temp);
         send_to_char(Gbuf1, ch);
       }
     }
-    sprintf( Gbuf1, "$p &nhas an item value of &+W%d&n.", itemvalue(obj) );
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "$p &nhas an item value of &+W%d&n.", itemvalue(obj) );
     act( Gbuf1, FALSE, ch, obj, 0, TO_CHAR );
   }
   else
@@ -10539,14 +10539,14 @@ void spell_lore(int level, P_char ch, char *arg, int type, P_char victim,
         }
         else
           Gbuf3[0] = 0;
-        sprintf(Gbuf1, " %s %s", Gbuf2, Gbuf3);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, " %s %s", Gbuf2, Gbuf3);
         send_to_char(Gbuf1, ch);
       }
     }
     if(found)
       send_to_char(".\n", ch);
 
-    sprintf(Gbuf1, "Estimated Value: %s\n", coin_stringv(obj->cost));
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "Estimated Value: %s\n", coin_stringv(obj->cost));
     send_to_char(Gbuf1, ch);
     return;
   }
@@ -11709,7 +11709,7 @@ bool check_item_teleport(P_char ch, char *arg, int cmd)
         {
           act("You follow $N.", FALSE, tch, 0, ch, TO_CHAR);
           send_to_char("\n", tch);
-          sprintf(Gbuf1, "%s %s", command[cmd - 1], arg);
+          snprintf(Gbuf1, MAX_STRING_LENGTH, "%s %s", command[cmd - 1], arg);
           command_interpreter(tch, Gbuf1);
         }
       }
@@ -14768,7 +14768,7 @@ void spell_feeblemind(int level, P_char ch, char *arg, int type, P_char victim, 
             {
               affect_remove(victim, af2);
               i--;
-              sprintf(Gbuffer_1, "You forget %s!\n", skills[af2->modifier].name);
+              snprintf(Gbuffer_1, MAX_STRING_LENGTH, "You forget %s!\n", skills[af2->modifier].name);
               send_to_char(Gbuffer_1, victim);
               continue;
             }
@@ -18957,17 +18957,17 @@ void spell_ether_sense(int level, P_char ch, char *arg, int type, P_char vict,
     }
     else if(elevel < 100)
     {
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+rYou detect a evil presence in the ether around you.\n");
     }
     else if(elevel < 250)
     {
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+rYou detect a evil presence in the ether around you.\n");
     }
     else
     {
-      sprintf(buf,
+      snprintf(buf, MAX_STRING_LENGTH,
               "&+rYou detect a evil presence in the ether around you.\n");
     }
     send_to_char(buf, ch);
@@ -21819,7 +21819,7 @@ void do_soulbind(P_char ch, char *argument, int cmd)
     obj->str_mask |= STRUNG_KEYS;
     obj->name = str_dup(gbuf2);
 
-    sprintf(buffer, "%s &+Lbearing the &+Wsoul&+L of &+r%s&n", obj->short_description, GET_NAME(victim));
+    snprintf(buffer, MAX_STRING_LENGTH, "%s &+Lbearing the &+Wsoul&+L of &+r%s&n", obj->short_description, GET_NAME(victim));
     set_short_description(obj, buffer);
 
     SET_BIT(obj->extra_flags, ITEM_NOSELL);

@@ -139,7 +139,7 @@ int gellz_test_obj_procs(P_obj obj, P_char ch, int cmd, char *argument)
       }
       else
       {
-        sprintf( buf, "Ship '%s' owner changed from %s to %s.", strip_ansi(ship->name).c_str(), argstring3,
+        snprintf(buf, MAX_STRING_LENGTH, "Ship '%s' owner changed from %s to %s.", strip_ansi(ship->name).c_str(), argstring3,
           skip_spaces(argument) );
         logit(LOG_SHIP, buf );
         send_to_char_f( ch, "Ship '%s' now owned by %s.\n", ship->name, GET_NAME(owner) );
@@ -173,7 +173,7 @@ int gellz_test_obj_procs(P_obj obj, P_char ch, int cmd, char *argument)
           return TRUE;
         }
       }
-      sprintf( buf, "&+WShip of '%s' not found!", argstring3 );
+      snprintf(buf, MAX_STRING_LENGTH, "&+WShip of '%s' not found!", argstring3 );
       act( buf, FALSE, ch, NULL, NULL, TO_CHAR );
       return TRUE;
     }
@@ -440,7 +440,7 @@ int magic_deck(P_obj obj, P_char ch, int cmd, char *argument)
         showhand(obj, ch, cmd, arg, 2); //show dealer hand
         // Assuming you just wait until the end of game to deal it?
 //        needcard(2,ch); //dealer 2nd card (HOW DO WE HIDE IT?)
-        sprintf(buf, "&+yThe &+bm&+Ba&+Cg&+Wi&+Cc&+Ba&+bl &+bf&+Bl&+Cam&+Be&+bs&+y flicker over the &+wdeck&+y once more, and you realise that you can choose to either &+Whit&+y, &+Wstay&+y or &+Wfold&+y simply by telling the cards what you wish to do.&n\n");
+        snprintf(buf, MAX_STRING_LENGTH, "&+yThe &+bm&+Ba&+Cg&+Wi&+Cc&+Ba&+bl &+bf&+Bl&+Cam&+Be&+bs&+y flicker over the &+wdeck&+y once more, and you realise that you can choose to either &+Whit&+y, &+Wstay&+y or &+Wfold&+y simply by telling the cards what you wish to do.&n\n");
         act( buf, FALSE, ch, obj, ch, TO_CHAR);
         game_on = BJ_POSTDEAL;
         return TRUE;
@@ -481,14 +481,14 @@ int magic_deck(P_obj obj, P_char ch, int cmd, char *argument)
 
       if( dealer_total > 21 )
       {
-        sprintf(buf, "&+CDealer&+R BUST&+y, so &+RY&+CO&+BU &+GW&+YI&+MN&+C!&+R!&+y&n\n");
+        snprintf(buf, MAX_STRING_LENGTH, "&+CDealer&+R BUST&+y, so &+RY&+CO&+BU &+GW&+YI&+MN&+C!&+R!&+y&n\n");
         send_to_char(buf, ch);
         do_win(ch, bettype, 2*betamt, 1);
       }
       else if( player_total > dealer_total )
       {
         do_win(ch, bettype, 2*betamt, 1);
-        sprintf(buf, "&+RY&+CO&+BU &+GW&+YI&+MN&+C!&+R!&+y! with %d versus the dealers %d.\n", player_total, dealer_total);
+        snprintf(buf, MAX_STRING_LENGTH, "&+RY&+CO&+BU &+GW&+YI&+MN&+C!&+R!&+y! with %d versus the dealers %d.\n", player_total, dealer_total);
         send_to_char(buf, ch);
       }
       else if( player_total == dealer_total )
@@ -499,7 +499,7 @@ int magic_deck(P_obj obj, P_char ch, int cmd, char *argument)
       // Can assume player total < dealer total.
       else
       {
-        sprintf(buf, "&+RYou LOOSE!!&+C Dealers %d &+rbeats your %d.\n", dealer_total, player_total);
+        snprintf(buf, MAX_STRING_LENGTH, "&+RYou LOOSE!!&+C Dealers %d &+rbeats your %d.\n", dealer_total, player_total);
         send_to_char(buf, ch);
         do_win(ch, bettype, betamt, 2);
       }
@@ -554,7 +554,7 @@ int magic_deck(P_obj obj, P_char ch, int cmd, char *argument)
       game_on = BJ_POSTHIT;
       if( player_total>21 )
       {
-        sprintf(buf, "&+yYou &+RBUSTED&+y with a total of %d. Sorry, maybe try again later?.\n", player_total, dealer_total);
+        snprintf(buf, MAX_STRING_LENGTH, "&+yYou &+RBUSTED&+y with a total of %d. Sorry, maybe try again later?.\n", player_total, dealer_total);
         send_to_char(buf, ch);
         do_win(ch, bettype, betamt, 2);
         clear_hands(1);
@@ -576,7 +576,7 @@ int magic_deck(P_obj obj, P_char ch, int cmd, char *argument)
       showhand(obj, ch, cmd, argument, 2);
       if( IS_TRUSTED(ch) )
       {
-        sprintf(buf, "Game Status is: %d. \n", game_on);
+        snprintf(buf, MAX_STRING_LENGTH, "Game Status is: %d. \n", game_on);
         send_to_char(buf, ch);
       }
       return TRUE;
@@ -892,37 +892,37 @@ void do_deaths_door(P_char ch, char *arg, int cmd)
     snprintf(buf, MAX_STRING_LENGTH, "&+yYou still need&+W: " );
     if( ch->base_stats.Str < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LStr&+y, ", 100 - ch->base_stats.Str );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LStr&+y, ", 100 - ch->base_stats.Str );
     }
     if( ch->base_stats.Dex < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LDex&+y, ", 100 - ch->base_stats.Dex );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LDex&+y, ", 100 - ch->base_stats.Dex );
     }
     if( ch->base_stats.Int < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LInt&+y, ", 100 - ch->base_stats.Int );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LInt&+y, ", 100 - ch->base_stats.Int );
     }
     if( ch->base_stats.Wis < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LWis&+y, ", 100 - ch->base_stats.Wis );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LWis&+y, ", 100 - ch->base_stats.Wis );
     }
     if( ch->base_stats.Agi < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LAgi&+y, ", 100 - ch->base_stats.Agi );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LAgi&+y, ", 100 - ch->base_stats.Agi );
     }
     if( ch->base_stats.Con < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LCon&+y, ", 100 - ch->base_stats.Con );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LCon&+y, ", 100 - ch->base_stats.Con );
     }
     if( ch->base_stats.Pow < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LPow&+y, ", 100 - ch->base_stats.Pow );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LPow&+y, ", 100 - ch->base_stats.Pow );
     }
     if( ch->base_stats.Cha < 100 )
     {
-      sprintf( buf + strlen(buf), "&+w%d &+LCha&+y, ", 100 - ch->base_stats.Cha );
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+w%d &+LCha&+y, ", 100 - ch->base_stats.Cha );
     }
-    sprintf( buf + strlen(buf) - 2, "&+y.\n" );
+    snprintf(buf + strlen(buf) - 2, MAX_STRING_LENGTH, "&+y.\n" );
     send_to_char(buf, ch );
     return;
   }

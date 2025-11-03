@@ -649,31 +649,31 @@ void raise_undead(int level, P_char ch, P_char victim, P_obj obj, int which_type
 
   if( (typ >= THEURPET_START) && (typ <= THEURPET_END) )
   {
-    sprintf(Gbuf2, "%s", undead_data[typ].name);
+    snprintf(Gbuf2, MAX_STRING_LENGTH, "%s", undead_data[typ].name);
     undead->player.name = str_dup(Gbuf2);
     if( typ == THEURPET_SPECTRE || typ == THEURPET_LICH || typ == THEURPET_SHADOW )
     {
-      sprintf(Gbuf1, "an %s", undead_data[typ].short_desc);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "an %s", undead_data[typ].short_desc);
       undead->player.short_descr = str_dup(Gbuf1);
-      sprintf(Gbuf1, "An %s stands here.\r\n", undead_data[typ].short_desc);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "An %s stands here.\r\n", undead_data[typ].short_desc);
       undead->player.long_descr = str_dup(Gbuf1);
 
     }
     else
     {
-      sprintf(Gbuf1, "a %s", undead_data[typ].short_desc);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "a %s", undead_data[typ].short_desc);
       undead->player.short_descr = str_dup(Gbuf1);
-      sprintf(Gbuf1, "A %s stands here.\r\n", undead_data[typ].short_desc);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "A %s stands here.\r\n", undead_data[typ].short_desc);
       undead->player.long_descr = str_dup(Gbuf1);
     }
   }
   else
   {
-    sprintf(Gbuf2, "undead %s _%s_", undead_data[typ].name, undead_data[typ].name);
+    snprintf(Gbuf2, MAX_STRING_LENGTH, "undead %s _%s_", undead_data[typ].name, undead_data[typ].name);
     undead->player.name = str_dup(Gbuf2);
-    sprintf(Gbuf1, "the %s of %s", undead_data[typ].name, obj->action_description);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "the %s of %s", undead_data[typ].name, obj->action_description);
     undead->player.short_descr = str_dup(Gbuf1);
-    sprintf(Gbuf1, "The %s of %s stands here.\r\n", undead_data[typ].name, obj->action_description);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "The %s of %s stands here.\r\n", undead_data[typ].name, obj->action_description);
     undead->player.long_descr = str_dup(Gbuf1);
   }
 
@@ -2573,10 +2573,10 @@ void spell_corpseform(int level, P_char ch, char *arg, int type, P_char victim, 
   act("&+LThe corpse of $o crumbles to dust as its essence is completely drained.&n", TRUE, ch, obj, NULL, TO_ROOM);
   act("&+LThe corpse of $o crumbles to dust as its essence is completely drained by you.&n", TRUE, ch, obj, NULL, TO_CHAR);
   
-  sprintf(tbuf, "You assume the form of %s!", race_names_table[corpse_race].normal);
+  snprintf(tbuf, MAX_STRING_LENGTH, "You assume the form of %s!", race_names_table[corpse_race].normal);
   act(tbuf, FALSE, ch, NULL, NULL, TO_CHAR);
 
-  sprintf(tbuf, "$n assumes the form of %s!", race_names_table[corpse_race].normal);
+  snprintf(tbuf, MAX_STRING_LENGTH, "$n assumes the form of %s!", race_names_table[corpse_race].normal);
   act(tbuf, FALSE, ch, NULL, NULL, TO_ROOM);
 
   GET_RACE(ch) = corpse_race;
@@ -2977,10 +2977,10 @@ void spell_wall_of_bones(int level, P_char ch, char *arg, int type, P_char tar_c
     SET_BIT(EXIT(ch, exit_dir)->exit_info, EX_BREAKABLE);
     SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[exit_dir])->to_room, rev_dir[exit_dir])->exit_info, EX_BREAKABLE);
 
-    sprintf(buf1, "&+LInfused by a powerful magic, %s &+Lmagically transforms into a wall of bones, blocking the %s exit!&n\r\n",
+    snprintf(buf1, MAX_STRING_LENGTH, "&+LInfused by a powerful magic, %s &+Lmagically transforms into a wall of bones, blocking the %s exit!&n\r\n",
       corpse->short_description, dirs[exit_dir]);
     send_to_room(buf1, ch->in_room);
-    sprintf(buf1, "&+LA pile of bones magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
+    snprintf(buf1, MAX_STRING_LENGTH, "&+LA pile of bones magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
     send_to_room(buf1, (world[ch->in_room].dir_option[exit_dir])->to_room);
 
     for( obj_in_corpse = corpse->contains; obj_in_corpse; obj_in_corpse = next_obj )
@@ -3000,10 +3000,10 @@ void spell_wall_of_bones(int level, P_char ch, char *arg, int type, P_char tar_c
     SET_BIT(EXIT(ch, exit_dir)->exit_info, EX_BREAKABLE);
     SET_BIT(VIRTUAL_EXIT((world[ch->in_room].dir_option[exit_dir])->to_room, rev_dir[exit_dir])->exit_info, EX_BREAKABLE);
 
-    sprintf(buf1, "&+LInfused by powerful sorcery, some &+gdragonscales &+Lmagically transform into a delicate yet solid curtain, blocking exit to the %s!&n\r\n",
+    snprintf(buf1, MAX_STRING_LENGTH, "&+LInfused by powerful sorcery, some &+gdragonscales &+Lmagically transform into a delicate yet solid curtain, blocking exit to the %s!&n\r\n",
       dirs[exit_dir]);
     send_to_room(buf1, ch->in_room);
-    sprintf(buf1, "&+LA thin &+gdragonscale&+L curtain magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
+    snprintf(buf1, MAX_STRING_LENGTH, "&+LA thin &+gdragonscale&+L curtain magically assembles to the %s!&n\r\n", dirs[rev_dir[exit_dir]]);
     send_to_room(buf1, (world[ch->in_room].dir_option[exit_dir])->to_room);
 
     if( corpse )

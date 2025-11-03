@@ -1567,7 +1567,7 @@ int item_switch(P_obj obj, P_char ch, int cmd, char *arg)
 
     if( obj->value[3] == 1 )
     {
-      sprintf(buf, "%s moves aside, revealing a passageway.\n", obj->short_description);
+      snprintf(buf, MAX_STRING_LENGTH, "%s moves aside, revealing a passageway.\n", obj->short_description);
       CAP(buf);
       send_to_room(buf, in_room);
     }
@@ -1583,7 +1583,7 @@ int item_switch(P_obj obj, P_char ch, int cmd, char *arg)
       }
       else
       {
-        sprintf(buf, "The %s wall moves aside, revealing a passageway.\n", dirs[door]);
+        snprintf(buf, MAX_STRING_LENGTH, "The %s wall moves aside, revealing a passageway.\n", dirs[door]);
       }
       send_to_room(buf, in_room);
     }
@@ -1860,7 +1860,7 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
 //    wheelb = 43;
 //    wheelc = 48;
 
-  sprintf(Gbuf1, "You pull the lever and see: %s %s %s\n", name[wheela],
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "You pull the lever and see: %s %s %s\n", name[wheela],
           name[wheelb], name[wheelc]);
   send_to_char(Gbuf1, ch);
   coins = 0;
@@ -2100,7 +2100,7 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
         wheela = number(39, 49);
         wheelb = number(39, 49);
         wheelc = number(39, 49);
-        sprintf(Gbuf1, "The machine shakes and you see: %s %s %s\n",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "The machine shakes and you see: %s %s %s\n",
                 name[wheela], name[wheelb], name[wheelc]);
         send_to_char(Gbuf1, ch);
 
@@ -2173,7 +2173,7 @@ int slot_machine(P_obj obj, P_char ch, int cmd, char *arg)
       }
     }
 
-    sprintf(Gbuf1, "You win %d %s coin(s)!", coins, coin_names[type]);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You win %d %s coin(s)!", coins, coin_names[type]);
     switch (type)
     {
     case 0:
@@ -3963,7 +3963,7 @@ int good_evil_sword(P_obj obj, P_char ch, int cmd, char *arg)
   {
     if( isname(arg, obj->name) && OBJ_WORN(obj) )
     {
-      sprintf(tmp_buf, "&+LHealth remaining:&+r %d&N\n", -(obj->value[7]));
+      snprintf(tmp_buf, MAX_STRING_LENGTH, "&+LHealth remaining:&+r %d&N\n", -(obj->value[7]));
       send_to_char(tmp_buf, ch);
       return TRUE;
     }
@@ -3996,7 +3996,7 @@ int good_evil_sword(P_obj obj, P_char ch, int cmd, char *arg)
     // 1/30 chance.
     if (!number(0, 29))
     {
-      sprintf(curWhisper, "$p whispers into your mind '%s&n'", whisperings[number(0, SWORD_WHISPERINGS - 1)]);
+      snprintf(curWhisper, MAX_STRING_LENGTH, "$p whispers into your mind '%s&n'", whisperings[number(0, SWORD_WHISPERINGS - 1)]);
       act(curWhisper, FALSE, ch, obj, 0, TO_CHAR);
     }
     good_evil_stoneOrSoulshield(obj);
@@ -6836,8 +6836,8 @@ int orcus_wand(P_obj obj, P_char ch, int cmd, char *arg)
 
 void prepare_wall_messages(char *color_string, char *ch_buffer, char *room_buffer)
 {
-  sprintf(ch_buffer, "...and are enveloped by a %s&N field as you try to pass through it.", color_string);
-  sprintf(room_buffer, "...and is enveloped by a %s&N field as $e tries to pass through it.", color_string);
+  snprintf(ch_buffer, MAX_STRING_LENGTH, "...and are enveloped by a %s&N field as you try to pass through it.", color_string);
+  snprintf(room_buffer, MAX_STRING_LENGTH, "...and is enveloped by a %s&N field as $e tries to pass through it.", color_string);
 }
 
 /*
@@ -7087,7 +7087,7 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
   switch (type)
   {
   case WALL_OF_FLAMES:
-    sprintf(buffer, "$n &+Ris surrounded by flames as $e goes to the %s.",
+    snprintf(buffer, MAX_STRING_LENGTH, "$n &+Ris surrounded by flames as $e goes to the %s.",
             dirs[dircmd]);
     act(buffer, TRUE, ch, obj, NULL, TO_ROOM);
 /* XXX */
@@ -7158,7 +7158,7 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
 
     break;
   case LIGHTNING_CURTAIN:
-    sprintf(buffer, "$n &+Bis surrounded by lightning as $e goes to the %s.&n", dirs[dircmd]);
+    snprintf(buffer, MAX_STRING_LENGTH, "$n &+Bis surrounded by lightning as $e goes to the %s.&n", dirs[dircmd]);
     act(buffer, TRUE, ch, obj, NULL, TO_ROOM);
 
     if (IS_AFFECTED2(ch, AFF2_PROT_LIGHTNING))
@@ -7286,7 +7286,7 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
     return TRUE;
 
   case WEB:
-    sprintf(buffer, "$n &+Wis enveloped in sticky webs as $e goes to the %s.",
+    snprintf(buffer, MAX_STRING_LENGTH, "$n &+Wis enveloped in sticky webs as $e goes to the %s.",
             dirs[dircmd]);
     send_to_char("&+WYou enter into the web!&n\n", ch);
     act(buffer, TRUE, ch, obj, NULL, TO_ROOM);
@@ -7567,7 +7567,7 @@ int wall_generic(P_obj obj, P_char ch, int cmd, char *arg)
       {
         act("You follow $N.", FALSE, k->follower, 0, ch, TO_CHAR);
         send_to_char("\n", k->follower);
-        sprintf(Gbuf1, "%s %s", command[exitnumb_to_cmd(dircmd) - 1], arg);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "%s %s", command[exitnumb_to_cmd(dircmd) - 1], arg);
         command_interpreter(k->follower, Gbuf1);
       }
     }
@@ -9693,7 +9693,7 @@ int guild_badge(P_obj obj, P_char ch, int cmd, char *arg)
       {
         // The long desc is, "A magical symbol floats in the air.", so keywords magical and symbol are important.
         // The short desc is "The symbol of ...", so keywords symbol and ... are important.
-        sprintf(buf1, "badge symbol magical %s", strip_ansi(GET_TITLE(ch)).c_str());
+        snprintf(buf1, MAX_STRING_LENGTH, "badge symbol magical %s", strip_ansi(GET_TITLE(ch)).c_str());
         if( (obj->str_mask & STRUNG_DESC1) && obj->name )
         {
            FREE(obj->name);
@@ -9702,7 +9702,7 @@ int guild_badge(P_obj obj, P_char ch, int cmd, char *arg)
         obj->str_mask |= STRUNG_DESC1;
         obj->name = str_dup(buf1);
 
-        sprintf(buf1, "&+LThe symbol of %s&N", GET_TITLE(ch));
+        snprintf(buf1, MAX_STRING_LENGTH, "&+LThe symbol of %s&N", GET_TITLE(ch));
         if( (obj->str_mask & STRUNG_DESC2) && obj->short_description )
         {
            FREE(obj->short_description);
@@ -9715,7 +9715,7 @@ int guild_badge(P_obj obj, P_char ch, int cmd, char *arg)
       {
         // The long desc is, "A magical symbol floats in the air.", so keywords magical and symbol are important.
         // The short desc is "The symbol of <ch's name>", so keywords symbol and <ch's name> are important.
-        sprintf(buf1, "badge symbol magical %s", GET_NAME(ch) );
+        snprintf(buf1, MAX_STRING_LENGTH, "badge symbol magical %s", GET_NAME(ch) );
         if( (obj->str_mask & STRUNG_DESC1) && obj->name )
         {
            FREE(obj->name);
@@ -9724,7 +9724,7 @@ int guild_badge(P_obj obj, P_char ch, int cmd, char *arg)
         obj->str_mask |= STRUNG_DESC1;
         obj->name = str_dup(buf1);
 
-        sprintf(buf1, "&+LThe symbol of %s&N", GET_NAME(ch));
+        snprintf(buf1, MAX_STRING_LENGTH, "&+LThe symbol of %s&N", GET_NAME(ch));
         if( (obj->str_mask & STRUNG_DESC2) && obj->short_description )
         {
            FREE(obj->short_description);
@@ -12821,23 +12821,23 @@ int skill_beacon(P_obj obj, P_char ch, int cmd, char *argument)
   {
     if (IS_TRUSTED(ch))
     {
-      sprintf(buf, "This is a skill beacon object. The following values are used to configure it:\n"
+      snprintf(buf, MAX_STRING_LENGTH, "This is a skill beacon object. The following values are used to configure it:\n"
               "  &+Wval0&n   skill number\n"
               "  &+Wval1&n   minimal skill level to use the beacon\n"
               "  &+Wval2&n   maximal skill level beacon will grant");
       if (skill)
-        sprintf(buf + strlen(buf), "\n$p is %sactive and grants skill &+W%s&n.",
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "\n$p is %sactive and grants skill &+W%s&n.",
           active ? "" : "in", skills[skill].name);
       if (requirement)
-        sprintf(buf + strlen(buf), "\nrequired skill level is &+W%d&n", requirement);
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "\nrequired skill level is &+W%d&n", requirement);
       if (cap)
-        sprintf(buf + strlen(buf), "\nit will not raise skill above &+W%d&n", cap);
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "\nit will not raise skill above &+W%d&n", cap);
     }
     else if (GET_C_INT(ch) > number(50, 150))
-      sprintf(buf, "$p is a monolithic block of an unidentified metal. There are some runes drawn on"
+      snprintf(buf, MAX_STRING_LENGTH, "$p is a monolithic block of an unidentified metal. There are some runes drawn on"
         " it which you decipher as referring to the art of &+W%s&n.", skills[skill].name);
     else
-      sprintf(buf, "$p is a monolithic block of an unidentified metal. There are some runes drawn on"
+      snprintf(buf, MAX_STRING_LENGTH, "$p is a monolithic block of an unidentified metal. There are some runes drawn on"
         " it which you can not decipher at all.");
     act(buf, FALSE, ch, obj, 0, TO_CHAR);
     return TRUE;

@@ -5020,56 +5020,56 @@ void BreathWeapon(P_char ch, int dir)
       act("$n breathes &+Rfire&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+Rfire&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A blast of &+Rfire&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A blast of &+Rfire&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_fire;
       break;
     case BREATH_LIGHTNING:
       act("$n breathes &=LBlightning&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &=LBlightning&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A bolt of &=LBlightning&n crackles from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A bolt of &=LBlightning&n crackles from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_lightning;
       break;
     case BREATH_FROST:
       act("$n breathes &+Wfrost&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+Wfrost&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A sudden &+Wfreezing gale&n blasts from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A sudden &+Wfreezing gale&n blasts from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_frost;
       break;
     case BREATH_ACID:
       act("$n breathes &+Lacid&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+Lacid&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Lfrothing liquid&n streams in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Lfrothing liquid&n streams in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_acid;
       break;
     case BREATH_GAS_POISON:
       act("$n breathes &+gpoison gas&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+gpoison gas&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A cloud of &+ggas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A cloud of &+ggas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_poison;
       break;
     case BREATH_GAS_SLEEP:
       act("$n breathes &+wgas&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+wgas&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A cloud of &+wgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A cloud of &+wgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_sleep;
       break;
     case BREATH_GAS_FEAR:
       act("$n breathes &+rgas&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+rgas&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A cloud of &+rgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A cloud of &+rgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_fear;
       break;
     case BREATH_GAS_PARA:
       act("$n breathes &+Mgas&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+Mgas&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A cloud of &+Mgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A cloud of &+Mgas&n billows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_paralysis;
       break;
     case BREATH_SHADOW:
@@ -5078,7 +5078,7 @@ void BreathWeapon(P_char ch, int dir)
         act("&+LA billowing cloud of darkness erupts from $n&+L's mouth!&n", 1, ch, 0, 0, TO_ROOM);
         act("&+LA billowing cloud of darkness erupts from your mouth!&n", 0, ch, 0, 0, TO_CHAR);
         if( dir != -1 )
-          sprintf(buf, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+          snprintf(buf, MAX_STRING_LENGTH, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
         funct = breath_weapon_shadow_1;
       }
       else
@@ -5086,7 +5086,7 @@ void BreathWeapon(P_char ch, int dir)
         act("&+LA black beam shoots out of $n&+L's mouth!&n", 1, ch, 0, 0, TO_ROOM);
         act("&+LA black beam shoots out of your mouth!&n", 0, ch, 0, 0, TO_CHAR);
         if( dir != -1 )
-          sprintf(buf, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+          snprintf(buf, MAX_STRING_LENGTH, "A billowing &+Lcloud of darkness&n flows in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
         funct = breath_weapon_shadow_2;
       }
       break;
@@ -5094,63 +5094,63 @@ void BreathWeapon(P_char ch, int dir)
       act("$n breathes &+Lgas&n!", 1, ch, 0, 0, TO_ROOM);
       act("You breathe &+Lgas&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A blast of &+ggas&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A blast of &+ggas&n shoots in from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_blind;
       break;
     case BREATH_CRIMSON:
       act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_crimson;
       break;
     case BREATH_JASPER:
       act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_jasper;
       break;
     case BREATH_AZURE:
       act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_azure;
       break;
     case BREATH_BASALT:
       act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_basalt;
       break;
     case BREATH_CRIMSON_2:
       act("$n spreads $s wings and emits a &+Rshimmering &+rlight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Rshimmering &+rlight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Rshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_crimson_2;
       break;
     case BREATH_AZURE_2:
       act("$n spreads $s wings and emits a &+Bshimmering &+blight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Bshimmering &+blight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Bshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_azure_2;
       break;
     case BREATH_JASPER_2:
       act("$n spreads $s wings and emits a &+Gshimmering &+glight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Gshimmering &+glight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Gshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_jasper_2;
       break;
     case BREATH_BASALT_2:
       act("$n spreads $s wings and emits a &+Lshimmering &+wlight&n!", 1, ch, 0, 0, TO_ROOM);
       act("You spread your wings and emit a &+Lshimmering &+wlight&n!", 0, ch, 0, 0, TO_CHAR);
       if( dir != -1 )
-        sprintf(buf, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
+        snprintf(buf, MAX_STRING_LENGTH, "A &+Lshimmering&n light blasts through from the %s!\r\n", dirs[(int) rev_dir[dir] - 1]);
       funct = breath_weapon_basalt_2;
       break;
   }
@@ -8136,7 +8136,7 @@ PROFILE_START(mundane_charmbreak);
       {
         if(IS_HUMANOID(ch))
         {
-          sprintf(Gbuf1, "point %s", GET_NAME(tmp_ch));
+          snprintf(Gbuf1, MAX_STRING_LENGTH, "point %s", GET_NAME(tmp_ch));
           command_interpreter(ch, Gbuf1);
           act
             ("\"You charmed me against my will.  Now you will pay!\" $n growls.",
@@ -10166,7 +10166,7 @@ void event_mob_hunt(P_char ch, P_char victim, P_obj obj, void *d)
     }
     // okay.. closed door in the way.. just open it :)
 
-    sprintf(buf, "%s", dirs[(int) next_step]);
+    snprintf(buf, MAX_STRING_LENGTH, "%s", dirs[(int) next_step]);
     do_open(ch, buf, 0);
 
     add_event(event_mob_hunt, PULSE_MOB_HUNT, ch, NULL, NULL, 0, data, sizeof(hunt_data));
@@ -10186,7 +10186,7 @@ void event_mob_hunt(P_char ch, P_char victim, P_obj obj, void *d)
     // /*
      // * okay.. closed door in the way.. just open it :)
      // */
-    // sprintf(buf, "%s %s", EXIT(ch, (int) next_step)->keyword ?
+    // snprintf(buf, MAX_STRING_LENGTH, "%s %s", EXIT(ch, (int) next_step)->keyword ?
             // FirstWord(EXIT(ch, (int) next_step)->keyword) : "door",
             // dirs[(int) next_step]);
     // do_open(ch, buf, 0);

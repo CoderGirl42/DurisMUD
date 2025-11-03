@@ -845,7 +845,7 @@ int vecna_krindor_main(P_obj obj, P_char ch, int cmd, char *arg)
         {
           act("$p&n &+Lwrithes and warps as it reforms into &+cKrindor's &+gMask of &+ythe Illithid&n.", TRUE, owner, obj, 0, TO_ROOM);
           act("$p&n &+Lwrithes and warps as it reforms into &+cKrindor's &+gMask of &+ythe Illithid&n.", TRUE, owner, obj, 0, TO_CHAR);
-            sprintf(buf, "&+cKrindor's &+gMask of &+ythe Illihthid&n");
+            snprintf(buf, MAX_STRING_LENGTH, "&+cKrindor's &+gMask of &+ythe Illihthid&n");
           obj->short_description = NULL;
           obj->str_mask |= STRUNG_DESC2;
           obj->short_description = str_dup(buf);
@@ -874,7 +874,7 @@ int vecna_krindor_main(P_obj obj, P_char ch, int cmd, char *arg)
         {
           act("$p&n &+Lwrithes and warps as it reforms into &+cKrindor's &+gMu&+Clt&+Mi&+Cco&+glor &+yBelt&n.", TRUE, owner, obj, 0, TO_ROOM);
           act("$p&n &+Lwrithes and warps as it reforms into &+cKrindor's &+gMu&+Clt&+Mi&+Cco&+glor &+yBelt&n.", TRUE, owner, obj, 0, TO_CHAR);
-                sprintf(buf, "&+cKrindor's &+gMu&+Clt&+Mi&+Cco&+glor &+yBelt&n");
+                snprintf(buf, MAX_STRING_LENGTH, "&+cKrindor's &+gMu&+Clt&+Mi&+Cco&+glor &+yBelt&n");
           obj->short_description = NULL;
           obj->str_mask |= STRUNG_DESC2;
           obj->short_description = str_dup(buf);
@@ -905,7 +905,7 @@ int vecna_krindor_main(P_obj obj, P_char ch, int cmd, char *arg)
             TRUE, owner, obj, 0, TO_ROOM);
           act("$p&n &+Lwrithes and warps as it reforms into &+cKrindor's &+MM&+ma&+Ms&+mk of &+MI&+ml&+Ml&+mu&+Ms&+mi&+Mo&+mn&+Ms&n.",
             TRUE, owner, obj, 0, TO_CHAR);
-          sprintf(buf, "&+cKrindor's &+MM&+ma&+Ms&+mk of &+MI&+ml&+Ml&+mu&+Ms&+mi&+Mo&+mn&+Ms&n");
+          snprintf(buf, MAX_STRING_LENGTH, "&+cKrindor's &+MM&+ma&+Ms&+mk of &+MI&+ml&+Ml&+mu&+Ms&+mi&+Mo&+mn&+Ms&n");
           obj->short_description = NULL;
           obj->str_mask |= STRUNG_DESC2;
           obj->short_description = str_dup(buf);

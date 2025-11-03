@@ -1721,47 +1721,47 @@ char *coin_stringv( int amount, int padfront )
 
   if( p )
   {
-    amount = sprintf(spot, "%d &+Wplatinum&N", p);
+    amount = snprintf(spot, MAX_STRING_LENGTH, "%d &+Wplatinum&N", p);
     spot += amount;
   }
   if( g )
   {
     if( p && !s && !c )
     {
-      sprintf(spot, ", and ");
+      snprintf(spot, MAX_STRING_LENGTH, ", and ");
       spot += 6;
     }
     else if( p )
     {
-      sprintf(spot, ", ");
+      snprintf(spot, MAX_STRING_LENGTH, ", ");
       spot += 2;
     }
-    amount = sprintf(spot, "%d &+Ygold&N", g);
+    amount = snprintf(spot, MAX_STRING_LENGTH, "%d &+Ygold&N", g);
     spot += amount;
   }
   if( s )
   {
     if( (p || g) && !c )
     {
-      sprintf(spot, ", and ");
+      snprintf(spot, MAX_STRING_LENGTH, ", and ");
       spot += 6;
     }
     else if( p || g )
     {
-      sprintf(spot, ", ");
+      snprintf(spot, MAX_STRING_LENGTH, ", ");
       spot += 2;
     }
-    amount = sprintf(spot, "%d silver", s);
+    amount = snprintf(spot, MAX_STRING_LENGTH, "%d silver", s);
     spot += amount;
   }
   if( c )
   {
     if( p || g || s )
     {
-      sprintf(spot, ", and ");
+      snprintf(spot, MAX_STRING_LENGTH, ", and ");
       spot += 6;
     }
-    sprintf(spot, "%d &+ycopper&N", c);
+    snprintf(spot, MAX_STRING_LENGTH, "%d &+ycopper&N", c);
   }
   return buf;
 }
@@ -2911,16 +2911,16 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
   {
     if( IS_DISGUISE_PC(ch) )
     {
-      sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_DISGUISE_RACE(ch)].normal
+      snprintf(GS_buf1, MAX_STRING_LENGTH, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_DISGUISE_RACE(ch)].normal
         : ANA(*(race_names_table[GET_DISGUISE_RACE(ch)].normal)), race_names_table[GET_DISGUISE_RACE(ch)].ansi );
     }
     else if( IS_DISGUISE_NPC(ch) )
     {
-      sprintf(GS_buf1, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
+      snprintf(GS_buf1, MAX_STRING_LENGTH, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
     }
     else
     {
-      sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
+      snprintf(GS_buf1, MAX_STRING_LENGTH, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
         : ANA(*(race_names_table[GET_RACE(ch)].normal)), race_names_table[GET_RACE(ch)].ansi );
     }
     return GS_buf1;
@@ -2942,7 +2942,7 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
   }
   if( IS_DISGUISE_NPC(ch) )
   {
-    sprintf(GS_buf1, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
+    snprintf(GS_buf1, MAX_STRING_LENGTH, "%s", (noansi ? strip_ansi(ch->disguise.name).c_str() : (ch->disguise.name)) );
     return GS_buf1;
   }
   if( is_introd(ch, vict) )
@@ -2953,7 +2953,7 @@ char *PERS(P_char ch, P_char vict, int short_d, bool noansi)
   {
     return ch->player.short_descr;
   }
-  sprintf( GS_buf1, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
+  snprintf(GS_buf1, MAX_STRING_LENGTH, noansi ? "%s" : "%s %s", noansi ? race_names_table[GET_RACE(ch)].normal
     : ANA(*(race_names_table[GET_RACE(ch)].normal)), race_names_table[GET_RACE(ch)].ansi );
   return GS_buf1;
 }
@@ -4426,13 +4426,13 @@ char *get_class_string(P_char ch, char *strn)
   {
     if( ch->player.m_class & (1 << i) )
     {
-      sprintf(strn + strlen(strn), "%s%s", found ? " " : "", class_names_table[i + 1].ansi);
+      snprintf(strn + strlen(strn), MAX_STRING_LENGTH - strlen(strn), "%s%s", found ? " " : "", class_names_table[i + 1].ansi);
       found = TRUE;
     }
   }
   if( IS_SPECIALIZED(ch) )
   {
-    sprintf(strn + strlen(strn), "&n / %s", GET_SPEC_NAME(ch->player.m_class, ch->player.spec-1));
+    snprintf(strn + strlen(strn), MAX_STRING_LENGTH - strlen(strn), "&n / %s", GET_SPEC_NAME(ch->player.m_class, ch->player.spec-1));
   }
 
   if( IS_MULTICLASS_PC(ch) )
@@ -4442,7 +4442,7 @@ char *get_class_string(P_char ch, char *strn)
       {
         if( ch->player.secondary_class & (1 << i) )
         {
-          sprintf(strn + strlen(strn), " %s", class_names_table[i + 1].ansi);
+          snprintf(strn + strlen(strn), MAX_STRING_LENGTH - strlen(strn), " %s", class_names_table[i + 1].ansi);
         }
       }
     }
@@ -6181,7 +6181,7 @@ char *coins_to_string( int platinum, int gold, int silver, int copper, char *col
   // "and" goes before gold.
   if( and_pos == 2 )
   {
-    pos2 = sprintf( ret_string + pos1, "%sand ", color_string );
+    pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "%sand ", color_string );
     pos1 += pos2;
   }
   // If we're printing gold.
@@ -6190,20 +6190,20 @@ char *coins_to_string( int platinum, int gold, int silver, int copper, char *col
     // If we have another type, use a comma.
     if( coins & (BIT_3 | BIT_4) )
     {
-      pos2 = sprintf( ret_string + pos1, "&+Y%dg%s, ", gold, color_string );
+      pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "&+Y%dg%s, ", gold, color_string );
       pos1 += pos2;
     }
     // Otherwise, just add gold and return it.
     else
     {
-      sprintf( ret_string + pos1, "&+Y%dg%s&n", gold, color_string );
+      snprintf(ret_string + pos1, MAX_STRING_LENGTH, "&+Y%dg%s&n", gold, color_string );
       return ret_string;
     }
   }
   // "and" goes before silver.
   if( and_pos == 3 )
   {
-    pos2 = sprintf( ret_string + pos1, "%sand ", color_string );
+    pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "%sand ", color_string );
     pos1 += pos2;
   }
   // If we're printing silver.
@@ -6212,26 +6212,26 @@ char *coins_to_string( int platinum, int gold, int silver, int copper, char *col
     // If we have another type (copper), use a comma.
     if( coins & BIT_4 )
     {
-      pos2 = sprintf( ret_string + pos1, "&+w%ds%s, ", silver, color_string );
+      pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "&+w%ds%s, ", silver, color_string );
       pos1 += pos2;
     }
     // Otherwise, just add silver and return it.
     else
     {
-      sprintf( ret_string + pos1, "&+w%ds%s&n", silver, color_string );
+      snprintf(ret_string + pos1, MAX_STRING_LENGTH, "&+w%ds%s&n", silver, color_string );
       return ret_string;
     }
   }
   // "and" goes before copper.
   if( and_pos == 4 )
   {
-    pos2 = sprintf( ret_string + pos1, "%sand ", color_string );
+    pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "%sand ", color_string );
     pos1 += pos2;
   }
   // If we're printing copper.
   if( coins & BIT_4 )
   {
-    pos2 = sprintf( ret_string + pos1, "&+y%dc&n", copper );
+    pos2 = snprintf(ret_string + pos1, MAX_STRING_LENGTH, "&+y%dc&n", copper );
     pos1 += pos2;
   }
   else
@@ -6295,7 +6295,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
       else if( index[1] == '&' )
       {
           // Copy the &'s
-          // I don't know if it's faster to print each & vs sprintf(good, "&&") then good += 2.
+          // I don't know if it's faster to print each & vs snprintf(good, MAX_STRING_LENGTH, "&&") then good += 2.
           *(good++) = '&';
           last_ansi_sequence = good;
           *(good++) = '&';
@@ -6308,7 +6308,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         if( is_ansi_char(index[2]) )
         {
           // Copy the &<+|-><color>
-          sprintf( good, "&%c%c", index[1], index[2] );
+          snprintf(good, MAX_STRING_LENGTH, "&%c%c", index[1], index[2] );
           last_ansi_sequence = good + 2;
           good += 3;
           index += 3;
@@ -6324,7 +6324,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
           // Note: We don't try'n print the 3rd character since it might be the start
           //   of an ansi sequence.
           // Note: We created an ansi sequence "&&".
-          sprintf( good, "&&%c", index[1] );
+          snprintf(good, MAX_STRING_LENGTH, "&&%c", index[1] );
           last_ansi_sequence = good + 1;
           good += 3;
           index += 2;
@@ -6337,7 +6337,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         if( is_ansi_char(index[2]) && is_ansi_char(index[3]) )
         {
           // Copy the &=<char><char>
-          sprintf( good, "&=%c%c", index[2], index[3] );
+          snprintf(good, MAX_STRING_LENGTH, "&=%c%c", index[2], index[3] );
           last_ansi_sequence = good + 3;
           good += 4;
           index += 4;
@@ -6353,7 +6353,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
           // Note: We don't try'n print the 3rd character since it might be the start
           //   of an ansi sequence.
           // Note: We created an ansi sequence "&&".
-          sprintf( good, "&&=" );
+          snprintf(good, MAX_STRING_LENGTH, "&&=" );
           last_ansi_sequence = good + 1;
           good += 3;
           index += 2;
@@ -6381,7 +6381,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
       // If we have enough room, just add the &N and string terminator.
       if( chars_left > 2 )
       {
-        sprintf( good, "&N" );
+        snprintf(good, MAX_STRING_LENGTH, "&N" );
         return;
       }
       // We need to overwrite one character.
@@ -6398,11 +6398,11 @@ void trim_and_end_colorless( char *orig, char *good, int length )
           {
             good--;
           }
-          sprintf( good, "N" );
+          snprintf(good, MAX_STRING_LENGTH, "N" );
           return;
         }
         // If we have 2 chars left, and we don't run into the last ansi sequence, just overwrite the last char.
-        sprintf( good - 1, "&N" );
+        snprintf(good - 1, MAX_STRING_LENGTH, "&N" );
         return;
       }
       // We have 1 character left.
@@ -6417,7 +6417,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
           good--;
         }
         // Overwrite the sequence with "N\0".
-        sprintf( good, "N" );
+        snprintf(good, MAX_STRING_LENGTH, "N" );
         return;
       }
       // If the second to last char is an ansi starter, we need to overwrite the ansi sequence,
@@ -6432,11 +6432,11 @@ void trim_and_end_colorless( char *orig, char *good, int length )
           good--;
         }
         // Overwrite the sequence with "N\0".
-        sprintf( good, "N" );
+        snprintf(good, MAX_STRING_LENGTH, "N" );
         return;
       }
       // 1 space left and neither of the last 2 chars are in an ansi sequence, so overwrite them.
-      sprintf( good - 2, "&N" );
+      snprintf(good - 2, MAX_STRING_LENGTH, "&N" );
       return;
     }
 
@@ -6449,7 +6449,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         // Since an ansi sequence is at least 2 chars, and we need 3 chars for "&N\0", no combinations
         //   are possible within the 4 spaces we have left.
         // So, we just decolorize and terminate.
-        sprintf( good, "&N" );
+        snprintf(good, MAX_STRING_LENGTH, "&N" );
         return;
       }
       // Regular character.
@@ -6462,7 +6462,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
     if( chars_left == 3 )
     {
       // Then we only have room to decolorize and terminate.
-      sprintf( good, "&N" );
+      snprintf(good, MAX_STRING_LENGTH, "&N" );
       return;
     }
     // We need more room.
@@ -6479,11 +6479,11 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         {
           good--;
         }
-        sprintf( good, "N" );
+        snprintf(good, MAX_STRING_LENGTH, "N" );
         return;
       }
       // If we have 2 chars left, and we don't run into the last ansi sequence, just overwrite the last char.
-      sprintf( good - 1, "&N" );
+      snprintf(good - 1, MAX_STRING_LENGTH, "&N" );
       return;
     }
     // We can assume chars_left == 1
@@ -6498,7 +6498,7 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         good--;
       }
       // Overwrite the sequence with "N\0".
-      sprintf( good, "N" );
+      snprintf(good, MAX_STRING_LENGTH, "N" );
       return;
     }
     // If the second to last char is an ansi starter, we need to overwrite the ansi sequence,
@@ -6513,11 +6513,11 @@ void trim_and_end_colorless( char *orig, char *good, int length )
         good--;
       }
       // Overwrite the sequence with "N\0".
-      sprintf( good, "N" );
+      snprintf(good, MAX_STRING_LENGTH, "N" );
       return;
     }
     // 1 space left and neither of the last 2 chars are in an ansi sequence, so overwrite them.
-    sprintf( good - 2, "&N" );
+    snprintf(good - 2, MAX_STRING_LENGTH, "&N" );
     return;
   }
 

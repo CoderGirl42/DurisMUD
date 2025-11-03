@@ -326,7 +326,7 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
           owner = read_mobile( ownerID, VIRTUAL );
           if( owner )
           {
-            sprintf( locNameBuf, "%s", J_NAME(owner) );
+            snprintf(locNameBuf, MAX_STRING_LENGTH, "%s", J_NAME(owner) );
             locName = locNameBuf;
             extract_char( owner );
             owner = NULL;
@@ -343,13 +343,13 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
         case ARTIFACT_ONGROUND:
           locName = world[real_room0(ownerID)].name;
           // Put room title on a seperate line with vnum
-          sprintf( locNameBuf, "%s (Room #%d)\n%-20s", locName, ownerID, " " );
+          snprintf(locNameBuf, MAX_STRING_LENGTH, "%s (Room #%d)\n%-20s", locName, ownerID, " " );
           locName = locNameBuf;
           break;
         case ARTIFACT_ONCORPSE:
           if( Godlist )
           {
-            sprintf( locNameBuf, "%s's corpse", get_player_name_from_pid(ownerID) );
+            snprintf(locNameBuf, MAX_STRING_LENGTH, "%s's corpse", get_player_name_from_pid(ownerID) );
             locName = locNameBuf;
           }
           else
@@ -382,7 +382,7 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
       // Mortals only see name and artifact.
       if( !Godlist )
       {
-        sprintf(buf, "%-20s%s\r\n", locName, obj->short_description);
+        snprintf(buf, MAX_STRING_LENGTH, "%-20s%s\r\n", locName, obj->short_description);
         send_to_char( buf, ch );
         shownData = TRUE;
         extract_obj( obj, FALSE );
@@ -408,12 +408,12 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
       {
         days = hours = minutes = 0;
       }
-      sprintf( timer, "%c%2d:%02d:%02d", negTime ? '-' : ' ', days, hours, minutes );
+      snprintf(timer, MAX_STRING_LENGTH, "%c%2d:%02d:%02d", negTime ? '-' : ' ', days, hours, minutes );
 
       // Trim locName: NAX_NAME_LENGTH + strlen("'s corpse") == 12 + 9 == 21.
-      sprintf( locNameBuf2, "%s", pad_ansi(locName, MAX_NAME_LENGTH + 9, TRUE).c_str() );
+      snprintf(locNameBuf2, MAX_STRING_LENGTH, "%s", pad_ansi(locName, MAX_NAME_LENGTH + 9, TRUE).c_str() );
       locName = locNameBuf2;
-      sprintf(buf, "%-21s&n%-11s %-22s%s (#%d)\r\n", locName, timer, row[5], obj->short_description, vnum );
+      snprintf(buf, MAX_STRING_LENGTH, "%-21s&n%-11s %-22s%s (#%d)\r\n", locName, timer, row[5], obj->short_description, vnum );
       send_to_char( buf, ch );
       shownData = TRUE;
       extract_obj( obj, FALSE );
@@ -431,14 +431,14 @@ void list_artifacts_sql( P_char ch, int type, bool Godlist, bool allArtis )
   }
   else
   {
-    sprintf(buf, "\r\n       &+r------&+LSummary&+r------&n\r\n" );
-    sprintf(buf + strlen(buf), "         &+WGoodies:      %d&n\r\n", articount[RACEWAR_GOOD]);
-    sprintf(buf + strlen(buf), "         &+rEvils:        %d&n\r\n", articount[RACEWAR_EVIL]);
+    snprintf(buf, MAX_STRING_LENGTH, "\r\n       &+r------&+LSummary&+r------&n\r\n" );
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "         &+WGoodies:      %d&n\r\n", articount[RACEWAR_GOOD]);
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "         &+rEvils:        %d&n\r\n", articount[RACEWAR_EVIL]);
     if( articount[RACEWAR_UNDEAD] )
-      sprintf(buf + strlen(buf), "         &+LUndead:       %d&n\r\n", articount[RACEWAR_UNDEAD]);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "         &+LUndead:       %d&n\r\n", articount[RACEWAR_UNDEAD]);
     if( articount[RACEWAR_NEUTRAL] )
-      sprintf(buf + strlen(buf), "         &+MNeutral:      %d&n\r\n", articount[RACEWAR_NEUTRAL]);
-    sprintf(buf + strlen(buf), "         &+WTotal:        %d\r\n",
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "         &+MNeutral:      %d&n\r\n", articount[RACEWAR_NEUTRAL]);
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "         &+WTotal:        %d\r\n",
       articount[RACEWAR_NONE]);
     send_to_char( buf, ch );
   }
@@ -1471,29 +1471,29 @@ void artifact_timer_sql( int vnum, char *buffer )
     }
     else
     {
-      sprintf(buffer, "[ &=LRUnknown&n ]" );
+      snprintf(buffer, MAX_STRING_LENGTH, "[ &=LRUnknown&n ]" );
     }
     if( timer < 0 )
     {
       timer *= -1;
-      sprintf(buffer,"[&+R-%ld&+Lh &+R%ld&+Lm &+R%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
+      snprintf(buffer, MAX_STRING_LENGTH,"[&+R-%ld&+Lh &+R%ld&+Lm &+R%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
     }
     else if( timer <= (ARTIFACT_BLOOD_DAYS * SECS_PER_REAL_DAY)/16 )
     {
-      sprintf(buffer, "[&+R%ld&+Lh &+R%ld&+Lm &+R%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
+      snprintf(buffer, MAX_STRING_LENGTH, "[&+R%ld&+Lh &+R%ld&+Lm &+R%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
     }
     else if( timer <= (ARTIFACT_BLOOD_DAYS * SECS_PER_REAL_DAY)/5 )
     {
-      sprintf(buffer, "[&+Y%ld&+Lh &+Y%ld&+Lm &+Y%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
+      snprintf(buffer, MAX_STRING_LENGTH, "[&+Y%ld&+Lh &+Y%ld&+Lm &+Y%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
     }
     else
     {
-      sprintf(buffer, "[&+G%ld&+Lh &+G%ld&+Lm &+G%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
+      snprintf(buffer, MAX_STRING_LENGTH, "[&+G%ld&+Lh &+G%ld&+Lm &+G%ld&+Ls&n]", timer / 3600, (timer / 60) % 60, timer % 60);
     }
   }
   else
   {
-    sprintf(buffer, "[ &=LCUnknown&n ]" );
+    snprintf(buffer, MAX_STRING_LENGTH, "[ &=LCUnknown&n ]" );
   }
 }
 
@@ -1827,7 +1827,7 @@ void arti_files_to_sql( P_char ch, char *arg )
               tmpch = OBJ_WORN(obj) ? obj->loc.wearing : obj->loc.carrying;
               if( tmpch && IS_NPC(tmpch) )
               {
-                sprintf( buf, "  &+YFound another copy of arti '&n%s&+Y' &+w%d&+Y on '&n%s&+Y' &+w%d&+Y, pulling it.&n\n\r",
+                snprintf(buf, MAX_STRING_LENGTH, "  &+YFound another copy of arti '&n%s&+Y' &+w%d&+Y on '&n%s&+Y' &+w%d&+Y, pulling it.&n\n\r",
                   OBJ_SHORT(arti), OBJ_VNUM(arti), J_NAME(tmpch), GET_VNUM(tmpch) );
                 send_to_char( buf, ch );
                 extract_obj(obj, FALSE);
@@ -1835,7 +1835,7 @@ void arti_files_to_sql( P_char ch, char *arg )
             }
             else
             {
-              sprintf( buf, "  &+YFound another copy of arti '&n%s&+Y' &+w%d&+Y in game not on a char, pulling it.&n\n\r",
+              snprintf(buf, MAX_STRING_LENGTH, "  &+YFound another copy of arti '&n%s&+Y' &+w%d&+Y in game not on a char, pulling it.&n\n\r",
                 OBJ_SHORT(arti), OBJ_VNUM(arti) );
               send_to_char( buf, ch );
               extract_obj(obj, TRUE); // Yes, we want to remove the arti data here.
@@ -2549,14 +2549,14 @@ void arti_hunt_sql( P_char ch, char *arg )
         }
         else
         {
-          sprintf( buf, "&+ROn another char:&N %s\n", get_player_name_from_pid(artidata.location) );
+          snprintf(buf, MAX_STRING_LENGTH, "&+ROn another char:&N %s\n", get_player_name_from_pid(artidata.location) );
           send_to_char( buf, ch );
         }
       }
       else if( artidata.locType == ARTIFACT_ON_NPC )
       {
         mob = read_mobile( artidata.location, VIRTUAL );
-        sprintf( buf, "&+ROn a mob:&N '%s' %d.\n", J_NAME(mob), artidata.location );
+        snprintf(buf, MAX_STRING_LENGTH, "&+ROn a mob:&N '%s' %d.\n", J_NAME(mob), artidata.location );
         extract_char( mob );
         send_to_char( buf, ch );
         // If there's one in zone, pull it.
@@ -2569,7 +2569,7 @@ void arti_hunt_sql( P_char ch, char *arg )
       }
       else if( artidata.locType == ARTIFACT_ONGROUND )
       {
-        sprintf( buf, "&+ROn ground:&N '%s' %d.\n", world[real_room0(artidata.location)].name, artidata.location );
+        snprintf(buf, MAX_STRING_LENGTH, "&+ROn ground:&N '%s' %d.\n", world[real_room0(artidata.location)].name, artidata.location );
         send_to_char( buf, ch );
         // If there's one in zone, pull it.
         if( (arti2 = artifact_find(OBJ_VNUM(arti))) )
@@ -2594,7 +2594,7 @@ void arti_hunt_sql( P_char ch, char *arg )
     {
       if( IS_ARTIFACT( arti ) )
       {
-        sprintf( buf, "%-12s has %s&n (%6d) : ", J_NAME(owner),
+        snprintf(buf, MAX_STRING_LENGTH, "%-12s has %s&n (%6d) : ", J_NAME(owner),
           pad_ansi(arti->short_description, 35, TRUE).c_str(), obj_index[arti->R_num].virtual_number );
         send_to_char( buf, ch );
         if( !get_artifact_data_sql( OBJ_VNUM(arti), &artidata ) )
@@ -2617,20 +2617,20 @@ void arti_hunt_sql( P_char ch, char *arg )
           }
           else
           {
-            sprintf( buf, "&+ROn another char:&N %s\n", get_player_name_from_pid(artidata.location) );
+            snprintf(buf, MAX_STRING_LENGTH, "&+ROn another char:&N %s\n", get_player_name_from_pid(artidata.location) );
             send_to_char( buf, ch );
           }
         }
         else if( artidata.locType == ARTIFACT_ON_NPC )
         {
           mob = read_mobile( artidata.location, VIRTUAL );
-          sprintf( buf, "&+ROn a mob:&N '%s' %d.\n", J_NAME(mob), artidata.location );
+          snprintf(buf, MAX_STRING_LENGTH, "&+ROn a mob:&N '%s' %d.\n", J_NAME(mob), artidata.location );
           extract_char( mob );
           send_to_char( buf, ch );
         }
         else if( artidata.locType == ARTIFACT_ONGROUND )
         {
-          sprintf( buf, "&+ROn ground:&N '%s' %d.\n", world[real_room0(artidata.location)].name, artidata.location );
+          snprintf(buf, MAX_STRING_LENGTH, "&+ROn ground:&N '%s' %d.\n", world[real_room0(artidata.location)].name, artidata.location );
           send_to_char( buf, ch );
         }
         else if( artidata.locType == ARTIFACT_NOTINGAME )
@@ -2649,7 +2649,7 @@ void arti_hunt_sql( P_char ch, char *arg )
   }
   // Close the directory!
   closedir( dir );
-  sprintf( buf, "Arti hunted '%c' successfully!\n", *arg );
+  snprintf(buf, MAX_STRING_LENGTH, "Arti hunted '%c' successfully!\n", *arg );
   send_to_char( buf, ch );
 }
 
@@ -2900,7 +2900,7 @@ void arti_timer_sql( P_char ch, char *arg )
   // Now we have a valid command, the vnum of an arti, and a postitive number of minutes to change.
   if( !get_artifact_data_sql( vnum, &artidata ) )
   {
-    sprintf( buf, "&+WHmm.. There's no timer ticking on '&+w%s&+W' &+w%d&+W.&n\n\r", artishort, vnum );
+    snprintf(buf, MAX_STRING_LENGTH, "&+WHmm.. There's no timer ticking on '&+w%s&+W' &+w%d&+W.&n\n\r", artishort, vnum );
     send_to_char( buf, ch );
     return;
   }
@@ -2937,7 +2937,7 @@ void arti_timer_sql( P_char ch, char *arg )
     new_time = time(NULL) + ARTIFACT_BLOOD_DAYS * SECS_PER_REAL_DAY;
   }
 
-  sprintf( buf, "&+WArtifact '&+w%s&+W' &+w%d&+W has had it's timer changed from &n", artishort, vnum );
+  snprintf(buf, MAX_STRING_LENGTH, "&+WArtifact '&+w%s&+W' &+w%d&+W has had it's timer changed from &n", artishort, vnum );
   artifact_timer_sql( vnum, buf + strlen(buf) );
   strcat( buf, "&+W to &n" );
 
@@ -3093,7 +3093,7 @@ void arti_swap_sql( P_char ch, char *arg )
     dummy = load_dummy_char(get_player_name_from_pid( artidata.location ));
     if( (arti1 = get_object_from_char( dummy, vnum1 )) == NULL )
     {
-      sprintf( buf, "&+WCould not find '&+w%s&+W' &+w%d&+W on &+w%s&+W's pfile.&n\n\r", artishort1, vnum1,
+      snprintf(buf, MAX_STRING_LENGTH, "&+WCould not find '&+w%s&+W' &+w%d&+W on &+w%s&+W's pfile.&n\n\r", artishort1, vnum1,
         get_player_name_from_pid( artidata.location ) );
       nuke_eq( dummy );
       extract_char( dummy );
@@ -3102,7 +3102,7 @@ void arti_swap_sql( P_char ch, char *arg )
   }
   if( !arti1 )
   {
-    sprintf( buf, "&+WStrange, could not find artifact '&+w%s&+W' &+w%d&+W anywhere?!?&n\n\r", artishort1, vnum1 );
+    snprintf(buf, MAX_STRING_LENGTH, "&+WStrange, could not find artifact '&+w%s&+W' &+w%d&+W anywhere?!?&n\n\r", artishort1, vnum1 );
     send_to_char( buf, ch );
     if( dummy )
     {
@@ -3140,7 +3140,7 @@ void arti_swap_sql( P_char ch, char *arg )
       break;
     // Not in a valid location, so skip it.
     case LOC_NOWHERE:
-      sprintf( buf, "&+WStrange, artifact '&+w%s&+W' &+w%d&+W has a bad location?!?&n\n\r", artishort1, vnum1 );
+      snprintf(buf, MAX_STRING_LENGTH, "&+WStrange, artifact '&+w%s&+W' &+w%d&+W has a bad location?!?&n\n\r", artishort1, vnum1 );
       send_to_char( buf, ch );
       if( dummy )
       {
@@ -3171,10 +3171,10 @@ void arti_swap_sql( P_char ch, char *arg )
   // Save in-game owner if applies.
   if( owner1 )
   {
-    sprintf( buf, "&+WYour %s&+W suddenly changes into %s&+W!&n\n\r",
+    snprintf(buf, MAX_STRING_LENGTH, "&+WYour %s&+W suddenly changes into %s&+W!&n\n\r",
       artishort1, OBJ_SHORT(arti2) );
     send_to_char( buf, owner1 );
-    sprintf( buf, "&+W$n's %s&+W suddenly changes into %s&+W!&n\n\r",
+    snprintf(buf, MAX_STRING_LENGTH, "&+W$n's %s&+W suddenly changes into %s&+W!&n\n\r",
       artishort1, OBJ_SHORT(arti2) );
     act( buf, FALSE, owner1, NULL, 0, TO_ROOM);
     writeCharacter(owner1, RENT_CRASH, owner1->in_room);
@@ -3195,12 +3195,12 @@ void arti_swap_sql( P_char ch, char *arg )
   }
   if( OBJ_ROOM(arti2) )
   {
-    sprintf( buf, "&+W%s&+W suddenly changes into %s&+W!&n\n\r",
+    snprintf(buf, MAX_STRING_LENGTH, "&+W%s&+W suddenly changes into %s&+W!&n\n\r",
       artishort1, OBJ_SHORT(arti2) );
     act( buf, FALSE, NULL, arti2, 0, TO_ROOM );
   }
 
-  sprintf( buf, "&+WArtifact '&+w%s&+W' &+w%d&+W swapped with artifact '&+w%s&+W' &+w%d&+W.&n\n\r",
+  snprintf(buf, MAX_STRING_LENGTH, "&+WArtifact '&+w%s&+W' &+w%d&+W swapped with artifact '&+w%s&+W' &+w%d&+W.&n\n\r",
     artishort1, vnum1, OBJ_SHORT(arti2), vnum2 );
   send_to_char( buf, ch );
 }
@@ -3623,9 +3623,9 @@ void arti_player_sql( P_char ch, char *arg )
     totalTime /= 60;
     hours = totalTime % 24;
 
-    sprintf( timeBuf, "%c%2ld:%02d:%02d", negTime ? '-' : ' ', totalTime / 24, hours, minutes );
+    snprintf(timeBuf, MAX_STRING_LENGTH, "%c%2ld:%02d:%02d", negTime ? '-' : ' ', totalTime / 24, hours, minutes );
 
-    sprintf(buf, "%s&n%-11s %-22s%s (#%d)\r\n", locationBuf, timeBuf, row[5], OBJ_SHORT(arti), vnum );
+    snprintf(buf, MAX_STRING_LENGTH, "%s&n%-11s %-22s%s (#%d)\r\n", locationBuf, timeBuf, row[5], OBJ_SHORT(arti), vnum );
     send_to_char( buf, ch );
     shownData = TRUE;
     extract_obj( arti, FALSE );

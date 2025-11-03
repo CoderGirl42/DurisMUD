@@ -436,21 +436,21 @@ int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
   // Handle anti-race - Thris dev crit.
   if( IS_THRIKREEN(pl) && skl == SKILL_DEVASTATING_CRITICAL )
   {
-    sprintf(buffer, "I cannot with good conscience teach this skill to a %s!\n", race_names_table[RACE_THRIKREEN].ansi );
+    snprintf(buffer, MAX_STRING_LENGTH, "I cannot with good conscience teach this skill to a %s!\n", race_names_table[RACE_THRIKREEN].ansi );
     send_to_char(buffer, pl);
     return TRUE;
   }
 
   if( pTeacher->deny_skill && GET_CHAR_SKILL(pl, pTeacher->deny_skill) )
   {
-    sprintf(buffer, "I cannot with good conscience teach this skill to someone who has already studied &+W%s&n!\n", skills[pTeacher->deny_skill].name);
+    snprintf(buffer, MAX_STRING_LENGTH, "I cannot with good conscience teach this skill to someone who has already studied &+W%s&n!\n", skills[pTeacher->deny_skill].name);
     send_to_char(buffer, pl);
     return TRUE;
   }
 
   if( pTeacher->pre_requisite && GET_CHAR_SKILL(pl, pTeacher->pre_requisite) < pTeacher->pre_req_lvl )
   {
-    sprintf(buffer, "You have not yet mastered the art of &+W%s&n!\r\n", skills[pTeacher->pre_requisite].name);
+    snprintf(buffer, MAX_STRING_LENGTH, "You have not yet mastered the art of &+W%s&n!\r\n", skills[pTeacher->pre_requisite].name);
     send_to_char(buffer, pl);
     return TRUE;
   }
@@ -465,7 +465,7 @@ int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
   if( pTeacher->pre_requisite
     && GET_CHAR_SKILL(pl, pTeacher->pre_requisite) < GET_CHAR_SKILL(pl, skl) + get_property("epic.skillGain", 10) )
   {
-    sprintf( buffer, "You must study &+W%s&n more before you can progress in &+W%s&n.\n",
+    snprintf(buffer, MAX_STRING_LENGTH, "You must study &+W%s&n more before you can progress in &+W%s&n.\n",
       skills[pTeacher->pre_requisite].name, skills[skl].name );
     send_to_char( buffer, pl );
     return TRUE;
@@ -482,14 +482,14 @@ int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
   // Handle anti-race - Thris dev crit.
   if( IS_THRIKREEN(pl) && skl == SKILL_DEVASTATING_CRITICAL )
   {
-    sprintf(buffer, "I cannot with good conscience teach this skill to a %s!\n", race_names_table[RACE_THRIKREEN].ansi );
+    snprintf(buffer, MAX_STRING_LENGTH, "I cannot with good conscience teach this skill to a %s!\n", race_names_table[RACE_THRIKREEN].ansi );
     send_to_char(buffer, pl);
     return TRUE;
   }
 
   if( pTeacher->deny_skill && GET_CHAR_SKILL(pl, pTeacher->deny_skill))
   {
-    sprintf(buffer, "I cannot with good conscience teach that skill to someone who has already studied &+W%s&n!\n", skills[pTeacher->deny_skill].name);
+    snprintf(buffer, MAX_STRING_LENGTH, "I cannot with good conscience teach that skill to someone who has already studied &+W%s&n!\n", skills[pTeacher->deny_skill].name);
     send_to_char(buffer, pl);
     return TRUE;
   }
@@ -518,7 +518,7 @@ int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
     return TRUE;
   }
 
-  sprintf( buffer, "$n takes you aside and teaches you the finer points of &+W%s&n.\n"
+  snprintf(buffer, MAX_STRING_LENGTH, "$n takes you aside and teaches you the finer points of &+W%s&n.\n"
     "&+cYou feel your skill in %s improving.&n\n", skills[skl].name, skills[skl].name );
   act( buffer, FALSE, ch, 0, pl, TO_VICT );
 
@@ -534,7 +534,7 @@ int epic_teacher(P_char ch, P_char pl, int cmd, char *arg)
     pl->only.pc->skills[skl].taught = pl->only.pc->skills[skl].learned = 100;
   if( pl->only.pc->skills[skl].taught == 100 )
   {
-    sprintf( buffer, "You have mastered &+W%s&N.\n", skills[skl].name );
+    snprintf(buffer, MAX_STRING_LENGTH, "You have mastered &+W%s&N.\n", skills[skl].name );
     send_to_char( buffer, pl );
   }
   do_save_silent(pl, 1); // Epic stats require a save.

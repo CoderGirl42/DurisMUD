@@ -923,7 +923,7 @@ void AddFrags(P_char ch, P_char victim)
 
   sql_modify_frags(victim, -loss);
   victim->only.pc->frags -= loss;
-  sprintf(buffer, "You just lost %.02f frags!\r\n", ((float) loss) / 100);
+  snprintf(buffer, MAX_STRING_LENGTH, "You just lost %.02f frags!\r\n", ((float) loss) / 100);
   send_to_char(buffer, victim);
   debug( "%s just fragged %s for %.02f/%.02f frags!", J_NAME(ch), J_NAME(victim), ((float) real_gain) / 100, ((float) loss) / 100);
   checkFragList(victim);
@@ -2575,7 +2575,7 @@ void die(P_char ch, P_char killer)
     {
       if(!mob_index[GET_RNUM(ch)].func.mob)
       {
-        sprintf(buf, "%s %d", ch->player.name, GET_RNUM(ch));
+        snprintf(buf, MAX_STRING_LENGTH, "%s %d", ch->player.name, GET_RNUM(ch));
         logit(LOG_STATUS, buf);
         logit(LOG_STATUS, "No special function for ACT_SPEC_DIE");
         REMOVE_BIT(ch->specials.act, ACT_SPEC_DIE);
@@ -3168,22 +3168,22 @@ void dam_message(double fdam, P_char ch, P_char victim, struct damage_messages *
   {
     snprintf(buf_char, 160, messages->attacker, victim_damage2[h_loop],
         weapon_damage[w_loop]);
-    sprintf(buf_vict, messages->victim, victim_damage[h_loop],
+    snprintf(buf_vict, MAX_STRING_LENGTH, messages->victim, victim_damage[h_loop],
         weapon_damage[w_loop]);
-    sprintf(buf_notvict, messages->room, victim_damage[h_loop],
+    snprintf(buf_notvict, MAX_STRING_LENGTH, messages->room, victim_damage[h_loop],
         weapon_damage[w_loop]);
   }
   else if ((msg_flags & DAMMSG_EFFECT))
   {
-    sprintf(buf_char, messages->attacker, victim_damage[h_loop]);
-    sprintf(buf_vict, messages->victim, victim_damage[h_loop]);
-    sprintf(buf_notvict, messages->room, victim_damage[h_loop]);
+    snprintf(buf_char, MAX_STRING_LENGTH, messages->attacker, victim_damage[h_loop]);
+    snprintf(buf_vict, MAX_STRING_LENGTH, messages->victim, victim_damage[h_loop]);
+    snprintf(buf_notvict, MAX_STRING_LENGTH, messages->room, victim_damage[h_loop]);
   }
   else if (msg_flags & DAMMSG_HIT)
   {
-    sprintf(buf_char, messages->attacker, weapon_damage[w_loop]);
-    sprintf(buf_vict, messages->victim, weapon_damage[w_loop]);
-    sprintf(buf_notvict, messages->room, weapon_damage[w_loop]);
+    snprintf(buf_char, MAX_STRING_LENGTH, messages->attacker, weapon_damage[w_loop]);
+    snprintf(buf_vict, MAX_STRING_LENGTH, messages->victim, weapon_damage[w_loop]);
+    snprintf(buf_notvict, MAX_STRING_LENGTH, messages->room, weapon_damage[w_loop]);
   }
   /* if (IS_PC(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) )
      strcat(buf_char, showdam);*/
@@ -4868,11 +4868,11 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
             if(!EYELESS(ch) &&
                 !affected_by_spell(ch, SPELL_BLINDNESS))
             {
-              sprintf(buf, "$N &+wmutters a prayer to %s, and then heavy &+Ldarkness &+wshrouds your vision.&n", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "$N &+wmutters a prayer to %s, and then heavy &+Ldarkness &+wshrouds your vision.&n", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_CHAR);
-              sprintf(buf, "$n &+wgropes around as if blind as $N mutters a prayer to %s.", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "$n &+wgropes around as if blind as $N mutters a prayer to %s.", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
-              sprintf(buf, "&+wYou send a prayer to %s, to shroud your foes in &+Ldarkness.&n", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+wYou send a prayer to %s, to shroud your foes in &+Ldarkness.&n", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_VICT);
               blind(victim, ch, 2 * PULSE_VIOLENCE);
               break;
@@ -4898,11 +4898,11 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
                 !IS_ELITE(ch) &&
                 !IS_GREATER_RACE(ch))
             {
-              sprintf(buf, "&+YBright light falls from above and&n $N &+Ysends forth divine power!&n", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+YBright light falls from above and&n $N &+Ysends forth divine power!&n", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_CHAR);
-              sprintf(buf, "&+w%s&+w sends a ray of light down upon&n $N.", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+w%s&+w sends a ray of light down upon&n $N.", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
-              sprintf(buf, "&+wYou send a prayer to %s&+w who instills you with &+Rwrath!&n", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+wYou send a prayer to %s&+w who instills you with &+Rwrath!&n", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_VICT);
               spell_silence(GET_LEVEL(victim), victim, 0, 0, ch, 0);
               break;
@@ -4946,21 +4946,21 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
           case 8:
             if(GET_HIT(victim) + 50 < GET_MAX_HIT(victim))
             {
-              sprintf(buf, "&+wBright light falls from above and&n $N&+w's wounds begin to heal!&n", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+wBright light falls from above and&n $N&+w's wounds begin to heal!&n", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_CHAR);
-              sprintf(buf, "&+w%s&+w sends a ray of light down upon&n $N&+w, healing some of $S wounds.", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+w%s&+w sends a ray of light down upon&n $N&+w, healing some of $S wounds.", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
-              sprintf(buf, "&+wYou send a prayer to %s&+w, who smiles upon you and mends some of your wounds.", get_god_name(victim));
+              snprintf(buf, MAX_STRING_LENGTH, "&+wYou send a prayer to %s&+w, who smiles upon you and mends some of your wounds.", get_god_name(victim));
               act(buf, FALSE, ch, 0, victim, TO_VICT);
               spell_heal(GET_LEVEL(victim), victim, 0, 0, victim, 0);
               break;
             }
           case 9:
-            sprintf(buf, "$N &+wmutters a prayer to %s &+was $e stares coldly at you.&n", get_god_name(victim));
+            snprintf(buf, MAX_STRING_LENGTH, "$N &+wmutters a prayer to %s &+was $e stares coldly at you.&n", get_god_name(victim));
             act(buf, FALSE, ch, 0, victim, TO_CHAR);
-            sprintf(buf, "&+w%s&+w sends a mighty wrath upon&n $n &+was &n$N&+w's prayers are heard.", get_god_name(victim));
+            snprintf(buf, MAX_STRING_LENGTH, "&+w%s&+w sends a mighty wrath upon&n $n &+was &n$N&+w's prayers are heard.", get_god_name(victim));
             act(buf, FALSE, ch, 0, victim, TO_NOTVICT);
-            sprintf(buf, "&+wYou send a prayer to %s&+w, who responds with a bolt from the Heavens!", get_god_name(victim));
+            snprintf(buf, MAX_STRING_LENGTH, "&+wYou send a prayer to %s&+w, who responds with a bolt from the Heavens!", get_god_name(victim));
             act(buf, FALSE, ch, 0, victim, TO_VICT);
             spell_full_harm(GET_LEVEL(victim), victim, 0, 0, ch, 0);
             break;
@@ -5982,7 +5982,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
       GET_LOWEST_HIT(victim) = GET_HIT(victim);
     }
 
-    sprintf(buffer, "&+w[Damage: %2d ] &n", (int) dam);
+    snprintf(buffer, MAX_STRING_LENGTH, "&+w[Damage: %2d ] &n", (int) dam);
 
     if( IS_PC(ch) && !IS_TRUSTED(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) )
     {
@@ -6486,7 +6486,7 @@ int chance_to_hit(P_char ch, P_char victim, int skill, P_obj weapon)
   }
 
 #ifdef FIGHT_DEBUG
-  sprintf(buf, "&+Rvictim ac: %d&n ", victim_ac);
+  snprintf(buf, MAX_STRING_LENGTH, "&+Rvictim ac: %d&n ", victim_ac);
   send_to_char(buf, ch);
 #endif
 
@@ -6742,11 +6742,11 @@ int anatomy_strike(P_char ch, P_char victim, int msg, struct damage_messages *me
     case 0:
       if( IS_HUMANOID(victim) )
       {
-        sprintf(messages->attacker, "Your%%s %s hits $N on the torso making $M grimace in pain.",
+        snprintf(messages->attacker, MAX_STRING_LENGTH, "Your%%s %s hits $N on the torso making $M grimace in pain.",
           attack_hit_text[msg].singular);
-        sprintf(messages->victim, "$n's%%s %s hits $N on the torso making $M grimace in pain.",
+        snprintf(messages->victim, MAX_STRING_LENGTH, "$n's%%s %s hits $N on the torso making $M grimace in pain.",
           attack_hit_text[msg].singular);
-        sprintf(messages->room, "$n's%%s %s hits $N on the torso making $M grimace in pain.",
+        snprintf(messages->room, MAX_STRING_LENGTH, "$n's%%s %s hits $N on the torso making $M grimace in pain.",
           attack_hit_text[msg].singular);
         messages->type = DAMMSG_HIT_EFFECT;
       }
@@ -6754,11 +6754,11 @@ int anatomy_strike(P_char ch, P_char victim, int msg, struct damage_messages *me
     case 1:
       if( !LEGLESS(victim) )
       {
-        sprintf(messages->attacker, "Your%%s %s hits $N across the leg, resulting in a limp stride.",
+        snprintf(messages->attacker, MAX_STRING_LENGTH, "Your%%s %s hits $N across the leg, resulting in a limp stride.",
           attack_hit_text[msg].singular);
-        sprintf(messages->victim, "$n's%%s %s hits $N across the leg, resulting in a limp stride.",
+        snprintf(messages->victim, MAX_STRING_LENGTH, "$n's%%s %s hits $N across the leg, resulting in a limp stride.",
           attack_hit_text[msg].singular);
-        sprintf(messages->room, "$n's%%s %s hits $N across the leg, resulting in a limp stride.",
+        snprintf(messages->room, MAX_STRING_LENGTH, "$n's%%s %s hits $N across the leg, resulting in a limp stride.",
           attack_hit_text[msg].singular);
         messages->type = DAMMSG_HIT_EFFECT;
         GET_VITALITY(victim) -= 5;
@@ -6776,11 +6776,11 @@ int anatomy_strike(P_char ch, P_char victim, int msg, struct damage_messages *me
     case 3:
       if( IS_HUMANOID(victim) )
       {
-        sprintf(messages->attacker, "Your%%s %s reached $N's arm severing tendons and muscles.",
+        snprintf(messages->attacker, MAX_STRING_LENGTH, "Your%%s %s reached $N's arm severing tendons and muscles.",
           attack_hit_text[msg].singular);
-        sprintf(messages->victim, "$n's%%s %s reached your arm severing tendons and muscles.",
+        snprintf(messages->victim, MAX_STRING_LENGTH, "$n's%%s %s reached your arm severing tendons and muscles.",
           attack_hit_text[msg].singular);
-        sprintf(messages->room, "$n's%%s %s reached $N's arm severing tendons and muscles.",
+        snprintf(messages->room, MAX_STRING_LENGTH, "$n's%%s %s reached $N's arm severing tendons and muscles.",
           attack_hit_text[msg].singular);
         messages->type = DAMMSG_HIT_EFFECT;
         af.duration = victim->specials.combat_tics + 1;
@@ -6819,11 +6819,11 @@ int anatomy_strike(P_char ch, P_char victim, int msg, struct damage_messages *me
     case 6:
       if( IS_HUMANOID(victim) )
       {
-        sprintf(messages->attacker, "Your%%s %s reached $N's ear causing a gush of blood.",
+        snprintf(messages->attacker, MAX_STRING_LENGTH, "Your%%s %s reached $N's ear causing a gush of blood.",
           attack_hit_text[msg].singular);
-        sprintf(messages->victim, "$n's%%s %s reached your ear causing a gush of blood.",
+        snprintf(messages->victim, MAX_STRING_LENGTH, "$n's%%s %s reached your ear causing a gush of blood.",
           attack_hit_text[msg].singular);
-        sprintf(messages->room, "$n's%%s %s reached $N's ear causing a gush of blood.",
+        snprintf(messages->room, MAX_STRING_LENGTH, "$n's%%s %s reached $N's ear causing a gush of blood.",
           attack_hit_text[msg].singular);
         messages->type = DAMMSG_HIT_EFFECT;
         af.duration = 10 * PULSE_VIOLENCE;
@@ -6837,9 +6837,9 @@ int anatomy_strike(P_char ch, P_char victim, int msg, struct damage_messages *me
 
 regular:
 
-  sprintf(messages->attacker, "Your%%s %s %%s.", attack_hit_text[msg].singular);
-  sprintf(messages->victim, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
-  sprintf(messages->room, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
+  snprintf(messages->attacker, MAX_STRING_LENGTH, "Your%%s %s %%s.", attack_hit_text[msg].singular);
+  snprintf(messages->victim, MAX_STRING_LENGTH, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
+  snprintf(messages->room, MAX_STRING_LENGTH, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
   messages->type = DAMMSG_HIT_EFFECT | DAMMSG_TERSE;
 
   return dam;
@@ -7561,31 +7561,31 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
       dam += GET_LEVEL(ch);
     }
 
-    sprintf(attacker_msg, "You feel a powerful rush of &+rAnG&+RE&+rr&n as your%%s %s %%s.", attack_hit_text[msg].singular);
-    sprintf(victim_msg, "A sense of &+RWi&+rLD H&+RAt&+rE &nsurrounds $n as $s%%s %s %%s.", attack_hit_text[msg].singular);
-    sprintf(room_msg, "A sense of &+RWi&+rLD H&+RAt&+rE &nsurrounds $n as $s%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "You feel a powerful rush of &+rAnG&+RE&+rr&n as your%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(victim_msg, MAX_STRING_LENGTH, "A sense of &+RWi&+rLD H&+RAt&+rE &nsurrounds $n as $s%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(room_msg, MAX_STRING_LENGTH, "A sense of &+RWi&+rLD H&+RAt&+rE &nsurrounds $n as $s%%s %s %%s.", attack_hit_text[msg].singular);
     messages.type = DAMMSG_HIT_EFFECT;
   }
   else if (notch_skill(victim, SKILL_BOILING_BLOOD, get_property("skill.notch.defensive", 17))
     || GET_CHAR_SKILL(victim, SKILL_BOILING_BLOOD) / 10 > number(1, 100) )
   {
-    sprintf(attacker_msg, "$N is so overcome with bloodlust, your %s barely grazes $M!", attack_hit_text[msg].singular);
-    sprintf(victim_msg, "You are so overcome with bloodlust, $n's %s barely grazes you!", attack_hit_text[msg].singular);
-    sprintf(room_msg, "$N is so overcome with bloodlust, $n's %s barely grazes $M!", attack_hit_text[msg].singular);
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "$N is so overcome with bloodlust, your %s barely grazes $M!", attack_hit_text[msg].singular);
+    snprintf(victim_msg, MAX_STRING_LENGTH, "You are so overcome with bloodlust, $n's %s barely grazes you!", attack_hit_text[msg].singular);
+    snprintf(room_msg, MAX_STRING_LENGTH, "$N is so overcome with bloodlust, $n's %s barely grazes $M!", attack_hit_text[msg].singular);
     dam = 1;
   }
   else if( get_linked_char(ch, LNK_FLANKING) == victim )
   {
-    sprintf(attacker_msg, "You %%s as your%%s %s reaches $S unprotected flank.", attack_hit_text[msg].singular);
-    sprintf(victim_msg, "$n %%s as $s%%s %s reaches your unprotected flank.", attack_hit_text[msg].singular);
-    sprintf(room_msg, "$n %%s as $s%%s %s reaches $S unprotected flank.", attack_hit_text[msg].singular);
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "You %%s as your%%s %s reaches $S unprotected flank.", attack_hit_text[msg].singular);
+    snprintf(victim_msg, MAX_STRING_LENGTH, "$n %%s as $s%%s %s reaches your unprotected flank.", attack_hit_text[msg].singular);
+    snprintf(room_msg, MAX_STRING_LENGTH, "$n %%s as $s%%s %s reaches $S unprotected flank.", attack_hit_text[msg].singular);
     messages.type = DAMMSG_EFFECT_HIT;
   }
   else if (get_linked_char(ch, LNK_CIRCLING) == victim)
   {
-    sprintf(attacker_msg, "$N screams in pain as your %s tears into $S flesh", attack_hit_text[msg].singular);
-    sprintf(victim_msg, "You scream in pain as $n's %s tears into your flesh.", attack_hit_text[msg].singular);
-    sprintf(room_msg, "$N screams in pain as $n's %s tears into $S flesh.", attack_hit_text[msg].singular);
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "$N screams in pain as your %s tears into $S flesh", attack_hit_text[msg].singular);
+    snprintf(victim_msg, MAX_STRING_LENGTH, "You scream in pain as $n's %s tears into your flesh.", attack_hit_text[msg].singular);
+    snprintf(room_msg, MAX_STRING_LENGTH, "$N screams in pain as $n's %s tears into $S flesh.", attack_hit_text[msg].singular);
     messages.type = DAMMSG_EFFECT_HIT;
   }
   /* Set property skill.anatomy.ratio to determine how often to check anatomy_strike().
@@ -7606,9 +7606,9 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
   }
   else
   {
-    sprintf(attacker_msg, "Your%%s %s %%s.", attack_hit_text[msg].singular);
-    sprintf(victim_msg, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
-    sprintf(room_msg, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "Your%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(victim_msg, MAX_STRING_LENGTH, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
+    snprintf(room_msg, MAX_STRING_LENGTH, "$n's%%s %s %%s.", attack_hit_text[msg].singular);
     messages.type = DAMMSG_HIT_EFFECT | DAMMSG_TERSE;
   }
 
@@ -8947,7 +8947,7 @@ let = 'Y';
 else
 let = 'R';
 real = real_mobile0(tr->vnum);
-sprintf(Gbuf1 + strlen(Gbuf1),
+snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
     "&+W(&n&+%c%2d.%02d&+W)&n %s\r\n", let,
     tr->kills / 100, tr->kills % 100,
     real ? mob_index[real].desc2 : "Unknown");
@@ -9796,18 +9796,18 @@ void perform_violence(void)
     appear(ch);
     appear(opponent);
 
-    sprintf(GBuf1, "%sYou attack $N.%s [&+R%d&n hits]",
+    snprintf(GBuf1, MAX_STRING_LENGTH, "%sYou attack $N.%s [&+R%d&n hits]",
         (IS_PC(ch) &&
          IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G-=[&n" : "",
         (IS_PC(ch) &&
          IS_SET(ch->specials.act2, PLR2_BATTLEALERT)) ? "&+G]=-&n" : "",
         num_hits);
     act(GBuf1, FALSE, ch, 0, opponent, TO_CHAR | ACT_TERSE);
-    sprintf( GBuf1, "%s$n attacks you.%s [&+R%d&n hits]",
+    snprintf(GBuf1, MAX_STRING_LENGTH, "%s$n attacks you.%s [&+R%d&n hits]",
       (IS_PC( opponent ) && IS_SET( opponent->specials.act2, PLR2_BATTLEALERT )) ? "&+R-=[&n" : "",
       (IS_PC( opponent ) && IS_SET( opponent->specials.act2, PLR2_BATTLEALERT )) ? "&+R]=-&n" : "", num_hits);
     act(GBuf1, FALSE, ch, 0, opponent, TO_VICT | ACT_TERSE);
-    sprintf(GBuf1, "$n attacks $N. [&+R%d&n hits]", num_hits);
+    snprintf(GBuf1, MAX_STRING_LENGTH, "$n attacks $N. [&+R%d&n hits]", num_hits);
     act(GBuf1, FALSE, ch, 0, opponent, TO_NOTVICT | ACT_TERSE);
   }
 
@@ -10398,7 +10398,7 @@ bool critical_attack(P_char ch, P_char victim, int msg)
           attack_hit_text[msg].plural);
       act(victim_msg, TRUE, ch, NULL, victim, TO_VICT);
 
-      sprintf(room_msg, "$n grins slightly as $s %s drops $N's defenses!&N",
+      snprintf(room_msg, MAX_STRING_LENGTH, "$n grins slightly as $s %s drops $N's defenses!&N",
           attack_hit_text[msg].singular);
       act(room_msg, TRUE, ch, NULL, victim, TO_NOTVICT);
 
@@ -10410,15 +10410,15 @@ bool critical_attack(P_char ch, P_char victim, int msg)
 
   if(random == 3)
   {
-    sprintf(attacker_msg, "You follow up your %s with a surprise attack!&N",
+    snprintf(attacker_msg, MAX_STRING_LENGTH, "You follow up your %s with a surprise attack!&N",
         attack_hit_text[msg].singular);
     act(attacker_msg, TRUE, ch, NULL, victim, TO_CHAR);
 
-    sprintf(victim_msg, "$n swiftly follows up his devastating %s with a surprise attack!&N",
+    snprintf(victim_msg, MAX_STRING_LENGTH, "$n swiftly follows up his devastating %s with a surprise attack!&N",
         attack_hit_text[msg].singular);
     act(victim_msg, TRUE, ch, NULL, victim, TO_VICT);
 
-    sprintf(room_msg, "$n uses the momentum of $s previous strike against $N to land another attack!&N",
+    snprintf(room_msg, MAX_STRING_LENGTH, "$n uses the momentum of $s previous strike against $N to land another attack!&N",
         attack_hit_text[msg].singular);
     hit(ch, victim, ch->equipment[SECONDARY_WEAPON]);
 

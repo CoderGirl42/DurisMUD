@@ -283,211 +283,211 @@ void do_fraglist(P_char ch, char *arg, int cmd)
     }
     else if (strstr("ogre", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.ogre");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.ogre");
     }
     else if (strstr("troll", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.troll");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.troll");
     }
     else if (strstr("drider", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.drider");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.drider");
     }
     else if (strstr("half elf", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.half-elf");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.half-elf");
     }
     else if (strstr("half-elf", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.half-elf");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.half-elf");
     }
     else if (strstr("orc", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.orc");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.orc");
     }
     else if (strstr("thrikreen", arg) || strstr("thri-kreen", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.thri-kreen");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.thri-kreen");
     }
     else if (strstr("centaur", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.centaur");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.centaur");
     }
     else if (strstr("githyanki", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.githyanki");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.githyanki");
     }
     else if (strstr("minotaur", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.minotaur");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.minotaur");
     }
     else if (strstr("goblin", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.goblin");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.goblin");
     }
     // else if (strstr("harpy", arg))
     // {
-      // sprintf(filename, "Fraglists/fraglist.harpy");
+      // snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.harpy");
     // }
     // else if (strstr("gargoyle", arg))
     // {
-      // sprintf(filename, "Fraglists/fraglist.gargoyle");
+      // snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.gargoyle");
     // }
     else if (strstr("orog", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.orog");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.orog");
     }
     else if (strstr("githzerai", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.githzerai");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.githzerai");
     }
     else if (strstr("agathinon", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.agathinon");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.agathinon");
     }
     else if (strstr("eladrin", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.eladrin");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.eladrin");
     }
     else if (strstr("pillithid", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.planetbound_illithid");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.planetbound_illithid");
     }
     else if (strstr("wood elf", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.wood_elf");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.wood_elf");
     }
     else if (strstr("kobold", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.kobold");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.kobold");
     }
     else if (strstr("kuo toa", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.kuo_toa");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.kuo_toa");
     }
     else if (strstr("firbolg", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.firbolg");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.firbolg");
     }
     else if (strstr("warrior", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.warrior");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.warrior");
     }
     else if (strstr("ranger", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.ranger");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.ranger");
     }
     else if (strstr("paladin", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.paladin");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.paladin");
     }
     else if (strstr("psionicist", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.psionicist");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.psionicist");
     }
     else if (strstr("anti-paladin", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.anti-paladin");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.anti-paladin");
     }
     else if (strstr("cleric", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.cleric");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.cleric");
     }
     else if (strstr("monk", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.monk");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.monk");
     }
     else if (strstr("unholy-piper", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.unholy-piper");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.unholy-piper");
     }
     else if (strstr("shaman", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.shaman");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.shaman");
     }
     else if (strstr("sorcerer", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.sorcerer");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.sorcerer");
     }
     else if (strstr("necromancer", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.necromancer");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.necromancer");
     }
     else if (strstr("conjurer", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.conjurer");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.conjurer");
     }
     else if (strstr("summoner", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.summoner");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.summoner");
     }
     else if (strstr("rogue", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.rogue");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.rogue");
     }
     else if (strstr("assassin", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.assassin");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.assassin");
     }
     else if (strstr("mercenary", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.mercenary");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.mercenary");
     }
     else if (strstr("bard", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.bard");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.bard");
     }
     else if (strstr("thief", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.thief");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.thief");
     }
     // else if (strstr("warlock", arg))
     // {
-      // sprintf(filename, "Fraglists/fraglist.warlock");
+      // snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.warlock");
     // }
     else if (strstr("druid", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.druid");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.druid");
     }
     else if (strstr("blighter", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.blighter");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.blighter");
     }
     else if (strstr("reaver", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.reaver");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.reaver");
     }
     else if (strstr("illusionist", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.illusionist");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.illusionist");
     }
     // else if (strstr("alchemist", arg))
     // {
-      // sprintf(filename, "Fraglists/fraglist.alchemist");
+      // snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.alchemist");
     // }
     else if (strstr("berserker", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.berserker");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.berserker");
     }
     // else if (strstr("mindflayer", arg))
     // {
-      // sprintf(filename, "Fraglists/fraglist.mindflayer");
+      // snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.mindflayer");
     // }
     else if (strstr("dreadlord", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.dreadlord");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.dreadlord");
     }
     else if (strstr("ethermancer", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.ethermancer");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.ethermancer");
     }
     else if (strstr("avenger", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.avenger");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.avenger");
     }
     else if (strstr("theurgist", arg))
     {
-      sprintf(filename, "Fraglists/fraglist.theurgist");
+      snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.theurgist");
     }
     else if (strstr("ship", arg))
     {
@@ -507,18 +507,18 @@ void do_fraglist(P_char ch, char *arg, int cmd)
     }
   }
   else
-    sprintf(filename, "Fraglists/fraglist.normal");
+    snprintf(filename, MAX_STRING_LENGTH, "Fraglists/fraglist.normal");
 
 
   if( !(fragList = fopen(filename, "rt")) )
   {
-    sprintf(name, "Couldn't open fraglist: %s\r\n", filename);
+    snprintf(name, MAX_STRING_LENGTH, "Couldn't open fraglist: %s\r\n", filename);
     send_to_char( "&+RError: Couldn't open fraglist.&n\n", ch );
     logit(LOG_DEBUG, name);
     return;
   }
 
-//  sprintf(buf, "\r\n&+WTop Fraggers\r\n\r\n");
+//  snprintf(buf, MAX_STRING_LENGTH, "\r\n&+WTop Fraggers\r\n\r\n");
   get_level_cap_info( &cap_frags, &cap_racewar, &cap_level, &cap_timer );
   cap_others = sql_level_cap( (cap_racewar == RACEWAR_GOOD) ? RACEWAR_EVIL : RACEWAR_GOOD );
   cap_timer -= time(NULL);
@@ -538,7 +538,7 @@ void do_fraglist(P_char ch, char *arg, int cmd)
     days = cap_timer;
   }
 
-  sprintf(buf, "&+YFrag Level Cap:&+w %d - &+%c%s&n, &+w%d&N - Others, &+YTop Frag Amount: &+w%d.%02d\n&+YTimer:&+w %02d:%02d:%02d:%02d &+YFrags needed:&+w %.2f&n\n\n&+WTop Fraggers\n\n",
+  snprintf(buf, MAX_STRING_LENGTH, "&+YFrag Level Cap:&+w %d - &+%c%s&n, &+w%d&N - Others, &+YTop Frag Amount: &+w%d.%02d\n&+YTimer:&+w %02d:%02d:%02d:%02d &+YFrags needed:&+w %.2f&n\n\n&+WTop Fraggers\n\n",
     cap_level, racewar_color[cap_racewar].color, racewar_color[cap_racewar].name, cap_others, (int)(cap_frags / 100),
     (int)(cap_frags % 100), days, hours, mins, secs, LEVEL_TO_FRAGS(cap_level + 1) );
 
@@ -549,9 +549,9 @@ void do_fraglist(P_char ch, char *arg, int cmd)
     fragnum = frags;
     fragnum /= 100.0;
 
-    //sprintf(buf2, "   &+Y%-30s             &+R%6d.%02d\r\n",
+    //snprintf(buf2, MAX_STRING_LENGTH, "   &+Y%-30s             &+R%6d.%02d\r\n",
     //        name, frags/100, frags %100);
-    sprintf(buf2, "   &+Y%-30s             &+R% 6.2f\r\n", name, fragnum);
+    snprintf(buf2, MAX_STRING_LENGTH, "   &+Y%-30s             &+R% 6.2f\r\n", name, fragnum);
     strcat(buf, buf2);
   }
 
@@ -564,8 +564,8 @@ void do_fraglist(P_char ch, char *arg, int cmd)
     fragnum = frags;
     fragnum /= 100.0;
 
-    //sprintf(buf2, "   &+Y%-30s             &+R%6d.%02d\r\n",
-    sprintf(buf2, "   &+Y%-30s             &+R% 6.2f\r\n", name, fragnum);
+    //snprintf(buf2, MAX_STRING_LENGTH, "   &+Y%-30s             &+R%6d.%02d\r\n",
+    snprintf(buf2, MAX_STRING_LENGTH, "   &+Y%-30s             &+R% 6.2f\r\n", name, fragnum);
     //name, frags / 100, (-1 * (frags % 100)));
     strcat(buf, buf2);
   }

@@ -622,12 +622,12 @@ int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument)
         playerHand->ReceiveCard(theDeck->DealACard());
         playerHand->ReceiveCard(theDeck->DealACard());
 
-        sprintf(buf, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
         send_to_char( buf, ch );
-        sprintf(buf, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
         send_to_char( buf, ch );
 
-        sprintf(buf, "&+yThe &+bm&+Ba&+Cg&+Wi&+Cc&+Ba&+bl &+bf&+Bl&+Cam&+Be&+bs&+y flicker over the &+wdeck&+y once more, and you realise that you can choose to either &+Whit&+y, &+Wstay&+y or &+Wfold&+y simply by telling the cards what you wish to do.&n\n");
+        snprintf(buf, MAX_STRING_LENGTH, "&+yThe &+bm&+Ba&+Cg&+Wi&+Cc&+Ba&+bl &+bf&+Bl&+Cam&+Be&+bs&+y flicker over the &+wdeck&+y once more, and you realise that you can choose to either &+Whit&+y, &+Wstay&+y or &+Wfold&+y simply by telling the cards what you wish to do.&n\n");
         act( buf, FALSE, ch, obj, ch, TO_CHAR);
 
         obj->value[0] = BJ_POSTDEAL;
@@ -647,14 +647,14 @@ int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument)
         act (STR_CARDS_FAILED, FALSE, ch, obj, obj, TO_CHAR);
       }
       // Show player's hand.
-      sprintf(buf, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
+      snprintf(buf, MAX_STRING_LENGTH, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
       send_to_char( buf, ch );
 
       // Dealer's turn to draw.
       send_to_char("&+yThe &+bm&+Ba&+Cg&+Wi&+Cc&+Ba&+bl &+bf&+Bl&+Cam&+Be&+bs&+y fly over the &+wdeck&+y as the &+CDealer&+y begins his &+Yturn!&n.\n", ch);
       act( "\n&+yThe &+CDealer&+y turns over the other card...&n", FALSE, ch, obj, ch, TO_CHAR );
       dealerHand->ReceiveCard(theDeck->DealACard());
-      sprintf(buf, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
+      snprintf(buf, MAX_STRING_LENGTH, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
       send_to_char( buf, ch );
 
       obj->value[0] = BJ_DEALERSTURN;
@@ -698,15 +698,15 @@ int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument)
       act("&+yA card leaves the &+wdeck&+y and &+Yreveals&+y itself.&n", FALSE, ch, obj, ch, TO_CHAR);
       playerHand->ReceiveCard(theDeck->DealACard());
 
-      sprintf(buf, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
+      snprintf(buf, MAX_STRING_LENGTH, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
       send_to_char( buf, ch );
-      sprintf(buf, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
+      snprintf(buf, MAX_STRING_LENGTH, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
       send_to_char( buf, ch );
       obj->value[0] = BJ_POSTHIT;
 
       if( playerHand->BlackjackValue() > 21 )
       {
-        sprintf(buf, "&+yYou &+RBUSTED&+y with a total of %d. Sorry, maybe try again later?.\n", playerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yYou &+RBUSTED&+y with a total of %d. Sorry, maybe try again later?.\n", playerHand->BlackjackValue() );
         send_to_char(buf, ch);
         act( STR_CARDS_BUST, FALSE, ch, obj, ch, TO_CHAR);
         logit(LOG_CARDGAMES, "%s lost %d %s at blackjack v2.0.", J_NAME(ch), obj->value[1], (obj->value[2]==0)?"copper":
@@ -727,13 +727,13 @@ int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument)
 
       if( IS_TRUSTED(ch) )
       {
-        sprintf(buf, "Game Status is: %d. \n", obj->value[0]);
+        snprintf(buf, MAX_STRING_LENGTH, "Game Status is: %d. \n", obj->value[0]);
         send_to_char(buf, ch);
       }
       // If we're pre-bid, then no sense in showing it (to mortals).
       if( IS_TRUSTED(ch) || obj->value[0] != BJ_PREBID )
       {
-        sprintf( buf, "The current bid is: %d %s.\n\r", obj->value[1],
+        snprintf(buf, MAX_STRING_LENGTH, "The current bid is: %d %s.\n\r", obj->value[1],
           (obj->value[2]==0) ? STR_COPP : (obj->value[2]==1) ? STR_SILV :
           (obj->value[2]==2) ? STR_GOLD : (obj->value[2]==3) ? STR_PLAT : "&=BRWTFs&n" );
         send_to_char( buf, ch );
@@ -751,18 +751,18 @@ int blackjack_table(P_obj obj, P_char ch, int cmd, char *argument)
       if( obj->value[0] ==  BJ_POSTDEAL || obj->value[0] == BJ_POSTHIT )
       {
         send_to_char( "&+yThe &+Ygame&+y is on!&n\n\r", ch );
-        sprintf(buf, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
         send_to_char( buf, ch );
-        sprintf(buf, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
         send_to_char( buf, ch );
         return TRUE;
       }
       if( obj->value[0] ==  BJ_DEALERSTURN )
       {
         send_to_char( "&+yThe &+Ydealer&+y is thinking...&n\n\r", ch );
-        sprintf(buf, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yDealer shows: %s.\n\r&+yDealer Total: &+Y%d&+y.&n\n\r", dealerHand->Display(), dealerHand->BlackjackValue() );
         send_to_char( buf, ch );
-        sprintf(buf, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
+        snprintf(buf, MAX_STRING_LENGTH, "&+yPlayer shows: %s.\n\r&+yPlayer Total: &+Y%d&+y.&n\n\r", playerHand->Display(), playerHand->BlackjackValue() );
         send_to_char( buf, ch );
         return TRUE;
       }

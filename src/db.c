@@ -3708,7 +3708,7 @@ void reset_zone(int zone, int force_item_repop)
           GET_BIRTHPLACE(mob) = world[ZCMD.arg3].number;
           apply_zone_modifier(mob);
           char_to_room(mob, ZCMD.arg3, -2);
-          sprintf(buf, "%s", FirstWord(GET_NAME(mob)));
+          snprintf(buf, MAX_STRING_LENGTH, "%s", FirstWord(GET_NAME(mob)));
           if (!IS_SET(mob->specials.act, ACT_SENTINEL))
             SET_BIT(mob->specials.act, ACT_SENTINEL);
           if (!IS_SET(mob->specials.act, ACT_MOUNT))

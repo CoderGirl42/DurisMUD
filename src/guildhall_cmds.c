@@ -514,14 +514,14 @@ void do_construct_golem(P_char ch, char *arg)
   {
     if(GET_MONEY(ch) < plat_cost)
     {
-      sprintf(buff, "You don't have enough money on you - it costs %s&n to build that type of golem.\r\n", coin_stringv(plat_cost));
+      snprintf(buff, MAX_STRING_LENGTH, "You don't have enough money on you - it costs %s&n to build that type of golem.\r\n", coin_stringv(plat_cost));
       send_to_char(buff, ch);
       return;
     }
 
     if(GET_ASSOC(ch)->get_construction() < cp_cost)
     {
-      sprintf(buff, "Your guild doesn't yet have enough &+Wconstruction points&n - it costs %d to build that type of golem.\r\n", cp_cost);
+      snprintf(buff, MAX_STRING_LENGTH, "Your guild doesn't yet have enough &+Wconstruction points&n - it costs %d to build that type of golem.\r\n", cp_cost);
       send_to_char(buff, ch);
       return;
     }
@@ -677,14 +677,14 @@ void do_construct_upgrade(P_char ch, char *arg)
   {
     if(GET_MONEY(ch) < plat_cost)
     {
-      sprintf(buff, "You don't have enough money on you - it costs %s&n for that room upgrade.\r\n", coin_stringv(plat_cost));
+      snprintf(buff, MAX_STRING_LENGTH, "You don't have enough money on you - it costs %s&n for that room upgrade.\r\n", coin_stringv(plat_cost));
       send_to_char(buff, ch);
       return;
     }    
     
     if(GET_ASSOC(ch)->get_construction() < cp_cost)
     {
-      sprintf(buff, "Your guild doesn't yet have enough &+Wconstruction points&n - it costs %d for that room upgrade.\r\n", cp_cost);
+      snprintf(buff, MAX_STRING_LENGTH, "Your guild doesn't yet have enough &+Wconstruction points&n - it costs %d for that room upgrade.\r\n", cp_cost);
       send_to_char(buff, ch);
       return;
     }    

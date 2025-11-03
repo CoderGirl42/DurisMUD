@@ -304,7 +304,7 @@ void give_reward(struct quest_complete_data *qcp, P_char mob, P_char pl)
       }
       if (pl->only.pc->skills[gp->number].learned < 1)
       {
-        sprintf(Gbuf1, "$n teaches you '%s'.", skills[gp->number].name);
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "$n teaches you '%s'.", skills[gp->number].name);
         act(Gbuf1, FALSE, mob, 0, pl, TO_VICT);
         act("$n teaches $N a new skill.", FALSE, mob, 0, pl, TO_NOTVICT);
         pl->only.pc->skills[gp->number].learned = 1;
@@ -313,7 +313,7 @@ void give_reward(struct quest_complete_data *qcp, P_char mob, P_char pl)
     case QUEST_GOAL_EXP:
 			/*
 	  if( (temp = sql_quest_trophy(mob)) > 1){
-	   sprintf(Gbuf1, "$n says 'This quest is very commonly done, reward is currently very low.'\r\n");
+	   snprintf(Gbuf1, MAX_STRING_LENGTH, "$n says 'This quest is very commonly done, reward is currently very low.'\r\n");
            act(Gbuf1, FALSE, mob, 0, pl, TO_VICT);
 		}  else temp = 1;
 			*/
@@ -978,7 +978,7 @@ void do_reload_quest(P_char ch, char *arg, int cmd)
 {
   P_char   i;
 
-  sprintf(Gbuf2, "Reload the quests by %s.", ch->player.name);
+  snprintf(Gbuf2, MAX_STRING_LENGTH, "Reload the quests by %s.", ch->player.name);
   logit(LOG_WIZ, Gbuf2);
   for (i = character_list; i; i = i->next)
     if (IS_PC(i))

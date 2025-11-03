@@ -549,19 +549,19 @@ void create_zone(int theme, int map_room1, int map_room2, int level_range,
     else
     {
       if (i > 1 && i < 10)
-        sprintf(buf1,
+        snprintf(buf1, MAX_STRING_LENGTH,
                 "&+WA huge sign with the engraving '&+RWarning, &+Lthis zone should be a challenge for lowbie groups&+W'&n ",
                 i * 2);
       else if (i > 9 && i < 20)
-        sprintf(buf1,
+        snprintf(buf1, MAX_STRING_LENGTH,
                 "&+WA huge sign with the engraving '&+RWarning, &+Lthis zone should be a challenge for mid leveled groups&+W'&n ",
                 i * 2);
       else if (i > 19 && i < 30)
-        sprintf(buf1,
+        snprintf(buf1, MAX_STRING_LENGTH,
                 "&+WA huge sign with the engraving '&+RWarning, &+Lthis zone should be a challenge for &+rsmall&+L high leveled groups towards the end&+W'&n ",
                 i * 2);
       else
-        sprintf(buf1,
+        snprintf(buf1, MAX_STRING_LENGTH,
                 "&+WA huge sign with the engraving '&+RWarning, &+Lthis zone should be a challenge for &+RBIG&+L high leveled groups towards the end&+W'&n ",
                 i * 2);
 

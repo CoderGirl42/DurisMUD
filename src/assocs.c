@@ -206,7 +206,7 @@ void Guild::add_frags( P_char ch, long new_frags )
   // new frag leader in guild?
   if( GET_FRAGS(ch) > frags.top_frags )
   {
-    sprintf( frags.topfragger, "%s", GET_NAME(ch) );
+    snprintf(frags.topfragger, MAX_STRING_LENGTH, "%s", GET_NAME(ch) );
     frags.top_frags = GET_FRAGS(ch);
   }
 
@@ -244,7 +244,7 @@ void show_guild_frags( P_char ch )
     // Insert the new entry into the open slot.
     strcpy( gfrag_list[i].guild_name, guild->get_name().c_str() );
     gfrag_list[i].tot_frags = guild->get_frags();
-    sprintf( gfrag_list[i].top_fragger, "%s", guild->get_top_fragger() );
+    snprintf(gfrag_list[i].top_fragger, MAX_STRING_LENGTH, "%s", guild->get_top_fragger() );
     gfrag_list[i].top_frags = guild->get_top_frags();
     gfrag_list[i].num_members = guild->get_num_members();
     guild_count++;
@@ -413,7 +413,7 @@ Guild::Guild( char *_name, unsigned int _racewar, unsigned int _id_number, unsig
   members = NULL;
   for( int i = 0; i < ASC_NUM_RANKS; i++ )
   {
-    sprintf( titles[i], "%s", guild_default_titles[i] );
+    snprintf(titles[i], MAX_STRING_LENGTH, "%s", guild_default_titles[i] );
   }
 }
 
@@ -435,7 +435,7 @@ Guild::Guild( )
   members = NULL;
   for( int i = 0; i < ASC_NUM_RANKS; i++ )
   {
-    sprintf( titles[i], "%s", guild_default_titles[i] );
+    snprintf(titles[i], MAX_STRING_LENGTH, "%s", guild_default_titles[i] );
   }
 }
 
@@ -534,7 +534,7 @@ bool Guild::load_guild( int guild_num )
     fgets( buf, ASC_MAX_STR_RANK + 1, file );
     // Cut the carriage return off.
     buf[strlen(buf) - 1] = '\0';
-    sprintf( new_guild->titles[i], "%s", buf );
+    snprintf(new_guild->titles[i], MAX_STRING_LENGTH, "%s", buf );
   }
   // Then get the guild bits, prestige and construction.
   fgets( buf, MAX_STR_NORMAL, file );
@@ -550,7 +550,7 @@ bool Guild::load_guild( int guild_num )
   while( fscanf(file, "%s %u %u\n", mem_name, &mem_bits, &mem_debt) == 3 )
   {
     new_member = new guild_member();
-    sprintf( new_member->name, "%s", mem_name );
+    snprintf(new_member->name, MAX_STRING_LENGTH, "%s", mem_name );
     new_member->bits = mem_bits;
     new_member->debt = mem_debt;
     new_member->next = NULL;
@@ -970,21 +970,21 @@ void Guild::display( P_char member )
   {
     for( int i = 0; i < ASC_NUM_RANKS; i++ )
     {
-      sprintf(buf + strlen(buf), "%-8s : %s&n\n", standard_names[i], titles[i]);
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%-8s : %s&n\n", standard_names[i], titles[i]);
     }
     strcat( buf, "\n" );
   }
 
-  sprintf( buf + strlen(buf), "Type: %s%s%s%s.\n", (( gbits == 0 ) ? "normal " : ""),
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "Type: %s%s%s%s.\n", (( gbits == 0 ) ? "normal " : ""),
     (( gbits & A_CHALL ) ? "challenge " : ""), (( gbits & A_HIDETITLE ) ? "hidden_titles " : ""),
     (( gbits & A_HIDESUBTITLE ) ? "hidden_subtitles " : "") );
 
-  sprintf( buf + strlen(buf), "Prestige:            &+W%lu&n.\nConstruction points: &+W%lu&n.\n"
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "Prestige:            &+W%lu&n.\nConstruction points: &+W%lu&n.\n"
                               "Maximum members:     &+W%u&n.\nCurrent members:     &+W%u&n.\n"
                               "Cash:                &+W%u platinum&n, &+Y%u gold&n, &+w%u silver&n, &+y%u copper&n.\n",
     prestige, construction, get_max_members(), member_count, platinum, gold, silver, copper );
 
-  sprintf(buf + strlen(buf), "Total Frags: &+W%.2f&N, Top Fragger: '&+W%s&N' with &+W%.2f&N frags.\n",
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "Total Frags: &+W%.2f&N, Top Fragger: '&+W%s&N' with &+W%.2f&N frags.\n",
     frags.frags / 100., frags.topfragger, frags.top_frags / 100. );
 
   strcat(buf, "Members:\n");
@@ -1002,7 +1002,7 @@ void Guild::display( P_char member )
       {
         if( NR_RANK(pMembers->bits) == i )
         {
-          sprintf( buf + strlen(buf), " %s | %-12s | %s | %s\n",
+          snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), " %s | %-12s | %s | %s\n",
             (pMembers->online_status == GSTAT_ONLINE) ? "&+Go&n"
             : (pMembers->online_status == GSTAT_LINKDEAD) ? "&+y+&n" : " ", pMembers->name,
             current_title, (pMembers->debt && ( (rank > A_SENIOR) || !strcmp(pMembers->name, GET_NAME( member )) ))
@@ -1253,7 +1253,7 @@ void do_supervise( P_char god, char *argument, int cmd )
           bits = 0;
           break;
         default:
-          sprintf( buf, "'%c' is not a valid bit code.  Valid codes are: 'c', 'h', 's', and 'n'.\n"
+          snprintf(buf, MAX_STRING_LENGTH, "'%c' is not a valid bit code.  Valid codes are: 'c', 'h', 's', and 'n'.\n"
           "'c' - Allow challenges.\n"
           "'h' - Hide titles.\n"
           "'s' - Hide subtitles.\n"
@@ -1430,7 +1430,7 @@ void do_supervise( P_char god, char *argument, int cmd )
       return;
     }
   }
-  sprintf( buf, "\n&+RUsage:&n supervise <&ns>ubcommand <argumentlist>\n&+MStandard Guilds and Kingdoms&n\n"
+  snprintf(buf, MAX_STRING_LENGTH, "\n&+RUsage:&n supervise <&ns>ubcommand <argumentlist>\n&+MStandard Guilds and Kingdoms&n\n"
     "&+m============================&n\n<> - displays list of existing associations\n"
     "<&+Mf&n>ound  <leader_name> <bits_string> <asc_name>\n<&+Md&n>elete <asc_number>\n"
     "<&+Mn&n>ame   <asc_number> <new_asc_name>\n<&+Mt&n>ype   <asc_number> <bits_string>\n"
@@ -2727,7 +2727,7 @@ void Guild::title_trim( char *raw_title, char *good_title )
         if( is_ansi_char(index[2]) )
         {
           // Copy the &<+|-><color>
-          sprintf( good_title, "&%c%c", index[1], index[2] );
+          snprintf(good_title, MAX_STRING_LENGTH, "&%c%c", index[1], index[2] );
           good_title += 3;
           index += 3;
 
@@ -2742,13 +2742,13 @@ void Guild::title_trim( char *raw_title, char *good_title )
           {
             if( colored )
             {
-              sprintf( good_title, "&&&N" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&&N" );
               colored = FALSE;
               good_title += 4;
             }
             else
             {
-              sprintf( good_title, "&&" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&" );
               good_title += 2;
             }
             printed_chars_left--;
@@ -2758,13 +2758,13 @@ void Guild::title_trim( char *raw_title, char *good_title )
           {
             if( colored )
             {
-              sprintf( good_title, "&&%c&N", index[1] );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&%c&N", index[1] );
               colored = FALSE;
               good_title += 4;
             }
             else
             {
-              sprintf( good_title, "&&%c", index[1] );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&%c", index[1] );
               good_title += 3;
             }
             printed_chars_left -= 2;
@@ -2775,7 +2775,7 @@ void Guild::title_trim( char *raw_title, char *good_title )
           //   of an ansi sequence.
           else
           {
-            sprintf( good_title, "&&%c", index[1] );
+            snprintf(good_title, MAX_STRING_LENGTH, "&&%c", index[1] );
             good_title += 3;
             index += 2;
             printed_chars_left -= 2;
@@ -2788,7 +2788,7 @@ void Guild::title_trim( char *raw_title, char *good_title )
         if( is_ansi_char(index[2]) && is_ansi_char(index[3]) )
         {
           // Copy the &=<char><char>
-          sprintf( good_title, "&=%c%c", index[2], index[3] );
+          snprintf(good_title, MAX_STRING_LENGTH, "&=%c%c", index[2], index[3] );
           good_title += 4;
           index += 4;
 
@@ -2801,13 +2801,13 @@ void Guild::title_trim( char *raw_title, char *good_title )
           {
             if( colored )
             {
-              sprintf( good_title, "&&&N" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&&N" );
               colored = FALSE;
               good_title += 4;
             }
             else
             {
-              sprintf( good_title, "&&" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&" );
               good_title += 2;
             }
             printed_chars_left--;
@@ -2816,13 +2816,13 @@ void Guild::title_trim( char *raw_title, char *good_title )
           {
             if( colored )
             {
-              sprintf( good_title, "&&=&N" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&=&N" );
               colored = FALSE;
               good_title += 5;
             }
             else
             {
-              sprintf( good_title, "&&=" );
+              snprintf(good_title, MAX_STRING_LENGTH, "&&=" );
               good_title += 3;
             }
             printed_chars_left -= 2;
@@ -2833,7 +2833,7 @@ void Guild::title_trim( char *raw_title, char *good_title )
           //   of an ansi sequence.
           else
           {
-            sprintf( good_title, "&&=" );
+            snprintf(good_title, MAX_STRING_LENGTH, "&&=" );
             good_title += 3;
             index += 2;
             printed_chars_left -= 2;
@@ -2866,11 +2866,11 @@ void Guild::title_trim( char *raw_title, char *good_title )
   // Might need to &N good_title here.
   if( colored )
   {
-    sprintf( good_title, "&N %s", name );
+    snprintf(good_title, MAX_STRING_LENGTH, "&N %s", name );
   }
   else
   {
-    sprintf( good_title, " %s", name );
+    snprintf(good_title, MAX_STRING_LENGTH, " %s", name );
   }
 
 }

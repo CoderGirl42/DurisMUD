@@ -598,7 +598,7 @@ void get_pkill_player_description(P_char ch, char *buffer)
     snprintf(assoc_name, MAX_STRING_LENGTH, "%s", GET_ASSOC(ch)->get_name().c_str() );
   }
 
-  sprintf(buffer, "[%2d %s&n] %s &n%s &n(%s&n)",
+  snprintf(buffer, MAX_STRING_LENGTH, "[%2d %s&n] %s &n%s &n(%s&n)",
                GET_LEVEL(ch), get_class_name(ch, ch), GET_NAME(ch), assoc_name, race_names_table[GET_RACE(ch)].ansi);
   
   logit(LOG_DEBUG, "%s", buffer);
@@ -1324,7 +1324,7 @@ void do_sql(P_char ch, char *argument, int cmd)
       {
         if( qry("UPDATE prepstatement_duris_sql SET sql_code = '%s' WHERE id='%d'", rest, prep_statement ) )
         {
-          sprintf(buf, "Row %d sql_code set to '%s'.\n\r", prep_statement, rest );
+          snprintf(buf, MAX_STRING_LENGTH, "Row %d sql_code set to '%s'.\n\r", prep_statement, rest );
           send_to_char(buf, ch );
         }
         return;
@@ -1333,7 +1333,7 @@ void do_sql(P_char ch, char *argument, int cmd)
       {
         if( qry("DELETE FROM prepstatement_duris_sql WHERE id=%d", prep_statement ) )
         {
-          sprintf(buf, "Row %d deleted.\n\r", prep_statement);
+          snprintf(buf, MAX_STRING_LENGTH, "Row %d deleted.\n\r", prep_statement);
           send_to_char(buf, ch );
         }
         return;

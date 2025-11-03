@@ -428,12 +428,12 @@ void do_acc(P_char ch, char *argument, int cmd)
       }
       if( IS_TRUSTED(to_ch) )
       {
-        sprintf(Gbuf1, "&+y%s&+y tells the alliance (&+%c%d %d&+y) '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+y%s&+y tells the alliance (&+%c%d %d&+y) '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
           color, alliance->get_forgers()->get_id(), alliance->get_joiners()->get_id(), argument);
       }
       else
       {
-        sprintf(Gbuf1, "&+y%s&+y tells your alliance '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "&+y%s&+y tells your alliance '&+Y%s&+y'\r\n", PERS(ch, to_ch, FALSE),
           language_CRYPT(ch, to_ch, argument));
       }
       send_to_char(Gbuf1, to_ch, LOG_PRIVATE);

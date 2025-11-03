@@ -346,7 +346,7 @@ void forge_describe(int choice, P_char ch)
 
   snprintf(buffer, 1024, "To create %s you need:\n", forge_item_list[choice].short_desc);  
   for (i = 0; i < 5 && forge_item_list[choice].ore_needed[i]; i++)
-    sprintf(buffer + strlen(buffer), "%s\n", 
+    snprintf(buffer + strlen(buffer), MAX_STRING_LENGTH - strlen(buffer), "%s\n", 
         obj_index[real_object(forge_item_list[choice].ore_needed[i])].desc2 ); 
 
   send_to_char(buffer, ch);
@@ -496,7 +496,7 @@ void do_forge(P_char ch, char *argument, int cmd)
   // Attempt to load the object we're inspecting/making.
   if( !(obj = read_object( objVnum, VIRTUAL )) )
   {
-    sprintf( Gbuf1, "Your recipe # %d seems to be &+rcorrupted&n. Please tell a &+WGod.\n\r", objVnum );
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "Your recipe # %d seems to be &+rcorrupted&n. Please tell a &+WGod.\n\r", objVnum );
     logit( LOG_DEBUG, "do_forge: '%s' has bad recipe vnum (%d) - couldn't load object.",
       ch ? J_NAME(ch) : "NULL", objVnum );
     return;
@@ -533,7 +533,7 @@ void do_forge(P_char ch, char *argument, int cmd)
     send_to_char("&+yYou open your &+Ltome &+yof &+Ycra&+yftsm&+Lanship &+yand examine the &+Litem&n.\n", ch);
     if( numLowQuality == 0 )
     {
-      sprintf( recipe, "To forge this item, you will need %d of %s.\r\n&n",
+      snprintf(recipe, MAX_STRING_LENGTH, "To forge this item, you will need %d of %s.\r\n&n",
         numHighQuality, highQualityMaterial->short_description );
     }
     else
@@ -541,12 +541,12 @@ void do_forge(P_char ch, char *argument, int cmd)
       // numHighQuality will always be >= 1 with the code the way it is on 2/11/2015.
       if( numHighQuality == 0 )
       {
-        sprintf( recipe, "To forge this item, you will need %d of %s.\r\n&n",
+        snprintf(recipe, MAX_STRING_LENGTH, "To forge this item, you will need %d of %s.\r\n&n",
           numLowQuality, lowQualityMaterial->short_description );
       }
       else
       {
-        sprintf( recipe, "To forge this item, you will need %d of %s and %d of %s.\r\n&n",
+        snprintf(recipe, MAX_STRING_LENGTH, "To forge this item, you will need %d of %s and %d of %s.\r\n&n",
           numHighQuality, highQualityMaterial->short_description,
           numLowQuality, lowQualityMaterial->short_description );
       }
@@ -672,8 +672,8 @@ void do_forge(P_char ch, char *argument, int cmd)
     REMOVE_BIT(obj->extra_flags, ITEM_SECRET);
     randomizeitem(ch, obj);
 
-    sprintf( keywords, "%s %s tradeskill", obj->name, GET_NAME(ch));
-    sprintf( short_desc, "%s &+ymade by&n &+r%s&n", obj->short_description, GET_NAME(ch));
+    snprintf(keywords, MAX_STRING_LENGTH, "%s %s tradeskill", obj->name, GET_NAME(ch));
+    snprintf(short_desc, MAX_STRING_LENGTH, "%s &+ymade by&n &+r%s&n", obj->short_description, GET_NAME(ch));
     set_keywords( obj, keywords );
     set_short_description( obj, short_desc );
 
@@ -716,28 +716,28 @@ void do_forge(P_char ch, char *argument, int cmd)
 
   *buf1 = '\0';
   if (!*argument){
-    sprintf(buf1 + strlen(buf1), "Syntax: 'forge info #', 'forge create #'\n"); 
-    sprintf(buf1 + strlen(buf1), "You know how to forge the following items:\n");
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "Syntax: 'forge info #', 'forge create #'\n"); 
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "You know how to forge the following items:\n");
     if(IS_TRUSTED(ch))
       for (int tmp = 1; tmp < MAX_FORGE_ITEMS; tmp++)
       {
         if(forge_item_list[tmp].short_desc == NULL)
           break;
-        sprintf(buf1 + strlen(buf1), "%d -  %s\n", tmp, forge_item_list[tmp].short_desc);
+        snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%d -  %s\n", tmp, forge_item_list[tmp].short_desc);
       }
     else
 
       for (int tmp = 1; tmp < MAX_FORGE_ITEMS; tmp++)
       {
         if(ch->only.pc->learned_forged_list[tmp] != 0)
-          sprintf(buf1 + strlen(buf1), "%d -  %s\n", tmp, forge_item_list[ch->only.pc->learned_forged_list[tmp]].short_desc );
+          snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), "%d -  %s\n", tmp, forge_item_list[ch->only.pc->learned_forged_list[tmp]].short_desc );
       }
     strcat(buf1, "\n");
     page_string(ch->desc, buf1, 1);
     return;
   }
 
-  sprintf(buf1, "");
+  snprintf(buf1, MAX_STRING_LENGTH, "");
   half_chop(argument, first, rest);
   half_chop(rest, second, rest);
   choice = (ush_int) atoi(second);
@@ -810,7 +810,7 @@ void do_forge(P_char ch, char *argument, int cmd)
         if(obj_index[t_obj->R_num].virtual_number == forge_item_list[choice].ore_needed[i]){
           if(!material)
             material = t_obj->material;
-          sprintf(buf1, "You start to work on %s\n", t_obj->short_description );
+          snprintf(buf1, MAX_STRING_LENGTH, "You start to work on %s\n", t_obj->short_description );
           send_to_char(buf1, ch);
           extract_obj(t_obj);
           FOUND++;
@@ -833,7 +833,7 @@ void do_forge(P_char ch, char *argument, int cmd)
       if (!obj)
         return;
       obj_to_char(obj, ch);
-      sprintf(buf1, "You finishing forging: %s!\n", obj->short_description); 
+      snprintf(buf1, MAX_STRING_LENGTH, "You finishing forging: %s!\n", obj->short_description); 
       send_to_char(buf1, ch);  
       wizlog(56, "%s forged %s" , GET_NAME(ch), buf1);
       notch_skill(ch, SKILL_FORGE, 50);
@@ -1878,7 +1878,7 @@ int smith(P_char ch, P_char pl, int cmd, char *arg)
   }
 
   // Take their money.
-  sprintf(buffer, "You hand $N %s.", coin_stringv(forge_prices[i-1]));
+  snprintf(buffer, MAX_STRING_LENGTH, "You hand $N %s.", coin_stringv(forge_prices[i-1]));
   act(buffer, FALSE, pl, 0, ch, TO_CHAR);
   SUB_MONEY(pl, forge_prices[i-1], 0);
 
@@ -2957,7 +2957,7 @@ int learn_tradeskill(P_char ch, P_char pl, int cmd, char *arg)
         send_to_char("Unfortunately, I cannot teach you anything more, you have already learned a tradeskill!\n", pl);
         return TRUE;
       }
-      sprintf(buffer, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
+      snprintf(buffer, MAX_STRING_LENGTH, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
                       "&+cYou feel your skill in %s improving.&n\n",
               skills[SKILL_MINE].name, skills[SKILL_MINE].name);
       act(buffer, FALSE, ch, 0, pl, TO_VICT);
@@ -2976,7 +2976,7 @@ int learn_tradeskill(P_char ch, P_char pl, int cmd, char *arg)
         send_to_char("Unfortunately, I cannot teach you anything more, you have already learned a tradeskill!\n", pl);
         return TRUE;
       }
-      sprintf(buffer, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
+      snprintf(buffer, MAX_STRING_LENGTH, "Your teacher takes you aside and teaches you the finer points of &+W%s&n.\n"
                       "&+cYou feel your skill in %s improving.&n\n",
               skills[SKILL_CRAFT].name, skills[SKILL_CRAFT].name);
       act(buffer, FALSE, ch, 0, pl, TO_VICT);
@@ -3986,7 +3986,7 @@ int assoc_founder(P_char mob, P_char pl, int cmd, char *arg)
     // Skip the opening '.
     snprintf(guild_name, MAX_INPUT_LENGTH, "%s", arg + 1 );
     // Overwrite the closing ' with a color normal.
-    sprintf( guild_name + strlen(guild_name) - 1, "&n" );
+    snprintf(guild_name + strlen(guild_name) - 1, MAX_STRING_LENGTH, "&n" );
 
     if( sub_string_cs(guild_name, "&-") || sub_string_cs(guild_name, "&=") )
     {

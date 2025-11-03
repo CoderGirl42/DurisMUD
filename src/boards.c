@@ -324,13 +324,13 @@ int Board_show_board(int board_type, struct char_data *ch, char *arg)
     strcat(buf, "The board is empty.\r\n");
   else
   {
-    sprintf(buf + strlen(buf), "There are %d messages on the board.\r\n",
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "There are %d messages on the board.\r\n",
             num_of_msgs[board_type]);
     /*   for (i = 0; i < num_of_msgs[board_type]; i++) {  */
     for (i = num_of_msgs[board_type] - 1; i >= 0; i--)
     {
       if (MSG_HEADING(board_type, i))
-        sprintf(buf + strlen(buf), "%-2d : %s\r\n", i + 1,
+        snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "%-2d : %s\r\n", i + 1,
                 MSG_HEADING(board_type, i));
       else
       {

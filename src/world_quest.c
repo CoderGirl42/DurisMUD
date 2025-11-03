@@ -132,7 +132,7 @@ void quest_epic_reward(P_char ch, int type)
 {
   if(GET_LEVEL(ch) > 45 && ch->only.pc->quest_level > 45)
   {
-    //sprintf(Gbuf1, "You gain some epic experience.");
+    //snprintf(Gbuf1, MAX_STRING_LENGTH, "You gain some epic experience.");
     //act(Gbuf1, FALSE, quest_mob, 0, ch, TO_VICT);
 
     if(ch->only.pc->quest_level == 46)
@@ -588,8 +588,8 @@ void do_quest(P_char ch, char *args, int cmd)
 
   if (q_giver = read_mobile(real_mobile(ch->only.pc->quest_giver), REAL))
   {
-    sprintf(q_name, "%s", q_giver->player.short_descr);
-    sprintf(buf ,"%s gave you the following quest:\r\n", q_name);
+    snprintf(q_name, MAX_STRING_LENGTH, "%s", q_giver->player.short_descr);
+    snprintf(buf, MAX_STRING_LENGTH,"%s gave you the following quest:\r\n", q_name);
     send_to_char(buf, ch);
 
     if (q_giver)
@@ -609,18 +609,18 @@ void do_quest(P_char ch, char *args, int cmd)
   //wizlog(56, "questmob num:%d",ch->only.pc->quest_mob_vnum);
   if (q_mob = read_mobile(real_mobile(ch->only.pc->quest_mob_vnum), REAL))
   {
-    sprintf(q_name, "%s", q_mob->player.short_descr);
+    snprintf(q_name, MAX_STRING_LENGTH, "%s", q_mob->player.short_descr);
 
 
     if(ch->only.pc->quest_type == FIND_AND_ASK)
     {
-      sprintf(buf ,"Go ask %s in %s about the %s.\r\n", q_name, zone_table[real_zone0(ch->only.pc->quest_zone_number)].name,  month_name[time_info.month]);
+      snprintf(buf, MAX_STRING_LENGTH,"Go ask %s in %s about the %s.\r\n", q_name, zone_table[real_zone0(ch->only.pc->quest_zone_number)].name,  month_name[time_info.month]);
       send_to_char(buf, ch);
 
     }
     else if(ch->only.pc->quest_type == FIND_AND_KILL)
     {
-      sprintf(buf, "Go kill %d %s (%d left) in %s!\r\n", ch->only.pc->quest_kill_original, q_name,  (ch->only.pc->quest_kill_original - ch->only.pc->quest_kill_how_many),  zone_table[real_zone0(ch->only.pc->quest_zone_number)].name );
+      snprintf(buf, MAX_STRING_LENGTH, "Go kill %d %s (%d left) in %s!\r\n", ch->only.pc->quest_kill_original, q_name,  (ch->only.pc->quest_kill_original - ch->only.pc->quest_kill_how_many),  zone_table[real_zone0(ch->only.pc->quest_zone_number)].name );
       send_to_char(buf, ch);
       wizlog(56, "%s got a quest to go kill %d of mob vnum %d; they have %d left.", 
            GET_NAME(ch), ch->only.pc->quest_kill_original, ch->only.pc->quest_mob_vnum,
@@ -657,7 +657,7 @@ void do_quest(P_char ch, char *args, int cmd)
   }
   else {
     send_to_char("&+RThis quest was given to you&n.\r\n", ch);
-    sprintf(buf, "You can share this quest with %d more people.\r\n", ch->only.pc->quest_shares_left);
+    snprintf(buf, MAX_STRING_LENGTH, "You can share this quest with %d more people.\r\n", ch->only.pc->quest_shares_left);
     send_to_char(buf, ch);
   }
 

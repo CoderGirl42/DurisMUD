@@ -254,7 +254,7 @@ int calcChDamagetoVictwithInnateArmor(P_char ch, P_char victim, P_obj weap,
 
   new_dam -= *damDefl + *damAbsorb;
 
-  sprintf(strn, "(innate armor) defl: %d, absorb: %d, weapd: %d\r\n",
+  snprintf(strn, MAX_STRING_LENGTH, "(innate armor) defl: %d, absorb: %d, weapd: %d\r\n",
           *damDefl, *damAbsorb, *weapDamage);
   if (IS_TRUSTED(victim))
     send_to_char(strn, victim);
@@ -697,7 +697,7 @@ int calcChDamagetoVictwithArmor(P_char ch, P_char victim, P_obj weap,
 
     new_dam -= *damDefl + *damAbsorb;
 
-    sprintf(strn, "defl: %d, absorb: %d, weapd: %d\r\n", *damDefl, *damAbsorb,
+    snprintf(strn, MAX_STRING_LENGTH, "defl: %d, absorb: %d, weapd: %d\r\n", *damDefl, *damAbsorb,
             *weapDamage);
     if (IS_TRUSTED(victim))
       send_to_char(strn, victim);
@@ -835,10 +835,10 @@ void displayWeaponDamage(const int weap_type, const P_char ch,
     break;
   }
 
-  sprintf(actstrn, "Your $q%s, rendering it useless.", damstrn);
+  snprintf(actstrn, MAX_STRING_LENGTH, "Your $q%s, rendering it useless.", damstrn);
   act(actstrn, TRUE, ch, object, 0, TO_CHAR);
 
-  sprintf(actstrn, "$n's $q%s, rendering it useless.", damstrn);
+  snprintf(actstrn, MAX_STRING_LENGTH, "$n's $q%s, rendering it useless.", damstrn);
   act(actstrn, TRUE, ch, object, 0, TO_ROOM);
 }
 
@@ -1800,7 +1800,7 @@ int hit(P_char ch, P_char victim, P_obj weapon, const int hit_type,
 
     if (IS_TRUSTED(ch))
     {
-      sprintf(strn, "defl: %d  abs: %d  weap_dam: %d  dam: %d\r\n", defl,
+      snprintf(strn, MAX_STRING_LENGTH, "defl: %d  abs: %d  weap_dam: %d  dam: %d\r\n", defl,
               absorb, weap_dam, dam);
       send_to_char(strn, ch);
     }
@@ -1927,7 +1927,7 @@ int hit(P_char ch, P_char victim, P_obj weapon, const int hit_type,
       w_type = TYPE_HIT;
   }
 #      ifdef FIGHT_DEBUG
-  sprintf(buf, "&+Rweapon type: %d&n ", w_type);
+  snprintf(buf, MAX_STRING_LENGTH, "&+Rweapon type: %d&n ", w_type);
   send_to_char(buf, ch);
 #      endif
 
@@ -1957,7 +1957,7 @@ int hit(P_char ch, P_char victim, P_obj weapon, const int hit_type,
   }
 
 #      ifdef FIGHT_DEBUG
-  sprintf(buf, "&+Rweapon skill num: %d&n ", wpn_skill_num);
+  snprintf(buf, MAX_STRING_LENGTH, "&+Rweapon skill num: %d&n ", wpn_skill_num);
   send_to_char(buf, ch);
 #      endif
 
@@ -2053,7 +2053,7 @@ int hit(P_char ch, P_char victim, P_obj weapon, const int hit_type,
 
   victim_ac = BOUNDED(-100, victim_ac, 100);
 #      ifdef FIGHT_DEBUG
-  sprintf(buf, "&+Rvictim ac: %d&n ", victim_ac);
+  snprintf(buf, MAX_STRING_LENGTH, "&+Rvictim ac: %d&n ", victim_ac);
   send_to_char(buf, ch);
 #      endif
 

@@ -406,32 +406,32 @@ void do_justice(P_char ch, char *arg, int cmd)
       }
       if (crime_ok)
       {
-        sprintf(buf, "%sThis area is controlled by justice.\r\n", buf);
-        sprintf(buf, "%s%s&+R-------------&N\r\n", buf, buf1);
+        snprintf(buf, MAX_STRING_LENGTH, "%sThis area is controlled by justice.\r\n", buf);
+        snprintf(buf, MAX_STRING_LENGTH, "%s%s&+R-------------&N\r\n", buf, buf1);
       }
 
     }
     else if (CHAR_IN_TOWN(ch))
     {
-      sprintf(buf, "&+R---JUSTICE---&N\r\n");
+      snprintf(buf, MAX_STRING_LENGTH, "&+R---JUSTICE---&N\r\n");
       for (i = 0; i < CRIME_NB; i++)
       {
         if (GET_CRIME_T(CHAR_IN_TOWN(ch), i))
         {
-          sprintf(buf1, "%s %s\r\n", buf1, crime_list[i]);
+          snprintf(buf1, MAX_STRING_LENGTH, "%s %s\r\n", buf1, crime_list[i]);
           crime_ok = TRUE;
         }
       }
       if (crime_ok)
       {
-        sprintf(buf, "%sThis town is controlled by justice.\r\n", buf);
-        sprintf(buf, "%s%s&+R-------------&N\r\n", buf, buf1);
+        snprintf(buf, MAX_STRING_LENGTH, "%sThis town is controlled by justice.\r\n", buf);
+        snprintf(buf, MAX_STRING_LENGTH, "%s%s&+R-------------&N\r\n", buf, buf1);
       }
 
     }
     else
     {
-      sprintf(buf, "&+CYou are not in an area controlled by justice.&N\r\n");
+      snprintf(buf, MAX_STRING_LENGTH, "&+CYou are not in an area controlled by justice.&N\r\n");
     }
     send_to_char(buf, ch);
     return;
@@ -928,7 +928,7 @@ void justice_set_outcast(P_char ch, int town)
   /* send it to them twice, just so they don't miss it */
   send_to_char(buf, r_ch);
 
-  sprintf(buf, "%s declared OUTCAST from %s by justice code",
+  snprintf(buf, MAX_STRING_LENGTH, "%s declared OUTCAST from %s by justice code",
           J_NAME(ch), town_name_list[town]);
 
 #if 0
@@ -2707,7 +2707,7 @@ void justice_judge(P_char ch, int town)
     temp = (crime_index - SENTENCE_MIN(town, SENTENCE_JAIL) + 1);
 
     logit(LOG_CRIMES, "%s sentence : %d days of jail", J_NAME(ch), temp);
-    sprintf(buf, "%sYou are sentenced to %d days of jail.'\r\n", buf, temp);
+    snprintf(buf, MAX_STRING_LENGTH, "%sYou are sentenced to %d days of jail.'\r\n", buf, temp);
     char_from_room(ch);
     char_to_room(ch, real_room(hometowns[town - 1].report_room), -1);
     act("$n is brought out of jail.", TRUE, ch, 0, 0, TO_ROOM);
@@ -2729,7 +2729,7 @@ void justice_judge(P_char ch, int town)
            (crime_index <= SENTENCE_MAX(town, SENTENCE_OUTCAST)))
   {
     logit(LOG_CRIMES, "%s sentence : outcast", J_NAME(ch));
-    sprintf(buf, "%sYou are sentenced to be outcast from the town.'\r\n",
+    snprintf(buf, MAX_STRING_LENGTH, "%sYou are sentenced to be outcast from the town.'\r\n",
             buf);
     char_from_room(ch);
     char_to_room(ch, real_room(hometowns[town - 1].report_room), -1);
@@ -2752,7 +2752,7 @@ void justice_judge(P_char ch, int town)
            (crime_index <= SENTENCE_MAX(town, SENTENCE_OUT_NO_EQ)))
   {
     logit(LOG_CRIMES, "%s sentence : outcast and lost of eq.", J_NAME(ch));
-    sprintf(buf,
+    snprintf(buf, MAX_STRING_LENGTH,
             "%sYou are sentenced to be outcast from the town and lose everything you have.'\r\n",
             buf);
     char_from_room(ch);
@@ -2773,7 +2773,7 @@ void justice_judge(P_char ch, int town)
            (crime_index <= SENTENCE_MAX(town, SENTENCE_DEATH)))
   {
     logit(LOG_CRIMES, "%s sentence : DEATH", J_NAME(ch));
-    sprintf(buf, "%sYou are sentenced to &+RDEATH&N!.'\r\n", buf);
+    snprintf(buf, MAX_STRING_LENGTH, "%sYou are sentenced to &+RDEATH&N!.'\r\n", buf);
     char_from_room(ch);
     char_to_room(ch, real_room(hometowns[town - 1].report_room), -1);
     act("$n is brought out of jail.", TRUE, ch, 0, 0, TO_ROOM);
@@ -2789,7 +2789,7 @@ void justice_judge(P_char ch, int town)
               real_room(hometowns[town - 1].jail_room), CRIME_NONE,
               time(NULL), J_STATUS_SENTENCE_DEATH, temp);
 
-    sprintf(buf1, "&+WSomeone shouts '%s has been sentenced to death!'&n\r\n"
+    snprintf(buf1, MAX_STRING_LENGTH, "&+WSomeone shouts '%s has been sentenced to death!'&n\r\n"
             "&+WSomeone shouts 'The execution will be held in three hours at the justice hall!'&n\r\n",
             J_NAME(ch));
 

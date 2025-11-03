@@ -638,13 +638,13 @@ temp = number(0, nfeets);
 if (!(obj = read_object(1297, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a pair of %s%s%s&n", color[temp3], generics[temp2],
+snprintf(buf, MAX_STRING_LENGTH, "a pair of %s%s%s&n", color[temp3], generics[temp2],
         feets[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A pair of %s%s%s &nlies here.", color[temp3],
+snprintf(buf, MAX_STRING_LENGTH, "A pair of %s%s%s &nlies here.", color[temp3],
         generics[temp2], feets[temp]);
 obj->description = str_dup(buf);
-sprintf(buf, "%s RANOBJ", strip_color(feets[temp]));
+snprintf(buf, MAX_STRING_LENGTH, "%s RANOBJ", strip_color(feets[temp]));
 obj->name = str_dup(buf);
 /* Now that we have name setup, set stats */
 /*    obj->affected[0].location = APPLY_ARMOR;
@@ -655,9 +655,9 @@ temp = number(0, ngenerics);
 if (!(obj = read_object(1289, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a pair of %s%ssleeves&n", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a pair of %s%ssleeves&n", color[temp3], generics[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A pair of %s%ssleeves &nlie here.", color[temp3],
+snprintf(buf, MAX_STRING_LENGTH, "A pair of %s%ssleeves &nlie here.", color[temp3],
         generics[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("sleeves RANOBJ");
@@ -670,9 +670,9 @@ temp = number(0, nshields);
 if (!(obj = read_object(1290, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a %s shield", shields[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a %s shield", shields[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A %s shield &nlies here.", shields[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "A %s shield &nlies here.", shields[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("shield RANOBJ");
 /* Now that we have name setup, set stats */
@@ -684,9 +684,9 @@ temp = number(0, ngenerics);
 if (!(obj = read_object(1287, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a %s%scloak&n", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a %s%scloak&n", color[temp3], generics[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A %s%scloak &nlies here.", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "A %s%scloak &nlies here.", color[temp3], generics[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("cloak RANOBJ");
 /* Now that we have name setup, set stats */
@@ -705,9 +705,9 @@ temp = number(0, ngenerics);
 if (!(obj = read_object(1288, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a %s%sbelt&n", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a %s%sbelt&n", color[temp3], generics[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A %s%sbelt &nlies here.", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "A %s%sbelt &nlies here.", color[temp3], generics[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("belt RANOBJ");
 break;
@@ -716,9 +716,9 @@ temp = number(0, ngenerics);
 if (!(obj = read_object(1291, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a %s%sbracelet&n", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a %s%sbracelet&n", color[temp3], generics[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A %s%sbracelet &nlies here.", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "A %s%sbracelet &nlies here.", color[temp3], generics[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("bracelet RANOBJ");
 /* Now that we have name setup, set stats */
@@ -735,9 +735,9 @@ temp = number(0, ngenerics);
 if (!(obj = read_object(1292, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "some %s%sgloves&n", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "some %s%sgloves&n", color[temp3], generics[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "Some %s%sgloves &nlie here.", color[temp3], generics[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "Some %s%sgloves &nlie here.", color[temp3], generics[temp]);
 obj->description = str_dup(buf);
 obj->name = str_dup("gloves RANOBJ");
 /* Now that we have name setup, set stats */
@@ -749,11 +749,11 @@ temp = number(0, nweps);
 if (!(obj = read_object(1294, VIRTUAL)))
 return NULL;
 obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-sprintf(buf, "a %s%s&n", generics[temp2], weps[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "a %s%s&n", generics[temp2], weps[temp]);
 obj->short_description = str_dup(buf);
-sprintf(buf, "A %s%s &nlies here.", generics[temp2], weps[temp]);
+snprintf(buf, MAX_STRING_LENGTH, "A %s%s &nlies here.", generics[temp2], weps[temp]);
 obj->description = str_dup(buf);
-sprintf(buf, "%s RANOBJ", strip_color(weps[temp]));
+snprintf(buf, MAX_STRING_LENGTH, "%s RANOBJ", strip_color(weps[temp]));
 obj->name = str_dup(buf);
 /* Now that we have name setup, set stats */
 obj->value[1] = number(1, 2);
@@ -776,9 +776,9 @@ case ITEM_WEAR_EARRING:
   if (!(obj = read_object(1283, VIRTUAL)))
     return NULL;
     obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-  sprintf(buf, "a %s earring", earrings[temp]);
+  snprintf(buf, MAX_STRING_LENGTH, "a %s earring", earrings[temp]);
   obj->short_description = str_dup(buf);
-  sprintf(buf, "A %s earring &nlies here.", earrings[temp]);
+  snprintf(buf, MAX_STRING_LENGTH, "A %s earring &nlies here.", earrings[temp]);
   obj->description = str_dup(buf);
   obj->name = str_dup("earring RANOBJ");
   break;
@@ -1169,12 +1169,12 @@ void random_jewelry(P_obj obj, int base_value)
 
   temp = number(0, 50);
   obj->str_mask = (STRUNG_KEYS | STRUNG_DESC1 | STRUNG_DESC2);
-  sprintf(buf, "%s jewelry RANJEWELRY", strip_color(kind[temp]));
+  snprintf(buf, MAX_STRING_LENGTH, "%s jewelry RANJEWELRY", strip_color(kind[temp]));
   obj->name = str_dup(buf);
-  sprintf(buf, "a %s %s &n%s%s", descriptions[base_value_place],
+  snprintf(buf, MAX_STRING_LENGTH, "a %s %s &n%s%s", descriptions[base_value_place],
           kind[temp], nice_gems, nice_work);
   obj->short_description = str_dup(buf);
-  sprintf(buf, "A %s %s &nlies here.", descriptions[base_value_place],
+  snprintf(buf, MAX_STRING_LENGTH, "A %s %s &nlies here.", descriptions[base_value_place],
           kind[temp]);
   obj->description = str_dup(buf);
   /* randomize some more */

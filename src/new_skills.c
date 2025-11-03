@@ -2726,29 +2726,29 @@ void do_carve(struct char_data *ch, char *argument, int cmd)
   half_chop(corpse->name, cname, buf);
 
   /* as keywords the part name and the player */
-  sprintf(buf, "%s %s", carve_part_name[which], cname);
+  snprintf(buf, MAX_STRING_LENGTH, "%s %s", carve_part_name[which], cname);
   carve->name = str_dup(buf);
 
   /* Converts "The corpse of an orc is lying here." to e.g. "The skull..." */
   dscp = corpse->description + 11;
-  sprintf(buf, "The %s %s", carve_part_name[which], dscp);
+  snprintf(buf, MAX_STRING_LENGTH, "The %s %s", carve_part_name[which], dscp);
   if (piece == MISSING_EYES || piece == MISSING_EARS ||
       piece == MISSING_BOWELS || piece == MISSING_ARMS ||
       piece == MISSING_LEGS)
   {
     dscp = strstr(buf, " is ");
     if (dscp != NULL)
-      sprintf(dscp, " are lying here.");
+      snprintf(dscp, MAX_STRING_LENGTH, " are lying here.");
   }
   carve->description = str_dup(buf);
 
   /* same trick, this time for short_description */
   dscp = corpse->short_description + 11;
-  sprintf(buf, "the %s %s", carve_part_name[which], dscp);
+  snprintf(buf, MAX_STRING_LENGTH, "the %s %s", carve_part_name[which], dscp);
   carve->short_description = str_dup(buf);
 
   /* for action description just the part name */
-  sprintf(buf, "%s", carve_part_name[which]);
+  snprintf(buf, MAX_STRING_LENGTH, "%s", carve_part_name[which]);
   carve->action_description = str_dup(buf);
 
   /* now add the appropriate weigth */

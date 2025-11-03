@@ -304,12 +304,12 @@ bool StorageLocker::MakeChests(P_char ch, char *args)
                             if( helpMode == LOCKER_HELP_ALL_LONG )                    \
                             {                                                         \
                               bFound = true;                                          \
-                              sprintf(GBuf2 + strlen(GBuf2), "&+C%15s&n   &+w(items %s)\r\n", keyword, desc); \
+                              snprintf(GBuf2 + strlen(GBuf2), MAX_STRING_LENGTH - strlen(GBuf2), "&+C%15s&n   &+w(items %s)\r\n", keyword, desc); \
                             }                                                         \
                             else if( helpMode == LOCKER_HELP_ALL_SHORT )              \
                             {                                                         \
                               bFound = true;                                          \
-                              sprintf(GBuf2 + strlen(GBuf2), "&+C%s&n, ", keyword);   \
+                              snprintf(GBuf2 + strlen(GBuf2), MAX_STRING_LENGTH - strlen(GBuf2), "&+C%s&n, ", keyword);   \
                             }                                                         \
                             else if (!str_cmp(keyword, GBuf1))                        \
                               if (isname(keyword, args))                              \
@@ -317,12 +317,12 @@ bool StorageLocker::MakeChests(P_char ch, char *args)
                               else if( helpMode == LOCKER_HELP_LONG )                 \
                               {                                                       \
                                 bFound = true;                                        \
-                                sprintf(GBuf2 + strlen(GBuf2), "&+C%15s&n   &+w(items %s)\r\n", keyword, desc); \
+                                snprintf(GBuf2 + strlen(GBuf2), MAX_STRING_LENGTH - strlen(GBuf2), "&+C%15s&n   &+w(items %s)\r\n", keyword, desc); \
                               }                                                       \
                               else if( helpMode == LOCKER_HELP_SHORT )                \
                               {                                                       \
                                 bFound = true;                                        \
-                                sprintf(GBuf2 + strlen(GBuf2), "&+C%s&n, ", keyword); \
+                                snprintf(GBuf2 + strlen(GBuf2), MAX_STRING_LENGTH - strlen(GBuf2), "&+C%s&n, ", keyword); \
                               }                                                       \
                               else
 
@@ -663,7 +663,7 @@ bool StorageLocker::MakeChests(P_char ch, char *args)
       if( !p && !bFound && str_cmp("unsorted", GBuf1)
         && helpMode != LOCKER_HELP_SHORT ) // != LOCKER_HELP_ALL_SHORT && helpMode != LOCKER_HELP_ALL_LONG )
       {
-        sprintf(GBuf2 + strlen(GBuf2), "Invalid sort option: %s \n", GBuf1);
+        snprintf(GBuf2 + strlen(GBuf2), MAX_STRING_LENGTH - strlen(GBuf2), "Invalid sort option: %s \n", GBuf1);
       }
       args = one_argument(args, GBuf1);
     }
@@ -715,7 +715,7 @@ bool StorageLocker::MakeChests(P_char ch, char *args)
     // If there's a short list, replace the last ", " with ".\n"
     if( ('\0' != GBuf2[0]) && (helpMode == LOCKER_HELP_SHORT || helpMode == LOCKER_HELP_ALL_SHORT) )
     {
-      sprintf( GBuf2 + strlen(GBuf2) - 2, ".\n" );
+      snprintf(GBuf2 + strlen(GBuf2) - 2, MAX_STRING_LENGTH, ".\n" );
     }
     send_to_char(GBuf2, ch);
   }
@@ -1769,7 +1769,7 @@ static void locker_access_show(P_char ch, P_char locker)
       strcat( buffer, row[0] );
       strcat( buffer, ", " );
     }
-    sprintf( &(buffer[strlen(buffer)-2]), ".\n" );
+    snprintf(&(buffer[strlen(buffer)-2]), MAX_STRING_LENGTH, ".\n" );
   }
 
   mysql_free_result(res);
@@ -2347,7 +2347,7 @@ static void locker_access_transferAccess(P_char chLocker, P_char ch)
   char names[MAX_STR_NORMAL], *pIndex;
 
   // Set locker name. (for speed)
-  sprintf( locker_name, "%s", GET_NAME(chLocker) );
+  snprintf(locker_name, MAX_STRING_LENGTH, "%s", GET_NAME(chLocker) );
   // Set list of names that have access to locker.
   if( chLocker->player.description != NULL )
     snprintf(names, MAX_STR_NORMAL, "%s", chLocker->player.description );

@@ -3397,7 +3397,7 @@ void enter_game(P_desc d)
     if( IS_SET(afp1->flags, AFFTYPE_OFFLINE) )
     {
       /* Debugging:
-      sprintf( Gbuf1, "enter_game: afp '%s' has AFFTYPE_OFFLINE\n\r", skills[afp1->type].name );
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "enter_game: afp '%s' has AFFTYPE_OFFLINE\n\r", skills[afp1->type].name );
       SEND_TO_Q( Gbuf1, d);
        */
       if( IS_SET(afp1->flags, AFFTYPE_SHORT) )
@@ -3433,7 +3433,7 @@ void enter_game(P_desc d)
              */
             long total_pulses = (evp->timer - ((evp->element < pulse) ? 0 : 1)) * PULSES_IN_TICK + evp->element - pulse;
             /* Debugging:
-            sprintf( Gbuf1, "enter_game: short afp '%s': timer: %d, element: %d, pulse: %d, rest(pulses): &+Y%ld&n.\n\r"
+            snprintf(Gbuf1, MAX_STRING_LENGTH, "enter_game: short afp '%s': timer: %d, element: %d, pulse: %d, rest(pulses): &+Y%ld&n.\n\r"
               "enter_game: timer(pulses): %d, element - pulse: %d, total pulses: &+Y%ld&n, total pulses - rest: &+Y%ld&n\n\r"
               "enter_game: old time left on event(pulses/sec): %d/%d, old timer: &+B%d&n, old element: &+B%d&n.\n\r",
               skills[afp1->type].name, evp->timer, evp->element, pulse, rest * WAIT_SEC,
@@ -3502,7 +3502,7 @@ void enter_game(P_desc d)
             }
             ne_schedule_tail[evp->element] = evp;
             /* Debugging:
-            sprintf( Gbuf1, "enter_game: new time left on event(pulses/sec): %d/%d, new timer: &+B%d&n, new element: &+B%d&n.\n\r",
+            snprintf(Gbuf1, MAX_STRING_LENGTH, "enter_game: new time left on event(pulses/sec): %d/%d, new timer: &+B%d&n, new element: &+B%d&n.\n\r",
               ne_event_time(evp), ne_event_time(evp) / WAIT_SEC, evp->timer, evp->element );
             SEND_TO_Q( Gbuf1, d);
             */
@@ -3513,7 +3513,7 @@ void enter_game(P_desc d)
       else if( time_gone > 0 )
       {
         /* Debugging:
-        sprintf( Gbuf1, "enter_game: not-short afp '%s' old duration: %d, new duration: %ld.\n\r",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "enter_game: not-short afp '%s' old duration: %d, new duration: %ld.\n\r",
           skills[afp1->type].name, afp1->duration, afp1->duration - time_gone );
         GetMIA2(ch->player.name, Gbuf1 + strlen(Gbuf1) );
         strcat( Gbuf1, "\n\r" );
@@ -3555,7 +3555,7 @@ void enter_game(P_desc d)
   if (!d->host)
   {
     wizlog(57, "%s had null host.", GET_NAME(ch));
-    sprintf(d->host, "UNKNOWN \0");
+    snprintf(d->host, MAX_STRING_LENGTH, "UNKNOWN \0");
   }
 
   ch->only.pc->last_ip = ip2ul(d->host);
@@ -3563,7 +3563,7 @@ void enter_game(P_desc d)
   if (!d->login)
   {
     wizlog(57, "%s had null login.", GET_NAME(ch));
-    sprintf(d->login, "UNKNOWN \0");
+    snprintf(d->login, MAX_STRING_LENGTH, "UNKNOWN \0");
   }
 
   if (IS_TRUSTED(ch))
@@ -3589,7 +3589,7 @@ void enter_game(P_desc d)
   {
     statuslog(ch->player.level, "&+GNEWBIE %s HAS ENTERED THE GAME! Help him out :) ", GET_NAME(ch));
     // Message to guides.
-    sprintf( Gbuf1, "&+GNEWBIE %s HAS ENTERED THE GAME! Help him out :)\n", 
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "&+GNEWBIE %s HAS ENTERED THE GAME! Help him out :)\n", 
       GET_NAME(ch));
     for (i = descriptor_list; i; i = i->next)
     {
@@ -3666,7 +3666,7 @@ void enter_game(P_desc d)
   GetMIA(ch->player.name, Gbuf1 );
   // Convert to EST.
   ct -= 4*60*60;
-  sprintf(timestr, "%s", asctime( localtime(&ct) ));
+  snprintf(timestr, MAX_STRING_LENGTH, "%s", asctime( localtime(&ct) ));
   *(timestr + strlen(timestr) - 1) = '\0';
   strcat( timestr, " EST" );
   ct += 4*60*60;
@@ -4209,7 +4209,7 @@ void select_name(P_desc d, char *arg, int flag)
   }
   else if( ((IS_SET(game_locked, LOCK_MAX_PLAYERS)) && (number_of_players() > game_locked_players)) )
   {
-    sprintf( Gbuf1, "Game is temporarily locked to %d chars.\n", game_locked_players );
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "Game is temporarily locked to %d chars.\n", game_locked_players );
     SEND_TO_Q(Gbuf1, d);
     SEND_TO_Q("Game is temporarily full.  Please try again later.\r\n", d);
     STATE(d) = CON_FLUSH;
@@ -4221,7 +4221,7 @@ void select_name(P_desc d, char *arg, int flag)
     if (flag)
     {
       d->character->player.name = str_dup(tmp_name);
-      sprintf(Gbuf1, "You wish to be known as %s (Y/N)? ", tmp_name);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You wish to be known as %s (Y/N)? ", tmp_name);
       SEND_TO_Q(Gbuf1, d);
       STATE(d) = CON_NAME_CONF;
       return;
@@ -4497,7 +4497,7 @@ void select_pwd(P_desc d, char *arg)
       if( (IS_SET(game_locked, LOCK_MAX_PLAYERS)) && !IS_TRUSTED(d->character)
         && (number_of_players() > game_locked_players) )
       {
-        sprintf( Gbuf1, "Game is temporarily locked to %d chars.\n", game_locked_players );
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "Game is temporarily locked to %d chars.\n", game_locked_players );
         SEND_TO_Q(Gbuf1, d);
         SEND_TO_Q("\r\nGame is currently full.  Please try again later.\r\n", d);
 //        SEND_TO_Q("Note 5pm - 8am EST there are no limits on connections.\r\n", d);
@@ -4507,7 +4507,7 @@ void select_pwd(P_desc d, char *arg)
 
       if( ((IS_SET(game_locked, LOCK_LEVEL)) && (GET_LEVEL(d->character) < game_locked_level)) )
       {
-        sprintf( Gbuf1, "Game is temporarily locked to your level (levels below %d).  Please try again later.\r\n",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "Game is temporarily locked to your level (levels below %d).  Please try again later.\r\n",
           game_locked_level );
         SEND_TO_Q(Gbuf1, d);
         STATE(d) = CON_FLUSH;
@@ -4560,7 +4560,7 @@ void select_pwd(P_desc d, char *arg)
     echo_on(d);
     if( !valid_password(d, arg) )
     {
-      sprintf(Gbuf1, "Please enter a password for %s: ", GET_NAME(d->character));
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "Please enter a password for %s: ", GET_NAME(d->character));
       SEND_TO_Q(Gbuf1, d);
       echo_off(d);
       return;
@@ -4578,7 +4578,7 @@ void select_pwd(P_desc d, char *arg)
     if( strcmp(CRYPT2(arg, d->character->only.pc->pwd), d->character->only.pc->pwd) )
     {
       echo_on(d);
-      sprintf(Gbuf1,"Passwords don't match.\r\nPlease enter a password for %s: ", GET_NAME(d->character));
+      snprintf(Gbuf1, MAX_STRING_LENGTH,"Passwords don't match.\r\nPlease enter a password for %s: ", GET_NAME(d->character));
       SEND_TO_Q(Gbuf1, d);
       echo_off(d);
       STATE(d) = CON_PWD_GET;
@@ -5516,7 +5516,7 @@ void display_classtable(P_desc d)
       snprintf(template_buf, MAX_STRING_LENGTH, "\r\n%%c) %%-%ds(%%c for help)",
               strlen(class_names_table[cls].ansi) -
               ansi_strlen(class_names_table[cls].ansi) + 20);
-      sprintf(buf + strlen(buf), template_buf, class_names_table[cls].letter,
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), template_buf, class_names_table[cls].letter,
               class_names_table[cls].ansi,
               (class_names_table[cls].letter == '3') ? '#' : toupper(class_names_table[cls].letter));
     }
@@ -5705,27 +5705,27 @@ void display_stats(P_desc d)
 
   strcpy(Gbuf1, "\r\nYour basic stats:\r\n");
 
-  sprintf(Gbuf1 + strlen(Gbuf1),
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
           "Strength:     %15s      Power:        %s\r\n",
           stat_to_string2((int) d->character->base_stats.Str),
           stat_to_string2((int) d->character->base_stats.Pow));
 
-  sprintf(Gbuf1 + strlen(Gbuf1),
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
           "Dexterity:    %15s      Intelligence: %s\r\n",
           stat_to_string2((int) d->character->base_stats.Dex),
           stat_to_string2((int) d->character->base_stats.Int));
 
-  sprintf(Gbuf1 + strlen(Gbuf1),
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
           "Agility:      %15s      Wisdom:       %s\r\n",
           stat_to_string2((int) d->character->base_stats.Agi),
           stat_to_string2((int) d->character->base_stats.Wis));
 
-  sprintf(Gbuf1 + strlen(Gbuf1),
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
           "Constitution: %15s      Charisma:     %s\r\n\r\n",
           stat_to_string2((int) d->character->base_stats.Con),
           stat_to_string2((int) d->character->base_stats.Cha));
 
-  sprintf(Gbuf1 + strlen(Gbuf1), "Luck: %15s      Unused:     %s\r\n\r\n",
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "Luck: %15s      Unused:     %s\r\n\r\n",
           stat_to_string2((int) d->character->base_stats.Luk),
           stat_to_string2((int) d->character->base_stats.Kar));
 
@@ -5748,13 +5748,13 @@ void display_characteristics(P_desc d)
     strcat(Gbuf1, "SEX:      Female\r\n");
 
   /*
-  sprintf(Gbuf1 + strlen(Gbuf1), "Your short description is...%s\r\n",
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "Your short description is...%s\r\n",
           d->character->player.short_descr);
   */
   
-  sprintf(Gbuf1 + strlen(Gbuf1), "RACE:     %s\r\n",
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "RACE:     %s\r\n",
           race_to_string(d->character));
-  sprintf(Gbuf1 + strlen(Gbuf1), "CLASS:    %s\r\n",
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "CLASS:    %s\r\n",
           get_class_string(d->character, buffer));
 
   if (GET_ALIGNMENT(d->character) == 1000)
@@ -5774,7 +5774,7 @@ void display_characteristics(P_desc d)
 
   if (GET_HOME(d->character) > 0)
   {
-    sprintf(Gbuf1 + strlen(Gbuf1), "HOMETOWN: %s\r\n",
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "HOMETOWN: %s\r\n",
             town_name_list[GET_HOME(d->character)]);    
   }
   else
@@ -5782,23 +5782,23 @@ void display_characteristics(P_desc d)
     logit(LOG_STATUS, "display_characteristics: unknown hometown, %d\n",
           GET_HOME(d->character));
     GET_HOME(d->character) = HOME_THARN;
-    sprintf(Gbuf1 + strlen(Gbuf1), "HOMETOWN: %s\r\n",
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "HOMETOWN: %s\r\n",
             town_name_list[GET_HOME(d->character)]);
   }
   
-  sprintf(Gbuf1 + strlen(Gbuf1), "\nPossible specializations:\n");
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "\nPossible specializations:\n");
   
   if( !append_valid_specs(Gbuf1, d->character) )
   {
-    sprintf(Gbuf1 + strlen(Gbuf1), "None\n");    
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "None\n");    
   }
     
   /*
-  sprintf(Gbuf1 + strlen(Gbuf1), "HARDCORE: ");
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "HARDCORE: ");
   if (IS_HARDCORE(d->character))
-    sprintf(Gbuf1 + strlen(Gbuf1), "YES\r\n");
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "YES\r\n");
   else
-    sprintf(Gbuf1 + strlen(Gbuf1), "NO\r\n");
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "NO\r\n");
 
 */
   SEND_TO_Q(Gbuf1, d);
@@ -6544,12 +6544,12 @@ void nanny(P_desc d, char *arg)
 
     /* Player enteres in login */
   case CON_ENTER_LOGIN:
-    sprintf(d->registered_login, "%s", arg);
+    snprintf(d->registered_login, MAX_STRING_LENGTH, "%s", arg);
     SEND_TO_Q("\n\rNow, the hostname part of your email address: ", d);
     STATE(d) = CON_ENTER_HOST;
     break;
   case CON_ENTER_HOST:
-    sprintf(d->registered_host, "%s", arg);
+    snprintf(d->registered_host, MAX_STRING_LENGTH, "%s", arg);
     if (email_in_use(d->registered_login, d->registered_host))
     {
       SEND_TO_Q("That email is in use already.\n\r", d);
@@ -6557,7 +6557,7 @@ void nanny(P_desc d, char *arg)
       SEND_TO_Q("\n\rPRESS RETURN.", d);
       return;
     }
-    sprintf(Gbuf1, "Your email is registered as %s@%s, is this correct? ",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "Your email is registered as %s@%s, is this correct? ",
             d->registered_login, d->registered_host);
     SEND_TO_Q(Gbuf1, d);
     STATE(d) = CON_CONFIRM_EMAIL;
@@ -6566,7 +6566,7 @@ void nanny(P_desc d, char *arg)
     for (; isspace(*arg); arg++) ;
     if (*arg == 'y' || *arg == 'Y')
     {                           /* continue */
-//      sprintf(Gbuf1, "Please enter your sex? (M/F) ");
+//      snprintf(Gbuf1, MAX_STRING_LENGTH, "Please enter your sex? (M/F) ");
 //      SEND_TO_Q(Gbuf1, d);
 
       SEND_TO_Q(racewars, d);
@@ -6596,7 +6596,7 @@ void nanny(P_desc d, char *arg)
    } else {
  */
 #ifndef USE_ACCOUNT
-      sprintf(Gbuf1, "\r\nPlease enter a password for %s: ",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "\r\nPlease enter a password for %s: ",
               GET_NAME(d->character));
       SEND_TO_Q(Gbuf1, d);
       STATE(d) = CON_PWD_GET;
@@ -6894,9 +6894,9 @@ void nanny(P_desc d, char *arg)
       struct registration_node *x;
       CREATE(x, struct registration_node, 1);
 
-      sprintf(x->host, "%s", d->registered_host);
-      sprintf(x->login, "%s", d->registered_login);
-      sprintf(x->name, "%s", GET_NAME(d->character));
+      snprintf(x->host, MAX_STRING_LENGTH, "%s", d->registered_host);
+      snprintf(x->login, MAX_STRING_LENGTH, "%s", d->registered_login);
+      snprintf(x->name, MAX_STRING_LENGTH, "%s", GET_NAME(d->character));
       x->name[0] = tolower(x->name[0]);
       x->next = email_reg_table[(int) x->name[0] - (int) 'a'].next;
       email_reg_table[(int) x->name[0] - (int) 'a'].next = x;
@@ -7044,7 +7044,7 @@ int tossHint(P_char ch)
 
   if (iLOADED < 1)
     return 0;
-  sprintf(buf2, "&+MHint: &+m%s", hint_array[number(0, iLOADED - 1)]);
+  snprintf(buf2, MAX_STRING_LENGTH, "&+MHint: &+m%s", hint_array[number(0, iLOADED - 1)]);
   send_to_char(buf2, ch);
   return 0;
 }

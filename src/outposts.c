@@ -1330,7 +1330,7 @@ int outpost_gateguard_proc(P_char ch, P_char pl, int cmd, char *arg)
       (cmd == CMD_HIT || cmd == CMD_KILL))
   {
     //can add check here to see if guild has magic mouth upgrade from db?
-    sprintf(buff,
+    snprintf(buff, MAX_STRING_LENGTH,
 	"&+cA magic mouth tells your guild 'Alert! $N&n&+c has trespassed into %s&n&+c!'&n",
 	world[ch->in_room].name);
     for (P_desc i = descriptor_list; i; i = i->next)

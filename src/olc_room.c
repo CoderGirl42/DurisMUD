@@ -443,13 +443,13 @@ void olc_room_menu(char *buf1, struct olc_data *data)
   {
   case OLC_MODE_ROOM0:
     strcpy(buf1, "&+YRoom Editor&N\r\n\r\n");
-    sprintf(buf1 + strlen(buf1),
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
             " &+WA&N. Edit room name (%.55s&N)\r\n", world[data->rnum].name);
     strcat(buf1, " &+WB&N. Edit room description\r\n");
-    sprintf(buf1 + strlen(buf1),
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
             " &+WC&N. Edit room flags (&+L%lu&N)\r\n",
             world[data->rnum].room_flags);
-    sprintf(buf1 + strlen(buf1),
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
             " &+WD&N. Edit room sector type (&+y%s&N)\r\n",
             sector_types[(int) world[data->rnum].sector_type]);
 
@@ -460,18 +460,18 @@ void olc_room_menu(char *buf1, struct olc_data *data)
       ex_desc = ex_desc->next;
       i++;
     }
-    sprintf(buf1 + strlen(buf1),
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
             " &+WE&N. Edit room extra descriptions (&+y%d keyword%s exist&N)\r\n",
             i, (i == 1) ? "" : "s");
     strcat(buf1, " &+WF&N. Edit room exits (&+yexits existing:");
     for (i = 0; i < NUM_EXITS; i++)
       if (world[data->rnum].dir_option[i])
-        sprintf(buf1 + strlen(buf1), " %c", *olc_dirs[i]);
+        snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1), " %c", *olc_dirs[i]);
 
     strcat(buf1, "&N)\r\n");
 
     strcat(buf1, " &+LG&N. Edit fall chance, mana, and current.\r\n");
-    sprintf(buf1 + strlen(buf1),
+    snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
             "\r\n &+WS&N. Save all rooms in this zone. (&+y%.43s&N)\r\n",
             zone_table[world[data->rnum].zone].filename);
     strcat(buf1, "\r\n"
@@ -507,7 +507,7 @@ void olc_room_menu(char *buf1, struct olc_data *data)
     break;
 
   case OLC_MODE_XTRA1:
-    sprintf(buf1, "&+YEditting Extra Description:&N &+c%s&N\r\n\r\n",
+    snprintf(buf1, MAX_STRING_LENGTH, "&+YEditting Extra Description:&N &+c%s&N\r\n\r\n",
             ((struct extra_descr_data *) (data->misc))->keyword);
     strcat(buf1, " &+WA.&N Edit Keyword(s)\r\n");
     strcat(buf1, " &+WB.&N Edit Description\r\n");
@@ -523,7 +523,7 @@ void olc_room_menu(char *buf1, struct olc_data *data)
       olc_show_menu(data);
       return;
     }
-    sprintf(buf1, "&+YDELETING Extra Description&N\r\n\r\n");
+    snprintf(buf1, MAX_STRING_LENGTH, "&+YDELETING Extra Description&N\r\n\r\n");
     olc_room_xtra_list(buf1, data->rnum);
     strcat(buf1,
            "\r\nChoose an extra description to delete, or hit [ENTER] on a blank line when done.\r\n\r\n");
@@ -536,7 +536,7 @@ void olc_room_menu(char *buf1, struct olc_data *data)
       if (world[data->rnum].dir_option[i])
       {
         j++;
-        sprintf(buf1 + strlen(buf1),
+        snprintf(buf1 + strlen(buf1), MAX_STRING_LENGTH - strlen(buf1),
                 " &+W%c.&N Edit %s exit\r\n", *olc_dirs[i], dirs[i]);
       }
     strcat(buf1, "\r\n");
@@ -572,7 +572,7 @@ static void olc_room_xtra_list(char *str, int rnum)
   i = 1;
   while (ex_desc)
   {
-    sprintf(str + strlen(str), " &+W%2d.&N %s\r\n", i, ex_desc->keyword);
+    snprintf(str + strlen(str), MAX_STRING_LENGTH - strlen(str), " &+W%2d.&N %s\r\n", i, ex_desc->keyword);
     ex_desc = ex_desc->next;
     i++;
   }

@@ -1067,11 +1067,11 @@ void handle_memorize(P_char ch)
 #endif
         if (meming_class(ch))
         {
-          sprintf(Gbuf1, "You have finished memorizing %s.\n", skills[af->modifier].name);
+          snprintf(Gbuf1, MAX_STRING_LENGTH, "You have finished memorizing %s.\n", skills[af->modifier].name);
         }
         else
         {
-          sprintf(Gbuf1, "You have finished praying for %s.\n", skills[af->modifier].name);
+          snprintf(Gbuf1, MAX_STRING_LENGTH, "You have finished praying for %s.\n", skills[af->modifier].name);
         }
         send_to_char(Gbuf1, ch);
         af->flags |= MEMTYPE_FULL;
@@ -1083,20 +1083,20 @@ void handle_memorize(P_char ch)
   if (GET_CLASS(ch, CLASS_SHAMAN))
   {
     send_to_char("You snap out of your meditative trance, memorization complete.\n", ch);
-    sprintf(Gbuf1, "$n snaps out of $s meditative trance, %s.",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "$n snaps out of $s meditative trance, %s.",
            IS_EVIL(ch) ? "grinning widely" : "smiling placidly");
   }
   else if (!book_class(ch))
   {
     send_to_char("Your prayers are complete.\n", ch);
-    sprintf(Gbuf1, "$n raises $s %sholy symbol and smiles %s.",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "$n raises $s %sholy symbol and smiles %s.",
             IS_EVIL(ch) ? "un" : "",
             IS_EVIL(ch) ? "malevolently" : "broadly");
   }
   else
   {
     send_to_char("Your studies are complete.\n", ch);
-    sprintf(Gbuf1, "$n closes $s book and %s.",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "$n closes $s book and %s.",
             IS_EVIL(ch) ? "grins malevolently" : "smiles broadly");
   }
   act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
@@ -1183,18 +1183,18 @@ void do_assimilate(P_char ch, char *argument, int cmd)
     return;
   }
 
-  sprintf(Gbuf1, "You currently have the following spell slots available:\n");
+  snprintf(Gbuf1, MAX_STRING_LENGTH, "You currently have the following spell slots available:\n");
   for (circle = 1; circle <= get_max_circle(ch); circle++)
   {
     available = ch->specials.undead_spell_slots[circle];
-    sprintf(Gbuf1 + strlen(Gbuf1), " %2d%s circle: %2d of %2d",
+    snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), " %2d%s circle: %2d of %2d",
             circle, circle == 1 ? "st" : circle == 2 ?
             "nd" : circle == 3 ? "rd" : "th",
             available, max_spells_in_circle(ch, circle));
     if (available != max_spells_in_circle(ch, circle))
     {
       need_mem = circle;
-      sprintf(Gbuf1 + strlen(Gbuf1), "   (%4d seconds)", 
+      snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "   (%4d seconds)", 
            (get_circle_memtime(ch,circle,true) * (max_spells_in_circle(ch,circle) - available))/WAIT_SEC);
     }
     strcat(Gbuf1, "\n");
@@ -1372,12 +1372,12 @@ void do_memorize(P_char ch, char *argument, int cmd)
           if (!shown_one)
           {
             shown_one = TRUE;
-            sprintf(Gbuf1 + strlen(Gbuf1), "(%2d%s circle) %2d - %s\n", circle, circle == 1 ? "st"
+            snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "(%2d%s circle) %2d - %s\n", circle, circle == 1 ? "st"
               : circle == 2 ? "nd" : circle == 3 ? "rd" : "th", per_spell[spl], skills[spl].name);
           }
           else
           {
-            sprintf(Gbuf1 + strlen(Gbuf1), "              %2d - %s\n",
+            snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "              %2d - %s\n",
               per_spell[spl], skills[spl].name);
           }
         }
@@ -1436,7 +1436,7 @@ void do_memorize(P_char ch, char *argument, int cmd)
           {
             time += get_circle_memtime(ch, circle, true);
           }
-          sprintf(Gbuf1 + strlen(Gbuf1), "%5d seconds:  (%2d%s) %s%s\n", time / 4, circle, (circle == 1)
+          snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "%5d seconds:  (%2d%s) %s%s\n", time / 4, circle, (circle == 1)
             ? "st" : (circle == 2) ? "nd" : (circle == 3) ? "rd" : "th", skills[af->modifier].name,
             book_class(ch) ? (SpellInSpellBook(ch, af->modifier, (SBOOK_MODE_IN_INV | SBOOK_MODE_AT_HAND
             | SBOOK_MODE_ON_BELT | SBOOK_MODE_ON_GROUND)) ? "" : "  [not in spell book]") : "");
@@ -1466,7 +1466,7 @@ void do_memorize(P_char ch, char *argument, int cmd)
           strcat(Gbuf1, Gbuf2);
         }
         i++;
-        sprintf(Gbuf2, "%d %d%s", max_spells_in_circle(ch, circle) - memorized[circle],
+        snprintf(Gbuf2, MAX_STRING_LENGTH, "%d %d%s", max_spells_in_circle(ch, circle) - memorized[circle],
           circle, (circle == 1) ? "st" : (circle == 2) ? "nd" : (circle == 3) ? "rd" : "th");
       }
     }
@@ -1509,7 +1509,7 @@ void do_memorize(P_char ch, char *argument, int cmd)
       else
       {
         send_to_char("You continue your praying.\n", ch);
-        sprintf(Gbuf1, "$n takes out $s %sholy symbol and begins praying intently.",
+        snprintf(Gbuf1, MAX_STRING_LENGTH, "$n takes out $s %sholy symbol and begins praying intently.",
           IS_EVIL(ch) ? "un" : "");
       }
       act(Gbuf1, TRUE, ch, sbook, 0, TO_ROOM);
@@ -1599,7 +1599,7 @@ void do_memorize(P_char ch, char *argument, int cmd)
     }
     else if( !book_class(ch) )
     {
-      sprintf(Gbuf1, "$n takes out $s %sholy symbol and begins praying intently.",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "$n takes out $s %sholy symbol and begins praying intently.",
         IS_EVIL(ch) ? "un" : "");
     }
     else
@@ -1612,17 +1612,17 @@ void do_memorize(P_char ch, char *argument, int cmd)
   SET_BIT(ch->specials.affected_by2, AFF2_MEMORIZING);
   if (GET_CLASS(ch, CLASS_SHAMAN))
   {
-    sprintf(Gbuf1, "You are memorizing %s, which will take about %d seconds.\n",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You are memorizing %s, which will take about %d seconds.\n",
       skills[spl].name, time / 4);
   }
   else if( !book_class(ch) )
   {
-    sprintf(Gbuf1, "You are praying for %s, which will take about %d seconds.\n",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You are praying for %s, which will take about %d seconds.\n",
       skills[spl].name, time / 4);
   }
   else
   {
-    sprintf(Gbuf1, "You are memorizing %s, which will take about %d seconds.\n",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You are memorizing %s, which will take about %d seconds.\n",
       skills[spl].name, time / 4);
   }
   send_to_char(Gbuf1, ch);
@@ -1721,7 +1721,7 @@ void do_forget(P_char ch, char *argument, int cmd)
 
   if (forget_spells(ch, spl))
   {
-    sprintf(Gbuf1, "You purge '%s' from your thoughts.\n", skills[spl].name);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You purge '%s' from your thoughts.\n", skills[spl].name);
     send_to_char(Gbuf1, ch);
   }
   else
@@ -1979,7 +1979,7 @@ int AddSpellToSpellBook(P_char ch, P_obj obj, int spl)
 
     tmp->next = obj->ex_description;
     obj->ex_description = tmp;
-    sprintf(Gbuf1, "%c%c%c", (char) 3, (char) 1, (char) 3);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "%c%c%c", (char) 3, (char) 1, (char) 3);
     tmp->keyword = str_dup(Gbuf1);
     CREATE(tmp->description, char, (MAX_SKILLS + 1) / 8 + 1, MEM_TAG_BUFFER);
   }
@@ -2071,7 +2071,7 @@ void add_scribing(P_char ch, int spl, P_obj book, int flag, P_obj obj,
   else
   {
     act("You start to teach $N..", TRUE, teacher, 0, ch, TO_CHAR);
-    sprintf(Gbuf1, "$n starts to teach you %s..", skills[spl].name);
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "$n starts to teach you %s..", skills[spl].name);
     act(Gbuf1, TRUE, teacher, 0, ch, TO_VICT );
   }
   add_scribe_data(spl, ch, book, flag, obj, teacher);
@@ -2408,12 +2408,12 @@ void event_scribe(P_char ch, P_char victim, P_obj obj, void *data)
   if (s_data->page >= GetSpellPages(ch, s_data->spell))
   {
     REMOVE_BIT(ch->specials.affected_by2, AFF2_SCRIBING);
-    sprintf(Gbuf1, "You finish scribing the spell '%s' into $p.",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "You finish scribing the spell '%s' into $p.",
             skills[s_data->spell].name);
     act(Gbuf1, TRUE, ch, s_data->book, 0, TO_CHAR);
     if (!s_data->flag && s_data->source.teacher)
     {
-      sprintf(Gbuf1, "You finish teaching the spell '%s' to %s.\n",
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You finish teaching the spell '%s' to %s.\n",
               skills[s_data->spell].name, GET_NAME(ch));
       send_to_char(Gbuf1, s_data->source.teacher);
 
@@ -2457,7 +2457,7 @@ void event_scribe(P_char ch, P_char victim, P_obj obj, void *data)
     }
     if (s_data->book->value[2] - s_data->book->value[3])
     {
-      sprintf(Gbuf1,
+      snprintf(Gbuf1, MAX_STRING_LENGTH,
               "The spell uses %d pages in $p, leaving %d more pages free.",
               GetSpellPages(ch, s_data->spell),
               s_data->book->value[2] - s_data->book->value[3]);

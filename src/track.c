@@ -240,12 +240,12 @@ void do_track_not_in_use(P_char ch, char *arg, int cmd)
     {
       if (skill >= number(90, 100))
       {
-        sprintf(descbuf, "%s\n", obj->description);
+        snprintf(descbuf, MAX_STRING_LENGTH, "%s\n", obj->description);
         send_to_char(descbuf, ch);
       }
       else 
       {
-        sprintf(descbuf, "There are some tracks");
+        snprintf(descbuf, MAX_STRING_LENGTH, "There are some tracks");
         if (skill >= 50)
         {
 				  strcat(descbuf, " heading ");
@@ -591,30 +591,30 @@ void add_track(P_char ch, int dir)
   // Show tracks of the mount if mounted.
   if( (mount = GET_MOUNT(ch)) != NULL )
   {
-    sprintf(buf1, "There are deep %s tracks going %s.", race_names_table[(int) GET_RACE(mount)].ansi, dirs[dir]);
+    snprintf(buf1, MAX_STRING_LENGTH, "There are deep %s tracks going %s.", race_names_table[(int) GET_RACE(mount)].ansi, dirs[dir]);
     strcpy(buf3, mount->player.short_descr);
     track->value[0] = dir;
     dura += 15 * WAIT_SEC;
   }
   else if( IS_DISGUISE_SHAPE(ch) )
   {
-    sprintf(buf1, "There are %s tracks going %s.", race_names_table[(int) GET_DISGUISE_RACE(ch)].ansi, dirs[dir]);
+    snprintf(buf1, MAX_STRING_LENGTH, "There are %s tracks going %s.", race_names_table[(int) GET_DISGUISE_RACE(ch)].ansi, dirs[dir]);
     strcpy(buf3, ch->disguise.name);
     track->value[0] = dir;
   }
   else
   {
-    sprintf(buf1, "There are %s tracks going %s.", race_names_table[(int) GET_RACE(ch)].ansi, dirs[dir]);
+    snprintf(buf1, MAX_STRING_LENGTH, "There are %s tracks going %s.", race_names_table[(int) GET_RACE(ch)].ansi, dirs[dir]);
     strcpy(buf3, ch->player.short_descr);
     track->value[0] = dir;
   }
 
-  //sprintf(buf1, "There are tracks here going %s.", dirs[dir]);
+  //snprintf(buf1, MAX_STRING_LENGTH, "There are tracks here going %s.", dirs[dir]);
 
   set_long_description(track, buf1);  
 
   /*
-  sprintf(buf2, "These appear to be the track of %s", buf3);
+  snprintf(buf2, MAX_STRING_LENGTH, "These appear to be the track of %s", buf3);
   set_short_description(track, buf2); 
   ed = track->ex_description;
   ed->description = str_dup(buf2);
@@ -936,7 +936,7 @@ void show_tracks(P_char ch, int room)
       {
         if( chance + 50 > number(1, 100) )
         {
-          //sprintf(Gbuf3, "%s\n", obj->description);
+          //snprintf(Gbuf3, MAX_STRING_LENGTH, "%s\n", obj->description);
           //send_to_char(Gbuf3, ch);
           send_to_char("&+rYou smell a scent in the area.\n", ch);
         }
@@ -978,7 +978,7 @@ void show_tracks(P_char ch, int room)
         // 2/3 chance for ppl with 30 greater skill than necessary & 1/2 for forest druids in forest.
         if( (number(0, 2) && skill - percent > 30) || (number(0,1) && forest_check) )
         {
-          sprintf(Gbuf3, "%s\n", obj->description);
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "%s\n", obj->description);
           send_to_char(Gbuf3, ch);
         }
         else
@@ -988,7 +988,7 @@ void show_tracks(P_char ch, int room)
           {
             continue;
           }
-          sprintf(Gbuf3, "There are some tracks");
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "There are some tracks");
 
           if( strstr(obj->description, "north") )
             strcat(Gbuf3, " heading north.\n");

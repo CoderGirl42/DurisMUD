@@ -187,9 +187,9 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
       }
       else
       {
-        sprintf( buf, "You fire $p %sward.", dirs[dir] );
+        snprintf(buf, MAX_STRING_LENGTH, "You fire $p %sward.", dirs[dir] );
         act( buf, FALSE, ch, obj, NULL, TO_CHAR );
-        sprintf( buf, "$n fires $p %sward.", dirs[dir] );
+        snprintf(buf, MAX_STRING_LENGTH, "$n fires $p %sward.", dirs[dir] );
         act( buf, TRUE, ch, obj, 0, TO_ROOM);
 
         if( obj->loc_p != LOC_ROOM )
@@ -229,7 +229,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
           // If we hit target siege object.
           if( num_rooms > 0 && !vict && (target = get_siege_room( ch, arg2)) )
           {
-            sprintf( buf, "%s slams into $p", ammo->short_description );
+            snprintf(buf, MAX_STRING_LENGTH, "%s slams into $p", ammo->short_description );
             act( buf, TRUE, NULL, target, 0, TO_ROOM );
             act( buf, TRUE, ch, target, 0, TO_CHAR );
             damage_siege( target, ammo );
@@ -241,7 +241,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
           if(  !VIRTUAL_EXIT(in_room, dir)
               || !VIRTUAL_EXIT(in_room, dir)->to_room )
           {
-            sprintf( buf, "$p hits the %s wall.", dirs[dir] );
+            snprintf(buf, MAX_STRING_LENGTH, "$p hits the %s wall.", dirs[dir] );
             act( buf, TRUE, NULL, ammo, 0, TO_ROOM );
             break;
           }
@@ -265,7 +265,7 @@ int ballista( P_obj obj, P_char ch, int cmd, char *arg )
         }
         else if( target = get_siege_room( ch, arg2) )
         {
-          sprintf( buf, "%s slams into $p", ammo->short_description );
+          snprintf(buf, MAX_STRING_LENGTH, "%s slams into $p", ammo->short_description );
           act( buf, TRUE, NULL, target, 0, TO_ROOM );
           act( buf, TRUE, ch, target, 0, TO_CHAR );
           damage_siege( target, ammo );
@@ -481,9 +481,9 @@ int catapult( P_obj obj, P_char ch, int cmd, char *arg )
       }
       else
       {
-        sprintf( buf, "You fire $p %sward.", dirs[dir] );
+        snprintf(buf, MAX_STRING_LENGTH, "You fire $p %sward.", dirs[dir] );
         act( buf, FALSE, ch, obj, NULL, TO_CHAR );
-        sprintf( buf, "$n fires $p %sward.", dirs[dir] );
+        snprintf(buf, MAX_STRING_LENGTH, "$n fires $p %sward.", dirs[dir] );
         act( buf, TRUE, ch, obj, 0, TO_ROOM);
 
         if( obj->loc_p != LOC_ROOM )
@@ -508,7 +508,7 @@ int catapult( P_obj obj, P_char ch, int cmd, char *arg )
           if(  !VIRTUAL_EXIT(in_room, dir)
               || !VIRTUAL_EXIT(in_room, dir)->to_room )
           {
-            sprintf( buf, "$p slams into the %s wall.", dirs[dir] );
+            snprintf(buf, MAX_STRING_LENGTH, "$p slams into the %s wall.", dirs[dir] );
             act( buf, TRUE, NULL, ammo, 0, TO_ROOM );
             return TRUE;
           }
@@ -771,7 +771,7 @@ void damage_siege( P_obj siege, P_obj ammo )
   if( siege->condition <= 0 )
     destroy = TRUE;
 
-  sprintf(buf, "$q %s", destroy ? "is completely destroyed!" :
+  snprintf(buf, MAX_STRING_LENGTH, "$q %s", destroy ? "is completely destroyed!" :
       "is damaged from the blow!" );
   act(buf, TRUE, NULL, siege, 0, TO_ROOM);
 
@@ -785,12 +785,12 @@ void damage_siege( P_obj siege, P_obj ammo )
       extract_obj( siege, TRUE ); // Siege arti?
       return;
     }
-    sprintf(buf, "Scraps from %s&n lie in a pile here.",
+    snprintf(buf, MAX_STRING_LENGTH, "Scraps from %s&n lie in a pile here.",
         siege->short_description);
     scraps->description = str_dup(buf);
-    sprintf(buf, "a pile of scraps from %s", siege->short_description);
+    snprintf(buf, MAX_STRING_LENGTH, "a pile of scraps from %s", siege->short_description);
     scraps->short_description = str_dup(buf);
-    sprintf(buf, "%s scraps pile", siege->name);
+    snprintf(buf, MAX_STRING_LENGTH, "%s scraps pile", siege->name);
     scraps->name = str_dup(buf);
     scraps->str_mask = STRUNG_DESC1 | STRUNG_DESC2 | STRUNG_KEYS;
     set_obj_affected(scraps, 400, TAG_OBJ_DECAY, 0);
@@ -1138,7 +1138,7 @@ int warmaster( P_char ch, P_char pl, int cmd, char *arg )
     {
       // For 'buy <#>' instead of 'buy gates <#>'
       if( atoi(arg1) > 0 )
-        sprintf( arg2, "%s", arg1 );
+        snprintf(arg2, MAX_STRING_LENGTH, "%s", arg1 );
 
       if( town->resources < 150000 )
       {
@@ -1168,10 +1168,10 @@ int warmaster( P_char ch, P_char pl, int cmd, char *arg )
             if( world[world[i].dir_option[j]->to_room].zone != world[i].zone )
             {
               if( has_gates( i ) )
-                sprintf( buf, "%2d)*%-5s %s\n", ++count, dirs[j],
+                snprintf(buf, MAX_STRING_LENGTH, "%2d)*%-5s %s\n", ++count, dirs[j],
                     world[world[i].dir_option[j]->to_room].name );
               else
-                sprintf( buf, "%2d) %-5s %s\n", ++count, dirs[j],
+                snprintf(buf, MAX_STRING_LENGTH, "%2d) %-5s %s\n", ++count, dirs[j],
                     world[world[i].dir_option[j]->to_room].name );
               send_to_char( buf, pl );
             }

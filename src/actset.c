@@ -644,7 +644,7 @@ static void setbit_char(P_char ch, char *name, char *flag, char *val, int on_off
         if( IS_PC(ppl) && (atoi(val) > MAXLVL) )
         {
           send_to_char("You can't setbit someone's level above 62.  Changing value to 62.\r\n", ch);
-          sprintf(val, "62");
+          snprintf(val, MAX_STRING_LENGTH, "62");
         }
       }
       if (SAME_STRING(flag, "winvis") &&
@@ -1161,7 +1161,7 @@ static void setbit_dir(P_char ch, char *name, char *flag, char *value, int on_of
         return;
       }
     }
-    sprintf(value, "%d", room_number);
+    snprintf(value, MAX_STRING_LENGTH, "%d", room_number);
   }
 
   setbit_parseTable(ch, (void *) where, table, ARRAY_SIZE(table), flag, value, on_off, SETBIT_DIR);

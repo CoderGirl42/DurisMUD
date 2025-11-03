@@ -488,12 +488,12 @@ void do_spec_list(P_char ch)
           {
             if( comma )
             {
-              sprintf(list + strlen(list), ", %s&n", race_names_table[race].ansi);
+              snprintf(list + strlen(list), MAX_STRING_LENGTH - strlen(list), ", %s&n", race_names_table[race].ansi);
             }
             else
             {
               comma = TRUE;
-              sprintf(list + strlen(list), " %s&n", race_names_table[race].ansi);
+              snprintf(list + strlen(list), MAX_STRING_LENGTH - strlen(list), " %s&n", race_names_table[race].ansi);
             }
           }
         }

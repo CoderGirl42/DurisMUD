@@ -716,7 +716,7 @@ int zombies_game(P_obj obj, P_char ch, int cmd, char *arg)
       obj->value[ZOMBIES_WAVE] = 0;
       // Need to scale the amount of mobs per level here
       zgame->zombies_to_load = MAX(obj->value[ZOMBIES_LEVEL], ((obj->value[ZOMBIES_LEVEL] + (palive*2))*palive/2));
-      sprintf(buff, "&+WRound &+c%d &+Wis beginning.  Good Luck!&n\r\n", obj->value[ZOMBIES_LEVEL]);
+      snprintf(buff, MAX_STRING_LENGTH, "&+WRound &+c%d &+Wis beginning.  Good Luck!&n\r\n", obj->value[ZOMBIES_LEVEL]);
       send_to_zone(zone, buff);
       return TRUE;
     }
@@ -743,23 +743,23 @@ int zombies_game(P_obj obj, P_char ch, int cmd, char *arg)
     {
       obj->value[ZOMBIES_STATUS] = 0;
       obj->timer[ZTIMER_STANDBY] = 0;
-      sprintf(buff, "&+WThe game has been stopped by %s.&n\r\n", GET_NAME(ch));
+      snprintf(buff, MAX_STRING_LENGTH, "&+WThe game has been stopped by %s.&n\r\n", GET_NAME(ch));
       send_to_zone(zone, buff);
       zgame_clear_zombies(obj);
       return TRUE;
     }
     else if( arg2 && isname(arg2, "status") )
     {
-      sprintf(buff, "&+WZombies Game Status&n\r\n");
-      sprintf(buff2, "&+L           Status&+W: &+c%s&n\r\n", (obj->value[ZOMBIES_STATUS] == 1 ? "On" : obj->value[ZOMBIES_STATUS] == 0 ? "Off" : "Standby"));
+      snprintf(buff, MAX_STRING_LENGTH, "&+WZombies Game Status&n\r\n");
+      snprintf(buff2, MAX_STRING_LENGTH, "&+L           Status&+W: &+c%s&n\r\n", (obj->value[ZOMBIES_STATUS] == 1 ? "On" : obj->value[ZOMBIES_STATUS] == 0 ? "Off" : "Standby"));
       strcat(buff, buff2);
-      sprintf(buff2, "&+L            Round&+W: &+c%d&n\r\n", obj->value[ZOMBIES_LEVEL]);
+      snprintf(buff2, MAX_STRING_LENGTH, "&+L            Round&+W: &+c%d&n\r\n", obj->value[ZOMBIES_LEVEL]);
       strcat(buff, buff2);
-      sprintf(buff2, "&+L    Players Alive&+W: &+c%d&n\r\n", palive);
+      snprintf(buff2, MAX_STRING_LENGTH, "&+L    Players Alive&+W: &+c%d&n\r\n", palive);
       strcat(buff, buff2);
-      sprintf(buff2, "&+L    Zombies Alive&+W: &+c%d&n\r\n", zombies);
+      snprintf(buff2, MAX_STRING_LENGTH, "&+L    Zombies Alive&+W: &+c%d&n\r\n", zombies);
       strcat(buff, buff2);
-      sprintf(buff2, "&+LZombies Remaining&+W: &+c%d&n\r\n", zgame->zombies_to_load);
+      snprintf(buff2, MAX_STRING_LENGTH, "&+LZombies Remaining&+W: &+c%d&n\r\n", zgame->zombies_to_load);
       strcat(buff, buff2);
       send_to_char(buff, ch);
       return TRUE;
@@ -782,7 +782,7 @@ int zombies_game(P_obj obj, P_char ch, int cmd, char *arg)
         return TRUE;
       }
       obj->value[ZOMBIES_LEVEL] = level;
-      sprintf(buff, "&+WZombies Game level set to: &+c%d&n.\r\n", level);
+      snprintf(buff, MAX_STRING_LENGTH, "&+WZombies Game level set to: &+c%d&n.\r\n", level);
       send_to_char(buff, ch);
       return TRUE;
     }

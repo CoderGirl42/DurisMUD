@@ -697,32 +697,32 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
       }
       else if (whats_in == CONTAINS_GOOD_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[RACEWAR_GOOD].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[RACEWAR_GOOD].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_EVIL_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[RACEWAR_EVIL].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[RACEWAR_EVIL].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_UNDEAD_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[RACEWAR_UNDEAD].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[RACEWAR_UNDEAD].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_NEUTRAL_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[RACEWAR_NEUTRAL].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[RACEWAR_NEUTRAL].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_UNKNOWN_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[MAX_RACEWAR+1].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[MAX_RACEWAR+1].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_SHIP)
       {
-        sprintf(minibuf, "&+%cS&n", racewar_color[RACEWAR_NONE].color );
+        snprintf(minibuf, MAX_STRING_LENGTH, "&+%cS&n", racewar_color[RACEWAR_NONE].color );
         strcat(buf, minibuf);
       }
       else if (whats_in == CONTAINS_FERRY)
@@ -816,7 +816,7 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
           shift = -2;
         }
 
-        sprintf( buf + strlen(buf) + shift, "&%s%s",
+        snprintf(buf + strlen(buf) + shift, MAX_STRING_LENGTH, "&%s%s",
           (what == SECT_FOREST && !number( 0,2 )) ? "+G" : color_symbol[what].colorStrn, sector_symbol[what]);
         hadbg = color_symbol[what].hasBg;
         prev = what;
@@ -829,7 +829,7 @@ void display_map_room(P_char ch, int from_room, int n, int show_map_regardless)
         {
           shift = -2;
         }
-        sprintf(buf + strlen(buf) + shift, "%s", sector_symbol[what]);
+        snprintf(buf + strlen(buf) + shift, MAX_STRING_LENGTH, "%s", sector_symbol[what]);
         map_tile = true;
       }
 

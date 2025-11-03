@@ -363,7 +363,7 @@ void MoveShadower(P_char ch, int to_room)
             break;
 
           default:              /* should never reach this case */
-            sprintf(buf, "MoveShadower(): (real) room %d with unknown sector type %d.",
+            snprintf(buf, MAX_STRING_LENGTH, "MoveShadower(): (real) room %d with unknown sector type %d.",
                     sh_ptr->shadower->in_room, world[sh_ptr->shadower->in_room].sector_type);
             logit(LOG_DEBUG, buf);
             break;

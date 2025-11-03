@@ -319,9 +319,9 @@ void do_disguise(P_char ch, char *arg, int cmd)
       ch->disguise.racewar = GET_RACEWAR(target);
       if (GET_TITLE(target))
         ch->disguise.title = str_dup(GET_TITLE(target));
-      sprintf(Gbuf1, "You disguise yourself into %s.\r\n", GET_NAME(target));
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You disguise yourself into %s.\r\n", GET_NAME(target));
       send_to_char(Gbuf1, ch);
-      sprintf(Gbuf1, "%s starts disguising into %s.", GET_NAME(ch), GET_NAME(target));
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s starts disguising into %s.", GET_NAME(ch), GET_NAME(target));
     }
     else
     {
@@ -338,15 +338,15 @@ void do_disguise(P_char ch, char *arg, int cmd)
 
       ch->disguise.name = str_dup(disguise_list_data[i].name[k]);
 
-      sprintf(Gbuf1, "%s is standing here, busy with his own matters.", disguise_list_data[i].name[k]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s is standing here, busy with his own matters.", disguise_list_data[i].name[k]);
 
       ch->disguise.longname = str_dup(Gbuf1);
       //GET_DISGUISE_TITLE(ch) = ch->disguise.name = ch->disguise.longname = str_dup(disguise_list_data[i].name[number(0, 2)]);
       ch->disguise.race = disguise_list_data[i].race;
       ch->disguise.hit = GET_LEVEL(ch) * 4;
-      sprintf(Gbuf1, "You disguise yourself into a %s.\r\n", disguise_list[i]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You disguise yourself into a %s.\r\n", disguise_list[i]);
       send_to_char(Gbuf1, ch);
-      sprintf(Gbuf1, "%s starts disguising into a %s.", GET_NAME(ch), disguise_list[i]);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "%s starts disguising into a %s.", GET_NAME(ch), disguise_list[i]);
     }
     SET_BIT(ch->specials.act, PLR_NOWHO);
     justice_witness(ch, NULL, CRIME_DISGUISE);

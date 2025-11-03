@@ -188,7 +188,7 @@ void apply_aura(P_char ch, P_char victim, int aura)
   linked_affect_to_char(victim, &af, ch, LNK_PALADIN_AURA);
   SET_BIT(victim->specials.affected_by3, AFF3_PALADIN_AURA);
 
-  sprintf(_buff, "You are surrounded by a %s.", auras[aura-FIRST_AURA].glow_name);
+  snprintf(_buff, MAX_STRING_LENGTH, "You are surrounded by a %s.", auras[aura-FIRST_AURA].glow_name);
   act(_buff, FALSE, victim, 0, victim, TO_CHAR);
 }
 
@@ -196,7 +196,7 @@ void apply_aura(P_char ch, P_char victim, int aura)
 void send_paladin_auras(P_char ch, P_char tar_ch) {
   for( struct affected_type* aff = tar_ch->affected; aff; aff = aff->next ) {
     if( aff->type >= FIRST_AURA && aff->type <= LAST_AURA ) {
-      sprintf(_buff, "$E is surrounded by a %s.", auras[aff->type-FIRST_AURA].glow_name);
+      snprintf(_buff, MAX_STRING_LENGTH, "$E is surrounded by a %s.", auras[aff->type-FIRST_AURA].glow_name);
       act(_buff, FALSE, ch, 0, tar_ch, TO_CHAR);
     }
   }

@@ -203,20 +203,20 @@ void get(P_char ch, P_obj o_obj, P_obj s_obj, int showit)
                                                                  wearing));
     }
     if (notall)
-      sprintf(Gbuf3, "You got: ");
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You got: ");
     else
-      sprintf(Gbuf3, "There were: ");
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "There were: ");
     if (got_p)
-      sprintf(Gbuf3 + strlen(Gbuf3), "%d &+Wplatinum&N coin%s, ", got_p,
+      snprintf(Gbuf3 + strlen(Gbuf3), MAX_STRING_LENGTH - strlen(Gbuf3), "%d &+Wplatinum&N coin%s, ", got_p,
               ((got_p > 1) ? "s" : ""));
     if (got_g)
-      sprintf(Gbuf3 + strlen(Gbuf3), "%d &+Ygold&N coin%s, ", got_g,
+      snprintf(Gbuf3 + strlen(Gbuf3), MAX_STRING_LENGTH - strlen(Gbuf3), "%d &+Ygold&N coin%s, ", got_g,
               ((got_g > 1) ? "s" : ""));
     if (got_s)
-      sprintf(Gbuf3 + strlen(Gbuf3), "%d &+wsilver&n coin%s, ", got_s,
+      snprintf(Gbuf3 + strlen(Gbuf3), MAX_STRING_LENGTH - strlen(Gbuf3), "%d &+wsilver&n coin%s, ", got_s,
               ((got_s > 1) ? "s" : ""));
     if (got_c)
-      sprintf(Gbuf3 + strlen(Gbuf3), "%d &+ycopper&N coin%s, ", got_c,
+      snprintf(Gbuf3 + strlen(Gbuf3), MAX_STRING_LENGTH - strlen(Gbuf3), "%d &+ycopper&N coin%s, ", got_c,
               ((got_c > 1) ? "s" : ""));
     Gbuf3[strlen(Gbuf3) - 2] = '.';
     strcat(Gbuf3, "\r\n");
@@ -519,7 +519,7 @@ void do_get(P_char ch, char *argument, int cmd)
             {
               strcpy(Gbuf4, o_obj->short_description);
               CAP(Gbuf4);
-              sprintf(Gbuf3, "%s isn't takeable.\r\n", Gbuf4);
+              snprintf(Gbuf3, MAX_STRING_LENGTH, "%s isn't takeable.\r\n", Gbuf4);
               send_to_char(Gbuf3, ch);
               fail = TRUE;
             }
@@ -528,7 +528,7 @@ void do_get(P_char ch, char *argument, int cmd)
           {
             strcpy(Gbuf4, o_obj->short_description);
             CAP(Gbuf4);
-            sprintf(Gbuf3, "%s is too heavy to lift.\r\n", Gbuf4);
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "%s is too heavy to lift.\r\n", Gbuf4);
             send_to_char(Gbuf3, ch);
             fail = TRUE;
           }
@@ -544,7 +544,7 @@ void do_get(P_char ch, char *argument, int cmd)
 
     if (total > 1)
     {
-      sprintf(Gbuf3, "You got %d items.\r\n", total);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You got %d items.\r\n", total);
       send_to_char(Gbuf3, ch);
     }
     else if (!total)
@@ -611,7 +611,7 @@ void do_get(P_char ch, char *argument, int cmd)
           {
             strcpy(Gbuf4, o_obj->short_description);
             CAP(Gbuf4);
-            sprintf(Gbuf3, "%s isn't takeable.\r\n", Gbuf4);
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "%s isn't takeable.\r\n", Gbuf4);
             send_to_char(Gbuf3, ch);
             fail = TRUE;
           }
@@ -620,7 +620,7 @@ void do_get(P_char ch, char *argument, int cmd)
         {
           strcpy(Gbuf4, o_obj->short_description);
           CAP(Gbuf4);
-          sprintf(Gbuf3, "%s is too heavy.\r\n", Gbuf4);
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "%s is too heavy.\r\n", Gbuf4);
           send_to_char(Gbuf3, ch);
           fail = TRUE;
         }
@@ -651,21 +651,21 @@ void do_get(P_char ch, char *argument, int cmd)
             // Set object to LOC_NOWHERE so we can give it to the char without errors: Applies to NULL location objects.
             s_obj->loc_p = LOC_NOWHERE;
             obj_to_char( s_obj, ch );
-            i += sprintf( Gbuf2 + i, "%s, ", OBJ_SHORT(s_obj) );
+            i += snprintf(Gbuf2 + i, MAX_STRING_LENGTH, "%s, ", OBJ_SHORT(s_obj) );
           }
         }
         if( i > 0 )
         {
-          sprintf( Gbuf2 + i - 2, ".\n" );
+          snprintf(Gbuf2 + i - 2, MAX_STRING_LENGTH, ".\n" );
         }
         else
         {
-          sprintf( Gbuf2, "No items found in nowhere.\n" );
+          snprintf(Gbuf2, MAX_STRING_LENGTH, "No items found in nowhere.\n" );
         }
         send_to_char( Gbuf2, ch );
         return;
       }
-      sprintf(Gbuf3, "You do not see a %s here.\r\n", arg1);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You do not see a %s here.\r\n", arg1);
       send_to_char(Gbuf3, ch);
       fail = TRUE;
     }
@@ -830,14 +830,14 @@ void do_get(P_char ch, char *argument, int cmd)
                 }
                 else
                 {
-                  sprintf(Gbuf3, "%s isn't takeable.\r\n", o_obj->short_description);
+                  snprintf(Gbuf3, MAX_STRING_LENGTH, "%s isn't takeable.\r\n", o_obj->short_description);
                   send_to_char(Gbuf3, ch);
                   fail = TRUE;
                 }
               }
               else
               {
-                sprintf(Gbuf3, "%s is too heavy.\r\n", o_obj->short_description);
+                snprintf(Gbuf3, MAX_STRING_LENGTH, "%s is too heavy.\r\n", o_obj->short_description);
                 send_to_char(Gbuf3, ch);
                 fail = TRUE;
               }
@@ -856,7 +856,7 @@ void do_get(P_char ch, char *argument, int cmd)
         }
         if (!total && !fail)
         {
-          sprintf(Gbuf3, "%s appears to be empty.\r\n", s_obj->short_description);
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "%s appears to be empty.\r\n", s_obj->short_description);
           send_to_char(Gbuf3, ch);
           fail = TRUE;
         }
@@ -869,14 +869,14 @@ void do_get(P_char ch, char *argument, int cmd)
       }
       else
       {
-        sprintf(Gbuf3, "%s is not a container.\r\n", s_obj->short_description);
+        snprintf(Gbuf3, MAX_STRING_LENGTH, "%s is not a container.\r\n", s_obj->short_description);
         send_to_char(Gbuf3, ch);
         fail = TRUE;
       }
     }
     else
     {
-      sprintf(Gbuf3, "You do not see or have the %s.\r\n", arg2);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You do not see or have the %s.\r\n", arg2);
       send_to_char(Gbuf3, ch);
       fail = TRUE;
     }
@@ -1035,7 +1035,7 @@ void do_get(P_char ch, char *argument, int cmd)
               }
               else
               {
-                sprintf(Gbuf3, "%s isn't takable.\r\n",
+                snprintf(Gbuf3, MAX_STRING_LENGTH, "%s isn't takable.\r\n",
                         o_obj->short_description);
                 send_to_char(Gbuf3, ch);
                 fail = TRUE;
@@ -1043,7 +1043,7 @@ void do_get(P_char ch, char *argument, int cmd)
             }
             else
             {
-              sprintf(Gbuf3, "%s is too heavy.\r\n",
+              snprintf(Gbuf3, MAX_STRING_LENGTH, "%s is too heavy.\r\n",
                       o_obj->short_description);
               send_to_char(Gbuf3, ch);
               fail = TRUE;
@@ -1057,7 +1057,7 @@ void do_get(P_char ch, char *argument, int cmd)
         }
         else
         {
-          sprintf(Gbuf3, "%s does not contain the %s.\r\n",
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "%s does not contain the %s.\r\n",
                   s_obj->short_description, arg1);
           send_to_char(Gbuf3, ch);
           fail = TRUE;
@@ -1065,7 +1065,7 @@ void do_get(P_char ch, char *argument, int cmd)
       }
       else
       {
-        sprintf(Gbuf3, "%s isn't a container.\r\n",
+        snprintf(Gbuf3, MAX_STRING_LENGTH, "%s isn't a container.\r\n",
                 s_obj->short_description);
         send_to_char(Gbuf3, ch);
         fail = TRUE;
@@ -1073,7 +1073,7 @@ void do_get(P_char ch, char *argument, int cmd)
     }
     else
     {
-      sprintf(Gbuf3, "You do not see or have the %s.\r\n", arg2);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You do not see or have the %s.\r\n", arg2);
       send_to_char(Gbuf3, ch);
       fail = TRUE;
     }
@@ -1223,7 +1223,7 @@ void do_junk(P_char ch, char *argument, int cmd)
         {
           if (CAN_SEE_OBJ(ch, tmp_object))
           {
-            sprintf(Gbuf3, "You can't junk the %s, it must be CURSED!\r\n",
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "You can't junk the %s, it must be CURSED!\r\n",
                     FirstWord(tmp_object->name));
             send_to_char(Gbuf3, ch);
             test = TRUE;
@@ -1250,7 +1250,7 @@ void do_junk(P_char ch, char *argument, int cmd)
         {
           if (!IS_SET(tmp_object->extra_flags, ITEM_TRANSIENT))
           {
-            sprintf( Gbuf3, "You junk %s.\r\n", OBJ_SHORT(tmp_object) );
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "You junk %s.\r\n", OBJ_SHORT(tmp_object) );
             send_to_char(Gbuf3, ch);
             act("$n junks $p.", 1, ch, tmp_object, 0, TO_ROOM);
             extract_obj(tmp_object, TRUE); // Just in case someone enables junking artis.
@@ -1259,7 +1259,7 @@ void do_junk(P_char ch, char *argument, int cmd)
           }
           else
           {
-            sprintf( Gbuf3, "%s dissolves with a blinding light.\r\n", OBJ_SHORT(tmp_object) );
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "%s dissolves with a blinding light.\r\n", OBJ_SHORT(tmp_object) );
             CAP(Gbuf3);
             for( t_ch = world[ch->in_room].people; t_ch; t_ch = t_ch->next_in_room )
             {
@@ -1397,14 +1397,14 @@ void do_dropalldot(P_char ch, char *name, int cmd)
     {
       snprintf(Gbuf1, MAX_STRING_LENGTH, "You drop %d %s(s).", total, name);
       act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
-      sprintf(Gbuf1, "$n drops some %s(s).", name);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "$n drops some %s(s).", name);
       act(Gbuf1, FALSE, ch, 0, 0, TO_ROOM);
     }
     else
     {
-      sprintf(Gbuf1, "You drop %d %s(s).", total, name);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "You drop %d %s(s).", total, name);
       act(Gbuf1, FALSE, ch, 0, 0, TO_CHAR);
-      sprintf(Gbuf1, "$n drops a bunch of %s(s).", name);
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "$n drops a bunch of %s(s).", name);
       act(Gbuf1, FALSE, ch, 0, 0, TO_ROOM);
     }
 
@@ -1590,7 +1590,7 @@ void do_drop(P_char ch, char *argument, int cmd)
         {
           if (CAN_SEE_OBJ(ch, tmp_object))
           {
-            sprintf(Gbuf3, "You drop %s.\r\n", tmp_object->short_description);
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "You drop %s.\r\n", tmp_object->short_description);
             send_to_char(Gbuf3, ch);
           }
           else
@@ -1627,7 +1627,7 @@ void do_drop(P_char ch, char *argument, int cmd)
         {
           if (CAN_SEE_OBJ(ch, tmp_object))
           {
-            sprintf(Gbuf3, "You can't drop %s, it must be CURSED!\r\n",
+            snprintf(Gbuf3, MAX_STRING_LENGTH, "You can't drop %s, it must be CURSED!\r\n",
                     tmp_object->short_description);
             send_to_char(Gbuf3, ch);
             test = TRUE;
@@ -1653,7 +1653,7 @@ void do_drop(P_char ch, char *argument, int cmd)
       {
         if (!IS_SET(tmp_object->extra_flags, ITEM_NODROP) || IS_TRUSTED(ch))
         {
-          sprintf(Gbuf3, "You drop %s.\r\n", tmp_object->short_description);
+          snprintf(Gbuf3, MAX_STRING_LENGTH, "You drop %s.\r\n", tmp_object->short_description);
           send_to_char(Gbuf3, ch);
           act("$n drops $p.", 0, ch, tmp_object, 0, TO_ROOM);
           obj_from_char(tmp_object);
@@ -1826,7 +1826,7 @@ void do_put(P_char ch, char *argument, int cmd)
     obj_to_char(o_obj, ch);
     if (count = put(ch, o_obj, s_obj, TRUE))
     {
-      sprintf(buf, "You put %d &+Wplatinum&n, %d &+Ygold&n, %d silver, and %d &+ycopper&n coins into $P.",
+      snprintf(buf, MAX_STRING_LENGTH, "You put %d &+Wplatinum&n, %d &+Ygold&n, %d silver, and %d &+ycopper&n coins into $P.",
         plat, gold, silv, copp);
       act(buf, TRUE, ch, 0, s_obj, TO_CHAR);
       ch->points.cash[3] -= plat;
@@ -1876,7 +1876,7 @@ void do_put(P_char ch, char *argument, int cmd)
     }
     else
     {
-      sprintf(buf, "You don't have the %s.\r\n", obj_name);
+      snprintf(buf, MAX_STRING_LENGTH, "You don't have the %s.\r\n", obj_name);
       send_to_char(buf, ch);
     }
   }
@@ -1884,7 +1884,7 @@ void do_put(P_char ch, char *argument, int cmd)
   {
     if (type == PUT_ALL)
     {
-      sprintf(buf, "You put %d items into $p.", count);
+      snprintf(buf, MAX_STRING_LENGTH, "You put %d items into $p.", count);
       act(buf, FALSE, ch, s_obj, 0, TO_CHAR);
       if (count < 6)
         act("$n puts some stuff into $p.", TRUE, ch, s_obj, 0, TO_ROOM);
@@ -1893,12 +1893,12 @@ void do_put(P_char ch, char *argument, int cmd)
     }
     else if (type == PUT_ALLDOT)
     {
-      sprintf(buf, "You put %d %s(s) into $p.", count, obj_name);
+      snprintf(buf, MAX_STRING_LENGTH, "You put %d %s(s) into $p.", count, obj_name);
       act(buf, FALSE, ch, s_obj, 0, TO_CHAR);
       if (count < 6)
-        sprintf(buf, "$n puts some %s(s) into $p.", obj_name);
+        snprintf(buf, MAX_STRING_LENGTH, "$n puts some %s(s) into $p.", obj_name);
       else
-        sprintf(buf, "$n puts a bunch of %s(s) into $p.", obj_name);
+        snprintf(buf, MAX_STRING_LENGTH, "$n puts a bunch of %s(s) into $p.", obj_name);
       act(buf, TRUE, ch, s_obj, 0, TO_ROOM);
     }
     char_light(ch);
@@ -2133,7 +2133,7 @@ bool put(P_char ch, P_obj o_obj, P_obj s_obj, int showit)
     {
       if (showit)
       {
-        sprintf(Gbuf3, "The %s is not a container.\r\n",
+        snprintf(Gbuf3, MAX_STRING_LENGTH, "The %s is not a container.\r\n",
                 FirstWord(s_obj->name));
         send_to_char(Gbuf3, ch);
       }
@@ -2464,7 +2464,7 @@ void name_to_drinkcon(P_obj obj, int type)
 
   CREATE(new_name, char, strlen(obj->name) + strlen(drinks[type]) + 2, MEM_TAG_STRING);
 
-  sprintf(new_name, "%s %s", drinks[type], obj->name);
+  snprintf(new_name, MAX_STRING_LENGTH, "%s %s", drinks[type], obj->name);
 
   if ((obj->str_mask & STRUNG_KEYS) && obj->name)
     str_free(obj->name);
@@ -2874,7 +2874,7 @@ void do_eat(P_char ch, char *argument, int cmd)
 
   if( updateArtiList )
   {
-    sprintf( Gbuf1, "%d", OBJ_VNUM(temp) );
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "%d", OBJ_VNUM(temp) );
     arti_clear_sql( ch, Gbuf1 );
   }
   extract_obj(temp);
@@ -3688,7 +3688,7 @@ int remove_and_wear(P_char ch, P_obj obj_object, int position, int keyword, int 
   P_obj temp = ch->equipment[position];
   int removed;
   // Remove Item Already in Place
-   //send_to_char(sprintf("%1", ch->equipment[position]), ch);
+   //send_to_char(snprintf("%1", MAX_STRING_LENGTH, ch->equipment[position]), ch);
   if( temp )
   {
     removed = remove_item(ch, temp, position);
@@ -4783,7 +4783,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, bool showit )
   case -1:
     if( showit )
     {
-      sprintf(Gbuf3, "Wear %s where?\r\n", FirstWord(obj_object->name));
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "Wear %s where?\r\n", FirstWord(obj_object->name));
       send_to_char(Gbuf3, ch);
     }
     break;
@@ -4791,7 +4791,7 @@ int wear(P_char ch, P_obj obj_object, int keyword, bool showit )
   case -2:
     if( showit )
     {
-      sprintf(Gbuf3, "You can't wear the %s.\r\n", FirstWord(obj_object->name));
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You can't wear the %s.\r\n", FirstWord(obj_object->name));
       send_to_char(Gbuf3, ch);
     }
     break;
@@ -4963,7 +4963,7 @@ void do_wear(P_char ch, char *argument, int cmd)
     }
     else // Object Doesn't Exist
     {
-      sprintf(Gbuf3, "You do not seem to have the '%s'.\r\n", Gbuf1);
+      snprintf(Gbuf3, MAX_STRING_LENGTH, "You do not seem to have the '%s'.\r\n", Gbuf1);
       send_to_char(Gbuf3, ch);
     }
   }
@@ -5651,16 +5651,16 @@ void do_salvage(P_char ch, char *argument, int cmd)
   //   mapping to 1.3, we want to map to 13 -> 2 plat, 6 gold; we set the multiplier to 13 - 1 = 12.
   modifier = ((matvnum - LOWEST_MAT_VNUM) * 12.0) / (float)(HIGHEST_MAT_VNUM - LOWEST_MAT_VNUM) + 1.0;
   if( DEBUG )
-    sprintf( debugBuf, "do_salvage: Newcost(initial): %d, Modifier: %.3f", newcost, modifier );
+    snprintf(debugBuf, MAX_STRING_LENGTH, "do_salvage: Newcost(initial): %d, Modifier: %.3f", newcost, modifier );
   newcost = (int)((float)newcost * modifier);
   if( DEBUG )
-    sprintf( debugBuf + strlen(debugBuf), ", Newcost(mod): %d", newcost );
+    snprintf(debugBuf + strlen(debugBuf), MAX_STRING_LENGTH - strlen(debugBuf), ", Newcost(mod): %d", newcost );
   newcost = (newcost * GET_LEVEL(ch)) / 56;
   if( DEBUG )
-    sprintf( debugBuf + strlen(debugBuf), ", Newcost(lvl): %d", newcost );
+    snprintf(debugBuf + strlen(debugBuf), MAX_STRING_LENGTH - strlen(debugBuf), ", Newcost(lvl): %d", newcost );
   newcost = (newcost * GET_CHAR_SKILL(ch, SKILL_SALVAGE) / 100);
   if( DEBUG )
-    sprintf( debugBuf + strlen(debugBuf), ", Newcost(skill): %d", newcost );
+    snprintf(debugBuf + strlen(debugBuf), MAX_STRING_LENGTH - strlen(debugBuf), ", Newcost(skill): %d", newcost );
 
   // 67% chance to get 2 salvaged materials.
   if( !number(0, 2) )
@@ -5679,7 +5679,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
 
     if( DEBUG )
     {
-      sprintf( debugBuf + strlen(debugBuf), ", Final cost: %d.", salvaged->cost );
+      snprintf(debugBuf + strlen(debugBuf), MAX_STRING_LENGTH - strlen(debugBuf), ", Final cost: %d.", salvaged->cost );
       debug( debugBuf );
     }
 
@@ -5714,7 +5714,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
 
     if( DEBUG )
     {
-      sprintf( debugBuf + strlen(debugBuf), ", Final cost: %d.", salvaged->cost );
+      snprintf(debugBuf + strlen(debugBuf), MAX_STRING_LENGTH - strlen(debugBuf), ", Final cost: %d.", salvaged->cost );
       debug( debugBuf );
     }
   }
@@ -5772,7 +5772,7 @@ void do_salvage(P_char ch, char *argument, int cmd)
       recipe = read_object(SALVAGE_RECIPE_VNUM, VIRTUAL);
 
       SET_BIT(recipe->value[6], itemvnum);
-      sprintf(buf1, "%s %s", recipe->short_description, item->short_description);
+      snprintf(buf1, MAX_STRING_LENGTH, "%s %s", recipe->short_description, item->short_description);
       recipe->short_description = str_dup(buf1);
       recipe->str_mask |= STRUNG_DESC2;
 

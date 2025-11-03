@@ -448,7 +448,7 @@ void edit_string_add(struct edit_data *data, char *str)
       SEND_TO_Q
         ("&+RNo ANSI characters allowed as input.  &+YDiscarding line.&N\r\n",
          data->desc);
-      sprintf(buf, "%3d&+W:&N ", data->cur_line + 1);
+      snprintf(buf, MAX_STRING_LENGTH, "%3d&+W:&N ", data->cur_line + 1);
       SEND_TO_Q(buf, data->desc);
       return;
     }
@@ -473,7 +473,7 @@ void edit_string_add(struct edit_data *data, char *str)
       }
     }
   }
-  sprintf(buf, "%3d&+W:&N ", data->cur_line + 1);
+  snprintf(buf, MAX_STRING_LENGTH, "%3d&+W:&N ", data->cur_line + 1);
   SEND_TO_Q(buf, data->desc);
 }
 

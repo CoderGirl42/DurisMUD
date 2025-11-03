@@ -3074,7 +3074,7 @@ void do_doorbash(P_char ch, char *arg, int cmd)
       ("You charge it, but it doesn't seem much damaged compared to you!\n",
        ch);
 
-    sprintf(Gbuf1,
+    snprintf(Gbuf1, MAX_STRING_LENGTH,
             "$n charges the %s to the %s, but it withstands the attack!",
             "door", dirs[dir]);
     act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
@@ -3206,7 +3206,7 @@ void do_doorkick(P_char ch, char *arg, int cmd)
     if (!char_to_room(ch, a, -1))
       return;
 
-    sprintf(Gbuf1, "With a great crash, the door to the %s is destroyed!",
+    snprintf(Gbuf1, MAX_STRING_LENGTH, "With a great crash, the door to the %s is destroyed!",
             dirs[rev_dir[dir]]);
     act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
 
@@ -3232,7 +3232,7 @@ void do_doorkick(P_char ch, char *arg, int cmd)
     send_to_char
       ("You kick the door with all your might, but alas, it seems unfazed.\n",
        ch);
-    sprintf(Gbuf1,
+    snprintf(Gbuf1, MAX_STRING_LENGTH,
             "$n kicks the %s to the %s, but alas, it seems unaffected.",
             "door", dirs[dir]);
     act(Gbuf1, TRUE, ch, 0, 0, TO_ROOM);
@@ -5018,7 +5018,7 @@ void do_list_innates( P_char ch, char *args )
     // If !classes and !races and we want to see all options..
     else if( !racefound && fulllist )
     {
-      sprintf( Gbuf1, "&+W%s:\n", innates_data[i].name );
+      snprintf(Gbuf1, MAX_STRING_LENGTH, "&+W%s:\n", innates_data[i].name );
       send_to_char( Gbuf1, ch );
     }
   }

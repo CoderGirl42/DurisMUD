@@ -457,11 +457,11 @@ bool ilienze_sword(P_char ch, P_char victim, P_obj wpn)
 
 void ilienze_sword_proc_messages(struct damage_messages *messages, const char *sub)
 {
-  sprintf(messages->attacker,
+  snprintf(messages->attacker, MAX_STRING_LENGTH,
           "&+rUnholy &+Rflames&n &+rflow down your blade and shoot in a %s &+rtowards $N&+r.&n", sub);
-  sprintf(messages->victim,
+  snprintf(messages->victim, MAX_STRING_LENGTH,
           "&+rUnholy &+Rflames&n &+rflow down $n's &+rblade and shoot in a %s &+rtowards &+Ryou&+r.&n", sub);
-  sprintf(messages->room,
+  snprintf(messages->room, MAX_STRING_LENGTH,
           "&+rUnholy &+Rflames&n &+rflow down $n's &+rblade and shoot in a %s &+rtowards $N&+r.&n", sub);
 }
 

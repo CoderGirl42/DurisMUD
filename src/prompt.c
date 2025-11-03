@@ -151,39 +151,39 @@ void make_prompt(void)
           // Healthy -> Green.
           if( percent >= 66 )
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;32m %dh", t_ch->points.hit);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m %dh", t_ch->points.hit);
           }
           // Wounded -> Brown.
           else if( percent >= 33 )
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[33m %dh", t_ch->points.hit);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[33m %dh", t_ch->points.hit);
           }
           // Hut bad -> Red.
           else if( percent >= 15 )
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[31m %dh", t_ch->points.hit);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[31m %dh", t_ch->points.hit);
           }
           // Nearing death -> Bright red on grey.
           else
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[31;40;1;5m %dh", t_ch->points.hit);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[31;40;1;5m %dh", t_ch->points.hit);
           }
         }
         else
         {
           // No color
-          sprintf(promptbuf + strlen(promptbuf), " %dh", t_ch->points.hit);
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " %dh", t_ch->points.hit);
         }
       }
       if( IS_SET(t_ch_p, PROMPT_MAX_HIT) )
       {
         if( ansi )
         {
-          sprintf(promptbuf + strlen(promptbuf), "\033[0;32m/%dH", GET_MAX_HIT(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m/%dH", GET_MAX_HIT(t_ch));
         }
         else
         {
-          sprintf(promptbuf + strlen(promptbuf), "/%dH", GET_MAX_HIT(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "/%dH", GET_MAX_HIT(t_ch));
         }
       }
       if( IS_SET(t_ch_p, PROMPT_MANA) )
@@ -202,35 +202,35 @@ void make_prompt(void)
           }
           if (percent >= 66)
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;32m %dm", GET_MANA(t_ch));
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m %dm", GET_MANA(t_ch));
           }
           else if (percent >= 33)
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;33m %dm", GET_MANA(t_ch));
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;33m %dm", GET_MANA(t_ch));
           }
           else if (percent >= 0)
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;31m %dm", GET_MANA(t_ch));
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;31m %dm", GET_MANA(t_ch));
           }
           else
           {
-            sprintf(promptbuf + strlen(promptbuf), " \033[31;40;1;5m%dm", GET_MANA(t_ch));
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " \033[31;40;1;5m%dm", GET_MANA(t_ch));
           }
         }
         else
         {
-          sprintf(promptbuf + strlen(promptbuf), " %dm", GET_MANA(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " %dm", GET_MANA(t_ch));
         }
       }
       if( IS_SET(t_ch_p, PROMPT_MAX_MANA) )
       {
         if( ansi )
         {
-          sprintf(promptbuf + strlen(promptbuf), "\033[0;32m/%dM", GET_MAX_MANA(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m/%dM", GET_MAX_MANA(t_ch));
         }
         else
         {
-          sprintf(promptbuf + strlen(promptbuf), "/%dM", GET_MAX_MANA(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "/%dM", GET_MAX_MANA(t_ch));
         }
       }
       if( IS_SET(t_ch_p, PROMPT_MOVE) )
@@ -250,31 +250,31 @@ void make_prompt(void)
 
           if( percent >= 66 )
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;32m %dv", t_ch->points.vitality);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m %dv", t_ch->points.vitality);
           }
           else if (percent >= 33)
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;33m %dv", t_ch->points.vitality);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;33m %dv", t_ch->points.vitality);
           }
           else
           {
-            sprintf(promptbuf + strlen(promptbuf), "\033[0;31m %dv", t_ch->points.vitality);
+            snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;31m %dv", t_ch->points.vitality);
           }
         }
         else
         {
-          sprintf(promptbuf + strlen(promptbuf), " %dv", t_ch->points.vitality);
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), " %dv", t_ch->points.vitality);
         }
       }
       if( IS_SET(t_ch_p, PROMPT_MAX_MOVE) )
       {
         if( ansi )
         {
-          sprintf(promptbuf + strlen(promptbuf), "\033[0;32m/%dV", GET_MAX_VITALITY(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "\033[0;32m/%dV", GET_MAX_VITALITY(t_ch));
         }
         else
         {
-          sprintf(promptbuf + strlen(promptbuf), "/%dV", GET_MAX_VITALITY(t_ch));
+          snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "/%dV", GET_MAX_VITALITY(t_ch));
         }
       }
       if( IS_SET(t_ch_p, PROMPT_STATUS) )
@@ -366,12 +366,12 @@ void make_prompt(void)
         if( ansi )
         {
           strcat(promptbuf, "\033[0;32m >\n");
-          sprintf(promptbuf2, "\033[32m<");
+          snprintf(promptbuf2, MAX_STRING_LENGTH, "\033[32m<");
         }
         else
         {
           strcat(promptbuf, " >\n");
-          sprintf(promptbuf2, "<");
+          snprintf(promptbuf2, MAX_STRING_LENGTH, "<");
         }
         pPrompt = promptbuf2 + strlen(promptbuf2);
       }
@@ -390,13 +390,13 @@ void make_prompt(void)
           {
             if( ansi )
             {
-              sprintf( pPrompt + strlen(pPrompt), " \033[0;34;1mT: %s",
+              snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " \033[0;34;1mT: %s",
                 (t_ch != tank && !CAN_SEE(t_ch, tank)) ? "someone"
                 : (IS_PC(tank) ? PERS(tank, t_ch, 0, true) : (FirstWord((tank)->player.name))));
             }
             else
             {
-              sprintf(pPrompt + strlen(pPrompt), " T: %s",
+              snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " T: %s",
                 (t_ch != tank && !CAN_SEE(t_ch, tank)) ? "someone"
                 : (IS_PC(tank) ? PERS(tank, t_ch, 0, true) : (FirstWord((tank)->player.name))));
             }
@@ -504,13 +504,13 @@ void make_prompt(void)
         {
           if( ansi )
           {
-            sprintf(pPrompt + strlen(pPrompt), " \033[0;31mE: %s",
+            snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " \033[0;31mE: %s",
               (!CAN_SEE(t_ch, t_ch_f)) ? "someone" : (IS_PC(t_ch_f) ? PERS(t_ch_f, t_ch, 0, true)
               : (FirstWord((t_ch_f)->player.name))));
           }
           else
           {
-            sprintf(pPrompt + strlen(pPrompt), " E: %s",
+            snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " E: %s",
               (!CAN_SEE(t_ch, t_ch_f) ) ? "someone" : (IS_PC(t_ch_f) ? PERS(t_ch_f, t_ch, 0, true)
               : (FirstWord((t_ch_f)->player.name))));
           }
@@ -632,13 +632,13 @@ void make_prompt(void)
           else
             strcat(pPrompt, "\033[1;31m");
 
-          sprintf(pPrompt + strlen(pPrompt), "%d ", t_obj_f->condition );
+          snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), "%d ", t_obj_f->condition );
         }
         else
         {
           strcat(pPrompt, " E: ");
           strcat(pPrompt, FirstWord(t_obj_f->name) );
-          sprintf(pPrompt + strlen(pPrompt), " EC: %d", t_obj_f->condition );
+          snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " EC: %d", t_obj_f->condition );
         }
       }
 
@@ -648,7 +648,7 @@ void make_prompt(void)
         {
           strcat(pPrompt, "\033[0;35m");
         }
-        sprintf(pPrompt + strlen(pPrompt), " Vis: %d", t_ch->only.pc->wiz_invis);
+        snprintf(pPrompt + strlen(pPrompt), MAX_STRING_LENGTH - strlen(pPrompt), " Vis: %d", t_ch->only.pc->wiz_invis);
       }
       if( IS_SET(t_ch->specials.act, PLR_AFK) )
       {
@@ -734,35 +734,35 @@ char    *make_bar(long val, long max, long len)
 
   percent = (100 * val) / max;
   if (percent >= 100)
-    sprintf(buf + strlen(buf), "&+g");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+g");
   else if (percent >= 90)
-    sprintf(buf + strlen(buf), "&+y");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+y");
   else if (percent >= 75)
-    sprintf(buf + strlen(buf), "&+Y");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+Y");
   else if (percent >= 50)
-    sprintf(buf + strlen(buf), "&+M");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+M");
   else if (percent >= 30)
-    sprintf(buf + strlen(buf), "&+m");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+m");
   else if (percent >= 15)
-    sprintf(buf + strlen(buf), "&+R");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+R");
   else
-    sprintf(buf + strlen(buf), "&+r");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+r");
 
   if (val > max)
   {
     for (i = 0; i < len; i++)
-      sprintf(buf + strlen(buf), "|");
-    sprintf(buf + strlen(buf), "&n+");
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "|");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&n+");
   }
   else
   {
     for (i = ((val * len) / max), n = 0; n < i; n++)
-      sprintf(buf + strlen(buf), "|");
-    sprintf(buf + strlen(buf), "&n");
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "|");
+    snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&n");
     while ((n++) < len)
-      sprintf(buf + strlen(buf), "|");
+      snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "|");
   }
-  sprintf(buf + strlen(buf), "&+R>&n");
+  snprintf(buf + strlen(buf), MAX_STRING_LENGTH - strlen(buf), "&+R>&n");
 
   return buf;
 }
@@ -881,23 +881,23 @@ void UpdateScreen(P_char ch, int update)
     }
   }
   else
-    sprintf(buf, " N/A");
+    snprintf(buf, MAX_STRING_LENGTH, " N/A");
   send_to_char(buf, ch);
-  sprintf(buf, VT_CURREST);
+  snprintf(buf, MAX_STRING_LENGTH, VT_CURREST);
   send_to_char(buf, ch);
 
 /* enemy */
-  sprintf(buf, VT_CURSAVE);
+  snprintf(buf, MAX_STRING_LENGTH, VT_CURSAVE);
   send_to_char(buf, ch);
-  sprintf(buf, VT_CURSPOS, size, 50);
+  snprintf(buf, MAX_STRING_LENGTH, VT_CURSPOS, size, 50);
   send_to_char(buf, ch);
-  sprintf(buf, "          ");
+  snprintf(buf, MAX_STRING_LENGTH, "          ");
   send_to_char(buf, ch);
-  sprintf(buf, VT_CURSPOS, size, 50);
+  snprintf(buf, MAX_STRING_LENGTH, VT_CURSPOS, size, 50);
   send_to_char(buf, ch);
   if (enemy && IS_SET(ch->specials.act, PLR_DEBUG))
   {
-    sprintf(buf, " %s", !CAN_SEE(ch, enemy) ? "someone" : J_NAME(enemy));
+    snprintf(buf, MAX_STRING_LENGTH, " %s", !CAN_SEE(ch, enemy) ? "someone" : J_NAME(enemy));
     if (GET_MAX_HIT(enemy) > 0 && GET_HIT(enemy) > 0)
       percent = (100 * GET_HIT(enemy)) / GET_MAX_HIT(enemy);
     else
@@ -920,10 +920,10 @@ void UpdateScreen(P_char ch, int update)
       strcat(buf, " bleeding, close to death");
   }
   else
-    sprintf(buf, " N/A");
+    snprintf(buf, MAX_STRING_LENGTH, " N/A");
   send_to_char(buf, ch);
 
-  sprintf(buf, VT_CURREST);
+  snprintf(buf, MAX_STRING_LENGTH, VT_CURREST);
   send_to_char(buf, ch);
 }
 

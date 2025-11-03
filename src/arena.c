@@ -270,7 +270,7 @@ void players_to_map()
           if (!IS_SET(arena.flags, FLAG_TOURNAMENT))
             arena.team[i].player[k].lives = DEFAULT_LIVES;
           arena.team[i].player[k].flags = 0;
-          sprintf(arena.team[i].player[k].name, "%s", GET_NAME(ch));
+          snprintf(arena.team[i].player[k].name, MAX_STRING_LENGTH, "%s", GET_NAME(ch));
           k++;
         }
         char_from_room(ch);
@@ -656,7 +656,7 @@ void arena_activity()
 
       if (arena.timer[0] < 1)
       {
-        sprintf(buf,
+        snprintf(buf, MAX_STRING_LENGTH,
                 "&+W%d seconds till the match begins, those of you in the arena who wish to leave, \r\n&+Wnow is your last chance!&N\r\n",
                 DEFAULT_TIMER_ACCEPT);
         send_to_arena(buf, -1);
@@ -675,7 +675,7 @@ void arena_activity()
       case 3:
       case 4:
       case 5:
-        sprintf(buf, "&+W%d!!&N\r\n", arena.timer[0]);
+        snprintf(buf, MAX_STRING_LENGTH, "&+W%d!!&N\r\n", arena.timer[0]);
         send_to_arena(buf, -1);
         break;
       case 10:
@@ -749,7 +749,7 @@ void arena_activity()
       case 3:
       case 4:
       case 5:
-        sprintf(buf, "&+W%d!!!\r\n&N", arena.timer[0]);
+        snprintf(buf, MAX_STRING_LENGTH, "&+W%d!!!\r\n&N", arena.timer[0]);
         send_to_arena(buf, -1);
         break;
       case 10:
