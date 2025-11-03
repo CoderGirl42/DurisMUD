@@ -166,7 +166,8 @@ void displayM(P_char ch, char *tbuf)
   else
     snprintf(color, 10, "&+L");
 
-  snprintf(tbuf, MAX_STRING_LENGTH, "%s <%s%dm&n/%s%dM&n>", tbuf, color, GET_VITALITY(ch), color,
+  int len = strlen(tbuf);
+  snprintf(tbuf + len, MAX_STRING_LENGTH - len, " <%s%dm&n/%s%dM&n>", color, GET_VITALITY(ch), color,
           GET_MAX_VITALITY(ch));
 }
 
@@ -192,7 +193,8 @@ void displayH(P_char ch, char *tbuf)
   else
     snprintf(color, 10, "&+L");
 
-  snprintf(tbuf, MAX_STRING_LENGTH, "%s <%s%dh&n/%s%dH&n>", tbuf, color, GET_HIT(ch), color,
+  int len = strlen(tbuf);
+  snprintf(tbuf + len, MAX_STRING_LENGTH - len, " <%s%dh&n/%s%dH&n>", color, GET_HIT(ch), color,
           GET_MAX_HIT(ch));
 }
 
@@ -337,7 +339,7 @@ void do_group(P_char ch, char *argument, int cmd)
         }
         else
         {
-          snprintf(Gbuf1, MAX_STRING_LENGTH, "%s\n", Gbuf1);
+          strcat(Gbuf1, "\n");
         }
 
         for (gl = gl->next; gl; gl = gl->next)
@@ -363,9 +365,9 @@ void do_group(P_char ch, char *argument, int cmd)
           }
           else
           {
-            snprintf(Gbuf2, MAX_STRING_LENGTH, "%s\n", Gbuf2);
+            strcat(Gbuf2, "\n");
           }
-          snprintf(Gbuf1, MAX_STRING_LENGTH, "%s%s", Gbuf1, Gbuf2);
+          strcat(Gbuf1, Gbuf2);
 
         }
         send_to_char(Gbuf1, ch, LOG_NONE);
