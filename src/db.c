@@ -844,19 +844,19 @@ void weather_setup(void)
 
     /* These use the default conditions above */
     sector_table[zon].conditions.windspeed =
-      winds[(int) sector_table[zon].climate.season_wind[s]];
+      ARR_GET(winds, sector_table[zon].climate.season_wind[s]);
 
     sector_table[zon].conditions.wind_dir =
       sector_table[zon].climate.season_wind_dir[s];
 
     sector_table[zon].conditions.precip_rate =
-      precip[(int) sector_table[zon].climate.season_precip[s]];
+      ARR_GET(precip, sector_table[zon].climate.season_precip[s]);
 
     sector_table[zon].conditions.temp =
-      temps[(int) sector_table[zon].climate.season_temp[s]];
+      ARR_GET(temps, sector_table[zon].climate.season_temp[s]);
 
     sector_table[zon].conditions.humidity =
-      humid[(int) sector_table[zon].climate.season_precip[s]];
+      ARR_GET(humid, sector_table[zon].climate.season_precip[s]);
 
     /* Set ambient light */
     calc_light_zone(zon);
