@@ -2283,8 +2283,12 @@ void die(P_char ch, P_char killer)
   if( IS_PC(ch) || !IS_SET(ch->specials.act, ACT_SPEC_DIE) )
   {
     act("$n is dead! &+RR.I.P.&n", TRUE, ch, 0, 0, TO_ROOM);
-    act("&-L&+rYou feel yourself falling to the ground.&n", FALSE, ch, 0, 0, TO_CHAR);
-    act("&-L&+rYour soul leaves your body in the cold sleep of death...&n", FALSE, ch, 0, 0, TO_CHAR);
+    // Only show death messages for hardcore characters - Arih
+    if (IS_PC(ch) && IS_HARDCORE(ch))
+    {
+      act("&-L&+rYou feel yourself falling to the ground.&n", FALSE, ch, 0, 0, TO_CHAR);
+      act("&-L&+rYour soul leaves your body in the cold sleep of death...&n", FALSE, ch, 0, 0, TO_CHAR);
+    }
     // Do nothing for PCs and !exp mobs.
     if( IS_PC(ch) || GET_EXP(ch) <= 0 )
     {
@@ -2658,14 +2662,51 @@ void die(P_char ch, P_char killer)
         statuslog(ch->player.level,
             "%s's existence on Duris was just ended...by %s!",
             GET_NAME(ch), GET_NAME(killer));
-        if (ch->desc)
-        {
-          close_socket(ch->desc);
-        }
+
         // If it's not an immortal.
         if( GET_LEVEL(ch) < MINLVLIMMORTAL )
         {
           update_ingame_racewar( -GET_RACEWAR(ch) );
+        }
+
+#ifdef USE_ACCOUNT
+        // With account system, return to account menu instead of disconnecting
+        if (ch->desc && ch->desc->account)
+        {
+          P_desc d = ch->desc;
+
+          // Send death messages BEFORE showing account menu - Arih
+          send_to_char("&-L&+rYou feel yourself falling to the ground.&n\r\n", ch);
+          send_to_char("&-L&+rYour soul leaves your body in the cold sleep of death...&n\r\n\r\n", ch);
+
+          // Delete character file
+          deleteCharacter(ch);
+
+          // Manually disconnect descriptor before calling extract_char to prevent
+          // extract_char from showing account menu and calling free_char - Arih
+          ch->desc = NULL;
+
+          // extract_char cleans up followers, equipment, etc.
+          // With ch->desc = NULL, it won't show menu or call free_char
+          extract_char(ch);
+
+          // Now manually free and show our custom menu
+          free_char(ch);
+
+          // Return to account menu
+          d->character = NULL;
+          d->term_type = TERM_ANSI;  // Preserve ANSI mode
+          SEND_TO_Q("&+RYour character has been permanently deleted.&n\r\n\r\n", d);
+          STATE(d) = CON_DISPLAY_ACCT_MENU;
+          display_account_menu(d, NULL);
+          return;
+        }
+#endif
+
+        // Without account system, or no descriptor, just disconnect
+        if (ch->desc)
+        {
+          close_socket(ch->desc);
         }
         extract_char(ch);
         deleteCharacter(ch);

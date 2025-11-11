@@ -94,6 +94,7 @@ struct acct_chars *find_char_in_list(struct acct_chars *, char *);
 P_char load_char_into_game(struct acct_chars *, P_desc);
 void account_new_char_name(P_desc, char *);
 void display_character_list(P_desc);
+void display_delete_character_list(P_desc);
 void add_char_to_account(P_desc);
 void remove_char_from_list(P_acct, char *);
 int write_account(P_acct);

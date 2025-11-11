@@ -6466,9 +6466,11 @@ void nanny(P_desc d, char *arg)
         break;
         */
 
+#ifdef REQUIRE_EMAIL_VERIFICATION
   case CON_CONFIRM_ACCT:
     confirm_account(d, arg);
     break;
+#endif
 
   case CON_VERIFY_NEW_ACCT_NAME:
     verify_account_name(d, arg);
@@ -6858,9 +6860,7 @@ void nanny(P_desc d, char *arg)
       SEND_TO_Q
         ("\r\n\r\nYou have selected Yes, and hereby agree to all conditions in the set of rules.\r\n",
          d);
-      SEND_TO_Q
-        ("Now you have to wait for your character to be approved by a god.\r\nProcess should not take long.\r\n",
-         d);
+      // Note: Actual approval logic is handled in the code after this switch statement
       break;
     default:
       SEND_TO_Q("\r\nThat is not a correct response. Try again.\r\n", d);
@@ -6888,9 +6888,7 @@ void nanny(P_desc d, char *arg)
     }
     else
     {
-      SEND_TO_Q
-        ("Now you have to wait for your character to be approved by a god.\r\nProcess should not take long.\r\nIf no god is on to approve you, you will be auto-approved in 5 mins.\r\n",
-         d);
+      // Approval mode is OFF - proceed directly
       SEND_TO_Q("\r\n*** PRESS RETURN:\r\n", d);
       writeCharacter(d->character, 2, NOWHERE);
       STATE(d) = CON_RMOTD;
@@ -6962,12 +6960,19 @@ void nanny(P_desc d, char *arg)
     break;
 
   case CON_RMOTD:
+    // For new character creation, enter the game directly
 #ifdef USE_ACCOUNT
-    display_account_menu(d, arg);
+    if (d->character) {
+      // New character entering the game for the first time
+      echo_on(d);
+      STATE(d) = CON_PLAYING;
+      enter_game(d);
+      d->prompt_mode = TRUE;
+    }
 #else
     SEND_TO_Q(MENU, d);
-#endif
     STATE(d) = CON_MAIN_MENU;
+#endif
     break;
 
     /* Main menu */

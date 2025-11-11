@@ -74,6 +74,93 @@ int is_bcrypt_hash(const char *hash)
           hash[3] == '$');
 }
 
+// Email validation function with strict RFC compliance
+// Returns 1 if valid, 0 if invalid
+int is_valid_email(const char *email)
+{
+  const char *p;
+  int at_count = 0, dot_after_at = 0;
+  int local_len = 0, domain_len = 0;
+  char prev_char = '\0';
+
+  if (!email || !*email)
+    return 0;
+
+  // Find the @ symbol and validate local part
+  for (p = email; *p && *p != '@'; p++)
+  {
+    local_len++;
+
+    // Check for valid characters in local part
+    if (!isalnum(*p) && *p != '.' && *p != '-' && *p != '_' && *p != '+')
+      return 0;
+
+    // Can't start with a dot
+    if (local_len == 1 && *p == '.')
+      return 0;
+
+    // Can't have consecutive dots
+    if (*p == '.' && prev_char == '.')
+      return 0;
+
+    prev_char = *p;
+  }
+
+  // Local part must exist and can't end with dot
+  if (local_len == 0 || local_len > 64 || prev_char == '.')
+    return 0;
+
+  // Must have exactly one @
+  if (*p != '@')
+    return 0;
+
+  p++; // Skip the @
+  at_count = 1;
+  prev_char = '\0';
+
+  // Validate domain part
+  for (; *p; p++)
+  {
+    domain_len++;
+
+    // Check for valid characters in domain
+    if (!isalnum(*p) && *p != '.' && *p != '-')
+      return 0;
+
+    // Can't start with dot or hyphen
+    if (domain_len == 1 && (*p == '.' || *p == '-'))
+      return 0;
+
+    // Can't have consecutive dots
+    if (*p == '.' && prev_char == '.')
+      return 0;
+
+    // Track if we have a dot after @
+    if (*p == '.')
+      dot_after_at = 1;
+
+    prev_char = *p;
+  }
+
+  // Domain must exist, have at least one dot, and can't end with dot or hyphen
+  if (domain_len == 0 || domain_len > 253 || !dot_after_at ||
+      prev_char == '.' || prev_char == '-')
+    return 0;
+
+  // Check for second @ symbol (invalid)
+  for (p = email; *p; p++)
+  {
+    if (*p == '@')
+    {
+      at_count++;
+      if (at_count > 1)
+        return 0;
+    }
+  }
+
+  return 1;
+}
+
 
 void select_accountname(P_desc d, char *arg)
 {
@@ -215,6 +302,7 @@ void get_account_password(P_desc d, char *arg)
   }
 
   echo_on(d);
+#ifdef REQUIRE_EMAIL_VERIFICATION
   if (is_account_confirmed(d))
   {
     // Display MOTD before showing account menu
@@ -230,6 +318,14 @@ void get_account_password(P_desc d, char *arg)
     STATE(d) = CON_CONFIRM_ACCT;
     return;
   }
+#else
+  // Email verification disabled - skip confirmation and go directly to MOTD
+  SEND_TO_Q(motd.c_str(), d);
+  SEND_TO_Q("\r\n*** PRESS RETURN: ", d);
+  update_account_iplist(d);
+  STATE(d) = CON_ACCT_RMOTD;
+  return;
+#endif
 }
 
 void display_account_menu(P_desc d, char *arg)
@@ -420,6 +516,14 @@ void get_new_account_email(P_desc d, char *arg)
   }
   for (; isspace(*arg); arg++) ;
 
+  // Validate email format
+  if (!is_valid_email(arg))
+  {
+    SEND_TO_Q("\r\n&+RInvalid email format.&n Please enter a valid email address.\r\n", d);
+    SEND_TO_Q("Email address:  ", d);
+    return;
+  }
+
   d->account->acct_email = str_dup(arg);
   STATE(d) = CON_VERIFY_NEW_ACCT_EMAIL;
   verify_new_account_email(d, NULL);
@@ -559,6 +663,7 @@ void verify_new_account_information(P_desc d, char *arg)
   }
   if ((arg[0] == 'y') || (arg[0] == 'Y'))
   {
+#ifdef REQUIRE_EMAIL_VERIFICATION
     SEND_TO_Q
       ("You will receive a confimation code in your email.\r\nYou must confirm your account before using it.\r\n\r\n",
        d);
@@ -567,6 +672,16 @@ void verify_new_account_information(P_desc d, char *arg)
     // Don't disconnect - go straight to confirmation prompt
     STATE(d) = CON_CONFIRM_ACCT;
     SEND_TO_Q("Please enter the confirmation code shown above: ", d);
+#else
+    // Email verification disabled - skip confirmation and go directly to menu
+    SEND_TO_Q("&+GAccount created successfully!&n\r\n\r\n", d);
+    generate_account_confirmation_code(d, NULL);  // Still generates code (for display) but auto-confirms
+    write_account(d->account);
+    SEND_TO_Q(motd.c_str(), d);
+    SEND_TO_Q("\r\n*** PRESS RETURN: ", d);
+    update_account_iplist(d);
+    STATE(d) = CON_ACCT_RMOTD;
+#endif
     return;
   }
   else if ((arg[0] == 'n') || (arg[0] == 'N'))
@@ -1026,6 +1141,22 @@ int load_char_display_data(char *charname, struct char_display_info *info)
   return 1;
 }
 
+// Helper function to get race name from character display info
+void get_race_name_from_info(struct char_display_info *info, char *race_str, int max_len)
+{
+  extern const struct race_names race_names_table[];
+  if (info->race >= 0 && info->race < LAST_RACE)
+  {
+    strncpy(race_str, race_names_table[info->race].normal, max_len - 1);
+    race_str[max_len - 1] = '\0';
+  }
+  else
+  {
+    strncpy(race_str, "Unknown", max_len - 1);
+    race_str[max_len - 1] = '\0';
+  }
+}
+
 void check_rested_bonus(P_desc d)
 {
   struct acct_chars *c = d->account->acct_character_list;
@@ -1066,6 +1197,150 @@ void check_rested_bonus(P_desc d)
 
   SEND_TO_Q("\r\n", d);
   display_account_menu(d, NULL);
+}
+
+void display_delete_character_list(P_desc d)
+{
+  struct acct_chars *c = d->account->acct_character_list;
+  struct acct_chars *sorted_chars[MAX_CHARS_PER_ACCOUNT];
+  char     buf[256];
+  int      count = 0, i, j;
+  struct acct_chars *temp;
+
+  // Enable ANSI terminal mode for color display
+  d->term_type = TERM_ANSI;
+
+  if (!c)
+  {
+    snprintf(buf, 256, "You currently don't have any characters to delete.\r\n");
+    SEND_TO_Q(buf, d);
+    STATE(d) = CON_DISPLAY_ACCT_MENU;
+    display_account_menu(d, NULL);
+    return;
+  }
+
+  // Count characters and build array for sorting
+  temp = c;
+  while (temp && count < MAX_CHARS_PER_ACCOUNT)
+  {
+    sorted_chars[count++] = temp;
+    temp = temp->next;
+  }
+
+  // Sort by last login time (most recent first) - simple bubble sort
+  for (i = 0; i < count - 1; i++)
+  {
+    for (j = 0; j < count - i - 1; j++)
+    {
+      if (sorted_chars[j]->last < sorted_chars[j+1]->last)
+      {
+        struct acct_chars *swap = sorted_chars[j];
+        sorted_chars[j] = sorted_chars[j+1];
+        sorted_chars[j+1] = swap;
+      }
+    }
+  }
+
+  // Display large warning banner in bright red
+  SEND_TO_Q("\r\n", d);
+  SEND_TO_Q("&+R/===========================================================================\\&n\r\n", d);
+  SEND_TO_Q("&+R|                                                                           |&n\r\n", d);
+  SEND_TO_Q("&+R|                         !!!  W A R N I N G  !!!                          |&n\r\n", d);
+  SEND_TO_Q("&+R|                                                                           |&n\r\n", d);
+  SEND_TO_Q("&+R|                  CHARACTER DELETION IS PERMANENT!                        |&n\r\n", d);
+  SEND_TO_Q("&+R|                                                                           |&n\r\n", d);
+  SEND_TO_Q("&+R|       Once deleted, your character CANNOT be recovered or restored!      |&n\r\n", d);
+  SEND_TO_Q("&+R|                                                                           |&n\r\n", d);
+  SEND_TO_Q("&+R\\===========================================================================/&n\r\n", d);
+  SEND_TO_Q("\r\n", d);
+
+  // Display table header
+  SEND_TO_Q("&+R/-------------------------------------------------------\\&n\r\n", d);
+
+  char title_buf[256];
+  snprintf(title_buf, 256, "DELETE CHARACTER (%d character%s)", count, count == 1 ? "" : "s");
+  int title_len = strlen(title_buf);
+  int left_pad = (57 - title_len) / 2;
+  int right_pad = 57 - title_len - left_pad - 2;
+
+  snprintf(buf, 256, "&+R|%*s&+W%s%*s&+R|&n\r\n", left_pad, "", title_buf, right_pad, "");
+  SEND_TO_Q(buf, d);
+
+  SEND_TO_Q("&+R|=======================================================|&n\r\n", d);
+  SEND_TO_Q("&+R|&n # &+R|&n &+RCharacter    &+R|&n &+RLevel &+R|&n &+RRace         &+R|&n &+RClass&n        &+R|&n\r\n", d);
+  SEND_TO_Q("&+R|-------------------------------------------------------|&n\r\n", d);
+
+  // Display sorted characters in red
+  for (i = 0; i < count; i++)
+  {
+    struct char_display_info info;
+    char name_capitalized[32];
+    char race_str[32];
+    char class_str[64];
+    char level_str[16];
+    char line_buf[512];
+
+    // Load character display data
+    if (!load_char_display_data(sorted_chars[i]->charname, &info))
+    {
+      snprintf(line_buf, 512, "&+R|&n &+R%d&n &+R|&n &+R%-12s&n &+R|&n &+R%-5s&n &+R|&n &+R%-12s&n &+R|&n &+R%-12s&n &+R|&n\r\n",
+               i + 1, sorted_chars[i]->charname, "?", "?", "?");
+      SEND_TO_Q(line_buf, d);
+      continue;
+    }
+
+    // Capitalize character name
+    strncpy(name_capitalized, info.charname, 31);
+    name_capitalized[31] = '\0';
+    if (name_capitalized[0])
+      name_capitalized[0] = toupper(name_capitalized[0]);
+
+    // Get race name
+    get_race_name_from_info(&info, race_str, 32);
+
+    // Get class name(s)
+    extern const struct class_names class_names_table[];
+    int primary_idx = flag2idx(info.m_class);
+    int secondary_idx = info.secondary_class ? flag2idx(info.secondary_class) : 0;
+
+    if (info.secondary_class && secondary_idx > 0)
+    {
+      // Multiclass
+      snprintf(level_str, 16, "%d/%d", info.level, info.secondary_level);
+      snprintf(class_str, 64, "%s/%s",
+               class_names_table[primary_idx].normal,
+               class_names_table[secondary_idx].normal);
+    }
+    else
+    {
+      // Single class
+      snprintf(level_str, 16, "%d", info.level);
+      strncpy(class_str, class_names_table[primary_idx].normal, 63);
+      class_str[63] = '\0';
+    }
+
+    // Truncate strings if too long
+    if (strlen(name_capitalized) > 12)
+      name_capitalized[12] = '\0';
+    if (strlen(race_str) > 12)
+      race_str[12] = '\0';
+    if (strlen(class_str) > 12)
+      class_str[12] = '\0';
+
+    // Display character row in bright red
+    snprintf(line_buf, 512, "&+R|&n %d &+R|&n &+R%-12s&n &+R|&n &+R%-5s&n &+R|&n &+R%-12s&n &+R|&n &+R%-12s&n &+R|&n\r\n",
+             i + 1, name_capitalized, level_str, race_str, class_str);
+    SEND_TO_Q(line_buf, d);
+
+    // Free rested status string
+    if (info.rested_status)
+      str_free(info.rested_status);
+  }
+
+  // Display table footer
+  SEND_TO_Q("&+R\\-------------------------------------------------------/&n\r\n", d);
+  SEND_TO_Q("\r\n&+W0&n) &+GCancel and return to Account Menu&n\r\n\r\n", d);
+  SEND_TO_Q("Which character do you want to &+RDELETE&n? (Enter number or 0 to cancel): ", d);
 }
 
 void display_character_list(P_desc d)
@@ -1154,17 +1429,8 @@ void display_character_list(P_desc d)
     if (name_capitalized[0])
       name_capitalized[0] = toupper(name_capitalized[0]);
 
-    // Get race name - with bounds checking
-    extern const struct race_names race_names_table[];
-    if (info.race >= 0 && info.race < LAST_RACE)
-    {
-      strncpy(race_str, race_names_table[info.race].normal, 31);
-      race_str[31] = '\0';
-    }
-    else
-    {
-      strcpy(race_str, "Unknown");
-    }
+    // Get race name
+    get_race_name_from_info(&info, race_str, 32);
 
     // Get class name(s) - with bounds checking
     extern const struct class_names class_names_table[];
@@ -1569,21 +1835,29 @@ void account_delete_char(P_desc d, char *arg)
 {
   P_char   ch = NULL;
   struct acct_chars *c = NULL;
+  struct acct_chars *sorted_chars[MAX_CHARS_PER_ACCOUNT];
+  struct acct_chars *temp;
   char     buf[256];
+  int      selection, count = 0, i, j;
 
   if (!arg)
   {
-    SEND_TO_Q("Which character would you like to delete?  ", d);
+    // First call - display the character list
+    display_delete_character_list(d);
     return;
   }
+
+  // Check if confirming deletion (yes/no)
   if (!strcasecmp(arg, "y") || !strcasecmp(arg, "yes"))
   {
     if (!d->character)
     {
-      SEND_TO_Q("\r\n Odd, couldn't delete that char.\r\n", d);
+      SEND_TO_Q("\r\n&+ROdd, couldn't delete that char.&n\r\n", d);
+      STATE(d) = CON_DISPLAY_ACCT_MENU;
+      display_account_menu(d, NULL);
       return;
     }
-    SEND_TO_Q("\r\nDeleting character...\r\n\r\n", d);
+    SEND_TO_Q("\r\n&+RDeleting character...&n\r\n\r\n", d);
     statuslog(d->character->player.level, "%s deleted %sself (%s@%s).",
               GET_NAME(d->character),
               GET_SEX(d->character) == SEX_MALE ? "him" : "her", d->login,
@@ -1592,35 +1866,96 @@ void account_delete_char(P_desc d, char *arg)
           GET_SEX(d->character) == SEX_MALE ? "him" : "her", d->login,
           d->host);
     deleteCharacter(d->character);
-    STATE(d) = CON_FLUSH;
-//              display_account_menu(d, NULL);
+    d->character = NULL;  // Clear dangling pointer
+    d->term_type = TERM_ANSI;  // Preserve ANSI terminal mode
+    SEND_TO_Q("&+GCharacter deleted successfully.&n\r\n\r\n", d);
+    STATE(d) = CON_DISPLAY_ACCT_MENU;
+    display_account_menu(d, NULL);
     return;
   }
-  else if (!strcasecmp(arg, "n"))
+  else if (!strcasecmp(arg, "n") || !strcasecmp(arg, "no"))
+  {
+    SEND_TO_Q("\r\n&+GDeletion cancelled.&n\r\n", d);
+    STATE(d) = CON_DISPLAY_ACCT_MENU;
+    display_account_menu(d, NULL);
+    return;
+  }
+
+  // Check if user wants to go back (0 or "back")
+  if (!strcasecmp(arg, "0") || !strcasecmp(arg, "back"))
   {
     STATE(d) = CON_DISPLAY_ACCT_MENU;
     display_account_menu(d, NULL);
     return;
   }
-  else
+
+  // Parse numeric selection
+  selection = atoi(arg);
+
+  if (selection <= 0)
   {
-    c = find_char_in_list(d->account->acct_character_list, arg);
-    if (c)
-      ch = load_char_into_game(c, d);
-
-    if (!ch)
-    {
-      SEND_TO_Q("Couldn't find that character!", d);
-      STATE(d) = CON_DISPLAY_ACCT_MENU;
-      display_account_menu(d, NULL);
-      return;
-    }
-
-    snprintf(buf, 256, "Are you sure you want to delete %s?  ", c->charname);
-    SEND_TO_Q(buf, d);
-    d->character = ch;
+    SEND_TO_Q("\r\n&+RInvalid selection.&n Please enter a number or 0 to cancel.\r\n", d);
+    display_delete_character_list(d);
     return;
   }
+
+  // Build sorted character list (same sorting as display)
+  temp = d->account->acct_character_list;
+  while (temp && count < MAX_CHARS_PER_ACCOUNT)
+  {
+    sorted_chars[count++] = temp;
+    temp = temp->next;
+  }
+
+  // Sort by last login time (most recent first)
+  for (i = 0; i < count - 1; i++)
+  {
+    for (j = 0; j < count - i - 1; j++)
+    {
+      if (sorted_chars[j]->last < sorted_chars[j+1]->last)
+      {
+        struct acct_chars *swap = sorted_chars[j];
+        sorted_chars[j] = sorted_chars[j+1];
+        sorted_chars[j+1] = swap;
+      }
+    }
+  }
+
+  // Validate selection range
+  if (selection > count)
+  {
+    SEND_TO_Q("\r\n&+RInvalid selection.&n Please choose a number from the list.\r\n", d);
+    display_delete_character_list(d);
+    return;
+  }
+
+  // Get the selected character (adjust for 0-based indexing)
+  c = sorted_chars[selection - 1];
+  ch = load_char_into_game(c, d);
+
+  if (!ch)
+  {
+    SEND_TO_Q("\r\n&+RCouldn't load that character!&n\r\n", d);
+    STATE(d) = CON_DISPLAY_ACCT_MENU;
+    display_account_menu(d, NULL);
+    return;
+  }
+
+  // Capitalize character name for display
+  char name_cap[128];
+  strncpy(name_cap, c->charname, 127);
+  name_cap[127] = '\0';
+  if (name_cap[0])
+    name_cap[0] = toupper(name_cap[0]);
+
+  // Confirm deletion
+  snprintf(buf, 256, "\r\n&+R!!! FINAL WARNING !!!&n\r\n"
+           "Are you &+RABSOLUTELY SURE&n you want to &+RPERMANENTLY DELETE&n &+W%s&n?\r\n"
+           "This action &+RCANNOT BE UNDONE!&n\r\n\r\n"
+           "Type &+WYES&n to confirm deletion, or &+WNO&n to cancel: ", name_cap);
+  SEND_TO_Q(buf, d);
+  d->character = ch;
+  return;
 }
 
 void remove_char_from_list(P_acct acct, char *ch)
@@ -1924,21 +2259,6 @@ void generate_account_confirmation_code(P_desc d, char *arg)
   snprintf(a, 256, "%d%ld", rand(), (long)time(NULL));
   snprintf(b, 256, "%s", CRYPT2(a, d->account->acct_name));
 
-  snprintf(a, 256, "/tmp/%s.confirmation", d->account->acct_name);
-  f = fopen(a, "w");
-  if (!f)
-  {
-    ereglog(AVATAR, "Couldn't open account confirmation temp file!");
-    SEND_TO_Q
-      ("Sorry, there was an error emailing your confirmation code!\r\n", d);
-    d->account = free_account(d->account);
-    STATE(d) = CON_FLUSH;
-    return;
-  }
-
-  fprintf(f, "  *** Duris Account Confirmation Code ***\n\n\n");
-  fprintf(f, "Your account confirmation code is:  %s\n", b);
-  fclose(f);
   d->account->acct_confirmation = str_dup(b);
   write_account(d->account);
 
@@ -1953,6 +2273,22 @@ void generate_account_confirmation_code(P_desc d, char *arg)
     "&+Y========================================&n\r\n\r\n",
     d->account->acct_confirmation);
   SEND_TO_Q(display_buf, d);
+
+#ifdef REQUIRE_EMAIL_VERIFICATION
+  // Only send email if verification is enabled
+  snprintf(a, 256, "/tmp/%s.confirmation", d->account->acct_name);
+  f = fopen(a, "w");
+  if (!f)
+  {
+    ereglog(AVATAR, "Couldn't open account confirmation temp file!");
+    SEND_TO_Q
+      ("&+YWarning: Could not send confirmation email, but you can still use the code displayed above.&n\r\n", d);
+    return;
+  }
+
+  fprintf(f, "  *** Duris Account Confirmation Code ***\n\n\n");
+  fprintf(f, "Your account confirmation code is:  %s\n", d->account->acct_confirmation);
+  fclose(f);
 
   snprintf(b, 256, "mail -s \"%s\" %s < %s", "Duris Account Confirmation",
           d->account->acct_email, a);
@@ -1969,6 +2305,14 @@ void generate_account_confirmation_code(P_desc d, char *arg)
     fprintf(f, "%s\n", d->account->acct_email);
     fclose(f);
   }
+
+  SEND_TO_Q("&+GAn email with your confirmation code has also been sent to your email address.&n\r\n", d);
+#else
+  // Email verification disabled - auto-confirm account
+  SEND_TO_Q("&+G(Email verification is disabled - your account is automatically confirmed)&n\r\n", d);
+  d->account->acct_confirmed = 1;
+  write_account(d->account);
+#endif
 
   return;
 }

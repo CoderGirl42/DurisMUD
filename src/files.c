@@ -2024,7 +2024,9 @@ int deleteCharacter(P_char ch, bool bDeleteLocker)
   sql_soft_delete_character( GET_PID(ch) );
 
 #ifdef USE_ACCOUNT
-  remove_char_from_list(ch->desc->account, ch->player.name);
+  // Only remove from account list if descriptor and account exist
+  if (ch->desc && ch->desc->account)
+    remove_char_from_list(ch->desc->account, ch->player.name);
 #endif
 
   snprintf(Gbuf1, MAX_STRING_LENGTH, "%s/%c/%s", SAVE_DIR, *name, name );

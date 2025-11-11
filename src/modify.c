@@ -1931,6 +1931,11 @@ char    *next_page(char *str, struct descriptor_data *d)
 {
   int      col = 1, line = 1, spec_code = FALSE;
 
+  /* Arih : this will fix the crash if paging was on when rent the char. */
+  /* Safety check: if character is invalid, return NULL to disable paging */
+  if (!d || !d->character)
+    return NULL;
+
   for (;; str++)
   {
     /* If end of string, return NULL. */

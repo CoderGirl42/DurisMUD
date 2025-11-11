@@ -41,6 +41,7 @@
 #undef  OVL                     /* anti-spam code, but adds significant cpu overhead */
 #undef  PET_STABLE              /* PET_STABLE allows stabling of pets -NOT YET FINISHED PORT! */
 #undef  REALTIME_COMBAT         /* REALTIME_COMBAT is fake-realtime combat replacing old perform_violence */
+#undef  REQUIRE_EMAIL_VERIFICATION  /* Require email verification for new accounts - #define to enable, #undef to disable (disabled by default) */
 #define SMART_PROMPT            /* SMART_PROMPT doesn't show prompt constantly (its annoying) */
 #undef  SPELL_DEBUG             /* for step by step debug info on spell routines */
 #define MISFIRE                 /* mistargeting spells when there are more allies in room than group cape and racewar is going on */
