@@ -33,6 +33,8 @@ DurisMUD forked from Xanadinn's repo.
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential mysql-server libmysqlclient-dev
+sudo apt-get install libxml2 libxml2-dev
+sudo apt-get install zlib1g zlib1g-dev
 ```
 
 **CentOS/RHEL:**
@@ -67,6 +69,13 @@ CREATE DATABASE duris_dev;
 GRANT ALL PRIVILEGES ON duris_dev.* TO 'duris'@'localhost' IDENTIFIED BY 'duris';
 GRANT ALL PRIVILEGES ON duris_dev.* TO 'duris'@'127.0.0.1' IDENTIFIED BY 'duris';
 FLUSH PRIVILEGES;
+
+-- newer versions of MYSQL
+CREATE USER 'duris'@'localhost' IDENTIFIED BY 'duris';
+CREATE USER 'duris'@'127.0.0.1' IDENTIFIED BY 'duris';
+GRANT ALL PRIVILEGES ON duris_dev.* TO 'duris'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON duris_dev.* TO 'duris'@'127.0.0.1' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
 ```
 
 **Production Database (when ready):**
@@ -77,6 +86,13 @@ CREATE DATABASE duris;
 -- Grant privileges (use a strong password in production!)
 GRANT ALL PRIVILEGES ON duris.* TO 'duris'@'localhost' IDENTIFIED BY 'your_secure_password';
 GRANT ALL PRIVILEGES ON duris.* TO 'duris'@'127.0.0.1' IDENTIFIED BY 'your_secure_password';
+FLUSH PRIVILEGES;
+
+-- newer versions of MYSQL
+CREATE USER 'duris'@'localhost' IDENTIFIED BY 'duris';
+CREATE USER 'duris'@'127.0.0.1' IDENTIFIED BY 'duris';
+GRANT ALL PRIVILEGES ON duris.* TO 'duris'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON duris.* TO 'duris'@'127.0.0.1' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
 
