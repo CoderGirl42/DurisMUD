@@ -547,6 +547,107 @@ void load_obj_to_newbies(P_char ch)
                                          1106, 1107, 1108, 1108, 203, 204, -1}));
 
 
+/* Tiefling Basics */
+
+  CREATE_KIT(RACE_TIEFLING, 0, ((int[])
+                             {
+						  677, 283, 285, 1112, 286, 288, 290,
+                             566, 390, 398, 398, 1152, 1153, -1}));
+
+/* Tiefling Classes */
+  CREATE_KIT(RACE_TIEFLING, CLASS_WARRIOR, ((int[])
+                                         {
+                                         1101, 1102, 1103, 1104, 1105, 1105,
+                                         1106, 1107, 1108, 1109, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_RANGER, ((int[])
+                                         {
+                                         1101, 1102, 1103, 1104, 1105, 1105,
+                                         1106, 1107, 1108, 1108, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_PALADIN, ((int[])
+                                         {
+                                         1101, 1102, 1103, 1104, 1105, 1105,
+                                         1106, 1107, 1110, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_ANTIPALADIN, ((int[])
+                                         {
+                                         1101, 1102, 1103, 1104, 1105, 1105,
+                                         1106, 1107, 1110, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_CLERIC, ((int[])
+                                        {
+                                        1119, 1120, 1121, 1122, 1124, 1126,
+                                        1127, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_DRUID, ((int[])
+                                       {
+                                       1135, 1136, 1137, 1138, 1139, 1140,
+                                       -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_SHAMAN, ((int[])
+                                        {
+                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_SORCERER, ((int[])
+                                          {
+                                          1114, 1115, 1131, 706, 735, 731,
+                                          731, 203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_NECROMANCER, ((int[])
+                                             {
+                                             1112, 1114, 1115, 1141, 1142,
+                                             1143, 203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_CONJURER, ((int[])
+                                          {
+                                          1114, 1115, 1131, 706, 735, 731,
+                                          731, 203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_SUMMONER, ((int[])
+                                          {
+                                          1114, 1115, 1131, 706, 735, 731,
+                                          731, 203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_MONK, ((int[])
+                                      {
+                                      1147, 1148, 1149, 1150, 1151, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_MERCENARY, ((int[])
+                                           {
+                                           1101, 1102, 1103, 1104, 1106, 1107,
+                                           1108, 1112, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_ROGUE, ((int[])
+                                       {
+                                       1112, 1112, 1128, 1129, 1130, 1131, 1132,
+                                       412, 412, 412, 412, 412, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_BARD, ((int[])
+                                      {
+                                      1112, 1128, 1129, 1130, 1131, 1134, 1241,
+                                      203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_ALCHEMIST, ((int[])
+                                           {
+                                           377, 676, 52, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_ILLUSIONIST, ((int[])
+                                             {
+                                             1114, 1115, 1131, 706, 735, 731,
+                                             731, 203, 204, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_ETHERMANCER, ((int[])
+                                             {
+                                             706, 735, 731, 731, -1}));
+
+  CREATE_KIT(RACE_TIEFLING, CLASS_REAVER, ((int[])
+                                         {
+                                         1101, 1102, 1103, 1104, 1105, 1105,
+                                         1106, 1107, 1108, 1108, 203, 204, -1}));
+/* End Tiefling */
+
 /*Human Basics*/
   CREATE_KIT(RACE_HUMAN, 0, ((int[])
                              {
@@ -644,7 +745,8 @@ void load_obj_to_newbies(P_char ch)
   CREATE_KIT(RACE_HUMAN, CLASS_REAVER, ((int[])
                                          {
                                          1101, 1102, 1103, 1104, 1105, 1105,
-                                         1106, 1107, 1108, 1108, 203, 204, -1}));/*END Human Classes*/
+                                         1106, 1107, 1108, 1108, 203, 204, -1}));
+/*END Human Classes*/
 
 
 /*Drow Elf Basics*/
