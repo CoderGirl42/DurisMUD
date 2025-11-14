@@ -59,7 +59,7 @@ typedef char                   bool;
 #define true 1
 #endif
 
-typedef char                      byte;
+typedef signed char               byte;
 typedef signed char               sbyte;
 typedef signed short int          sh_int;
 typedef struct AC_Memory          Memory;
