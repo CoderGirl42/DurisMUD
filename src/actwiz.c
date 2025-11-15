@@ -4840,6 +4840,7 @@ void do_purge(P_char ch, char *argument, int cmd)
         snprintf(buf2, MAX_STRING_LENGTH, "Players/%c/%s", LOWER(*buf), buf);
         f = fopen(buf2, "r");
         vict = (struct char_data *) mm_get(dead_mob_pool);
+        ensure_pconly_pool();
         vict->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
         if(restoreCharOnly(vict, skip_spaces(buf)) < 0 || !vict)
         {
@@ -7022,6 +7023,7 @@ void do_lookup(P_char ch, char *argument, int cmd)
     while (fscanf(flist, " %s \n", Gbuf2) != EOF)
     {
       owner = (struct char_data *) mm_get(dead_mob_pool);
+      ensure_pconly_pool();
       owner->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
       if(restoreCharOnly(owner, skip_spaces(Gbuf2)) >= 0)
@@ -7199,9 +7201,10 @@ void do_money_supply(P_char ch, char *argument, int cmd)
           fclose(flist);
           continue;
        }
-       while(fscanf(flist, " %s \n", buff) != EOF) 
+       while(fscanf(flist, " %s \n", buff) != EOF)
        {
           tch = (struct char_data *) mm_get(dead_mob_pool);
+          ensure_pconly_pool();
           tch->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
           if(restoreCharOnly(tch, skip_spaces(buff)) >= 0) 
@@ -7458,6 +7461,7 @@ void GetMIA(char *playerName, char *returned)
   }
 
   finger_foo = (struct char_data *) mm_get(dead_mob_pool);
+  ensure_pconly_pool();
   finger_foo->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
   if(restoreCharOnly(finger_foo, skip_spaces(playerName)) < 0 || !finger_foo)
@@ -7512,6 +7516,7 @@ void GetMIA2(char *playerName, char *returned)
   P_char   finger_foo;
 
   finger_foo = (struct char_data *) mm_get(dead_mob_pool);
+  ensure_pconly_pool();
   finger_foo->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
   if(restoreCharOnly(finger_foo, skip_spaces(playerName)) < 0 || !finger_foo)
   {
@@ -7567,6 +7572,7 @@ void do_finger(P_char ch, char *arg, int cmd)
     return;
   }
   finger_foo = (struct char_data *) mm_get(dead_mob_pool);
+  ensure_pconly_pool();
   finger_foo->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
   if(restoreCharOnly(finger_foo, skip_spaces(arg)) < 0 || !finger_foo)

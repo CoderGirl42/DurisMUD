@@ -5467,6 +5467,7 @@ P_char get_player_from_name(char *name)
   P_char player;
 
   player = (struct char_data *) mm_get(dead_mob_pool);
+  ensure_pconly_pool();
   player->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
   if (restoreCharOnly(player, skip_spaces(name)) < 0 || !player)
@@ -5485,6 +5486,7 @@ int get_player_pid_from_name(char *name)
   int pid = 0;
 
   player = (struct char_data *) mm_get(dead_mob_pool);
+  ensure_pconly_pool();
   player->only.pc = (struct pc_only_data *) mm_get(dead_pconly_pool);
 
   if (restoreCharOnly(player, skip_spaces(name)) < 0 || !player)

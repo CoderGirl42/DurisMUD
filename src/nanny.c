@@ -121,6 +121,21 @@ int max_ingame_good = 0;
 int curr_ingame_evil = 0;
 int max_ingame_evil = 0;
 
+/*
+ * Helper function to ensure dead_pconly_pool is initialized - Arih
+ * This function is idempotent - safe to call multiple times.
+ */
+void ensure_pconly_pool(void)
+{
+  if (!dead_pconly_pool)
+  {
+    dead_pconly_pool = mm_create("PC_ONLY",
+                                 sizeof(struct pc_only_data),
+                                 offsetof(struct pc_only_data, switched),
+                                 mm_find_best_chunk(sizeof(struct pc_only_data), 10, 25));
+  }
+}
+
 void swapstat( P_desc d, char *arg);
 void select_swapstat( P_desc d, char *arg);
 void swapstats(P_char ch, int stat1, int stat2);
