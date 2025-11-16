@@ -2364,13 +2364,8 @@ int writeCharacter(P_char ch, int type, int room)
   data["header"]["int_size"]      = int_size;
   data["header"]["long_size"]     = long_size;
   data["header"]["restore_type"]  = type;
-  data["header"]["skill_off"]     = 0;
-  data["header"]["witness_off"]   = 0;
-  data["header"]["affect_off"]    = 0;
-  data["header"]["item_off"]      = 0;
-  data["header"]["size_off"]      = 0;
   data["header"]["surname"]       = ch->specials.act3;
-  data["header"]["room"]          = room;
+  data["header"]["starting_room"] = room;
   data["header"]["time"]          = time(0);
 #endif
   /*
@@ -2418,7 +2413,7 @@ int writeCharacter(P_char ch, int type, int room)
 
   buf += writeItems(buf, ch);
 #ifdef ENABLE_JSON_PFILE
-    data["items"] = iarr;
+  data["items"] = iarr;
 #endif
 
   ADD_INT(size_off, (int) (buf - buff));
