@@ -1245,7 +1245,6 @@ bool restoreStatus(const nlohmann::json& data, P_char ch)
     GET_SILVER(ch)            = (int)data["status"]["bank"]["silver"].get<int>();
     GET_GOLD(ch)              = (int)data["status"]["bank"]["gold"].get<int>();
     GET_PLATINUM(ch)          = (int)data["status"]["bank"]["platinum"].get<int>();
-
     GET_BALANCE_COPPER(ch)    = (int)data["status"]["bank"]["bank_copper"].get<int>();
     GET_BALANCE_SILVER(ch)    = (int)data["status"]["bank"]["bank_silver"].get<int>();
     GET_BALANCE_GOLD(ch)      = (int)data["status"]["bank"]["bank_gold"].get<int>();
@@ -1326,8 +1325,7 @@ bool restoreStatus(const nlohmann::json& data, P_char ch)
         // Increment number of times left guild.
         GET_NB_LEFT_GUILD(ch)       = (char)data["status"]["guild"]["nb_left_guild"].get<int>() + 1;
       }
-      // Load guild info
-      else
+      else // Load guild info
       {
         GET_A_BITS(ch)              = (int)data["status"]["guild"]["guild_status"].get<int>();
         GET_TIME_LEFT_GUILD(ch)     = (long)data["status"]["guild"]["time_left_guild"].get<long>();
@@ -1568,10 +1566,8 @@ int restoreCharOnlyJSON(P_char ch, char *name)
 #ifndef _PFILE_
   char     buff[SAV_MAXSIZE];
   char    *buf;
-  int      skill_off, affect_off, item_off, surname;
 #endif
-  int      start, size, csize, type, room;
-  int      witness_off;
+  int      type, room;
   char     Gbuf1[MAX_STRING_LENGTH];
   char     b_savevers;
 
@@ -1636,14 +1632,7 @@ int restoreCharOnlyJSON(P_char ch, char *name)
   if(pfile.contains("header"))
   {
     type                = pfile["header"]["type"].get<int>();
-    skill_off           = pfile["header"]["skill_off"].get<int>();
-    affect_off          = pfile["header"]["affect_off"].get<int>();
-    item_off            = pfile["header"]["item_off"].get<int>();
-    csize               = pfile["header"]["size_off"].get<int>();
     room                = pfile["header"]["starting_room"].get<int>();   
-
-    if (b_savevers >= (char) SAV_WTNSVERS)                            /* no witness record save in file */
-      witness_off       = pfile["header"]["witness_off"].get<int>();  /* TASFALEN */
 
     if( b_savevers > 4 )
       ch->specials.act3 = pfile["header"]["surname"].get<int>();
@@ -1656,7 +1645,7 @@ int restoreCharOnlyJSON(P_char ch, char *name)
   }
   else
   {
-    logit(LOG_FILE, "Error: JSON Save file does not contain a header section.", size);
+    logit(LOG_FILE, "Error: JSON Save file does not contain a header section.");
     fprintf(stderr, "Problem restoring save file of: %s\n", name);
     logit(LOG_FILE, "Problem restoring save file of %s.", name);
     send_to_char("There is something wrong with your save file!  Please talk to a God.\r\n", ch);
@@ -1665,7 +1654,7 @@ int restoreCharOnlyJSON(P_char ch, char *name)
 
   if(!restoreStatus(pfile, ch))
   {
-    logit(LOG_FILE, "Error: JSON Save file has errors in the status section.", size);
+    logit(LOG_FILE, "Error: JSON Save file has errors in the status section.");
     fprintf(stderr, "Problem restoring save file of: %s\n", name);
     logit(LOG_FILE, "Problem restoring save file of %s.", name);
     send_to_char("There is something wrong with your save file!  Please talk to a God.\r\n", ch);
@@ -1679,7 +1668,7 @@ int restoreCharOnlyJSON(P_char ch, char *name)
 
   if(!restoreSkills(pfile, ch, MAX_SKILLS))
   {
-    logit(LOG_FILE, "Error: JSON Save file has errors in the skills section.", size);
+    logit(LOG_FILE, "Error: JSON Save file has errors in the skills section.");
     fprintf(stderr, "Problem restoring save file of: %s\n", name);
     logit(LOG_FILE, "Problem restoring save file of %s.", name);
     send_to_char("There is something wrong with your save file!  Please talk to a God.\r\n", ch);
