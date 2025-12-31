@@ -32,7 +32,6 @@ D 0 88968 0 1 100 0 0 0
 *
 O 0 88900 1 88903 100 0 0 0        * a fishing guide
 O 0 88910 4 88910 100 0 0 0        * a bundle of sticks
-O 0 88920 4 88910 100 0 0 0        * a smooth round rock
 O 0 88910 4 88915 100 0 0 0        * a bundle of sticks
 O 0 88912 6 88924 100 0 0 0        * a glass bottle
 O 0 88908 5 88924 100 0 0 0        * a string of lily pads
@@ -44,15 +43,12 @@ O 0 88901 1 88927 100 0 0 0        * a small paddle boat
 O 0 88912 6 88929 100 0 0 0        * a glass bottle
 O 0 88912 6 88934 100 0 0 0        * a glass bottle
 O 0 88915 1 88937 100 0 0 0        * a sign of cauTion
-O 0 88920 4 88938 100 0 0 0        * a smooth round rock
-O 0 88920 4 88944 100 0 0 0        * a smooth round rock
 O 0 88907 1 88946 100 0 0 0        * a sign of cauTion
 O 0 88910 4 88951 100 0 0 0        * a bundle of sticks
 O 0 88910 4 88953 100 0 0 0        * a bundle of sticks
 O 0 88908 5 88955 100 0 0 0        * a string of lily pads
 O 0 88908 5 88957 100 0 0 0        * a string of lily pads
 O 0 88908 5 88959 100 0 0 0        * a string of lily pads
-O 0 88920 4 88969 100 0 0 0        * a smooth round rock
 *
 M 0 88906 2 88906 100 0 0 0        * an old fisherman
 M 0 88905 2 88906 100 0 0 0        * an adult fisherman

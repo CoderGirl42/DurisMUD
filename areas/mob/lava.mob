@@ -68,7 +68,7 @@ creep duergar villianous~
 &+Lwith no responibility or moral compass.  Dressed in dark ratty clothes,
 &+Lhe seems to be hiding something.&n
 ~
-2120 0 0 0 0 2 0 0 -500 S
+2122 0 0 0 0 2 0 0 -500 S
 pd 0 4096 1 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -100,7 +100,7 @@ enslaver vampire thirsty~
 &+rBecoming bored with this world, he resents being animated.&n
 ~
 1073743944 0 0 0 8 0 0 0 -500 S
-um 0 16 3 3
+um 0 16777216 2 3
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -144,7 +144,7 @@ vagabond drunk flind~
 &+mdisgrace to the town and hasn't gotten much better.  He notices you and
 &+mraises his beer to salute, until stumbling backwards.&n
 ~
-76 0 0 0 0 2 0 0 -500 S
+78 0 0 0 0 2 0 0 -500 S
 l 0 4096 2 3
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -189,7 +189,7 @@ companion garm giant~
 &+yA clear sign of danger, it's best to stay back.  The garm stands
 &+yalert, ready to assistant any battle.&n
 ~
-1140852808 0 0 0 0 2 0 0 -500 S
+1140852810 0 0 0 0 2 0 0 -500 S
 ac 0 1048576 1 3
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -249,7 +249,7 @@ scoundrel ghoul deranged~
 &+Lamoung the crowd for anyone to eat.  Hissing, follows chunks of skin
 &+Lfalling off this wreck of a creature.&n
 ~
-2120 0 0 0 0 2 0 0 -500 S
+2122 0 0 0 0 2 0 0 -500 S
 zo 0 32768 2 3
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -264,7 +264,7 @@ savage wight cruel~
 &+Lwith minimal flesh and armed with sharp claws.  When he glances at you
 &+Lwith its burning eyes, it seems he has cruel intentions.&n
 ~
-2120 0 0 0 0 2 0 0 -500 S
+2122 0 0 0 0 2 0 0 -500 S
 uw 0 16384 1 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0

@@ -187,7 +187,7 @@ S
 &+mcorpse of a rat lying on a table.  The floor is filthy and the ceiling
 &+Lis engulfed in spider webs.  There is no door on the dwellings exit.&n
 ~
-997 33554432 15
+997 33554436 15
 D1
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -202,7 +202,7 @@ S
 &+mcorpse of a rat lying on a table.  The floor is filthy and the ceiling
 &+Lis engulfed in spider webs.  There is no door on the dwellings exit.&n
 ~
-997 33554432 15
+997 33554436 15
 D3
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -217,7 +217,7 @@ S
 &+mcorpse of a rat lying on a table.  The floor is filthy and the ceiling
 &+Lis engulfed in spider webs.  There is no door on the dwellings exit.&n
 ~
-997 33554432 15
+997 33554436 15
 D1
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -232,7 +232,7 @@ S
 &+mcorpse of a rat lying on a table.  The floor is filthy and the ceiling
 &+Lis engulfed in spider webs.  There is no door on the dwellings exit.&n
 ~
-997 33554432 15
+997 33554436 15
 D3
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -249,7 +249,7 @@ S
 &+Lare many eerie sounds of unknown creatures in the distance.  Because
 &+Lof the extreme darkness it is hard to see anything around.&n
 ~
-997 1 27
+997 5 27
 D1
 &+LA D&+Wa&+wr&+Wk &+LTr&+wail&n
 ~
@@ -313,7 +313,7 @@ S
 &+Lare many eerie sounds of unknown creatures in the distance.  Because
 &+Lof the extreme darkness it is hard to see anything around.&n
 ~
-997 1 27
+997 5 27
 D2
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -422,7 +422,7 @@ S
 &+Lof heat from the distant lava springs warm the entire cavern.  There
 &+Lare many eerie sounds of unknown creatures in the distance.&n
 ~
-997 1 27
+997 5 27
 D0
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -486,7 +486,7 @@ S
 &+Lthe entire cavern.  There are many eerie sounds of unknown creatures in
 &+Lthe distance.&N
 ~
-997 1 27
+997 5 27
 D0
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -537,7 +537,7 @@ S
 &+Lis no door on the dwellings exit.  There is a rotting corpse of a cat
 &+Llying on a table in the room.  To the east is a bedrock passage.&n
 ~
-997 33554432 15
+997 33554436 15
 D1
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -570,7 +570,7 @@ S
 &+Loccupies the center of the room beside a roaring hearth which leaks
 &+Lblack smoke.  To the west is a bedrock passage.&n
 ~
-997 33554432 15
+997 33554436 15
 D3
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -587,7 +587,7 @@ S
 &+Lis no door on the dwellings exit.  There is a rotting corpse of a cat
 &+Llying on a table in the room.  To the southwest is a dark trail.&n
 ~
-997 33554432 15
+997 33554436 15
 D7
 &+LA D&+Wa&+wr&+Wk &+LTr&+wail&n
 ~
@@ -602,7 +602,7 @@ S
 &+Ylocal families use this bank because it is known to be one of the
 &+Ysafest places in the land to store their money.&n
 ~
-997 33554432 15
+997 33554436 15
 D2
 &+LA D&+Wa&+wr&+Wk &+LTr&+wail&n
 ~
@@ -619,7 +619,7 @@ S
 &+Lis no door on the dwellings exit.  There is a rotting corpse of a cat
 &+Llying on a table in the room.  To the northwest is a bedrock passage.&n
 ~
-997 33554432 15
+997 33554436 15
 D6
 &+LA B&+We&+wn&+Wd &+Lin the Pass&+wage&n
 ~
@@ -652,7 +652,7 @@ S
 &+yThe post has been neatly kept up.  The trapdoor leads back down to the
 &+Lcavern foyer.&n
 ~
-997 5 27
+997 1 27
 D5
 &+LA C&+mav&+Mern F&+moy&+Ler&n
 ~
@@ -1346,7 +1346,7 @@ S
 &+mceiling is engulfed in spider webs.  There is a wooden plank door
 &+Lblocking the only exit.&n
 ~
-997 1 15
+997 5 15
 D3
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -1423,7 +1423,7 @@ S
 &+mceiling is engulfed in spider webs.  There is a wooden plank door
 &+Lblocking the only exit.&n
 ~
-997 1 15
+997 5 15
 D3
 &+LA Bed&+Wr&+woc&+Wk &+LPass&+wage&n
 ~
@@ -1482,7 +1482,7 @@ S
 &+yThe post has been neatly kept up.  The trapdoor leads back down to the
 &+Lcavern foyer.&n
 ~
-997 5 27
+997 1 27
 D5
 &+LA C&+mav&+Mern F&+moy&+Ler&n
 ~

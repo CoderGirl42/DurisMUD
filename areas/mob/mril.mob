@@ -40,7 +40,7 @@ terzak giant spider~
 ~
 2120 0 0 0 0 0 0 0 -250 S
 as 0 16777216 1 3
-31 0 0 1d1+1 1d1+1
+36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 2
 #33703
@@ -237,7 +237,7 @@ olyx hulking ox~
 &+Wthe village.  Although, to consider it as prey, will test your strength.
 &+WLong hair, rich with fat, and bent tusks assist it's survial.&n
 ~
-2120 0 0 0 8 2 0 0 0 S
+134219850 0 0 0 8 2 0 0 0 S
 ac 0 1048576 1 4
 46 0 0 1d1+1 1d1+1
 0.0.0.0 0
