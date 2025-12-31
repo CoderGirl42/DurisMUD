@@ -759,7 +759,6 @@ void ne_init_events(void)
 
     // skip zone reset during copyover - mobs preserved from before
     // but still initialize lifespan so zone timers work
-    extern int copyover_boot;
     if (copyover_boot) {
       // just set lifespan without spawning mobs
       if (zone_table[j].lifespan_min != zone_table[j].lifespan_max)

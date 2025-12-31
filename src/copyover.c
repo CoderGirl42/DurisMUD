@@ -48,7 +48,6 @@ extern void clear_char(P_char ch);
 extern void setCharPhysTypeInfo(P_char ch);
 
 static int copyover_in_progress = 0;
-static P_char find_mob_in_room_by_vnum(int room, int vnum);
 
 int is_copyover_boot(void)
 {
@@ -73,7 +72,8 @@ static int write_desc_entry(FILE *fp, P_desc d)
     entry.fd = d->descriptor;
 
     if (ch && GET_NAME(ch)) {
-        strncpy(entry.player_name, GET_NAME(ch), 49);
+        strncpy(entry.player_name, GET_NAME(ch), sizeof(entry.player_name) - 1);
+        entry.player_name[sizeof(entry.player_name) - 1] = '\0';
         entry.room = ch->in_room;
 
         // save combat state
@@ -84,8 +84,10 @@ static int write_desc_entry(FILE *fp, P_desc d)
                 entry.fighting_id = GET_IDNUM(target);
             } else {
                 entry.fighting_type = 2;
-                if (GET_NAME(target))
-                    strncpy(entry.fighting_name, GET_NAME(target), 49);
+                if (GET_NAME(target)) {
+                    strncpy(entry.fighting_name, GET_NAME(target), sizeof(entry.fighting_name) - 1);
+                    entry.fighting_name[sizeof(entry.fighting_name) - 1] = '\0';
+                }
             }
         }
 
@@ -100,8 +102,10 @@ static int write_desc_entry(FILE *fp, P_desc d)
             }
         }
     }
-    strncpy(entry.host, d->host, 49);
-    strncpy(entry.host2, d->host2, 127);
+    strncpy(entry.host, d->host, sizeof(entry.host) - 1);
+    entry.host[sizeof(entry.host) - 1] = '\0';
+    strncpy(entry.host2, d->host2, sizeof(entry.host2) - 1);
+    entry.host2[sizeof(entry.host2) - 1] = '\0';
     entry.term_type = d->term_type;
     entry.gmcp_enabled = d->gmcp_enabled;
     entry.out_compress = d->out_compress;
@@ -133,7 +137,8 @@ static int write_mob_entry(FILE *fp, P_char mob)
         } else {
             entry.fighting_type = 1;
             if (GET_NAME(target)) {
-                strncpy(entry.fighting_name, GET_NAME(target), 49);
+                strncpy(entry.fighting_name, GET_NAME(target), sizeof(entry.fighting_name) - 1);
+                entry.fighting_name[sizeof(entry.fighting_name) - 1] = '\0';
             }
         }
     }
@@ -229,12 +234,18 @@ static int write_obj_entry(FILE *fp, P_obj obj)
     memcpy(entry.value, obj->value, sizeof(entry.value));
     memcpy(entry.timer, obj->timer, sizeof(entry.timer));
 
-    if (obj->name)
-        strncpy(entry.name, obj->name, 79);
-    if (obj->short_description)
-        strncpy(entry.short_desc, obj->short_description, 79);
-    if (obj->description)
-        strncpy(entry.description, obj->description, 159);
+    if (obj->name) {
+        strncpy(entry.name, obj->name, sizeof(entry.name) - 1);
+        entry.name[sizeof(entry.name) - 1] = '\0';
+    }
+    if (obj->short_description) {
+        strncpy(entry.short_desc, obj->short_description, sizeof(entry.short_desc) - 1);
+        entry.short_desc[sizeof(entry.short_desc) - 1] = '\0';
+    }
+    if (obj->description) {
+        strncpy(entry.description, obj->description, sizeof(entry.description) - 1);
+        entry.description[sizeof(entry.description) - 1] = '\0';
+    }
 
     // count contents
     entry.num_contents = 0;
@@ -401,12 +412,14 @@ void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc)
     header.num_rooms = num_rooms;
     header.num_combat = 0;
 
-    fwrite(&header, sizeof(header), 1, fp);
-
-    // write listener socket fds
-    fwrite(&mother_desc, sizeof(int), 1, fp);
-    fwrite(&mother_desc_ssl, sizeof(int), 1, fp);
-    fwrite(&ws_desc, sizeof(int), 1, fp);
+    if (fwrite(&header, sizeof(header), 1, fp) != 1 ||
+        fwrite(&mother_desc, sizeof(int), 1, fp) != 1 ||
+        fwrite(&mother_desc_ssl, sizeof(int), 1, fp) != 1 ||
+        fwrite(&ws_desc, sizeof(int), 1, fp) != 1) {
+        logit(LOG_STATUS, "copyover: failed to write header/sockets");
+        fclose(fp);
+        return;
+    }
 
     // write descriptors
     for (d = descriptor_list; d; d = d->next) {
@@ -486,18 +499,6 @@ void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc)
     }
 }
 
-// find mob by idnum in current character list
-static P_char find_mob_by_idnum(int idnum)
-{
-    P_char ch;
-    for (ch = character_list; ch; ch = ch->next) {
-        if (IS_NPC(ch) && GET_IDNUM(ch) == idnum) {
-            return ch;
-        }
-    }
-    return NULL;
-}
-
 // find_player_by_name already declared in prototypes.h
 
 // load a player character for copyover recovery
@@ -565,9 +566,15 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
           header.num_descriptors, header.num_mobs, header.num_rooms);
 
     // read listener sockets
-    fread(mother_desc, sizeof(int), 1, fp);
-    fread(mother_desc_ssl, sizeof(int), 1, fp);
-    fread(ws_desc, sizeof(int), 1, fp);
+    if (fread(mother_desc, sizeof(int), 1, fp) != 1 ||
+        fread(mother_desc_ssl, sizeof(int), 1, fp) != 1 ||
+        fread(ws_desc, sizeof(int), 1, fp) != 1) {
+        logit(LOG_STATUS, "copyover_recover: failed to read listener sockets");
+        fclose(fp);
+        unlink(COPYOVER_FILE);
+        copyover_in_progress = 0;
+        return;
+    }
 
     // restore descriptors
     for (i = 0; i < header.num_descriptors; i++) {
@@ -595,8 +602,10 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
         int opt = 1;
         setsockopt(d->descriptor, SOL_TCP, TCP_NODELAY, &opt, sizeof(opt));
 
-        strncpy(d->host, desc_entry.host, 49);
-        strncpy(d->host2, desc_entry.host2, 127);
+        strncpy(d->host, desc_entry.host, sizeof(d->host) - 1);
+        d->host[sizeof(d->host) - 1] = '\0';
+        strncpy(d->host2, desc_entry.host2, sizeof(d->host2) - 1);
+        d->host2[sizeof(d->host2) - 1] = '\0';
         d->term_type = desc_entry.term_type;
         d->gmcp_enabled = desc_entry.gmcp_enabled;
         d->wait = 1;
@@ -655,8 +664,11 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
                 // stash fighting info for later restoration
                 ch->specials.copyover_fighting_type = desc_entry.fighting_type;
                 ch->specials.copyover_fighting_id = desc_entry.fighting_id;
-                if (desc_entry.fighting_name[0])
-                    strncpy(ch->specials.copyover_fighting_name, desc_entry.fighting_name, 49);
+                if (desc_entry.fighting_name[0]) {
+                    strncpy(ch->specials.copyover_fighting_name, desc_entry.fighting_name,
+                            sizeof(ch->specials.copyover_fighting_name) - 1);
+                    ch->specials.copyover_fighting_name[sizeof(ch->specials.copyover_fighting_name) - 1] = '\0';
+                }
 
                 raw_write_to_fd(d->descriptor, "\r\n*** Copyover complete! ***\r\n");
 
@@ -784,8 +796,11 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
         if (mob_entry.fighting_type) {
             mob->specials.copyover_fighting_type = mob_entry.fighting_type;
             mob->specials.copyover_fighting_id = mob_entry.fighting_id;
-            if (mob_entry.fighting_name[0])
-                strncpy(mob->specials.copyover_fighting_name, mob_entry.fighting_name, 49);
+            if (mob_entry.fighting_name[0]) {
+                strncpy(mob->specials.copyover_fighting_name, mob_entry.fighting_name,
+                        sizeof(mob->specials.copyover_fighting_name) - 1);
+                mob->specials.copyover_fighting_name[sizeof(mob->specials.copyover_fighting_name) - 1] = '\0';
+            }
         }
     }
 
@@ -820,15 +835,16 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
         memcpy(obj->value, obj_entry.value, sizeof(obj->value));
         memcpy(obj->timer, obj_entry.timer, sizeof(obj->timer));
 
-        // restore name/desc for corpses (don't free - might be shared index pointer)
+        // restore name/desc for corpses
+        // note: not freeing old pointers - they point to shared prototype strings
         if (obj_entry.name[0]) {
-            obj->name = strdup(obj_entry.name);
+            obj->name = str_dup(obj_entry.name);
         }
         if (obj_entry.short_desc[0]) {
-            obj->short_description = strdup(obj_entry.short_desc);
+            obj->short_description = str_dup(obj_entry.short_desc);
         }
         if (obj_entry.description[0]) {
-            obj->description = strdup(obj_entry.description);
+            obj->description = str_dup(obj_entry.description);
         }
 
         // place in room
@@ -862,26 +878,6 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
     unlink(COPYOVER_FILE);
 
     logit(LOG_STATUS, "copyover_recover: complete");
-}
-
-static P_char find_mob_in_room_by_idnum(int room, int idnum)
-{
-    P_char ch;
-    for (ch = world[room].people; ch; ch = ch->next_in_room) {
-        if (IS_NPC(ch) && GET_IDNUM(ch) == idnum)
-            return ch;
-    }
-    return NULL;
-}
-
-static P_char find_mob_in_room_by_vnum(int room, int vnum)
-{
-    P_char ch;
-    for (ch = world[room].people; ch; ch = ch->next_in_room) {
-        if (IS_NPC(ch) && mob_index[GET_RNUM(ch)].virtual_number == vnum)
-            return ch;
-    }
-    return NULL;
 }
 
 // link up fighting pointers after zones loaded

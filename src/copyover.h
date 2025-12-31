@@ -118,6 +118,9 @@ struct copyover_obj_content {
 // alias for clarity
 typedef struct copyover_obj_content copyover_carried_item;
 
+// copyover state - set during copyover boot
+extern int copyover_boot;
+
 // main copyover functions
 void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc);
 void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc);
