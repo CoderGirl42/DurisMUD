@@ -751,13 +751,23 @@ void ne_init_events(void)
     logit(LOG_STATUS, "Zone %3d:(%5d-%5d) %s",
       j, j ? (zone_table[j - 1].top + 1) : 0, zone_table[j].top, zone_table[j].name);
 
+    // schedule zone reset events (always needed)
+    if (zone_table[j].reset_mode)
+    {
+      add_event(event_reset_zone, i, 0, 0, 0, 0, &j, sizeof(j));
+    }
+
     // skip zone reset during copyover - mobs preserved from before
+    // but still initialize lifespan so zone timers work
     extern int copyover_boot;
-    if (!copyover_boot) {
-      if (zone_table[j].reset_mode)
-      {
-        add_event(event_reset_zone, i, 0, 0, 0, 0, &j, sizeof(j));
-      }
+    if (copyover_boot) {
+      // just set lifespan without spawning mobs
+      if (zone_table[j].lifespan_min != zone_table[j].lifespan_max)
+        zone_table[j].lifespan = number(zone_table[j].lifespan_min, zone_table[j].lifespan_max);
+      else
+        zone_table[j].lifespan = zone_table[j].lifespan_min;
+      zone_table[j].age = 0;
+    } else {
       reset_zone(j, 2);
     }
   }

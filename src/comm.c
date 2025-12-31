@@ -590,6 +590,8 @@ void game_loop(int port, int sslport)
   if (copyover_boot) {
     copyover_recover(&recovered_mother_desc, &recovered_mother_desc_ssl, &recovered_ws_desc);
     copyover_restore_combat();
+    // recalculate avg mob level now that mobs are restored
+    calc_zone_mob_level();
   }
 
   PROFILES(RESET);
