@@ -12446,6 +12446,25 @@ void spell_create_spring(int level, P_char ch, char *arg, int type,
   obj_to_room(spring, ch->in_room);
 }
 
+
+void spell_divine_font(int level, P_char ch, char *arg, int type,
+                       P_char victim, P_obj obj)
+{
+  P_obj    font;
+
+  font = read_object(469, VIRTUAL);
+  if(!font)
+  {
+    logit(LOG_DEBUG, "spell_divine_font(): obj 469 (font) not loadable");
+    send_to_char("Tell someone to make a font object ASAP!\n", ch);
+    return;
+  }
+  send_to_room("&+WA divine font slowly fades into existence, radiating holy power!&n\n", ch->in_room);
+  set_obj_affected(font, 60 * 10, TAG_OBJ_DECAY, 0);
+  obj_to_room(font, ch->in_room);
+}
+
+
 void spell_regeneration(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
   struct affected_type af;
@@ -19256,7 +19275,7 @@ void spell_accel_healing(int level, P_char ch, char *arg, int type, P_char victi
     {
       if(af1->type == SPELL_ACCEL_HEALING)
       {
-        af1->duration = 20;
+        af1->duration = skl_lvl + 1;
         found = true;
       }
     }
@@ -19270,7 +19289,8 @@ void spell_accel_healing(int level, P_char ch, char *arg, int type, P_char victi
   af.type = SPELL_ACCEL_HEALING;
   af.duration = skl_lvl + 1;
   af.location = APPLY_HIT_REG;
-  af.modifier = 5 * level;
+  // 1.5x as effective as regen, but only works out of combat
+  af.modifier = ((int)(get_property("hit.regen.Spell", 9.000) + 1) * 3 / 2) * level;
   affect_to_char(victim, &af);
 
   send_to_char("You begin to heal faster.\r\n", victim);
