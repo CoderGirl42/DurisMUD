@@ -17,6 +17,7 @@
 
 #include "defines.h"
 #include "structs.h"
+#include "files.h"
 #include "utils.h"
 #include "prototypes.h"
 #include "db.h"
@@ -357,7 +358,8 @@ void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc)
             continue;
         }
 
-        do_save_silent(d->character, 3);
+        logit(LOG_STATUS, "copyover: saving %s with RENT_CRASH", GET_NAME(d->character));
+        do_save_silent(d->character, RENT_CRASH);
 
         if (d->websocket) {
             logit(LOG_STATUS, "copyover: %s is websocket, disconnecting", GET_NAME(d->character));
@@ -625,8 +627,9 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
                 ch->in_room = NOWHERE;
                 char_to_room(ch, save_room, FALSE);
 
-                restoreItemsOnly(ch, 0);
                 reset_char(ch);
+                int items_result = restoreItemsOnly(ch, 0);
+                logit(LOG_STATUS, "copyover: restoreItemsOnly for %s returned %d", GET_NAME(ch), items_result);
 
                 // restore pets/followers with hp
                 for (int p = 0; p < desc_entry.num_pets && p < 10; p++) {
