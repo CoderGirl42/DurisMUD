@@ -206,11 +206,14 @@ int compress_end(P_desc player, int flush)
 /* use this function whenever you want to send anything to player,
  do not attempt to call raw_write_to_descriptor, or you may
  screw up compression */
+extern int copyover_boot;
+
 int write_to_descriptor(P_desc player, const char *txt)
 {
   int      len, total, status, i, j;
   char     static_conv_buf[MAX_STRING_LENGTH];
   char    *conv_buf = static_conv_buf;;
+
 
   /* WebSocket connections need JSON-wrapped text frames */
   if (player->websocket) {

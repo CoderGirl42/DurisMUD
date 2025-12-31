@@ -82,6 +82,7 @@ OBJS =  $(SHIP_OBJS) \
 				 buildings.o \
          cardgames.o \
 				 comm.o \
+				 copyover.o \
 				 common.o \
 				 condition.o \
 				 constant.o \

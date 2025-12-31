@@ -30,6 +30,7 @@
 #include "vnum.obj.h"
 #include "interp.h"
 #include "outposts.h"
+#include "copyover.h"
 
 #define MAX_FUNCTIONS 6000
 #define FUNCTION_NAMES_FILE "lib/misc/event_names"
@@ -755,8 +756,11 @@ void ne_init_events(void)
 	add_event(event_reset_zone, i, 0, 0, 0, 0, &j, sizeof(j));
     }
 
-    // The value 2 means that this is a boot-time initial zone reset.
-    reset_zone(j, 2);
+    // skip zone reset during copyover - mobs preserved from before
+    extern int copyover_boot;
+    if (!copyover_boot) {
+      reset_zone(j, 2);
+    }
   }
 
   /* special cases now */
