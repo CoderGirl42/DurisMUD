@@ -751,14 +751,13 @@ void ne_init_events(void)
     logit(LOG_STATUS, "Zone %3d:(%5d-%5d) %s",
       j, j ? (zone_table[j - 1].top + 1) : 0, zone_table[j].top, zone_table[j].name);
 
-    if (zone_table[j].reset_mode)
-    {
-	add_event(event_reset_zone, i, 0, 0, 0, 0, &j, sizeof(j));
-    }
-
     // skip zone reset during copyover - mobs preserved from before
     extern int copyover_boot;
     if (!copyover_boot) {
+      if (zone_table[j].reset_mode)
+      {
+        add_event(event_reset_zone, i, 0, 0, 0, 0, &j, sizeof(j));
+      }
       reset_zone(j, 2);
     }
   }
