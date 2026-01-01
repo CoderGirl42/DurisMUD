@@ -87,7 +87,7 @@ void gmcp_negotiate(struct descriptor_data *d) {
     negotiate[1] = TELNET_WILL;
     negotiate[2] = TELOPT_GMCP;
 
-    write(d->descriptor, negotiate, 3);
+    write_to_descriptor_binary(d, negotiate, 3);
 }
 
 /* handle gmcp negotiation response */
