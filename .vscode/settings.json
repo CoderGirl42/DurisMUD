@@ -12,6 +12,11 @@
             "tooltip": "Build Duris"
         },
         {
+            "label": "$(copy) Copy Duris",
+            "task": "Copy Duris",
+            "tooltip": "Copy Duris"
+        },
+        {
             "label": "$(run) Run Duris",
             "task": "Run Duris",
             "tooltip": "Run Duris"
