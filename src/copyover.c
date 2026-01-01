@@ -26,6 +26,7 @@
 #include "websocket.h"
 #include "gmcp.h"
 #include "mm.h"
+#include "ships/ships.h"
 
 extern const int top_of_world;
 extern P_room world;
@@ -326,9 +327,12 @@ static void count_copyover_items(int *num_descs, int *num_mobs, int *num_objs, i
         }
     }
 
-    // count objects on ground
+    // count objects on ground, but skip ship stuff - already loaded
     for (obj = object_list; obj; obj = obj->next) {
         if (OBJ_ROOM(obj)) {
+            int vnum = OBJ_VNUM(obj);
+            if (vnum == VOBJ_PANEL || vnum == VOBJ_ALL_SHIPS || vnum == VOBJ_CARGO_CRATE)
+                continue;
             (*num_objs)++;
         }
     }
@@ -447,9 +451,12 @@ void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc)
         }
     }
 
-    // write objects on ground (including corpses)
+    // write objects on ground, skip ship stuff - already loaded
     for (obj = object_list; obj; obj = obj->next) {
         if (OBJ_ROOM(obj)) {
+            int vnum = OBJ_VNUM(obj);
+            if (vnum == VOBJ_PANEL || vnum == VOBJ_ALL_SHIPS || vnum == VOBJ_CARGO_CRATE)
+                continue;
             write_obj_entry(fp, obj);
         }
     }
