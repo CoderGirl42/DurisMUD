@@ -1393,6 +1393,11 @@ struct char_special_data {
   P_char arrest_by;
   sh_int time_judge;
   char undead_spell_slots[MAX_CIRCLE+1];
+
+  // copyover temp - stash fighting info til mobs load
+  int copyover_fighting_type;
+  int copyover_fighting_id;
+  char copyover_fighting_name[50];
 };
 
 /* this is.. semi-simple system. Overall, when attsleft==0 || !ch->specials.combat,

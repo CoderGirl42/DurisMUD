@@ -61,6 +61,7 @@
 #include "websocket.h"
 #include "json_utils.h"
 #include "gmcp.h"
+#include "copyover.h"
 
 /* external variables */
 
@@ -125,6 +126,17 @@ struct mm_ds *dead_desc_pool = NULL;
 int      RUNNING_PORT = 0;
 int      no_random = 0;
 int      no_ferries = 0;
+
+// copyover support
+int copyover_boot = 0;
+static int recovered_mother_desc = -1;
+static int recovered_mother_desc_ssl = -1;
+static int recovered_ws_desc = -1;
+
+// listening sockets - stored here so copyover can access them
+static int mother_desc = -1;
+static int mother_desc_ssl = -1;
+static int ws_desc = -1;
 P_char   executing_ch;
 #define  MAX_COMMAND_OUTPUT (5 * MAX_STRING_LENGTH)
 #define  PAD_COMMAND_OUTPUT (500)  // some space for appending a warning
@@ -231,6 +243,11 @@ int main(int argc, char **argv)
     case 'z':
       mini_mode = 2;
       logit(LOG_STATUS, "Running with area debugger on");
+      break;
+    case 'C':
+      // copyover boot - sockets recovered from copyover.dat
+      copyover_boot = 1;
+      logit(LOG_STATUS, "Copyover boot mode");
       break;
     default:
       logit(LOG_STATUS, "Unknown option -% in argument string.",
@@ -457,8 +474,10 @@ void run_the_game(int port, int sslport)
   */
 
 #ifdef MEMCHK
-  free_world();
-  dump_mem_log();
+  if (!_copyover) {
+    free_world();
+    dump_mem_log();
+  }
 #endif
 
   if( _reboot )
@@ -473,14 +492,17 @@ void run_the_game(int port, int sslport)
     {
       logit(LOG_EXIT, "Auto reboot with copyover.");
       logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
-      exit(57);
     }
     else
     {
       logit(LOG_EXIT, "Copyover reboot.");
       logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
-      exit(53);
     }
+    // attempt true copyover - if it returns, something went wrong
+    copyover_save(mother_desc, mother_desc_ssl, ws_desc);
+    // fallback to old behavior if copyover_save fails
+    logit(LOG_EXIT, "Copyover failed, falling back to normal restart.");
+    exit(_autoboot ? 57 : 53);
   }
   if( _autoboot )
   {
@@ -563,20 +585,46 @@ void game_loop(int port, int sslport)
                              mm_find_best_chunk(sizeof
                                                 (struct descriptor_data), 25,
                                                 110));
+
+  // copyover recovery - pool must exist first
+  if (copyover_boot) {
+    copyover_recover(&recovered_mother_desc, &recovered_mother_desc_ssl, &recovered_ws_desc);
+    copyover_restore_combat();
+    // recalculate avg mob level now that mobs are restored
+    calc_zone_mob_level();
+  }
+
   PROFILES(RESET);
 #ifdef DO_PROFILE
   init_func_call_info();
 #endif
   
-  logit(LOG_STATUS, "Opening mother connection.");
-  s = init_socket(port);
-  logit(LOG_STATUS, "Opening father connection.");
-  S = init_socket(sslport);
-  logit(LOG_STATUS, "Opening WebSocket connection.");
-  WS = websocket_init(WS_PORT);
-  if (WS < 0) {
-    logit(LOG_STATUS, "WARNING: WebSocket server failed to start on port %d", WS_PORT);
+  // use recovered sockets if copyover, otherwise create new ones
+  if (copyover_boot && recovered_mother_desc >= 0) {
+    logit(LOG_STATUS, "Using recovered sockets from copyover");
+    s = recovered_mother_desc;
+    S = recovered_mother_desc_ssl;
+    WS = recovered_ws_desc;
+  } else if (copyover_boot) {
+    // copyover mode but recovery failed - can't bind new sockets because old ones still open
+    logit(LOG_STATUS, "FATAL: copyover recovery failed, cannot continue");
+    exit(1);
+  } else {
+    logit(LOG_STATUS, "Opening mother connection.");
+    s = init_socket(port);
+    logit(LOG_STATUS, "Opening father connection.");
+    S = init_socket(sslport);
+    logit(LOG_STATUS, "Opening WebSocket connection.");
+    WS = websocket_init(WS_PORT);
+    if (WS < 0) {
+      logit(LOG_STATUS, "WARNING: WebSocket server failed to start on port %d", WS_PORT);
+    }
   }
+
+  // store in file-scope statics for copyover access
+  mother_desc = s;
+  mother_desc_ssl = S;
+  ws_desc = WS;
 
   /* Main loop */
   while (!shutdownflag)
@@ -731,10 +779,12 @@ void game_loop(int port, int sslport)
         close_socket(point);
       }
       else if (FD_ISSET(point->descriptor, &input_set))
+      {
         if (point->connected != CON_SSLNEGO && process_input(point) < 0)
         {
           close_socket(point);
         }
+      }
     }
     PROFILE_END(connections);
 
@@ -1103,40 +1153,43 @@ void game_loop(int port, int sslport)
     Guildhall::shutdown();
   }
 
-  for (point = descriptor_list; point; point = point->next)
-  {
-    if (point->character)
+  // skip character extraction during copyover - we need them intact
+  if (!_copyover) {
+    for (point = descriptor_list; point; point = point->next)
     {
-      /* check for CON_PLAYING before extracting char. -DCL */
-      if (point->connected == CON_PLAYING)
+      if (point->character)
       {
-        /* when you extract_char() a morph, it un_morph's first, which
-           results in another save.  Unfortunatly, the save_silent(...3)
-           has already nuked all the eq...  so.. just un_morph() them
-           before the save_silent */
-        if (IS_MORPH(point->character))
+        /* check for CON_PLAYING before extracting char. -DCL */
+        if (point->connected == CON_PLAYING)
         {
-          if (IS_FIGHTING(point->character))
-            stop_fighting(point->character);
-          if( IS_DESTROYING(point->character))
-            stop_destroying(point->character);
-          un_morph(point->character);
+          /* when you extract_char() a morph, it un_morph's first, which
+             results in another save.  Unfortunatly, the save_silent(...3)
+             has already nuked all the eq...  so.. just un_morph() them
+             before the save_silent */
+          if (IS_MORPH(point->character))
+          {
+            if (IS_FIGHTING(point->character))
+              stop_fighting(point->character);
+            if( IS_DESTROYING(point->character))
+              stop_destroying(point->character);
+            un_morph(point->character);
+          }
+          if( shutdown_message )
+          {
+            write_to_descriptor(point, shutdown_message);
+          }
+          if( !_pwipe )
+          {
+            write_to_descriptor(point, "\r\nSaving...\r\n");
+            do_save_silent(point->character, 3);
+          }
+          // If it's not an immortal.
+          if( GET_LEVEL(point->character) < MINLVLIMMORTAL )
+          {
+            update_ingame_racewar( -GET_RACEWAR(point->character) );
+          }
+          extract_char(point->character);
         }
-        if( shutdown_message )
-        {
-          write_to_descriptor(point, shutdown_message);
-        }
-        if( !_pwipe )
-        {
-          write_to_descriptor(point, "\r\nSaving...\r\n");
-          do_save_silent(point->character, 3);
-        }
-        // If it's not an immortal.
-        if( GET_LEVEL(point->character) < MINLVLIMMORTAL )
-        {
-          update_ingame_racewar( -GET_RACEWAR(point->character) );
-        }
-        extract_char(point->character);
       }
     }
   }
