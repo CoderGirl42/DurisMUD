@@ -219,25 +219,19 @@ D3
 0 0 85708
 S
 #85710
-&+wA &+rD&+Rea&+rd &+wEn&+Ld Corn&+wer&n~
-&+L   This is a tight tunnel in the bottom of the cave.  In the distance
-&+Lare sounds of bats and other creatures.  The walls of the cave are
-&+Lmade of solid rock and for some reason seem to be damp.  Because of
-&+Lthe extreme darkness it is hard to see the surroundings of the cave.
-&+LThe air has a stale smell to it.  There are also many rodents that
-&+Llive in these tunnels.  A cavern boulder blocks the higher exit.&n
+&+wA &+LPriv&+wate &+cR&+Coyal &+cQ&+Cuart&+cers &+LLook&+wout&n~
+&+L   This is the peak lookout spot of the tower.  From here it's easy to see the
+&+Ltowers once grand construction.  The walls of the tower are made of light gray
+&+Lstone that has been smoothed down.  The floor of this section is cracked, and
+&+Lseems a bit unstable.  From here it is possible to see almost all of Arcium.
+&+LThis lookout gives a whole new prospective on what Arcium is like.&n
 ~
-857 134250497 3
-D3
-&+wA R&+Wo&+wc&+Lk Landing&n
+857 167804928 1
+D8
+&+wT&+Lhe Tow&+wer&+Ls &+cR&+Coyal &+cQ&+Cuart&+cers&n
 ~
-~
-0 0 85812
-D4
-&+LA Sm&+wall &+LPit&n
-~
-~
-0 0 85810
+door~
+1 0 85801
 S
 #85711
 &+wA&+L Dark &+wT&+Lr&+wa&+Li&+wl&n~
@@ -357,10 +351,10 @@ S
 ~
 857 167772164 27
 D5
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
+&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85773
+0 0 85769
 S
 #85717
 &+gThe L&+Gi&+gv&+Gi&+gn&+Gg&+g Forest&n~
@@ -679,7 +673,7 @@ S
 &+gto be an endless amount of mud.  Also there are some types of weeds growing
 &+ghere.&n
 ~
-857 134250529 10
+857 134250533 10
 D0
 &+GWith&+gin &+Ga &+mSw&+Mam&+mp &+MMon&+msters &+GL&+gair&n
 ~
@@ -712,7 +706,7 @@ S
 &+gto be an endless amount of mud.  Also there are some types of weeds growing
 &+ghere.&n
 ~
-857 134250529 10
+857 134250533 10
 D0
 &+GWith&+gin &+Ga &+gM&+Gur&+gky &+mSw&+Mam&+mp&n
 ~
@@ -740,7 +734,7 @@ S
 &+gto be an endless amount of mud.  Also there are some types of weeds growing
 &+ghere.&n
 ~
-857 134250529 10
+857 134250533 10
 D0
 &+GWith&+gin &+Ga &+gM&+Gur&+gky &+mSw&+Mam&+mp&n
 ~
@@ -768,7 +762,7 @@ S
 &+gto be an endless amount of mud.  Also there are some types of weeds growing
 &+ghere.&n
 ~
-857 134250529 10
+857 134250533 10
 D0
 &+GWith&+gin &+Ga &+gM&+Gur&+gky &+mSw&+Mam&+mp&n
 ~
@@ -783,7 +777,7 @@ D5
 &+LAn &+bUnder&+Bwater &+LNo&+wok&n
 ~
 ~
-0 0 85819
+0 0 85812
 S
 #85733
 &+GWith&+gin &+Ga &+mSw&+Mam&+mp &+MMon&+msters &+GL&+gair&n~
@@ -827,7 +821,7 @@ S
 &+ysudden downpour decides to happen.  Check &+Lyour mates, as it is hard to&n
 &+ymaneuver past others here.&n
 ~
-857 167804932 4
+857 167804928 4
 D1
 &+wA L&+Land&+yslide S&+Lpill&+wout&n
 ~
@@ -848,7 +842,7 @@ S
 &+ysudden downpour decides to happen.  Check &+Lyour mates, as it is hard to&n
 &+ymaneuver past others here.&n
 ~
-857 167804928 4
+857 167804932 4
 D0
 &+yA&+w Na&+Wrr&+wow&+y Trail&n
 ~
@@ -899,7 +893,7 @@ S
 &+yover it. There are many animals in the nearby forest.  The trail is easy to
 &+yfollow because the forest has a definite lining.&n
 ~
-857 167804932 2
+857 167804928 2
 D0
 &+wA L&+Land&+yslide S&+Lpill&+wout&n
 ~
@@ -959,7 +953,7 @@ S
 &+yover it. There are many animals in the nearby forest.  The trail is easy to
 &+yfollow because the forest has a definite lining.&n
 ~
-857 167804928 2
+857 167804932 2
 D0
 &+LA &+yDir&+Lt P&+ya&+Lth&n
 ~
@@ -1091,7 +1085,7 @@ fence~
 S
 #85747
 &+LA Long &+yDraw&+Lbr&+yid&+Lge L&+yandi&+Lng&n~
- &+w_&+G,&+g.&+w_&+g.&+w_ &+L/&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+L:&+w[&+LXXX&+w]&n
+ &+w_&+G,&+g.&+w_&+g.&+w_ &+L/&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+y=====&+Yo&+L:&+w[&+LXX&+w]&n
 ~
 857 167804932 1
 D0
@@ -1123,7 +1117,7 @@ S
 &+yover it. There are many animals in the nearby forest.  The trail is easy to
 &+yfollow because the forest has a definite lining.&n
 ~
-857 167804928 2
+857 167804932 2
 D1
 &+wA &+LGloo&+wmy &+LGrave&+wyard&n
 ~
@@ -1469,7 +1463,6 @@ S
 &+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
 &+Lthere are sounds of bats and what might be the mother dragon.  It seems as
 &+Lif there is danger in the air.  A rumbling roar fills the cave with fear.&n
-&+LThe cave seems to narrow towards the east.
 ~
 857 167804928 27
 D2
@@ -1477,11 +1470,6 @@ D2
 ~
 ~
 0 0 85764
-D3
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85768
 S
 #85764
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
@@ -1497,10 +1485,10 @@ D0
 ~
 0 0 85763
 D1
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
+&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85774
+0 0 85772
 D2
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
@@ -1530,30 +1518,6 @@ D0
 ~
 ~
 0 0 85764
-D3
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85766
-S
-#85766
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
-&+L   This naturally formed cave is dimly lit and made of solid rock.  The
-&+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
-&+Lthere are sounds of bats and what might be the mother dragon.  It seems as
-&+Lif there is danger in the air.  A rumbling roar fills the cave with fear.&n
-~
-857 167804928 27
-D0
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85767
-D1
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85765
 S
 #85767
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
@@ -1564,45 +1528,16 @@ S
 &+LSome bones of random races lie here.
 ~
 857 167804928 27
-D0
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85768
 D1
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
 0 0 85764
-D2
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85766
 D3
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85769
-S
-#85768
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
-&+L   This naturally formed cave is dimly lit and made of solid rock.  The
-&+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
-&+Lthere are sounds of bats and what might be the mother dragon.  It seems as
-&+Lif there is danger in the air.  A rumbling roar fills the cave with fear.&n
-~
-857 167804928 27
-D1
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85763
-D2
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85767
+0 0 85770
 S
 #85769
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
@@ -1612,16 +1547,16 @@ S
 &+Lif there is danger in the air.  A rumbling roar fills the cave with fear.&n
 ~
 857 167804928 27
-D1
-&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
-~
-~
-0 0 85767
 D3
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85770
+0 0 85772
+D4
+&+LA &+wM&+Woo&+wnl&+Wit &+LCave&n
+~
+~
+0 0 85716
 S
 #85770
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
@@ -1636,7 +1571,7 @@ D1
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85769
+0 0 85767
 D2
 &+wT&+Lhe &+rDr&+Rago&+rns &+wBe&+Ldding D&+wen&n
 ~
@@ -1658,56 +1593,19 @@ D0
 0 0 85770
 S
 #85772
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n~
-&+L   This naturally formed tunnel is dimly lit and made of solid rock.  The
+&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n~
+&+L   This naturally formed cave is dimly lit and made of solid rock.  The
 &+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
-&+Lthere are sounds of bats and what might be a dragon.  It seems as if there is
-&+Ldanger in the air.&n
-~
-857 167804928 27
-D0
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
-~
-~
-0 0 85773
-D3
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
-~
-~
-0 0 85774
-S
-#85773
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n~
-&+L   This naturally formed tunnel is dimly lit and made of solid rock.  The
-&+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
-&+Lthere are sounds of bats and what might be a dragon.  It seems as if there is
-&+Ldanger in the air.  A cavern boulder blocks the lower exit.&n
-~
-857 167804928 27
-D2
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
-~
-~
-0 0 85772
-D4
-&+LA &+wM&+Woon&+wl&+Wit&+L Cave&n
-~
-~
-0 0 85716
-S
-#85774
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n~
-&+L   This naturally formed tunnel is dimly lit and made of solid rock.  The
-&+Luncomfortably hot air is stale and reeks of rotting flesh.  In the distance
-&+Lthere are sounds of bats and what might be a dragon.  It seems as if there is
-&+Ldanger in the air.  To the west is a dragons haven.&n
+&+Lthere are sounds of bats and what might be the mother dragon.  It seems as
+&+Lif there is danger in the air.  A rumbling roar fills the cave with fear.
+&+LThe cave seems to narrow towards the east.&n
 ~
 857 167804928 27
 D1
-&+wT&+Lhe Tunn&+wel&+L of D&+rr&+Rea&+rd&n
+&+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
 ~
-0 0 85772
+0 0 85769
 D3
 &+wT&+Lhe &+rDr&+Rago&+rns &+LHav&+wen&n
 ~
@@ -1803,9 +1701,10 @@ S
 &+Lover by a deadly disease that has now diminished the population and itself.
 &+LThe tower is decorated with big rugs on the walls.  Each of the rugs has large
 &+Lsymbols on it that has its own significance.  The whole inside of the tower
-&+Lis engulfed in spider webs.&n
+&+Lis engulfed in spider webs.  There is a ladder here that leads up to the
+&+Lsecond level of the tower.&n
 ~
-857 167804928 0
+857 167804932 0
 D0
 &+wT&+Lhe Tow&+wer&+L of Un&+wdead &+cM&+Ci&+wn&+Wi&+wo&+Cn&+cs&n
 ~
@@ -1933,7 +1832,7 @@ S
 &+Lis engulfed in spider webs.  To the west is a grand balcony.  There is a
 &+Lladder here that leads down to the second level of the tower.
 ~
-857 167804928 0
+857 167804932 0
 D1
 &+wT&+Lhe Tow&+wer&+L of Un&+wdead &+cM&+Ci&+wn&+Wi&+wo&+Cn&+cs&n
 ~
@@ -2330,7 +2229,7 @@ D6
 &+wA &+LRoom of Re&+wlease&n
 ~
 door~
-2 85724 85805
+3 85703 85805
 S
 #85800
 &+wT&+Lhe Tow&+wer&+Ls &+cR&+Coyal &+cQ&+Cuart&+cers&n~
@@ -2380,8 +2279,8 @@ D1
 D7
 &+wA &+LPriv&+wate &+cR&+Coyal &+cQ&+Cuart&+cers &+LLook&+wout&n
 ~
-~
-0 0 85820
+door~
+1 0 85710
 S
 #85802
 &+wT&+Lhe Tow&+wer&+Ls &+cR&+Coyal &+cQ&+Cuart&+cers&n~
@@ -2462,7 +2361,7 @@ D9
 &+wT&+Lhe Tow&+wer&+Ls &+cR&+Coyal &+cQ&+Cuart&+cers&n
 ~
 door~
-2 85724 85799
+2 85703 85799
 S
 #85806
 &+wA &+LHi&+wdd&+Len &+wEsc&+Lape&n~
@@ -2496,10 +2395,10 @@ D2
 ~
 0 0 85813
 D4
-&+wA R&+Wo&+wc&+Lk Landing&n
+&+LA Sm&+wall &+LPit&n
 ~
 ~
-0 0 85812
+0 0 85810
 S
 #85808
 &+yA&+w Na&+Wrr&+wow&+y Trail&n~
@@ -2527,7 +2426,7 @@ S
 &+yrare since it is cluddered &+wwith tall grass and &+ythick brush.  Evidence of
 &+yanimals in the nearby forest&+w is apartent.&n
 ~
-857 167804932 2
+857 167804928 2
 D2
 &+wA L&+Land&+yslide S&+Lpill&+wout&n
 ~
@@ -2543,19 +2442,20 @@ S
 &+LA Sm&+wall &+LPit&n~
 &+y   This is a small pit dug into the floor of the forest.  It has been created
 &+yby an ettercap trying to set a trap.  There is nothing but dirt lying in the
-&+yhole.  Upward leads back to the forbidden forest.&n
+&+yhole.  Upward leads back to the forbidden forest.  Down leads back into the
+&+ychilly water.&n
 ~
-857 134512641 0
+857 134512645 0
 D4
 &+gT&+Ghe &+gT&+Gree &+gT&+Grunker &+LL&+wod&+Wge&n
 ~
 trap pit door~
 1 0 85757
 D5
-&+wA &+rD&+Rea&+rd &+wEn&+Ld Corn&+wer&n
+&+LAn &+bUnder&+Bwater &+LNo&+wok&n
 ~
 ~
-0 0 85710
+0 0 85807
 S
 #85811
 &+wA &+LSe&+wal&+Led &+wCry&+Lpt&n~
@@ -2574,26 +2474,24 @@ door~
 1 0 85800
 S
 #85812
-&+wA R&+Wo&+wc&+Lk Landing&n~
-&+L   Emerging from the water, a cave comes into view.  This is a tight
-&+Ltunnel in the bottom of the cave.  In the distance are sounds of bats
-&+Land other creatures.  The walls of the cave are made of solid rock and
-&+Lfor some reason seem to be damp.  Because of the extreme darkness it
-&+Lis hard to see the surroundings of the cave.  The air has a stale
-&+Lsmell to it.  There are also many rodents that live in these tunnels.
-&+LDown leads back into the chilly water.&n
+&+LAn &+bUnder&+Bwater &+LNo&+wok&n~
+&+b   Here the cavern stops at an enclosed nook.  There is lots of room to
+&+bswim and no noticeable turbulence from the river above.  It is pitch
+&+bblack in here, leading to a hint of fear.  There doesn't seem to be any
+&+bfish in here for some reason.  The sides of the cavern are made of
+&+bweather down rock.&n
 ~
-857 167804932 5
-D1
-&+wA &+rD&+Rea&+rd &+wEn&+Ld Corn&+wer&n
+857 134250529 10
+D3
+&+LA &+bCros&+Bsing &+Lin the Cave&+wrn&n
 ~
 ~
-0 0 85710
-D5
-&+LAn &+bUnder&+Bwater &+LNo&+wok&n
+0 0 85816
+D4
+&+GWith&+gin &+Ga &+gM&+Gur&+gky &+mSw&+Mam&+mp&n
 ~
 ~
-0 0 85807
+0 0 85732
 S
 #85813
 &+LAn &+bUnder&+Bwater &+LCave&+wrn&n~
@@ -2664,7 +2562,7 @@ D1
 &+LAn &+bUnder&+Bwater &+LNo&+wok&n
 ~
 ~
-0 0 85819
+0 0 85812
 D2
 &+LAn &+bUnder&+Bwater &+LCave&+wrn&n
 ~
@@ -2709,39 +2607,4 @@ D4
 ~
 pit door trap~
 1 0 85752
-S
-#85819
-&+LAn &+bUnder&+Bwater &+LNo&+wok&n~
-&+b   Here the cavern stops at an enclosed nook.  There is lots of room to
-&+bswim and no noticeable turbulence from the river above.  It is pitch
-&+bblack in here, leading to a hint of fear.  There doesn't seem to be any
-&+bfish in here for some reason.  The sides of the cavern are made of
-&+bweather down rock.&n
-~
-857 134250529 10
-D3
-&+LA &+bCros&+Bsing &+Lin the Cave&+wrn&n
-~
-~
-0 0 85816
-D4
-&+GWith&+gin &+Ga &+gM&+Gur&+gky &+mSw&+Mam&+mp&n
-~
-~
-0 0 85732
-S
-#85820
-&+wA &+LPriv&+wate &+cR&+Coyal &+cQ&+Cuart&+cers &+LLook&+wout&n~
-&+L   This is the peak lookout spot of the tower.  From here it's easy to see the
-&+Ltowers once grand construction.  The walls of the tower are made of light gray
-&+Lstone that has been smoothed down.  The floor of this section is cracked, and
-&+Lseems a bit unstable.  From here it is possible to see almost all of Arcium.
-&+LThis lookout gives a whole new prospective on what Arcium is like.&n
-~
-857 167804928 1
-D8
-&+wT&+Lhe Tow&+wer&+Ls &+cR&+Coyal &+cQ&+Cuart&+cers&n
-~
-~
-0 0 85801
 S

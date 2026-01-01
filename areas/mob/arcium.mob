@@ -108,7 +108,7 @@ horse undead~
 &+Lamount of flesh as a regular horse since its un&+wdead&+L.&n
 ~
 134217802 0 0 0 0 2 0 0 -400 S
-u 0 1 2 -1
+u 0 1 0 -1
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 0
@@ -201,7 +201,7 @@ skeleton black boned~
 &+Lare now stark and bare to the harsh world. Its eyes glow with a hellish
 &+Lglow. &n
 ~
-2122 0 0 0 268435456 2 0 0 -400 S
+2120 0 0 0 268435456 2 0 0 -400 S
 sk 0 4096 0 3
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -220,19 +220,6 @@ B 0 16777216 0 2
 26 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
-#85715
-child undead~
-&+Lan un&+wdead &+gc&+Ghi&+gld&n~
-&+LAn un&+wdead &+gc&+Ghi&+gld &+Lstaggers around without &+wany dir&+Lection.&n
-~
-&+G   Ragged and wearing rotting clothes, this small child has been cursed
-&+Gand must walk with the other undead minions of the lands.&n
-~
-72 0 0 0 0 2 0 0 -400 S
-zo 0 1 0 2
-21 0 0 1d1+1 1d1+1
-0.0.0.0 0
-8 8 0
 #85716
 soldier undead~
 &+Lan un&+wdead &+Bsold&+bier&n~
@@ -245,7 +232,7 @@ soldier undead~
 &+bdead body.&n
 ~
 1074137162 0 0 0 8 2 0 0 -400 S
-re 0 1 2 -1
+uk 0 1 2 -1
 51 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -416,7 +403,7 @@ beggar undead~
 &+Ltown.  The flesh of the zombie is almost completely gone.  It has slowly
 &+Lbeen falling off of the dead body.  Some lice falls from his nappy hair.&n
 ~
-76 0 0 0 0 2 0 0 -400 S
+78 0 0 0 0 2 0 0 -400 S
 zo 0 16384 0 3
 31 0 0 1d1+1 1d1+1
 0.0.0.0 0
@@ -489,7 +476,7 @@ thug undead~
 &+ytirelessly.&n
 ~
 1073743944 0 0 0 268435456 2 0 0 -400 S
-us 0 20480 0 -1
+sp 0 20480 0 -1
 36 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -505,7 +492,7 @@ noble undead~
 &+cchin and cheek.&n
 ~
 2120 0 0 0 8 2 0 0 -400 S
-ul 0 1 0 -1
+up 0 1 0 -1
 41 0 0 1d1+1 1d1+1
 0.0.0.0 0
 8 8 1
@@ -688,7 +675,7 @@ lorik hunter~
 &+cand still lives to see another day.  What started out as a mission from
 &+chis king, has become a lifelong passion, to end the treat from dragons.&n
 ~
-322152250 0 0 0 1048584 0 0 0 500 S
+322152248 0 0 0 1048584 0 0 0 500 S
 pe 0 2 2 -1
 58 0 0 1d1+1 1d1+1
 0.0.0.0 0

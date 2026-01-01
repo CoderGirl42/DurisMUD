@@ -3,8 +3,8 @@ light flickering insanity flicker~
 &+La &+Wfl&+wic&+Wke&+wri&+Wng l&+wi&+Wg&+wh&+Wt &+Lof &+Winsan&+wit&+Ly&n~
 &+LA &+Wfl&+wic&+Wke&+wri&+Wng l&+wi&+Wg&+wh&+Wt &+Lforces you &+wn&+Wear insan&+wit&+Ly.&n~
 ~
-29 1 3 0 7 0 67125248 0 0 0 0
-15 31300 1 0 0 0 0 0
+25 1 3 0 7 0 67125248 0 0 0 0
+31302 15 -1 0 0 0 0 0
 0 0 100
 E
 light flickering insanity~
@@ -15,8 +15,8 @@ light solid reality~
 &+Ya &+Wsolid light &+Yof &+Wreal&+wit&+Yy&n~
 &+YA &+Wsolid light &+Ypulls you back &+win&+Wto real&+wit&+Yy&+w.&n~
 ~
-29 15 3 0 7 0 67125248 0 0 0 0
-15 31300 5 0 0 0 0 0
+25 15 3 0 7 0 67125248 0 0 0 0
+85805 15 -1 0 0 0 0 0
 0 0 100
 E
 light solid reality~
@@ -67,7 +67,7 @@ dagger purge demonic~
 &+rA &+Ld&+we&+Lm&+wo&+Ln&+wi&+Wc &+Ld&+wa&+Wgg&+Ler &+rlies here for&+Rgot&+rten in a p&+Roo&+rl of bl&+Roo&+rd.&n~
 ~
 5 18 3 0 14 0 8320 8193 64 0 0
-2 4 4 3 0 461 50 50
+2 4 4 3 0 618 50 50
 4 52329 100
 E
 dagger purge demonic~
@@ -82,7 +82,7 @@ spectacles inner vision~
 &+Lthe &+Wspec&+wtac&+Lles of i&+wnn&+Ler &+Yvision&n~
 &+LSome unassuming &+Wspec&+wtac&+Lles &+Lof &+win&+Wsight &+Llie here.&n~
 ~
-9 27 3 0 15 0 3145728 131073 0 0 0
+9 27 3 0 15 0 3153920 131073 0 0 0
 12 0 0 3 0 0 0 0
 1 43210 100 0 12 0 83886080
 E
