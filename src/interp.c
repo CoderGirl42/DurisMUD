@@ -1092,8 +1092,8 @@ const char *command[MAX_CMD] = {
   "protocol",
   "extractlink",
   "zlist",
-  "hlist",
   "rlist",
+  "hlist",
   "olist",
   "mlist",
   "\n"                          /* MAX_CMD = 843, MAX_CMD_LIST = 1000 */
@@ -2858,8 +2858,8 @@ void assign_command_pointers(void)
   CMD_Y(CMD_AUCTION, STAT_NORMAL + POS_STANDING, new_ah_call, 0, FALSE);
 
   CMD_Y(CMD_ZLIST, STAT_DEAD + POS_PRONE, do_zlist, IMMORTAL, FALSE);
-  CMD_Y(CMD_HLIST, STAT_DEAD + POS_PRONE, do_hlist, IMMORTAL, FALSE);
   CMD_Y(CMD_RLIST, STAT_DEAD + POS_PRONE, do_rlist, IMMORTAL, FALSE);
+  CMD_Y(CMD_HLIST, STAT_DEAD + POS_PRONE, do_hlist, IMMORTAL, FALSE);
   CMD_Y(CMD_OLIST, STAT_DEAD + POS_PRONE, do_olist, IMMORTAL, FALSE);
   CMD_Y(CMD_MLIST, STAT_DEAD + POS_PRONE, do_mlist, IMMORTAL, FALSE);
 

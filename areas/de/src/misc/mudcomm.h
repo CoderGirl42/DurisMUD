@@ -403,8 +403,8 @@ typedef struct _mudCommand
 #define MUDCOMM_HISS       364
 #define MUDCOMM_BITE       365
 #define MUDCOMM_ZLIST      366 // list all zones wiz command
-#define MUDCOMM_HLIST      367 // list all houses wiz command
-#define MUDCOMM_RLIST      368 // list all rooms wiz command
+#define MUDCOMM_RLIST      367 // list all rooms wiz command
+#define MUDCOMM_HLIST      368 // list all houses wiz command
 #define MUDCOMM_OLIST      369 // list all objects wiz command
 #define MUDCOMM_MLIST      370 // list all mobiles wiz command
 #define MUDCOMM_HIGHEST    370
