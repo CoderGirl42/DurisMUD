@@ -9101,7 +9101,11 @@ void do_zlist(P_char ch, char *argument, int cmd)
       W_RTOP, zone.real_top );
     send_to_char(buf, ch);
   }
-  
+  send_to_char("|-----------------------------------------------------------------------------------------|\r\n", ch);
+  snprintf(buf, MAX_STRING_LENGTH, 
+          "|&-c&+l Number of Zones Loaded: %-7d                                                         &n|\r\n", 
+          top_of_zone_table);
+  send_to_char(buf, ch);
   send_to_char("\\-----------------------------------------------------------------------------------------/\r\n", ch);
 }
 
