@@ -162,6 +162,7 @@ string save_to_string(int);
 const char *stat_to_string1(int);
 const char *stat_to_string2(int);
 const char *stat_to_string3(int);
+const char stat_to_ansi2(int);
 const char *stat_to_string_damage_pulse(float);
 const char *stat_to_string_spell_pulse(float);
 void ShowCharSpellBookSpells(P_char, P_obj, char *);
@@ -216,6 +217,12 @@ bool hasRequiredSlots(P_char);
 void do_raid(P_char, char*, int);
 void do_recall(P_char, char*, int);
 void display_room_auras(P_char, int);
+void do_zlist(P_char, char *, int);
+void do_hlist(P_char, char *, int);
+void do_rlist(P_char, char *, int);
+void do_olist(P_char, char *, int);
+void do_mlist(P_char, char *, int);
+
 //void do_resetspec(P_char, char *, int);
 /* actmove.c */
 

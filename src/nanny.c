@@ -5346,13 +5346,13 @@ void select_class(P_desc d, char *arg)
     SEND_TO_Q(alignment_table, d);
     if (class_table[(int) GET_RACE(d->character)]
         [flag2idx(d->character->player.m_class)] != 4)
-      SEND_TO_Q("G)ood\r\n", d);
-    SEND_TO_Q("N)eutral\r\n", d);
+      SEND_TO_Q("&+YG)ood&n\r\n", d);
+    SEND_TO_Q("&+LN)eutral&n\r\n", d);
 /*    if (!invitemode && (class_table[(int) GET_RACE(d->character)][flag2idx(d->character->player.m_class)] != 3) &&
         (!RACE_NEUTRAL(d->character) || is_invited(GET_NAME(d->character))))*/
     if (class_table[(int) GET_RACE(d->character)]
         [flag2idx(d->character->player.m_class)] != 3)
-      SEND_TO_Q("E)vil\r\n", d);
+      SEND_TO_Q("&+rE)vil&n\r\n", d);
     SEND_TO_Q("Alignment only affects your character's alignment and not the chosen racewar side.\n", d);
     SEND_TO_Q("\r\nYour selection: ", d);
     return;
@@ -5604,27 +5604,38 @@ void display_stats(P_desc d)
   strcpy(Gbuf1, "\r\nYour basic stats:\r\n");
 
   snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
-          "Strength:     %15s      Power:        %s\r\n",
+          "Strength:     &+%c%15s&n      Power:        &+%c%s&n\r\n",
+          stat_to_ansi2((int)   d->character->base_stats.Str), 
           stat_to_string2((int) d->character->base_stats.Str),
+          stat_to_ansi2((int)   d->character->base_stats.Pow), 
           stat_to_string2((int) d->character->base_stats.Pow));
 
   snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
-          "Dexterity:    %15s      Intelligence: %s\r\n",
+          "Dexterity:    &+%c%15s&n      Intelligence: &+%c%s&n\r\n",
+          stat_to_ansi2((int)   d->character->base_stats.Dex), 
           stat_to_string2((int) d->character->base_stats.Dex),
+          stat_to_ansi2((int)   d->character->base_stats.Int), 
           stat_to_string2((int) d->character->base_stats.Int));
 
   snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
-          "Agility:      %15s      Wisdom:       %s\r\n",
+          "Agility:      &+%c%15s&n      Wisdom:       &+%c%s&n\r\n",
+          stat_to_ansi2((int)   d->character->base_stats.Agi), 
           stat_to_string2((int) d->character->base_stats.Agi),
+          stat_to_ansi2((int)   d->character->base_stats.Wis), 
           stat_to_string2((int) d->character->base_stats.Wis));
 
   snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1),
-          "Constitution: %15s      Charisma:     %s\r\n\r\n",
+          "Constitution: &+%c%15s&n      Charisma:     &+%c%s&n\r\n\r\n",
+          stat_to_ansi2((int)   d->character->base_stats.Con),
           stat_to_string2((int) d->character->base_stats.Con),
+          stat_to_ansi2((int)   d->character->base_stats.Cha),
           stat_to_string2((int) d->character->base_stats.Cha));
 
-  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), "Luck: %15s      Unused:     %s\r\n\r\n",
+  snprintf(Gbuf1 + strlen(Gbuf1), MAX_STRING_LENGTH - strlen(Gbuf1), 
+          "Luck: &+%c%15s&n      Karma:      &+%c%s&n\r\n\r\n",
+          stat_to_ansi2((int)   d->character->base_stats.Luk),
           stat_to_string2((int) d->character->base_stats.Luk),
+          stat_to_ansi2((int)   d->character->base_stats.Kar),
           stat_to_string2((int) d->character->base_stats.Kar));
 
   SEND_TO_Q(Gbuf1, d);
@@ -5637,7 +5648,7 @@ void display_characteristics(P_desc d)
   char     buffer[MAX_STRING_LENGTH];
 
   snprintf(Gbuf1, MAX_STRING_LENGTH,
-          "\r\n\r\n---------------------------------------\r\nNAME:   %s\r\n",
+          "\r\n\r\n---------------------------------------\r\nNAME:     %s\r\n",
           GET_NAME(d->character));
 
   if (d->character->player.sex == SEX_MALE)
@@ -5656,9 +5667,9 @@ void display_characteristics(P_desc d)
           get_class_string(d->character, buffer));
 
   if (GET_ALIGNMENT(d->character) == 1000)
-    strcat(Gbuf1, "ALIGN:    Good\r\n");
+    strcat(Gbuf1, "ALIGN:    &+YGood&n\r\n");
   else if (GET_ALIGNMENT(d->character) == -1000)
-    strcat(Gbuf1, "ALIGN:    Evil\r\n");
+    strcat(Gbuf1, "ALIGN:    &+rEvil&n\r\n");
   else
   {
     if (GET_ALIGNMENT(d->character) != 0)
@@ -5667,7 +5678,7 @@ void display_characteristics(P_desc d)
             GET_ALIGNMENT(d->character));
       GET_ALIGNMENT(d->character) = 0;
     }
-    strcat(Gbuf1, "ALIGNMENT:    Neutral\r\n");
+    strcat(Gbuf1, "ALIGNMENT:    &+LNeutral&n\r\n");
   }
 
   if (GET_HOME(d->character) > 0)

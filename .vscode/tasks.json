@@ -1,0 +1,71 @@
+{
+    "tasks": [
+        {
+            "label": "Build Duris",
+            "type": "shell",
+            "command": "make && cp dms_new ../dms",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "never",
+                "revealProblems": "onProblem",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/src"
+                ]
+            }
+        },
+        {
+            "label": "Clean Duris",
+            "type": "shell",
+            "command": "make clean",
+            "options": {
+                "cwd": "${workspaceFolder}/src"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "never",
+                "revealProblems": "onProblem",
+                "panel": "shared"
+            },
+            "problemMatcher": {
+                "base": "$gcc",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}/src"
+                ]
+            }
+        },
+        {
+            "label": "Run Duris",
+            "type": "shell",
+            "command": "./gdbdms",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Kill Duris",
+            "type": "shell",
+            "command": "pkill -KILL -x dms || true; pkill -KILL -f 'gdb.*(\\./)?dms' || true",
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
