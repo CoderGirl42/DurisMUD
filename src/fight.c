@@ -10081,8 +10081,10 @@ int calculate_attacks(P_char ch, int attacks[])
   if( !MIN_POS(ch, POS_STANDING + STAT_NORMAL) && !GROUNDFIGHTING_CHECK(ch) )
   {
     if(GET_POS(ch) == POS_KNEELING)
-      number_attacks = (int)(number_attacks - (number_attacks * .70));
+	  //30% reduction for kneeling
+      number_attacks = (int)(number_attacks - (number_attacks / 3));
     else
+	  //50% reduction for sitting/prone
       number_attacks = (int)(number_attacks - (number_attacks / 2));
   }
 
