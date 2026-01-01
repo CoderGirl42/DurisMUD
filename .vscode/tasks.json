@@ -65,6 +65,20 @@
                 "reveal": "never",
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Copy Duris",
+            "type": "shell",
+            "command": "cp ./src/dms_new ./dms",
+            "presentation": {
+                "reveal": "never",
+                "panel": "shared"
+            },
+            "dependsOn": [
+                "Kill Duris",
+                "Build Duris"
+            ],
+            "dependsOrder": "sequence"
         }
     ],
     "version": "2.0.0"
