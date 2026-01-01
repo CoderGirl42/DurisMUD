@@ -9055,14 +9055,14 @@ void list_ships_to_char( P_char ch, int room_no )
 void do_zlist(P_char ch, char *argument, int cmd)
 {
   char     buf[MAX_STRING_LENGTH];
-  int      no, i;
+  int      i;
 
   if( IS_NPC(ch) )
   {
     return;
   }
 
-  // Column widths (pick what you want)
+  // Column widths
   static constexpr int W_NUM   = 7;
   static constexpr int W_NAME  = 40;
   static constexpr int W_FILE  = 20;
@@ -9073,7 +9073,6 @@ void do_zlist(P_char ch, char *argument, int cmd)
   send_to_char("|&-c&+l Zone Listing                                                                            &n|\r\n", ch);
   send_to_char("|-----------------------------------------------------------------------------------------|\r\n", ch);
   
-  // Optional: column labels
   snprintf(buf, MAX_STRING_LENGTH,
     "|&-c&+l%*s&n|&-c&+l %-*s &n|&-c&+l %-*s &n|&-c&+l%*s&n|&-c&+l%*s&n|\r\n",
     W_NUM,      "Vnum",
@@ -9087,9 +9086,6 @@ void do_zlist(P_char ch, char *argument, int cmd)
   for (i = 0; i <= top_of_zone_table; i++)
   {
     const zone_data& zone = zone_table[i];
-
-    //send_to_char("|-------|------------------------------------------|----------------------|--------------------------------|\r\n", ch);
-
     // Use precision to TRUNCATE to column width so it stays fixed. 
     // %-*.*s => left align, width W, print at most W chars.
     snprintf(buf, MAX_STRING_LENGTH,
@@ -9101,6 +9097,7 @@ void do_zlist(P_char ch, char *argument, int cmd)
       W_RTOP, zone.real_top );
     send_to_char(buf, ch);
   }
+
   send_to_char("|-----------------------------------------------------------------------------------------|\r\n", ch);
   snprintf(buf, MAX_STRING_LENGTH, 
           "|&-c&+l Number of Zones Loaded: %-7d                                                         &n|\r\n", 
