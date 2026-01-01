@@ -217,6 +217,12 @@ bool hasRequiredSlots(P_char);
 void do_raid(P_char, char*, int);
 void do_recall(P_char, char*, int);
 void display_room_auras(P_char, int);
+void do_zlist(P_char, char *, int);
+void do_hlist(P_char, char *, int);
+void do_rlist(P_char, char *, int);
+void do_olist(P_char, char *, int);
+void do_mlist(P_char, char *, int);
+
 //void do_resetspec(P_char, char *, int);
 /* actmove.c */
 

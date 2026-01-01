@@ -9051,3 +9051,77 @@ void list_ships_to_char( P_char ch, int room_no )
     page_string(ch->desc, buf, 1);
   }
 }
+
+void do_zlist(P_char ch, char *argument, int cmd)
+{
+  char     buf[MAX_STRING_LENGTH];
+  int      no, i;
+
+  if( IS_NPC(ch) )
+  {
+    return;
+  }
+
+  // Column widths (pick what you want)
+  static constexpr int W_NUM   = 7;
+  static constexpr int W_NAME  = 40;
+  static constexpr int W_FILE  = 20;
+  static constexpr int W_RTOP = 7;
+  static constexpr int W_RBOTTOM = 7;
+
+  send_to_char("/-----------------------------------------------------------------------------------------\\\r\n", ch);
+  send_to_char("|&-c&+l Zone Listing                                                                            &n|\r\n", ch);
+  send_to_char("|-----------------------------------------------------------------------------------------|\r\n", ch);
+  
+  // Optional: column labels
+  snprintf(buf, MAX_STRING_LENGTH,
+    "|&-c&+l%*s&n|&-c&+l %-*s &n|&-c&+l %-*s &n|&-c&+l%*s&n|&-c&+l%*s&n|\r\n",
+    W_NUM,      "Vnum",
+    W_NAME,     "Name",
+    W_FILE,     "File",
+    W_RBOTTOM,  "Bottom",
+    W_RTOP,     "Top");
+  send_to_char(buf, ch);
+  send_to_char("|-------|------------------------------------------|----------------------|-------|-------|\r\n", ch);
+
+  for (i = 0; i <= top_of_zone_table; i++)
+  {
+    const zone_data& zone = zone_table[i];
+
+    //send_to_char("|-------|------------------------------------------|----------------------|--------------------------------|\r\n", ch);
+
+    // Use precision to TRUNCATE to column width so it stays fixed. 
+    // %-*.*s => left align, width W, print at most W chars.
+    snprintf(buf, MAX_STRING_LENGTH,
+      "|%*d| %s&n | %s&n |%*d|%*d|\r\n",
+      W_NUM, zone.number,
+      zone.name ? pad_ansi(zone.name, W_NAME, W_NAME).c_str() : pad_ansi("", W_NAME, W_NAME).c_str(),
+      zone.filename ? pad_ansi(zone.filename, W_FILE, W_FILE).c_str() : pad_ansi("", W_FILE, W_FILE).c_str(),
+      W_RBOTTOM, zone.real_bottom,
+      W_RTOP, zone.real_top );
+    send_to_char(buf, ch);
+  }
+  
+  send_to_char("\\-----------------------------------------------------------------------------------------/\r\n", ch);
+}
+
+
+void do_hlist(P_char ch, char *argument, int cmd)
+{
+
+}
+
+void do_rlist(P_char ch, char *argument, int cmd)
+{
+
+}
+
+void do_olist(P_char ch, char *argument, int cmd)
+{
+
+}
+
+void do_mlist(P_char ch, char *argument, int cmd)
+{
+
+}
