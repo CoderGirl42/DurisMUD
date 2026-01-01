@@ -165,6 +165,27 @@ const char *stat_names1[18] = {
   "good"                        /* * 100+ */
 };
 
+const char stat_ansi2[18] = {
+  'm',                      /* * 0 */
+  'm',                      /* * 1-9 */
+  'R',                      /* * 10-15 */
+  'R',                      /* * 16-21 */
+  'r',                      /* * 22-27 */
+  'r',                      /* * 28-33 */
+  'y',                      /* * 34-39 */
+  'y',                      /* * 40-45 */
+  'y',                      /* * 46-50 */
+  'y',                      /* * 51-55 */
+  'y',                      /* * 56-61 */
+  'y',                      /* * 62-67 */
+  'Y',                      /* * 68-73 */
+  'Y',                      /* * 74-79 */
+  'g',                      /* * 80-85 */
+  'G',                      /* * 86-91 */
+  'C',                      /* * 92-100 */
+  'C',                      /* * 100+ */
+};
+
 const char *stat_names2[18] = {
   "lame",                       /* * 0 */
   "lame",                       /* * 1-9 */
@@ -364,6 +385,18 @@ const char *stat_to_string1(int val)
     return (stat_names1[17]);
   else
     return (stat_names1[si]);
+}
+
+const char stat_to_ansi2(int val)
+{
+  int      si = STAT_INDEX(val);
+
+  if (si < 0)
+    return (stat_ansi2[0]);
+  else if (si > 17)
+    return (stat_ansi2[17]);
+  else
+    return (stat_ansi2[si]);
 }
 
 const char *stat_to_string2(int val)

@@ -162,6 +162,7 @@ string save_to_string(int);
 const char *stat_to_string1(int);
 const char *stat_to_string2(int);
 const char *stat_to_string3(int);
+const char stat_to_ansi2(int);
 const char *stat_to_string_damage_pulse(float);
 const char *stat_to_string_spell_pulse(float);
 void ShowCharSpellBookSpells(P_char, P_obj, char *);
