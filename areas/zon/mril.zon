@@ -39,7 +39,6 @@ D 0 33754 3 1 100 0 0 0
 *
 *
 *
-M 0 33715 7 33700 100 0 0 0        * a hulking olyx
 M 0 33706 4 33704 100 0 0 0        * a brutish protector
 E 1 33704 2 24 100 0 0 0           *   a glowing blue crystal
 M 0 33706 4 33706 100 0 0 0        * a brutish protector
@@ -70,27 +69,22 @@ G 1 33709 6 0 100 0 0 0            *    a freshly killed salmon
 M 0 33718 6 33717 100 0 0 0        * a bruised salmon
 G 1 33709 6 0 100 0 0 0            *    a freshly killed salmon
 M 0 33700 1 33718 100 0 0 0        * a strange hooded figure
-M 0 33702 6 33719 100 0 0 0        * a giant terzak
-M 0 33703 6 33720 100 0 0 0        * a wild ratak
-M 0 33717 6 33721 100 0 0 0        * a shadowy figure
-M 0 33703 6 33722 100 0 0 0        * a wild ratak
-M 0 33717 6 33723 100 0 0 0        * a shadowy figure
-M 0 33719 3 33724 100 0 0 0        * a blood hawk
-M 0 33717 6 33725 100 0 0 0        * a shadowy figure
-M 0 33702 6 33726 100 0 0 0        * a giant terzak
-M 0 33703 6 33727 100 0 0 0        * a wild ratak
-M 0 33702 6 33728 100 0 0 0        * a giant terzak
-M 0 33717 6 33729 100 0 0 0        * a shadowy figure
-M 0 33717 6 33730 100 0 0 0        * a shadowy figure
-M 0 33703 6 33731 100 0 0 0        * a wild ratak
-M 0 33703 6 33732 100 0 0 0        * a wild ratak
-M 0 33702 6 33733 100 0 0 0        * a giant terzak
-M 0 33719 3 33734 100 0 0 0        * a blood hawk
-M 0 33719 3 33735 100 0 0 0        * a blood hawk
-M 0 33702 6 33736 100 0 0 0        * a giant terzak
-M 0 33703 6 33737 100 0 0 0        * a wild ratak
-M 0 33717 6 33738 100 0 0 0        * a shadowy figure
-M 0 33702 6 33739 100 0 0 0        * a giant terzak
+M 0 33702 4 33719 100 0 0 0        * a giant terzak
+M 0 33717 4 33720 100 0 0 0        * a shadowy figure
+M 0 33702 4 33721 100 0 0 0        * a giant terzak
+M 0 33719 4 33722 100 0 0 0        * a blood hawk
+M 0 33703 4 33723 100 0 0 0        * a wild ratak
+M 0 33717 4 33724 100 0 0 0        * a shadowy figure
+M 0 33703 4 33725 100 0 0 0        * a wild ratak
+M 0 33719 4 33726 100 0 0 0        * a blood hawk
+M 0 33702 4 33727 100 0 0 0        * a giant terzak
+M 0 33717 4 33728 100 0 0 0        * a shadowy figure
+M 0 33702 4 33729 100 0 0 0        * a giant terzak
+M 0 33719 4 33731 100 0 0 0        * a blood hawk
+M 0 33703 4 33733 100 0 0 0        * a wild ratak
+M 0 33717 4 33735 100 0 0 0        * a shadowy figure
+M 0 33703 4 33737 100 0 0 0        * a wild ratak
+M 0 33719 4 33739 100 0 0 0        * a blood hawk
 M 0 33704 1 33743 100 0 0 0        * Gorlon, the faceless beast
 E 1 33703 1 21 100 0 0 0           *   a silver tooth earring
 E 1 33715 3 16 100 0 0 0           *   a huge olyx leg bone
@@ -98,23 +92,22 @@ E 1 33715 3 17 100 0 0 0           *   a huge olyx leg bone
 G 1 31317 1 0 100 0 0 0            *    (object type not in this .obj file)
 M 0 33705 1 33745 100 0 0 0        * Tarik, a black bird humanoid
 E 1 33701 1 20 100 0 0 0           *   a lithixl beak
-M 0 33715 7 33747 100 0 0 0        * a hulking olyx
-M 0 33715 7 33748 100 0 0 0        * a hulking olyx
+M 0 33715 6 33746 100 0 0 0        * a hulking olyx
+M 0 33715 6 33747 100 0 0 0        * a hulking olyx
 M 0 33720 1 33748 70 0 0 0         * an abominable frost giant
 E 1 33715 3 16 100 0 0 0           *   a huge olyx leg bone
 G 1 33710 1 0 100 0 0 0            *    a frozen heart of the abominable
-M 0 33715 7 33749 100 0 0 0        * a hulking olyx
-M 0 33715 7 33751 100 0 0 0        * a hulking olyx
-M 0 33715 7 33752 100 0 0 0        * a hulking olyx
-M 0 33715 7 33753 100 0 0 0        * a hulking olyx
+M 0 33715 6 33749 100 0 0 0        * a hulking olyx
+M 0 33715 6 33750 100 0 0 0        * a hulking olyx
+M 0 33715 6 33751 100 0 0 0        * a hulking olyx
+M 0 33715 6 33753 100 0 0 0        * a hulking olyx
 M 0 33701 1 33754 100 0 0 0        * Uduku, a renown mystic magus
 M 0 33706 4 33756 100 0 0 0        * a brutish protector
 E 1 33712 1 3 100 0 0 0            *   an honor of guards medallion
 M 0 33706 4 33758 100 0 0 0        * a brutish protector
 E 1 33716 1 3 100 0 0 0            *   an honor of guards medallion
-M 0 33713 6 33759 100 0 0 0        * a village native
-M 0 33713 6 33759 100 0 0 0        * a village native
-M 0 33713 6 33759 100 0 0 0        * a village native
+M 0 33713 4 33759 100 0 0 0        * a village native
+M 0 33713 4 33759 100 0 0 0        * a village native
 M 0 33707 2 33760 100 0 0 0        * a nomadic hunter
 M 0 33709 2 33760 100 0 0 0        * a nomadic madam
 M 0 33716 2 33760 100 0 0 0        * a nomadic youth
@@ -123,8 +116,7 @@ E 1 33705 1 18 100 0 0 0           *   a crystalline lyre
 M 0 33707 2 33762 100 0 0 0        * a nomadic hunter
 M 0 33709 2 33762 100 0 0 0        * a nomadic madam
 M 0 33716 2 33762 100 0 0 0        * a nomadic youth
-M 0 33713 6 33763 100 0 0 0        * a village native
-M 0 33713 6 33763 100 0 0 0        * a village native
-M 0 33713 6 33763 100 0 0 0        * a village native
+M 0 33713 4 33763 100 0 0 0        * a village native
+M 0 33713 4 33763 100 0 0 0        * a village native
 *
 S

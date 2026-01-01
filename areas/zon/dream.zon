@@ -78,8 +78,8 @@ D 0 31314 0 1 100 0 0 0
 *     "Past Secluded Desires" - closed
 *
 *
-O 0 31301 1 31300 100 0 0 0        * a solid light of reality
 O 0 31300 1 31300 100 0 0 0        * a flickering light of insanity
+O 0 31301 1 31300 100 0 0 0        * a solid light of reality
 O 0 31302 1 31301 100 0 0 0        * a whirlpool fountian
 O 0 31304 4 31302 100 0 0 0        * a static charged key
 O 0 31304 4 31303 100 0 0 0        * a static charged key
@@ -115,20 +115,18 @@ M 0 31316 1 31308 100 0 0 0        * an enslaved phantom minion
 M 0 31303 1 31308 100 0 0 0        * a tiny devil warlock
 M 0 31307 1 31309 100 0 0 0        * Nomd, a lazy-eyed necromancer
 G 1 31311 4 0 100 0 0 0            *    an ethereal soul shard
-M 0 31313 3 31310 100 0 0 0        * a burly titan bodyguard
+M 0 31313 2 31310 100 0 0 0        * a burly titan bodyguard
 M 0 31311 1 31311 100 0 0 0        * a lonely deva princess
 E 1 31307 1 8 100 0 0 0            *   some boots of abandonment
 E 1 31309 1 24 100 0 0 0           *   --,-'--{@
-M 0 31313 3 31311 100 0 0 0        * a burly titan bodyguard
-M 0 31313 3 31311 100 0 0 0        * a burly titan bodyguard
+M 0 31313 2 31311 100 0 0 0        * a burly titan bodyguard
 M 0 31310 1 31312 100 0 0 0        * Qin, the master illusionist
 G 1 31314 1 0 100 0 0 0            *    a pack of tarot cards
-M 0 31312 3 31313 100 0 0 0        * a young sucubbus harlot
+M 0 31312 2 31313 100 0 0 0        * a young sucubbus harlot
 M 0 31309 1 31314 100 0 0 0        * an invoking faerie enchantress
 E 1 31308 1 7 100 0 0 0            *   some torn cloth stockings
 E 1 31312 1 24 100 0 0 0           *   a necromantic death shroud
-M 0 31312 3 31314 100 0 0 0        * a young sucubbus harlot
-M 0 31312 3 31314 100 0 0 0        * a young sucubbus harlot
+M 0 31312 2 31314 100 0 0 0        * a young sucubbus harlot
 M 0 31306 1 31315 100 0 0 0        * Milrd, a devout cleric
 G 1 31311 4 0 100 0 0 0            *    an ethereal soul shard
 M 0 31308 1 31316 100 0 0 0        * Whonh, a patient monk
