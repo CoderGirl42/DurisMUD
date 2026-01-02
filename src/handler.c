@@ -3146,18 +3146,23 @@ void extract_char(P_char ch)
 		}
 	  }
 #else
-      ch->desc->connected = CON_DISPLAY_ACCT_MENU;
+      if (ch->desc->account) {
+        ch->desc->connected = CON_DISPLAY_ACCT_MENU;
 
-      /* For WebSocket clients, send return_to_menu signal instead of telnet menu */
-      if (ch->desc->websocket) {
-          const char *reason = "quit";
-          /* If character died (STAT_DEAD flag is set in position) */
-          if (GET_POS(ch) & STAT_DEAD) {
-              reason = "death";
-          }
-          ws_send_return_to_menu(ch->desc, reason);
+        /* For WebSocket clients, send return_to_menu signal instead of telnet menu */
+        if (ch->desc->websocket) {
+            const char *reason = "quit";
+            /* If character died (STAT_DEAD flag is set in position) */
+            if (GET_POS(ch) & STAT_DEAD) {
+                reason = "death";
+            }
+            ws_send_return_to_menu(ch->desc, reason);
+        } else {
+            display_account_menu(ch->desc, NULL);
+        }
       } else {
-          display_account_menu(ch->desc, NULL);
+        // no account loaded, just close the connection
+        close_socket(ch->desc);
       }
 #endif
 	  ch->desc->character = NULL;
