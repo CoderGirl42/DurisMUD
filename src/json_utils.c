@@ -34,6 +34,8 @@ extern struct index_data *mob_index;
 extern struct index_data *obj_index;
 extern struct time_info_data time_info;
 extern const char *month_name[];
+extern const char *size_types[];
+int get_vis_mode(P_char ch, int room);
 
 /* sql function for quest remaining count */
 int sql_world_quest_can_do_another(struct char_data *ch);
@@ -521,29 +523,61 @@ char *json_build_room_info(struct room_data *room, struct char_data *ch) {
     /* Build npcs array - visible NPCs in room */
     npcs = cJSON_CreateArray();
     if (ch) {
+        int vis_mode = get_vis_mode(ch, ch->in_room);
         for (tch = room->people; tch; tch = tch->next_in_room) {
             if (!IS_NPC(tch)) continue;  /* Skip PCs */
             if (!CAN_SEE(ch, tch)) continue;  /* Visibility check */
 
             cJSON *npc = cJSON_CreateObject();
-            /* Clean name for Mudlet compatibility - use short_descr for NPCs */
-            clean_name = json_escape_ansi_string(tch->player.short_descr ? tch->player.short_descr : GET_NAME(tch));
-            cJSON_AddStringToObject(npc, "name", clean_name);
-            free(clean_name);
-            /* Colored name for web client - use short_descr which has ANSI codes */
-            clean_name = json_escape_string(tch->player.short_descr ? tch->player.short_descr : GET_NAME(tch));
-            cJSON_AddStringToObject(npc, "colored_name", clean_name);
-            free(clean_name);
-            cJSON_AddNumberToObject(npc, "vnum", GET_VNUM(tch));
-            /* Extract first keyword from NPC's name list for targeting */
-            if (tch->player.name) {
-                char keyword_buf[64];
-                strncpy(keyword_buf, tch->player.name, sizeof(keyword_buf) - 1);
-                keyword_buf[sizeof(keyword_buf) - 1] = '\0';
-                char *space = strchr(keyword_buf, ' ');
-                if (space) *space = '\0';  /* Get first word only */
-                cJSON_AddStringToObject(npc, "keyword", keyword_buf);
+
+            /* check if player can only see red shapes (infravision mode) */
+            if (vis_mode == 3) {
+                cJSON_AddStringToObject(npc, "name", "a red shape");
+                cJSON_AddStringToObject(npc, "colored_name", "&+ra red shape&n");
+                cJSON_AddNumberToObject(npc, "vnum", 0);
+                cJSON_AddStringToObject(npc, "keyword", "");
+            } else {
+                /* normal visibility - use short_descr */
+                clean_name = json_escape_ansi_string(tch->player.short_descr ? tch->player.short_descr : GET_NAME(tch));
+                cJSON_AddStringToObject(npc, "name", clean_name);
+                free(clean_name);
+                clean_name = json_escape_string(tch->player.short_descr ? tch->player.short_descr : GET_NAME(tch));
+                cJSON_AddStringToObject(npc, "colored_name", clean_name);
+                free(clean_name);
+                cJSON_AddNumberToObject(npc, "vnum", GET_VNUM(tch));
+                /* Extract first keyword from NPC's name list for targeting */
+                if (tch->player.name) {
+                    char keyword_buf[64];
+                    strncpy(keyword_buf, tch->player.name, sizeof(keyword_buf) - 1);
+                    keyword_buf[sizeof(keyword_buf) - 1] = '\0';
+                    char *space = strchr(keyword_buf, ' ');
+                    if (space) *space = '\0';  /* Get first word only */
+                    cJSON_AddStringToObject(npc, "keyword", keyword_buf);
+                }
             }
+
+            /* add fighting status if applicable */
+            if (IS_FIGHTING(tch) && GET_OPPONENT(tch)) {
+                struct char_data *opponent = GET_OPPONENT(tch);
+                if (opponent == ch) {
+                    cJSON_AddStringToObject(npc, "fighting", "you");
+                } else if (opponent->in_room != tch->in_room) {
+                    cJSON_AddStringToObject(npc, "fighting", "someone who has already left");
+                } else if (CAN_SEE(ch, opponent)) {
+                    if (IS_NPC(opponent)) {
+                        /* fighting another npc - use short_descr */
+                        clean_name = json_escape_ansi_string(opponent->player.short_descr ? opponent->player.short_descr : GET_NAME(opponent));
+                        cJSON_AddStringToObject(npc, "fighting", clean_name);
+                        free(clean_name);
+                    } else {
+                        /* fighting a player - use name */
+                        cJSON_AddStringToObject(npc, "fighting", GET_NAME(opponent));
+                    }
+                } else {
+                    cJSON_AddStringToObject(npc, "fighting", "someone");
+                }
+            }
+
             cJSON_AddItemToArray(npcs, npc);
         }
     }
