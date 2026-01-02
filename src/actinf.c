@@ -9199,9 +9199,9 @@ void do_mlist(P_char ch, char *argument, int cmd)
   {
     send_to_char(
         "&+WUsage:&n\r\n"
-        "  rlist\r\n"
-        "  rlist ?\r\n"
-        "  rlist <vnumFrom> <vnumTo>\r\n",
+        "  mlist\r\n"
+        "  mlist ?\r\n"
+        "  mlist <vnumFrom> <vnumTo>\r\n",
         ch);
   };
 
