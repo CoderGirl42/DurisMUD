@@ -17,6 +17,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 #include "comm.h"
@@ -113,6 +114,7 @@ extern struct zone_data *zone_table;
 extern struct sector_data *sector_table;
 extern uint event_counter[];
 extern char *specdata[][MAX_SPEC];
+extern const char *sector_types[];
 extern long sentbytes;
 extern long recivedbytes;
 extern const struct race_names race_names_table[];
@@ -8979,6 +8981,12 @@ void do_zlist(P_char ch, char *argument, int cmd)
     return;
   }
 
+  if (!IS_SET(ch->specials.act, PLR_PAGING_ON))
+  {
+    send_to_char("&+WNews file is to long, please tog page on, to read it\n", ch);
+    return;
+  }
+
   // Column widths
   static constexpr int W_NUM = 7;
   static constexpr int W_NAME = 40;
@@ -9008,8 +9016,8 @@ void do_zlist(P_char ch, char *argument, int cmd)
     snprintf(buf, MAX_STRING_LENGTH,
              "|%*d| %s&n | %s&n |%*d|%*d|\r\n",
              W_NUM, zone.number,
-             zone.name ? pad_ansi(zone.name, W_NAME, W_NAME).c_str() : pad_ansi("", W_NAME, W_NAME).c_str(),
-             zone.filename ? pad_ansi(zone.filename, W_FILE, W_FILE).c_str() : pad_ansi("", W_FILE, W_FILE).c_str(),
+             pad_ansi(zone.name ? zone.name : "", W_NAME, W_NAME).c_str(),
+             pad_ansi(zone.filename ? zone.filename : "", W_FILE, W_FILE).c_str(),
              W_RBOTTOM, zone.real_bottom,
              W_RTOP, zone.real_top);
     send_to_char(buf, ch);
@@ -9029,48 +9037,129 @@ void do_hlist(P_char ch, char *argument, int cmd)
 
 void do_rlist(P_char ch, char *argument, int cmd)
 {
+  std::vector<std::string> t;
+  char tmp[MAX_INPUT_LENGTH];
+  bool haveZone = false, haveRange = false;
+  int zone = -1;
+  int vmin = INT_MIN, vmax = INT_MAX;
+  size_t i = 0;
   char buf[MAX_STRING_LENGTH];
-  int i;
+  static constexpr int W_NUM = 7;
+  static constexpr int W_NAME = 40;
+  static constexpr int W_SECTOR = 20;
 
   if (IS_NPC(ch))
+    return;
+
+  if (!IS_SET(ch->specials.act, PLR_PAGING_ON))
   {
+    send_to_char("&+WRoom List is too long, please tog page on, to read it\n", ch);
     return;
   }
 
-  // Column widths
-  static constexpr int W_NUM = 7;
-  static constexpr int W_NAME = 40;
-
-  send_to_char("/----------------------------------------------------------\\\r\n", ch);
-  send_to_char("|&-c&+l Room Listing                                             &n|\r\n", ch);
-  send_to_char("|----------------------------------------------------------|\r\n", ch);
-
-  snprintf(buf, MAX_STRING_LENGTH,
-           "|&-c&+l%*s&n|&-c&+l%*s&n|&-c&+l %-*s &n|\r\n",
-           W_NUM, "Vnum",
-           W_NUM, "Zone",
-           W_NAME, "Name");
-  send_to_char(buf, ch);
-  send_to_char("|-------|-------|------------------------------------------|\r\n", ch);
-
-  for (i = 0; i <= top_of_world; i++)
+  for (; argument && *argument;)
   {
-    const room_data &room = world[i];
-    // Use precision to TRUNCATE to column width so it stays fixed.
-    // %-*.*s => left align, width W, print at most W chars.
-    snprintf(buf, MAX_STRING_LENGTH,
-             "|%*d|%*d||\r\n",
+    argument = one_argument(argument, tmp);
+    if (*tmp)
+      t.emplace_back(tmp);
+  }
+
+  auto help = [&]()
+  {
+    send_to_char(
+        "&+WUsage:&n\r\n"
+        "  rlist\r\n"
+        "  rlist ?\r\n"
+        "  rlist zone <zone#>\r\n"
+        "  rlist <vnumFrom> <vnumTo>\r\n"
+        "  rlist zone <zone#> <vnumFrom> <vnumTo>\r\n",
+        ch);
+  };
+
+  if (!t.empty() && (t[0] == "?" || t[0] == "help"))
+  {
+    help();
+    return;
+  }
+
+  if (i < t.size() && is_abbrev(t[i].c_str(), "zone"))
+  {
+    haveZone = true;
+    if (++i >= t.size() || !is_number(const_cast<char *>(t[i].c_str())))
+    {
+      help();
+      return;
+    }
+    zone = atoi(const_cast<char *>(t[i].c_str()));
+    ++i;
+  }
+
+  if (i < t.size())
+  {
+    if (!is_number(const_cast<char *>(t[i].c_str())))
+    {
+      help();
+      return;
+    }
+    haveRange = true;
+    vmin = atoi(t[i].c_str());
+    if (++i < t.size())
+    {
+      if (!is_number(const_cast<char *>(t[i].c_str())))
+      {
+        help();
+        return;
+      }
+      vmax = atoi(t[i].c_str());
+      ++i;
+    }
+    else
+    {
+      vmax = vmin;
+    }
+  }
+
+  if (i != t.size())
+  {
+    help();
+    return;
+  } // extra junk args
+
+  if (haveRange && vmin > vmax)
+    std::swap(vmin, vmax);
+
+  send_to_char("/---------------------------------------------------------------------------------\\\r\n", ch);
+  snprintf(buf, sizeof(buf),
+           "|&-c&+l Room Listing (# Rooms: %7d)                                                 &n|\r\n",
+           top_of_world + 1);
+  send_to_char(buf, ch);
+  send_to_char("|---------------------------------------------------------------------------------|\r\n", ch);
+
+  snprintf(buf, sizeof(buf),
+           "|&-c&+l%*s&n|&-c&+l%*s&n|&-c&+l %-*s &n|&-c&+l %-*s &n|\r\n",
+           W_NUM, "Zone", W_NUM, "Vnum", W_NAME, "Name", W_SECTOR, "Sector");
+  send_to_char(buf, ch);
+  send_to_char("|-------|-------|------------------------------------------|----------------------|\r\n", ch);
+
+  for (int r = 0; r <= top_of_world; ++r)
+  {
+    const room_data &room = world[r];
+
+    if (haveZone && room.zone != zone)
+      continue;
+    if (haveRange && (room.number < vmin || room.number > vmax))
+      continue;
+
+    snprintf(buf, sizeof(buf),
+             "|%*d|%*d| %s &n| %s &n|\r\n",
+             W_NUM, room.zone,
              W_NUM, room.number,
-             W_NUM, room.zone);
+             pad_ansi(room.name ? room.name : "", W_NAME, W_NAME).c_str(),
+             pad_ansi(sector_types[room.sector_type] ? sector_types[room.sector_type] : "Unknown", W_SECTOR, W_SECTOR).c_str());
     send_to_char(buf, ch);
   }
 
-  send_to_char("|--------------------------------------------------------- |\r\n", ch);
-  snprintf(buf, MAX_STRING_LENGTH,
-           "|&-c&+l Number of Rooms Loaded: %-7d                                  &n|\r\n",
-           top_of_world);
-  send_to_char(buf, ch);
-  send_to_char("\\---------------------------------------------------------/\r\n", ch);
+  send_to_char("\\---------------------------------------------------------------------------------/\r\n", ch);
 }
 
 void do_olist(P_char ch, char *argument, int cmd)
@@ -9079,4 +9168,116 @@ void do_olist(P_char ch, char *argument, int cmd)
 
 void do_mlist(P_char ch, char *argument, int cmd)
 {
+  std::vector<std::string> t;
+  char tmp[MAX_INPUT_LENGTH];
+  bool haveRange = false;
+  int zone = -1;
+  int vmin = INT_MIN, vmax = INT_MAX;
+  size_t i = 0;
+  char buf[MAX_STRING_LENGTH];
+  static constexpr int W_VNUM = 7;
+  static constexpr int W_NUM = 4;
+  static constexpr int W_NAME = 40;
+
+  if (IS_NPC(ch))
+    return;
+
+  if (!IS_SET(ch->specials.act, PLR_PAGING_ON))
+  {
+    send_to_char("&+WRoom List is too long, please tog page on, to read it\n", ch);
+    return;
+  }
+
+  for (; argument && *argument;)
+  {
+    argument = one_argument(argument, tmp);
+    if (*tmp)
+      t.emplace_back(tmp);
+  }
+
+  auto help = [&]()
+  {
+    send_to_char(
+        "&+WUsage:&n\r\n"
+        "  rlist\r\n"
+        "  rlist ?\r\n"
+        "  rlist <vnumFrom> <vnumTo>\r\n",
+        ch);
+  };
+
+  if (!t.empty() && (t[0] == "?" || t[0] == "help"))
+  {
+    help();
+    return;
+  }
+
+  if (i < t.size())
+  {
+    if (!is_number(const_cast<char *>(t[i].c_str())))
+    {
+      help();
+      return;
+    }
+    haveRange = true;
+    vmin = atoi(t[i].c_str());
+    if (++i < t.size())
+    {
+      if (!is_number(const_cast<char *>(t[i].c_str())))
+      {
+        help();
+        return;
+      }
+      vmax = atoi(t[i].c_str());
+      ++i;
+    }
+    else
+    {
+      vmax = vmin;
+    }
+  }
+
+  if (i != t.size())
+  {
+    help();
+    return;
+  } // extra junk args
+
+  if (haveRange && vmin > vmax)
+    std::swap(vmin, vmax);
+
+  send_to_char("/------------------------------------------------------------\\\r\n", ch);
+  snprintf(buf, sizeof(buf),
+           "|&-c&+l Room Listing (# Rooms: %7d)                            &n|\r\n",
+           top_of_mobt + 1);
+  send_to_char(buf, ch);
+  send_to_char("|------------------------------------------------------------|\r\n", ch);
+
+  snprintf(buf, sizeof(buf),
+           "|&-c&+l%*s&n|&-c&+l %-*s &n|&-c&+l%*s/%-*s&n|\r\n",
+           W_VNUM, "Vnum", W_NAME, "Name", W_NUM, "Num", W_NUM, "Max");
+  send_to_char(buf, ch);
+  send_to_char("|-------|------------------------------------------|---------|\r\n", ch);
+
+  for (i = 0; i <= top_of_mobt; i++)
+  {
+    if (haveRange && (mob_index[i].virtual_number < vmin || mob_index[i].virtual_number > vmax))
+      continue;
+
+    P_char mob = read_mobile(mob_index[i].virtual_number, VIRTUAL);
+
+    if (!mob)
+      continue;
+
+    snprintf(buf, sizeof(buf),
+             "|%*d| %s &n|%*d/%-*d|\r\n",
+             W_VNUM, mob_index[i].virtual_number,
+             pad_ansi(mob->player.short_descr ? mob->player.short_descr : "", W_NAME, W_NAME).c_str(),
+             W_NUM, mob_index[i].number,
+             W_NUM, mob_index[i].limit);
+    send_to_char(buf, ch);
+
+    extract_char(mob);
+  }
+
+  send_to_char("\\------------------------------------------------------------/\r\n", ch);
 }
