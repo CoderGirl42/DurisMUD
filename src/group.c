@@ -181,7 +181,8 @@ void displayH(P_char ch, char *tbuf)
   int      percent = 0;
   char     color[10];
 
-  GET_HIT(ch), GET_MAX_HIT(ch), percent = 100 * GET_HIT(ch) / GET_MAX_HIT(ch);
+  // this is so that no more crash when max hp = 0
+  percent = (GET_MAX_HIT(ch) > 0) ? (100 * GET_HIT(ch) / GET_MAX_HIT(ch)) : 0;
 
 //wizlog(56, "percent:%d", percent);
 
