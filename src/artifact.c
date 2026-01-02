@@ -1098,7 +1098,7 @@ void remove_all_artifacts_sql( P_char ch )
   pid = GET_PID(ch);
 
   // Nullify arti timers on all ch's equipment.
-  qry("UPDATE artifacts SET owned='N', timer=0, lastUpdate=SYSDATE() WHERE location=%d and locType=%d", pid, ARTIFACT_ON_PC );
+  qry("UPDATE artifacts SET owned='N', timer=NULL, lastUpdate=SYSDATE() WHERE location=%d and locType=%d", pid, ARTIFACT_ON_PC );
 }
 
 // This is a wrapper function for artifact_update_sql.
@@ -2220,7 +2220,7 @@ void event_artifact_check_poof_sql( P_char ch, P_char vict, P_obj obj, void * ar
   mysql_free_result(res);
 
   // Clear the artis from the list.  Note: doing it after the loop intentionally.
-  qry( "UPDATE artifacts SET owned='N', locType='NotInGame', location=-1, timer=0, lastUpdate=SYSDATE() WHERE owned='Y' AND timer < now()" );
+  qry( "UPDATE artifacts SET owned='N', locType='NotInGame', location=-1, timer=NULL, lastUpdate=SYSDATE() WHERE owned='Y' AND timer < now()" );
 
   add_event( event_artifact_check_poof_sql, 12 * WAIT_SEC, NULL, NULL, NULL, 0, NULL, 0 );
 }
