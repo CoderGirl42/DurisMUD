@@ -198,8 +198,9 @@ int SpammingNchat(P_char ch);
 /*
  * Macros
  */
-
+#ifndef ARRAY_SIZE
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof(*(A)))
+#endif
 
 #define GET_VICTIM_ROOM(v, c, a) (v) = get_char_room_vis((c), (a))
 
