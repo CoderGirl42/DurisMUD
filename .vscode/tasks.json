@@ -3,7 +3,7 @@
         {
             "label": "Build Duris",
             "type": "shell",
-            "command": "make && cp dms_new ../dms",
+            "command": "make",
             "options": {
                 "cwd": "${workspaceFolder}/src"
             },

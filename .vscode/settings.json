@@ -26,5 +26,7 @@
             "task": "Kill Duris",
             "tooltip": "Kill Duris"
         },
-    ]
+    ],
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+    "C_Cpp.errorSquiggles": "disabled"
 }
