@@ -9247,7 +9247,7 @@ void do_mlist(P_char ch, char *argument, int cmd)
 
   send_to_char("/------------------------------------------------------------\\\r\n", ch);
   snprintf(buf, sizeof(buf),
-           "|&-c&+l Room Listing (# Rooms: %7d)                            &n|\r\n",
+           "|&-c&+l Mobile Listing (# Rooms: %7d)                          &n|\r\n",
            top_of_mobt + 1);
   send_to_char(buf, ch);
   send_to_char("|------------------------------------------------------------|\r\n", ch);
