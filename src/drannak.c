@@ -1628,7 +1628,8 @@ bool valid_conjure(P_char ch, P_char victim)
   if( IS_PC(victim) )
     return FALSE;
 
-  if( IS_ELITE(victim) )
+  // these are hand tuned mobs from hard zones, no conjuring
+  if( IS_SET(victim->specials.act, ACT_IGNORE) )
     return FALSE;
 
 /* Commented out new changes for now.
