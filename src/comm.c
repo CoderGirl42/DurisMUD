@@ -1761,7 +1761,7 @@ void close_socket(struct descriptor_data *d)
   /* I really don't wanna crash it  */
 #ifdef USE_ACCOUNT
   if (d->account)
-    free_account(d->account);
+    d->account = free_account(d->account);
 #endif
 
   /* Free WebSocket fragment buffer if any */

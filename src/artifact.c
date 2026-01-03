@@ -1098,7 +1098,7 @@ void remove_all_artifacts_sql( P_char ch )
   pid = GET_PID(ch);
 
   // Nullify arti timers on all ch's equipment.
-  qry("UPDATE artifacts SET owned='N', timer=0, lastUpdate=SYSDATE() WHERE location=%d and locType=%d", pid, ARTIFACT_ON_PC );
+  qry("UPDATE artifacts SET owned='N', timer=NULL, lastUpdate=SYSDATE() WHERE location=%d and locType=%d", pid, ARTIFACT_ON_PC );
 }
 
 // This is a wrapper function for artifact_update_sql.
@@ -1186,7 +1186,7 @@ bool get_artifact_data_sql( int vnum, P_arti adata )
     adata->owned = owned;
     adata->locType = atoi(row[1]);
     adata->location = atoi(row[2]);
-    adata->timer = atol(row[3]);
+    adata->timer = row[3] ? atol(row[3]) : 0;
     adata->type = atoi(row[4]);
     adata->next = NULL;
   }
@@ -2220,7 +2220,7 @@ void event_artifact_check_poof_sql( P_char ch, P_char vict, P_obj obj, void * ar
   mysql_free_result(res);
 
   // Clear the artis from the list.  Note: doing it after the loop intentionally.
-  qry( "UPDATE artifacts SET owned='N', locType='NotInGame', location=-1, timer=0, lastUpdate=SYSDATE() WHERE owned='Y' AND timer < now()" );
+  qry( "UPDATE artifacts SET owned='N', locType='NotInGame', location=-1, timer=NULL, lastUpdate=SYSDATE() WHERE owned='Y' AND timer < now()" );
 
   add_event( event_artifact_check_poof_sql, 12 * WAIT_SEC, NULL, NULL, NULL, 0, NULL, 0 );
 }
@@ -2315,7 +2315,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
       node->owned = TRUE;
       node->locType = atoi(row[1]);
       node->location = pid;
-      node->timer = atol(row[3]);
+      node->timer = row[3] ? atol(row[3]) : 0;
       node->type = atoi(row[4]);
       node->next = NULL;
     }
@@ -2328,7 +2328,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
       }
       if( nextlist->pid == pid )
       {
-        add_artidata_to_list( nextlist->artis, vnum, TRUE, atoi(row[1]), pid, atol(row[3]), atoi(row[4]) );
+        add_artidata_to_list( nextlist->artis, vnum, TRUE, atoi(row[1]), pid, row[3] ? atol(row[3]) : 0, atoi(row[4]) );
       }
       else
       {
@@ -2342,7 +2342,7 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
         node->owned = TRUE;
         node->locType = atoi(row[1]);
         node->location = pid;
-        node->timer = atol(row[3]);
+        node->timer = row[3] ? atol(row[3]) : 0;
         node->type = atoi(row[4]);
         node->next = NULL;
       }
@@ -3259,7 +3259,7 @@ void event_artifact_check_bind_sql( P_char ch, P_char vict, P_obj obj, void * ar
     bindData = new bind_data;
     bindData->vnum      = atoi(row[0]);
     bindData->owner_pid = atoi(row[1]);
-    bindData->timer     = atol(row[2]);
+    bindData->timer     = row[2] ? atol(row[2]) : 0;
 
     bindData->next = list;
     list = bindData;

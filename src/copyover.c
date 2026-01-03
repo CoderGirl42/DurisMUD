@@ -320,9 +320,9 @@ static void count_copyover_items(int *num_descs, int *num_mobs, int *num_objs, i
         }
     }
 
-    // count living mobs
+    // count living mobs (skip pc pets - saved per-descriptor)
     for (ch = character_list; ch; ch = ch->next) {
-        if (IS_NPC(ch) && ch->in_room >= 0) {
+        if (IS_NPC(ch) && ch->in_room >= 0 && !IS_PC_PET(ch)) {
             (*num_mobs)++;
         }
     }
@@ -442,9 +442,9 @@ void copyover_save(int mother_desc, int mother_desc_ssl, int ws_desc)
         }
     }
 
-    // write mobs
+    // write mobs (skip pc pets - saved per-descriptor)
     for (ch = character_list; ch; ch = ch->next) {
-        if (IS_NPC(ch) && ch->in_room >= 0) {
+        if (IS_NPC(ch) && ch->in_room >= 0 && !IS_PC_PET(ch)) {
             write_mob_entry(fp, ch);
             write_mob_affects(fp, ch);
             write_mob_inventory(fp, ch);

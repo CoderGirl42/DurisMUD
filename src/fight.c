@@ -9731,12 +9731,20 @@ int calculate_attacks(P_char ch, int attacks[])
   weapon = ch->equipment[SECONDARY_WEAPON];
   if ((weapon == NULL) || (weapon->type == ITEM_WEAPON))
   {
-    int actpct = (100 * ((weapon == NULL) ? 0 : GET_OBJ_WEIGHT(weapon))) / GET_C_STR(ch);
+    if (ch->equipment[PRIMARY_WEAPON] && IS_SET(ch->equipment[PRIMARY_WEAPON]->extra_flags, ITEM_TWOHANDS) && weapon == NULL)
+    {
+	  //swap to primary for actpct weight check if 2hander	
+      weapon = ch->equipment[PRIMARY_WEAPON];
+    }
+	  
+    int actpct = (100 * ( (weapon == NULL) ? 0 : GET_OBJ_WEIGHT(weapon) )) / GET_C_STR(ch);
 
     if ((actpct <= 6) && (GET_C_DEX(ch) >= 150))
     {
       if (number(1, GET_C_DEX(ch)) > 60)
       {
+        //Swap back to secondary if it was changed due to 2hander so the check below works as original
+        weapon = ch->equipment[SECONDARY_WEAPON];		  
         send_to_char("&nYour improved &+gdexterity&n grants you an additional attack!&n\n\r", ch);
         if (ch->equipment[PRIMARY_WEAPON] && IS_SET(ch->equipment[PRIMARY_WEAPON]->extra_flags, ITEM_TWOHANDS) && weapon == NULL)
           ADD_ATTACK(PRIMARY_WEAPON);
