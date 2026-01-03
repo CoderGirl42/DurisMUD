@@ -27,12 +27,16 @@ ifdef EFENCE
 	CFLAGS += -DEFENCE
 endif
 
-# GENERAL_LIBS += -lcygipc 
+# GENERAL_LIBS += -lcygipc
 LIBS += $(GENERAL_LIBS)
+
+# Put all .o/.d files here (Makefile lives in src/)
+OBJDIR   := ../obj
+DEPFLAGS := -MMD -MP
 
 # files that would be compiled as dynamic libs if USE_SHARED was defined
 #    make sure that they are NOT included in ANY form in OBJS!!!
-# The makefile will deal with compiling SH_LIBS as normal files 
+# The makefile will deal with compiling SH_LIBS as normal files
 # if USE_SHARED isn't defined
 
 SH_LIBS 	=
@@ -244,11 +248,9 @@ OBJS =  $(SHIP_OBJS) \
 				 json_utils.o \
 				 gmcp.o
 
-SHARED_PFILE_OBJS=pf-skills.o \
-									pf-files.o
-
-PFILE_OBJS=pfile-stubs.o \
-					 pfile.o
+# Name lists (no paths) for pfile-related objs
+SHARED_PFILE_OBJS_NAMES = pf-skills.o pf-files.o
+PFILE_OBJS_NAMES        = pfile-stubs.o pfile.o
 
 #******************************************************************************
 #******************************************************************************
@@ -258,17 +260,17 @@ PFILE_OBJS=pfile-stubs.o \
 
 PROGS 	= dms_new
 
-DMS_OBJS = $(OBJS)
-
+# Build object paths under OBJDIR (preserve subdirs like ships/)
+DMS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+PFILE_OBJS        = $(addprefix $(OBJDIR)/,$(PFILE_OBJS_NAMES))
+SHARED_PFILE_OBJS = $(addprefix $(OBJDIR)/,$(SHARED_PFILE_OBJS_NAMES))
 
 ifndef USE_SHARED
-	DMS_OBJS += $(SH_LIBS)
-	PFILE_OBJS += $(SH_LIBS)
+	DMS_OBJS   += $(addprefix $(OBJDIR)/,$(SH_LIBS))
+	PFILE_OBJS += $(addprefix $(OBJDIR)/,$(SH_LIBS))
 else
 	PROGS += $(SH_LIBS:.o=.so)
 endif
-
-SRCS	= $(OBJS:.o=.c) $(SH_LIBS:.o=.c) $(PFILE_OBJS:.o=.c)
 
 all: $(PROGS)
 
@@ -276,35 +278,41 @@ dms_new : $(DMS_OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -g -o dms_new $(DMS_OBJS) $(LIBS)
 	chmod a+rx dms_new
 
-pfile : $(PFILE_OBJS) $(SHARED_PFILE_OBJS) mm.o common.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -g -o pfile $(PFILE_OBJS) $(SHARED_PFILE_OBJS) common.o mm.o $(LIBS)
+pfile : $(PFILE_OBJS) $(SHARED_PFILE_OBJS) $(OBJDIR)/mm.o $(OBJDIR)/common.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -g -o pfile \
+		$(PFILE_OBJS) $(SHARED_PFILE_OBJS) \
+		$(OBJDIR)/common.o $(OBJDIR)/mm.o $(LIBS)
 
-$(DMS_OBJS): %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEBUG) -c $< -o $@
+# Build any C object into OBJDIR, creating folders as needed.
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEBUG) $(DEPFLAGS) -c $< -o $@
 
-$(PFILE_OBJS): %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEBUG) -c $< -o $@
+# Build any C++ object into OBJDIR, creating folders as needed.
+$(OBJDIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEBUG) $(DEPFLAGS) -c $< -o $@
 
-$(SHARED_PFILE_OBJS): pf-%.o: %.c
-	$(CC) $(CFLAGS) -D_PFILE_ $(INCLUDES) $(DEBUG) -c $< -o $@
+# Shared pfile objects (pf-*.o) also go into OBJDIR
+$(OBJDIR)/pf-%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -D_PFILE_ $(INCLUDES) $(DEBUG) $(DEPFLAGS) -c $< -o $@
 
+# Shared libs (if you ever use SH_LIBS / USE_SHARED)
 $(SH_LIBS:.o=.so): %.so: %.c
-	$(CC) $(CFLAGS) $(DEBUG) -fpic -c $< -o $*.o
-	ld -shared -o $@ /usr/lib/crtbeginS.o $*.o /usr/lib/crtendS.o
-
-#depend:
-#	makedepend -m -w110 -- $(CFLAGS) -- $(SRCS)
-
-depend .depend:
-	$(CC) $(INCLUDES) $(CFLAGS) -MM $(SRCS) > .depend
+	@mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(DEBUG) -fpic -c $< -o $(OBJDIR)/$*.o
+	ld -shared -o $@ /usr/lib/crtbeginS.o $(OBJDIR)/$*.o /usr/lib/crtendS.o
 
 clean:
-	rm -f *.o *~ dms_new .depend
-	rm -f ships/*.a ships/*.o ships/*~ ships/.depend
+	rm -f *~ dms_new pfile
+	rm -rf $(OBJDIR)
 
 debug: $(PROGS)
 	cd ..; ./gdbdms
 
--include .depend
+# Auto-generated dependency files alongside objects
+DEPFILES := $(DMS_OBJS:.o=.d) $(PFILE_OBJS:.o=.d) $(SHARED_PFILE_OBJS:.o=.d)
+-include $(DEPFILES)
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
