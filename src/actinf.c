@@ -9010,11 +9010,24 @@ void do_zlist(P_char ch, char *argument, int cmd)
   arg_parser_result rc = parse_arguments(argument, defs, parsed);
   if (rc != ARG_PARSE_OK)
   {
-    wizlog(GET_LEVEL(ch), "%s: zlist parse error (%d): %s [arg='%s']",
-           GET_NAME(ch),
-           rc,
-           parsed.error ? parsed.error : "unknown error",
-           argument ? argument : "");
+    if (parsed.error.message && *parsed.error.message)
+    {
+      wizlog(GET_LEVEL(ch),
+             "%s: zlist parse error (%d) token %zu pos %zu: %s [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             parsed.error.token_index,
+             parsed.error.token_pos,
+             parsed.error.message,
+             argument ? argument : "");
+    }
+    else
+    {
+      wizlog(GET_LEVEL(ch), "%s: zlist parse error (%d): unknown error [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             argument ? argument : "");
+    }
     help();
     return;
   }
@@ -9128,11 +9141,24 @@ void do_rlist(P_char ch, char *argument, int cmd)
   arg_parser_result rc = parse_arguments(argument, defs, parsed);
   if (rc != ARG_PARSE_OK)
   {
-    wizlog(GET_LEVEL(ch), "%s: rlist parse error (%d): %s [arg='%s']",
-           GET_NAME(ch),
-           rc,
-           parsed.error ? parsed.error : "unknown error",
-           argument ? argument : "");
+    if (parsed.error.message && *parsed.error.message)
+    {
+      wizlog(GET_LEVEL(ch),
+             "%s: rlist parse error (%d) token %zu pos %zu: %s [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             parsed.error.token_index,
+             parsed.error.token_pos,
+             parsed.error.message,
+             argument ? argument : "");
+    }
+    else
+    {
+      wizlog(GET_LEVEL(ch), "%s: rlist parse error (%d): unknown error [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             argument ? argument : "");
+    }
     help();
     return;
   }
@@ -9233,11 +9259,24 @@ void do_mlist(P_char ch, char *argument, int cmd)
   arg_parser_result rc = parse_arguments(argument, defs, parsed);
   if (rc != ARG_PARSE_OK)
   {
-    wizlog(GET_LEVEL(ch), "%s: mlist parse error (%d): %s [arg='%s']",
-           GET_NAME(ch),
-           rc,
-           parsed.error ? parsed.error : "unknown error",
-           argument ? argument : "");
+    if (parsed.error.message && *parsed.error.message)
+    {
+      wizlog(GET_LEVEL(ch),
+             "%s: mlist parse error (%d) token %zu pos %zu: %s [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             parsed.error.token_index,
+             parsed.error.token_pos,
+             parsed.error.message,
+             argument ? argument : "");
+    }
+    else
+    {
+      wizlog(GET_LEVEL(ch), "%s: mlist parse error (%d): unknown error [arg='%s']",
+             GET_NAME(ch),
+             rc,
+             argument ? argument : "");
+    }
     help();
     return;
   }

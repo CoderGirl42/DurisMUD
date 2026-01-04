@@ -39,9 +39,11 @@ enum arg_match_status
 arg_parser_output::arg_parser_output()
     : items(NULL),
       count(0),
-      values(NULL),
-      error(NULL)
+      values(NULL)
 {
+  error.token_index = 0;
+  error.token_pos = 0;
+  error.message = NULL;
 }
 
 arg_parser_output::~arg_parser_output()
@@ -63,11 +65,13 @@ static void arg_set_error(arg_parser_output *out, const char *fmt, ...)
   vsnprintf(buf, sizeof(buf), fmt, args);
   va_end(args);
 
-  if (out->error)
+  if (out->error.message)
   {
-    free(out->error);
+    free(out->error.message);
   }
-  out->error = strdup(buf);
+  out->error.message = strdup(buf);
+  out->error.token_index = 0;
+  out->error.token_pos = 0;
 }
 
 static size_t arg_token_pos(const char *base, const char *token_start)
@@ -96,7 +100,13 @@ static void arg_set_error_at(arg_parser_output *out,
   vsnprintf(buf, sizeof(buf), fmt, args);
   va_end(args);
 
-  arg_set_error(out, "Token %zu (pos %zu): %s", token_index, token_pos, buf);
+  if (out->error.message)
+  {
+    free(out->error.message);
+  }
+  out->error.message = strdup(buf);
+  out->error.token_index = token_index;
+  out->error.token_pos = token_pos;
 }
 
 static void arg_release_values(arg_parser_output *out)
@@ -973,7 +983,9 @@ arg_parser_result parse_arguments(const char *argument,
   out.items = NULL;
   out.count = 0;
   out.values = NULL;
-  out.error = NULL;
+  out.error.message = NULL;
+  out.error.token_index = 0;
+  out.error.token_pos = 0;
 
   rc = arg_validate_list(list, &out);
   if (rc != ARG_PARSE_OK)
@@ -1920,11 +1932,13 @@ void free_parsed_arguments(arg_parser_output *out)
 
   arg_release_values(out);
 
-  if (out->error)
+  if (out->error.message)
   {
-    free(out->error);
-    out->error = NULL;
+    free(out->error.message);
+    out->error.message = NULL;
   }
+  out->error.token_index = 0;
+  out->error.token_pos = 0;
 
   out->items = NULL;
   out->count = 0;

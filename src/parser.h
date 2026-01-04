@@ -111,12 +111,19 @@ typedef struct arg_value
   } as;
 } arg_value;
 
+typedef struct arg_parser_error
+{
+  size_t token_index;
+  size_t token_pos;
+  char *message;
+} arg_parser_error;
+
 typedef struct arg_parser_output
 {
   const arg_def *items;
   size_t count;
   arg_value *values;
-  char *error;
+  arg_parser_error error;
   arg_parser_output();
   ~arg_parser_output();
   arg_parser_output(const arg_parser_output &) = delete;
