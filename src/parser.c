@@ -828,8 +828,140 @@ static int arg_match_bool(const arg_def *def,
   return ARG_MATCH_NO;
 }
 
+static arg_parser_result arg_match_token_value(const arg_def *def,
+                                               const char *token,
+                                               bool was_quoted,
+                                               bool force_case_sensitive,
+                                               arg_value *out_value,
+                                               arg_parser_output *out,
+                                               size_t token_index,
+                                               size_t token_pos,
+                                               bool *matched)
+{
+  char normalized[MAX_INPUT_LENGTH];
+  char regex_err[MAX_INPUT_LENGTH];
+  int match_status;
+
+  *matched = false;
+
+  switch (def->type)
+  {
+  case ARG_TYPE_STRING:
+    regex_err[0] = '\0';
+    match_status = arg_match_string(def,
+                                    token,
+                                    was_quoted,
+                                    force_case_sensitive,
+                                    normalized,
+                                    sizeof(normalized),
+                                    regex_err,
+                                    sizeof(regex_err));
+    if (match_status == ARG_MATCH_ERROR)
+    {
+      arg_set_error(out,
+                    "Invalid string pattern for %s: %s.",
+                    def->name,
+                    regex_err[0] ? regex_err : "Invalid pattern");
+      return ARG_PARSE_INVALID_LIST;
+    }
+    if (match_status == ARG_MATCH_NO)
+    {
+      return ARG_PARSE_OK;
+    }
+
+    out_value->as.string = strdup(normalized);
+    if (!out_value->as.string)
+    {
+      arg_set_error(out, "Out of memory.");
+      return ARG_PARSE_NO_MEMORY;
+    }
+
+    out_value->present = true;
+    *matched = true;
+    return ARG_PARSE_OK;
+
+  case ARG_TYPE_INT:
+    match_status = arg_match_int(def, token, &out_value->as.integer);
+    if (match_status == ARG_MATCH_ERROR)
+    {
+      arg_set_error(out, "Invalid integer range for %s.", def->name);
+      return ARG_PARSE_INVALID_LIST;
+    }
+    if (match_status == ARG_MATCH_NO)
+    {
+      return ARG_PARSE_OK;
+    }
+
+    out_value->present = true;
+    *matched = true;
+    return ARG_PARSE_OK;
+
+  case ARG_TYPE_FLOAT:
+    match_status = arg_match_float(def, token, &out_value->as.floating);
+    if (match_status == ARG_MATCH_ERROR)
+    {
+      arg_set_error(out, "Invalid float range for %s.", def->name);
+      return ARG_PARSE_INVALID_LIST;
+    }
+    if (match_status == ARG_MATCH_NO)
+    {
+      return ARG_PARSE_OK;
+    }
+
+    out_value->present = true;
+    *matched = true;
+    return ARG_PARSE_OK;
+
+  case ARG_TYPE_BOOL:
+    match_status = arg_match_bool(def, token, force_case_sensitive, &out_value->as.boolean);
+    if (match_status == ARG_MATCH_AMBIGUOUS)
+    {
+      char suggestions[MAX_INPUT_LENGTH];
+
+      arg_bool_suggestions(def, token, force_case_sensitive, suggestions, sizeof(suggestions));
+      if (suggestions[0])
+      {
+        arg_set_error_at(out,
+                         token_index,
+                         token_pos,
+                         "Ambiguous boolean for %s: %s. Did you mean: %s?",
+                         def->name,
+                         token,
+                         suggestions);
+      }
+      else
+      {
+        arg_set_error_at(out,
+                         token_index,
+                         token_pos,
+                         "Ambiguous boolean for %s: %s.",
+                         def->name,
+                         token);
+      }
+      return ARG_PARSE_INVALID_VALUE;
+    }
+    if (match_status == ARG_MATCH_ERROR)
+    {
+      arg_set_error(out, "Invalid boolean list for %s.", def->name);
+      return ARG_PARSE_INVALID_LIST;
+    }
+    if (match_status == ARG_MATCH_NO)
+    {
+      return ARG_PARSE_OK;
+    }
+
+    out_value->present = true;
+    *matched = true;
+    return ARG_PARSE_OK;
+
+  default:
+    arg_set_error(out, "Unknown argument type for %s.", def->name);
+    return ARG_PARSE_INVALID_LIST;
+  }
+}
+
 static arg_parser_result arg_validate_list(const arg_list *list,
-                                        arg_parser_output *out)
+                                           arg_parser_output *out)
 {
   size_t i;
 
@@ -961,9 +1093,9 @@ static arg_parser_result arg_validate_list(const arg_list *list,
 }
 
 arg_parser_result parse_arguments(const char *argument,
-                               const arg_list *list,
-                               const arg_parser_options *options,
-                               arg_parser_output &out)
+                                  const arg_list *list,
+                                  const arg_parser_options *options,
+                                  arg_parser_output &out)
 {
   const char *cursor = argument ? argument : "";
   const char *base = cursor;
@@ -1176,10 +1308,6 @@ arg_parser_result parse_arguments(const char *argument,
 
       for (t = 0; t < token_count; t++)
       {
-        char normalized[MAX_INPUT_LENGTH];
-        char regex_err[MAX_INPUT_LENGTH];
-        int match_status;
-
         if (used[t])
         {
           continue;
@@ -1194,162 +1322,31 @@ arg_parser_result parse_arguments(const char *argument,
           }
         }
 
-        switch (def->type)
+        bool token_matched = false;
+        arg_parser_result match_rc = arg_match_token_value(def,
+                                                           tokens[t],
+                                                           token_quotes[t] != '\0',
+                                                           force_case_sensitive,
+                                                           &out.values[i],
+                                                           &out,
+                                                           t + 1,
+                                                           token_positions[t],
+                                                           &token_matched);
+
+        if (match_rc != ARG_PARSE_OK)
         {
-        case ARG_TYPE_STRING:
-        {
-          regex_err[0] = '\0';
-          match_status = arg_match_string(def,
-                                          tokens[t],
-                                          token_quotes[t] != '\0',
-                                          force_case_sensitive,
-                                          normalized,
-                                          sizeof(normalized),
-                                          regex_err,
-                                          sizeof(regex_err));
-          if (match_status == ARG_MATCH_ERROR)
-          {
-            arg_set_error(&out,
-                          "Invalid string pattern for %s: %s.",
-                          def->name,
-                          regex_err[0] ? regex_err : "Invalid pattern");
-            rc_random = ARG_PARSE_INVALID_LIST;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_AMBIGUOUS)
-          {
-            size_t token_index = t + 1;
-            size_t token_pos = token_positions[t];
-            arg_set_error_at(&out,
-                             token_index,
-                             token_pos,
-                             "Ambiguous abbreviation for %s: %s.",
-                             def->name,
-                             tokens[t]);
-            rc_random = ARG_PARSE_INVALID_VALUE;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_NO)
-          {
-            continue;
-          }
-
-          out.values[i].present = true;
-          out.values[i].as.string = strdup(normalized);
-          if (!out.values[i].as.string)
-          {
-            arg_set_error(&out, "Out of memory.");
-            rc_random = ARG_PARSE_NO_MEMORY;
-            goto random_cleanup;
-          }
-
-          used[t] = true;
-          matched = true;
-          break;
-        }
-
-        case ARG_TYPE_INT:
-        {
-          match_status = arg_match_int(def, tokens[t], &out.values[i].as.integer);
-
-          if (match_status == ARG_MATCH_ERROR)
-          {
-            arg_set_error(&out, "Invalid integer range for %s.", def->name);
-            rc_random = ARG_PARSE_INVALID_LIST;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_NO)
-          {
-            continue;
-          }
-
-          out.values[i].present = true;
-          used[t] = true;
-          matched = true;
-          break;
-        }
-
-        case ARG_TYPE_FLOAT:
-        {
-          match_status = arg_match_float(def, tokens[t], &out.values[i].as.floating);
-
-          if (match_status == ARG_MATCH_ERROR)
-          {
-            arg_set_error(&out, "Invalid float range for %s.", def->name);
-            rc_random = ARG_PARSE_INVALID_LIST;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_NO)
-          {
-            continue;
-          }
-
-          out.values[i].present = true;
-          used[t] = true;
-          matched = true;
-          break;
-        }
-
-        case ARG_TYPE_BOOL:
-        {
-          match_status = arg_match_bool(def, tokens[t], force_case_sensitive, &out.values[i].as.boolean);
-
-          if (match_status == ARG_MATCH_AMBIGUOUS)
-          {
-            char suggestions[MAX_INPUT_LENGTH];
-            size_t token_index = t + 1;
-            size_t token_pos = token_positions[t];
-
-            arg_bool_suggestions(def, tokens[t], force_case_sensitive, suggestions, sizeof(suggestions));
-            if (suggestions[0])
-            {
-              arg_set_error_at(&out,
-                               token_index,
-                               token_pos,
-                               "Ambiguous boolean for %s: %s. Did you mean: %s?",
-                               def->name,
-                               tokens[t],
-                               suggestions);
-            }
-            else
-            {
-              arg_set_error_at(&out,
-                               token_index,
-                               token_pos,
-                               "Ambiguous boolean for %s: %s.",
-                               def->name,
-                               tokens[t]);
-            }
-            rc_random = ARG_PARSE_INVALID_VALUE;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_ERROR)
-          {
-            arg_set_error(&out, "Invalid boolean list for %s.", def->name);
-            rc_random = ARG_PARSE_INVALID_LIST;
-            goto random_cleanup;
-          }
-          if (match_status == ARG_MATCH_NO)
-          {
-            continue;
-          }
-
-          out.values[i].present = true;
-          used[t] = true;
-          matched = true;
-          break;
-        }
-
-        default:
-          arg_set_error(&out, "Unknown argument type for %s.", def->name);
-          rc_random = ARG_PARSE_INVALID_LIST;
+          rc_random = match_rc;
           goto random_cleanup;
         }
 
-        if (matched)
+        if (!token_matched)
         {
-          break;
+          continue;
         }
+
+        used[t] = true;
+        matched = true;
+        break;
       }
 
       if (!matched)
@@ -1452,8 +1449,6 @@ arg_parser_result parse_arguments(const char *argument,
     const char *next = NULL;
     const char *token_start = NULL;
     char token[MAX_INPUT_LENGTH];
-    char normalized[MAX_INPUT_LENGTH];
-    char regex_err[MAX_INPUT_LENGTH];
     char quote_char = '\0';
     enum arg_token_error token_err = ARG_TOKEN_ERR_NONE;
     int status;
@@ -1523,199 +1518,40 @@ arg_parser_result parse_arguments(const char *argument,
       continue;
     }
 
-    switch (def->type)
+    bool token_matched = false;
+    arg_parser_result match_rc = arg_match_token_value(def,
+                                                       token,
+                                                       quote_char != '\0',
+                                                       force_case_sensitive,
+                                                       &out.values[i],
+                                                       &out,
+                                                       current_index,
+                                                       token_pos,
+                                                       &token_matched);
+    if (match_rc != ARG_PARSE_OK)
     {
-    case ARG_TYPE_STRING:
-    {
-      int match_status;
+      arg_release_values(&out);
+      return match_rc;
+    }
 
-      regex_err[0] = '\0';
-      match_status = arg_match_string(def,
-                                      token,
-                                      quote_char != '\0',
-                                      force_case_sensitive,
-                                      normalized,
-                                      sizeof(normalized),
-                                      regex_err,
-                                      sizeof(regex_err));
-      if (match_status == ARG_MATCH_ERROR)
-      {
-        arg_set_error(&out,
-                      "Invalid string pattern for %s: %s.",
-                      def->name,
-                      regex_err[0] ? regex_err : "Invalid pattern");
-        arg_release_values(&out);
-        return ARG_PARSE_INVALID_LIST;
-      }
-      if (match_status == ARG_MATCH_AMBIGUOUS)
+    if (!token_matched)
+    {
+      if (arg_option_required(def->options))
       {
         arg_set_error_at(&out,
                          current_index,
                          token_pos,
-                         "Ambiguous abbreviation for %s: %s.",
+                         "Invalid value for %s: %s.",
                          def->name,
                          token);
         arg_release_values(&out);
         return ARG_PARSE_INVALID_VALUE;
       }
-      if (match_status == ARG_MATCH_NO)
-      {
-        if (arg_option_required(def->options))
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Invalid value for %s: %s.",
-                           def->name,
-                           token);
-          arg_release_values(&out);
-          return ARG_PARSE_INVALID_VALUE;
-        }
-        continue;
-      }
-
-      out.values[i].present = true;
-      out.values[i].as.string = strdup(normalized);
-      if (!out.values[i].as.string)
-      {
-        arg_set_error(&out, "Out of memory.");
-        arg_release_values(&out);
-        return ARG_PARSE_NO_MEMORY;
-      }
-
-      cursor = next;
-      token_index++;
-      break;
+      continue;
     }
 
-    case ARG_TYPE_INT:
-    {
-      int match_status = arg_match_int(def, token, &out.values[i].as.integer);
-
-      if (match_status == ARG_MATCH_ERROR)
-      {
-        arg_set_error(&out, "Invalid integer range for %s.", def->name);
-        arg_release_values(&out);
-        return ARG_PARSE_INVALID_LIST;
-      }
-      if (match_status == ARG_MATCH_NO)
-      {
-        if (arg_option_required(def->options))
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Invalid value for %s: %s.",
-                           def->name,
-                           token);
-          arg_release_values(&out);
-          return ARG_PARSE_INVALID_VALUE;
-        }
-        continue;
-      }
-
-      out.values[i].present = true;
-      cursor = next;
-      token_index++;
-      break;
-    }
-
-    case ARG_TYPE_FLOAT:
-    {
-      int match_status = arg_match_float(def, token, &out.values[i].as.floating);
-
-      if (match_status == ARG_MATCH_ERROR)
-      {
-        arg_set_error(&out, "Invalid float range for %s.", def->name);
-        arg_release_values(&out);
-        return ARG_PARSE_INVALID_LIST;
-      }
-      if (match_status == ARG_MATCH_NO)
-      {
-        if (arg_option_required(def->options))
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Invalid value for %s: %s.",
-                           def->name,
-                           token);
-          arg_release_values(&out);
-          return ARG_PARSE_INVALID_VALUE;
-        }
-        continue;
-      }
-
-      out.values[i].present = true;
-      cursor = next;
-      token_index++;
-      break;
-    }
-
-    case ARG_TYPE_BOOL:
-    {
-      int match_status = arg_match_bool(def, token, force_case_sensitive, &out.values[i].as.boolean);
-
-      if (match_status == ARG_MATCH_AMBIGUOUS)
-      {
-        char suggestions[MAX_INPUT_LENGTH];
-
-        arg_bool_suggestions(def, token, force_case_sensitive, suggestions, sizeof(suggestions));
-        if (suggestions[0])
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Ambiguous boolean for %s: %s. Did you mean: %s?",
-                           def->name,
-                           token,
-                           suggestions);
-        }
-        else
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Ambiguous boolean for %s: %s.",
-                           def->name,
-                           token);
-        }
-        arg_release_values(&out);
-        return ARG_PARSE_INVALID_VALUE;
-      }
-      if (match_status == ARG_MATCH_ERROR)
-      {
-        arg_set_error(&out, "Invalid boolean list for %s.", def->name);
-        arg_release_values(&out);
-        return ARG_PARSE_INVALID_LIST;
-      }
-      if (match_status == ARG_MATCH_NO)
-      {
-        if (arg_option_required(def->options))
-        {
-          arg_set_error_at(&out,
-                           current_index,
-                           token_pos,
-                           "Invalid value for %s: %s.",
-                           def->name,
-                           token);
-          arg_release_values(&out);
-          return ARG_PARSE_INVALID_VALUE;
-        }
-        continue;
-      }
-
-      out.values[i].present = true;
-      cursor = next;
-      token_index++;
-      break;
-    }
-
-    default:
-      arg_set_error(&out, "Unknown argument type for %s.", def->name);
-      arg_release_values(&out);
-      return ARG_PARSE_INVALID_LIST;
-    }
+    cursor = next;
+    token_index++;
   }
 
   if (list && !allow_trailing)
@@ -1808,8 +1644,8 @@ static const arg_value *arg_find_value(const arg_parser_output *out,
 }
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              const char **value)
+                                 const arg_parser_output &parsed,
+                                 const char **value)
 {
   const arg_value *found = arg_find_value(&parsed, name);
 
@@ -1837,8 +1673,8 @@ arg_parser_result parse_argument(const char *name,
 }
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              int *value)
+                                 const arg_parser_output &parsed,
+                                 int *value)
 {
   const arg_value *found = arg_find_value(&parsed, name);
 
@@ -1866,8 +1702,8 @@ arg_parser_result parse_argument(const char *name,
 }
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              bool *value)
+                                 const arg_parser_output &parsed,
+                                 bool *value)
 {
   const arg_value *found = arg_find_value(&parsed, name);
 
@@ -1895,8 +1731,8 @@ arg_parser_result parse_argument(const char *name,
 }
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              float *value)
+                                 const arg_parser_output &parsed,
+                                 float *value)
 {
   const arg_value *found = arg_find_value(&parsed, name);
 
@@ -1943,3 +1779,406 @@ void free_parsed_arguments(arg_parser_output *out)
   out->items = NULL;
   out->count = 0;
 }
+
+#define PARSER_UNIT_TEST
+#ifdef PARSER_UNIT_TEST
+#include <assert.h>
+
+static arg_parser_result arg_parse_with_list(const char *argument,
+                                             const arg_def *defs,
+                                             size_t count,
+                                             const arg_parser_options *options,
+                                             arg_parser_output &out)
+{
+  const arg_list list = {defs, count};
+  return parse_arguments(argument, &list, options, out);
+}
+
+static void arg_expect_result(const char *argument,
+                              const arg_def *defs,
+                              size_t count,
+                              const arg_parser_options *options,
+                              arg_parser_result expected)
+{
+  arg_parser_output parsed;
+  arg_parser_result rc = arg_parse_with_list(argument, defs, count, options, parsed);
+  assert(rc == expected);
+}
+
+static void parser_unit_test_basic_required_optional(void)
+{
+  const arg_def defs[] = {
+      define_argument("cmd", ARG_PATTERN_WORD, ARG_OPT_REQUIRED),
+      define_argument("count", 1, 10, ARG_OPT_OPTIONAL),
+      define_argument("flag", ARG_OPT_OPTIONAL),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("foo 5 yes", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  const char *cmd = NULL;
+  int count = 0;
+  bool flag = false;
+  assert(parse_argument("cmd", parsed, &cmd) == ARG_PARSE_OK);
+  assert(strcmp(cmd, "foo") == 0);
+  assert(parse_argument("count", parsed, &count) == ARG_PARSE_OK);
+  assert(count == 5);
+  assert(parse_argument("flag", parsed, &flag) == ARG_PARSE_OK);
+  assert(flag == true);
+}
+
+static void parser_unit_test_required_only(void)
+{
+  const arg_def defs[] = {
+      define_argument("cmd", ARG_PATTERN_WORD, ARG_OPT_REQUIRED),
+      define_argument("count", 1, 10, ARG_OPT_OPTIONAL),
+      define_argument("flag", ARG_OPT_OPTIONAL),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("foo", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  const char *cmd = NULL;
+  assert(parse_argument("cmd", parsed, &cmd) == ARG_PARSE_OK);
+  assert(strcmp(cmd, "foo") == 0);
+  assert(parse_argument("count", parsed, (int *)NULL) == ARG_PARSE_MISSING);
+  assert(parse_argument("flag", parsed, (bool *)NULL) == ARG_PARSE_MISSING);
+}
+
+static void parser_unit_test_invalid_literal_string(void)
+{
+  const arg_def defs[] = {
+      define_argument("cmd", "foo", ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("bar", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_missing_required(void)
+{
+  const arg_def defs[] = {
+      define_argument("count", 0, 3, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("", defs, 1, &opts, ARG_PARSE_MISSING_REQUIRED);
+}
+
+static void parser_unit_test_extra_argument(void)
+{
+  const arg_def defs[] = {
+      define_argument("count", 0, 10, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("1 2", defs, 1, &opts, ARG_PARSE_EXTRA_ARGUMENT);
+}
+
+static void parser_unit_test_unterminated_quote_double(void)
+{
+  const arg_def defs[] = {
+      define_argument("msg", ARG_PATTERN_WORD, ARG_OPT_REQUIRED | ARG_OPT_QUOTE_DOUBLE),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("\"foo", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_quoted_double_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("msg", ARG_PATTERN_WORD, ARG_OPT_REQUIRED | ARG_OPT_QUOTE_DOUBLE),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("\"foo bar\"", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  const char *msg = NULL;
+  assert(parse_argument("msg", parsed, &msg) == ARG_PARSE_OK);
+  assert(strcmp(msg, "foo bar") == 0);
+}
+
+static void parser_unit_test_quoted_single_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("msg", ARG_PATTERN_WORD, ARG_OPT_REQUIRED | ARG_OPT_QUOTE_SINGLE),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("'foo bar'", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  const char *msg = NULL;
+  assert(parse_argument("msg", parsed, &msg) == ARG_PARSE_OK);
+  assert(strcmp(msg, "foo bar") == 0);
+}
+
+static void parser_unit_test_junk_after_quote(void)
+{
+  const arg_def defs[] = {
+      define_argument("msg", ARG_PATTERN_WORD, ARG_OPT_REQUIRED | ARG_OPT_QUOTE_DOUBLE),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("\"foo\"bar", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_case_insensitive_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("word", "Foo", ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("foo", defs, 1, &opts, ARG_PARSE_OK);
+}
+
+static void parser_unit_test_case_sensitive_invalid(void)
+{
+  const arg_def defs[] = {
+      define_argument("word", "Foo", ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_CASE_SENSITIVE;
+  opts.delimiters = NULL;
+  arg_expect_result("foo", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_abbrev_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("dir", "north", ARG_OPT_REQUIRED | ARG_OPT_ABBREV),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("n", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  const char *dir = NULL;
+  assert(parse_argument("dir", parsed, &dir) == ARG_PARSE_OK);
+  assert(strcmp(dir, "north") == 0);
+}
+
+static void parser_unit_test_abbrev_invalid(void)
+{
+  const arg_def defs[] = {
+      define_argument("flag", ARG_OPT_REQUIRED | ARG_OPT_ABBREV),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("o", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_float_out_of_range(void)
+{
+  const arg_def defs[] = {
+      define_argument("ratio", 0.0f, 1.0f, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("1.5", defs, 1, &opts, ARG_PARSE_INVALID_VALUE);
+}
+
+static void parser_unit_test_random_order_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("num", 0, 10, ARG_OPT_REQUIRED),
+      define_argument("flag", ARG_OPT_REQUIRED),
+      define_argument("word", ARG_PATTERN_WORD, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_ALLOW_RANDOM_ORDER;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("yes 3 foo", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  int num = 0;
+  bool flag = false;
+  const char *word = NULL;
+  assert(parse_argument("num", parsed, &num) == ARG_PARSE_OK);
+  assert(parse_argument("flag", parsed, &flag) == ARG_PARSE_OK);
+  assert(parse_argument("word", parsed, &word) == ARG_PARSE_OK);
+  assert(num == 3);
+  assert(flag == true);
+  assert(strcmp(word, "foo") == 0);
+}
+
+static void parser_unit_test_random_order_extra_argument(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_REQUIRED),
+      define_argument("b", 0, 10, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_ALLOW_RANDOM_ORDER;
+  opts.delimiters = NULL;
+  arg_expect_result("1 2 3", defs, 2, &opts, ARG_PARSE_EXTRA_ARGUMENT);
+}
+
+static void parser_unit_test_depends_on_prev_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_OPTIONAL),
+      define_argument("b", ARG_PATTERN_WORD, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("5 foo", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  int a = 0;
+  const char *b = NULL;
+  assert(parse_argument("a", parsed, &a) == ARG_PARSE_OK);
+  assert(parse_argument("b", parsed, &b) == ARG_PARSE_OK);
+  assert(a == 5);
+  assert(strcmp(b, "foo") == 0);
+}
+
+static void parser_unit_test_depends_on_prev_invalid(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_OPTIONAL),
+      define_argument("b", ARG_PATTERN_WORD, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("foo", defs, 2, &opts, ARG_PARSE_EXTRA_ARGUMENT);
+}
+
+static void parser_unit_test_delims_only_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_REQUIRED),
+      define_argument("b", 0, 10, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_DELIMS_ONLY;
+  opts.delimiters = ",";
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("1,2", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  int a = 0;
+  int b = 0;
+  assert(parse_argument("a", parsed, &a) == ARG_PARSE_OK);
+  assert(parse_argument("b", parsed, &b) == ARG_PARSE_OK);
+  assert(a == 1);
+  assert(b == 2);
+}
+
+static void parser_unit_test_delims_only_missing_set(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_DELIMS_ONLY;
+  opts.delimiters = NULL;
+  arg_expect_result("1", defs, 1, &opts, ARG_PARSE_INVALID_LIST);
+}
+
+static void parser_unit_test_allow_trailing_junk_ok(void)
+{
+  const arg_def defs[] = {
+      define_argument("a", 0, 10, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_ALLOW_TRAILING_JUNK;
+  opts.delimiters = NULL;
+
+  arg_parser_output parsed;
+  arg_parser_result rc = parse_arguments("1 extra", defs, &opts, parsed);
+  assert(rc == ARG_PARSE_OK);
+
+  int a = 0;
+  assert(parse_argument("a", parsed, &a) == ARG_PARSE_OK);
+  assert(a == 1);
+}
+
+static void parser_unit_test_invalid_list_required_optional(void)
+{
+  const arg_def defs[] = {
+      define_argument("bad", ARG_PATTERN_WORD, ARG_OPT_REQUIRED | ARG_OPT_OPTIONAL),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result("foo", defs, 1, &opts, ARG_PARSE_INVALID_LIST);
+}
+
+static void parser_unit_test_argument_too_long(void)
+{
+  char long_token[MAX_INPUT_LENGTH + 1];
+  memset(long_token, 'a', sizeof(long_token) - 1);
+  long_token[sizeof(long_token) - 1] = '\0';
+
+  const arg_def defs[] = {
+      define_argument("long", ARG_PATTERN_WORD, ARG_OPT_REQUIRED),
+  };
+  arg_parser_options opts;
+  opts.flags = ARG_PARSER_OPT_NONE;
+  opts.delimiters = NULL;
+  arg_expect_result(long_token, defs, 1, &opts, ARG_PARSE_ARGUMENT_TOO_LONG);
+}
+
+void parser_unit_test(void)
+{
+  parser_unit_test_basic_required_optional();
+  parser_unit_test_required_only();
+  parser_unit_test_invalid_literal_string();
+  parser_unit_test_missing_required();
+  parser_unit_test_extra_argument();
+  parser_unit_test_unterminated_quote_double();
+  parser_unit_test_quoted_double_ok();
+  parser_unit_test_quoted_single_ok();
+  parser_unit_test_junk_after_quote();
+  parser_unit_test_case_insensitive_ok();
+  parser_unit_test_case_sensitive_invalid();
+  parser_unit_test_abbrev_ok();
+  parser_unit_test_abbrev_invalid();
+  parser_unit_test_float_out_of_range();
+  parser_unit_test_random_order_ok();
+  parser_unit_test_random_order_extra_argument();
+  parser_unit_test_depends_on_prev_ok();
+  parser_unit_test_depends_on_prev_invalid();
+  parser_unit_test_delims_only_ok();
+  parser_unit_test_delims_only_missing_set();
+  parser_unit_test_allow_trailing_junk_ok();
+  parser_unit_test_invalid_list_required_optional();
+  parser_unit_test_argument_too_long();
+}
+#endif
