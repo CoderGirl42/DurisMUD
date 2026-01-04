@@ -122,6 +122,7 @@ OBJS =  $(SHIP_OBJS) \
 				 hardcore.o \
 				 innates.o \
 				 interp.o \
+				 parser.o \
 				 justice.o \
 				 kick.o \
 				 language.o \

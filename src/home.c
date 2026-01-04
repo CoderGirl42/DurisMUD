@@ -13,45 +13,44 @@ This copy is for the exclusive use of Duris: Land of the Bloodlust
 void load_homes();
 void save_homes();
 void load_home(P_char ch);
-void save_home(home_data* home);
+void save_home(home_data *home);
 
 void construct_home(P_char ch);
-void construct_plot(P_char ch, home_data* home, int plotX, int plotY);
+void construct_plot(P_char ch, home_data *home, int plotX, int plotY);
 
 extern void wizlog(int level, const char *format, ...);
 
 void load_homes()
 {
-
 }
 
 void save_homes()
 {
-    home_data* home = home_list;
+    home_data *home = home_list;
 
-    while(home != NULL) 
+    while (home != NULL)
     {
         save_home(home);
         home = home->next_home;
+
+        // save as json file per home
     }
 }
 
-void save_home(home_data* home)
+void save_home(home_data *home)
 {
-    if(home)
+    if (home)
     {
-
     }
 }
 
 void load_home(P_char ch)
 {
-
 }
 
 void construct_home(P_char ch)
 {
-    if(!HAS_HOME(ch))
+    if (!HAS_HOME(ch))
     {
         char buf[MAX_STRING_LENGTH];
         // is allowed to construct home
@@ -61,19 +60,24 @@ void construct_home(P_char ch)
         // is current room allowed
 
         // not in combat
-        if(IS_CASTING(ch) || GET_OPPONENT(ch)) return;
+        if (IS_CASTING(ch) || GET_OPPONENT(ch))
+            return;
 
-        home_data* new_home = (home_data*)malloc(sizeof(home_data));
+        home_data *new_home = (home_data *)malloc(sizeof(home_data));
         new_home->owner = ch;
         new_home->exit_to = ch->in_room;
         new_home->next_home = NULL;
 
         snprintf(buf, MAX_STRING_LENGTH, "House of %s", GET_NAME(ch));
 
-        new_home->zone = (zone_data*)malloc(sizeof(zone_data));
-        new_home->zone->number = -1; // TODO: Get a valid zone number
-        new_home->zone->name = buf;
-        new_home->zone->filename = GET_NAME(ch); // TODO: make sure this name is valid.
+        new_home->zone = (zone_data *)malloc(sizeof(zone_data));
+
+        // Find next available zone number
+        int new_zone_num = 0;
+
+        new_home->zone->number = new_zone_num; // TODO: Get a valid zone number
+        new_home->zone->name = strdup(buf);
+        new_home->zone->filename = strdup(GET_NAME(ch)); // TODO: make sure this name is valid.
         new_home->zone->mapx = PLOT_SIZE * MAX_PLOTS;
         new_home->zone->mapy = PLOT_SIZE * MAX_PLOTS;
         new_home->zone->lifespan_min = 30;
@@ -103,12 +107,12 @@ void construct_home(P_char ch)
         save_home(new_home);
 
         // link home in home list
-        if(home_list) 
+        if (home_list)
         {
             last_home->next_home = new_home;
             last_home = new_home;
         }
-        else 
+        else
         {
             home_list = new_home;
             last_home = new_home;
@@ -118,31 +122,30 @@ void construct_home(P_char ch)
     }
 }
 
-void construct_plot(P_char ch, home_data* home, int plotX, int plotY)
+void construct_plot(P_char ch, home_data *home, int plotX, int plotY)
 {
     // owns home?
-    if(HAS_HOME(ch) && home)
+    if (HAS_HOME(ch) && home)
     {
         // can player build?
 
         // is plot free
-        if (plotX >= MAX_PLOTS || plotY >= MAX_PLOTS || plotX < 0 || plotY < 0) 
+        if (plotX >= MAX_PLOTS || plotY >= MAX_PLOTS || plotX < 0 || plotY < 0)
         {
             wizlog(MINLVLIMMORTAL, "Home plot was out of bounds: %s, (%d/%d)", GET_NAME(ch), plotX, plotY);
             return;
         }
-        
+
         int plotIndex = plotY * MAX_PLOTS + plotX; // row-major
 
         // create plot
-        if(!home->plots[plotIndex])
+        if (!home->plots[plotIndex])
         {
-            home_plot_data* new_plot = (home_plot_data*)malloc(sizeof(home_plot_data));
+            home_plot_data *new_plot = (home_plot_data *)malloc(sizeof(home_plot_data));
 
             // create rooms
 
             home->plots[plotIndex] = new_plot;
         }
     }
-    
 }

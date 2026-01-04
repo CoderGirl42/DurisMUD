@@ -25,6 +25,7 @@ using namespace std;
 #include "events.h"
 #include "objmisc.h"
 #include "interp.h"
+#include "parser.h"
 #include "utils.h"
 #include "justice.h"
 #include "prototypes.h"
@@ -8975,6 +8976,8 @@ void do_zlist(P_char ch, char *argument, int cmd)
 {
   char buf[MAX_STRING_LENGTH];
   int i;
+  bool haveRange = false;
+  int zmin = INT_MIN, zmax = INT_MAX;
 
   if (IS_NPC(ch))
   {
@@ -8986,6 +8989,45 @@ void do_zlist(P_char ch, char *argument, int cmd)
     send_to_char("&+WNews file is to long, please tog page on, to read it\n", ch);
     return;
   }
+
+  auto help = [&]()
+  {
+    send_to_char(
+        "&+WUsage:&n\r\n"
+        "  zlist\r\n"
+        "  zlist ?\r\n"
+        "  zlist [<zoneFrom> <zoneTo>]\r\n",
+        ch);
+  };
+
+  const arg_def defs[] = {
+      define_argument("help", "\\?|help", ARG_OPT_OPTIONAL),
+      define_argument("zmin", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL),
+      define_argument("zmax", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
+  };
+
+  arg_parser_output parsed;
+  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
+  {
+    help();
+    return;
+  }
+
+  const char *help_token = NULL;
+  if (parse_argument("help", parsed, &help_token) == ARG_PARSE_OK)
+  {
+    help();
+    return;
+  }
+
+  if (parse_argument("zmin", parsed, &zmin) == ARG_PARSE_OK)
+    haveRange = true;
+
+  if (parse_argument("zmax", parsed, &zmax) != ARG_PARSE_OK)
+    zmax = zmin;
+
+  if (haveRange && zmin > zmax)
+    std::swap(zmin, zmax);
 
   // Column widths
   static constexpr int W_NUM = 7;
@@ -9011,6 +9053,8 @@ void do_zlist(P_char ch, char *argument, int cmd)
   for (i = 0; i <= top_of_zone_table; i++)
   {
     const zone_data &zone = zone_table[i];
+    if (haveRange && (zone.number < zmin || zone.number > zmax))
+      continue;
     // Use precision to TRUNCATE to column width so it stays fixed.
     // %-*.*s => left align, width W, print at most W chars.
     snprintf(buf, MAX_STRING_LENGTH,
@@ -9037,12 +9081,9 @@ void do_hlist(P_char ch, char *argument, int cmd)
 
 void do_rlist(P_char ch, char *argument, int cmd)
 {
-  std::vector<std::string> t;
-  char tmp[MAX_INPUT_LENGTH];
   bool haveZone = false, haveRange = false;
   int zone = -1;
   int vmin = INT_MIN, vmax = INT_MAX;
-  size_t i = 0;
   char buf[MAX_STRING_LENGTH];
   static constexpr int W_NUM = 7;
   static constexpr int W_NAME = 40;
@@ -9057,73 +9098,48 @@ void do_rlist(P_char ch, char *argument, int cmd)
     return;
   }
 
-  for (; argument && *argument;)
-  {
-    argument = one_argument(argument, tmp);
-    if (*tmp)
-      t.emplace_back(tmp);
-  }
-
   auto help = [&]()
   {
     send_to_char(
         "&+WUsage:&n\r\n"
         "  rlist\r\n"
         "  rlist ?\r\n"
-        "  rlist zone <zone#>\r\n"
-        "  rlist <vnumFrom> <vnumTo>\r\n"
-        "  rlist zone <zone#> <vnumFrom> <vnumTo>\r\n",
+        "  rlist [zone <zone#>]\r\n"
+        "  rlist [<vnumFrom> <vnumTo>]\r\n"
+        "  rlist [zone <zone#>] [<vnumFrom> <vnumTo>]\r\n",
         ch);
   };
 
-  if (!t.empty() && (t[0] == "?" || t[0] == "help"))
+  const arg_def defs[] = {
+      define_argument("help", "\\?|help", ARG_OPT_OPTIONAL),
+      define_argument("zone_kw", "zone", ARG_OPT_OPTIONAL | ARG_OPT_ABBREV),
+      define_argument("zone", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_REQUIRED | ARG_OPT_DEPENDS_ON_PREV),
+      define_argument("vmin", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL),
+      define_argument("vmax", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
+  };
+
+  arg_parser_output parsed;
+  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
   {
     help();
     return;
   }
 
-  if (i < t.size() && is_abbrev(t[i].c_str(), "zone"))
+  const char *help_token = NULL;
+  if (parse_argument("help", parsed, &help_token) == ARG_PARSE_OK)
   {
+    help();
+    return;
+  }
+
+  if (parse_argument("zone", parsed, &zone) == ARG_PARSE_OK)
     haveZone = true;
-    if (++i >= t.size() || !is_number(const_cast<char *>(t[i].c_str())))
-    {
-      help();
-      return;
-    }
-    zone = atoi(const_cast<char *>(t[i].c_str()));
-    ++i;
-  }
 
-  if (i < t.size())
-  {
-    if (!is_number(const_cast<char *>(t[i].c_str())))
-    {
-      help();
-      return;
-    }
+  if (parse_argument("vmin", parsed, &vmin) == ARG_PARSE_OK)
     haveRange = true;
-    vmin = atoi(t[i].c_str());
-    if (++i < t.size())
-    {
-      if (!is_number(const_cast<char *>(t[i].c_str())))
-      {
-        help();
-        return;
-      }
-      vmax = atoi(t[i].c_str());
-      ++i;
-    }
-    else
-    {
-      vmax = vmin;
-    }
-  }
 
-  if (i != t.size())
-  {
-    help();
-    return;
-  } // extra junk args
+  if (parse_argument("vmax", parsed, &vmax) != ARG_PARSE_OK)
+    vmax = vmin;
 
   if (haveRange && vmin > vmax)
     std::swap(vmin, vmax);
@@ -9168,10 +9184,7 @@ void do_olist(P_char ch, char *argument, int cmd)
 
 void do_mlist(P_char ch, char *argument, int cmd)
 {
-  std::vector<std::string> t;
-  char tmp[MAX_INPUT_LENGTH];
   bool haveRange = false;
-  int zone = -1;
   int vmin = INT_MIN, vmax = INT_MAX;
   size_t i = 0;
   char buf[MAX_STRING_LENGTH];
@@ -9188,59 +9201,41 @@ void do_mlist(P_char ch, char *argument, int cmd)
     return;
   }
 
-  for (; argument && *argument;)
-  {
-    argument = one_argument(argument, tmp);
-    if (*tmp)
-      t.emplace_back(tmp);
-  }
-
   auto help = [&]()
   {
     send_to_char(
         "&+WUsage:&n\r\n"
         "  mlist\r\n"
         "  mlist ?\r\n"
-        "  mlist <vnumFrom> <vnumTo>\r\n",
+        "  mlist [<vnumFrom> <vnumTo>]\r\n",
         ch);
   };
 
-  if (!t.empty() && (t[0] == "?" || t[0] == "help"))
+  const arg_def defs[] = {
+      define_argument("help", "\\?|help", ARG_OPT_OPTIONAL),
+      define_argument("vmin", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL),
+      define_argument("vmax", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
+  };
+
+  arg_parser_output parsed;
+  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
   {
     help();
     return;
   }
 
-  if (i < t.size())
+  const char *help_token = NULL;
+  if (parse_argument("help", parsed, &help_token) == ARG_PARSE_OK)
   {
-    if (!is_number(const_cast<char *>(t[i].c_str())))
-    {
-      help();
-      return;
-    }
+    help();
+    return;
+  }
+
+  if (parse_argument("vmin", parsed, &vmin) == ARG_PARSE_OK)
     haveRange = true;
-    vmin = atoi(t[i].c_str());
-    if (++i < t.size())
-    {
-      if (!is_number(const_cast<char *>(t[i].c_str())))
-      {
-        help();
-        return;
-      }
-      vmax = atoi(t[i].c_str());
-      ++i;
-    }
-    else
-    {
-      vmax = vmin;
-    }
-  }
 
-  if (i != t.size())
-  {
-    help();
-    return;
-  } // extra junk args
+  if (parse_argument("vmax", parsed, &vmax) != ARG_PARSE_OK)
+    vmax = vmin;
 
   if (haveRange && vmin > vmax)
     std::swap(vmin, vmax);
