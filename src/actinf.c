@@ -9007,8 +9007,14 @@ void do_zlist(P_char ch, char *argument, int cmd)
   };
 
   arg_parser_output parsed;
-  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
+  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  if (rc != ARG_PARSE_OK)
   {
+    wizlog(GET_LEVEL(ch), "%s: zlist parse error (%d): %s [arg='%s']",
+           GET_NAME(ch),
+           rc,
+           parsed.error ? parsed.error : "unknown error",
+           argument ? argument : "");
     help();
     return;
   }
@@ -9113,14 +9119,20 @@ void do_rlist(P_char ch, char *argument, int cmd)
   const arg_def defs[] = {
       define_argument("help", "\\?|help", ARG_OPT_OPTIONAL),
       define_argument("zone_kw", "zone", ARG_OPT_OPTIONAL | ARG_OPT_ABBREV),
-      define_argument("zone", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_REQUIRED | ARG_OPT_DEPENDS_ON_PREV),
+      define_argument("zone_num", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_REQUIRED | ARG_OPT_DEPENDS_ON_PREV),
       define_argument("vmin", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL),
       define_argument("vmax", ARG_INT_MIN, ARG_INT_MAX, ARG_OPT_OPTIONAL | ARG_OPT_DEPENDS_ON_PREV),
   };
 
   arg_parser_output parsed;
-  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
+  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  if (rc != ARG_PARSE_OK)
   {
+    wizlog(GET_LEVEL(ch), "%s: rlist parse error (%d): %s [arg='%s']",
+           GET_NAME(ch),
+           rc,
+           parsed.error ? parsed.error : "unknown error",
+           argument ? argument : "");
     help();
     return;
   }
@@ -9132,7 +9144,7 @@ void do_rlist(P_char ch, char *argument, int cmd)
     return;
   }
 
-  if (parse_argument("zone", parsed, &zone) == ARG_PARSE_OK)
+  if (parse_argument("zone_num", parsed, &zone) == ARG_PARSE_OK)
     haveZone = true;
 
   if (parse_argument("vmin", parsed, &vmin) == ARG_PARSE_OK)
@@ -9218,8 +9230,14 @@ void do_mlist(P_char ch, char *argument, int cmd)
   };
 
   arg_parser_output parsed;
-  if (parse_arguments(argument, defs, parsed) != ARG_PARSE_OK)
+  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  if (rc != ARG_PARSE_OK)
   {
+    wizlog(GET_LEVEL(ch), "%s: mlist parse error (%d): %s [arg='%s']",
+           GET_NAME(ch),
+           rc,
+           parsed.error ? parsed.error : "unknown error",
+           argument ? argument : "");
     help();
     return;
   }

@@ -31,7 +31,9 @@ typedef enum
   ARG_OPT_OPTIONAL = 1 << 1,
   ARG_OPT_ABBREV = 1 << 2,
   ARG_OPT_EXACT = 1 << 3,
-  ARG_OPT_DEPENDS_ON_PREV = 1 << 4
+  ARG_OPT_DEPENDS_ON_PREV = 1 << 4,
+  ARG_OPT_QUOTE_DOUBLE = 1 << 5,
+  ARG_OPT_QUOTE_SINGLE = 1 << 6
 } arg_option;
 
 typedef struct arg_def
@@ -75,6 +77,7 @@ typedef struct arg_parser_options
 #define ARG_PARSER_OPT_DELIMS_ONLY (1u << 1)
 #define ARG_PARSER_OPT_ALLOW_TRAILING_JUNK (1u << 2)
 #define ARG_PARSER_OPT_ALLOW_RANDOM_ORDER (1u << 3)
+#define ARG_PARSER_OPT_CASE_SENSITIVE (1u << 4)
 
 #define ARG_PARSER_DELIMS_SPACE " \t\r\n"
 #define ARG_PARSER_DELIMS_COMMA ","
@@ -93,7 +96,7 @@ typedef enum
   ARG_PARSE_NOT_FOUND = 7,
   ARG_PARSE_TYPE_MISMATCH = 8,
   ARG_PARSE_MISSING = 9
-} arg_parse_code;
+} arg_parser_result;
 
 typedef struct arg_value
 {
@@ -180,7 +183,7 @@ static inline arg_def define_argument(const char *name,
   return def;
 }
 
-arg_parse_code parse_arguments(const char *argument,
+arg_parser_result parse_arguments(const char *argument,
                                const arg_list *list,
                                const arg_parser_options *options,
                                arg_parser_output &out);
@@ -194,7 +197,7 @@ static inline arg_parser_options default_arg_parser_options()
 }
 
 template <size_t N>
-static inline arg_parse_code parse_arguments(const char *argument,
+static inline arg_parser_result parse_arguments(const char *argument,
                                              const arg_def (&defs)[N],
                                              const arg_parser_options *options,
                                              arg_parser_output &out)
@@ -203,7 +206,7 @@ static inline arg_parse_code parse_arguments(const char *argument,
   return parse_arguments(argument, &list, options, out);
 }
 
-static inline arg_parse_code parse_arguments(const char *argument,
+static inline arg_parser_result parse_arguments(const char *argument,
                                              const arg_list *list,
                                              arg_parser_output &out)
 {
@@ -212,7 +215,7 @@ static inline arg_parse_code parse_arguments(const char *argument,
 }
 
 template <size_t N>
-static inline arg_parse_code parse_arguments(const char *argument,
+static inline arg_parser_result parse_arguments(const char *argument,
                                              const arg_def (&defs)[N],
                                              arg_parser_output &out)
 {
@@ -220,19 +223,19 @@ static inline arg_parse_code parse_arguments(const char *argument,
   return parse_arguments(argument, defs, &opts, out);
 }
 
-arg_parse_code parse_argument(const char *name,
+arg_parser_result parse_argument(const char *name,
                               const arg_parser_output &parsed,
                               const char **value);
 
-arg_parse_code parse_argument(const char *name,
+arg_parser_result parse_argument(const char *name,
                               const arg_parser_output &parsed,
                               int *value);
 
-arg_parse_code parse_argument(const char *name,
+arg_parser_result parse_argument(const char *name,
                               const arg_parser_output &parsed,
                               bool *value);
 
-arg_parse_code parse_argument(const char *name,
+arg_parser_result parse_argument(const char *name,
                               const arg_parser_output &parsed,
                               float *value);
 
