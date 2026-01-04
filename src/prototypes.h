@@ -1352,6 +1352,7 @@ int mana_limit(P_char);
 int mana_regen(P_char, bool);
 int vitality_limit(P_char);
 int move_regen(P_char, bool);
+int ward_regen(P_char, bool);
 void advance_level(P_char);
 void illithid_advance_level(P_char);
 void check_idling(P_char);

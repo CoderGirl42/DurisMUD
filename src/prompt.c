@@ -97,17 +97,24 @@ void make_prompt(P_desc point)
   if (!t_ch_p)
     return;
 
-  if( IS_SET(t_ch_p, PROMPT_WARD) && (paf = get_ward_from_char(t_ch)) != NULL )
+  if( IS_SET(t_ch_p, PROMPT_WARD) )
   {
-	int wardAmount = 0;
-	for (paf = t_ch->affected; paf; paf = paf->next)
+	if( (paf = get_ward_from_char(t_ch)) != NULL )
 	{
-		if (IS_SET(paf->flags, AFFTYPE_DAM_WARD))
+		int wardAmount = 0;
+		for (paf = t_ch->affected; paf; paf = paf->next)
 		{
-			wardAmount += paf->modifier;
+			if (IS_SET(paf->flags, AFFTYPE_DAM_WARD))
+			{
+				wardAmount += paf->modifier;
+			}
 		}
+		snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+C %dW", wardAmount);
+    }
+	else if( GET_MAX_WARD(t_ch) > 0 )
+	{
+		snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+C %d/%dW", GET_WARD(t_ch), GET_MAX_WARD(t_ch));
 	}
-	snprintf(promptbuf + strlen(promptbuf), MAX_STRING_LENGTH - strlen(promptbuf), "&+C %dW", wardAmount);
   }
   if( IS_SET(t_ch_p, PROMPT_HIT) )
   {

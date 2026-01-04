@@ -415,6 +415,9 @@ int race_size(int race);
 #define GET_MANA(ch)    ((ch)->points.mana)
 #define GET_MAX_MANA(ch) ((ch)->points.max_mana)
 
+#define GET_WARD(ch)    ((ch)->points.ward)
+#define GET_MAX_WARD(ch) ((ch)->points.max_ward)
+
 #define GET_MONEY(ch) ((ch)->points.cash[0] + \
            10 * (ch)->points.cash[1] + \
                        100 * (ch)->points.cash[2] + \

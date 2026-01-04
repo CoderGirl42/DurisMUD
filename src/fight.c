@@ -396,10 +396,8 @@ struct affected_type *get_ward_from_char(P_char ch)
 int check_damage_ward(P_char attacker, P_char ch, int dam)
 {
   struct affected_type *paf = get_ward_from_char(ch);
-  if (!paf)
-    return 0;
   int absorbed = 0;
-  float wardMitigation = get_property("ward.mitigation", 0.5);
+  float wardMitigation = get_property("ward.mitigation", 0.80);
   dam = (int)ceil(dam * wardMitigation);
 
   // loop through all wards
@@ -423,6 +421,31 @@ int check_damage_ward(P_char attacker, P_char ch, int dam)
         FALSE, attacker, 0, ch, TO_VICT | ACT_NOTTERSE);
     act("&+CThe ward around&n $N&+C flashes briefly as it absorbs your assault!&n",
         FALSE, attacker, 0, ch, TO_CHAR | ACT_NOTTERSE);
+  }
+
+  // check for innate wards
+  if(GET_WARD(ch) > 0)
+  {
+	GET_WARD(ch) -= (dam - absorbed);
+	if(GET_WARD(ch) < 0)
+	{
+		absorbed += (dam + GET_WARD(ch));
+		GET_WARD(ch) = 0;
+	}
+	else
+	{
+		absorbed += (dam - absorbed);
+	}
+
+	act("&+CThe ward around you flashes briefly as it absorbs $n&+C's assault!&n",
+        FALSE, attacker, 0, ch, TO_VICT | ACT_NOTTERSE);
+    act("&+CThe ward around&n $N&+C flashes briefly as it absorbs your assault!&n",
+        FALSE, attacker, 0, ch, TO_CHAR | ACT_NOTTERSE);
+	
+	if(GET_CHAR_SKILL(ch, SKILL_EPIC_WARDING_FAITH) > 0)
+	{
+		notch_skill(ch, SKILL_EPIC_WARDING_FAITH, 2);
+	}
   }
 
   return (int)ceil(absorbed / wardMitigation);
@@ -648,6 +671,11 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   hits = vamp(ch, hits, cap);
   update_achievements(healer, ch, hits, 1);
 
+  if (GET_SPEC(healer, CLASS_CLERIC, SPEC_HEALER))
+  {
+	// healing replenishes ward
+    GET_WARD(healer) = BOUNDED(0, GET_WARD(healer) + (hits / 5), GET_MAX_WARD(healer));
+  }
   // debug("Hitting heal function in fight with (%d) hits.", hits);
   if (IS_PC(healer) && IS_FIGHTING(ch))
   {
@@ -4558,7 +4586,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
   }
 
   dam = (double)((int)dam - check_damage_ward(ch, victim, (int)dam));
-  if (dam == 0)
+  if (dam <= 0)
   {
     return DAM_NONEDEAD;
   }
@@ -4947,7 +4975,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
 
   // ugly hack - we smuggle damage_type for eq poofing messages on 8 highest bits
   messages->type |= type << 24;
-  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT ^ flags, messages);
+  result = raw_damage(ch, victim, dam, (RAWDAM_DEFAULT ^ flags) | RAWDAM_NOWARD, messages);
 
   // Tether code here
   /*
@@ -5489,7 +5517,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_
   }
 
   dam = (double)((int)dam - check_damage_ward(ch, victim, (int)dam));
-  if (dam == 0)
+  if (dam <= 0)
   {
     return 0;
   }
@@ -5609,7 +5637,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_
 
   messages->type |= 1 << 24;
 
-  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT | flags, messages);
+  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT | flags | RAWDAM_NOWARD, messages);
 
   if (result != DAM_NONEDEAD)
   {
@@ -6200,10 +6228,13 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
 
   if (ch && victim) // Just making sure.
   {
-    dam = (double)((int)dam - check_damage_ward(ch, victim, (int)dam));
-    if (dam == 0)
-    {
-      return DAM_NONEDEAD;
+	if(!IS_SET(flags, RAWDAM_NOWARD))
+	{
+		dam = (double)((int)dam - check_damage_ward(ch, victim, (int)dam));
+		if (dam <= 0)
+		{
+			return DAM_NONEDEAD;
+		}
     }
     // Client
     for (gl = victim->group; gl; gl = gl->next)

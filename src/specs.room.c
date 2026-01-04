@@ -1673,3 +1673,13 @@ int cage_room2(int room, P_char ch, int cmd, char *argument)
   }
   return TRUE;
 }
+
+int avernus_overland(int room, P_char ch, int cmd, char *argument)
+{
+  int knob;
+
+  if( cmd == CMD_SET_PERIODIC )
+  {
+    return TRUE;
+  }
+}

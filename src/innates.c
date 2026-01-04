@@ -419,7 +419,8 @@ const struct innate_data innates_data[LAST_INNATE + 1] =
   {"living stone", NULL, SKILL_NONE},
   {"invisibility", NULL, SKILL_NONE },
   {"infernal fury", NULL, SKILL_NONE },
-  {"ophidian eyes", NULL, SKILL_NONE }
+  {"ophidian eyes", NULL, SKILL_NONE },
+  {"warding faith", NULL, SKILL_NONE }
 };
 
 string list_innates(int race, int cls, int spec)
@@ -1031,6 +1032,7 @@ void assign_innates()
 
   ADD_CLASS_INNATE(INNATE_GOD_CALL, CLASS_CLERIC, 1, 0);
   //ADD_CLASS_INNATE(INNATE_BLOOD_SCENT, CLASS_CLERIC, 1, SPEC_HEALER);
+  ADD_CLASS_INNATE(INNATE_WARDING_FAITH, CLASS_CLERIC, 30, SPEC_HEALER);
 
   ADD_CLASS_INNATE(INNATE_FLY, CLASS_ETHERMANCER, 1, 0);
   ADD_CLASS_INNATE(INNATE_FLY, CLASS_CONJURER, 30, SPEC_AIR);

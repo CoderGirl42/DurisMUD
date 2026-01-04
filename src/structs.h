@@ -478,8 +478,9 @@ struct edit_data
 #define INNATE_INVISIBILITY 173
 #define INNATE_INFERNAL_FURY 174
 #define INNATE_OPHIDIAN_EYES 175
+#define INNATE_WARDING_FAITH 176
 
-#define LAST_INNATE 175 // LAST means last, not last + 1 or whatever
+#define LAST_INNATE INNATE_WARDING_FAITH // LAST means last, not last + 1 or whatever
 
 struct extra_descr_data
 {
@@ -1160,16 +1161,19 @@ struct char_point_data
   int base_hit;
   sh_int base_mana;
   sh_int base_vitality;
+  sh_int base_ward;
 
   /* these 3 are the current values */
   int hit;
   sh_int mana;
   sh_int vitality;
+  sh_int ward;
 
   /* these 3 are base + modifiers, and are used as a limit */
   int max_hit;
   sh_int max_mana;
   sh_int max_vitality;
+  sh_int max_ward;
 
   /* values for storing damage done to each body part - maximums are
      determined by max hp of player - body location stuff is currently
@@ -1197,6 +1201,7 @@ struct char_point_data
   int hit_reg;         /* bonus added to basic regen rate */
   sh_int move_reg;     /* bonus added to basic regen rate */
   sh_int mana_reg;     /* bonus added to basic regen rate */
+  sh_int ward_reg;     /* bonus added to basic regen rate */
   sh_int spell_pulse;  /* modifiers to spellcasting speed */
   sh_int combat_pulse; /* modifiers to combat speed */
 };
@@ -2450,10 +2455,10 @@ struct hold_data
   int c_Str, c_Dex, c_Agi, c_Con, c_Pow, c_Int, c_Wis, c_Cha, c_Kar, c_Luc;
   int m_Str, m_Dex, m_Agi, m_Con, m_Pow, m_Int, m_Wis, m_Cha, m_Kar, m_Luc;
   int r_Str, r_Dex, r_Agi, r_Con, r_Pow, r_Int, r_Wis, r_Cha, r_Kar, r_Luc;
-  int AC, Age, Dam, Hit, Hits, Fprot, Move, Mana;
+  int AC, Age, Dam, Hit, Hits, Fprot, Move, Mana, Ward;
   int S_spell, S_para, S_petri, S_rod, S_breath;
   int hit_reg;
-  sh_int move_reg, mana_reg;
+  sh_int move_reg, mana_reg, ward_reg;
   //  sh_int   spell_pulse, combat_pulse;
   float spell_pulse, combat_pulse;
   ulong BV_1, BV_2, BV_3, BV_4, BV_5, BV_6;

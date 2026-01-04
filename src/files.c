@@ -2366,9 +2366,11 @@ int restoreStatus(char *buf, P_char ch)
     ch->points.base_hit = 1;
   GET_VITALITY(ch) = GET_SHORT(buf);
   ch->points.base_vitality = GET_SHORT(buf);
+  ch->points.base_ward = 0;
   ch->points.hit_reg = 0;
   ch->points.move_reg = 0;
   ch->points.mana_reg = 0;
+  ch->points.ward_reg = 0;
 
   GET_COPPER(ch) = GET_INTE(buf);
   GET_SILVER(ch) = GET_INTE(buf);

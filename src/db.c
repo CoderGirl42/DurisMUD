@@ -2349,6 +2349,8 @@ P_char read_mobile(int nr, int type)
     fscanf(mob_f, " %ld \n", &tmp);
     GET_ALIGNMENT(mob) = tmp;
   }
+  mob->points.base_ward = 0;
+  mob->points.ward_reg = 0;
 
   fscanf(mob_f, " %ld ", &tmp);
   /*
