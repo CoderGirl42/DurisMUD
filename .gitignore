@@ -11,6 +11,7 @@ __py_cache__/
 cscope.out
 *.a
 *.o
+*.d
 *.backup
 *~
 lib/information/leaderboard
