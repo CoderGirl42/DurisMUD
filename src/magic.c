@@ -12238,6 +12238,7 @@ void spell_divine_font(int level, P_char ch, char *arg, int type,
     send_to_char("Tell someone to make a font object ASAP!\n", ch);
     return;
   }
+  font->value[0] = GET_LEVEL(ch);
   send_to_room("&+WA divine font slowly fades into existence, radiating holy power!&n\n", ch->in_room);
   set_obj_affected(font, 60 * 10, TAG_OBJ_DECAY, 0);
   obj_to_room(font, ch->in_room);

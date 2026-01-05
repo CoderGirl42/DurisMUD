@@ -192,7 +192,7 @@ epic_teacher_skill epic_teachers[] = {
   {21535, SKILL_EPIC_LUCK, 0, 100, 0, 0, 0}, //Babedo in Aravne
   {2733, SKILL_SHIP_DAMAGE_CONTROL, 0, 100, 0, 0, 0}, // Commodore in Headless
   {402029, SKILL_NATURES_RUIN, 0, 100, 0, 0, 0}, // Shezeera in Library zone
-  {67103, SKILL_EPIC_WARDING_FAITH, 0, 100, 0, 0, 0},
+  {55168, SKILL_EPIC_WARDING_FAITH, 0, 100, 0, 0, 0},
   {0}
 };
 
