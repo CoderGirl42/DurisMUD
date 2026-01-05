@@ -279,6 +279,7 @@ void get_account_password(P_desc d, char *arg)
     else
       d->account = free_account(d->account);
     close_socket(d);
+    return;
   }
 
   if (!arg)
