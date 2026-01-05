@@ -6657,11 +6657,13 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
       if (new_stat != STAT_DEAD)
       {
         StartRegen(victim, EVENT_HIT_REGEN);
+		StartRegen(victim, EVENT_WARD_REGEN);
       }
     }
     else
     {
       StartRegen(victim, EVENT_HIT_REGEN);
+	  StartRegen(victim, EVENT_WARD_REGEN);
       max_hit = GET_MAX_HIT(victim);
 
       if (dam > GET_HIT(victim) && ch != victim)

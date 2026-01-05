@@ -3451,6 +3451,8 @@ void enter_game(P_desc d)
       StartRegen(ch, EVENT_MANA_REGEN);
     if (GET_VITALITY(ch) != GET_MAX_VITALITY(ch))
       StartRegen(ch, EVENT_MOVE_REGEN);
+	if (GET_WARD(ch) != GET_MAX_WARD(ch))
+      StartRegen(ch, EVENT_WARD_REGEN);
 
     set_char_size(ch);
 

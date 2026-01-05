@@ -150,6 +150,10 @@ void generic_char_event(P_char ch, P_char victim, P_obj obj, void *data)
     {
       StartRegen(i, EVENT_HIT_REGEN);
     }
+	if( GET_WARD(i) < GET_MAX_WARD(i) )
+    {
+      StartRegen(i, EVENT_WARD_REGEN);
+    }
   }
   add_event(generic_char_event, 20 * WAIT_SEC, NULL, NULL, NULL, 0, NULL, 0);
   //AddEvent(EVENT_SPECIAL, 20 * WAIT_SEC, TRUE, generic_char_event, 0);
