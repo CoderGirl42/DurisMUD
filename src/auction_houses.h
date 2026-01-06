@@ -45,6 +45,8 @@ class EqSortFlag
     const char *gKey() { return keyword.c_str(); }
     const char *gDesc() { return desc.c_str(); }
 
+    virtual ~EqSortFlag() = default;
+
   protected:
     string keyword;
     string desc;
