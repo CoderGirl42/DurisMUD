@@ -2280,10 +2280,10 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
 
   modifier = get_property("artifact.wars.modifier", 1.0);
 
-  // We only care about artis on a PC or corpse (Note: it's implied that owned='Y' on these).
-  // The other options: not in game, on npc, on ground can not have fighting artis.
-  debug( "event_artifact_wars_sql: Querying artifacts on PC/Corpse..." );
-  qry("SELECT vnum, locType+0, location, UNIX_TIMESTAMP(timer), type FROM artifacts WHERE locType='OnPC' OR locType='OnCorpse'" );
+  // we only care about artis on a PC (online players only).
+  // corpse/npc/ground artifacts don't trigger the penalty.
+  debug( "event_artifact_wars_sql: querying artifacts on pc..." );
+  qry("SELECT vnum, locType+0, location, UNIX_TIMESTAMP(timer), type FROM artifacts WHERE locType='OnPC'" );
   res = mysql_store_result(DB);
 
   if( !res || mysql_num_rows(res) < 1 )
@@ -2368,56 +2368,59 @@ void event_artifact_wars_sql(P_char ch, P_char vict, P_obj obj, void *arg)
     punish_level  = (count[ARTIFACT_MAJOR ] > 1) ? count[ARTIFACT_MAJOR ] - 1 : 0;
     punish_level += (count[ARTIFACT_UNIQUE] > 1) ? count[ARTIFACT_UNIQUE] - 1 : 0;
     punish_level += (count[ARTIFACT_IOUN  ] > 1) ? count[ARTIFACT_IOUN  ] - 1 : 0;
-    // If they're in violation (more than one arti of the same type.
+    // if they're in violation (more than one arti of the same type), drop all their artifacts.
     if( punish_level > 0 )
     {
-      // 1: 5min, 2: 15min, 3: 30min, 4: 64min, 5: 125min (2hrs+), 6: 216min (3.5hrs+), 7: 343min (5.5hrs+).
-      // More than a punish_level of 3 is ridiculous though.
-      switch( punish_level )
-      {
-        case 0:
-            punishment = 0;
-        case 1:
-            punishment = 300;
-          break;
-        case 2:
-            punishment = 900;
-          break;
-        case 3:
-            punishment = 1800;
-          break;
-        default:
-          // x^3 minutes function.
-          punishment = 60 * punish_level * punish_level * punish_level;
-          break;
-      }
-      // 2 of the same type (and no others):  300 * 2 =   600 sec = 10min
-      // 6 artis with two of each type     : 1800 * 6 = 10800 sec = 180min = 3 hrs loss every half hr.
-      punishment *= count[0];
-      punishment *= modifier;
+      owner = find_player_by_pid(nextlist->pid);
 
-      node = nextlist->artis;
-      while( node )
+      if( owner && owner->in_room != NOWHERE )
       {
-        arti = read_object( node->vnum, VIRTUAL );
-        if( !arti )
-        {
-          logit(LOG_ARTIFACT, "SYSERR: artifact_wars_sql: vnum %d not found in object prototypes", node->vnum);
-          node = node->next;
-          continue;
-        }
-        debug( "fight: '%s&n'%6d upset (%d/%d =%3d:%02d) with %s.",
-          pad_ansi(arti->short_description, 35, TRUE).c_str(), node->vnum,
-          punish_level, count[0], (int)punishment/60, (int)punishment%60, get_player_name_from_pid(node->location) );
-        if( node->locType == ARTIFACT_ON_PC
-          && (owner = get_player_from_name( get_player_name_from_pid(node->location) )) )
-        {
-          act("&+L$p &+Lseems very upset with you.&n", FALSE, owner, arti, 0, TO_CHAR);
-        }
-        extract_obj(arti, FALSE);
-        qry("UPDATE artifacts SET timer = FROM_UNIXTIME(%lu), lastUpdate=SYSDATE() WHERE vnum = %d", node->timer - punishment, node->vnum );
+        P_obj obj, next_obj;
+        bool first = TRUE;
 
-        node = node->next;
+        for( int pos = 0; pos < MAX_WEAR; pos++ )
+        {
+          if( owner->equipment[pos] && IS_ARTIFACT(owner->equipment[pos]) )
+          {
+            obj = unequip_char(owner, pos, FALSE);
+            if( first )
+            {
+              act("&+RThe gods frown upon your greed! $p burns your flesh and falls to the ground!&n", FALSE, owner, obj, 0, TO_CHAR);
+              act("&+R$n screams as $p burns $m and falls to the ground!&n", FALSE, owner, obj, 0, TO_ROOM);
+              first = FALSE;
+            }
+            else
+            {
+              act("&+R$p falls to the ground!&n", FALSE, owner, obj, 0, TO_CHAR);
+              act("&+R$p falls to the ground!&n", FALSE, owner, obj, 0, TO_ROOM);
+            }
+            obj_to_room(obj, owner->in_room);
+          }
+        }
+
+        for( obj = owner->carrying; obj; obj = next_obj )
+        {
+          next_obj = obj->next_content;
+          if( IS_ARTIFACT(obj) )
+          {
+            if( first )
+            {
+              act("&+RThe gods frown upon your greed! $p burns your flesh and falls to the ground!&n", FALSE, owner, obj, 0, TO_CHAR);
+              act("&+R$n screams as $p burns $m and falls to the ground!&n", FALSE, owner, obj, 0, TO_ROOM);
+              first = FALSE;
+            }
+            else
+            {
+              act("&+R$p falls to the ground!&n", FALSE, owner, obj, 0, TO_CHAR);
+              act("&+R$p falls to the ground!&n", FALSE, owner, obj, 0, TO_ROOM);
+            }
+            obj_from_char(obj);
+            obj_to_room(obj, owner->in_room);
+          }
+        }
+
+        debug( "artifact_wars: %s had %d artifacts forcibly dropped (punish_level=%d)",
+               GET_NAME(owner), count[0], punish_level );
       }
     }
     nextlist = nextlist->next;
