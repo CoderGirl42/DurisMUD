@@ -357,11 +357,11 @@ void load_obj_to_newbies(P_char ch)
 /*Minotaur Basics*/
   static int minotaur_good_eq[] = { 
 						  677, 283, 285, 1112, 286, 288, 290,
-						398, 398, 1176, 1167, 1182, 603, 105, 106, 107, -1 };
+						398, 398, 1176, 1167, 1182, 603, 108, 109, 111, -1 };
 
   static int minotaur_evil_eq[] = { 
 						  677, 283, 285, 1112, 286, 288, 290,
-						1170, 1173, 1182, 603, 105, 106, 107, -1 };
+						1170, 1173, 1182, 603, 108, 109, 111, -1 };
 
 
   memset(newbie_kits, 0, sizeof(newbie_kits));
@@ -406,7 +406,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_BARBARIAN, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_BARBARIAN, CLASS_SORCERER, PROTECT(
@@ -505,7 +505,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_GITHZERAI, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_GITHZERAI, CLASS_SORCERER, PROTECT(
@@ -606,7 +606,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_TIEFLING, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_TIEFLING, CLASS_SORCERER, PROTECT(
@@ -706,7 +706,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_HUMAN, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_HUMAN, CLASS_SORCERER, PROTECT(
@@ -806,7 +806,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_DROW, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_DROW, CLASS_SORCERER, PROTECT(
@@ -907,7 +907,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_DUERGAR, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_DUERGAR, CLASS_SORCERER, PROTECT(
@@ -1007,7 +1007,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_GNOME, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_GNOME, CLASS_SORCERER, PROTECT(
@@ -1183,7 +1183,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_HALFLING, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_HALFLING, CLASS_SORCERER, PROTECT(
@@ -1295,7 +1295,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_CENTAUR, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_CENTAUR, CLASS_SORCERER, PROTECT(
@@ -1463,7 +1463,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_GITHYANKI, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_GITHYANKI, CLASS_SORCERER, PROTECT(
@@ -1577,7 +1577,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_MINOTAUR, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_MINOTAUR, CLASS_SORCERER, PROTECT(
@@ -1679,7 +1679,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_GREY, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_GREY, CLASS_SORCERER, PROTECT(
@@ -1781,7 +1781,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_MOUNTAIN, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_MOUNTAIN, CLASS_SORCERER, PROTECT(
@@ -1890,7 +1890,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_OGRE, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_OGRE, CLASS_SORCERER, PROTECT(
@@ -1983,7 +1983,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_ORC, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_ORC, CLASS_SORCERER, PROTECT(
@@ -2287,7 +2287,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_TROLL, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_TROLL, CLASS_SORCERER, PROTECT(
@@ -2389,7 +2389,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_GOBLIN, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_GOBLIN, CLASS_SORCERER, PROTECT(
@@ -2537,7 +2537,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_KOBOLD, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_KOBOLD, CLASS_SORCERER, PROTECT(
@@ -2617,7 +2617,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_KUOTOA, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_KUOTOA, CLASS_WARRIOR, PROTECT(
@@ -2671,7 +2671,7 @@ void load_obj_to_newbies(P_char ch)
 
   CREATE_KIT(RACE_FIRBOLG, CLASS_SHAMAN, PROTECT(
                                         {
-                                        105, 106, 107, 1144, 1145, 1146, 1127,
+                                        108, 109, 111, 1144, 1145, 1146, 1127,
                                         -1}));
 
   CREATE_KIT(RACE_FIRBOLG, CLASS_SORCERER, PROTECT(
