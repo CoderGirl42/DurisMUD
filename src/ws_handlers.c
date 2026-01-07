@@ -660,6 +660,11 @@ void ws_cmd_enter(struct descriptor_data *d, cJSON *data)
     struct acct_chars *c;
     struct descriptor_data *k, *next_k;
 
+    /* prevent duplicate entry if already entering or playing */
+    if (d->connected == CON_ACCT_CONFIRM_CHAR || d->connected == CON_PLAYING) {
+        return;
+    }
+
     if (!data) {
         ws_send_text(d, "system", "Missing character data");
         return;
