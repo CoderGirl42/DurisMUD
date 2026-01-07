@@ -33,6 +33,7 @@
 #include "assocs.h"
 #include "objmisc.h"
 #include "siege.h"
+#include "copyover.h"
 
 /*
  * external variables
@@ -731,8 +732,11 @@ void boot_db(int mini_mode)
 
   logit(LOG_STATUS, "Setting up player-side artifact list.");
   setupMortArtiList_sql();
-  addOnGroundArtis_sql();
-  addOnMobArtis_sql();
+  // skip loading artifacts from db during copyover - they're restored from copyover.dat
+  if (!is_copyover_boot()) {
+    addOnGroundArtis_sql();
+    addOnMobArtis_sql();
+  }
 
   fprintf(stderr, "-- Continents\n");
   assign_continents();
