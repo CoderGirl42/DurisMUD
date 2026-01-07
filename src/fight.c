@@ -3896,7 +3896,7 @@ static dam_mod_predicate spell_damage_modifiers[] =
         {MAKE_DAM_MOD_PRED(){
             if (get_linked_char(victim, LNK_PET) && IS_PC(caster)){
                 dam_mod->mod += get_property("damage.pcs.vs.pets", 2.000) - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -3904,7 +3904,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (affected_by_spell(victim, SKILL_BERSERK)){
             dam_mod->mod = dam_factor[DF_BERSERKSPELL] - 1.0;
-dam_mod->type = dam_mod_type::More;
+dam_mod->type = dam_mod_type::Increased;
 if (GET_CLASS(caster, CLASS_BERSERKER))
 {
   dam_mod->mod += dam_factor[DF_BERSERKEREXTRA] - 1.0;
@@ -3922,7 +3922,7 @@ if (affected_by_spell(victim, SKILL_RAGE))
     {MAKE_DAM_MOD_PRED(){
         if (ELEMENTAL_DAM(damageType) && affected_by_spell(victim, SPELL_ENERGY_CONTAINMENT)){
             dam_mod->mod += dam_factor[DF_ENERGY_CONTAINMENT] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -3930,7 +3930,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (ELEMENTAL_DAM(damageType) && has_innate(caster, INNATE_ELEMENTAL_POWER) && GET_LEVEL(caster) >= 35){
             dam_mod->mod += dam_factor[DF_ELEMENTALIST] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -3939,7 +3939,7 @@ dam_mod->type = dam_mod_type::Increased;
         if (GET_CHAR_SKILL(victim, SKILL_ARCANE_BLOCK) > 0 && !IS_TRUSTED(victim) && !IS_STUNNED(victim) && !IS_IMMOBILE(victim)){
             if (damage > 15 && (notch_skill(victim, SKILL_ARCANE_BLOCK, get_property("skill.notch.arcane", 10)) || number(1, 250) <= (GET_LEVEL(victim) + GET_C_LUK(victim) / 10 + GET_CHAR_SKILL(victim, SKILL_ARCANE_BLOCK)) || ((IS_ELITE(victim) || IS_GREATER_RACE(victim)) && !number(0, 4)))){
                 dam_mod->mod = -(number(1, get_property("skill.arcane.block.dam.reduction", .4) * GET_CHAR_SKILL(victim, SKILL_ARCANE_BLOCK))) / 100.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 
 act("$N raises hands performing an &+Marcane gesture&n and some of $n's &+mspell energy&n is dispersed.",
     TRUE, caster, 0, victim, TO_NOTVICT);
@@ -3957,7 +3957,7 @@ act("You perform an &+Marcane gesture&n dispersing some of $n's &+mspell energy.
           case SPLDAM_GENERIC :
               if (has_innate(victim, MAGICAL_REDUCTION)){
                   dam_mod->mod += -0.2;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 break;
 }
@@ -3967,7 +3967,7 @@ break;
     {MAKE_DAM_MOD_PRED(){
         if (damageType == SPLDAM_FIRE && IS_AFFECTED4(victim, AFF4_ICE_AURA)){
             dam_mod->mod += dam_factor[DF_VULNFIRE] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 act("&+rYour fiery spell causes&n $N to &+rsmolder and spasm in pain!&n",
     TRUE, caster, 0, victim, TO_CHAR);
 act("$n's &+fiery spell causes you smolder and spasm in pain!&n",
@@ -3981,7 +3981,7 @@ act("$n's &+rfiery spell causes&n $N &n&+rto smolder and spasm in pain!&n",
     {MAKE_DAM_MOD_PRED(){
         if (damageType == SPLDAM_FIRE && IS_NPC(caster) && !IS_PC_PET(caster)){
             dam_mod->mod += get_property("damage.mob.bonus", 1.0) - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -3992,7 +3992,7 @@ dam_mod->type = dam_mod_type::Increased;
 if ((paf = get_spell_from_char(caster, TAG_BLOODLUST)) != NULL)
 {
   dam_mod->mod = paf->modifier / 100.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4004,7 +4004,7 @@ if ((paf = get_spell_from_char(caster, TAG_BLOODLUST)) != NULL)
 if (has_innate(victim, INNATE_VULN_FIRE))
 {
   dam_mod->mod += dam_factor[DF_VULNFIRE] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 
   if (IS_AFFECTED2(victim, AFF2_FIRESHIELD))
     dam_mod->mod += dam_factor[DF_ELSHIELDRED_TROLL] - 1.0;
@@ -4037,35 +4037,35 @@ if (has_innate(victim, INNATE_VULN_FIRE))
 else if (IS_AFFECTED2(victim, AFF2_FIRESHIELD))
 {
   dam_mod->mod += dam_factor[DF_ELSHIELDRED] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 else if (IS_AFFECTED(victim, AFF_PROT_FIRE))
 {
   dam_mod->mod += dam_factor[DF_PROTECTION] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 
 if (IS_AFFECTED3(victim, AFF3_COLDSHIELD))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_ELSHIELDINC] - 1.0;
 }
 
 if (IS_AFFECTED(victim, AFF_BARKSKIN) || IS_AFFECTED5(victim, AFF5_THORNSKIN))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_BARKFIRE] - 1.0;
 }
 
 if (affected_by_spell(victim, SPELL_IRONWOOD))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_IRONWOOD] - 1.0;
 }
 
 if (IS_AFFECTED5(victim, AFF5_WET))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_WETFIRE] - 1.0;
   if (ilogb(damage) > number(6, 10)) // not sure ilogb is what this needs to be with this refactor
   {
@@ -4081,7 +4081,7 @@ if (IS_AFFECTED5(victim, AFF5_WET))
 
 if (GET_RACE(victim) == RACE_F_ELEMENTAL || IS_EFREET(victim))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += (IS_EFREET(victim) ? (.75 * dam_factor[DF_VULNCOLD]) : (dam_factor[DF_VULNCOLD])) - 1.0;
   act("&+BYour icy spell makes&n $N &+Bwrithe in agony!&n",
       TRUE, caster, 0, victim, TO_CHAR);
@@ -4092,7 +4092,7 @@ if (GET_RACE(victim) == RACE_F_ELEMENTAL || IS_EFREET(victim))
 }
 else if (IS_AFFECTED2(victim, AFF2_FIRE_AURA))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_VULNCOLD] - 1.0;
 
   act("&+BYour icy spell makes&n $N &+Bwrithe in agony!&n",
@@ -4105,18 +4105,18 @@ else if (IS_AFFECTED2(victim, AFF2_FIRE_AURA))
 
 if (IS_AFFECTED3(victim, AFF3_COLDSHIELD))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_ELSHIELDRED] - 1.0;
 }
 else if (IS_AFFECTED2(victim, AFF2_PROT_COLD))
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += dam_factor[DF_PROTECTION] - 1.0;
 }
 
 if (GET_RACE(victim) == RACE_BARBARIAN)
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += -0.4;
 }
 
@@ -4131,7 +4131,7 @@ if (IS_AFFECTED2(victim, AFF2_FIRESHIELD))
   }
   else
   {
-    dam_mod->type = dam_mod_type::Increased;
+    dam_mod->type = dam_mod_type::More;
     dam_mod->mod += dam_factor[DF_ELSHIELDINC] - 1.0;
   }
 }
@@ -4144,12 +4144,12 @@ if (IS_AFFECTED2(victim, AFF2_FIRESHIELD))
 if (IS_AFFECTED3(victim, AFF3_LIGHTNINGSHIELD))
 {
   dam_mod->mod += dam_factor[DF_ELSHIELDINC] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 else if (IS_AFFECTED2(victim, AFF2_PROT_GAS))
 {
   dam_mod->mod += dam_factor[DF_PROTECTION] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4160,12 +4160,12 @@ else if (IS_AFFECTED2(victim, AFF2_PROT_GAS))
 if (IS_AFFECTED3(victim, AFF3_LIGHTNINGSHIELD))
 {
   dam_mod->mod += dam_factor[DF_ELSHIELDINC] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 else if (IS_AFFECTED2(victim, AFF2_PROT_ACID))
 {
   dam_mod->mod += dam_factor[DF_PROTECTION] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4176,12 +4176,12 @@ else if (IS_AFFECTED2(victim, AFF2_PROT_ACID))
 if (IS_AFFECTED3(victim, AFF3_LIGHTNINGSHIELD))
 {
   dam_mod->mod += dam_factor[DF_ELSHIELDRED] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 else if (IS_AFFECTED2(victim, AFF2_PROT_LIGHTNING))
 {
   dam_mod->mod += dam_factor[DF_PROTECTION] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4208,7 +4208,7 @@ if (victim && IS_UNDEADRACE(victim))
     }
   }
   dam_mod->mod += levelmod - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 
   if (GET_LEVEL(victim) < 56) // Message is not displayed versus level 56 and greater vampires.
   {
@@ -4223,13 +4223,13 @@ if (victim && IS_UNDEADRACE(victim))
   if (IS_AFFECTED2(victim, AFF2_SOULSHIELD))
   {
     dam_mod->mod += dam_factor[DF_SOULSPELL] - 1.0;
-    dam_mod->type = dam_mod_type::Increased;
+    dam_mod->type = dam_mod_type::More;
   }
 
   if (IS_AFFECTED4(victim, AFF4_NEG_SHIELD))
   {
     dam_mod->mod += dam_factor[DF_SLSHIELDINCREASE] - 1.0;
-    dam_mod->type = dam_mod_type::Increased;
+    dam_mod->type = dam_mod_type::More;
   }
 }
 }
@@ -4241,17 +4241,17 @@ if (victim && IS_UNDEADRACE(victim))
 if (IS_AFFECTED3(victim, AFF3_TOWER_IRON_WILL))
 {
   dam_mod->mod += dam_factor[DF_IRONWILL] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 if (get_spell_from_char(victim, SKILL_TIGER_PALM))
 {
   dam_mod->mod += dam_factor[DF_TIGERPALM] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 if (GET_RACE(victim) == RACE_THRIKREEN)
 {
   dam_mod->mod += -0.3;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4262,17 +4262,17 @@ if (GET_RACE(victim) == RACE_THRIKREEN)
 if (victim && IS_ANGEL(victim))
 {
   dam_mod->mod += get_property("damage.neg.increase.modifierVsAngel", 1.500) - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 if (IS_AFFECTED2(victim, AFF2_SOULSHIELD))
 {
   dam_mod->mod += dam_factor[DF_SLSHIELDINCREASE] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 if (IS_AFFECTED4(victim, AFF4_NEG_SHIELD))
 {
   dam_mod->mod += dam_factor[DF_NEG_SHIELD_SPELL] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4280,7 +4280,7 @@ if (IS_AFFECTED4(victim, AFF4_NEG_SHIELD))
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED5(victim, AFF5_JUDICIUM_FIDEI)){
             dam_mod->mod += dam_factor[DF_JUDICIUM_FIDEI] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4304,7 +4304,7 @@ else if (GET_RACE(victim) == RACE_FIRBOLG)
     {MAKE_DAM_MOD_PRED(){
         if (affected_by_spell(caster, ACH_DRAGONSLAYER) && (GET_RACE(victim) == RACE_DRAGON)){
             dam_mod->mod += 0.1;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4312,7 +4312,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (affected_by_spell(caster, ACH_DEMONSLAYER) && (GET_RACE(victim) == RACE_DEMON)){
             dam_mod->mod += 0.1;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4321,7 +4321,7 @@ dam_mod->type = dam_mod_type::Increased;
         if (affected_by_spell(victim, SPELL_SOULSHIELD) &&
             (GET_CLASS(victim, CLASS_PALADIN) || GET_CLASS(victim, CLASS_ANTIPALADIN))){
             dam_mod->mod += -0.15;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4341,14 +4341,14 @@ if (modifier >= 1 && !(flags & SPLDAM_NOSHRUG))
 
   redmod *= .01;
   dam_mod->mod += redmod - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
 ,
     {MAKE_DAM_MOD_PRED(){
         dam_mod->mod += ((MAGICDAMBONUS(caster) <= 100 ? 100 : MAGICDAMBONUS(caster) - 10 + number(1, 10)) / 100.0) - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 ,
@@ -4362,7 +4362,7 @@ if ((af = get_spell_from_char(victim, SPELL_ELEM_AFFINITY)) && ELEMENTAL_DAM(dam
   if (af->modifier == damageType)
   {
     dam_mod->mod += dam_factor[DF_ELAFFINITY] - 1.0;
-    dam_mod->type = dam_mod_type::Increased;
+    dam_mod->type = dam_mod_type::More;
   }
   else
   {
@@ -4390,7 +4390,7 @@ if (victim->equipment[WEAR_BODY] &&
 if (ELEMENTAL_DAM(damageType) && IS_AFFECTED4(victim, AFF4_PHANTASMAL_FORM) && !awe)
 {
   dam_mod->mod += dam_factor[DF_PHANTFORM] - 1.0;
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4424,7 +4424,7 @@ if (!NewSaves(victim, SAVING_PARA, 2))
     {MAKE_DAM_MOD_PRED(){
         if (parse_chaos_shield(caster, victim)){
             dam_mod->mod += dam_factor[DF_CHAOSSHIELD] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -4432,7 +4432,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (affected_by_spell(victim, SKILL_SPELL_PENETRATION)){
             int damageReductionMod = number(20, 70);
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 dam_mod->mod = -(damageReductionMod / 100.0);
 // Use this properties file to make fine adjustments to this from now on.
 dam_mod->mod += -(get_property("skill.spellPenetration.damageReductionMod", 1.00) / 100.0);
@@ -4443,13 +4443,13 @@ affect_from_char(victim, SKILL_SPELL_PENETRATION);
 ,
     {MAKE_DAM_MOD_PRED(){
         if (GET_RACE(caster) > RACE_NONE && GET_RACE(caster) <= LAST_RACE && damageType >= 0 && damageType < LAST_SPLDAM_TYPE){
-            dam_mod->type = dam_mod_type::Increased;
+            dam_mod->type = dam_mod_type::More;
 dam_mod->mod += racial_spldam_offensive_factor[GET_RACE(caster)][damageType] - 1.0;
 }
 
 if (GET_RACE(victim) > RACE_NONE && GET_RACE(victim) <= LAST_RACE && damageType >= 0 && damageType < LAST_SPLDAM_TYPE)
 {
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += racial_spldam_defensive_factor[GET_RACE(victim)][damageType] - 1.0;
 }
 }
@@ -4461,8 +4461,8 @@ if (GET_RACE(victim) > RACE_NONE && GET_RACE(victim) <= LAST_RACE && damageType 
 
 if (zone_difficulty > 1)
 {
-  dam_mod->type = dam_mod_type::Increased;
-  dam_mod->mod += (get_property("damage.zoneDifficulty.spells.factor", 0.05) * zone_difficulty) - 1.0;
+  dam_mod->type = dam_mod_type::More;
+  dam_mod->mod += (get_property("damage.zoneDifficulty.spells.factor", 0.05) * zone_difficulty);
 }
 }
 }
@@ -4477,7 +4477,7 @@ if (IS_NPC(caster) && IS_PC(victim))
     if (mob_index[GET_RNUM(caster)].virtual_number == NECROPET ||
         mob_index[GET_RNUM(caster)].virtual_number == necropets[r])
     {
-      dam_mod->type = dam_mod_type::Increased;
+      dam_mod->type = dam_mod_type::More;
       dam_mod->mod += -0.5;
       break;
     }
@@ -4488,7 +4488,7 @@ if (IS_NPC(caster) && IS_PC(victim))
 ,
     {MAKE_DAM_MOD_PRED(){
         dam_mod->mod += get_property("damage.spell.multiplier", 1.0) - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 ,
@@ -4514,7 +4514,7 @@ if (IS_ALIVE(eth_ch))
 
   raw_damage(caster, eth_ch, localDam, RAWDAM_DEFAULT ^ flags, messages);
 
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
   dam_mod->mod += -0.5;
 }
 }
@@ -4535,7 +4535,7 @@ dam_mod->mod = reduction - 1.0;
 ,
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED3(victim, AFF3_PALADIN_AURA) && has_aura(victim, AURA_SPELL_PROTECTION)){
-            dam_mod->type = dam_mod_type::Increased;
+            dam_mod->type = dam_mod_type::More;
 dam_mod->mod = -(aura_mod(victim, AURA_SPELL_PROTECTION) / 100.0);
 }
 }
@@ -4950,7 +4950,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
       damProf.increasedMod += dam_mod.mod;
       break;
     case dam_mod_type::More:
-      damProf.moreMod += dam_mod.mod;
+      damProf.moreMod *= (1 + dam_mod.mod);
       break;
     }
   }
@@ -4958,11 +4958,8 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
   dam = (damProf.baseDamage + BOUNDEDF(-100.0, damProf.addedMod, 100.0)) * BOUNDEDF(0.05, damProf.increasedMod, 4.0) * BOUNDEDF(0.1, damProf.moreMod, 2.0);
   dam = MAX(1, dam);
 
-  if (damProf.addedMod < -100.0 || damProf.addedMod > 100.0 ||
-      damProf.increasedMod < 0.05 || damProf.increasedMod > 4.0 ||
-      damProf.moreMod < 0.1 || damProf.moreMod > 2.0)
-  {
-    debug("spell_damage: %s doing %f damage to %s with bad mods (base=%f, added=%f, increased=%f, more=%f, type=%d)!",
+  
+    debug("spell_damage: %s doing %f damage to %s (base=%f, added=%f, increased=%f, more=%f, type=%d)!",
           GET_NAME(ch),
           dam,
           GET_NAME(victim),
@@ -4971,7 +4968,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
           damProf.increasedMod,
           damProf.moreMod,
           type);
-  }
+  
 
   // ugly hack - we smuggle damage_type for eq poofing messages on 8 highest bits
   messages->type |= type << 24;
@@ -5991,14 +5988,14 @@ case RACEWAR_NEUTRAL:
 dam_mod->mod += dam_factor[DF_NEUTRAL_MODIFIER] - 1.0;
 break;
 }
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 ,
     {MAKE_DAM_MOD_PRED(){
         if (IS_NPC(caster) && !IS_PC_PET(caster)){
             dam_mod->mod += get_property("damage.mob.bonus", 1.0) - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6046,7 +6043,7 @@ dam_mod->type = dam_mod_type::Added;
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED4(victim, AFF4_SANCTUARY) && (flags & RAWDAM_SANCTUARY) && (GET_CLASS(victim, CLASS_PALADIN))){
             dam_mod->mod += dam_factor[DF_SANC] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 int group_size = num_group_members_in_room(victim);
 double group_mod = -(group_size * get_property("damage.reduction.sanctuary.paladin.groupMod", 0.02));
 dam_mod->mod += MAX(-0.45, group_mod);
@@ -6057,7 +6054,7 @@ dam_mod->mod += MAX(-0.45, group_mod);
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED4(victim, AFF4_SANCTUARY) && (flags & RAWDAM_SANCTUARY) && GET_CLASS(victim, CLASS_CLERIC)){
             dam_mod->mod += dam_factor[DF_SANC] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6065,7 +6062,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED4(victim, AFF4_SANCTUARY) && (flags & RAWDAM_SANCTUARY) && (!GET_CLASS(victim, CLASS_CLERIC) && !GET_CLASS(victim, CLASS_PALADIN))){
             dam_mod->mod += dam_factor[DF_SANC] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6073,7 +6070,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED(victim, AFF_SANCTUM_DRACONIS) && (flags & RAWDAM_SANCTUARY) && (GET_SPEC(victim, CLASS_DRAGOON, SPEC_DRAGON_LANCER))){
             dam_mod->mod += dam_factor[DF_SANC] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6083,7 +6080,7 @@ dam_mod->type = dam_mod_type::Increased;
 if (((IS_EVIL(caster) && !IS_EVIL(victim)) || (IS_GOOD(caster) && !IS_GOOD(victim))) && !(flags & PHSDAM_NOREDUCE) && (af = get_spell_from_char(victim, SPELL_VIRTUE)))
 {
   dam_mod->mod += -(af->modifier / 800.0);
-  dam_mod->type = dam_mod_type::Increased;
+  dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6091,7 +6088,7 @@ if (((IS_EVIL(caster) && !IS_EVIL(victim)) || (IS_GOOD(caster) && !IS_GOOD(victi
     {MAKE_DAM_MOD_PRED(){
         if (get_spell_from_room(&world[caster->in_room], SPELL_CONSECRATE_LAND) && !(flags & PHSDAM_NOREDUCE)){
             dam_mod->mod += -0.5;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6099,7 +6096,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (get_spell_from_room(&world[caster->in_room], SPELL_BINDING_WIND) && !(flags & PHSDAM_NOREDUCE)){
             dam_mod->mod += -0.2;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6107,7 +6104,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED3(victim, AFF3_PROT_ANIMAL) && IS_ANIMAL(caster) && !(flags & PHSDAM_NOREDUCE)){
             dam_mod->mod += dam_factor[DF_PROTANIMAL] - 1.0;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6115,7 +6112,7 @@ dam_mod->type = dam_mod_type::Increased;
     {MAKE_DAM_MOD_PRED(){
         if (IS_AFFECTED3(caster, AFF3_PALADIN_AURA) && has_aura(caster, AURA_BATTLELUST) && !(flags & PHSDAM_NOREDUCE)){
             dam_mod->mod += ((get_property("innate.paladin_aura.battlelust_mod", 0.2) * aura_mod(caster, AURA_BATTLELUST)) / 100.0);
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 }
 }
 }
@@ -6126,7 +6123,7 @@ dam_mod->type = dam_mod_type::Increased;
 double bonus = BOUNDEDF(.02, (group_size / 100.0) + (GET_LEVEL(caster) / 1120.0), (double).15);
 
 dam_mod->mod += bonus;
-dam_mod->type = dam_mod_type::Increased;
+dam_mod->type = dam_mod_type::More;
 if (caster->group)
 {
   int count = 0;
@@ -6149,12 +6146,12 @@ if (caster->group)
 ,
     {MAKE_DAM_MOD_PRED(){
         if (!(flags & PHSDAM_NOREDUCE)){
-            // global mod of 75% less damage
+            // global mod of 75% reduced damage
             dam_mod->mod += -0.75;
-dam_mod->type = dam_mod_type::More;
+dam_mod->type = dam_mod_type::Increased;
 if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim)))
 {
-  // npcs to pcs do 25% more damage
+  // npcs to pcs do 25% increased damage
   dam_mod->mod += 0.25;
 }
 }
@@ -6163,7 +6160,7 @@ if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) 
 ,
     {MAKE_DAM_MOD_PRED(){
         if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim))){
-            dam_mod->type = dam_mod_type::Increased;
+            dam_mod->type = dam_mod_type::More;
 dam_mod->mod += ((dam_factor[DF_NPCTOPC] / 2) - 1.0);
 if (GET_RACEWAR(victim) == RACEWAR_GOOD)
 {
@@ -6309,7 +6306,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
         damProf.increasedMod += dam_mod.mod;
         break;
       case dam_mod_type::More:
-        damProf.moreMod += dam_mod.mod;
+        damProf.moreMod *= (1 + dam_mod.mod);
         break;
       }
     }
@@ -6317,11 +6314,8 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
     dam = (damProf.baseDamage + BOUNDEDF(-100.0, damProf.addedMod, 100.0)) * BOUNDEDF(0.10, damProf.increasedMod, 4.0) * BOUNDEDF(0.1, damProf.moreMod, 2.0);
     dam = MAX(1, dam);
 
-    if (damProf.addedMod < -100.0 || damProf.addedMod > 100.0 ||
-        damProf.increasedMod < 0.10 || damProf.increasedMod > 4.0 ||
-        damProf.moreMod < 0.1 || damProf.moreMod > 2.0)
-    {
-      debug("raw_damage: %s doing %f damage to %s with bad mods (base=%f, added=%f, increased=%f, more=%f)!",
+    
+      debug("raw_damage: %s doing %f damage to %s (base=%f, added=%f, increased=%f, more=%f)!",
             GET_NAME(ch),
             dam,
             GET_NAME(victim),
@@ -6329,7 +6323,7 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
             damProf.addedMod,
             damProf.increasedMod,
             damProf.moreMod);
-    }
+    
 
     dam = BOUNDED(1, (int)dam, 32766);
 
