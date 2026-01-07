@@ -2417,6 +2417,98 @@ void obj_to_obj(P_obj obj, P_obj obj_to)
 */
 }
 
+// appends obj to end of a linked list - used during load to preserve order
+static void append_obj_to_list(P_obj *head, P_obj obj)
+{
+  P_obj last;
+  obj->next_content = NULL;
+  if (!*head)
+  {
+    *head = obj;
+  }
+  else
+  {
+    for (last = *head; last->next_content; last = last->next_content)
+      ;
+    last->next_content = obj;
+  }
+}
+
+void obj_to_obj_at_end(P_obj obj, P_obj obj_to)
+{
+  char buf[MAX_STRING_LENGTH];
+
+  if (!obj || !obj_to || ((obj_to->type != ITEM_CONTAINER) &&
+                          (obj_to->type != ITEM_QUIVER) &&
+                          (obj_to->type != ITEM_STORAGE) &&
+                          (obj_to->type != ITEM_CORPSE)))
+  {
+    if (obj && obj_to)
+    {
+      snprintf(buf, MAX_STRING_LENGTH, "Object %d: %s to Object %d: %s error\r\n", obj->R_num,
+              obj->short_description, obj_to->R_num,
+              obj_to->short_description);
+      logit(LOG_EXIT, buf);
+    }
+    else
+      logit(LOG_EXIT, "obj_to_obj_at_end: obj or obj_to is somehow invalid");
+
+    raise(SIGSEGV);
+  }
+
+  obj->loc_p = LOC_INSIDE;
+  obj->loc.inside = obj_to;
+  append_obj_to_list(&obj_to->contains, obj);
+
+  if (obj->weight > 0)
+    add_weight(obj_to, obj->weight);
+}
+
+void obj_to_char_at_end(P_obj object, P_char ch)
+{
+  if (!ch)
+  {
+    logit(LOG_MOB, "obj_to_char_at_end: no ch, obj vnum %d", object ? OBJ_VNUM(object) : -1);
+    logit(LOG_OBJ, "obj_to_char_at_end: no ch, obj vnum %d", object ? OBJ_VNUM(object) : -1);
+    return;
+  }
+
+  if (!object)
+  {
+    if (IS_NPC(ch))
+      logit(LOG_OBJ, "obj_to_char_at_end: no obj: mob (%d).", GET_VNUM(ch));
+    else
+      logit(LOG_OBJ, "obj_to_char_at_end: no obj: player (%s).", GET_NAME(ch));
+    return;
+  }
+
+  if (!OBJ_NOWHERE(object))
+  {
+    logit(LOG_DEBUG, "obj_to_char_at_end: obj vnum %d not in NOWHERE", OBJ_VNUM(object));
+    return;
+  }
+
+  append_obj_to_list(&ch->carrying, object);
+
+  if (IS_SET(object->extra_flags, ITEM_LIT) ||
+      ((object->type == ITEM_LIGHT) && (object->value[2] == -1)))
+  {
+    char_light(ch);
+    room_light(ch->in_room, REAL);
+  }
+  object->loc_p = LOC_CARRIED;
+  object->loc.carrying = ch;
+  object->z_cord = 0;
+  GET_CARRYING_W(ch) += GET_OBJ_WEIGHT(object);
+  IS_CARRYING_N(ch)++;
+
+  if (IS_ARTIFACT(object))
+    artifact_update_location_sql(object);
+
+  if (object->g_key == 0 && IS_PC(ch) && GET_LEVEL(ch) < 57 && GET_PID(ch) < 10000000)
+    object->g_key = 1;
+}
+
 /*
  * remove an object from an object
  */

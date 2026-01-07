@@ -3488,15 +3488,15 @@ P_obj restoreObjects(char *buf, P_char ch, int not_room)
         }
 
         if (c_obj && (c_obj->type == ITEM_QUIVER || !ch))
-          obj_to_obj(obj, c_obj);
+          obj_to_obj_at_end(obj, c_obj);
         else if (c_obj && ((GET_OBJ_WEIGHT(obj) + GET_OBJ_WEIGHT(c_obj) <= c_obj->value[0]) || !ch))
         {
-          obj_to_obj(obj, c_obj);
+          obj_to_obj_at_end(obj, c_obj);
         }
         else
         {
           if (ch)
-            obj_to_char(obj, ch);
+            obj_to_char_at_end(obj, ch);
           else
           {
             obj_to_room(obj, corpse_room);
