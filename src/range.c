@@ -1261,6 +1261,7 @@ void do_throw(P_char ch, char *argument, int cmd)
 		  }
 
       snprintf(messages.attacker, MAX_STRING_LENGTH, "You hit $N with $p!");
+      act("You throw $p at $N!", FALSE, ch, weapon, vict, TO_CHAR);
       snprintf(messages.death_attacker, MAX_STRING_LENGTH,
              "Your skilfully thrown $p cuts right through $N's artery. $E tries to stop the &+rblood&n fountain but alas!");
       if (ch->in_room != vict->in_room)
@@ -1289,8 +1290,8 @@ void do_throw(P_char ch, char *argument, int cmd)
      dmg = dice(weapon->value[1], MAX(1, weapon->value[2]));
      dmg += TRUE_DAMROLL(ch);
 
-     if (!CAN_HURT(ch, weapon, vict)) ;
-     dmg = 1;
+     if (!CAN_HURT(ch, weapon, vict))
+       dmg = 1;
 
      victroom = vict->in_room;
      messages.obj = weapon;
