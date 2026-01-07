@@ -62,6 +62,7 @@
 #include "json_utils.h"
 #include "gmcp.h"
 #include "copyover.h"
+#include "poll.h"
 
 /* external variables */
 
@@ -1019,6 +1020,9 @@ void game_loop(int port, int sslport)
     if (!(pulse % (WAIT_SEC * 300)))
       wimps_in_approve_queue();
 
+    if (!(pulse % (WAIT_SEC * 300)))
+      poll_check_expirations();
+
     if (!(pulse % (WAIT_SEC * 120)))
     {
       epic_zone_balance();
@@ -1591,6 +1595,11 @@ void close_socket(struct descriptor_data *d)
   time_t ct;
 
   compress_end(d, TRUE); /* does flushing out all output break anything ? */
+
+  /* clean up poll wizard session if active */
+  if (d->character && poll_wizard_active(d->character))
+    poll_wizard_cancel(d->character);
+
   if (d->sslses)
     ssl_close(d->sslses);
   if (d->descriptor)

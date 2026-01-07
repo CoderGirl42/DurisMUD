@@ -877,6 +877,7 @@ extern unsigned int game_locked_level;
 #define CMD_HLIST        846
 #define CMD_OLIST        847
 #define CMD_MLIST        848
+#define CMD_POLL         849
 
 /* The CMD_s below are not real commands, they are used in item special procedures to identify
  * when wearer gets hit in melee or nuked and when an item is poofing on ground.

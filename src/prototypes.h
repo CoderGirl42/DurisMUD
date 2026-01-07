@@ -103,6 +103,12 @@ int write_account(P_acct);
 int read_account(P_acct);
 const char *get_account_name_safe(P_char);
 
+/* poll.c */
+void do_poll(P_char, char *, int);
+void poll_check_expirations(void);
+bool poll_wizard_active(P_char);
+void poll_wizard_cancel(P_char);
+
 /* actcomm.c */
 
 #ifdef OVL

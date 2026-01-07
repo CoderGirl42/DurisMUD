@@ -25,6 +25,7 @@
 #include "mm.h"
 #include "files.h"
 #include "sql.h"
+#include "poll.h"
 
 extern struct descriptor_data *descriptor_list;
 extern struct mm_ds *dead_mob_pool;
@@ -2294,7 +2295,214 @@ void ws_send_return_to_menu(struct descriptor_data *d, const char *reason)
     statuslog(56, "Account %s returned to menu: %s", d->account->acct_name, reason);
 }
 
-/* main command dispatcher */
+/* polls */
+void ws_cmd_poll_list(struct descriptor_data *d, cJSON *data)
+{
+    if (!d || !d->account) {
+        ws_send_system(d, "error", "Not authenticated");
+        return;
+    }
+
+    cJSON *active_only_json = data ? cJSON_GetObjectItem(data, "active_only") : NULL;
+    bool active_only = active_only_json ? cJSON_IsTrue(active_only_json) : true;
+
+    cJSON *root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "type", "poll_list");
+
+    cJSON *data_obj = cJSON_CreateObject();
+    cJSON *polls_arr = cJSON_CreateArray();
+
+    vector<poll_data> polls = poll_get_all(active_only);
+    for (size_t i = 0; i < polls.size(); i++) {
+        cJSON *poll_obj = cJSON_CreateObject();
+        cJSON_AddNumberToObject(poll_obj, "id", polls[i].id);
+        cJSON_AddStringToObject(poll_obj, "question", polls[i].question.c_str());
+        cJSON_AddNumberToObject(poll_obj, "expires_at", (double)polls[i].expires_at);
+        cJSON_AddNumberToObject(poll_obj, "total_votes", polls[i].total_votes);
+        cJSON_AddBoolToObject(poll_obj, "multi_select", polls[i].multi_select);
+        cJSON_AddBoolToObject(poll_obj, "is_active", polls[i].is_active);
+        cJSON_AddItemToArray(polls_arr, poll_obj);
+    }
+
+    cJSON_AddItemToObject(data_obj, "polls", polls_arr);
+    cJSON_AddItemToObject(root, "data", data_obj);
+
+    char *json_str = cJSON_PrintUnformatted(root);
+    if (json_str) {
+        websocket_send_text(d, json_str);
+        free(json_str);
+    }
+    cJSON_Delete(root);
+}
+
+void ws_cmd_poll_view(struct descriptor_data *d, cJSON *data)
+{
+    if (!d || !d->account) {
+        ws_send_system(d, "error", "Not authenticated");
+        return;
+    }
+
+    cJSON *poll_id_json = data ? cJSON_GetObjectItem(data, "poll_id") : NULL;
+    if (!poll_id_json || !cJSON_IsNumber(poll_id_json)) {
+        ws_send_system(d, "error", "Missing poll_id");
+        return;
+    }
+
+    int poll_id = (int)cJSON_GetNumberValue(poll_id_json);
+    poll_data poll = poll_get_by_id(poll_id);
+
+    if (poll.id == 0) {
+        ws_send_system(d, "error", "Poll not found");
+        return;
+    }
+
+    cJSON *root = cJSON_CreateObject();
+    cJSON_AddStringToObject(root, "type", "poll_view");
+
+    cJSON *data_obj = cJSON_CreateObject();
+    cJSON_AddNumberToObject(data_obj, "id", poll.id);
+    cJSON_AddStringToObject(data_obj, "question", poll.question.c_str());
+    cJSON_AddStringToObject(data_obj, "created_by", poll.created_by.c_str());
+    cJSON_AddNumberToObject(data_obj, "expires_at", (double)poll.expires_at);
+    cJSON_AddBoolToObject(data_obj, "multi_select", poll.multi_select);
+    cJSON_AddNumberToObject(data_obj, "max_choices", poll.max_choices);
+    cJSON_AddBoolToObject(data_obj, "is_active", poll.is_active);
+    cJSON_AddNumberToObject(data_obj, "total_votes", poll.total_votes);
+
+    /* voted? */
+    bool has_voted = poll_has_voted(d->account->acct_name, poll_id);
+    cJSON_AddBoolToObject(data_obj, "has_voted", has_voted);
+
+    cJSON *options_arr = cJSON_CreateArray();
+    for (size_t i = 0; i < poll.options.size(); i++) {
+        cJSON *opt_obj = cJSON_CreateObject();
+        cJSON_AddNumberToObject(opt_obj, "num", poll.options[i].option_num);
+        cJSON_AddStringToObject(opt_obj, "text", poll.options[i].text.c_str());
+        cJSON_AddNumberToObject(opt_obj, "votes", poll.options[i].vote_count);
+        cJSON_AddItemToArray(options_arr, opt_obj);
+    }
+    cJSON_AddItemToObject(data_obj, "options", options_arr);
+
+    cJSON_AddItemToObject(root, "data", data_obj);
+
+    char *json_str = cJSON_PrintUnformatted(root);
+    if (json_str) {
+        websocket_send_text(d, json_str);
+        free(json_str);
+    }
+    cJSON_Delete(root);
+}
+
+void ws_cmd_poll_vote(struct descriptor_data *d, cJSON *data)
+{
+    if (!d || !d->account) {
+        ws_send_system(d, "error", "Not authenticated");
+        return;
+    }
+
+    cJSON *poll_id_json = data ? cJSON_GetObjectItem(data, "poll_id") : NULL;
+    cJSON *choices_json = data ? cJSON_GetObjectItem(data, "choices") : NULL;
+
+    if (!poll_id_json || !cJSON_IsNumber(poll_id_json)) {
+        ws_send_system(d, "error", "Missing poll_id");
+        return;
+    }
+
+    if (!choices_json || !cJSON_IsArray(choices_json)) {
+        ws_send_system(d, "error", "Missing choices array");
+        return;
+    }
+
+    int poll_id = (int)cJSON_GetNumberValue(poll_id_json);
+    poll_data poll = poll_get_by_id(poll_id);
+
+    if (poll.id == 0) {
+        ws_send_system(d, "error", "Poll not found");
+        return;
+    }
+
+    if (!poll.is_active) {
+        ws_send_system(d, "error", "Poll is closed");
+        return;
+    }
+
+    if (poll_has_voted(d->account->acct_name, poll_id)) {
+        ws_send_system(d, "error", "Already voted");
+        return;
+    }
+
+    /* choices */
+    vector<int> choices;
+    int arr_size = cJSON_GetArraySize(choices_json);
+    for (int i = 0; i < arr_size; i++) {
+        cJSON *item = cJSON_GetArrayItem(choices_json, i);
+        if (cJSON_IsNumber(item)) {
+            choices.push_back((int)cJSON_GetNumberValue(item));
+        }
+    }
+
+    if (choices.empty()) {
+        ws_send_system(d, "error", "No valid choices");
+        return;
+    }
+
+    if (!poll.multi_select && choices.size() > 1) {
+        ws_send_system(d, "error", "Only one choice allowed");
+        return;
+    }
+
+    if ((int)choices.size() > poll.max_choices) {
+        ws_send_system(d, "error", "Too many choices");
+        return;
+    }
+
+    /* validate */
+    for (size_t i = 0; i < choices.size(); i++) {
+        bool found = false;
+        for (size_t j = 0; j < poll.options.size(); j++) {
+            if (poll.options[j].option_num == choices[i]) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            ws_send_system(d, "error", "Invalid choice");
+            return;
+        }
+    }
+
+    /* record vote */
+#ifndef __NO_MYSQL__
+    int votes_cast = poll_record_votes(d->account->acct_name, "web", poll_id, poll, choices);
+
+    if (votes_cast > 0) {
+        /* success */
+        cJSON *root = cJSON_CreateObject();
+        cJSON_AddStringToObject(root, "type", "poll_vote");
+        cJSON *data_obj = cJSON_CreateObject();
+        cJSON_AddBoolToObject(data_obj, "success", true);
+        cJSON_AddStringToObject(data_obj, "message", "Vote recorded");
+        cJSON_AddItemToObject(root, "data", data_obj);
+
+        char *json_str = cJSON_PrintUnformatted(root);
+        if (json_str) {
+            websocket_send_text(d, json_str);
+            free(json_str);
+        }
+        cJSON_Delete(root);
+
+        /* broadcast */
+        poll = poll_get_by_id(poll_id);
+        poll_broadcast_vote(poll_id, poll.total_votes);
+    } else {
+        ws_send_system(d, "error", "Failed to record vote");
+    }
+#else
+    ws_send_system(d, "error", "Database not available");
+#endif
+}
+
+/* dispatch */
 void ws_handle_command(struct descriptor_data *d, const char *cmd, cJSON *data)
 {
     if (!cmd) return;
@@ -2338,8 +2546,14 @@ void ws_handle_command(struct descriptor_data *d, const char *cmd, cJSON *data)
     } else if (strcmp(cmd, "admin_delete_character") == 0) {
         statuslog(56, "Dispatching admin_delete_character command");
         ws_cmd_admin_delete_character(d, data);
+    } else if (strcmp(cmd, "poll_list") == 0) {
+        ws_cmd_poll_list(d, data);
+    } else if (strcmp(cmd, "poll_view") == 0) {
+        ws_cmd_poll_view(d, data);
+    } else if (strcmp(cmd, "poll_vote") == 0) {
+        ws_cmd_poll_vote(d, data);
     } else {
-        /* unknown command - treat as game command */
+        /* unknown = game cmd */
         if (d->connected == CON_PLAYING) {
             write_to_q(cmd, &d->input, 0);
         }
