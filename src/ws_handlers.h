@@ -49,6 +49,11 @@ void ws_broadcast_auction_close(int auction_id, const char *winner_name, int win
                                  int final_price, const char *close_reason,
                                  int seller_pid, const char *seller_name);
 
+/* polls */
+void ws_cmd_poll_list(struct descriptor_data *d, cJSON *data);
+void ws_cmd_poll_view(struct descriptor_data *d, cJSON *data);
+void ws_cmd_poll_vote(struct descriptor_data *d, cJSON *data);
+
 /* helper functions */
 void ws_send_auth_success(struct descriptor_data *d, const char *account);
 void ws_send_auth_failed(struct descriptor_data *d, const char *error);

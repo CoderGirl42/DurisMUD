@@ -151,6 +151,7 @@ OBJS =  $(SHIP_OBJS) \
 				 objmisc.o \
 				 outposts.o \
 				 period.list.o \
+				 poll.o \
 				 prompt.o \
 				 properties.o \
 				 psionics.o \
