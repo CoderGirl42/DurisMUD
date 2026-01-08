@@ -26,6 +26,8 @@ const unsigned char compress_on_str[] = { IAC, WILL, TELOPT_COMPRESS, '\0' };
 const unsigned char compress2_on_str[] = { IAC, WILL, TELOPT_COMPRESS2, '\0' };
 const unsigned char enable_compress[] = { IAC, SB, TELOPT_COMPRESS, WILL, SE, '\0' };
 const unsigned char enable_compress2[] = { IAC, SB, TELOPT_COMPRESS2, IAC, SE, '\0' };
+const unsigned char sga_will_str[] = { IAC, WILL, TELOPT_SGA, '\0' };
+const unsigned char ga_str[] = { IAC, GA, '\0' };
 
 void    *zlib_alloc(void *opaque, unsigned int items, unsigned int size);
 void     zlib_free(void *opaque, void *address);
@@ -49,6 +51,17 @@ void advertise_mccp(P_desc desc)
 {
   write_to_descriptor(desc, (const char *)compress2_on_str);
   write_to_descriptor(desc, (const char *)compress_on_str);
+}
+
+void sga_negotiate(P_desc desc)
+{
+  write_to_descriptor_binary(desc, sga_will_str, 3);
+}
+
+void send_ga(P_desc desc)
+{
+  if (desc && !desc->sga_disabled && !desc->websocket)
+    write_to_descriptor_binary(desc, ga_str, 2);
 }
 
 /* parse telnet options and return amount of characters 
@@ -77,6 +90,9 @@ int parse_telnet_options(P_desc player, char *buf)
     case TELOPT_GMCP:
       gmcp_handle_negotiation(player, DO);
       return 3;
+    case TELOPT_SGA:
+      player->sga_disabled = 1;
+      return 3;
     }
     break;
   case DONT:
@@ -84,6 +100,9 @@ int parse_telnet_options(P_desc player, char *buf)
     {
     case TELOPT_GMCP:
       gmcp_handle_negotiation(player, DONT);
+      return 3;
+    case TELOPT_SGA:
+      player->sga_disabled = 0;
       return 3;
     }
     /* fall through */
