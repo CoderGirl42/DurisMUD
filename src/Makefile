@@ -247,7 +247,8 @@ OBJS =  $(SHIP_OBJS) \
 				 websocket.o \
 				 ws_handlers.o \
 				 json_utils.o \
-				 gmcp.o
+				 gmcp.o \
+				 ttype.o
 
 # Name lists (no paths) for pfile-related objs
 SHARED_PFILE_OBJS_NAMES = pf-skills.o pf-files.o

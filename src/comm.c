@@ -62,6 +62,7 @@
 #include "websocket.h"
 #include "json_utils.h"
 #include "gmcp.h"
+#include "ttype.h"
 #include "copyover.h"
 #include "poll.h"
 
@@ -852,6 +853,17 @@ void game_loop(int port, int sslport)
         case 1:
           continue;
         }
+      }
+
+      /* wait for ttype response or timeout */
+      if (point->connected == CON_TTYPE_NEGO)
+      {
+        if (point->ttype_state == TTYPE_COMPLETE || time(0) >= point->ttype_timeout)
+        {
+          greet(point);
+        }
+        else
+          continue;
       }
 
       /* update max_users_playing for "who" information */
@@ -2142,7 +2154,12 @@ int new_descriptor(int s, int conn_type)
   else if (conn_type == 2)
     STATE(newd) = CON_GET_TERM; /* WebSocket waits for HTTP handshake */
   else
-    greet(newd);
+  {
+    /* start ttype negotiation before greeting */
+    ttype_negotiate(newd);
+    STATE(newd) = CON_TTYPE_NEGO;
+    newd->ttype_timeout = time(0) + 5; /* 5 second timeout */
+  }
 
   return 0;
 }
@@ -2167,6 +2184,7 @@ static void greet(P_desc newd)
 
   advertise_mccp(newd);
   gmcp_negotiate(newd);
+  /* ttype_negotiate called earlier, before greeting */
   sga_negotiate(newd);
 }
 
@@ -2756,6 +2774,24 @@ int process_input(P_desc t)
   *(t->buf + begin + sofar) = 0;
 
   /*
+   * process telnet options before checking for newlines, so ttype/gmcp
+   * subnegotiations that arrive without user input are still handled
+   */
+  for (i = begin; *(t->buf + i); i++)
+  {
+    if (*(t->buf + i) == (signed char)IAC)
+    {
+      int consumed = parse_telnet_options(t, t->buf + i);
+      if (consumed > 0)
+      {
+        /* remove processed telnet data from buffer */
+        memmove(t->buf + i, t->buf + i + consumed, strlen(t->buf + i + consumed) + 1);
+        i--; /* recheck this position */
+      }
+    }
+  }
+
+  /*
    * scan input stream for a newline, if one isn't found, command is not
    * yet ready for processing, so do not xfer it to input queue, and
    * return 0, so that this socket is skipped.
@@ -2781,8 +2817,8 @@ int process_input(P_desc t)
       /* telnet option ? */
       if (*(t->buf + i) == (signed char)IAC)
         i += parse_telnet_options(t, t->buf + i);
-      /* backspace? */
-      else if (*(t->buf + i) == '\b')
+      /* backspace? (handle both ^H and DEL) */
+      else if (*(t->buf + i) == '\b' || (unsigned char)*(t->buf + i) == 127)
       {
         /* more than one char ? */
         if (k)

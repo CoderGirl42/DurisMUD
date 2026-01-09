@@ -25,6 +25,7 @@
 #include "copyover.h"
 #include "websocket.h"
 #include "gmcp.h"
+#include "ttype.h"
 #include "mm.h"
 #include "ships/ships.h"
 
@@ -110,6 +111,12 @@ static int write_desc_entry(FILE *fp, P_desc d)
     entry.term_type = d->term_type;
     entry.gmcp_enabled = d->gmcp_enabled;
     entry.out_compress = d->out_compress;
+    entry.mtts_flags = d->mtts_flags;
+    entry.charset_detected = d->charset_detected;
+    strncpy(entry.ttype_client, d->ttype_client, sizeof(entry.ttype_client) - 1);
+    entry.ttype_client[sizeof(entry.ttype_client) - 1] = '\0';
+    strncpy(entry.ttype_terminal, d->ttype_terminal, sizeof(entry.ttype_terminal) - 1);
+    entry.ttype_terminal[sizeof(entry.ttype_terminal) - 1] = '\0';
 
     return fwrite(&entry, sizeof(entry), 1, fp) == 1;
 }
@@ -615,6 +622,13 @@ void copyover_recover(int *mother_desc, int *mother_desc_ssl, int *ws_desc)
         d->host2[sizeof(d->host2) - 1] = '\0';
         d->term_type = desc_entry.term_type;
         d->gmcp_enabled = desc_entry.gmcp_enabled;
+        d->mtts_flags = desc_entry.mtts_flags;
+        d->charset_detected = desc_entry.charset_detected;
+        strncpy(d->ttype_client, desc_entry.ttype_client, sizeof(d->ttype_client) - 1);
+        d->ttype_client[sizeof(d->ttype_client) - 1] = '\0';
+        strncpy(d->ttype_terminal, desc_entry.ttype_terminal, sizeof(d->ttype_terminal) - 1);
+        d->ttype_terminal[sizeof(d->ttype_terminal) - 1] = '\0';
+        d->ttype_state = TTYPE_COMPLETE;  // already negotiated before copyover
         d->wait = 1;
         d->prompt_mode = FALSE;
         d->connected = -1;  // temp state until player loads
