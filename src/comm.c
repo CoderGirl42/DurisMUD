@@ -2184,8 +2184,8 @@ static void greet(P_desc newd)
 
   advertise_mccp(newd);
   gmcp_negotiate(newd);
-  /* ttype_negotiate called earlier, before greeting */
-  sga_negotiate(newd);
+  /* sga disabled - causes ^? ^M on raw telnet in character mode */
+  /* sga_negotiate(newd); */
 }
 
 /*
