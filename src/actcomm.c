@@ -831,18 +831,6 @@ void do_page(P_char ch, char *argument, int cmd)
   logit(LOG_STATUS, "re-reading wizmotd.");
   wizmotd = get_mud_info("wizmotd");
 
-  send_to_char("Re-reading credits...\r\n", ch);
-  logit(LOG_STATUS, "re-reading credits.");
-  credits = get_mud_info("credits");
-
-  send_to_char("Re-reading faq...\r\n", ch);
-  logit(LOG_STATUS, "re-reading faq.");
-  faq = get_mud_info("faq");
-
-  send_to_char("Re-reading wizlist...\r\n", ch);
-  logit(LOG_STATUS, "re-reading wizlist.");
-  wizlist = get_mud_info("wizlist");
-
   send_to_char("&+WDone.&N\r\n", ch);
 }
 

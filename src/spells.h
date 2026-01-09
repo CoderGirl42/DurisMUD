@@ -725,7 +725,9 @@
 #define SPELL_GUARDIAN_WARD           674
 #define SPELL_GREATER_GUARDIAN_WARD   675
 #define SPELL_DIVINE_FONT             676
-#define LAST_SPELL                    SPELL_DIVINE_FONT
+#define SPELL_VITAL_INTERCESSION      677
+#define SPELL_HOLY_INTERCESSION       678
+#define LAST_SPELL                    SPELL_HOLY_INTERCESSION
 
 
 #define FIRST_SKILL                  1000  /* should be a decent split point */
@@ -1238,6 +1240,7 @@
 #define ACH_DO_YOU_MINE              2123
 #define TAG_HELP_COOLDOWN            2124
 #define TAG_SUPPRESS_PERM_BITS       2125
+#define TAG_INFO_COOLDOWN            2126
 
 #define SAVING_PARA   0
 #define SAVING_ROD    1

@@ -399,8 +399,15 @@ char *json_build_room_info(struct room_data *room, struct char_data *ch) {
     /* Terrain type to environment string mapping */
     const char *env_names[] = {
         "inside", "city", "field", "forest", "hills", "mountains",
-        "water", "water", "air", "underwater", "desert", "arctic",
-        "swamp", "ocean", "path", "road", "jungle", "cavern"
+        "water swim", "water noswim", "no ground", "underwater",
+        "underwater ground", "plane of fire", "ocean", "ud wild",
+        "ud city", "ud inside", "ud water swim", "ud water noswim",
+        "ud no ground", "plane of air", "plane of water",
+        "plane of earth", "plane of ethereal", "plane of astral",
+        "desert", "tundra", "swamp", "ud mountains", "ud slime",
+        "ud low ceilings", "ud liquid mithril", "ud mushroom forest",
+        "outer castle wall", "castle gate", "castle", "negative plane",
+        "plane of avernus", "patrolled road", "snowy forest", "lava",
     };
 
     if (!room) return strdup("{}");
@@ -442,8 +449,11 @@ char *json_build_room_info(struct room_data *room, struct char_data *ch) {
     }
 
     /* Standard field: environment (string, not terrain number) */
-    if (room->sector_type >= 0 && room->sector_type < 18) {
-        cJSON_AddStringToObject(root, "environment", env_names[room->sector_type]);
+    size_t env_count = sizeof(env_names) / sizeof(env_names[0]);
+
+    if (room->sector_type >= 0 && (size_t)room->sector_type < env_count) {
+        cJSON_AddStringToObject(root, "environment",
+                                env_names[room->sector_type]);
     } else {
         cJSON_AddStringToObject(root, "environment", "unknown");
     }

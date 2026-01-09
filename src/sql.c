@@ -1769,6 +1769,12 @@ string get_mud_info(const char *name)
 
   MYSQL_RES *res = mysql_store_result(DB);
 
+  if (!res)
+  {
+    logit(LOG_DEBUG, "get_mud_info(): mysql_store_result failed for '%s'", name);
+    return string();
+  }
+
   if (mysql_num_rows(res) > 0)
   {
     MYSQL_ROW row = mysql_fetch_row(res);

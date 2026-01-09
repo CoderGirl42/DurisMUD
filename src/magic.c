@@ -494,7 +494,7 @@ void spell_prismatic_spray(int level, P_char ch, char *arg, int type,
 void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
                           P_char victim, P_obj obj)
 {
-  int dam, temp, save;
+  int dam, temp, save, noshrug;
   struct damage_messages messages = {
       "&+BReality &nseems to twist and bend as your &+Yray&n collides with $N's body!",
       "$n laughs maniacally as their &+Ldevastating &+Yray&n of pure &+Benergy &ncollides with your body!",
@@ -512,15 +512,19 @@ void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
   if (saves_spell(victim, SAVING_SPELL))
     dam >>= 1;
 
+  // This spell has a chance to be !shrug.
+  if (number(0, 99) <= get_property("spell.shrug.chance.anti_magic_ray", 60))
+    noshrug = SPLDAM_NOSHRUG;
+  else
+    noshrug = 0;
+
   // if vict doesn't die, hit with dispel magic 50% of the time
 
-  if (spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages) ==
-          DAM_NONEDEAD &&
-      (number(0, 1)))
+  if (spell_damage(ch, victim, dam, SPLDAM_GENERIC, noshrug, &messages) == DAM_NONEDEAD && (number(0, 1)))
 
   {
     save = victim->specials.apply_saving_throw[SAVING_SPELL];
-    victim->specials.apply_saving_throw[SAVING_SPELL] += 15;
+    victim->specials.apply_saving_throw[SAVING_SPELL] += 20 + (56 - GET_LEVEL(ch));
     spell_dispel_magic(level, ch, 0, SPELL_TYPE_SPELL, victim, obj);
     victim->specials.apply_saving_throw[SAVING_SPELL] = save;
   }
@@ -9257,6 +9261,97 @@ void spell_vitality(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
+void vital_intercession_heal(P_char ch)
+{
+	struct affected_type *paf = get_spell_from_char(ch, SPELL_VITAL_INTERCESSION);
+	P_char healer = paf ? (P_char)paf->context : NULL;
+
+	int healpoints = number( (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMin", 0.1)), (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMax", 0.2)) );
+
+	if(healer && SanityCheck(healer, "vital_intercession_heal"))
+	{
+		// if the healer is still alive, call heal to give exp and apply modifiers
+		heal(ch, healer, healpoints, GET_MAX_HIT(ch));
+	}
+	else
+	{
+		// healer is gone, just call vamp
+		vamp(ch, healpoints, GET_MAX_HIT(ch));
+	}
+
+	send_to_char("&+WHealing energies surge through your body!\r\n&n", ch);
+
+	paf->modifier--;
+	if(paf->modifier <= 0)
+	{
+		wear_off_message(ch, paf);
+		affect_remove(ch, paf);
+	}
+}
+
+void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char victim,
+                    		  P_obj obj)
+{
+	struct affected_type af;
+	int hits = level / 3 + number(-2, 2);
+	if (hits < 0)
+		hits = 5;
+
+	if (!SanityCheck(ch, "spell_vital_intercession") || !SanityCheck(victim, "spell_vital_intercession"))
+		return;
+
+	if (!affected_by_spell(victim, SPELL_VITAL_INTERCESSION))
+	{
+		bzero(&af, sizeof(af));
+		af.type = SPELL_VITAL_INTERCESSION;
+		af.duration = 5;
+		af.modifier = hits;
+		af.context = (void*)ch;
+		af.loc2 = GET_LEVEL(ch);
+		affect_to_char(victim, &af);
+		update_pos(victim);
+	}
+	else
+	{
+		struct affected_type *af1;
+		for (af1 = victim->affected; af1; af1 = af1->next)
+		if (af1->type == SPELL_VITAL_INTERCESSION)
+		{
+			af1->duration = 5;
+			af1->modifier = hits;
+			af1->context = (void*)ch;
+			af.loc2 = GET_LEVEL(ch);
+		}
+	}
+
+	send_to_char("&+WYou feel healing energies surround you!\r\n&n", victim);
+}
+
+void spell_holy_intercession(int level, P_char ch, char *arg, int type, P_char victim,
+                    		 P_obj obj)
+{
+	struct group_list *gl;
+
+	if (!SanityCheck(ch, "spell_holy_intercession"))
+		return;
+
+	if (ch->group)
+	{
+		gl = ch->group;
+		/* leader first */
+		if (gl->ch->in_room == ch->in_room) spell_vital_intercession(level * 3 / 4, ch, 0, 0, gl->ch, 0);
+		/* followers */
+		for (gl = gl->next; gl; gl = gl->next)
+		{
+			if (gl->ch->in_room == ch->in_room) spell_vital_intercession(level * 3 / 4, ch, 0, 0, gl->ch, 0);
+		}
+	}
+	else
+	{
+		spell_vital_intercession(level * 3 / 4, ch, 0, 0, ch, 0);
+	}
+}
+
 void spell_vitalize_undead(int level, P_char ch, char *arg, int type,
                            P_char victim, P_obj obj)
 {
@@ -11990,9 +12085,14 @@ void spell_battletide(int level, P_char ch, char *arg, int type, P_char victim,
   bzero(&af, sizeof(af));
   af.type = SPELL_BATTLETIDE;
   af.location = APPLY_DAMROLL;
-  af.modifier = (level / 10) + dice(1, 10);
+  af.modifier = 10;
   af.duration = 10;
   af.bitvector4 = AFF4_BATTLETIDE;
+  affect_to_char(ch, &af);
+  af.location = APPLY_HITROLL;
+  af.modifier = 10;
+  af.duration = 10;
+  af.bitvector4 = 0;
   affect_to_char(ch, &af);
 
   act("&+R$n&+R thrusts $s arms skyward, &+rscreaming&+R forth a call to arms!&n", FALSE, ch, 0, 0, TO_ROOM);
@@ -14821,11 +14921,10 @@ int CheckMobRemoveableSpellBits(P_char ch, RemoveableSpellBit *spellBits, int co
     return success;
   }
 
-  int saveBonus = IS_ELITE(ch) ? -6 : -3;
   for (int i = 0; i < countSpellBits; i++)
   {
     if (IS_SET(*bitStore, spellBits[i].bit) && !affected_by_spell(ch, spellBits[i].spell) &&
-        (nosave || !NewSaves(ch, SAVING_SPELL, saveMod + saveBonus)))
+        (nosave || !NewSaves(ch, SAVING_SPELL, saveMod)))
     {
       success = 1;
       if (!IS_ELITE(ch))

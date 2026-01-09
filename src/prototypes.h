@@ -1577,6 +1577,9 @@ void spell_corpse_portal(int level, P_char ch, char *arg, int type, P_char victi
 void spell_contain_being(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
 void spell_infernal_fury(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
 void spell_freedom_of_movement(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
+void vital_intercession_heal(P_char ch);
+void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
+void spell_holy_intercession(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj);
 bool check_freedom_of_movement(P_char ch, bool clear);
 int get_spell_component(P_char, int, int);
 

@@ -136,17 +136,14 @@ struct reboot_data
 #define OK(ch) send_to_char("Okay.\r\n", (ch))
 
 /* global variables */
-extern string credits;
 extern char *worldmap;
 extern char *worldmapa;
 extern string news;
 extern char *projects;
-extern string faq;
 extern string motd;
 extern string wizmotd;
 extern char *help;
 extern char *rules;
-extern string wizlist;
 extern char *wizlista;
 extern char *greetinga;
 extern char *disclaimer;

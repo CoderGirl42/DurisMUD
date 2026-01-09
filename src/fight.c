@@ -421,6 +421,8 @@ int check_damage_ward(P_char attacker, P_char ch, int dam)
         FALSE, attacker, 0, ch, TO_VICT | ACT_NOTTERSE);
     act("&+CThe ward around&n $N&+C flashes briefly as it absorbs your assault!&n",
         FALSE, attacker, 0, ch, TO_CHAR | ACT_NOTTERSE);
+	act("&+CThe ward around&n $N&+C flashes briefly as it absorbs &n$n&+C's assault!&n",
+        FALSE, attacker, 0, ch, TO_NOTVICT | ACT_NOTTERSE);
   }
 
   // check for innate wards
@@ -666,7 +668,7 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   hits = vamp(ch, hits, cap);
   update_achievements(healer, ch, hits, 1);
 
-  if(hits > 1 && healer != ch && IS_SET(healer->specials.act2, PLR2_HEAL))
+  if(hits > 1 && healer != ch && ch->in_room == healer->in_room && IS_SET(healer->specials.act2, PLR2_HEAL))
   {
 	char buf[100];
 	snprintf(buf, ARRAY_SIZE(buf), "&+w[Heal: &+G%2d&+w ]&n ", hits);
@@ -6588,6 +6590,11 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
         victim->disguise.hit -= (int)dam;
       }
     }
+
+	if (victim && affected_by_spell(victim, SPELL_VITAL_INTERCESSION))
+	{
+		vital_intercession_heal(victim);
+	}
 
     if (new_stat == STAT_DEAD)
     {
