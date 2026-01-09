@@ -494,7 +494,7 @@ void spell_prismatic_spray(int level, P_char ch, char *arg, int type,
 void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
                           P_char victim, P_obj obj)
 {
-  int dam, temp, save;
+  int dam, temp, save, noshrug;
   struct damage_messages messages = {
       "&+BReality &nseems to twist and bend as your &+Yray&n collides with $N's body!",
       "$n laughs maniacally as their &+Ldevastating &+Yray&n of pure &+Benergy &ncollides with your body!",
@@ -512,11 +512,15 @@ void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
   if (saves_spell(victim, SAVING_SPELL))
     dam >>= 1;
 
+  // This spell has a chance to be !shrug.
+  if (number(0, 99) <= get_property("spell.shrug.chance.anti_magic_ray", 60))
+    noshrug = SPLDAM_NOSHRUG;
+  else
+    noshrug = 0;
+
   // if vict doesn't die, hit with dispel magic 50% of the time
 
-  if (spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages) ==
-          DAM_NONEDEAD &&
-      (number(0, 1)))
+  if (spell_damage(ch, victim, dam, SPLDAM_GENERIC, noshrug, &messages) == DAM_NONEDEAD && (number(0, 1)))
 
   {
     save = victim->specials.apply_saving_throw[SAVING_SPELL];
