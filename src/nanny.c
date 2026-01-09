@@ -6899,6 +6899,10 @@ void nanny(P_desc d, char *arg)
     STATE(d) = CON_GET_TERM;
     break;
 
+  case CON_TTYPE_NEGO:
+    /* waiting for ttype negotiation, ignore user input */
+    break;
+
     /* Flush output messages, then kill the descriptor */
   case CON_FLUSH:
   default:

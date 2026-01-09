@@ -10,7 +10,7 @@
 
 #define COPYOVER_FILE "copyover.dat"
 #define COPYOVER_MAGIC "COPY"
-#define COPYOVER_VERSION 6
+#define COPYOVER_VERSION 7
 
 // copyover file header
 struct copyover_header {
@@ -33,6 +33,10 @@ struct copyover_desc {
     int gmcp_enabled;
     int out_compress;
     int room;
+    int mtts_flags;
+    int charset_detected;
+    char ttype_client[64];
+    char ttype_terminal[32];
     int fighting_type;          // 0=none, 1=mob, 2=player
     int fighting_id;
     char fighting_name[50];

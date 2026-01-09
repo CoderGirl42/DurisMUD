@@ -3204,6 +3204,11 @@ void advertise_mccp(P_desc desc);
 int compress_start(P_desc, int);
 int compress_end(P_desc, int);
 
+/* ttype.c */
+void ttype_negotiate(P_desc d);
+void ttype_handle_negotiation(P_desc d, int cmd);
+void ttype_handle_subnegotiation(P_desc d, const unsigned char *data, int len);
+
 /* poisons */
 void poison_lifeleak(int, P_char, char *, int, P_char, struct affected_type *);
 void poison_weakness(int, P_char, char *, int, P_char, struct affected_type *);
