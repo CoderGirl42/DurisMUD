@@ -13098,13 +13098,16 @@ void apply_zone_spell(P_char ch, int count, const char *zone_name, int zone_inde
 
   if (message != SETMSG_NONE)
   {
-    // mark this as from a set
-    struct affected_type *paf = get_spell_from_char(ch, spell);
-    if (paf)
-    {
-      SET_BIT(paf->flags, AFFTYPE_SET_AFFECT | AFFTYPE_NOSAVE);
-      paf->context = reinterpret_cast<void *>(zone_index);
-    }
+    // mark all affects matching the skill as from a set and nosave
+    struct affected_type *paf = NULL;
+	for( paf = ch->affected; paf; paf = paf->next )
+	{
+		if( paf->type == spell )
+		{
+			SET_BIT(paf->flags, AFFTYPE_SET_AFFECT | AFFTYPE_NOSAVE);
+			paf->context = reinterpret_cast<void *>(zone_index);
+		}
+	}
   }
 }
 

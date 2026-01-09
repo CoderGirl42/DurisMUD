@@ -86,8 +86,8 @@ extern Skill skills[];
 extern long new_exp_table[]; // Arih: Fixed type mismatch bug - was int, should be long
 extern struct wis_app_type wis_app[];
 
-int pv_common(P_char, P_char, const P_obj);
-bool monk_superhit(P_char, P_char);
+int pv_common(P_char, P_char, const P_obj, int*);
+bool monk_superhit(P_char, P_char, int*);
 extern char *arena_death_msg(P_obj p_weapon);
 extern void send_to_arena(char *msg, int race);
 extern int get_numb_chars_in_group(struct group_list *group);
@@ -538,7 +538,7 @@ bool opposite_racewar(P_char ch, P_char victim)
 int vamp(P_char ch, double fhits, double fcap)
 {
   struct affected_type *af;
-  static char buf[16];
+  static char buf[100];
   P_char tch;
   struct group_list *gl;
   int hits = (int)fhits, cap = (int)fcap, blocked;
@@ -602,16 +602,11 @@ int vamp(P_char ch, double fhits, double fcap)
   hits = MAX(0, MIN(hits, cap - GET_HIT(ch)));
   GET_HIT(ch) = GET_HIT(ch) + hits;
 
-  /* if(hits > 1)
-     {
-  //snprintf(buf, 16, "%s healed: %d\n", GET_NAME(ch), hits);
-  // only send buf if it actually filled
-  for (tch = world[ch->in_room].people; tch; tch = tch->next_in_room)
-#ifndef TEST_MUD
-if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_HEAL))
-#endif
-  //send_to_char(buf, tch);
-  }*/
+  if(hits > 1 && IS_SET(ch->specials.act2, PLR2_HEAL))
+  {
+	snprintf(buf, ARRAY_SIZE(buf), "&+w[Heal: &+G%2d&+w ]&n ", hits);
+	send_to_char(buf, ch);	
+  }
 
   // Client
   for (gl = ch->group; gl; gl = gl->next)
@@ -670,6 +665,13 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   */
   hits = vamp(ch, hits, cap);
   update_achievements(healer, ch, hits, 1);
+
+  if(hits > 1 && healer != ch && IS_SET(healer->specials.act2, PLR2_HEAL))
+  {
+	char buf[100];
+	snprintf(buf, ARRAY_SIZE(buf), "&+w[Heal: &+G%2d&+w ]&n ", hits);
+	send_to_char(buf, healer);	
+  }
 
   if (GET_SPEC(healer, CLASS_CLERIC, SPEC_HEALER))
   {
@@ -4565,7 +4567,7 @@ dam_mod->mod = -(aura_mod(victim, AURA_SPELL_PROTECTION) / 100.0);
  *   replace SPLDAM_ prefix with something else, it may collide with constants
  *   for spells. SPLDAM, PHSDAM
  */
-int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, struct damage_messages *messages)
+int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, struct damage_messages *messages, int *damAccumulator)
 {
   struct damage_messages dummy_messages;
   struct affected_type *af;
@@ -4972,7 +4974,7 @@ int spell_damage(P_char ch, P_char victim, double dam, int type, uint flags, str
 
   // ugly hack - we smuggle damage_type for eq poofing messages on 8 highest bits
   messages->type |= type << 24;
-  result = raw_damage(ch, victim, dam, (RAWDAM_DEFAULT ^ flags) | RAWDAM_NOWARD, messages);
+  result = raw_damage(ch, victim, dam, (RAWDAM_DEFAULT ^ flags) | RAWDAM_NOWARD, messages, damAccumulator);
 
   // Tether code here
   /*
@@ -5348,7 +5350,7 @@ int check_shields(P_char ch, P_char victim, int dam, int flags)
  * calculates vamping from melee damage and also resolves damage from fireshield type
  * spells to the attacker.
  */
-int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_messages *messages)
+int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_messages *messages, int *damAccumulator)
 {
   struct damage_messages dummy_messages;
   unsigned int skin;
@@ -5634,7 +5636,7 @@ int melee_damage(P_char ch, P_char victim, double dam, int flags, struct damage_
 
   messages->type |= 1 << 24;
 
-  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT | flags | RAWDAM_NOWARD, messages);
+  result = raw_damage(ch, victim, dam, RAWDAM_DEFAULT | flags | RAWDAM_NOWARD, messages, damAccumulator);
 
   if (result != DAM_NONEDEAD)
   {
@@ -5689,6 +5691,12 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
   if (!IS_ALIVE(ch) || !IS_ALIVE(victim) || (dam < 1))
   {
     return;
+  }
+
+  // no vamping on images
+  if (IS_NPC(victim) && GET_VNUM(victim) == 250)
+  {
+	return;
   }
 
   // Allowing cannibalize through all weapons.
@@ -6148,14 +6156,14 @@ if (caster->group)
         if (!(flags & PHSDAM_NOREDUCE)){
             // global mod of 75% reduced damage
             dam_mod->mod += -0.75;
-dam_mod->type = dam_mod_type::Increased;
-if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim)))
-{
-  // npcs to pcs do 25% increased damage
-  dam_mod->mod += 0.25;
-}
-}
-}
+			dam_mod->type = dam_mod_type::Increased;
+			if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim)))
+			{
+				// npcs to pcs do 25% increased damage
+				dam_mod->mod += 0.25;
+			}
+		}
+	}
 }
 ,
     {MAKE_DAM_MOD_PRED(){
@@ -6202,7 +6210,7 @@ if (GET_RACEWAR(victim) == RACEWAR_EVIL)
  * mob procs on death, spell_damage and melee_damage can quite
  * often return -1, on deflects and shields
  */
-int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_messages *messages)
+int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_messages *messages, int *damAccumulator)
 {
   struct affected_type *af, *next_af;
   struct group_list *gl;
@@ -6419,27 +6427,33 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
       GET_LOWEST_HIT(victim) = GET_HIT(victim);
     }
 
-    snprintf(buffer, MAX_STRING_LENGTH, "&+w[Damage: %2d ] &n", (int)dam);
+	if(damAccumulator)
+	{
+		*damAccumulator = *damAccumulator + (int)dam;
+	}
+	
+	snprintf(buffer, MAX_STRING_LENGTH, "&+w[Damage: %2d ] &n", (int)dam);
 
-    if (IS_PC(ch) && !IS_TRUSTED(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE))
-    {
-      send_to_char(buffer, ch);
-    }
+	if (IS_PC(ch) && !IS_TRUSTED(ch) && IS_SET(ch->specials.act2, PLR2_DAMAGE) && (!messages || !IS_SET(messages->type, DAMMSG_TERSE) || !IS_SET(ch->specials.act2, PLR2_TERSE)))
+	{
+		send_to_char(buffer, ch);
+	}
 
-    for (tch = world[victim->in_room].people; tch; tch = tch->next_in_room)
-    {
-      if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_DAMAGE))
-      {
-        send_to_char(buffer, tch);
-      }
-      // If it's a charmie, charmed by a PC with PET_DAMAGE toggled on.
-      // Note: We want pet damage to show for illusionist / no-order pets which are
-      //   affected by SPELL_CHARM_PERSON, but not AFF_CHARM.
-      else if ((IS_AFFECTED(ch, AFF_CHARM) || affected_by_spell(ch, SPELL_CHARM_PERSON)) && IS_PC(tch) && IS_SET(tch->specials.act3, PLR3_PET_DAMAGE) && tch == GET_MASTER(ch))
-      {
-        send_to_char(buffer, tch);
-      }
-    }
+	for (tch = world[victim->in_room].people; tch; tch = tch->next_in_room)
+	{
+		if (IS_TRUSTED(tch) && IS_SET(tch->specials.act2, PLR2_DAMAGE) && (!messages || !IS_SET(messages->type, DAMMSG_TERSE) || !IS_SET(tch->specials.act2, PLR2_TERSE)))
+		{
+			send_to_char(buffer, tch);
+		}
+		// If it's a charmie, charmed by a PC with PET_DAMAGE toggled on.
+		// Note: We want pet damage to show for illusionist / no-order pets which are
+		//   affected by SPELL_CHARM_PERSON, but not AFF_CHARM.
+		else if ((IS_AFFECTED(ch, AFF_CHARM) || affected_by_spell(ch, SPELL_CHARM_PERSON)) && IS_PC(tch) && IS_SET(tch->specials.act3, PLR3_PET_DAMAGE) && tch == GET_MASTER(ch))
+		{
+			send_to_char(buffer, tch);
+		}
+	}
+	
 
     if (messages && messages->type & DAMMSG_TERSE)
     {
@@ -6462,6 +6476,29 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
         if (af->type == TAG_RACE_CHANGE || af->type == SPELL_DRACONIC_APOTHEOSIS)
         {
           GET_RACE(victim) = af->modifier;
+        }
+      }
+    }
+
+	if ((ch != victim))
+    {
+      check_vamp(ch, victim, dam, flags);
+    }
+
+    P_char rider = GET_RIDER(victim);
+
+    if (rider != NULL)
+    {
+      if (IS_DRAGOON(rider) && affected_by_spell(rider, SPELL_STIGMATA_DRACONICA))
+      {
+        if (is_dragoon_mounted(rider))
+        {
+          P_char mount = get_dragoon_mount(rider);
+
+          if (mount == victim)
+          {
+            check_vamp(rider, victim, dam, flags);
+          }
         }
       }
     }
@@ -6538,29 +6575,6 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
       act("Upon being struck, $n disappears into thin air.", TRUE, victim, 0, 0, TO_ROOM);
       extract_char(victim);
       return DAM_VICTDEAD;
-    }
-
-    if ((ch != victim))
-    {
-      check_vamp(ch, victim, dam, flags);
-    }
-
-    P_char rider = GET_RIDER(victim);
-
-    if (rider != NULL)
-    {
-      if (IS_DRAGOON(rider) && affected_by_spell(rider, SPELL_STIGMATA_DRACONICA))
-      {
-        if (is_dragoon_mounted(rider))
-        {
-          P_char mount = get_dragoon_mount(rider);
-
-          if (mount == victim)
-          {
-            check_vamp(rider, victim, dam, flags);
-          }
-        }
-      }
     }
 
     if (victim && IS_DISGUISE(victim))
@@ -7342,7 +7356,7 @@ int required_weapon_skill(P_obj wpn)
  *   2) Make hit take slot with weapon as an argument or weapon itself
  *        to avoid silly swapping.
  */
-bool hit(P_char ch, P_char victim, P_obj weapon)
+bool hit(P_char ch, P_char victim, P_obj weapon, int *damAccumulator)
 {
   P_char tch, mount, gvict;
   int msg, victim_ac, to_hit, diceroll, wpn_skill, sic, tmp, wpn_skill_num;
@@ -8066,7 +8080,7 @@ bool hit(P_char ch, P_char victim, P_obj weapon)
 
   //!!!
   // | RAWDAM_NOEXP,   // hitting yields normal exp -Odorf &messages)
-  if (melee_damage(ch, victim, dam, (msg == MSG_HIT ? PHSDAM_TOUCH : PHSDAM_HELLFIRE | PHSDAM_BATTLETIDE), &messages) != DAM_NONEDEAD)
+  if (melee_damage(ch, victim, dam, (msg == MSG_HIT ? PHSDAM_TOUCH : PHSDAM_HELLFIRE | PHSDAM_BATTLETIDE), &messages, damAccumulator) != DAM_NONEDEAD)
   {
     return TRUE;
   }
@@ -9975,7 +9989,7 @@ void perform_violence(void)
   struct affected_type aff;
   int attacks[MAX_ATTACKS];
   int number_attacks, real_attacks, div_attacks;
-  int num_hits;
+  int num_hits, damAccumulator;
   long time_now;
   int i, room, skill;
   std::set<int> room_rnums;
@@ -10238,6 +10252,7 @@ void perform_violence(void)
     }
 
     num_hits = 0;
+	damAccumulator = 0;
 
     for (i = 0; i < real_attacks; i++)
     {
@@ -10248,10 +10263,10 @@ void perform_violence(void)
       // Monk % maxhealth damage.
       if (attacks[i / div_attacks] == WEAR_NONE)
       {
-        if (monk_superhit(ch, opponent))
+        if (monk_superhit(ch, opponent, &damAccumulator))
           num_hits++;
       }
-      else if (pv_common(ch, opponent, ch->equipment[attacks[i / div_attacks]]))
+      else if (pv_common(ch, opponent, ch->equipment[attacks[i / div_attacks]], &damAccumulator))
       {
         num_hits++;
       }
@@ -10270,7 +10285,7 @@ void perform_violence(void)
     appear(ch);
     appear(opponent);
 
-    snprintf(GBuf1, MAX_STRING_LENGTH, "%sYou attack $N.%s [&+R%d&n hits]",
+    snprintf(GBuf1, MAX_STRING_LENGTH, "%sYou attack $N.%s [&+R%d&n hits] [&+R%d&n damage]",
              (IS_PC(ch) &&
               IS_SET(ch->specials.act2, PLR2_BATTLEALERT))
                  ? "&+G-=[&n"
@@ -10279,11 +10294,11 @@ void perform_violence(void)
               IS_SET(ch->specials.act2, PLR2_BATTLEALERT))
                  ? "&+G]=-&n"
                  : "",
-             num_hits);
+             num_hits, damAccumulator);
     act(GBuf1, FALSE, ch, 0, opponent, TO_CHAR | ACT_TERSE);
-    snprintf(GBuf1, MAX_STRING_LENGTH, "%s$n attacks you.%s [&+R%d&n hits]",
+    snprintf(GBuf1, MAX_STRING_LENGTH, "%s$n attacks you.%s [&+R%d&n hits] [&+R%d&n damage]",
              (IS_PC(opponent) && IS_SET(opponent->specials.act2, PLR2_BATTLEALERT)) ? "&+R-=[&n" : "",
-             (IS_PC(opponent) && IS_SET(opponent->specials.act2, PLR2_BATTLEALERT)) ? "&+R]=-&n" : "", num_hits);
+             (IS_PC(opponent) && IS_SET(opponent->specials.act2, PLR2_BATTLEALERT)) ? "&+R]=-&n" : "", num_hits, damAccumulator);
     act(GBuf1, FALSE, ch, 0, opponent, TO_VICT | ACT_TERSE);
     snprintf(GBuf1, MAX_STRING_LENGTH, "$n attacks $N. [&+R%d&n hits]", num_hits);
     act(GBuf1, FALSE, ch, 0, opponent, TO_NOTVICT | ACT_TERSE);
@@ -10373,7 +10388,7 @@ void double_strike(P_char ch, P_char victim, P_obj wpn)
 }
 
 // This does % maxhealth damage, costs the monk 2 attacks and is not blockable.
-bool monk_superhit(P_char ch, P_char victim)
+bool monk_superhit(P_char ch, P_char victim, int *damAccumulator)
 {
   static struct damage_messages monk_superhit_messages = {
       "You hit a pressure point on $N with additional &+rforce&n.",
@@ -10436,7 +10451,7 @@ bool monk_superhit(P_char ch, P_char victim)
   {
     dam = 225;
   }
-  melee_damage(ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_TOUCH, &monk_superhit_messages);
+  melee_damage(ch, victim, dam, PHSDAM_NOREDUCE | PHSDAM_TOUCH, &monk_superhit_messages, damAccumulator);
 
   return TRUE;
 }
@@ -10451,7 +10466,7 @@ bool monk_superhit(P_char ch, P_char victim)
 // num_hits  = incremented if opponent did not dodge somehow (as such, it is only somewhat accurate, eh?)
 //
 
-int pv_common(P_char ch, P_char opponent, const P_obj wpn)
+int pv_common(P_char ch, P_char opponent, const P_obj wpn, int *damAccumulator)
 {
   int i, room, success = FALSE, wpn_skill, spell;
   P_obj item;
@@ -10513,7 +10528,7 @@ int pv_common(P_char ch, P_char opponent, const P_obj wpn)
     }
   }
 
-  if (hit(ch, opponent, wpn))
+  if (hit(ch, opponent, wpn, damAccumulator))
     success = TRUE;
 
   if (success && IS_ALIVE(opponent) && GET_POS(opponent) == POS_STANDING && GET_CHAR_SKILL(opponent, SKILL_ARMLOCK))
