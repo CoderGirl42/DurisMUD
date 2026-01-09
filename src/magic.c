@@ -520,7 +520,7 @@ void spell_anti_magic_ray(int level, P_char ch, char *arg, int type,
 
   {
     save = victim->specials.apply_saving_throw[SAVING_SPELL];
-    victim->specials.apply_saving_throw[SAVING_SPELL] += 15;
+    victim->specials.apply_saving_throw[SAVING_SPELL] += 20 + (56 - GET_LEVEL(ch));
     spell_dispel_magic(level, ch, 0, SPELL_TYPE_SPELL, victim, obj);
     victim->specials.apply_saving_throw[SAVING_SPELL] = save;
   }
@@ -9261,7 +9261,8 @@ void vital_intercession_heal(P_char ch)
 {
 	struct affected_type *paf = get_spell_from_char(ch, SPELL_VITAL_INTERCESSION);
 	P_char healer = paf ? (P_char)paf->context : NULL;
-	int healpoints = number( paf->loc2 / 6, paf->loc2 / 2 );
+
+	int healpoints = number( (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMin", 0.1)), (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMax", 0.2)) );
 
 	if(healer && SanityCheck(healer, "vital_intercession_heal"))
 	{
@@ -14916,11 +14917,10 @@ int CheckMobRemoveableSpellBits(P_char ch, RemoveableSpellBit *spellBits, int co
     return success;
   }
 
-  int saveBonus = IS_ELITE(ch) ? -6 : -3;
   for (int i = 0; i < countSpellBits; i++)
   {
     if (IS_SET(*bitStore, spellBits[i].bit) && !affected_by_spell(ch, spellBits[i].spell) &&
-        (nosave || !NewSaves(ch, SAVING_SPELL, saveMod + saveBonus)))
+        (nosave || !NewSaves(ch, SAVING_SPELL, saveMod)))
     {
       success = 1;
       if (!IS_ELITE(ch))

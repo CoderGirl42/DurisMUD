@@ -668,7 +668,7 @@ void heal(P_char ch, P_char healer, int hits, int cap)
   hits = vamp(ch, hits, cap);
   update_achievements(healer, ch, hits, 1);
 
-  if(hits > 1 && healer != ch && IS_SET(healer->specials.act2, PLR2_HEAL))
+  if(hits > 1 && healer != ch && ch->in_room == healer->in_room && IS_SET(healer->specials.act2, PLR2_HEAL))
   {
 	char buf[100];
 	snprintf(buf, ARRAY_SIZE(buf), "&+w[Heal: &+G%2d&+w ]&n ", hits);
