@@ -1063,6 +1063,9 @@ void show_visual_status(P_char ch, P_char tar_char)
   snprintf(buf, 256, "&+c$E's %s in size.", size_types[GET_ALT_SIZE(tar_char)]);
   SVS(buf);
 
+  if (GET_WARD(tar_char) > 0)
+    SVS("&+C$E appears to be warded.");
+
   if (IS_CASTING(tar_char))
     SVS("&+m$E appears to be casting.");
 
@@ -8153,7 +8156,7 @@ void do_display(P_char ch, char *argument, int cmd)
     send_to_char("Syntax: display <option>\n"
                  "Note: You must type the full name of the option listed below.\n"
                  "Options:all|off|hits|maxhits|slots|maxslots|moves|maxmoves|\n"
-                 "        tankname|tankcond|enemy|enemycond|twoline\n",
+                 "        tankname|tankcond|enemy|enemycond|twoline|ward\n",
                  to_ch);
   return;
 }

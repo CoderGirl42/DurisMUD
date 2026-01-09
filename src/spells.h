@@ -725,7 +725,9 @@
 #define SPELL_GUARDIAN_WARD           674
 #define SPELL_GREATER_GUARDIAN_WARD   675
 #define SPELL_DIVINE_FONT             676
-#define LAST_SPELL                    SPELL_DIVINE_FONT
+#define SPELL_VITAL_INTERCESSION      677
+#define SPELL_HOLY_INTERCESSION       678
+#define LAST_SPELL                    SPELL_HOLY_INTERCESSION
 
 
 #define FIRST_SKILL                  1000  /* should be a decent split point */

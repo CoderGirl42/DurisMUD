@@ -5314,6 +5314,18 @@ void initialize_skills()
                TAR_IGNORE | TAR_NOCOMBAT, spell_divine_font);
   SPEC_SPELL_ADD(CLASS_CLERIC, 11, SPEC_HEALER);
 
+  SPELL_CREATE_MSG("vital intercession", 
+	        		SPELL_VITAL_INTERCESSION,
+					PULSE_SPELLCAST * 3 / 2,
+					TAR_CHAR_ROOM, 
+					spell_vital_intercession,
+					"&+WThe healing energies surrounding you falter!");
+  SPEC_SPELL_ADD(CLASS_CLERIC, 6, SPEC_HOLYMAN);
+
+  SPELL_CREATE("holy intercession", SPELL_HOLY_INTERCESSION, PULSE_SPELLCAST * 4,
+               TAR_IGNORE, spell_holy_intercession);
+  SPEC_SPELL_ADD(CLASS_CLERIC, 10, SPEC_HOLYMAN);
+
 #ifndef _DE_
   create_epic_skills();
 #endif

@@ -272,6 +272,9 @@ void make_prompt(P_desc point)
           strcat(pPrompt, "&+r awful");
         else
           strcat(pPrompt, "&+r bleeding, close to death");
+		
+		if (IS_SET(t_ch_p, PROMPT_WARD) && GET_WARD(tank) > 0)
+		  strcat(pPrompt, "&+C (warded)");
       }
     }
 
@@ -318,6 +321,9 @@ void make_prompt(P_desc point)
         strcat(pPrompt, "&+r awful");
       else
         strcat(pPrompt, "&+r bleeding, close to death");
+
+	  if (IS_SET(t_ch_p, PROMPT_WARD) && GET_WARD(t_ch_f) > 0)
+		strcat(pPrompt, "&+C (warded)");
     }
   }
   if( t_obj_f )

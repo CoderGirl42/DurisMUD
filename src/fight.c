@@ -421,6 +421,8 @@ int check_damage_ward(P_char attacker, P_char ch, int dam)
         FALSE, attacker, 0, ch, TO_VICT | ACT_NOTTERSE);
     act("&+CThe ward around&n $N&+C flashes briefly as it absorbs your assault!&n",
         FALSE, attacker, 0, ch, TO_CHAR | ACT_NOTTERSE);
+	act("&+CThe ward around&n $N&+C flashes briefly as it absorbs &n$n&+C's assault!&n",
+        FALSE, attacker, 0, ch, TO_NOTVICT | ACT_NOTTERSE);
   }
 
   // check for innate wards
@@ -6588,6 +6590,11 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
         victim->disguise.hit -= (int)dam;
       }
     }
+
+	if (victim && affected_by_spell(victim, SPELL_VITAL_INTERCESSION))
+	{
+		vital_intercession_heal(victim);
+	}
 
     if (new_stat == STAT_DEAD)
     {
