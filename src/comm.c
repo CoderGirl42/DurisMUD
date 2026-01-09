@@ -2773,10 +2773,7 @@ int process_input(P_desc t)
 
   *(t->buf + begin + sofar) = 0;
 
-  /*
-   * process telnet options before checking for newlines, so ttype/gmcp
-   * subnegotiations that arrive without user input are still handled
-   */
+  /* processed before user input - no newline */
   for (i = begin; *(t->buf + i); i++)
   {
     if (*(t->buf + i) == (signed char)IAC)
@@ -2814,7 +2811,7 @@ int process_input(P_desc t)
   {
     if (!ISNEWL(*(t->buf + i)) && !(flag = (k >= (MAX_INPUT_LENGTH - 2))))
     {
-      /* telnet option ? */
+      /* safety fallback for telnet */
       if (*(t->buf + i) == (signed char)IAC)
         i += parse_telnet_options(t, t->buf + i);
       /* backspace? (handle both ^H and DEL) */

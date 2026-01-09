@@ -119,7 +119,7 @@ int parse_telnet_options(P_desc player, char *buf)
   case SB:  /* subnegotiation */
     {
       int len = 2;
-      /* don't check for null - IS byte is 0 which looks like null */
+      /* no null check - buf = 4800 */
       while (len < 4096 && !(p[len] == IAC && p[len+1] == SE))
         len++;
       if (p[len] == IAC && p[len+1] == SE)
