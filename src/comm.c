@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
@@ -80,6 +81,8 @@ extern struct zone_data *zone_table;
 extern const char *shutdown_message;
 extern const int max_ingame_good;
 extern const int max_ingame_evil;
+extern TimedShutdownData shutdownData;
+extern void timedShutdown(P_char ch, P_char, P_obj, void *data);
 
 long sentbytes = 0;
 long recivedbytes = 0;
@@ -114,6 +117,8 @@ int _autoboot = 0;
 int _pwipe = 0;
 int req_passwd = 1;
 int shutdownflag = 0;
+// signal-initiated shutdown: 0=none, 1=shutdown, 2=reboot, 3=copyover
+volatile sig_atomic_t signal_shutdown_pending = 0;
 int slow_death = 0;
 int tics = 0;
 long boot_time;
@@ -635,6 +640,34 @@ void game_loop(int port, int sslport)
   /* Main loop */
   while (!shutdownflag)
   {
+    // check for signal-initiated shutdown (from launcher)
+    if (signal_shutdown_pending)
+    {
+      int type = signal_shutdown_pending;
+      signal_shutdown_pending = 0;
+
+      // set to current time so timedShutdown schedules properly
+      shutdownData.reboot_time = time(0);
+      shutdownData.next_warning = -1;
+      strncpy(shutdownData.IssuedBy, "Launcher", sizeof(shutdownData.IssuedBy) - 1);
+      strncpy(shutdownData.Reason, "signal from launcher", sizeof(shutdownData.Reason) - 1);
+
+      switch (type)
+      {
+        case 1: // shutdown
+          shutdownData.eShutdownType = TimedShutdownData::OK;
+          break;
+        case 2: // reboot
+          shutdownData.eShutdownType = TimedShutdownData::REBOOT;
+          break;
+        case 3: // copyover
+          shutdownData.eShutdownType = TimedShutdownData::COPYOVER;
+          break;
+      }
+      // call timedShutdown - it will schedule event for next tick
+      timedShutdown(NULL, NULL, NULL, NULL);
+    }
+
     /*
         struct host_answer host_ans_buf;
         struct ident_answer ident_ans_buf;
@@ -1805,6 +1838,45 @@ void nonblock(int s)
         * old/new socket code. 9/18/95  JAB \
         */
 
+/* parse proxy protocol v1 header - returns 1 if found, stores real ip */
+static int parse_proxy_protocol(int desc, char *real_ip, size_t ip_len)
+{
+  char buf[108];
+  char proto[8], src_ip[46], dst_ip[46];
+  int src_port, dst_port;
+  ssize_t n;
+  int i;
+
+  /* peek first 6 bytes to check for "PROXY " */
+  n = recv(desc, buf, 6, MSG_PEEK);
+  if (n < 6 || strncmp(buf, "PROXY ", 6) != 0)
+    return 0;
+
+  /* read full line up to \r\n */
+  for (i = 0; i < (int)sizeof(buf) - 1; i++)
+  {
+    n = recv(desc, &buf[i], 1, 0);
+    if (n <= 0)
+      return 0;
+    if (buf[i] == '\n')
+    {
+      buf[i + 1] = '\0';
+      break;
+    }
+  }
+  buf[i] = '\0';
+
+  if (sscanf(buf, "PROXY %7s %45s %45s %d %d",
+             proto, src_ip, dst_ip, &src_port, &dst_port) == 5)
+  {
+    strncpy(real_ip, src_ip, ip_len - 1);
+    real_ip[ip_len - 1] = '\0';
+    return 1;
+  }
+
+  return 0;
+}
+
 int new_descriptor(int s, int conn_type)
 {
   P_desc newd;
@@ -1864,6 +1936,14 @@ int new_descriptor(int s, int conn_type)
              ((unsigned char *)&(sock.sin_addr))[1],
              ((unsigned char *)&(sock.sin_addr))[2],
              ((unsigned char *)&(sock.sin_addr))[3]);
+
+    /* check for proxy protocol on websocket connections */
+    if (conn_type == 2)
+    {
+      char proxy_ip[46];
+      if (parse_proxy_protocol(desc, proxy_ip, sizeof(proxy_ip)))
+        strncpy(Gbuf1, proxy_ip, MAX_STRING_LENGTH - 1);
+    }
 
 #if 0
     if (strlen(Gbuf1) < 8)
@@ -2087,6 +2167,7 @@ static void greet(P_desc newd)
 
   advertise_mccp(newd);
   gmcp_negotiate(newd);
+  sga_negotiate(newd);
 }
 
 /*
@@ -2440,6 +2521,7 @@ int process_output(P_desc t)
   }
 #endif
 
+  bool had_prompt = t->prompt_mode;  // track if prompt will be sent
   make_prompt(t);
 
   /* Cycle thru output queue */
@@ -2586,6 +2668,9 @@ int process_output(P_desc t)
 
   if (write_to_descriptor(t, descbuf.c_str()) < 0)
     return (-1);
+
+  if (had_prompt && !t->connected)
+    send_ga(t);
 
   return (1);
 }

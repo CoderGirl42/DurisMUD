@@ -1741,6 +1741,7 @@ struct descriptor_data
   char *ws_fragment_buffer; /* Buffer for fragmented messages */
   size_t ws_fragment_len;   /* Length of fragment buffer */
   int gmcp_enabled;         /* 1 if client wants GMCP protocol */
+  int sga_disabled;
   int gmcp_quest_map_sent;  /* 1 if quest map already sent this session */
   char client_name[64];     /* mud client name (mudlet, cmud, etc) */
   char client_version[32];  /* client version string */
