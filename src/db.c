@@ -95,18 +95,18 @@ int      top_of_zone_table = 0;                   /* The highest valid zone rnum
 struct message_list fight_messages[MAX_MESSAGES]; /* fighting messages  */
 
 char    *guild_frags = NULL;
-char    *credits = NULL;        /* * the Credits List                */
+string  credits;
 //char    *news = NULL;           /* * the news                        */
 string  news;
 char    *projects = NULL;       /* * Project information             */
-char    *faq = NULL;            /* * frequently asked questions      */
+string  faq;
 //char    *motd = NULL;           /* * ansi motd                       */
 string  motd;
 //char    *wizmotd = NULL;        /* * ansi wizmotd * */
 string  wizmotd;
 char    *help = NULL;           /* * the main help page              */
 char    *rules = NULL;
-char    *wizlist = NULL;        /* * the wizlist                     */
+string  wizlist;
 char    *wizlista = NULL;       /* * wizlist for ansi listeners * */
 char    *greetinga = NULL;      /* * greeting for our ansi viewers * */
 char    *greetinga1 = NULL;
@@ -421,10 +421,10 @@ void boot_db(int mini_mode)
   logit(LOG_STATUS, "Reading projectsfile.");
   projects = file_to_string(PROJECTS_FILE);
 
-  logit(LOG_STATUS, "Reading faqfile.");
-  faq = file_to_string(FAQ_FILE);
-  logit(LOG_STATUS, "Reading credits.");
-  credits = file_to_string(CREDITS_FILE);
+  logit(LOG_STATUS, "Reading faq from db.");
+  faq = get_mud_info("faq");
+  logit(LOG_STATUS, "Reading credits from db.");
+  credits = get_mud_info("credits");
   logit(LOG_STATUS, "Reading Ansi motd.");
 //  motd = file_to_string(MOTD_FILE);
   motd = get_mud_info("motd");
@@ -435,8 +435,8 @@ void boot_db(int mini_mode)
   
   logit(LOG_STATUS, "Reading help.");
   help = file_to_string(HELP_PAGE_FILE);
-  logit(LOG_STATUS, "Reading wizlist.");
-  wizlist = file_to_string(WIZLIST_FILE);
+  logit(LOG_STATUS, "Reading wizlist from db.");
+  wizlist = get_mud_info("wizlist");
   logit(LOG_STATUS, "Reading rules.");
   rules = file_to_string(RULES_FILE);
   logit(LOG_STATUS, "Reading Ansi 1 login screen.");

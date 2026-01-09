@@ -497,6 +497,17 @@ CREATE TABLE `mud_info` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
+INSERT INTO `mud_info` (`name`, `content`) VALUES
+  ('motd', ''),
+  ('wizmotd', ''),
+  ('news', ''),
+  ('rules', ''),
+  ('credits', ''),
+  ('info', ''),
+  ('wizlist', ''),
+  ('faq', '')
+ON DUPLICATE KEY UPDATE `name` = `name`;
+
 --
 -- Table structure for table `multiplay_whitelist`
 --
