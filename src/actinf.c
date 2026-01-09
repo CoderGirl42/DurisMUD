@@ -7557,7 +7557,14 @@ void do_equipment(P_char ch, char *argument, int cmd)
 
 void do_credits(P_char ch, char *argument, int cmd)
 {
-  page_string(ch->desc, (char *)credits.c_str(), 0);
+  int cooldown = (int)get_property("info.cooldown.secs", 2);
+  if (!affect_timer(ch, cooldown, TAG_INFO_COOLDOWN))
+  {
+    send_to_char("&+RYou must wait a moment.&n\n", ch);
+    return;
+  }
+  string content = get_mud_info("credits");
+  page_string(ch->desc, (char *)content.c_str(), 0);
 }
 
 void do_map(P_char ch, char *arg, int cmd)
@@ -7617,12 +7624,26 @@ void do_projects(P_char ch, char *argument, int cmd)
 
 void do_faq(P_char ch, char *argument, int cmd)
 {
-  page_string(ch->desc, (char *)faq.c_str(), 0);
+  int cooldown = (int)get_property("info.cooldown.secs", 2);
+  if (!affect_timer(ch, cooldown, TAG_INFO_COOLDOWN))
+  {
+    send_to_char("&+RYou must wait a moment.&n\n", ch);
+    return;
+  }
+  string content = get_mud_info("faq");
+  page_string(ch->desc, (char *)content.c_str(), 0);
 }
 
 void do_wizlist(P_char ch, char *argument, int cmd)
 {
-  page_string(ch->desc, (char *)wizlist.c_str(), 0);
+  int cooldown = (int)get_property("info.cooldown.secs", 2);
+  if (!affect_timer(ch, cooldown, TAG_INFO_COOLDOWN))
+  {
+    send_to_char("&+RYou must wait a moment.&n\n", ch);
+    return;
+  }
+  string content = get_mud_info("wizlist");
+  page_string(ch->desc, (char *)content.c_str(), 0);
 }
 
 void do_rules(P_char ch, char *argument, int cmd)
