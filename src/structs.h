@@ -1735,34 +1735,36 @@ struct descriptor_data
   int last_group_update;             /* CLIENT SPECIFIC INT */
 
   /* WebSocket support */
-  int websocket;            /* 1 if this is a WebSocket connection */
-  int ws_state;             /* WebSocket state (WS_STATE_*) */
-  int ws_handshake_done;    /* 1 if HTTP upgrade complete */
-  char *ws_fragment_buffer; /* Buffer for fragmented messages */
-  size_t ws_fragment_len;   /* Length of fragment buffer */
-  int gmcp_enabled;         /* 1 if client wants GMCP protocol */
+  int websocket;
+  int ws_state;
+  int ws_handshake_done;
+  char *ws_handshake_buffer;  /* buffer for fragmented http upgrade */
+  size_t ws_handshake_len;
+  char *ws_fragment_buffer;
+  size_t ws_fragment_len;
+  int gmcp_enabled;
   int sga_disabled;
-  int gmcp_quest_map_sent;  /* 1 if quest map already sent this session */
-  char client_name[64];     /* mud client name (mudlet, cmud, etc) */
-  char client_version[32];  /* client version string */
+  int gmcp_quest_map_sent;
+  char client_name[64];
+  char client_version[32];
   int durisweb_verified;
 
-  /* WebSocket ping/pong for dead connection detection */
-  time_t ws_last_ping;  /* Time of last ping sent */
-  int ws_pong_received; /* 1 if pong received since last ping */
+  /* ping/pong for dead connection detection */
+  time_t ws_last_ping;
+  int ws_pong_received;
 
-  /* WebSocket message fragmentation (rfc 6455 fin=0 frames) */
-  char *ws_message_buffer; /* Buffer for fragmented ws messages */
-  size_t ws_message_len;   /* Current length of message buffer */
-  int ws_message_opcode;   /* Opcode from first fragment */
+  /* message fragmentation (rfc 6455 fin=0 frames) */
+  char *ws_message_buffer;
+  size_t ws_message_len;
+  int ws_message_opcode;
 
-  /* WebSocket character generation */
-  struct stat_data chargen_stats; /* Rolled stats stored server-side */
-  int chargen_race;               /* Selected race for chargen */
-  int chargen_bonus_remaining;    /* Bonus points left to allocate (0-5) */
-  int chargen_hometown;           /* Selected hometown (-1 = default) */
-  int chargen_hardcore;           /* 1 if hardcore mode selected */
-  int chargen_newbie;             /* 1 if player is new to Duris */
+  /* chargen state for webclient */
+  struct stat_data chargen_stats;
+  int chargen_race;
+  int chargen_bonus_remaining;
+  int chargen_hometown;
+  int chargen_hardcore;
+  int chargen_newbie;
 };
 
 struct damage_messages
