@@ -6585,7 +6585,11 @@ int raw_damage(P_char ch, P_char victim, double dam, uint flags, struct damage_m
 
 	if (victim && affected_by_spell(victim, SPELL_VITAL_INTERCESSION))
 	{
-		vital_intercession_heal(victim);
+		vital_intercession_heal(victim, dam, SPELL_VITAL_INTERCESSION);
+	}
+	if (victim && affected_by_spell(victim, SPELL_HOLY_INTERCESSION))
+	{
+		vital_intercession_heal(victim, dam, SPELL_HOLY_INTERCESSION);
 	}
 
     if (new_stat == STAT_DEAD)

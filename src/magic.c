@@ -9261,12 +9261,16 @@ void spell_vitality(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
-void vital_intercession_heal(P_char ch)
+void vital_intercession_heal(P_char ch, int dam, int spell)
 {
-	struct affected_type *paf = get_spell_from_char(ch, SPELL_VITAL_INTERCESSION);
+	struct affected_type *paf = get_spell_from_char(ch, spell);
 	P_char healer = paf ? (P_char)paf->context : NULL;
 
-	int healpoints = number( (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMin", 0.1)), (int)(paf->loc2 * get_property("spell.vitalIntercession.healScalarMax", 0.2)) );
+	int healpoints = number( (int)(dam * get_property("spell.vitalIntercession.healScalarMin", 0.4)), (int)(dam * get_property("spell.vitalIntercession.healScalarMax", 0.6)) );
+	if(healpoints > paf->modifier)
+	{
+		healpoints = paf->modifier;
+	}
 
 	if(healer && SanityCheck(healer, "vital_intercession_heal"))
 	{
@@ -9281,7 +9285,7 @@ void vital_intercession_heal(P_char ch)
 
 	send_to_char("&+WHealing energies surge through your body!\r\n&n", ch);
 
-	paf->modifier--;
+	paf->modifier -= healpoints;
 	if(paf->modifier <= 0)
 	{
 		wear_off_message(ch, paf);
@@ -9289,25 +9293,21 @@ void vital_intercession_heal(P_char ch)
 	}
 }
 
-void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char victim,
-                    		  P_obj obj)
+void vital_intercession(int level, P_char ch, P_char victim, int spell)
 {
 	struct affected_type af;
-	int hits = level / 3 + number(-2, 2);
-	if (hits < 0)
-		hits = 5;
+	int maximumHitsHealed = (int)(level * get_property("spell.vitalIntercession.maxHitsHealedMultiplier", 6)) + number(-20, 20);
 
 	if (!SanityCheck(ch, "spell_vital_intercession") || !SanityCheck(victim, "spell_vital_intercession"))
 		return;
 
-	if (!affected_by_spell(victim, SPELL_VITAL_INTERCESSION))
+	if (!affected_by_spell(victim, spell))
 	{
 		bzero(&af, sizeof(af));
-		af.type = SPELL_VITAL_INTERCESSION;
+		af.type = spell;
 		af.duration = 5;
-		af.modifier = hits;
+		af.modifier = maximumHitsHealed;
 		af.context = (void*)ch;
-		af.loc2 = GET_LEVEL(ch);
 		affect_to_char(victim, &af);
 		update_pos(victim);
 	}
@@ -9315,16 +9315,21 @@ void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char 
 	{
 		struct affected_type *af1;
 		for (af1 = victim->affected; af1; af1 = af1->next)
-		if (af1->type == SPELL_VITAL_INTERCESSION)
+		if (af1->type == spell)
 		{
 			af1->duration = 5;
-			af1->modifier = hits;
+			af1->modifier = maximumHitsHealed;
 			af1->context = (void*)ch;
-			af.loc2 = GET_LEVEL(ch);
 		}
 	}
 
 	send_to_char("&+WYou feel healing energies surround you!\r\n&n", victim);
+}
+
+void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char victim,
+                    		  P_obj obj)
+{
+	vital_intercession(level, ch, victim, SPELL_VITAL_INTERCESSION);
 }
 
 void spell_holy_intercession(int level, P_char ch, char *arg, int type, P_char victim,
@@ -9339,16 +9344,16 @@ void spell_holy_intercession(int level, P_char ch, char *arg, int type, P_char v
 	{
 		gl = ch->group;
 		/* leader first */
-		if (gl->ch->in_room == ch->in_room) spell_vital_intercession(level * 3 / 4, ch, 0, 0, gl->ch, 0);
+		if (gl->ch->in_room == ch->in_room) vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
 		/* followers */
 		for (gl = gl->next; gl; gl = gl->next)
 		{
-			if (gl->ch->in_room == ch->in_room) spell_vital_intercession(level * 3 / 4, ch, 0, 0, gl->ch, 0);
+			if (gl->ch->in_room == ch->in_room) vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
 		}
 	}
 	else
 	{
-		spell_vital_intercession(level * 3 / 4, ch, 0, 0, ch, 0);
+		vital_intercession(level * 2 / 3, ch, ch, SPELL_HOLY_INTERCESSION);
 	}
 }
 
