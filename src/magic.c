@@ -9264,7 +9264,6 @@ void spell_vitality(int level, P_char ch, char *arg, int type, P_char victim,
 void vital_intercession_heal(P_char ch, int dam, int spell)
 {
 	struct affected_type *paf = get_spell_from_char(ch, spell);
-	P_char healer = paf ? (P_char)paf->context : NULL;
 
 	int healpoints = number( (int)(dam * get_property("spell.vitalIntercession.healScalarMin", 0.4)), (int)(dam * get_property("spell.vitalIntercession.healScalarMax", 0.6)) );
 	if(healpoints > paf->modifier)
@@ -9272,16 +9271,7 @@ void vital_intercession_heal(P_char ch, int dam, int spell)
 		healpoints = paf->modifier;
 	}
 
-	if(healer && SanityCheck(healer, "vital_intercession_heal"))
-	{
-		// if the healer is still alive, call heal to give exp and apply modifiers
-		heal(ch, healer, healpoints, GET_MAX_HIT(ch));
-	}
-	else
-	{
-		// healer is gone, just call vamp
-		vamp(ch, healpoints, GET_MAX_HIT(ch));
-	}
+	vamp(ch, healpoints, GET_MAX_HIT(ch));
 
 	send_to_char("&+WHealing energies surge through your body!\r\n&n", ch);
 
@@ -9307,7 +9297,6 @@ void vital_intercession(int level, P_char ch, P_char victim, int spell)
 		af.type = spell;
 		af.duration = 5;
 		af.modifier = maximumHitsHealed;
-		af.context = (void*)ch;
 		affect_to_char(victim, &af);
 		update_pos(victim);
 	}
@@ -9319,7 +9308,6 @@ void vital_intercession(int level, P_char ch, P_char victim, int spell)
 		{
 			af1->duration = 5;
 			af1->modifier = maximumHitsHealed;
-			af1->context = (void*)ch;
 		}
 	}
 
