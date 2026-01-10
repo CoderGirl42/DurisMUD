@@ -3847,13 +3847,41 @@ void spell_flamestrike(int level, P_char ch, char *arg, int type,
 
   if (GET_SPEC(ch, CLASS_CLERIC, SPEC_ZEALOT))
   {
-    dam = (int)(dam * 1.25);
+    dam = (int)(dam * get_property("zealots.flamestrike.damageMulti", 1.25));
   }
 
   spell_damage(ch, victim, (dam / 2), SPLDAM_HOLY, RAWDAM_NOKILL, 0);
   if (IS_ALIVE(victim))
   {
     spell_damage(ch, victim, (dam / 2), SPLDAM_FIRE, 0, &messages);
+  }
+
+  if(!IS_ALIVE(victim) || !IS_ALIVE(ch))
+  	return;
+
+  if(GET_SPEC(ch, CLASS_CLERIC, SPEC_ZEALOT))
+  {
+	struct affected_type *paf = NULL;
+	int duration = level / 10;
+	int healBlocked = (int)(dam * get_property("zealots.flamestrike.blockedMulti", 2.0));
+
+	// find the flamestrike affect
+	if((paf = get_spell_from_char(victim, SPELL_FLAMESTRIKE)) == NULL)
+	{
+		// add it if not found
+		struct affected_type af;
+		bzero(&af, sizeof(af));
+		af.duration = duration;
+		af.type = SPELL_FLAMESTRIKE;
+		paf = affect_to_char(victim, &af);
+
+		act("You have &+rbranded&n $N with your &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_CHAR);
+		act("You have been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_VICT);
+		act("$N has been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_NOTVICT);
+	}
+	// reset duration and update modifier
+	paf->duration = duration;
+	paf->modifier += healBlocked;
   }
 }
 

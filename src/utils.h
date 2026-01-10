@@ -1333,7 +1333,8 @@ char *CRYPT2( char *passwd, char *name );
         affected_by_spell(victim, TAG_ARMLOCK) || \
         affected_by_spell(victim, TAG_LEGLOCK) || \
         affected_by_spell(victim, SPELL_BMANTLE) || \
-        affected_by_spell(victim, SPELL_ENERGY_DRAIN))
+        affected_by_spell(victim, SPELL_ENERGY_DRAIN) || \
+		affected_by_spell(victim, SPELL_FLAMESTRIKE)) \
 
 // Simply change these defines to focus reaver preferred weapons.
 // These defines are used for all the applicable reaver spells.

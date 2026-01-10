@@ -577,7 +577,8 @@ int vamp(P_char ch, double fhits, double fcap)
     blocked = (int)(hits * (((float)number(50, 60)) / 100));
     hits -= blocked;
   }
-  else if ((af = get_spell_from_char(ch, SPELL_BMANTLE)))
+  else if ( (af = get_spell_from_char(ch, SPELL_BMANTLE)) != NULL ||
+            (af = get_spell_from_char(ch, SPELL_FLAMESTRIKE)) != NULL )
   {
     blocked = (int)(MIN(hits * (GET_LEVEL(ch) / 100), af->modifier));
     hits -= blocked;
@@ -645,7 +646,7 @@ void heal(P_char ch, P_char healer, int hits, int cap)
     hits = (int)(hits * 1.20);
   }
 
-  if (get_spell_from_char(ch, SPELL_BMANTLE))
+  if (affected_by_spell(ch, SPELL_BMANTLE) || affected_by_spell(ch, SPELL_FLAMESTRIKE))
   {
     hits = (int)(hits * get_property("blackmantle.healing.mod", .75));
   }
@@ -5954,7 +5955,7 @@ void check_vamp(P_char ch, P_char victim, double fdam, uint flags)
     vamped = vamp(ch, MIN(dam, number(2, 7)), GET_MAX_HIT(ch) * VAMPPERCENT(ch));
   }
 
-  if ((dam >= 2 && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) && IS_AFFECTED4(victim, AFF4_HOLY_SACRIFICE) && (flags & RAWDAM_HOLYSAC) && !affected_by_spell(victim, SPELL_BMANTLE) && !affected_by_spell(victim, SPELL_PLAGUE)))
+  if ((dam >= 2 && !IS_AFFECTED4(ch, AFF4_BATTLE_ECSTASY) && IS_AFFECTED4(victim, AFF4_HOLY_SACRIFICE) && (flags & RAWDAM_HOLYSAC) && !affected_by_spell(victim, SPELL_BMANTLE) && !affected_by_spell(victim, SPELL_PLAGUE) && !affected_by_spell(victim, SPELL_FLAMESTRIKE)))
   /* Taking this out as it doesn't seem necessary.
       && ((GOOD_RACE(victim) && !GOOD_RACE(ch))
       || (EVIL_RACE(victim) && !EVIL_RACE(ch))))

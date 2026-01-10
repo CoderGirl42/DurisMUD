@@ -427,11 +427,13 @@ void do_reboot_restore(P_char ch, P_char victim)
 
   if (affected_by_spell(victim, SPELL_DISEASE) ||
       affected_by_spell(victim, SPELL_PLAGUE) ||
-      affected_by_spell(victim, SPELL_BMANTLE))
+      affected_by_spell(victim, SPELL_BMANTLE) ||
+	  affected_by_spell(victim, SPELL_FLAMESTRIKE))
   {
     affect_from_char(victim, SPELL_DISEASE);
     affect_from_char(victim, SPELL_PLAGUE);
     affect_from_char(victim, SPELL_BMANTLE);
+	affect_from_char(victim, SPELL_FLAMESTRIKE);
   }
 
   if (affected_by_spell(victim, TAG_ARMLOCK))

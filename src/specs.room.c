@@ -1682,4 +1682,6 @@ int avernus_overland(int room, P_char ch, int cmd, char *argument)
   {
     return TRUE;
   }
+
+  return FALSE;
 }
