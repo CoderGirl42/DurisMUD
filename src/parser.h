@@ -16,25 +16,62 @@
 #define ARG_FLOAT_MIN (-FLT_MAX)
 #define ARG_FLOAT_MAX FLT_MAX
 
+#define ARG_RESULT_SUCCESS(result) ((result & ARG_PARSE_OK) != 0)
+#define ARG_RESULT_FAILURE(result) ((result & ARG_PARSE_ERROR) != 0)
+
+#define ARG_PARSER_OPT_NONE 0u
+#define ARG_PARSER_OPT_USE_FILL_WORDS (1u << 0)
+#define ARG_PARSER_OPT_DELIMS_ONLY (1u << 1)
+#define ARG_PARSER_OPT_ALLOW_TRAILING_JUNK (1u << 2)
+#define ARG_PARSER_OPT_ALLOW_RANDOM_ORDER (1u << 3)
+#define ARG_PARSER_OPT_CASE_SENSITIVE (1u << 4)
+
+#define ARG_PARSER_DELIMS_SPACE " \t\r\n"
+#define ARG_PARSER_DELIMS_COMMA ","
+#define ARG_PARSER_DELIMS_BAR "|"
+#define ARG_PARSER_DELIMS_SEMICOLON ";"
+
 typedef enum
 {
   ARG_TYPE_STRING = 0,
   ARG_TYPE_INT = 1,
   ARG_TYPE_BOOL = 2,
-  ARG_TYPE_FLOAT = 3
+  ARG_TYPE_FLOAT = 3,
+  ARG_TYPE_REST_OF_LINE = 4
 } arg_type;
 
-typedef enum
-{
-  ARG_OPT_NONE = 0,
-  ARG_OPT_REQUIRED = 1 << 0,
-  ARG_OPT_OPTIONAL = 1 << 1,
-  ARG_OPT_ABBREV = 1 << 2,
-  ARG_OPT_EXACT = 1 << 3,
-  ARG_OPT_DEPENDS_ON_PREV = 1 << 4,
-  ARG_OPT_QUOTE_DOUBLE = 1 << 5,
-  ARG_OPT_QUOTE_SINGLE = 1 << 6
-} arg_option;
+#define ARG_OPT_NONE 0u,
+#define ARG_OPT_REQUIRED 1u << 0
+#define ARG_OPT_OPTIONAL 1u << 1
+#define ARG_OPT_ABBREV 1u << 2
+#define ARG_OPT_EXACT 1u << 3
+#define ARG_OPT_DEPENDS_ON_PREV 1u << 4
+#define ARG_OPT_QUOTE_DOUBLE 1u << 5
+#define ARG_OPT_QUOTE_SINGLE 1u << 6
+#define ARG_OPT_REGEX 1u << 7
+
+#define ARG_PARSE_NONE 0u
+#define ARG_PARSE_OK 1u << 0
+#define ARG_PARSE_EOL 1u << 1
+#define ARG_PARSE_INFO 1u << 2
+#define ARG_PARSE_WARNING 1u << 3
+#define ARG_PARSE_ERROR 1u << 4
+#define ARG_PARSE_INVALID_LIST 1u << 5
+#define ARG_PARSE_MISSING_REQUIRED 1u << 6
+#define ARG_PARSE_INVALID_VALUE 1u << 7
+#define ARG_PARSE_EXTRA_ARGUMENT 1u << 8
+#define ARG_PARSE_NO_MEMORY 1u << 9
+#define ARG_PARSE_ARGUMENT_TOO_LONG 1u << 10
+#define ARG_PARSE_NOT_FOUND 1u << 11
+#define ARG_PARSE_TYPE_MISMATCH 1u << 12
+#define ARG_PARSE_MISSING 1u << 13
+#define ARG_PARSE_MISSING_NAME 1u << 14
+#define ARG_PARSE_MISSING_QUOTE 1u << 15
+#define ARG_PARSE_MISSING_DELIMITERS 1u << 16
+#define ARG_PARSE_JUNK 1u << 17
+
+typedef unsigned int arg_option;
+typedef unsigned int arg_parser_result;
 
 typedef struct arg_def
 {
@@ -58,45 +95,24 @@ typedef struct arg_def
       float max;
     } floating;
   } spec;
-} arg_def;
 
-typedef struct arg_list
-{
-  const arg_def *items;
-  size_t count;
-} arg_list;
+  bool is_option_set(unsigned int flags, unsigned int bit) { return (flags & bit) != 0; }
+
+  bool arg_opt_required() { return is_option_set(options, ARG_OPT_REQUIRED); }
+  bool arg_opt_optional() { return is_option_set(options, ARG_OPT_OPTIONAL); }
+  bool arg_opt_abbrev() { return is_option_set(options, ARG_OPT_ABBREV); }
+  bool arg_opt_exact() { return is_option_set(options, ARG_OPT_EXACT); }
+  bool arg_opt_depends_on_prev() { return is_option_set(options, ARG_OPT_DEPENDS_ON_PREV); }
+  bool arg_opt_quote_single() { return is_option_set(options, ARG_OPT_QUOTE_SINGLE); }
+  bool arg_opt_quote_double() { return is_option_set(options, ARG_OPT_QUOTE_DOUBLE); }
+  bool arg_opt_regex() { return is_option_set(options, ARG_OPT_REGEX); }
+} arg_def;
 
 typedef struct arg_parser_options
 {
-  unsigned int flags;
-  const char *delimiters; // Extra delimiter characters; NULL uses whitespace only.
+  unsigned int flags = ARG_PARSER_OPT_USE_FILL_WORDS | ARG_PARSER_OPT_ALLOW_TRAILING_JUNK;
+  const char *delimiters = NULL; // Extra delimiter characters; NULL uses whitespace only.
 } arg_parser_options;
-
-#define ARG_PARSER_OPT_NONE 0u
-#define ARG_PARSER_OPT_USE_FILL_WORDS (1u << 0)
-#define ARG_PARSER_OPT_DELIMS_ONLY (1u << 1)
-#define ARG_PARSER_OPT_ALLOW_TRAILING_JUNK (1u << 2)
-#define ARG_PARSER_OPT_ALLOW_RANDOM_ORDER (1u << 3)
-#define ARG_PARSER_OPT_CASE_SENSITIVE (1u << 4)
-
-#define ARG_PARSER_DELIMS_SPACE " \t\r\n"
-#define ARG_PARSER_DELIMS_COMMA ","
-#define ARG_PARSER_DELIMS_BAR "|"
-#define ARG_PARSER_DELIMS_SEMICOLON ";"
-
-typedef enum
-{
-  ARG_PARSE_OK = 0,
-  ARG_PARSE_INVALID_LIST = 1,
-  ARG_PARSE_MISSING_REQUIRED = 2,
-  ARG_PARSE_INVALID_VALUE = 3,
-  ARG_PARSE_EXTRA_ARGUMENT = 4,
-  ARG_PARSE_NO_MEMORY = 5,
-  ARG_PARSE_ARGUMENT_TOO_LONG = 6,
-  ARG_PARSE_NOT_FOUND = 7,
-  ARG_PARSE_TYPE_MISMATCH = 8,
-  ARG_PARSE_MISSING = 9
-} arg_parser_result;
 
 typedef struct arg_value
 {
@@ -113,9 +129,11 @@ typedef struct arg_value
 
 typedef struct arg_parser_error
 {
-  size_t token_index;
-  size_t token_pos;
-  char *message;
+  size_t token_index = 0;
+  size_t token_pos = 0;
+  char *message = NULL;
+  char *value = NULL;
+  arg_parser_result code = ARG_PARSE_OK;
 } arg_parser_error;
 
 typedef struct arg_parser_output
@@ -124,8 +142,8 @@ typedef struct arg_parser_output
   size_t count;
   arg_value *values;
   arg_parser_error error;
-  arg_parser_output();
-  ~arg_parser_output();
+  arg_parser_output() {};
+  ~arg_parser_output() {};
   arg_parser_output(const arg_parser_output &) = delete;
   arg_parser_output &operator=(const arg_parser_output &) = delete;
 } arg_parser_output;
@@ -191,61 +209,29 @@ static inline arg_def define_argument(const char *name,
 }
 
 arg_parser_result parse_arguments(const char *argument,
-                               const arg_list *list,
-                               const arg_parser_options *options,
-                               arg_parser_output &out);
-
-static inline arg_parser_options default_arg_parser_options()
-{
-  arg_parser_options opts;
-  opts.flags = ARG_PARSER_OPT_USE_FILL_WORDS | ARG_PARSER_OPT_ALLOW_TRAILING_JUNK;
-  opts.delimiters = NULL;
-  return opts;
-}
-
-template <size_t N>
-static inline arg_parser_result parse_arguments(const char *argument,
-                                             const arg_def (&defs)[N],
-                                             const arg_parser_options *options,
-                                             arg_parser_output &out)
-{
-  const arg_list list = {defs, N};
-  return parse_arguments(argument, &list, options, out);
-}
+                                  const arg_def *list,
+                                  const arg_parser_options &options,
+                                  arg_parser_output *out);
 
 static inline arg_parser_result parse_arguments(const char *argument,
-                                             const arg_list *list,
-                                             arg_parser_output &out)
+                                                const arg_def *list,
+                                                arg_parser_output *out)
 {
-  arg_parser_options opts = default_arg_parser_options();
-  return parse_arguments(argument, list, &opts, out);
+  return parse_arguments(argument, list, arg_parser_options(), out);
 }
-
-template <size_t N>
-static inline arg_parser_result parse_arguments(const char *argument,
-                                             const arg_def (&defs)[N],
-                                             arg_parser_output &out)
-{
-  arg_parser_options opts = default_arg_parser_options();
-  return parse_arguments(argument, defs, &opts, out);
-}
+arg_parser_result parse_argument(const char *name,
+                                 const arg_parser_output &parsed,
+                                 const char **value);
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              const char **value);
+                                 const arg_parser_output &parsed,
+                                 int *value);
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              int *value);
+                                 const arg_parser_output &parsed,
+                                 bool *value);
 
 arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              bool *value);
-
-arg_parser_result parse_argument(const char *name,
-                              const arg_parser_output &parsed,
-                              float *value);
-
-void free_parsed_arguments(arg_parser_output *out);
-
+                                 const arg_parser_output &parsed,
+                                 float *value);
 #endif // DURIS_PARSER_H

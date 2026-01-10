@@ -9007,7 +9007,7 @@ void do_zlist(P_char ch, char *argument, int cmd)
   };
 
   arg_parser_output parsed;
-  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  arg_parser_result rc = parse_arguments(argument, defs, &parsed);
   if (rc != ARG_PARSE_OK)
   {
     const char *err_msg = (parsed.error.message && *parsed.error.message)
@@ -9132,7 +9132,7 @@ void do_rlist(P_char ch, char *argument, int cmd)
   };
 
   arg_parser_output parsed;
-  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  arg_parser_result rc = parse_arguments(argument, defs, &parsed);
   if (rc != ARG_PARSE_OK)
   {
     const char *err_msg = (parsed.error.message && *parsed.error.message)
@@ -9244,7 +9244,7 @@ void do_mlist(P_char ch, char *argument, int cmd)
   };
 
   arg_parser_output parsed;
-  arg_parser_result rc = parse_arguments(argument, defs, parsed);
+  arg_parser_result rc = parse_arguments(argument, defs, &parsed);
   if (rc != ARG_PARSE_OK)
   {
     const char *err_msg = (parsed.error.message && *parsed.error.message)
