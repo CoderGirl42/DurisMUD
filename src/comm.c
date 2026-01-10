@@ -65,6 +65,7 @@
 #include "ttype.h"
 #include "copyover.h"
 #include "poll.h"
+#include "ws_handlers.h"
 
 /* external variables */
 
@@ -490,6 +491,7 @@ void run_the_game(int port, int sslport)
   {
     logit(LOG_EXIT, "Rebooting.");
     logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
+    ws_broadcast_mud_shutdown("reboot");
     exit(52); /* what's so great about HHGTTG, anyhow? */
   }
   if (_copyover)
@@ -504,6 +506,7 @@ void run_the_game(int port, int sslport)
       logit(LOG_EXIT, "Copyover reboot.");
       logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
     }
+    ws_broadcast_mud_shutdown("copyover");
     // attempt true copyover - if it returns, something went wrong
     copyover_save(mother_desc, mother_desc_ssl, ws_desc);
     // fallback to old behavior if copyover_save fails
@@ -514,14 +517,17 @@ void run_the_game(int port, int sslport)
   {
     logit(LOG_EXIT, "Auto reboot.");
     logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
+    ws_broadcast_mud_shutdown("autoreboot");
     exit(54);
   }
   if (_pwipe)
   {
     logit(LOG_EXIT, "Pwipe Shutdown.");
     logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
+    ws_broadcast_mud_shutdown("pwipe");
     exit(55);
   }
+  ws_broadcast_mud_shutdown("manual");
   logit(LOG_EXIT, "Normal termination of game.");
   logit(LOG_EXIT, "Max Goods: %d, Max Evils: %d.", max_ingame_good, max_ingame_evil);
   logit(LOG_STATUS, "Normal termination of game.");
@@ -1739,6 +1745,7 @@ void close_socket(struct descriptor_data *d)
       sql_disconnectIP(d->character);
       act("$n has lost $s link.", TRUE, GET_PLYR(d->character), 0, 0,
           TO_ROOM);
+      ws_broadcast_player_logout(d->character);
       if ((NumAttackers(d->character) > 0) && !IS_TRUSTED(d->character))
       {
         logit(LOG_COMM, "Combat DropLink: %s [%s].",

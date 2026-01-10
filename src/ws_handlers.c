@@ -50,6 +50,10 @@ extern const char *stat_to_string2(int val);
 extern const char *town_name_list[];
 extern const int avail_hometowns[][LAST_RACE + 1];
 
+/* forward declarations for helpers used by broadcast functions */
+static const char *ws_get_race_name(int race);
+static const char *ws_get_class_name(unsigned int m_class);
+
 /* durisweb secret for service authentication */
 #define DURISWEB_SECRET_DEFAULT "Dur1sM4pK3y2025xYz!"
 
@@ -132,6 +136,7 @@ void ws_cmd_durisweb_auth(struct descriptor_data *d, cJSON *data)
         d->durisweb_verified = 1;
         statuslog(56, "DurisWeb service authenticated");
         send_auth_response(d, 1, NULL);
+        ws_broadcast_wholist();
     } else {
         send_auth_response(d, 0, "Invalid signature");
     }
@@ -240,6 +245,162 @@ void ws_broadcast_auction_close(int auction_id, const char *winner_name, int win
     free(json);
 }
 
+/* broadcast wholist to durisweb service */
+void ws_broadcast_wholist(void) {
+    struct descriptor_data *d, *target;
+    cJSON *root, *data, *players, *player;
+    char *json;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "wholist");
+
+    data = cJSON_CreateObject();
+    players = cJSON_CreateArray();
+
+    /* iterate all playing connections */
+    for (target = descriptor_list; target; target = target->next) {
+        if (target->connected != CON_PLAYING || !target->character)
+            continue;
+
+        player = cJSON_CreateObject();
+        cJSON_AddStringToObject(player, "character", GET_NAME(target->character));
+        cJSON_AddStringToObject(player, "account", target->account ? target->account->acct_name : "");
+        cJSON_AddStringToObject(player, "ip", target->host);
+        cJSON_AddNumberToObject(player, "level", GET_LEVEL(target->character));
+        cJSON_AddStringToObject(player, "race", ws_get_race_name(GET_RACE(target->character)));
+        cJSON_AddStringToObject(player, "class", ws_get_class_name(target->character->player.m_class));
+        cJSON_AddNumberToObject(player, "faction", GET_RACEWAR(target->character));
+        cJSON_AddStringToObject(player, "client", target->client_name);
+        cJSON_AddStringToObject(player, "clientVersion", target->client_version);
+        cJSON_AddNumberToObject(player, "uptime", time(0) - target->character->player.time.logon);
+        cJSON_AddItemToArray(players, player);
+    }
+
+    cJSON_AddItemToObject(data, "players", players);
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+
+    free(json);
+}
+
+/* broadcast player login to durisweb service */
+void ws_broadcast_player_login(struct char_data *ch) {
+    struct descriptor_data *d;
+    cJSON *root, *data;
+    char *json;
+
+    if (!ch || !ch->desc) return;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "player_login");
+
+    data = cJSON_CreateObject();
+    cJSON_AddStringToObject(data, "character", GET_NAME(ch));
+    cJSON_AddStringToObject(data, "account", ch->desc->account ? ch->desc->account->acct_name : "");
+    cJSON_AddStringToObject(data, "ip", ch->desc->host);
+    cJSON_AddNumberToObject(data, "level", GET_LEVEL(ch));
+    cJSON_AddStringToObject(data, "race", ws_get_race_name(GET_RACE(ch)));
+    cJSON_AddStringToObject(data, "class", ws_get_class_name(ch->player.m_class));
+    cJSON_AddNumberToObject(data, "faction", GET_RACEWAR(ch));
+    cJSON_AddStringToObject(data, "client", ch->desc->client_name);
+    cJSON_AddStringToObject(data, "clientVersion", ch->desc->client_version);
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+
+    free(json);
+}
+
+/* broadcast player logout to durisweb service */
+void ws_broadcast_player_logout(struct char_data *ch) {
+    struct descriptor_data *d;
+    cJSON *root, *data;
+    char *json;
+
+    if (!ch) return;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "player_logout");
+
+    data = cJSON_CreateObject();
+    cJSON_AddStringToObject(data, "character", GET_NAME(ch));
+    cJSON_AddNumberToObject(data, "faction", GET_RACEWAR(ch));
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+
+    free(json);
+}
+
+/* broadcast mud shutdown to durisweb service */
+void ws_broadcast_mud_shutdown(const char *type) {
+    struct descriptor_data *d;
+    cJSON *root, *data;
+    char *json;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "mud_shutdown");
+
+    data = cJSON_CreateObject();
+    cJSON_AddStringToObject(data, "shutdownType", type ? type : "unknown");
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+
+    free(json);
+}
+
+/* handle request_wholist command from durisweb */
+void ws_cmd_request_wholist(struct descriptor_data *d, cJSON *data) {
+    if (!d->durisweb_verified) {
+        ws_send_system(d, "error", "not authorized");
+        return;
+    }
+
+    ws_broadcast_wholist();
+}
+
 /* helper structure for character display */
 struct ws_char_info {
     char name[32];
@@ -332,22 +493,22 @@ static int ws_load_char_info(const char *charname, struct ws_char_info *info)
     return 1;
 }
 
-/* get race name string */
+/* get race name string with ansi colors */
 static const char *ws_get_race_name(int race)
 {
     extern const struct race_names race_names_table[];
     if (race >= 0) {
-        return race_names_table[race].normal;
+        return race_names_table[race].ansi;
     }
     return "Unknown";
 }
 
-/* get class name string */
+/* get class name string with ansi colors */
 static const char *ws_get_class_name(unsigned int m_class)
 {
     int idx = flag2idx(m_class);
     if (idx >= 0) {
-        return class_names_table[idx].normal;
+        return class_names_table[idx].ansi;
     }
     return "Unknown";
 }
@@ -2557,6 +2718,8 @@ void ws_handle_command(struct descriptor_data *d, const char *cmd, cJSON *data)
         ws_cmd_poll_view(d, data);
     } else if (strcmp(cmd, "poll_vote") == 0) {
         ws_cmd_poll_vote(d, data);
+    } else if (strcmp(cmd, "request_wholist") == 0) {
+        ws_cmd_request_wholist(d, data);
     } else {
         /* unknown = game cmd */
         if (d->connected == CON_PLAYING) {
