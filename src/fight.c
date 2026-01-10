@@ -3983,14 +3983,6 @@ act("$n's &+rfiery spell causes&n $N &n&+rto smolder and spasm in pain!&n",
 }
 ,
     {MAKE_DAM_MOD_PRED(){
-        if (damageType == SPLDAM_FIRE && IS_NPC(caster) && !IS_PC_PET(caster)){
-            dam_mod->mod += get_property("damage.mob.bonus", 1.0) - 1.0;
-dam_mod->type = dam_mod_type::More;
-}
-}
-}
-,
-    {MAKE_DAM_MOD_PRED(){
         if (damageType == SPLDAM_FIRE && caster && affected_by_spell(caster, TAG_BLOODLUST) && !IS_PC_PET(victim) && IS_NPC(victim) && !CHAR_IN_JUSTICE_AREA(caster)){
             struct affected_type * paf;
 if ((paf = get_spell_from_char(caster, TAG_BLOODLUST)) != NULL)
@@ -6159,11 +6151,11 @@ if (caster->group)
             // global mod of 75% reduced damage
             dam_mod->mod += -0.75;
 			dam_mod->type = dam_mod_type::Increased;
-			if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim)))
-			{
-				// npcs to pcs do 25% increased damage
-				dam_mod->mod += 0.25;
-			}
+			// if (IS_NPC(caster) && !IS_PC_PET(caster) && !IS_MORPH(caster) && (IS_PC(victim) || IS_PC_PET(victim) || IS_MORPH(victim)))
+			// {
+			// 	// npcs to pcs do 25% increased damage
+			// 	dam_mod->mod += 0.25;
+			// }
 		}
 	}
 }
