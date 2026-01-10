@@ -1388,8 +1388,8 @@ void event_paladin_vit(P_char ch, P_char victim, P_obj obj, void *data) {
       if (af->modifier > 2)
         af->modifier -= 2;
       else {
-        affect_remove(ch, af);
         wear_off_message(ch, af);
+        affect_remove(ch, af);
         return;
       }
     else
@@ -1448,8 +1448,8 @@ void event_decrepify(P_char ch, P_char victim, P_obj obj, void *data)
 
     if (af)
     {
-      affect_remove(victim, af);
       wear_off_message(victim, af);
+      affect_remove(victim, af);
       return;
     }
   }
