@@ -564,8 +564,8 @@ int vamp(P_char ch, double fhits, double fcap)
     hits -= blocked;
     if (af->modifier <= blocked)
     {
-      affect_remove(ch, af);
       wear_off_message(ch, af);
+      affect_remove(ch, af);
     }
     else
     {
@@ -583,8 +583,8 @@ int vamp(P_char ch, double fhits, double fcap)
     hits -= blocked;
     if (af->modifier <= blocked)
     {
-      affect_remove(ch, af);
       wear_off_message(ch, af);
+      affect_remove(ch, af);
     }
     else
     {
