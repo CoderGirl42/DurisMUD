@@ -1452,10 +1452,6 @@ int mortal_heaven(int room, P_char ch, int cmd, char *arg)
         update_ingame_racewar( -GET_RACEWAR(tch) );
       }
       extract_char(tch);
-      if( !tch->desc )
-      {
-        free_char(tch);
-      }
     }
   }
 
