@@ -1114,7 +1114,7 @@
 #define HERB_BLACK_KUSH     1904
 #define HERB_GOOTWIET       1905
 
-#define HERB_FIRST          HERB_SMOKED
+#define HERB_FIRST          HERB_OCULARIUS
 #define HERB_LAST           HERB_GOOTWIET
 
 /* everything below does not make part of players skill data */
