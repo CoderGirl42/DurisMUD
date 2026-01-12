@@ -3261,7 +3261,6 @@ void extract_char(P_char ch)
         close_socket(ch->desc);
       }
 #endif
-      ws_broadcast_player_logout(ch);
 	  ch->desc->character = NULL;
     }
     free_char(ch);

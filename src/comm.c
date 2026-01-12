@@ -1745,7 +1745,6 @@ void close_socket(struct descriptor_data *d)
       sql_disconnectIP(d->character);
       act("$n has lost $s link.", TRUE, GET_PLYR(d->character), 0, 0,
           TO_ROOM);
-      ws_broadcast_player_logout(d->character);
       if ((NumAttackers(d->character) > 0) && !IS_TRUSTED(d->character))
       {
         logit(LOG_COMM, "Combat DropLink: %s [%s].",

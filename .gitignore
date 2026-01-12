@@ -34,3 +34,9 @@ duris.key
 # environment files (may contain secrets)
 .env
 logs/shutdown_info.txt
+
+# claude/cursor folders
+.c*
+
+# log files
+logs/log/*
