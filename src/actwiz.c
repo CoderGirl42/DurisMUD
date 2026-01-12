@@ -536,6 +536,19 @@ void do_read_player(P_char ch, char *arg, int cmd)
   }
   tmp = restoreItemsOnly(vict, 100);
 
+  if (!strstr(GET_NAME(vict), ".locker") )
+  {
+	for(P_char it = character_list; it; it = it->next)
+	{
+		if(IS_PC(it) && !strstr(GET_NAME(it), ".locker") && GET_PID(it) == GET_PID(vict))
+		{
+			char buf[1024];
+			snprintf(buf, ARRAY_SIZE(buf), "&=lWPID collision - characters %s and %s share PID %d&n\n", GET_NAME(it), GET_NAME(vict), GET_PID(it));
+			send_to_char(buf, ch);
+		}
+	}
+  }
+
   /* insert in list */
   vict->next = character_list;
   character_list = vict;
