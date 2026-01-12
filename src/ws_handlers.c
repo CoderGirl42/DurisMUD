@@ -272,6 +272,73 @@ void ws_broadcast_mud_shutdown(const char *type) {
     free(json);
 }
 
+/* broadcast player login to durisweb service */
+void ws_broadcast_player_login(struct descriptor_data *player_d) {
+    struct descriptor_data *d;
+    cJSON *root, *data;
+    char *json;
+
+    if (!player_d || !player_d->character) return;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "player_login");
+
+    data = cJSON_CreateObject();
+    cJSON_AddStringToObject(data, "character", GET_NAME(player_d->character));
+    cJSON_AddStringToObject(data, "account", player_d->account ? player_d->account->acct_name : "");
+    cJSON_AddStringToObject(data, "ip", player_d->host);
+    cJSON_AddNumberToObject(data, "level", GET_LEVEL(player_d->character));
+    cJSON_AddStringToObject(data, "race", ws_get_race_name(GET_RACE(player_d->character)));
+    cJSON_AddStringToObject(data, "class", ws_get_class_name(player_d->character->player.m_class));
+    cJSON_AddNumberToObject(data, "faction", GET_RACEWAR(player_d->character));
+    cJSON_AddStringToObject(data, "client", player_d->client_name ? player_d->client_name : "");
+    cJSON_AddStringToObject(data, "clientVersion", player_d->client_version ? player_d->client_version : "");
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+    free(json);
+}
+
+/* broadcast player logout to durisweb service */
+void ws_broadcast_player_logout(const char *character, int faction) {
+    struct descriptor_data *d;
+    cJSON *root, *data;
+    char *json;
+
+    if (!character) return;
+
+    root = cJSON_CreateObject();
+    if (!root) return;
+
+    cJSON_AddStringToObject(root, "type", "player_logout");
+
+    data = cJSON_CreateObject();
+    cJSON_AddStringToObject(data, "character", character);
+    cJSON_AddNumberToObject(data, "faction", faction);
+    cJSON_AddItemToObject(root, "data", data);
+
+    json = cJSON_PrintUnformatted(root);
+    cJSON_Delete(root);
+    if (!json) return;
+
+    for (d = descriptor_list; d; d = d->next) {
+        if (d->websocket && d->durisweb_verified) {
+            websocket_send_text(d, json);
+        }
+    }
+    free(json);
+}
+
 /* send wholist to a specific client (for backend requests) */
 static void ws_send_wholist_to_client(struct descriptor_data *d) {
     struct descriptor_data *target;

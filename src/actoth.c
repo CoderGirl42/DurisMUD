@@ -35,6 +35,7 @@
 #include "specializations.h"
 #include "gmcp.h"
 #include "guard.h"
+#include "ws_handlers.h"
 #include "specs.winterhaven.h"
 #include "guildhall.h"
 #include "achievements.h"
@@ -337,6 +338,7 @@ void do_camp(P_char ch, char *arg, int cmd)
 
     writeCharacter(ch, RENT_INN, ch->in_room);
 
+    ws_broadcast_player_logout(GET_NAME(ch), GET_RACEWAR(ch));
     extract_char(ch);
     ch = NULL;
     return;
@@ -1709,6 +1711,7 @@ void do_quit(P_char ch, char *argument, int cmd)
     update_ingame_racewar( -GET_RACEWAR(ch) );
   }
 
+  ws_broadcast_player_logout(GET_NAME(ch), GET_RACEWAR(ch));
   extract_char(ch);
   ch = NULL;
 }

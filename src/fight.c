@@ -51,6 +51,7 @@
 #include "siege.h"
 #include "vnum.obj.h"
 #include "gmcp.h"
+#include "ws_handlers.h"
 /*
  * external variables //
  */
@@ -2762,6 +2763,7 @@ void die(P_char ch, P_char killer)
           ch->desc = NULL;
 
           // extract_char cleans up followers, equipment, etc. and frees the char
+          ws_broadcast_player_logout(GET_NAME(ch), GET_RACEWAR(ch));
           extract_char(ch);
 
           // Return to account menu
@@ -2779,6 +2781,7 @@ void die(P_char ch, P_char killer)
         {
           close_socket(ch->desc);
         }
+        ws_broadcast_player_logout(GET_NAME(ch), GET_RACEWAR(ch));
         deleteCharacter(ch);
         extract_char(ch); // extract_char also calls free_char
         ch = NULL;
@@ -2871,6 +2874,7 @@ void die(P_char ch, P_char killer)
       {
         update_ingame_racewar(-GET_RACEWAR(ch));
       }
+      ws_broadcast_player_logout(GET_NAME(ch), GET_RACEWAR(ch));
       extract_char(ch); // extract_char also calls free_char
       ch = NULL;
     }
