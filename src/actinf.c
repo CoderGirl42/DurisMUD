@@ -42,7 +42,7 @@ using namespace std;
 #include "specializations.h"
 #include "grapple.h"
 #include "nexus_stones.h"
-#include "ships.h"
+#include "ships/ships.h"
 #include "ctf.h"
 #include "epic_bonus.h"
 #include "vnum.obj.h"
