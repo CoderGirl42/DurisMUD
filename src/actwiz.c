@@ -44,6 +44,7 @@
 #include "utility.h"
 #include "achievements.h"
 #include "files.h"
+#include "ws_handlers.h"
 
 /*
  * external variables
@@ -4862,6 +4863,7 @@ void do_purge(P_char ch, char *argument, int cmd)
         }
 
         /* player will lose all objects! */
+        ws_broadcast_player_logout(GET_NAME(vict), GET_RACEWAR(vict));
         extract_char(vict);
         writeCharacter(vict, 2, NOWHERE);
         if (vict->desc)
@@ -9353,6 +9355,7 @@ void do_terminate(P_char ch, char *argument, int cmd)
   {
     update_ingame_racewar(-GET_RACEWAR(ch));
   }
+  ws_broadcast_player_logout(GET_NAME(victim), GET_RACEWAR(victim));
   deleteCharacter(victim);
   extract_char(victim); // extract_char also calls free_char
   victim = NULL;
@@ -12741,6 +12744,7 @@ void do_extractlink(P_char ch, char *argument, int cmd)
         vict->desc = NULL;
 
       writeCharacter(vict, RENT_LINKDEAD, vict->in_room);
+      ws_broadcast_player_logout(GET_NAME(vict), GET_RACEWAR(vict));
       extract_char(vict);
       count++;
     }
@@ -12787,6 +12791,7 @@ void do_extractlink(P_char ch, char *argument, int cmd)
         vict->desc = NULL;
 
       writeCharacter(vict, RENT_LINKDEAD, vict->in_room);
+      ws_broadcast_player_logout(GET_NAME(vict), GET_RACEWAR(vict));
       extract_char(vict);
       count++;
     }

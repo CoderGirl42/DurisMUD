@@ -3759,6 +3759,7 @@ void enter_game(P_desc d)
   loginlog(GET_LEVEL(ch), "%s [%s] enters game @ %s.%s [%d]",
            GET_NAME(ch), d->host, timestr, Gbuf1, world[ch->in_room].number);
   sql_log(ch, CONNECTLOG, "Entered Game");
+  ws_broadcast_player_login(d);
 
   if(GET_LEVEL(ch) >= MINLVLIMMORTAL)
     loginlog(GET_LEVEL(ch), "&+GIMMORTAL&n: (%s) [%s] has logged on.%s",
