@@ -141,7 +141,7 @@ void spell_frost_beam(int level, P_char ch, char *arg, int type, P_char victim, 
 
   act("Your &+BF&+br&+Bo&+bs&+Bt&n beam strikes $N leaving them shaken!", TRUE, ch, 0, victim, TO_CHAR);
   act("A &+GBeam&n of &+BF&+Br&+Bo&+bs&+BT&n streams from $n's hands, hitting you sqaure in the torso", FALSE, ch, 0, victim, TO_VICT);
-  act("A &+GBeam*n of &+BF&+Br&+Bo&+bs&+BT&n streams from $n's hands, striking $N square in the torso!", FALSE, ch, 0, victim, TO_NOTVICT);
+  act("A &+GBeam&n of &+BF&+Br&+Bo&+bs&+BT&n streams from $n's hands, striking $N square in the torso!", FALSE, ch, 0, victim, TO_NOTVICT);
 
   if (ch && victim)
     engage(ch, victim);
