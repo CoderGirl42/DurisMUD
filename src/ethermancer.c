@@ -148,7 +148,14 @@ void spell_frost_beam(int level, P_char ch, char *arg, int type, P_char victim, 
 
   int dam = GET_LEVEL(ch) * 14 + number(10,20);
 
-  spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NOSHRUG, NULL);
+  if(GET_SPEC(ch, CLASS_ETHERMANCER, SPEC_FROSTMAGUS))
+    spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NOSHRUG, NULL);
+  else {
+    if (number(0,99) < 50) // 50% chance to be !shrug.
+      spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NOSHRUG, NULL);
+    else
+      spell_damage(ch, victim, dam, SPLDAM_COLD, 0, NULL);
+  }
 
   if (!NewSaves(victim, SAVING_PARA, 0))
   {
