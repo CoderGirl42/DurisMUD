@@ -3271,9 +3271,11 @@ void extract_char(P_char ch)
         }
         ch->desc->character = NULL;
       } else {
+        ch->desc->character = NULL;
         close_socket(ch->desc);
       }
 #endif
+      ch->desc = NULL;
     }
     free_char(ch);
     ch = NULL;

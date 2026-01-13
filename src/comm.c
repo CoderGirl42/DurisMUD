@@ -1641,7 +1641,7 @@ void close_socket(struct descriptor_data *d)
 {
   struct descriptor_data *tmp;
   snoop_by_data *snoop_by_ptr, *next;
-  int is_morphed = IS_MORPH(d->character);
+  int is_morphed = d->character ? IS_MORPH(d->character) : 0;
   char Gbuf1[MAX_STRING_LENGTH];
   time_t ct;
 
