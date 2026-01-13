@@ -112,8 +112,11 @@ void shutdown_ships()
                 if (obj)
                 {
                     obj_next = obj->next_content;
-                    obj_from_room(obj);
-                    obj_to_room(obj, real_room0(ship->anchor));
+                    if (OBJ_ROOM(obj))
+                    {
+                        obj_from_room(obj);
+                        obj_to_room(obj, real_room0(ship->anchor));
+                    }
                 }
             }
         }
@@ -444,8 +447,10 @@ int load_ship(P_ship ship, int to_room)
    SET_BIT(ship->flags, LOADED);
    
    if (ship->panel != NULL)
+   {
       obj_to_room(ship->panel, real_room0(ship->bridge));
-   else 
+   }
+   else
    {
       shiperror = 23;
       return FALSE;
