@@ -5672,7 +5672,12 @@ void do_score(P_char ch, char *argument, int cmd)
 
     for (aff = ch->affected; aff; aff = aff->next)
     {
-      if ((aff->type > 0) && skills[aff->type].name && (aff->type <= LAST_SKILL || aff->type == TAG_CTF || aff->type == TAG_RESTED || aff->type == TAG_WELLRESTED))
+      if ((aff->type > 0) && skills[aff->type].name && 
+	      (aff->type <= LAST_SKILL || 
+		   aff->type == TAG_CTF || 
+		   aff->type == TAG_RESTED || 
+		   aff->type == TAG_WELLRESTED ||
+		   (aff->type >= HERB_FIRST && aff->type <= HERB_LAST)))
       {
         switch (aff->type)
         {
