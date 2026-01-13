@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <gnutls/gnutls.h>
 #include "structs.h"
 #include "prototypes.h"
@@ -397,7 +398,7 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
     thisround = write(d->descriptor, txt + sofar, (unsigned) (total - sofar));
     if (thisround < 0)
     {
-      logit(LOG_COMM, "Write to socket error");
+      logit(LOG_COMM, "Write to socket error: %s (errno=%d)", strerror(errno), errno);
       return (-1);
     }
     sofar += thisround;
