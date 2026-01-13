@@ -3275,7 +3275,11 @@ void spell_single_lightning_ring(int level, P_char ch, char *arg, int type,
       "and you die as a &=LBflashing light&n explodes in your face!",
       "and turns $N into a charred &=LBsparkling&n corpse!", 0};
 
-  dam = 6 * MIN(51, level) + number(1, level);
+  dam = 6 * MIN(51, level) + GET_CLASS(ch, CLASS_ETHERMANCER) ? dice(level, 6) : number(1, level);
+  if (IS_PC(ch) && IS_PC(victim))
+  {
+    dam = dam * get_property("spell.area.damage.to.pc", 0.5);
+  }
 
   spell_damage(ch, victim, dam, SPLDAM_LIGHTNING, 0, &messages);
 }
@@ -21209,6 +21213,10 @@ void spell_spore_cloud(int level, P_char ch, char *arg, int type, P_char victim,
 
   dam = 100 + level * 4 + number(1, 20);
   // Meteorswarm damage is: 100 + level * 6 + number(1, 40);
+  if (IS_PC(ch) && IS_PC(victim))
+  {
+    dam = dam * get_property("spell.area.damage.to.pc", 0.5);
+  }
 
   switch (world[ch->in_room].sector_type)
   {

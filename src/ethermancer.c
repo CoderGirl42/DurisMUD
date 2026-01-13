@@ -1158,7 +1158,7 @@ void event_tupor_wake(P_char ch, P_char victim, P_obj obj, void *data)
 void spell_induce_tupor(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
 
-  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) )
+  if( !IS_ALIVE(ch) || !IS_ALIVE(victim) || IS_TRUSTED(victim) )
   {
     return;
   }
@@ -1380,6 +1380,11 @@ int door, target_room;
   /* Victim might get lucky */
   if((GET_C_LUK(victim) / 10) < number(1, 100))
     takedown_chance /= 2;
+
+  if (IS_PC(ch) && IS_PC(victim))
+  {
+    dam = dam * get_property("spell.area.damage.to.pc", 0.5);
+  }
 
   dam = dam * get_property("spell.area.damage.factor.squallTempest", 1.000);
   
@@ -1642,6 +1647,10 @@ void spell_single_supernova(int level, P_char ch, char *arg, int type, P_char vi
   };
 
   dam = 120 + level * 6 + number(1, 40);
+  if (IS_PC(ch) && IS_PC(victim))
+  {
+    dam = dam * get_property("spell.area.damage.to.pc", 0.5);
+  }
   dam = dam * get_property("spell.area.damage.factor.superNova", 1.000);
   if (spell_damage(ch, victim, dam, SPLDAM_GENERIC, 0, &messages))
     return;
@@ -2010,7 +2019,7 @@ void spell_single_polar_vortex(int level, P_char ch, char *arg, int type,
     bzero(&af, sizeof(af));
     af.type = SPELL_MAJOR_PARALYSIS;
     af.flags = AFFTYPE_SHORT;
-    af.duration = WAIT_SEC * 3;
+    af.duration = WAIT_SEC * number(1, 3);
     af.bitvector2 = AFF2_MAJOR_PARALYSIS;
 
     affect_to_char(victim, &af);
@@ -2930,7 +2939,7 @@ void event_arctic_blast(P_char victim, P_char ch, P_obj obj, void *data)
 
 void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
-  int duration = 3;
+  int duration = 3 + (MAX(level - 40, 0) / 5);
   P_nevent e1 = NULL;
   bool found = FALSE;
 
@@ -2952,7 +2961,7 @@ void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim
   // If there's an event already going on, suck it's data and kill it!
   if( found )
   {
-    duration = *((int *) e1->data) + 2;
+    duration = *((int *) e1->data) + duration - 1;
     disarm_char_nevents(victim, event_arctic_blast);
 
     act("&+CThe &+Wfr&+Ce&+cez&+Win&+Cg &+Wwinds &+Caround $N &+Wintensify!", TRUE, ch, 0, victim, TO_CHAR);
@@ -2967,7 +2976,7 @@ void spell_arctic_blast(int level, P_char ch, char *arg, int type, P_char victim
   }
 
   // This has to be backwards for the event search to work right.. *sigh*
-  add_event(event_arctic_blast, PULSE_SPELLCAST*2, victim, ch, NULL, 0, &duration, sizeof(int));
+  add_event(event_arctic_blast, PULSE_SPELLCAST, victim, ch, NULL, 0, &duration, sizeof(int));
 
 }
 
