@@ -58,8 +58,8 @@ extern P_index obj_index;
 extern P_obj object_list;
 extern P_town towns;
 extern P_room world;
-extern byte create_locked;
-extern byte locked;
+extern ::byte create_locked;
+extern ::byte locked;
 extern int top_of_helpt;
 extern FILE *help_fl;
 extern const char *weapons[];
@@ -314,9 +314,9 @@ char *comma_string(long num)
 
 void sa_byteCopy(P_char ch, unsigned long offset, int value)
 {
-  byte new_value = (byte)value;
+  ::byte new_value = (::byte)value;
 
-  bcopy((char *)&new_value, (char *)ch + offset, sizeof(byte));
+  bcopy((char *)&new_value, (char *)ch + offset, sizeof(::byte));
 }
 
 /*

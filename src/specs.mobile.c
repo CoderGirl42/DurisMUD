@@ -2917,9 +2917,9 @@ int dryad(P_char ch, P_char pl, int cmd, char *arg)
                    "A beautiful dryad slowly fades into exsistance!\r\n");
           LOOP_THRU_PEOPLE(tmp_ch, ch)
           if (GET_MASTER(tmp_ch) == ch)
-              snprintf(Gbuf1, MAX_STRING_LENGTH,
-                       "%s slowly fades into existance, standing obediently behind the dryad.\r\n",
-                       (IS_NPC(tmp_ch) ? tmp_ch->player.short_descr : GET_NAME(tmp_ch)));
+            snprintf(Gbuf1, MAX_STRING_LENGTH,
+                     "%s slowly fades into existance, standing obediently behind the dryad.\r\n",
+                     (IS_NPC(tmp_ch) ? tmp_ch->player.short_descr : GET_NAME(tmp_ch)));
           strcat(Gbuf4, Gbuf1);
           send_to_room(Gbuf4, princess ? real_room(5744) : real_room(5739));
           /*          LOOP_THRU_PEOPLE(tmp_ch, ch) {*/
@@ -13795,7 +13795,7 @@ int witch_doctor(P_char witch, P_char customer, int cmd, char *arg)
     char *keyword;
     char *desc;
     int price;
-    byte affect_vector;
+    ::byte affect_vector;
     uint affect_flag;
   } elixir_list[] =
       {

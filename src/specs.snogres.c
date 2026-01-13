@@ -5,7 +5,7 @@
 #include <string.h>
 #include <time.h>
 #include <list>
-using namespace std;
+;
 
 #include "comm.h"
 #include "db.h"

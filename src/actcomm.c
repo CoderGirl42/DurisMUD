@@ -1898,8 +1898,8 @@ void boot_pose_messages(void)
 
 void do_pose(P_char ch, char *argument, int cmd)
 {
-  byte to_pose;
-  byte counter;
+  ::byte to_pose;
+  ::byte counter;
   int m_class;
 
   if (IS_NPC(ch))

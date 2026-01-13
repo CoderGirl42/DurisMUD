@@ -2122,7 +2122,7 @@ void do_withdraw(P_char ch, char *argument, int cmd)
 void do_sneak(P_char ch, char *argument, int cmd)
 {
   struct affected_type af;
-  byte percent;
+  ::byte percent;
   int skl_lvl = 0;
   char Gbuf1[MAX_STRING_LENGTH];
 
@@ -2242,7 +2242,7 @@ void do_sneak(P_char ch, char *argument, int cmd)
 
 void do_hide(P_char ch, char *argument, int cmd)
 {
-  byte roll;
+  ::byte roll;
   int skl_lvl = 0, vis_mode;
   bool tried = FALSE;
   P_obj obj_object, next_obj, tobj, next_tobj;
