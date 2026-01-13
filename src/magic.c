@@ -13235,7 +13235,7 @@ void unequip_char_dale(P_obj kala)
 
 void spell_disintegrate(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
 {
-  int i, dam;
+  int i, dam, noshrug;
   P_obj x;
   struct damage_messages messages = {
       "You smile happily as your disintegration ray hits $N!",
@@ -13269,6 +13269,11 @@ void spell_disintegrate(int level, P_char ch, char *arg, int type, P_char victim
   // Making Disintegrate !shrug -- Eikel.
   // if(resists_spell(ch, victim))
   //  return;
+   // This spell has a chance to be !shrug.
+  if (number(0, 99) <= get_property("spell.shrug.chance.disintegrate", 50))
+    noshrug = SPLDAM_NOSHRUG;
+  else
+    noshrug = 0;
 
   if (!saves_spell(victim, SAVING_SPELL))
   {
@@ -13350,7 +13355,7 @@ void spell_disintegrate(int level, P_char ch, char *arg, int type, P_char victim
       }
     }
   } /* else dam = 0; */
-  spell_damage(ch, victim, dam, SPLDAM_NEGATIVE, SPLDAM_NOSHRUG, &messages);
+  spell_damage(ch, victim, dam, SPLDAM_NEGATIVE, noshrug, &messages);
 }
 
 void spell_shatter(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
@@ -19649,7 +19654,7 @@ void event_acidimmolate(P_char ch, P_char vict, P_obj obj, void *data)
     }
   }
   // This is still strange, as it's almost identical to above, aside from the stop_memming chance.
-  else if (spell_damage(ch, vict, dam, SPLDAM_ACID, SPLDAM_NODEFLECT, &messages) == DAM_NONEDEAD)
+  else if (spell_damage(ch, vict, dam, SPLDAM_ACID, SPLDAM_NODEFLECT | SPLDAM_NOSHRUG, &messages) == DAM_NONEDEAD)
   {
     add_event(event_acidimmolate, PULSE_VIOLENCE, ch, vict, NULL, 0, &acidburntime, sizeof(acidburntime));
     if (3 > number(1, 10))
