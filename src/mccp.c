@@ -385,11 +385,17 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
   if (d->sslses)
   {
     int ret = gnutls_record_send(d->sslses, txt, total);
-    while (ret==GNUTLS_E_AGAIN || ret==GNUTLS_E_INTERRUPTED)
+    // retry on interrupt, but not on buffer full
+    while (ret == GNUTLS_E_INTERRUPTED)
       ret = gnutls_record_send(d->sslses, NULL, 0);
-    if (ret)
+    if (ret == GNUTLS_E_AGAIN)
     {
-      logit(LOG_COMM, "Write to SSL socket error: %s", gnutls_strerror(ret));
+      // ssl buffer full, skip this write and try next tick
+      return 0;
+    }
+    if (ret < 0)
+    {
+      logit(LOG_COMM, "Write to SSL socket error: %s (ret=%d)", gnutls_strerror(ret), ret);
       return -1;
     }
   }
