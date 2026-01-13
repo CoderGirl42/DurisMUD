@@ -224,7 +224,8 @@ int compress_end(P_desc player, int flush)
         break;
       }
       len = (long) player->z_str->next_out - (long) player->out_compress_buf;
-      raw_write_to_descriptor(player, player->out_compress_buf, len);
+      if (raw_write_to_descriptor(player, player->out_compress_buf, len) < 0)
+        break;
     }
     while (status != Z_STREAM_END);
   }
@@ -317,7 +318,12 @@ int write_to_descriptor(P_desc player, const char *txt)
 
   if (!player->out_compress)
   {
-    raw_write_to_descriptor(player, txt, total);
+    if (raw_write_to_descriptor(player, txt, total) < 0)
+    {
+      if (conv_buf != static_conv_buf)
+        FREE(conv_buf);
+      return (-1);
+    }
   }
   else
   {
@@ -344,7 +350,12 @@ int write_to_descriptor(P_desc player, const char *txt)
 
           len = (long) player->z_str->next_out -
             (long) player->out_compress_buf;
-          raw_write_to_descriptor(player, player->out_compress_buf, len);
+          if (raw_write_to_descriptor(player, player->out_compress_buf, len) < 0)
+          {
+            if (conv_buf != static_conv_buf)
+              FREE(conv_buf);
+            return (-1);
+          }
 
         }
         while (player->z_str->avail_out == 0);
@@ -407,7 +418,8 @@ int write_to_descriptor_binary(P_desc player, const unsigned char *data, size_t 
 
   if (!player->out_compress)
   {
-    raw_write_to_descriptor(player, (const char *)data, len);
+    if (raw_write_to_descriptor(player, (const char *)data, len) < 0)
+      return -1;
   }
   else
   {
@@ -431,7 +443,8 @@ int write_to_descriptor_binary(P_desc player, const unsigned char *data, size_t 
 
           out_len = (long)player->z_str->next_out -
                     (long)player->out_compress_buf;
-          raw_write_to_descriptor(player, player->out_compress_buf, out_len);
+          if (raw_write_to_descriptor(player, player->out_compress_buf, out_len) < 0)
+            return -1;
         }
         while (player->z_str->avail_out == 0);
       }
