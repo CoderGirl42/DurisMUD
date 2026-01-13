@@ -398,6 +398,11 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
     thisround = write(d->descriptor, txt + sofar, (unsigned) (total - sofar));
     if (thisround < 0)
     {
+      if (errno == EAGAIN || errno == EWOULDBLOCK)
+      {
+        // socket buffer full, skip this write and try next tick
+        return (0);
+      }
       logit(LOG_COMM, "Write to socket error: %s (errno=%d)", strerror(errno), errno);
       return (-1);
     }

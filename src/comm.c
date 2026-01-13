@@ -1607,6 +1607,10 @@ int new_connection(int s)
   i = 1;
   setsockopt(t, SOL_TCP, TCP_NODELAY, &i, sizeof(i));
 
+  // increase send buffer
+  i = 65536;
+  setsockopt(t, SOL_SOCKET, SO_SNDBUF, &i, sizeof(i));
+
   return (t);
 }
 
