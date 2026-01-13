@@ -145,7 +145,7 @@ void SPEC_SKILL_ADD(int Class, int Level, int MaxLearn, int Spec)
     MaxLearn = -1;
   }
 
-  skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].rlevel[Spec] = (byte)(Level);
+  skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].rlevel[Spec] = (::byte)(Level);
   skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].maxlearn[Spec] = (ubyte)(MaxLearn);
 }
 
@@ -154,7 +154,7 @@ void SKILL_ADD(int Class, int Level, int MaxLearn)
   for (int i = 0; i < MAX_SPEC + 1; i++)
   {
     skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].rlevel[i] =
-        (byte)(Level);
+        (::byte)(Level);
     skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].maxlearn[i] =
         (ubyte)(MaxLearn);
   }
@@ -175,7 +175,7 @@ void SPELL_CREATE2(const char *Name, int Index, int Beats,
 void SPEC_SPELL_ADD(int Class, int Level, int Spec)
 {
   skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].rlevel[Spec] =
-      (byte)(Level);
+      (::byte)(Level);
   skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].maxlearn[Spec] = 100;
 }
 
@@ -184,7 +184,7 @@ void SPELL_ADD(int Class, int Level)
   for (int i = 0; i < MAX_SPEC + 1; i++)
   {
     skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].rlevel[i] =
-        (byte)(Level);
+        (::byte)(Level);
     skills[numSkills].m_class[(int)(flag2idx(Class) - 1)].maxlearn[i] = 100;
   }
 }
@@ -1381,7 +1381,7 @@ void initialize_skills()
   SPEC_SPELL_ADD(CLASS_REAVER, 10, SPEC_FLAME_REAVER);
 
   SPELL_CREATE_MSG("flame strike", SPELL_FLAMESTRIKE, PULSE_SPELLCAST + 1,
-               	   TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_CHAR_RANGE | TAR_AGGRO, spell_flamestrike, "The &+rbrand&n begins to fade...");
+                   TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_CHAR_RANGE | TAR_AGGRO, spell_flamestrike, "The &+rbrand&n begins to fade...");
   SPELL_ADD(CLASS_CLERIC, 6);
   SPEC_SPELL_ADD(CLASS_CLERIC, 0, SPEC_HEALER);
   SPELL_ADD(CLASS_BLIGHTER, 6);
@@ -5314,12 +5314,12 @@ void initialize_skills()
                TAR_IGNORE | TAR_NOCOMBAT, spell_divine_font);
   SPEC_SPELL_ADD(CLASS_CLERIC, 11, SPEC_HEALER);
 
-  SPELL_CREATE_MSG("vital intercession", 
-	        		SPELL_VITAL_INTERCESSION,
-					PULSE_SPELLCAST * 3 / 2,
-					TAR_CHAR_ROOM, 
-					spell_vital_intercession,
-					"&+WThe healing energies surrounding you falter!");
+  SPELL_CREATE_MSG("vital intercession",
+                   SPELL_VITAL_INTERCESSION,
+                   PULSE_SPELLCAST * 3 / 2,
+                   TAR_CHAR_ROOM,
+                   spell_vital_intercession,
+                   "&+WThe healing energies surrounding you falter!");
   SPEC_SPELL_ADD(CLASS_CLERIC, 6, SPEC_HOLYMAN);
 
   SPELL_CREATE("holy intercession", SPELL_HOLY_INTERCESSION, PULSE_SPELLCAST * 4,
