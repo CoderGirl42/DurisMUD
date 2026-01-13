@@ -3371,6 +3371,11 @@ void initialize_skills()
                    spell_vapor_armor, "&+CYou feel the protection of the winds dissapate.");
   SPELL_ADD(CLASS_ETHERMANCER, 1);
 
+  SPELL_CREATE("frost beam", SPELL_FROST_BEAM, PULSE_SPELLCAST *2,
+                   TAR_CHAR_ROOM | TAR_FIGHT_VICT | TAR_AGGRO,
+                   spell_frost_beam);
+  SPELL_ADD(CLASS_ETHERMANCER, 10);  
+
   SPELL_CREATE_MSG("faerie sight", SPELL_FAERIE_SIGHT, PULSE_SPELLCAST * 2,
                    TAR_SELF_ONLY | TAR_NOCOMBAT,
                    spell_faerie_sight, "You feel the &+mtwinkle&n in your eyes fade.");

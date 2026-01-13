@@ -17887,8 +17887,7 @@ void spell_immolate(int level, P_char ch, char *arg, int type, P_char victim,
       dam += dam * 0.05;
 
     if (IS_ALIVE(victim) &&
-        (spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_NODEFLECT, NULL) == DAM_NONEDEAD))
-      ;
+        (spell_damage(ch, victim, dam, SPLDAM_FIRE, SPLDAM_NODEFLECT, NULL) == DAM_NONEDEAD)) 
     {
       if (ch &&
           IS_ALIVE(victim)) // Adding another check.
