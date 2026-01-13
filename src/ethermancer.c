@@ -119,6 +119,57 @@ void spell_vapor_armor(int level, P_char ch, char *arg, int type, P_char victim,
   }
 }
 
+void spell_frost_beam(int level, P_char ch, char *arg, int type, P_char victim, P_obj obj)
+{
+
+  struct affected_type af;
+  if (!ch)
+  {
+    logit(LOG_EXIT, "spell_frost_beam called in magic.c with no ch");
+    raise(SIGSEGV);
+  }
+
+  if (!victim)
+  {
+    return;
+  }
+
+  if (!IS_ALIVE(ch) || !IS_ALIVE(victim))
+  {
+    return;
+  }
+
+  act("Your &+BF&+br&+Bo&+bs&+Bt&n beam strikes $N leaving them shaken!", TRUE, ch, 0, victim, TO_CHAR);
+  act("A &+GBeam&n of &+BF&+Br&+Bo&+bs&+BT&n streams from $n's hands, hitting you sqaure in the torso", FALSE, ch, 0, victim, TO_VICT);
+  act("A &+GBeam*n of &+BF&+Br&+Bo&+bs&+BT&n streams from $n's hands, striking $N square in the torso!", FALSE, ch, 0, victim, TO_NOTVICT);
+
+  if (ch && victim)
+    engage(ch, victim);
+
+  int dam = GET_LEVEL(ch) * 14 + number(10,20);
+
+  spell_damage(ch, victim, dam, SPLDAM_COLD, SPLDAM_NOSHRUG, NULL);
+
+  if (!NewSaves(victim, SAVING_PARA, 0))
+  {
+    bzero(&af, sizeof(af));
+    af.type = SPELL_MINOR_PARALYSIS;
+    af.flags = AFFTYPE_SHORT;
+    af.duration = (int)(level * WAIT_SEC * 0.75);
+    af.bitvector2 = AFF2_MINOR_PARALYSIS;
+    affect_to_char(victim, &af);
+
+    act("$n &+Wturns pale as &+bice&N spreads across $s body, causing all motion to halt.", FALSE, victim, 0, 0, TO_ROOM);
+    send_to_char("&+LYour body becomes like stone as is is encased by &+bice&n.\n", victim);
+
+    if (IS_FIGHTING(victim))
+      stop_fighting(victim);
+    if (IS_DESTROYING(victim))
+      stop_destroying(victim);
+    StopMercifulAttackers(victim);
+  }
+}
+
 void spell_faerie_sight(int level, P_char ch, char *arg, int type, P_char victim, P_obj tar_obj)
 {
   struct affected_type af;

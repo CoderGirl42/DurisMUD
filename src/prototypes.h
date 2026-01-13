@@ -2823,6 +2823,7 @@ void cast_bloodstone(int, P_char, char *, int, P_char, P_obj);
 
 /* ethermancer spells */
 void spell_vapor_armor(int, P_char, char *, int, P_char, P_obj);
+void spell_frost_beam(int, P_char, char *, int, P_char, P_obj);
 void spell_faerie_sight(int, P_char, char *, int, P_char, P_obj);
 void spell_cold_snap(int, P_char, char *, int, P_char, P_obj);
 void spell_path_of_frost(int, P_char, char *, int, P_char, P_obj);
