@@ -420,9 +420,8 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
     }
     if (thisround == 0)
     {
-      // wrote nothing - connection is broken
-      d->write_failed = 1;
-      return (-1);
+      // wrote nothing - treat like eagain, try again next tick
+      return (0);
     }
     sofar += thisround;
   }
