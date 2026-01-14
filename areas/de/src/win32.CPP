@@ -36,11 +36,8 @@
 #  error WIN32.CPP should only be used for Windows
 #endif
 
-#include <windows.h>
-#include <mapi.h>
-#include <wincon.h>
-#include <stdio.h>
-#include <direct.h>
+#include <mapiutil.h>
+#include <mapiwin.h>
 #include <wincon.h>
 #include <stdio.h>
 #include <direct.h>

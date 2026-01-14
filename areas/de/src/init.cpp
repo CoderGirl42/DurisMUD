@@ -43,6 +43,8 @@
 
 #include "graphcon.h"
 
+
+
 flagDef g_npc_class_bits[CLASS_COUNT + 1];
 flagDef g_race_names[RACE_PLAYER_MAX + 1];
 
@@ -55,8 +57,8 @@ extern const char *g_exitnames[];
 
 extern "C" struct class_names class_names_table[];
 extern "C" struct race_names race_names_table[];
+extern void initialize_skills();
 
-extern void initialize_skills(void);
 //
 // startInit : Initializes after reading the data files
 //

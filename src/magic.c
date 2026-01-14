@@ -74,7 +74,7 @@ extern const flagDef affected4_bits[];
 extern const flagDef affected5_bits[];
 extern const char *item_types[];
 extern const struct stat_data stat_factor[];
-// extern int rev_dir[];
+extern int rev_dir[];
 extern int avail_hometowns[][LAST_RACE + 1];
 extern int guild_locations[][CLASS_COUNT + 1];
 extern int spl_table[TOTALLVLS][MAX_CIRCLE];
@@ -3860,32 +3860,32 @@ void spell_flamestrike(int level, P_char ch, char *arg, int type,
     spell_damage(ch, victim, (dam / 2), SPLDAM_FIRE, 0, &messages);
   }
 
-  if (!IS_ALIVE(victim) || !IS_ALIVE(ch))
-    return;
+  if(!IS_ALIVE(victim) || !IS_ALIVE(ch))
+  	return;
 
-  if (GET_SPEC(ch, CLASS_CLERIC, SPEC_ZEALOT))
+  if(GET_SPEC(ch, CLASS_CLERIC, SPEC_ZEALOT))
   {
-    struct affected_type *paf = NULL;
-    int duration = level / 10;
-    int healBlocked = (int)(dam * get_property("zealots.flamestrike.blockedMulti", 2.0));
+	struct affected_type *paf = NULL;
+	int duration = level / 10;
+	int healBlocked = (int)(dam * get_property("zealots.flamestrike.blockedMulti", 2.0));
 
-    // find the flamestrike affect
-    if ((paf = get_spell_from_char(victim, SPELL_FLAMESTRIKE)) == NULL)
-    {
-      // add it if not found
-      struct affected_type af;
-      bzero(&af, sizeof(af));
-      af.duration = duration;
-      af.type = SPELL_FLAMESTRIKE;
-      paf = affect_to_char(victim, &af);
+	// find the flamestrike affect
+	if((paf = get_spell_from_char(victim, SPELL_FLAMESTRIKE)) == NULL)
+	{
+		// add it if not found
+		struct affected_type af;
+		bzero(&af, sizeof(af));
+		af.duration = duration;
+		af.type = SPELL_FLAMESTRIKE;
+		paf = affect_to_char(victim, &af);
 
-      act("You have &+rbranded&n $N with your &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_CHAR);
-      act("You have been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_VICT);
-      act("$N has been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_NOTVICT);
-    }
-    // reset duration and update modifier
-    paf->duration = duration;
-    paf->modifier += healBlocked;
+		act("You have &+rbranded&n $N with your &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_CHAR);
+		act("You have been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_VICT);
+		act("$N has been &+rbranded&n by $n's &+Wholy &+Yf&+Rl&+Yam&+Re&+Ys&n!", FALSE, ch, 0, victim, TO_NOTVICT);
+	}
+	// reset duration and update modifier
+	paf->duration = duration;
+	paf->modifier += healBlocked;
   }
 }
 
@@ -9295,88 +9295,86 @@ void spell_vitality(int level, P_char ch, char *arg, int type, P_char victim,
 
 void vital_intercession_heal(P_char ch, int dam, int spell)
 {
-  struct affected_type *paf = get_spell_from_char(ch, spell);
+	struct affected_type *paf = get_spell_from_char(ch, spell);
 
-  int healpoints = number((int)(dam * get_property("spell.vitalIntercession.healScalarMin", 0.4)), (int)(dam * get_property("spell.vitalIntercession.healScalarMax", 0.6)));
-  if (healpoints > paf->modifier)
-  {
-    healpoints = paf->modifier;
-  }
+	int healpoints = number( (int)(dam * get_property("spell.vitalIntercession.healScalarMin", 0.4)), (int)(dam * get_property("spell.vitalIntercession.healScalarMax", 0.6)) );
+	if(healpoints > paf->modifier)
+	{
+		healpoints = paf->modifier;
+	}
 
-  vamp(ch, healpoints, GET_MAX_HIT(ch));
+	vamp(ch, healpoints, GET_MAX_HIT(ch));
 
-  send_to_char("&+WHealing energies surge through your body!\r\n&n", ch);
+	send_to_char("&+WHealing energies surge through your body!\r\n&n", ch);
 
-  paf->modifier -= healpoints;
-  if (paf->modifier <= 0)
-  {
-    wear_off_message(ch, paf);
-    affect_remove(ch, paf);
-  }
+	paf->modifier -= healpoints;
+	if(paf->modifier <= 0)
+	{
+		wear_off_message(ch, paf);
+		affect_remove(ch, paf);
+	}
 }
 
 void vital_intercession(int level, P_char ch, P_char victim, int spell)
 {
-  struct affected_type af;
-  int maximumHitsHealed = (int)(level * get_property("spell.vitalIntercession.maxHitsHealedMultiplier", 6)) + number(-20, 20);
+	struct affected_type af;
+	int maximumHitsHealed = (int)(level * get_property("spell.vitalIntercession.maxHitsHealedMultiplier", 6)) + number(-20, 20);
 
-  if (!SanityCheck(ch, "spell_vital_intercession") || !SanityCheck(victim, "spell_vital_intercession"))
-    return;
+	if (!SanityCheck(ch, "spell_vital_intercession") || !SanityCheck(victim, "spell_vital_intercession"))
+		return;
 
-  if (!affected_by_spell(victim, spell))
-  {
-    bzero(&af, sizeof(af));
-    af.type = spell;
-    af.duration = 5;
-    af.modifier = maximumHitsHealed;
-    affect_to_char(victim, &af);
-    update_pos(victim);
-  }
-  else
-  {
-    struct affected_type *af1;
-    for (af1 = victim->affected; af1; af1 = af1->next)
-      if (af1->type == spell)
-      {
-        af1->duration = 5;
-        af1->modifier = maximumHitsHealed;
-      }
-  }
+	if (!affected_by_spell(victim, spell))
+	{
+		bzero(&af, sizeof(af));
+		af.type = spell;
+		af.duration = 5;
+		af.modifier = maximumHitsHealed;
+		affect_to_char(victim, &af);
+		update_pos(victim);
+	}
+	else
+	{
+		struct affected_type *af1;
+		for (af1 = victim->affected; af1; af1 = af1->next)
+		if (af1->type == spell)
+		{
+			af1->duration = 5;
+			af1->modifier = maximumHitsHealed;
+		}
+	}
 
-  send_to_char("&+WYou feel healing energies surround you!\r\n&n", victim);
+	send_to_char("&+WYou feel healing energies surround you!\r\n&n", victim);
 }
 
 void spell_vital_intercession(int level, P_char ch, char *arg, int type, P_char victim,
-                              P_obj obj)
+                    		  P_obj obj)
 {
-  vital_intercession(level, ch, victim, SPELL_VITAL_INTERCESSION);
+	vital_intercession(level, ch, victim, SPELL_VITAL_INTERCESSION);
 }
 
 void spell_holy_intercession(int level, P_char ch, char *arg, int type, P_char victim,
-                             P_obj obj)
+                    		 P_obj obj)
 {
-  struct group_list *gl;
+	struct group_list *gl;
 
-  if (!SanityCheck(ch, "spell_holy_intercession"))
-    return;
+	if (!SanityCheck(ch, "spell_holy_intercession"))
+		return;
 
-  if (ch->group)
-  {
-    gl = ch->group;
-    /* leader first */
-    if (gl->ch->in_room == ch->in_room)
-      vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
-    /* followers */
-    for (gl = gl->next; gl; gl = gl->next)
-    {
-      if (gl->ch->in_room == ch->in_room)
-        vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
-    }
-  }
-  else
-  {
-    vital_intercession(level * 2 / 3, ch, ch, SPELL_HOLY_INTERCESSION);
-  }
+	if (ch->group)
+	{
+		gl = ch->group;
+		/* leader first */
+		if (gl->ch->in_room == ch->in_room) vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
+		/* followers */
+		for (gl = gl->next; gl; gl = gl->next)
+		{
+			if (gl->ch->in_room == ch->in_room) vital_intercession(level * 2 / 3, ch, gl->ch, SPELL_HOLY_INTERCESSION);
+		}
+	}
+	else
+	{
+		vital_intercession(level * 2 / 3, ch, ch, SPELL_HOLY_INTERCESSION);
+	}
 }
 
 void spell_vitalize_undead(int level, P_char ch, char *arg, int type,

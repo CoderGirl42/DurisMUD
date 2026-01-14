@@ -35,11 +35,12 @@
 #include "damage.h"
 #include "sql.h"
 #include "vnum.obj.h"
-#include "ships/ships.h"
+#include "ships.h"
 #include "listen.h"
 #include "map.h"
 #include "epic.h"
 #include "trophy.h"
+#include "ships.h"
 #include "utility.h"
 #include "achievements.h"
 #include "files.h"
@@ -58,8 +59,8 @@ extern P_index obj_index;
 extern P_obj object_list;
 extern P_town towns;
 extern P_room world;
-extern ::byte create_locked;
-extern ::byte locked;
+extern byte create_locked;
+extern byte locked;
 extern int top_of_helpt;
 extern FILE *help_fl;
 extern const char *weapons[];
@@ -314,9 +315,9 @@ char *comma_string(long num)
 
 void sa_byteCopy(P_char ch, unsigned long offset, int value)
 {
-  ::byte new_value = (::byte)value;
+  byte new_value = (byte)value;
 
-  bcopy((char *)&new_value, (char *)ch + offset, sizeof(::byte));
+  bcopy((char *)&new_value, (char *)ch + offset, sizeof(byte));
 }
 
 /*
@@ -428,12 +429,12 @@ void do_reboot_restore(P_char ch, P_char victim)
   if (affected_by_spell(victim, SPELL_DISEASE) ||
       affected_by_spell(victim, SPELL_PLAGUE) ||
       affected_by_spell(victim, SPELL_BMANTLE) ||
-      affected_by_spell(victim, SPELL_FLAMESTRIKE))
+	  affected_by_spell(victim, SPELL_FLAMESTRIKE))
   {
     affect_from_char(victim, SPELL_DISEASE);
     affect_from_char(victim, SPELL_PLAGUE);
     affect_from_char(victim, SPELL_BMANTLE);
-    affect_from_char(victim, SPELL_FLAMESTRIKE);
+	affect_from_char(victim, SPELL_FLAMESTRIKE);
   }
 
   if (affected_by_spell(victim, TAG_ARMLOCK))
