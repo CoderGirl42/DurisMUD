@@ -12595,10 +12595,17 @@ int SpammingNchat(P_char ch)
 #ifdef USE_ACCOUNT
 void show_account_info(P_char ch, P_char target)
 {
-  send_to_char("\n", ch);
-  display_account_information_to_char(ch, target->desc->account);
-  display_character_list_to_char(ch, target->desc->account);
-  send_to_char("\n", ch);
+	if(target->desc)
+	{
+		send_to_char("\n", ch);
+		display_account_information_to_char(ch, target->desc->account);
+		display_character_list_to_char(ch, target->desc->account);
+		send_to_char("\n", ch);
+	}
+	else
+	{
+		send_to_char("\nCharacter has no descriptor attached (link dead).\n", ch);
+	}
 }
 
 void remove_account_char(P_char ch, P_char target)
