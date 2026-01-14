@@ -249,6 +249,9 @@ int write_to_descriptor(P_desc player, const char *txt)
   char     static_conv_buf[MAX_STRING_LENGTH];
   char    *conv_buf = static_conv_buf;
 
+  if (player->write_failed)
+    return -1;
+
   /* WebSocket connections need JSON-wrapped text frames */
   if (player->websocket) {
     char *escaped = json_escape_ansi_string(txt);
@@ -397,6 +400,7 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
     if (ret < 0)
     {
       logit(LOG_COMM, "Write to SSL socket error: %s (ret=%d)", gnutls_strerror(ret), ret);
+      d->write_failed = 1;
       return -1;
     }
   }
@@ -411,6 +415,13 @@ int raw_write_to_descriptor(P_desc d, const char *txt, const int total)
         return (0);
       }
       logit(LOG_COMM, "Write to socket error: %s (errno=%d)", strerror(errno), errno);
+      d->write_failed = 1;
+      return (-1);
+    }
+    if (thisround == 0)
+    {
+      // wrote nothing - connection is broken
+      d->write_failed = 1;
       return (-1);
     }
     sofar += thisround;
@@ -428,6 +439,9 @@ int write_to_descriptor_binary(P_desc player, const unsigned char *data, size_t 
   long out_len;
 
   if (!player || !data || len == 0) return 0;
+
+  if (player->write_failed)
+    return -1;
 
   if (!player->out_compress)
   {

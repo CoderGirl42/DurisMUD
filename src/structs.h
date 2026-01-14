@@ -1745,6 +1745,7 @@ struct descriptor_data
   size_t ws_fragment_len;
   int gmcp_enabled;
   int sga_disabled;
+  int write_failed;
   int gmcp_quest_map_sent;
   char client_name[64];
   char client_version[32];

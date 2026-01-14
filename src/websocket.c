@@ -439,6 +439,8 @@ static int websocket_send_frame(struct descriptor_data *d, int opcode,
 
     if (!d || d->descriptor < 0) return -1;
 
+    if (d->write_failed) return -1;
+
     /* only compress text/binary, not control frames like ping/pong */
     if (d->ws_compress && d->ws_deflate_stream &&
         (opcode == WS_OPCODE_TEXT || opcode == WS_OPCODE_BINARY) &&
@@ -529,6 +531,9 @@ static int websocket_send_frame(struct descriptor_data *d, int opcode,
 
     if (result == 0 && d->character && d->character->only.pc)
         d->character->only.pc->send_data += frame_len;
+
+    if (result != 0)
+        d->write_failed = 1;
 
     free(frame);
 
