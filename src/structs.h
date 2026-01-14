@@ -1769,6 +1769,14 @@ struct descriptor_data
   size_t ws_message_len;
   int ws_message_opcode;
 
+  /* websocket compression */
+  int ws_deflate_requested;
+  int ws_compress;
+  void *ws_deflate_stream;
+  void *ws_inflate_stream;
+  size_t ws_bytes_in;
+  size_t ws_bytes_out;
+
   /* chargen state for webclient */
   struct stat_data chargen_stats;
   int chargen_race;
