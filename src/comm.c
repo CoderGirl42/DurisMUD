@@ -2698,7 +2698,8 @@ int process_output(P_desc t)
     return (-1);
 
   if (had_prompt && !t->connected)
-    send_ga(t);
+    if (send_ga(t) < 0)
+      return (-1);
 
   return (1);
 }

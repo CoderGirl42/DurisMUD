@@ -60,10 +60,11 @@ void sga_negotiate(P_desc desc)
   write_to_descriptor_binary(desc, sga_will_str, 3);
 }
 
-void send_ga(P_desc desc)
+int send_ga(P_desc desc)
 {
   if (desc && !desc->sga_disabled && !desc->websocket)
-    write_to_descriptor_binary(desc, ga_str, 2);
+    return write_to_descriptor_binary(desc, ga_str, 2);
+  return 0;
 }
 
 /* parse telnet options and return amount of characters 
